@@ -91,27 +91,8 @@ export const home = {
     /** [REPLACE] */
     disclaimer: 'Figures shown are placeholders pending client-approved data.',
   },
-  testimonials: {
-    eyebrow: 'What clients say',
-    title: 'Straight feedback, on the record.',
-    items: [
-      {
-        quote: '[REPLACE: client quote — request from accounts]',
-        name: '[REPLACE]',
-        role: '[REPLACE: role, company]',
-      },
-      {
-        quote: '[REPLACE: client quote — request from accounts]',
-        name: '[REPLACE]',
-        role: '[REPLACE: role, company]',
-      },
-      {
-        quote: '[REPLACE: client quote — request from accounts]',
-        name: '[REPLACE]',
-        role: '[REPLACE: role, company]',
-      },
-    ],
-  },
+  // Testimonials section removed from Home per client request (July 2026) —
+  // reinstate with real, attributable quotes only.
   aboutTeaser: {
     eyebrow: 'Who we are',
     title: 'Senior marketers. No account-manager telephone.',

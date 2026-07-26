@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, ChevronDown, Star } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import CtaButton from '@/components/CtaButton';
 import Reveal from '@/components/Reveal';
 import Icon from '@/components/Icon';
@@ -206,41 +206,6 @@ export default function Home() {
           <Reveal className="mt-8">
             <p className="text-xs text-[#7c7ea6]">{home.resultsTeaser.disclaimer}</p>
           </Reveal>
-        </div>
-      </section>
-
-      {/* 7. Testimonials */}
-      <section className="section-pad border-t border-white/5">
-        <div className="container-site">
-          <Reveal className="max-w-3xl">
-            <p className="eyebrow">{home.testimonials.eyebrow}</p>
-            <h2 className="mt-4">{home.testimonials.title}</h2>
-          </Reveal>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {home.testimonials.items.map((item, i) => (
-              <Reveal key={i} delay={i * 100}>
-                <figure className="card-dark flex h-full flex-col">
-                  <div className="flex gap-1" aria-label="5 out of 5 stars">
-                    {Array.from({ length: 5 }).map((_, s) => (
-                      <Star key={s} className="h-4 w-4 fill-[#00a3d6] text-[#00a3d6]" aria-hidden="true" />
-                    ))}
-                  </div>
-                  <blockquote className="mt-5 text-[0.9375rem] text-[#b9bbd9]">
-                    “{item.quote}”
-                  </blockquote>
-                  <figcaption className="mt-auto flex items-center gap-3 pt-6">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#12123d] font-display text-sm font-semibold text-[#f4f5ff]">
-                      {item.name.replace(/[[\]]/g, '').charAt(0) || '?'}
-                    </span>
-                    <span>
-                      <span className="block text-sm font-medium text-[#f4f5ff]">{item.name}</span>
-                      <span className="block text-xs text-[#7c7ea6]">{item.role}</span>
-                    </span>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
