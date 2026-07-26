@@ -3,7 +3,7 @@
  */
 export const about = {
   meta: {
-    title: 'About — Elevate Marketing',
+    title: 'About | Elevate Marketing',
     description:
       'A small, senior UK marketing team. The people in your kickoff call are the people in your accounts.',
   },
@@ -13,9 +13,9 @@ export const about = {
     titleAfter: '.',
   },
   story: [
-    "Elevate Marketing exists because too many businesses pay for marketing they cannot trace to revenue. We started as operators — running channels in-house — and kept the operator's habit: judge everything on what it produces.",
-    'We stay deliberately small. Fewer clients, senior people only, and weekly attention on every account. When we think a channel is wrong for you, we say so — even when saying so costs us the work.',
-    'The agency was founded in 2015 and is led from Norway, with specialists across disciplines in the UK and Germany — working with clients across the UK.',
+    "Elevate Marketing exists because too many businesses pay for marketing they cannot trace to revenue. We started as operators, running channels in-house, and kept the operator's habit: judge everything on what it produces.",
+    'We stay deliberately small. Fewer clients, senior people only, and weekly attention on every account. When we think a channel is wrong for you, we say so, even when saying so costs us the work.',
+    'The agency was founded in 2015 and is led from Norway, with specialists across disciplines in the UK and Germany, working with clients across the UK.',
   ],
   team: [
     {

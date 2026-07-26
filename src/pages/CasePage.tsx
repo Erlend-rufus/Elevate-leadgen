@@ -11,7 +11,7 @@ export default function CasePage() {
   const { slug } = useParams<{ slug: string }>();
   const study = cases.find((c) => c.slug === slug);
   usePageMeta(
-    study?.meta.title ?? 'Case study — Elevate Marketing',
+    study?.meta.title ?? 'Case study | Elevate Marketing',
     study?.meta.description ?? '',
   );
 

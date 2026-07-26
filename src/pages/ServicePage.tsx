@@ -12,7 +12,7 @@ import { cases } from '@/content/cases';
 import { site } from '@/content/site';
 
 /**
- * /services/:slug — one reusable component rendering the 8-section template
+ * /services/:slug: one reusable component rendering the 8-section template
  * (services.md) for any of the 7 services. Unknown slugs redirect to /services.
  */
 export default function ServicePage() {
@@ -21,7 +21,7 @@ export default function ServicePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   usePageMeta(
-    service?.meta.title ?? 'Services — Elevate Marketing',
+    service?.meta.title ?? 'Services | Elevate Marketing',
     service?.meta.description ?? '',
   );
 

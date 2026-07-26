@@ -8,7 +8,7 @@ import { about } from '@/content/about';
 
 const valueIcons: Record<string, LucideIcon> = { PoundSterling, Compass, Users };
 
-/** /about — about the agency (cases-audit-pages.md §D). */
+/** /about: about the agency (cases-audit-pages.md §D). */
 export default function About() {
   usePageMeta(about.meta.title, about.meta.description);
   return (

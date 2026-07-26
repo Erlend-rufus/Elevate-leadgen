@@ -1,5 +1,5 @@
 /**
- * SVG gradient curve with arrowhead — suggests upward trajectory.
+ * SVG gradient curve with arrowhead: suggests upward trajectory.
  * variant 'process': used behind the Process steps (home) and optionally /audit.
  */
 interface JourneyCurveProps {

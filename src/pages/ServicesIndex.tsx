@@ -8,7 +8,7 @@ import { servicesIndex } from '@/content/services';
 import { home } from '@/content/home';
 
 /**
- * /services — hero + bento grid of all 7 services (mirrors the home Services
+ * /services: hero + bento grid of all 7 services (mirrors the home Services
  * section, reusing its card copy) + shared FinalCTA.
  */
 export default function ServicesIndex() {

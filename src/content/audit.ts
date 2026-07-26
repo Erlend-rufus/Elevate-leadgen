@@ -3,12 +3,12 @@
  */
 export const audit = {
   meta: {
-    title: 'Free marketing audit — Elevate Marketing',
+    title: 'Free marketing audit | Elevate Marketing',
     description:
       'A free, specific review of your marketing: where money is made or lost, and what to fix first. No obligations.',
   },
   hero: {
-    titleBefore: 'Find out exactly where your marketing makes — or loses — ',
+    titleBefore: 'Find out exactly where your marketing makes (or loses) ',
     titleHighlight: 'money',
     titleAfter: '.',
     sub: 'A free audit of your accounts, site and data. Specific to your business. Yours to keep, whoever you work with.',
@@ -16,17 +16,17 @@ export const audit = {
   covers: {
     title: 'What the audit covers',
     items: [
-      'Ad accounts — where spend converts and where it leaks',
-      'Website — the friction costing you enquiries',
-      'Tracking — whether your numbers can be trusted',
-      'Search & AI visibility — where you appear when buyers look',
-      'A written verdict — priorities ranked by commercial impact',
+      'Ad accounts: where spend converts and where it leaks',
+      'Website: the friction costing you enquiries',
+      'Tracking: whether your numbers can be trusted',
+      'Search & AI visibility: where you appear when buyers look',
+      'A written verdict: priorities ranked by commercial impact',
     ],
   },
   cost: {
     title: 'What it costs',
     value: '£0.',
-    body: 'No card, no catch. The audit is how we earn the right to pitch — if we cannot find anything worth fixing, we will tell you that too.',
+    body: 'No card, no catch. The audit is how we earn the right to pitch. If we cannot find anything worth fixing, we will tell you that too.',
   },
   after: {
     title: 'What happens after',
@@ -39,7 +39,7 @@ export const audit = {
   },
   booking: {
     /** [REPLACE: embed code from Cal.com/Calendly] */
-    placeholder: 'Booking calendar — [REPLACE: embed code from Cal.com/Calendly]',
+    placeholder: 'Booking calendar: [REPLACE: embed code from Cal.com/Calendly]',
     mailtoLabel: 'Prefer email? Write to hello@getelevateleads.com',
   },
   riskReducers: [
@@ -51,7 +51,7 @@ export const audit = {
     },
     {
       title: 'Plain English',
-      body: 'No 60-slide jargon deck — a short written verdict and a call.',
+      body: 'No 60-slide jargon deck: a short written verdict and a call.',
       icon: 'MessagesSquare',
     },
   ],

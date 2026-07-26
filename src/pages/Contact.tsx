@@ -10,7 +10,7 @@ const cardIcons: Record<string, LucideIcon> = { Mail, CalendarCheck };
 
 const TYPEFORM_SCRIPT = 'https://embed.typeform.com/next/embed.js';
 
-/** /contact — contact page (cases-audit-pages.md §E). */
+/** /contact: contact page (cases-audit-pages.md §E). */
 export default function Contact() {
   usePageMeta(contact.meta.title, contact.meta.description);
 
@@ -70,7 +70,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Form — Typeform live embed */}
+      {/* Form: Typeform live embed */}
       <section className="section-pad border-t border-white/5">
         <div className="container-site max-w-2xl">
           <Reveal>

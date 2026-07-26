@@ -9,7 +9,7 @@ import { audit } from '@/content/audit';
 const riskIcons: Record<string, LucideIcon> = { ClipboardCheck, Eye, MessagesSquare };
 
 /**
- * /audit — free audit conversion landing page (cases-audit-pages.md §C).
+ * /growth-audit: free audit conversion landing page (cases-audit-pages.md §C).
  * Chrome: App.tsx detects /growth-audit and renders minimal chrome (logo-only header,
  * legal-only footer) so this page stays distraction-free for ad traffic.
  */
@@ -60,7 +60,7 @@ export default function Audit() {
         </div>
       </section>
 
-      {/* 4. What happens after — allowed JourneyCurve exception (design.md §1) */}
+      {/* 4. What happens after (allowed JourneyCurve exception, design.md §1) */}
       <section className="section-pad relative overflow-hidden border-t border-white/5">
         <JourneyCurve
           variant="process"
