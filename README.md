@@ -1,104 +1,62 @@
-# Elevate Marketing: IT Consultancy Landing Page
+# Elevate Marketing — getelevateleads.com
 
-High-converting landing page for UK IT consultancies. Commission-only lead generation model. Built with pure HTML/CSS/JS, deployed on Netlify.
+Marketing site for Elevate Marketing's UK division. One job: convert warm
+traffic into **booked strategy calls** and build trust in the UK market.
 
-## Project Structure
+## Stack
 
-```
-├── index.html          # Landing page
-├── css/styles.css      # All styles
-├── js/main.js          # Animations, sticky bar, FAQ accordion, UTM capture, conversion tracking
-├── images/             # SVG assets (if needed)
-├── netlify.toml        # Netlify deploy config + security headers
-└── .gitignore
-```
+React 19 + TypeScript + Vite 7 · Tailwind CSS 3.4 (shadcn theme) · Framer Motion · lucide-react
 
-## Setup
+## Develop
 
-### 1. Connect to Netlify
-
-1. Log in to [Netlify](https://app.netlify.com)
-2. Click **"Add new site"** > **"Import an existing project"**
-3. Select this GitHub repository
-4. Branch to deploy: `main`
-5. Build command: leave blank (no build step)
-6. Publish directory: `.`
-7. Click **Deploy site**
-
-### 2. Custom Domain
-
-1. In Netlify, go to **Domain management** > **Add custom domain**
-2. Enter your subdomain (e.g. `it.yourdomain.com`)
-3. Add the DNS records Netlify provides to your domain registrar
-4. Netlify will auto-provision an SSL certificate
-
-### 3. Replace Typeform ID
-
-In `index.html`, find this line in the form section:
-
-```html
-<div data-tf-live="TYPEFORM_ID"
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build to dist/
+npm run preview  # serve the production build
 ```
 
-Replace `TYPEFORM_ID` with your actual Typeform form ID (found in Typeform's share/embed settings).
+## Editing content — start here
 
-### 4. Configure Facebook Pixel
+**All copy, figures and placeholders live in `src/content.ts`.**
+Everything marked `[REPLACE]` must be swapped for real, documentable
+values before launch (stats, cases, phone/address, Companies House no.,
+Cal.com URL, testimonials, team bios/photos). Never publish a number that
+cannot be evidenced — and never a counter that can show 0.
 
-The Facebook Pixel (ID: `1396679842249197`) is already installed in `index.html`. It fires:
-
-- **PageView** on every page load
-- **Lead** event when the Typeform is submitted (via `js/main.js`)
-
-To change the Pixel ID, edit the `fbq('init', '...')` line in `index.html`.
-
-### 5. Configure Google Analytics 4
-
-In `index.html`, uncomment the GA4 block in `<head>` and replace `GA_MEASUREMENT_ID` with your actual GA4 Measurement ID (format: `G-XXXXXXXXXX`).
-
-GA4 events fired:
-- **page_view** automatically
-- **generate_lead** on Typeform submit (via `js/main.js`)
-
-## GEO Audit Funnel (`/geo-audit`)
-
-Separate funnel for the Meta campaign "LEADS I ENGLAND I IT I v.3", adset GEO-audit. Three pages, styled by `css/geo.css` (V2 editorial system: Fraunces + Geist, navy `#0A1628`), fully independent of the commission funnel pages.
-
-| Path | Purpose | Pixel events |
-|---|---|---|
-| `/geo-audit` | Landing page (cold Meta traffic) | `PageView` only |
-| `/geo-audit/thanks` | Qualified Typeform redirect, Calendly embed | `PageView` + `LeadGEOUK` (trackCustom) |
-| `/geo-audit/not-a-fit` | Disqualified Typeform redirect | `PageView` only |
-
-`LeadGEOUK` is a custom event, deliberately separate from the commission funnel's `Lead` event so the two Meta audiences never mix. It fires **only** on `/geo-audit/thanks`.
-
-**Before launch:**
-1. Create the GEO Typeform (5 questions with gate logic; see campaign brief) and replace `TYPEFORM_URL` at the top of `geo-audit/index.html`.
-2. Set Typeform redirects: qualified → `https://it.getelevateleads.com/geo-audit/thanks`, disqualified → `https://it.getelevateleads.com/geo-audit/not-a-fit`.
-3. Confirm the delivery-time answer in the FAQ ("You will have the findings within a week.") — flagged with a TODO comment in `geo-audit/index.html`.
-4. Zapier: Typeform → ClickUp list "IT - UK - GEO" (separate from "IT - UK - Commision") + Slack alert. Flag free email domains in the Zapier step.
-
-UTM parameters on the landing page URL are appended to the Typeform link automatically.
-
-## Duplicating for Other Verticals
-
-1. Copy the entire repository
-2. Update industry-specific copy (see brief Section 8 for swap table)
-3. Key areas to change: hero tag, pain points, "who this is for" cards, process steps, form copy, meta title/description
-4. Deploy as a separate Netlify site with its own subdomain
-
-## UTM Tracking
-
-UTM parameters from the URL are automatically passed to Typeform as hidden fields. Use URLs like:
+## Structure
 
 ```
-https://yourdomain.com/?utm_source=meta&utm_medium=cpc&utm_campaign=it_consultancy
+src/content.ts          Single source of truth for all copy + data
+src/components/         ArrowMotif (signature dotted gradient arrow),
+                        Logo, Reveal, CtaButton, BookingEmbed (Cal.com),
+                        CookieConsent, LegalPage, ui/ (shadcn)
+src/sections/           Header, Hero, ProofBar, Problem, Services, Process,
+                        ResultsTeaser, Testimonials, AboutTeaser, FAQ,
+                        FinalCTA, Footer
+src/pages/              Home (/) · Results · About · Contact · Privacy · Terms
+public/                 favicon.svg + PNGs (arrow motif), og-image.jpg,
+                        logo-white.png, robots.txt, sitemap.xml
 ```
 
-## Tech Stack
+## Before launch checklist
 
-- **HTML/CSS/JS** (no frameworks, no build tools)
-- **Google Fonts**: Plus Jakarta Sans
-- **Typeform**: Embedded conversational form
-- **Netlify**: Hosting with auto-deploy on push
-- **Facebook Pixel**: Conversion tracking
-- **GA4**: Analytics (placeholder, configure before launch)
+- [ ] Replace all `[REPLACE]` items in `src/content.ts`
+- [ ] Set the real Cal.com link (`site.bookingUrl`) — UK timezone — and flip `site.bookingEnabled` to `true`
+- [ ] Swap `Logo.tsx` for the official SVG logo when delivered
+- [ ] Real team photos (never stock) on /about
+- [ ] GA4 measurement ID in `index.html` + Consent Mode v2, gated behind
+      the cookie banner (`localStorage['elevate-cookie-consent']`)
+- [ ] Legal review of /privacy and /terms (UK GDPR / PECR)
+- [ ] 301 redirects from old URLs if the structure changed
+- [ ] Deploy on Vercel (`vercel.json` included)
+
+## Legacy funnels (still live)
+
+The pre-existing campaign pages are preserved as static files under `public/`
+and keep their URLs: `/lp` (the old landing page, moved from `/`),
+`/lp/privacy/`, `/lp/terms/`, `/takk.html`, `/not-a-fit.html`, `/geo-audit/*`,
+`/audit/` (Visibility Dossier, source in `dossier/`), `/case/*.html`,
+`/nevari/`. See `docs/LEGACY-FUNNELS.md` for details. Redirect order in
+`netlify.toml` matters: the `/audit/*` and `/lp/*` rules must stay before the
+final SPA catch-all.

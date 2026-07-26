@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* shadcn tokens mapped to the Elevate "premium dark" palette */
+    --background: 240 88% 6%;          /* #04041C */
+    --foreground: 0 0% 100%;
+    --card: 240 63% 11%;               /* #0B0B2E */
+    --card-foreground: 0 0% 100%;
+    --popover: 240 63% 11%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 196 100% 42%;           /* #00A3D6 */
+    --primary-foreground: 240 88% 6%;
+    --secondary: 240 53% 15%;          /* #12123D */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 53% 15%;
+    --muted-foreground: 0 0% 100% / 0.65;
+    --accent: 240 53% 15%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 100% / 0.08;
+    --input: 0 0% 100% / 0.12;
+    --ring: 196 100% 42%;
+    --radius: 0.75rem;
+    --sidebar-background: 240 88% 6%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 196 100% 42%;
+    --sidebar-primary-foreground: 240 88% 6%;
+    --sidebar-accent: 240 53% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 100% / 0.08;
+    --sidebar-ring: 196 100% 42%;
+
+    /* Brand tokens */
+    --cyan: #00A3D6;
+    --blue-mid: #0080C4;
+    --blue-deep: #006ABA;
+    --navy: #02009A;
+    --bg: #04041C;
+    --surface: #0B0B2E;
+    --surface-2: #12123D;
+    --text-dim: rgba(255, 255, 255, 0.65);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: #ffffff;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(0, 163, 214, 0.35);
+    color: #ffffff;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .text-dim {
+    color: var(--text-dim);
+  }
+
+  /* Gradient used sparsely: key words, primary CTA, arrow motif */
+  .text-gradient {
+    background: linear-gradient(90deg, #00A3D6 0%, #006ABA 55%, #02009A 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .bg-brand-gradient {
+    background: linear-gradient(90deg, #00A3D6 0%, #006ABA 55%, #02009A 100%);
+  }
+
+  .bg-surface {
+    background-color: var(--surface);
+  }
+
+  .bg-surface-2 {
+    background-color: var(--surface-2);
+  }
+
+  .border-subtle {
+    border-color: var(--border-subtle);
+  }
+
+  /* Card with subtle border + soft inner glow */
+  .card-dark {
+    background-color: var(--surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1rem;
+  }
+
+  .card-dark-hover {
+    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+  }
+
+  .card-dark-hover:hover {
+    background-color: var(--surface-2);
+    border-color: rgba(0, 163, 214, 0.35);
+    transform: translateY(-2px);
+  }
+
+  /* Sticky header state */
+  .header-glass {
+    background-color: rgba(4, 4, 28, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* Soft radial glow used behind hero / CTA */
+  .glow-gradient {
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0, 163, 214, 0.16), transparent 70%),
+      radial-gradient(ellipse 45% 40% at 85% 100%, rgba(2, 0, 154, 0.22), transparent 70%);
+  }
+
+  .glow-orb {
+    background: radial-gradient(circle, rgba(0, 163, 214, 0.35) 0%, transparent 65%);
+    filter: blur(60px);
+  }
+
+  /* Dotted arrow: dots slowly travel along the stroke (one dash period per loop) */
+  @keyframes arrow-flow {
+    to {
+      stroke-dashoffset: -13.1px;
+    }
+  }
+
+  .arrow-flow {
+    animation: arrow-flow 1.8s linear infinite;
+  }
+
+  /* Primary CTA arrow lifts on hover */
+  .cta-arrow {
+    transition: transform 0.25s ease;
+  }
+
+  .group:hover .cta-arrow,
+  a:hover > .cta-arrow,
+  button:hover > .cta-arrow {
+    transform: translate(3px, -3px);
+  }
+
+  /* Gradient ring for stat chips / avatars */
+  .gradient-ring {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--surface), var(--surface)) padding-box,
+      linear-gradient(90deg, rgba(0, 163, 214, 0.6), rgba(2, 0, 154, 0.6)) border-box;
+  }
+
+  .section-pad {
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-pad {
+      padding-top: 9rem;
+      padding-bottom: 9rem;
+    }
+  }
+}
+
+/* Respect reduced motion everywhere */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .arrow-flow {
+    animation: none;
+  }
+
+  .cta-arrow,
+  .card-dark-hover {
+    transition: none;
+  }
+}

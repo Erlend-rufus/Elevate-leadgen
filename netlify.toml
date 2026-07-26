@@ -1,5 +1,9 @@
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
 
 [[headers]]
   for = "/*"
@@ -8,6 +12,13 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# Vite build output is content-hashed — safe to cache forever
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Legacy funnel assets (shared by /lp, /takk.html, /geo-audit, /case)
 [[headers]]
   for = "/css/*"
   [headers.values]
@@ -19,13 +30,7 @@
     Cache-Control = "public, max-age=31536000, immutable"
 
 # The Visibility Dossier SPA is served at /audit/ (prebuilt output committed in
-# audit/ — rebuild via: cd dossier && npm run build && cp -r dist ../audit).
-# SPA fallback: unknown /audit/* paths serve the app shell (existing files win).
-[[redirects]]
-  from = "/audit/*"
-  to = "/audit/index.html"
-  status = 200
-
+# public/audit/ — rebuild via: cd dossier && npm run build && cp -r dist ../public/audit).
 [[headers]]
   for = "/audit/*"
   [headers.values]
@@ -35,13 +40,6 @@
   for = "/audit/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-# The Visibility Dossier source (dossier/) is the source for /audit/ above.
-# Never serve its raw source files on this site:
-[[redirects]]
-  from = "/dossier/*"
-  to = "/404"
-  status = 404
 
 # Nevari client proposal (served at /nevari/). Keep it out of search indexes:
 # it contains commercial terms and must not be indexable.
@@ -59,3 +57,29 @@
   for = "/nevari/vendor/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# ---------------------------------------------------------------------------
+# Redirects. ORDER MATTERS: specific rules must come before the SPA catch-all.
+# Netlify serves real files first, so everything under public/ (lp, geo-audit,
+# audit, case, nevari, takk.html, not-a-fit.html, css, js, images) always wins
+# over these rewrites.
+# ---------------------------------------------------------------------------
+
+# Visibility Dossier SPA fallback: unknown /audit/* paths serve its app shell
+[[redirects]]
+  from = "/audit/*"
+  to = "/audit/index.html"
+  status = 200
+
+# Legacy landing page (moved from / to /lp): unknown /lp/* paths serve it
+[[redirects]]
+  from = "/lp/*"
+  to = "/lp/index.html"
+  status = 200
+
+# React SPA fallback — deep links like /results must serve the app shell.
+# MUST stay last.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
