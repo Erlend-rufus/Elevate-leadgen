@@ -65,14 +65,14 @@ export default function FinalCta() {
         </p>
         <h2 className="mt-8 font-serif text-[clamp(2.8rem,5.4vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.025em]">
           <span className="mask-line">
-            <span className="mask-inner fc-line">Half your buyers already asked.</span>
+            <span className="mask-inner fc-line">Your buyers are already asking.</span>
           </span>
           <span className="mask-line">
             <span className="mask-inner fc-line italic text-teal">What did the AI say about you?</span>
           </span>
         </h2>
         <p className="mt-8 max-w-[48ch] text-[1.125rem] leading-[1.65] text-paper-on-navy/70">
-          Find out in 48 hours. Free audit, fixed scope, report yours to keep.
+          Free audit, fixed scope, findings yours to keep either way.
         </p>
         <div className="fc-btn relative mt-12 flex items-center gap-6">
           <a

@@ -30,11 +30,11 @@ const CHIPS: Chip[] = [
     ],
   },
   {
-    q: 'B2B SaaS onboarding tools?',
+    q: 'IT support for a growing accountancy firm?',
     answer: [
-      '1. Northbeam IT — managed onboarding packages',
-      '2. BrightByte — fast-growing, competitive pricing',
-      '3. Onboardly — purpose-built platform',
+      '1. Northbeam IT — accountancy-sector clients',
+      '2. BrightByte — responsive helpdesk, London',
+      '3. Fieldstone IT — mid-market specialists',
     ],
   },
 ]
@@ -107,7 +107,7 @@ function PromptSimulator({ started }: { started: boolean }) {
     <div className="hero-console relative">
       <ConsoleCard
         title="QUERY LOG — LIVE INTERROGATION"
-        footer="Simulated answer. Your audit runs 50+ real queries across 5 platforms."
+        footer="Simulated answer. Your audit shows how AI assistants really answer your buyers' questions."
         className="relative transition-all duration-300 ease-snap hover:-translate-y-1 hover:shadow-[10px_10px_0_rgba(5,23,41,.45)]"
         bodyClassName="px-4 py-4"
       >
@@ -279,7 +279,7 @@ export default function Hero() {
         aria-hidden="true"
         className="writing-vertical absolute left-16 top-40 hidden font-mono text-[0.72rem] tracking-[0.24em] text-ink-soft xl:block"
       >
-        LONDON · MANCHESTER · BIRMINGHAM
+        FOR UK IT &amp; MSP FIRMS
       </p>
 
       <div className="mx-auto grid min-h-[calc(100dvh-72px)] max-w-[1200px] grid-cols-1 items-center gap-12 px-6 pb-20 pt-[88px] lg:grid-cols-12 lg:gap-8 lg:px-12">
@@ -307,7 +307,7 @@ export default function Hero() {
           </h1>
 
           <p className="hero-sub mt-8 max-w-[56ch] text-[1.125rem] leading-[1.65] text-ink-soft">
-            50% of B2B buyers ask AI before they ask Google. Get your free GEO audit and see if ChatGPT, Gemini and
+            More and more buyers ask AI before they ask Google. Get your free GEO audit and see if ChatGPT, Gemini and
             Perplexity know you exist — or if they're{' '}
             <em className="font-serif italic text-ink">sending your prospects to competitors.</em>
           </p>
@@ -331,7 +331,7 @@ export default function Hero() {
           </div>
 
           <p className="hero-proof mt-8 font-mono text-[12px] uppercase tracking-[0.14em] text-ink-soft">
-            48-HOUR TURNAROUND · NO CARD REQUIRED · UNSUBSCRIBE ANYTIME
+            FREE AUDIT · NO CARD REQUIRED · UNSUBSCRIBE ANYTIME
           </p>
         </div>
 

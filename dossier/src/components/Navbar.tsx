@@ -9,7 +9,6 @@ const NAV_LINKS = [
   { label: 'The Problem', hash: '#exhibit-a' },
   { label: 'What You Get', hash: '#exhibit-c' },
   { label: 'How It Works', hash: '#exhibit-d' },
-  { label: 'Results', hash: '#exhibit-e' },
   { label: 'FAQ', hash: '#faq' },
 ]
 
@@ -218,7 +217,7 @@ export default function Navbar() {
                   Get My Free Audit →
                 </a>
                 <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.18em] text-paper-on-navy/60">
-                  hello@elevatemarketing.co.uk · CASE FILE Nº 001
+                  post@elevatemarketing.no · CASE FILE Nº 001
                 </p>
               </motion.div>
             </nav>

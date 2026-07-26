@@ -12,20 +12,20 @@ const STEPS = [
   {
     n: '02',
     title: 'We run the audit',
-    body: 'Within 48 hours your business has been put through 50+ buyer-style queries across five AI platforms. Every answer logged.',
-    chip: '48 HOURS',
+    body: 'We put the questions your buyers actually ask to the major AI platforms and log every answer — how you are described, where you appear, and where you are absent.',
+    chip: 'READY QUICKLY',
   },
   {
     n: '03',
-    title: 'Receive your report',
-    body: 'A plain-English PDF: your Visibility Score, the benchmark, and the 90-day plan. Yours to keep, whatever happens next.',
-    chip: 'YOURS TO KEEP',
+    title: 'Walk through the findings',
+    body: 'A free 30-minute call. We go through what we found and answer anything. The exact timing depends on when you book.',
+    chip: '30 MIN · FREE',
   },
   {
     n: '04',
-    title: 'Book your walkthrough',
-    body: 'A free 30-minute call. We walk you through the findings and answer anything. No obligation, no hard sell.',
-    chip: '30 MIN · FREE',
+    title: 'Keep the findings',
+    body: "The findings are yours to keep, whatever happens next. If we're not the right people to fix what we find, we'll say so.",
+    chip: 'YOURS TO KEEP',
   },
 ]
 

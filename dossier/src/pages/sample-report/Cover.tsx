@@ -5,10 +5,10 @@ import { gsap, useGSAP, prefersReducedMotion } from '@/lib/gsap'
 
 const META_ROWS: [string, string][] = [
   ['SUBJECT', 'COMPANY X LTD (MSP, MANCHESTER)'],
-  ['DATE', 'JANUARY 2026'],
+  ['STATUS', 'ILLUSTRATIVE EXAMPLE'],
   ['EXAMINER', 'ELEVATE MARKETING, GEO UNIT'],
-  ['SCOPE', '52 QUERIES × 5 PLATFORMS'],
-  ['TURNAROUND', '41 HOURS'],
+  ['SCOPE', 'BUYER-STYLE QUERIES, MAJOR AI PLATFORMS'],
+  ['DELIVERY', 'WALKTHROUGH CALL'],
 ]
 
 const TEASERS = [
@@ -96,7 +96,7 @@ export default function Cover() {
           GEO AUDIT REPORT
         </p>
         <p className="sr-folio-cell border-b border-line-paper px-5 py-2.5 text-center sm:border-b-0 sm:border-r">
-          REF: GEO-26-0147
+          REF: GEO-26-SAMPLE
         </p>
         <p className="sr-folio-cell px-5 py-2.5 sm:text-right md:px-8">PAGES 01–06</p>
       </div>
@@ -105,7 +105,7 @@ export default function Cover() {
       <div className="grid grid-cols-1 gap-10 px-5 pb-10 pt-10 md:px-8 lg:grid-cols-12 lg:gap-8 lg:pb-14 lg:pt-14">
         <div className="lg:col-span-8">
           <p className="font-mono text-[0.75rem] font-medium uppercase tracking-[0.22em] text-orange-aa">
-            SAMPLE REPORT — ANONYMISED CLIENT DATA
+            SAMPLE REPORT — ILLUSTRATIVE EXAMPLE
           </p>
           <h1 className="mt-5 font-serif text-[clamp(2.4rem,5.4vw,4.25rem)] font-medium leading-[1.02] tracking-[-0.02em] text-ink">
             <span className="mask-line sr-h1-mask">
@@ -122,13 +122,13 @@ export default function Cover() {
                     aria-hidden="true"
                     className="absolute left-1/2 top-full mt-[0.06em] -translate-x-1/2 whitespace-nowrap font-mono text-[10px] font-medium uppercase tracking-[0.18em] text-ink-soft"
                   >
-                    ANONYMISED
+                    FICTIONAL
                   </span>
                   <span
                     role="tooltip"
                     className="pointer-events-none absolute -top-9 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap border border-ink bg-ink px-2.5 py-1.5 font-mono text-[9px] font-medium uppercase tracking-[0.14em] text-paper opacity-0 shadow-[4px_4px_0_rgba(26,26,46,.15)] transition-opacity duration-200 group-hover/xred:opacity-100 group-focus-visible/xred:opacity-100"
                   >
-                    ANONYMISED — CLIENT DATA
+                    ILLUSTRATIVE EXAMPLE
                   </span>
                 </span>{' '}
                 Ltd.
@@ -136,9 +136,9 @@ export default function Cover() {
             </span>
           </h1>
           <p className="sr-cover-sub mt-6 max-w-[60ch] text-[1.125rem] leading-[1.65] text-ink-soft">
-            A managed IT service provider in Manchester. 34 staff, £4.1m turnover, strong Google rankings — and, as of
-            this audit, effectively invisible to every major AI platform. This is the report they received, reproduced
-            in full.
+            A fictional managed IT service provider in Manchester, built as a worked example: strong Google rankings —
+            and effectively invisible to every major AI platform. This is what your report looks like, page for page,
+            with invented data throughout.
           </p>
         </div>
 

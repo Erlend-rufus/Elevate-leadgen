@@ -5,9 +5,9 @@ import { cn } from '@/lib/utils'
 export const TOC_ITEMS = [
   { id: 'report-summary', index: '01', label: 'Executive Summary' },
   { id: 'report-platforms', index: '02', label: 'Platform Results' },
-  { id: 'report-benchmark', index: '03', label: 'Competitor Benchmark' },
+  { id: 'report-benchmark', index: '03', label: 'Who Appears Instead' },
   { id: 'report-findings', index: '04', label: 'Key Findings' },
-  { id: 'report-plan', index: '05', label: 'The 90-Day Plan' },
+  { id: 'report-plan', index: '05', label: 'The Fixes' },
   { id: 'report-next-step', index: '06', label: 'Your Next Step' },
 ] as const
 

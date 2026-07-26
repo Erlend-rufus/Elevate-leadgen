@@ -7,29 +7,29 @@ import { gsap, useGSAP, prefersReducedMotion } from '@/lib/gsap'
 const CARDS = [
   {
     file: 'FILE 01',
-    stamp: '48H',
+    stamp: 'FINDINGS',
     stampColor: 'orange' as const,
-    title: 'The 48-Hour Analysis',
-    body: 'We interrogate five AI platforms — ChatGPT, Gemini, Perplexity, Copilot and Google AI Overviews — with the questions your buyers actually ask. Every mention, omission and misstatement, documented.',
-    meta: '5 PLATFORMS · 50+ QUERIES · EVERY ANSWER LOGGED',
+    title: 'How AI Describes You Today',
+    body: 'We put the questions your buyers actually ask to ChatGPT, Gemini, Perplexity, Copilot and Google AI Overviews — and document how they describe your firm, and whether you appear at all.',
+    meta: 'EVERY MENTION · EVERY OMISSION · EVERY MISSTATEMENT',
     rotate: -3,
   },
   {
     file: 'FILE 02',
-    stamp: 'BENCHMARK',
+    stamp: 'GAPS',
     stampColor: 'ink' as const,
-    title: 'The Competitor Benchmark',
-    body: "See exactly who the AIs recommend instead of you, how often, and what they're doing that you're not. A ranked mention-share table — no guesswork.",
-    meta: 'MENTION SHARE · SENTIMENT · SOURCE CITATIONS',
+    title: 'The Gaps Keeping You Out',
+    body: 'See who the AIs name when buyers ask in your area or niche, and what keeps your firm out of the answers. Documented, not guessed.',
+    meta: 'WHO APPEARS · WHERE YOU ARE ABSENT · WHY',
     rotate: 0,
   },
   {
     file: 'FILE 03',
-    stamp: '90 DAYS',
+    stamp: 'FIXES',
     stampColor: 'teal-aa' as const,
-    title: 'The 90-Day Action Plan',
-    body: 'A prioritised roadmap from invisible to recommended: the citations to earn, the facts to correct, the content AI is actually looking for. Ordered by impact, written in plain English.',
-    meta: 'PRIORITISED · PLAIN ENGLISH · NO RETAINER REQUIRED',
+    title: 'What to Fix First',
+    body: 'A prioritised list of fixes, in plain English: the facts to correct, the sources to earn, and where to start. Ordered by impact.',
+    meta: 'PRIORITISED · PLAIN ENGLISH · YOURS TO KEEP',
     rotate: 3,
   },
 ]
@@ -100,8 +100,8 @@ export default function ExhibitC() {
           </div>
           <div className="mt-8 lg:col-span-5 lg:mt-2 lg:text-right">
             <p className="text-[1.125rem] leading-[1.65] text-ink-soft lg:ml-auto lg:max-w-[42ch]">
-              A free, fixed-scope audit. Three documents, one picture: whether AI can see you, who it sees instead,
-              and how to fix it.
+              A free, fixed-scope audit. One picture: how AI describes you today, who it names instead,
+              and what to fix first.
             </p>
           </div>
         </div>
@@ -127,10 +127,10 @@ export default function ExhibitC() {
         {/* Secondary CTA banner */}
         <div className="ec-banner mt-12 flex flex-col items-start gap-5 border border-ink/60 bg-paper-2 px-6 py-6 md:flex-row md:items-center md:justify-between md:px-8">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-ink-soft">
-            EXHIBIT C.1 — PROOF IT'S REAL
+            EXHIBIT C.1 — SEE IT FIRST
           </p>
           <p className="font-serif text-[1.15rem] italic leading-snug text-ink md:max-w-[38ch]">
-            Read a complete anonymised audit before you commit two minutes.
+            See exactly what your audit findings look like before you commit two minutes.
           </p>
           <Link
             to="/sample-report"

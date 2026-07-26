@@ -17,7 +17,7 @@ type Phase = {
 
 const PHASES: Phase[] = [
   {
-    days: 'DAYS 0–30',
+    days: 'FIRST',
     name: 'STOP THE BLEEDING',
     actions: [
       {
@@ -41,7 +41,7 @@ const PHASES: Phase[] = [
     ],
   },
   {
-    days: 'DAYS 31–60',
+    days: 'NEXT',
     name: 'GET LISTED WHERE AI LOOKS',
     actions: [
       {
@@ -65,7 +65,7 @@ const PHASES: Phase[] = [
     ],
   },
   {
-    days: 'DAYS 61–90',
+    days: 'THEN',
     name: 'EARN THE RECOMMENDATION',
     actions: [
       {
@@ -139,27 +139,15 @@ export default function Plan() {
         },
       )
 
-      // Projection note underlines itself (2px teal draw)
-      gsap.fromTo(
-        '.srp-underline',
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: 0.6,
-          ease: 'wipe',
-          transformOrigin: 'left center',
-          scrollTrigger: { trigger: '.srp-projection', start: 'top 80%', once: true },
-        },
-      )
     },
     { scope: root },
   )
 
   return (
-    <section ref={root} id="report-plan" data-nav="paper" aria-label="The 90-day plan" className="border-t border-line-paper px-5 py-16 md:px-8 lg:py-24">
-      <SectionHeader index="05" title="From invisible to recommended in 90 days" />
+    <section ref={root} id="report-plan" data-nav="paper" aria-label="The fixes" className="border-t border-line-paper px-5 py-16 md:px-8 lg:py-24">
+      <SectionHeader index="05" title="What to fix first, in plain English" />
       <p className="mt-6 max-w-[62ch] leading-[1.65] text-ink-soft">
-        Every action prioritised by expected impact on mention share. No retainer required — Company X's team can
+        Every action prioritised by expected impact. No retainer required — Company X's team can
         execute in-house, or we can help.
       </p>
 
@@ -202,14 +190,6 @@ export default function Plan() {
         ))}
       </div>
 
-      {/* Projection note */}
-      <p className="srp-projection mt-10 inline-block font-mono text-[12px] leading-[1.6] tracking-[0.04em] text-ink">
-        <span className="relative inline-block pb-1.5">
-          Projected outcome at day 90, based on comparable engagements: mention share{' '}
-          <span className="tnum font-bold">4% → 25–35%</span>.
-          <span aria-hidden="true" className="srp-underline absolute bottom-0 left-0 h-0.5 w-full bg-teal" />
-        </span>
-      </p>
     </section>
   )
 }

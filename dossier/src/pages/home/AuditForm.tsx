@@ -5,10 +5,10 @@ import { gsap, useGSAP, prefersReducedMotion } from '@/lib/gsap'
 import { typeformUrl } from '@/lib/typeform'
 
 const CHECKLIST = [
-  'Visibility Score across 5 AI platforms',
-  'Competitor mention-share table',
-  '90-day prioritised action plan',
-  'Free 30-minute walkthrough call',
+  'How AI assistants describe your firm today',
+  'Whether you appear when buyers ask in your area or niche',
+  'The gaps keeping you out of AI answers',
+  'A prioritised list of fixes, in plain English',
 ]
 
 /** S8 — FORM 06 "Request for Assessment" (paper). The CTA links out to the Typeform. */
@@ -61,7 +61,7 @@ export default function AuditForm() {
             Open your <em className="italic">case file.</em>
           </h2>
           <p className="mt-6 max-w-[52ch] text-[1.125rem] leading-[1.65] text-ink-soft">
-            Free. 48-hour turnaround. Fixed scope. If we're not the right people to fix what we find, we'll say so.
+            Free. Fixed scope. If we're not the right people to fix what we find, we'll say so.
           </p>
           <ul className="af-checklist mt-8 space-y-3.5">
             {CHECKLIST.map((c) => (
@@ -83,7 +83,7 @@ export default function AuditForm() {
               REF: GEO-26-____
             </p>
             <p className="max-w-[46ch] text-[1.05rem] leading-[1.65] text-ink-soft">
-              The request takes two minutes. Your report lands within 48 hours.
+              The request takes two minutes. We go through the findings with you on a short walkthrough call — they are yours to keep either way.
             </p>
             <div className="mt-8">
               <a

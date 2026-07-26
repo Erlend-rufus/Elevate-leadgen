@@ -8,7 +8,7 @@ export type RedactProps = {
   /**
    * wipe: ink bar opens on scroll (or on load when trigger='load').
    * peek: hover/focus slides the bar to 92% width; releases back on leave.
-   * locked: never opens (genuinely anonymised client data).
+   * locked: never opens (details withheld in the illustrative example).
    */
   mode?: 'wipe' | 'peek' | 'locked'
   /** wipe only: open on scroll into view (default) or after `delay` from mount. */
@@ -72,7 +72,7 @@ export default function Redact({
         </span>
         {showNote && (
           <span aria-hidden="true" className="ml-2 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft">
-            ANONYMISED — CLIENT DATA
+            WITHHELD — ILLUSTRATIVE
           </span>
         )}
       </span>
