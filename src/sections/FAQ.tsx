@@ -5,7 +5,8 @@ import { faq } from '@/content'
 /** FAQ that removes buying barriers — pricing, lock-in, timelines. */
 export function FAQ() {
   return (
-    <section className="section-pad">
+    // id="faq": deep-link target — the /audit/ funnel links to /#faq
+    <section id="faq" className="section-pad">
       <div className="mx-auto max-w-3xl px-5 sm:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-3xl font-bold leading-tight tracking-[-0.02em] text-white sm:text-4xl lg:text-5xl">
