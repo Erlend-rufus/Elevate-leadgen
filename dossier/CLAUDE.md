@@ -8,7 +8,7 @@ Your job going forward: deploy it, wire the remaining integrations, and iterate 
 ## 1. What this is
 
 Campaign site for **Elevate Marketing's free GEO (Generative Engine Optimization) Audit** aimed at UK IT companies
-(MSPs, B2B SaaS, cybersecurity). Art direction: a forensic case file / evidence dossier — warm paper, redaction bars
+(MSPs, IT support, cybersecurity — 2 to 50 people; B2B SaaS is NOT in the audience, the shared Typeform disqualifies it). Art direction: a forensic case file / evidence dossier — warm paper, redaction bars
 that wipe open on scroll, rubber stamps, mono examiner's notes, navy "interrogation room" console panels where AI
 answers type out live. **Deliberately anti-generic-SaaS**: no purple gradients, no glassmorphism, no stock imagery.
 

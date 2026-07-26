@@ -11,7 +11,7 @@ const CLAUSES: LegalClause[] = [
   {
     n: 1,
     title: 'The service',
-    body: 'Elevate Marketing Ltd ("we") provides a free GEO (Generative Engine Optimisation) audit: a fixed-scope analysis of how selected AI platforms — including ChatGPT, Gemini, Perplexity, Copilot and Google AI Overviews — mention, describe and recommend your business, delivered as a written report within a target of 48 hours of a complete request.',
+    body: 'EngeCo AS, trading as Elevate Marketing ("we"), provides a free GEO (Generative Engine Optimisation) audit: a fixed-scope analysis of how selected AI platforms — including ChatGPT, Gemini, Perplexity, Copilot and Google AI Overviews — mention, describe and recommend your business, with the findings presented on a short walkthrough call and yours to keep.',
   },
   {
     n: 2,
@@ -42,7 +42,7 @@ const CLAUSES: LegalClause[] = [
   {
     n: 6,
     title: 'Liability',
-    body: 'Nothing excludes liability that can\'t be excluded by law (including for death or personal injury caused by negligence, or fraud). Otherwise: the free audit is provided "as is"; to the extent permitted by law we exclude implied warranties and are not liable for indirect or consequential loss; our aggregate liability in connection with the free audit is limited to £100.',
+    body: 'Nothing excludes liability that can\'t be excluded by law (including for death or personal injury caused by negligence, or fraud). Otherwise: the free audit is provided "as is"; to the extent permitted by law we exclude implied warranties and are not liable for indirect or consequential loss; our aggregate liability in connection with the free audit is limited to the amount you paid for it, which is nil.',
   },
   {
     n: 7,
@@ -57,7 +57,7 @@ const CLAUSES: LegalClause[] = [
   {
     n: 9,
     title: 'Governing law',
-    body: "England & Wales. Courts of England & Wales have exclusive jurisdiction. Contact first: hello@elevatemarketing.co.uk — we'd rather sort things out directly.",
+    body: "England & Wales. Courts of England & Wales have exclusive jurisdiction. Contact first: post@elevatemarketing.no — we'd rather sort things out directly.",
   },
 ]
 
@@ -68,16 +68,16 @@ export default function Terms() {
         <title>Terms of Service — Elevate Marketing</title>
         <meta
           name="description"
-          content="The terms governing use of elevatemarketing.co.uk and the free GEO audit service offered by Elevate Marketing Ltd."
+          content="The terms governing use of this website and the free GEO audit service offered by Elevate Marketing (EngeCo AS)."
         />
-        <meta name="robots" content="index,follow" />
-        <link rel="canonical" href="https://elevatemarketing.co.uk/terms" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://it.getelevateleads.com/audit/terms" />
         <meta property="og:title" content="Terms of Service — Elevate Marketing" />
         <meta
           property="og:description"
-          content="The terms governing use of elevatemarketing.co.uk and the free GEO audit service offered by Elevate Marketing Ltd."
+          content="The terms governing use of this website and the free GEO audit service offered by Elevate Marketing (EngeCo AS)."
         />
-        <meta property="og:url" content="https://elevatemarketing.co.uk/terms" />
+        <meta property="og:url" content="https://it.getelevateleads.com/audit/terms" />
       </Helmet>
       <LegalDocument
         fileLabel="FILE — TERMS OF SERVICE"
@@ -87,7 +87,7 @@ export default function Terms() {
         title="Terms of Service"
         meta={[
           { label: 'LAST UPDATED: 6 JANUARY 2026' },
-          { label: 'APPLIES TO: ELEVATEMARKETING.CO.UK + FREE GEO AUDIT' },
+          { label: 'APPLIES TO: THIS WEBSITE + FREE GEO AUDIT' },
         ]}
         preface="The short version: the audit really is free, the report is yours to keep, we do our best to make it accurate, and we can't promise specific commercial outcomes. Details below."
         clauses={CLAUSES}

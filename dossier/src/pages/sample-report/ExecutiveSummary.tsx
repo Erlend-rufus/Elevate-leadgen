@@ -142,10 +142,10 @@ export default function ExecutiveSummary() {
               className="sr-gauge group relative border border-ink/70 bg-paper-2/40 px-5 pb-6 pt-5"
               tabIndex={0}
               role="img"
-              aria-label={`Visibility Score gauge: ${SCORE} out of 100, in the “at risk” zone. Aggregate across 5 platforms and 52 queries. Per-platform: ChatGPT 18, Gemini 27, Perplexity 31, Copilot 19, AI Overviews 21.`}
+              aria-label={`Illustrative visibility gauge: ${SCORE} out of 100, in the “at risk” zone. Example data for a fictional firm. Per-platform: ChatGPT 18, Gemini 27, Perplexity 31, Copilot 19, AI Overviews 21.`}
             >
               <p className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-ink-soft">
-                EXHIBIT 01-A — VISIBILITY SCORE
+                EXHIBIT 01-A — VISIBILITY (ILLUSTRATIVE)
               </p>
 
               {/* Hover tooltip: per-platform mini-scores */}
@@ -208,11 +208,11 @@ export default function ExecutiveSummary() {
               <div className="-mt-5 text-center">
                 <span className="sr-gauge-num tnum font-serif text-[3.5rem] font-medium leading-none text-ink">0</span>
                 <span className="ml-2 font-mono text-[11px] font-medium tracking-[0.18em] text-ink-soft">
-                  /100 VISIBILITY SCORE
+                  /100 VISIBILITY
                 </span>
               </div>
               <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.16em] text-ink-soft/80">
-                AGGREGATE ACROSS 5 PLATFORMS · 52 QUERIES
+                ILLUSTRATIVE EXAMPLE — INVENTED DATA
               </p>
             </div>
           </div>

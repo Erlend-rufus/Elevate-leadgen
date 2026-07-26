@@ -86,11 +86,11 @@ export default function NextStep() {
                 <span className="mask-inner srn-line">This is Company X's file.</span>
               </span>
               <span className="mask-line">
-                <span className="mask-inner srn-line italic text-teal">Yours takes 48 hours.</span>
+                <span className="mask-inner srn-line italic text-teal">Yours is a two-minute request away.</span>
               </span>
             </h2>
             <p className="mt-6 max-w-[58ch] text-[1.125rem] leading-[1.65] text-paper-on-navy/70">
-              Free, fixed scope, report yours to keep either way. If your Visibility Score is higher than 23, we'll
+              Free, fixed scope, findings yours to keep either way. If AI already describes you well, we'll
               tell you that too.
             </p>
           </div>

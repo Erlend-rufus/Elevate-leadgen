@@ -6,22 +6,23 @@
 
     <!-- Primary SEO (home defaults; per-page meta managed by react-helmet-async) -->
     <title>Is Your IT Business Invisible to ChatGPT? | Free GEO Audit — Elevate Marketing</title>
-    <meta name="description" content="50% of B2B buyers ask AI before they ask Google. Get a free 48-hour GEO audit: see if ChatGPT, Gemini and Perplexity know you exist — or send prospects to competitors." />
-    <link rel="canonical" href="https://elevatemarketing.co.uk/" />
+    <meta name="description" content="More and more buyers start their search in AI tools. Get a free GEO audit and see how ChatGPT, Gemini and Copilot describe your firm — and what to fix first." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://it.getelevateleads.com/audit/" />
 
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Elevate Marketing" />
     <meta property="og:title" content="Is Your IT Business Invisible to ChatGPT? | Free GEO Audit — Elevate Marketing" />
-    <meta property="og:description" content="50% of B2B buyers ask AI before they ask Google. Get a free 48-hour GEO audit: see if ChatGPT, Gemini and Perplexity know you exist — or send prospects to competitors." />
-    <meta property="og:url" content="https://elevatemarketing.co.uk/" />
-    <meta property="og:image" content="https://elevatemarketing.co.uk/og-image.png" />
+    <meta property="og:description" content="More and more buyers start their search in AI tools. Get a free GEO audit and see how ChatGPT, Gemini and Copilot describe your firm — and what to fix first." />
+    <meta property="og:url" content="https://it.getelevateleads.com/audit/" />
+    <meta property="og:image" content="https://it.getelevateleads.com/audit/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Is Your IT Business Invisible to ChatGPT? | Free GEO Audit — Elevate Marketing" />
-    <meta name="twitter:description" content="50% of B2B buyers ask AI before they ask Google. Get a free 48-hour GEO audit: see if ChatGPT, Gemini and Perplexity know you exist — or send prospects to competitors." />
-    <meta name="twitter:image" content="https://elevatemarketing.co.uk/og-image.png" />
+    <meta name="twitter:description" content="More and more buyers start their search in AI tools. Get a free GEO audit and see how ChatGPT, Gemini and Copilot describe your firm — and what to fix first." />
+    <meta name="twitter:image" content="https://it.getelevateleads.com/audit/og-image.png" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/audit/favicon.svg" />
@@ -34,23 +35,32 @@
       rel="stylesheet"
     />
 
-    <!-- JSON-LD: Organization (sitewide) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Elevate Marketing",
-      "url": "https://elevatemarketing.co.uk",
-      "logo": "https://elevatemarketing.co.uk/logo.svg",
-      "email": "hello@elevatemarketing.co.uk",
-      "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" },
-      "sameAs": []
-    }
+    <!-- JSON-LD deliberately omitted: the page is noindexed campaign material,
+         so structured data has no value and only duplicates claims to maintain. -->
+
+    <!-- Meta Pixel Code (PageView only — identical to the rest of the funnel).
+         CRITICAL: no Lead/LeadGEOUK events anywhere in this SPA. LeadGEOUK fires
+         exclusively on /geo-audit/thanks, which the shared Typeform redirects to. -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1466790598245604');
+    fbq('track', 'PageView');
     </script>
-    <script type="module" crossorigin src="/audit/assets/index-BMf5Yiyw.js"></script>
-    <link rel="stylesheet" crossorigin href="/audit/assets/index-CotPX5k8.css">
+    <!-- End Meta Pixel Code -->
+    <script type="module" crossorigin src="/audit/assets/index-BPNjlS1b.js"></script>
+    <link rel="stylesheet" crossorigin href="/audit/assets/index-BbOUQMJe.css">
   </head>
   <body>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1466790598245604&ev=PageView&noscript=1"
+    /></noscript>
     <div id="root"></div>
   </body>
 </html>

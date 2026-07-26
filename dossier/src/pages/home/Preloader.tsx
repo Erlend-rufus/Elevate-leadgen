@@ -3,7 +3,7 @@ import { PRELOADER_EXIT_EVENT, SEEN_KEY, preloaderWillShow } from '@/lib/preload
 
 export { PRELOADER_EXIT_EVENT }
 
-const LINES = ['ELEVATE MARKETING — GEO UNIT', 'OPENING CASE FILE Nº 001 …', 'QUERYING 5 AI PLATFORMS ']
+const LINES = ['ELEVATE MARKETING — GEO UNIT', 'OPENING CASE FILE Nº 001 …', 'QUERYING THE AI ASSISTANTS ']
 
 /** S0 — "Opening the file": mono boot log, wipes up ≤1.1s, skipped on repeat/reduced motion. */
 export default function Preloader() {
