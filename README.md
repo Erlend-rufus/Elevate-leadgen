@@ -1,4 +1,4 @@
-# Elevate Marketing — getleadelevate.com
+# Elevate Marketing — getelevateleads.com
 
 Marketing site for Elevate Marketing's UK division. One job: convert warm
 traffic into **booked strategy calls** and build trust in the UK market.

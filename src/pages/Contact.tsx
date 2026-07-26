@@ -9,7 +9,7 @@ import { contact } from '@/content'
 export default function Contact() {
   usePageMeta(
     'Contact — Elevate Marketing',
-    'Book a free strategy call directly into our calendar, or email hello@getleadelevate.com — a senior marketer replies within one working day.'
+    'Book a free strategy call directly into our calendar, or email hello@getelevateleads.com — a senior marketer replies within one working day.'
   )
 
   const icons = [Mail, Phone, MapPin]

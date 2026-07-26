@@ -8,10 +8,10 @@
 
 export const site = {
   name: 'Elevate Marketing',
-  domain: 'getleadelevate.com',
-  url: 'https://getleadelevate.com',
+  domain: 'getelevateleads.com',
+  url: 'https://getelevateleads.com',
   tagline: 'The transparent growth partner for UK service businesses.',
-  email: 'hello@getleadelevate.com',
+  email: 'hello@getelevateleads.com',
   // [REPLACE] UK phone number (virtual office is fine to start)
   phone: '+44 20 7946 0000',
   // [REPLACE] Registered UK office address

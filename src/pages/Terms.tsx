@@ -8,7 +8,7 @@ export default function Terms() {
     <LegalPage
       title="Terms of Service"
       metaTitle="Terms of Service — Elevate Marketing"
-      metaDescription="The terms that govern use of getleadelevate.com and the working principles for engagements with Elevate Marketing."
+      metaDescription="The terms that govern use of getelevateleads.com and the working principles for engagements with Elevate Marketing."
       updated="22 July 2026"
       intro={`These terms govern your use of ${site.domain} and set out the working principles for engagements with ${site.name}. Specific scopes, deliverables and fees are agreed per client in a written statement of work.`}
       sections={[
