@@ -5,19 +5,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
-        brand: {
-          cyan: '#00A3D6',
-          mid: '#0080C4',
-          deep: '#006ABA',
-          navy: '#02009A',
-        },
-        'bg-deep': '#04041C',
-        surface: '#0B0B2E',
-        'surface-2': '#12123D',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

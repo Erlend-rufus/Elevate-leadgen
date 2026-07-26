@@ -1,53 +1,37 @@
-import { useEffect } from 'react'
-import { faq, services, site } from '@/content'
+import type { ReactNode } from 'react';
+import { site } from '@/content/site';
 
 /**
- * Injects FAQPage + services structured data into <head> on the home page.
- * Matches the visible FAQ/service copy exactly (Google requires this) and
- * makes answers eligible for rich results in search.
+ * Reusable JSON-LD script tag for any page.
  */
-export function HomeStructuredData() {
-  useEffect(() => {
-    const id = 'ld-home'
-    if (document.getElementById(id)) return
+export function JsonLd({ data }: { data: Record<string, unknown> | Record<string, unknown>[] }): ReactNode {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
 
-    const data = [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faq.items.map((item) => ({
-          '@type': 'Question',
-          name: item.q,
-          acceptedAnswer: { '@type': 'Answer', text: item.a },
-        })),
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'ItemList',
-        name: 'Services',
-        itemListElement: services.items.map((s, i) => ({
-          '@type': 'ListItem',
-          position: i + 1,
-          item: {
-            '@type': 'Service',
-            name: s.name,
-            description: s.outcome,
-            provider: { '@type': 'ProfessionalService', name: site.name, url: site.url },
-            areaServed: 'GB',
-          },
-        })),
-      },
-    ]
-
-    const script = document.createElement('script')
-    script.id = id
-    script.type = 'application/ld+json'
-    script.textContent = JSON.stringify(data)
-    document.head.appendChild(script)
-    return () => {
-      document.getElementById(id)?.remove()
-    }
-  }, [])
-
-  return null
+/**
+ * Home page structured data: Organization + WebSite (design.md §2).
+ * FAQPage schema is rendered separately by the home FAQ section.
+ */
+export default function HomeStructuredData() {
+  const data = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: site.brand,
+      url: site.url,
+      email: site.email,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: site.brand,
+      url: site.url,
+    },
+  ];
+  return <JsonLd data={data} />;
 }
