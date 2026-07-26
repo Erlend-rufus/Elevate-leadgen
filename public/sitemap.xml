@@ -17,6 +17,10 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://getelevateleads.com/book</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://getelevateleads.com/privacy</loc>
     <priority>0.2</priority>
   </url>

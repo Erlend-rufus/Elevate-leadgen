@@ -17,7 +17,7 @@ export function CtaButton({ size = 'md', className = '', label = cta.primary }: 
 
   return (
     <a
-      href={site.bookingUrl}
+      href={site.bookingDirectUrl}
       target="_blank"
       rel="noopener noreferrer"
       className={`group inline-flex items-center gap-2 rounded-xl bg-brand-gradient font-semibold text-white shadow-lg shadow-brand-navy/30 transition-all hover:shadow-brand-cyan/25 hover:brightness-110 ${sizing} ${className}`}

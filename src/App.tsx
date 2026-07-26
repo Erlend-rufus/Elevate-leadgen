@@ -11,6 +11,7 @@ const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
+const Book = lazy(() => import('./pages/Book'))
 
 /**
  * Handles three scroll cases:
@@ -57,6 +58,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/book" element={<Book />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </Suspense>

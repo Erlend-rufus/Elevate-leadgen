@@ -1,20 +1,24 @@
+import { useEffect } from 'react'
 import { site } from '@/content'
 import { ArrowUpRight, CalendarDays, Check, Mail } from 'lucide-react'
 
-interface BookingEmbedProps {
-  /** Embed height in px */
-  height?: number
-}
+const CALENDLY_SCRIPT = 'https://assets.calendly.com/assets/external/widget.js'
 
 /**
- * Embedded booking widget (Cal.com). The URL lives in content.ts
- * (site.bookingUrl) — swap the placeholder for the real calendar,
- * configured to UK time, and set site.bookingEnabled = true.
- *
- * Until then a designed placeholder holds the space: the page looks
- * finished, and email carries the conversion instead of a blank iframe.
+ * Embedded Calendly booking widget (the real event, brand colours on a
+ * light plate inside the dark card). Falls back to a designed placeholder
+ * if site.bookingEnabled is ever flipped back to false.
  */
-export function BookingEmbed({ height = 640 }: BookingEmbedProps) {
+export function BookingEmbed() {
+  useEffect(() => {
+    if (!site.bookingEnabled) return
+    if (document.querySelector(`script[src="${CALENDLY_SCRIPT}"]`)) return
+    const script = document.createElement('script')
+    script.src = CALENDLY_SCRIPT
+    script.async = true
+    document.body.appendChild(script)
+  }, [])
+
   if (!site.bookingEnabled) {
     return (
       <div className="card-dark relative overflow-hidden p-10 sm:p-14">
@@ -53,17 +57,19 @@ export function BookingEmbed({ height = 640 }: BookingEmbedProps) {
 
   return (
     <div className="card-dark overflow-hidden">
-      <iframe
-        src={site.bookingUrl}
-        title="Book a free strategy call"
-        className="w-full bg-white"
-        style={{ height }}
-        loading="lazy"
-      />
+      {/* Light plate: Calendly renders its own light UI inside our dark card.
+          min-height keeps the plate visible while the widget JS loads. */}
+      <div className="bg-white" style={{ minHeight: '700px' }}>
+        <div
+          className="calendly-inline-widget w-full"
+          data-url={site.bookingUrl}
+          style={{ minWidth: '320px', height: '700px' }}
+        />
+      </div>
       <div className="flex items-center justify-between gap-4 border-t border-subtle px-5 py-3">
         <p className="text-xs text-dim">Calendar not loading?</p>
         <a
-          href={site.bookingUrl}
+          href={site.bookingDirectUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="group inline-flex items-center gap-1 text-xs font-semibold text-brand-cyan hover:opacity-80"

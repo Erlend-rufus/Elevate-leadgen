@@ -19,10 +19,14 @@ export const site = {
   // [REPLACE] Companies House number, if registered
   companyNumber: '',
   // [REPLACE] Cal.com booking link (UK timezone configured in Cal.com)
-  bookingUrl: 'https://cal.com/elevate-marketing/strategy-call',
-  // Flip to true once bookingUrl is the real calendar — until then the site
-  // shows a designed placeholder instead of an empty iframe.
-  bookingEnabled: false,
+  // Real Calendly event for the free strategy call. The URL carries the
+  // embed params (hide details/GDPR banner + brand colours on light bg).
+  bookingUrl: 'https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=00a3d6',
+  // Direct link without embed params — used for buttons that open Calendly
+  // in a new tab rather than embedding it.
+  bookingDirectUrl: 'https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1',
+  // Real Calendly event is connected — the widget embeds everywhere.
+  bookingEnabled: true,
   social: {
     // Only channels actually in use — no template leftovers
     linkedin: 'https://www.linkedin.com/company/elevate-marketing',
@@ -394,6 +398,28 @@ export const about = {
       body: 'Only what works, cut from the noise. We would rather do three things well than ten things adequately.',
     },
   ],
+}
+
+export const bookingPage = {
+  eyebrow: 'FREE STRATEGY CALL',
+  titleLead: 'Growth Assessment',
+  titleGradient: 'for your business.',
+  sub: 'A focused 30-minute call to explore how predictable, transparent growth marketing could work for your business.',
+  coversHeading: "What we'll cover:",
+  covers: [
+    'How we turn ad spend into revenue for service businesses like yours',
+    'What realistic growth looks like for your market, budget and capacity',
+    'An honest read on your current funnel — what is working, what is leaking',
+    'How we work: month to month, no lock-in, full transparency',
+  ],
+  closing: 'No obligation. No hard sell. Just clarity on whether this is a fit.',
+  after: [
+    { step: '01', title: 'Book a slot', body: 'Pick a time that suits you — UK business hours.' },
+    { step: '02', title: 'We audit', body: 'We look at your funnel before the call and bring the numbers.' },
+    { step: '03', title: 'The call', body: '30 minutes with a senior marketer — not a salesperson.' },
+    { step: '04', title: 'Written summary', body: 'Findings and next steps in your inbox within 24 hours.' },
+  ],
+  reassurance: 'Free audit included · No lock-in · Cancel monthly · Senior people only',
 }
 
 export const resultsPage = {
