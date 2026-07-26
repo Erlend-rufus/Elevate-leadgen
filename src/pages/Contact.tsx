@@ -71,7 +71,7 @@ export default function Contact() {
 
           {/* Booking widget embedded — not a contact form */}
           <Reveal delay={0.12}>
-            <BookingEmbed height={700} />
+            <BookingEmbed />
           </Reveal>
         </section>
       </main>

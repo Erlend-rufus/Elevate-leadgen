@@ -34,7 +34,7 @@ src/components/         ArrowMotif (signature dotted gradient arrow),
 src/sections/           Header, Hero, ProofBar, Problem, Services, Process,
                         ResultsTeaser, Testimonials, AboutTeaser, FAQ,
                         FinalCTA, Footer
-src/pages/              Home (/) · Results · About · Contact · Privacy · Terms
+src/pages/              Home (/) · Results · About · Contact · Privacy · Terms · Book (/book)
 public/                 favicon.svg + PNGs (arrow motif), og-image.jpg,
                         logo-white.png, robots.txt, sitemap.xml
 ```
@@ -42,7 +42,10 @@ public/                 favicon.svg + PNGs (arrow motif), og-image.jpg,
 ## Before launch checklist
 
 - [ ] Replace all `[REPLACE]` items in `src/content.ts`
-- [ ] Set the real Cal.com link (`site.bookingUrl`) — UK timezone — and flip `site.bookingEnabled` to `true`
+- [x] Real Calendly event connected (`site.bookingUrl`, `bookingEnabled: true`) — UK timezone.
+      Booking surfaces: FinalCTA + /contact (embedded widget) and /book
+      (dedicated conversion landing page). `site.bookingDirectUrl` is the
+      plain link used by CTA buttons that open Calendly in a new tab.
 - [ ] Swap `Logo.tsx` for the official SVG logo when delivered
 - [ ] Real team photos (never stock) on /about
 - [ ] GA4 measurement ID in `index.html` + Consent Mode v2, gated behind

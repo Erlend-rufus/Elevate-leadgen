@@ -34,7 +34,7 @@ export function Process() {
 
         <Reveal delay={0.2} className="mt-10 text-center">
           <a
-            href={site.bookingUrl}
+            href={site.bookingDirectUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 text-base font-semibold text-brand-cyan transition-opacity hover:opacity-80"
