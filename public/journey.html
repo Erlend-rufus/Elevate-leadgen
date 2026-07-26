@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Journey — A No-Obligation Strategy Call, Shown Scene by Scene | Elevate Marketing</title>
+  <meta name="description" content="See the whole journey before you say yes — from first ad to compounding growth, in six scenes. Then a no-obligation strategy call: no hard sell, clarity either way." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #04041C; --surface: #0B0B2E; --surface-2: #12123D;
+      --cyan: #00A3D6; --blue: #006ABA; --navy: #02009A;
+      --dim: rgba(255,255,255,.65); --dimmer: rgba(255,255,255,.4);
+      --border: rgba(255,255,255,.08);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:auto; }
+    body { background:var(--bg); color:#fff; font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+    .display { font-family:'Space Grotesk','Inter',sans-serif; letter-spacing:-.02em; }
+    .dim { color:var(--dim); }
+    .grad {
+      background:linear-gradient(90deg,var(--cyan),var(--blue) 55%,var(--navy));
+      -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent; color:transparent;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background:linear-gradient(90deg,var(--cyan),var(--blue) 55%,var(--navy));
+      border-radius:.75rem; font-weight:600; color:#fff; padding:1rem 2rem;
+      text-decoration:none; box-shadow:0 10px 25px -10px rgba(2,0,154,.4);
+      transition:filter .2s;
+    }
+    .btn:hover { filter:brightness(1.1); }
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:1rem; }
+
+    /* ---------- fixed chrome ---------- */
+    #progress { position:fixed; inset:0 0 auto 0; height:3px; z-index:60; pointer-events:none; }
+    #progress .bar { height:100%; background:linear-gradient(90deg,var(--cyan),var(--blue) 55%,var(--navy)); transform-origin:left; transform:scaleX(0); position:relative; }
+    #progress .tip { position:absolute; right:-4px; top:50%; transform:translateY(-50%); opacity:0; }
+
+    header.mini { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:1.1rem 1.5rem; transition:background .3s, backdrop-filter .3s; }
+    header.mini.solid { background:rgba(4,4,28,.75); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
+    .wordmark { display:inline-flex; align-items:flex-end; gap:4px; text-decoration:none; }
+    .wordmark span { font-family:'Space Grotesk',sans-serif; font-size:1.3rem; font-weight:700; letter-spacing:-.03em; color:#fff; }
+
+    #chapters { position:fixed; right:1.1rem; top:50%; transform:translateY(-50%); z-index:50; display:flex; flex-direction:column; gap:.7rem; }
+    #chapters a { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.18); display:block; transition:background .3s, transform .3s; }
+    #chapters a.on { background:var(--cyan); transform:scale(1.35); }
+    @media (max-width:768px) { #chapters { display:none; } }
+
+    /* ---------- scenes ---------- */
+    .scene { min-height:100vh; display:flex; align-items:center; justify-content:center; position:relative; padding:6rem 1.5rem; }
+    .scene-inner { max-width:68rem; width:100%; margin:0 auto; display:grid; gap:3rem; align-items:center; }
+    @media (min-width:900px) { .scene-inner.split { grid-template-columns:1fr 1fr; } }
+    .kicker { font-size:.72rem; font-weight:700; letter-spacing:.18em; color:var(--cyan); text-transform:uppercase; }
+    .scene h2 { font-size:clamp(1.9rem,4.5vw,2.9rem); font-weight:700; line-height:1.1; margin-top:.9rem; }
+    .scene .body { margin-top:1.2rem; font-size:1.05rem; line-height:1.7; max-width:30rem; }
+    .stage { position:relative; }
+    .stage svg { width:100%; height:auto; display:block; }
+
+    /* layers get gentle parallax via JS transform */
+    .layer { will-change:transform; }
+
+    /* ---------- hook ---------- */
+    #hook { text-align:center; flex-direction:column; }
+    #hook h1 { font-size:clamp(2.6rem,7vw,4.6rem); font-weight:700; line-height:1.06; }
+    #hook .sub { margin:1.6rem auto 0; max-width:38rem; font-size:1.15rem; line-height:1.7; }
+    .scroll-cue { position:absolute; bottom:2.2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.5rem; color:var(--dimmer); font-size:.72rem; letter-spacing:.16em; }
+    .scroll-cue .line { width:1px; height:44px; background:linear-gradient(180deg,var(--cyan),transparent); }
+    @keyframes cueDrop { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+    .scroll-cue .line { animation:cueDrop 1.8s ease-in-out infinite; }
+
+    /* ---------- final curve ---------- */
+    @keyframes arrowFlow { to { stroke-dashoffset:-13.1px; } }
+    .arrow-flow { animation:arrowFlow 1.8s linear infinite; }
+
+    /* ---------- outro ---------- */
+    #outro { text-align:center; }
+    #outro h2 { font-size:clamp(2.2rem,6vw,3.8rem); }
+    #cal-wrap { max-width:44rem; margin:2.5rem auto 0; text-align:left; }
+    .cal-plate { background:#fff; min-height:640px; border-radius:1rem 1rem 0 0; overflow:hidden; }
+    .cal-foot { display:flex; align-items:center; justify-content:space-between; gap:1rem; border-top:1px solid var(--border); padding:.85rem 1.25rem; background:var(--surface); border-radius:0 0 1rem 1rem; border:1px solid var(--border); border-top:none; }
+    .cal-foot a { color:var(--cyan); font-size:.75rem; font-weight:600; text-decoration:none; }
+    .cal-foot p { font-size:.75rem; color:var(--dimmer); }
+
+    footer { border-top:1px solid var(--border); padding:1.5rem; text-align:center; font-size:.75rem; color:var(--dim); }
+    footer a { color:var(--cyan); text-decoration:none; }
+
+    .fade { opacity:0; transform:translateY(26px); transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+    .fade.in { opacity:1; transform:none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-cue .line, .arrow-flow { animation:none; }
+      .fade { opacity:1 !important; transform:none !important; transition:none; }
+      .layer { transform:none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress" aria-hidden="true">
+    <div class="bar">
+      <svg class="tip" width="20" height="12" viewBox="0 0 24 14" fill="none">
+        <path d="M 2 12 L 22 2 M 13 1.5 L 22 2 L 20.5 11" stroke="#00A3D6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <header class="mini" id="miniHeader">
+    <a class="wordmark" href="https://getelevateleads.com/" aria-label="Elevate Marketing">
+      <span>elevate</span>
+      <svg viewBox="0 0 64 44" width="26" height="18" fill="none" aria-hidden="true">
+        <defs><linearGradient id="lg-a" x1="0" y1="44" x2="64" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#02009A"/><stop offset="55%" stop-color="#006ABA"/><stop offset="100%" stop-color="#00A3D6"/></linearGradient></defs>
+        <path d="M 6 38 C 22 36, 40 26, 54 8" stroke="url(#lg-a)" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 7"/>
+        <path d="M 46 16 L 54 8 L 44 6" stroke="url(#lg-a)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a class="btn" href="#outro" style="padding:.6rem 1.1rem;font-size:.85rem;">Skip to the call</a>
+  </header>
+
+  <nav id="chapters" aria-label="Journey chapters">
+    <a href="#hook" data-scene="hook" class="on" aria-label="Start"></a>
+    <a href="#scene-ad" data-scene="scene-ad" aria-label="The ad"></a>
+    <a href="#scene-click" data-scene="scene-click" aria-label="The click"></a>
+    <a href="#scene-audit" data-scene="scene-audit" aria-label="The audit"></a>
+    <a href="#scene-workshop" data-scene="scene-workshop" aria-label="The workshop"></a>
+    <a href="#scene-curve" data-scene="scene-curve" aria-label="The curve"></a>
+    <a href="#outro" data-scene="outro" aria-label="Your scene one"></a>
+  </nav>
+
+  <!-- ============ HOOK ============ -->
+  <section class="scene glow" id="hook" style="flex-direction:column;">
+    <div class="fade in" style="max-width:56rem;">
+      <p class="kicker" style="text-align:center;">ELEVATE MARKETING</p>
+      <h1 class="display">Every agency <em style="font-style:normal;" class="grad">tells</em> you their process.<br />We'd rather show you yours.</h1>
+      <p class="sub dim">This is the exact journey our clients take — from the moment our ad crosses their screen to the moment the curve turns. Six scenes. One scroll. No pitch deck.</p>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">
+      <span>SCROLL</span>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 1: THE AD ============ -->
+  <section class="scene" id="scene-ad">
+    <div class="scene-inner split">
+      <div class="fade">
+        <p class="kicker">Scene 01 — Where it starts</p>
+        <h2 class="display">Between two jobs, your customer is scrolling.</h2>
+        <p class="body dim">A workshop owner. A solicitor. A clinic manager. Same phone, same noise — hundreds of posts fighting for one thumb. This is where every growth story actually begins: not with a website, but with three seconds of attention.</p>
+      </div>
+      <div class="stage fade">
+        <svg viewBox="0 0 520 560" fill="none" role="img" aria-label="Illustration: a phone in a hand, our ad glowing in a noisy feed">
+          <defs>
+            <linearGradient id="s1-grad" x1="0" y1="560" x2="520" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#02009A"/><stop offset="55%" stop-color="#006ABA"/><stop offset="100%" stop-color="#00A3D6"/>
+            </linearGradient>
+            <radialGradient id="s1-glow" cx="50%" cy="45%" r="55%">
+              <stop offset="0%" stop-color="rgba(0,163,214,.28)"/><stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+          </defs>
+          <!-- ambient glow behind phone -->
+          <ellipse class="layer" data-depth="0.15" cx="260" cy="270" rx="230" ry="240" fill="url(#s1-glow)"/>
+          <!-- hand silhouette (abstract) -->
+          <path class="layer" data-depth="0.08" d="M 60 560 C 90 470, 150 440, 210 445 L 320 445 C 390 440, 440 480, 460 560 Z" fill="#0B0B2E"/>
+          <!-- phone -->
+          <g class="layer" data-depth="0.2">
+            <rect x="150" y="70" width="220" height="440" rx="34" fill="#04041C" stroke="rgba(255,255,255,.14)" stroke-width="2"/>
+            <rect x="162" y="82" width="196" height="416" rx="24" fill="#0B0B2E"/>
+            <rect x="225" y="92" width="70" height="8" rx="4" fill="rgba(255,255,255,.1)"/>
+            <!-- feed noise -->
+            <rect x="176" y="116" width="168" height="52" rx="10" fill="rgba(255,255,255,.05)"/>
+            <rect x="186" y="128" width="70" height="8" rx="4" fill="rgba(255,255,255,.14)"/>
+            <rect x="186" y="144" width="110" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="176" y="180" width="168" height="52" rx="10" fill="rgba(255,255,255,.05)"/>
+            <rect x="186" y="192" width="90" height="8" rx="4" fill="rgba(255,255,255,.14)"/>
+            <rect x="186" y="208" width="100" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <!-- OUR AD — the glow in the noise -->
+            <g class="ad-pulse">
+              <rect x="176" y="244" width="168" height="98" rx="12" fill="#12123D" stroke="url(#s1-grad)" stroke-width="2"/>
+              <text x="190" y="268" font-family="Space Grotesk,sans-serif" font-size="10" font-weight="700" letter-spacing="1.5" fill="#00A3D6">AD · ELEVATE</text>
+              <text x="190" y="290" font-family="Space Grotesk,sans-serif" font-size="13.5" font-weight="700" fill="#fff">Marketing that pays</text>
+              <text x="190" y="307" font-family="Space Grotesk,sans-serif" font-size="13.5" font-weight="700" fill="#fff">for itself.</text>
+              <path d="M 190 326 C 225 324, 250 316, 285 296" stroke="url(#s1-grad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 6" class="arrow-flow" fill="none"/>
+              <path d="M 278 304 L 285 296 L 274 294" stroke="url(#s1-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </g>
+            <rect x="176" y="354" width="168" height="52" rx="10" fill="rgba(255,255,255,.05)"/>
+            <rect x="186" y="366" width="80" height="8" rx="4" fill="rgba(255,255,255,.14)"/>
+            <rect x="186" y="382" width="105" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="176" y="418" width="168" height="52" rx="10" fill="rgba(255,255,255,.05)"/>
+            <rect x="186" y="430" width="95" height="8" rx="4" fill="rgba(255,255,255,.14)"/>
+            <rect x="186" y="446" width="85" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+          </g>
+          <!-- the tap: pulsing ring on the ad -->
+          <g class="layer" data-depth="0.3">
+            <circle id="tapRing" cx="260" cy="293" r="26" stroke="#00A3D6" stroke-width="2.5" fill="none" opacity="0"/>
+            <circle id="tapDot" cx="260" cy="293" r="7" fill="#00A3D6" opacity="0"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 2: THE CLICK ============ -->
+  <section class="scene" id="scene-click">
+    <div class="scene-inner split">
+      <div class="stage fade" style="order:2;">
+        <svg viewBox="0 0 520 460" fill="none" role="img" aria-label="Illustration: the ad click opens a focused landing page">
+          <defs>
+            <linearGradient id="s2-grad" x1="0" y1="460" x2="520" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#02009A"/><stop offset="55%" stop-color="#006ABA"/><stop offset="100%" stop-color="#00A3D6"/>
+            </linearGradient>
+          </defs>
+          <!-- browser window -->
+          <g class="layer" data-depth="0.12">
+            <rect x="40" y="50" width="440" height="330" rx="16" fill="#0B0B2E" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="40" y="50" width="440" height="40" rx="16" fill="#12123D"/>
+            <circle cx="66" cy="70" r="5" fill="rgba(255,255,255,.18)"/>
+            <circle cx="84" cy="70" r="5" fill="rgba(255,255,255,.18)"/>
+            <circle cx="102" cy="70" r="5" fill="rgba(255,255,255,.18)"/>
+            <rect x="130" y="61" width="240" height="18" rx="9" fill="rgba(255,255,255,.06)"/>
+            <text x="142" y="74" font-family="Inter,sans-serif" font-size="10" fill="rgba(255,255,255,.4)">getelevateleads.com</text>
+            <!-- page content: one promise, one button -->
+            <text x="80" y="140" font-family="Space Grotesk,sans-serif" font-size="24" font-weight="700" fill="#fff">Marketing that</text>
+            <text x="80" y="172" font-family="Space Grotesk,sans-serif" font-size="24" font-weight="700" fill="url(#s2-grad)">pays for itself.</text>
+            <rect x="80" y="196" width="200" height="10" rx="5" fill="rgba(255,255,255,.1)"/>
+            <rect x="80" y="214" width="160" height="10" rx="5" fill="rgba(255,255,255,.07)"/>
+            <rect x="80" y="252" width="190" height="44" rx="10" fill="url(#s2-grad)"/>
+            <text x="104" y="280" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#fff">Book a free strategy call</text>
+            <rect x="80" y="316" width="120" height="8" rx="4" fill="rgba(255,255,255,.08)"/>
+            <rect x="210" y="316" width="120" height="8" rx="4" fill="rgba(255,255,255,.08)"/>
+            <rect x="340" y="316" width="90" height="8" rx="4" fill="rgba(255,255,255,.08)"/>
+          </g>
+          <!-- cursor gliding in -->
+          <g class="layer" data-depth="0.25">
+            <path id="cursor" d="M 0 0 L 0 22 L 6 16 L 10 26 L 14 24 L 10 15 L 18 15 Z" fill="#fff" stroke="#04041C" stroke-width="1.5" transform="translate(430, 380)"/>
+            <path id="cursorTrail" d="M 430 380 C 380 350, 300 320, 185 280" stroke="url(#s2-grad)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0.1 8" fill="none" opacity="0.85"/>
+          </g>
+          <!-- caption chip -->
+          <g class="layer" data-depth="0.18">
+            <rect x="270" y="396" width="210" height="40" rx="20" fill="#12123D" stroke="rgba(0,163,214,.35)"/>
+            <text x="292" y="421" font-family="Inter,sans-serif" font-size="12" fill="#fff">One page. One promise. One button.</text>
+          </g>
+        </svg>
+      </div>
+      <div class="fade" style="order:1;">
+        <p class="kicker">Scene 02 — The click</p>
+        <h2 class="display">One click. No maze.</h2>
+        <p class="body dim">The ad doesn't open a website with fourteen menu items. It opens one page with one promise and one button. Every click we buy has a job to do — and we don't let it get lost on the way.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 3: THE AUDIT ============ -->
+  <section class="scene" id="scene-audit">
+    <div class="scene-inner split">
+      <div class="fade">
+        <p class="kicker">Scene 03 — Before we say a word</p>
+        <h2 class="display">We look at everything first.</h2>
+        <p class="body dim">Ads, search presence, the funnel, the numbers behind them. The audit happens before the call — so the conversation starts with your reality, not our pitch. If something is broken, you'll see it. If something works, we'll say that too.</p>
+      </div>
+      <div class="stage fade">
+        <svg viewBox="0 0 520 500" fill="none" role="img" aria-label="Illustration: audit documents and data tiles assembling into a report">
+          <defs>
+            <linearGradient id="s3-grad" x1="0" y1="500" x2="520" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#02009A"/><stop offset="55%" stop-color="#006ABA"/><stop offset="100%" stop-color="#00A3D6"/>
+            </linearGradient>
+          </defs>
+          <!-- floating data tiles -->
+          <g class="layer" data-depth="0.08">
+            <rect x="30" y="60" width="110" height="70" rx="12" fill="#0B0B2E" stroke="rgba(255,255,255,.1)"/>
+            <text x="46" y="88" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.4)">GOOGLE ADS</text>
+            <rect x="46" y="98" width="60" height="7" rx="3.5" fill="rgba(255,255,255,.16)"/>
+            <rect x="46" y="110" width="40" height="7" rx="3.5" fill="rgba(255,255,255,.08)"/>
+          </g>
+          <g class="layer" data-depth="0.14">
+            <rect x="380" y="40" width="110" height="70" rx="12" fill="#0B0B2E" stroke="rgba(255,255,255,.1)"/>
+            <text x="396" y="68" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.4)">SEARCH</text>
+            <rect x="396" y="78" width="66" height="7" rx="3.5" fill="rgba(255,255,255,.16)"/>
+            <rect x="396" y="90" width="46" height="7" rx="3.5" fill="rgba(255,255,255,.08)"/>
+          </g>
+          <g class="layer" data-depth="0.11">
+            <rect x="392" y="330" width="104" height="66" rx="12" fill="#0B0B2E" stroke="rgba(255,255,255,.1)"/>
+            <text x="406" y="356" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.4)">FUNNEL</text>
+            <rect x="406" y="366" width="58" height="7" rx="3.5" fill="rgba(255,255,255,.16)"/>
+            <rect x="406" y="378" width="38" height="7" rx="3.5" fill="rgba(255,255,255,.08)"/>
+          </g>
+          <g class="layer" data-depth="0.06">
+            <rect x="26" y="330" width="104" height="66" rx="12" fill="#0B0B2E" stroke="rgba(255,255,255,.1)"/>
+            <text x="40" y="356" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.4)">META ADS</text>
+            <rect x="40" y="366" width="54" height="7" rx="3.5" fill="rgba(255,255,255,.16)"/>
+            <rect x="40" y="378" width="42" height="7" rx="3.5" fill="rgba(255,255,255,.08)"/>
+          </g>
+          <!-- centre report -->
+          <g class="layer" data-depth="0.2">
+            <rect x="160" y="110" width="200" height="270" rx="16" fill="#0B0B2E" stroke="url(#s3-grad)" stroke-width="1.5"/>
+            <text x="184" y="148" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="700" fill="#fff">Your audit</text>
+            <text x="184" y="166" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.4)">PREPARED BEFORE THE CALL</text>
+            <!-- screenshot strip -->
+            <rect x="184" y="182" width="152" height="66" rx="8" fill="#12123D" stroke="rgba(255,255,255,.08)"/>
+            <rect x="194" y="192" width="60" height="8" rx="4" fill="rgba(255,255,255,.18)"/>
+            <rect x="194" y="206" width="120" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="194" y="218" width="100" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="194" y="230" width="80" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <!-- findings rows -->
+            <g id="findings">
+              <rect x="184" y="262" width="152" height="26" rx="8" fill="rgba(0,163,214,.1)"/>
+              <circle cx="198" cy="275" r="5" fill="#00A3D6"/>
+              <rect x="212" y="270" width="108" height="9" rx="4.5" fill="rgba(255,255,255,.2)"/>
+              <rect x="184" y="296" width="152" height="26" rx="8" fill="rgba(0,163,214,.07)"/>
+              <circle cx="198" cy="309" r="5" fill="#00A3D6"/>
+              <rect x="212" y="304" width="88" height="9" rx="4.5" fill="rgba(255,255,255,.14)"/>
+              <rect x="184" y="330" width="152" height="26" rx="8" fill="rgba(0,163,214,.05)"/>
+              <circle cx="198" cy="343" r="5" fill="#00A3D6"/>
+              <rect x="212" y="338" width="118" height="9" rx="4.5" fill="rgba(255,255,255,.1)"/>
+            </g>
+          </g>
+          <!-- magnifier -->
+          <g class="layer" data-depth="0.28">
+            <circle cx="368" cy="130" r="34" fill="rgba(4,4,28,.6)" stroke="url(#s3-grad)" stroke-width="3"/>
+            <line x1="392" y1="154" x2="418" y2="180" stroke="url(#s3-grad)" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 356 130 l 8 8 l 16 -16" stroke="#00A3D6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <!-- dotted connectors from tiles to report -->
+          <path d="M 140 95 C 150 100, 155 105, 160 110" stroke="rgba(0,163,214,.4)" stroke-width="2" stroke-dasharray="0.1 6" fill="none" class="arrow-flow"/>
+          <path d="M 380 75 C 372 82, 366 88, 362 96" stroke="rgba(0,163,214,.4)" stroke-width="2" stroke-dasharray="0.1 6" fill="none" class="arrow-flow"/>
+          <path d="M 130 363 C 140 350, 150 340, 160 330" stroke="rgba(0,163,214,.4)" stroke-width="2" stroke-dasharray="0.1 6" fill="none" class="arrow-flow"/>
+          <path d="M 392 363 C 382 350, 372 340, 360 330" stroke="rgba(0,163,214,.4)" stroke-width="2" stroke-dasharray="0.1 6" fill="none" class="arrow-flow"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 4: THE WORKSHOP ============ -->
+  <section class="scene" id="scene-workshop">
+    <div class="scene-inner split">
+      <div class="stage fade" style="order:2;">
+        <svg viewBox="0 0 520 460" fill="none" role="img" aria-label="Illustration: two people at a table with a whiteboard — the workshop turning point">
+          <defs>
+            <linearGradient id="s4-grad" x1="0" y1="460" x2="520" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#02009A"/><stop offset="55%" stop-color="#006ABA"/><stop offset="100%" stop-color="#00A3D6"/>
+            </linearGradient>
+          </defs>
+          <!-- whiteboard -->
+          <g class="layer" data-depth="0.1">
+            <rect x="70" y="40" width="380" height="210" rx="14" fill="#0B0B2E" stroke="rgba(255,255,255,.14)" stroke-width="1.5"/>
+            <text x="94" y="74" font-family="Inter,sans-serif" font-size="10" letter-spacing="2" fill="rgba(255,255,255,.4)">THE PLAN — WEEK 1–2</text>
+            <!-- honest mini-curve on the board -->
+            <path d="M 100 190 C 140 186, 170 192, 200 194 C 250 190, 300 160, 340 130 C 380 104, 410 88, 428 74" stroke="url(#s4-grad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 9" class="arrow-flow" fill="none"/>
+            <path d="M 416 88 L 428 74 L 410 76" stroke="url(#s4-grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <!-- turning point marker -->
+            <circle cx="200" cy="194" r="8" fill="#04041C" stroke="#00A3D6" stroke-width="3"/>
+            <text x="100" y="228" font-family="Inter,sans-serif" font-size="10" fill="rgba(255,255,255,.45)">the turning point</text>
+          </g>
+          <!-- table -->
+          <g class="layer" data-depth="0.18">
+            <rect x="60" y="330" width="400" height="16" rx="8" fill="#1B1B52" stroke="rgba(255,255,255,.12)"/>
+            <rect x="100" y="346" width="14" height="70" rx="6" fill="#12123D"/>
+            <rect x="406" y="346" width="14" height="70" rx="6" fill="#12123D"/>
+          </g>
+          <!-- person 1 (client, left) -->
+          <g class="layer" data-depth="0.22">
+            <circle cx="160" cy="280" r="26" fill="#1B1B52" stroke="rgba(255,255,255,.3)"/>
+            <path d="M 120 330 C 126 306, 142 296, 160 296 C 178 296, 194 306, 200 330 Z" fill="#1B1B52" stroke="rgba(255,255,255,.3)"/>
+          </g>
+          <!-- person 2 (Elevate, right) -->
+          <g class="layer" data-depth="0.24">
+            <circle cx="360" cy="280" r="26" fill="#1B1B52" stroke="rgba(0,163,214,.7)"/>
+            <path d="M 320 330 C 326 306, 342 296, 360 296 C 378 296, 394 306, 400 330 Z" fill="#1B1B52" stroke="rgba(0,163,214,.7)"/>
+            <!-- laptop -->
+            <rect x="330" y="312" width="60" height="18" rx="4" fill="#04041C" stroke="rgba(0,163,214,.7)"/>
+          </g>
+          <!-- papers -->
+          <g class="layer" data-depth="0.2">
+            <rect x="180" y="318" width="52" height="12" rx="3" fill="rgba(255,255,255,.2)" transform="rotate(-4 206 324)"/>
+            <rect x="240" y="316" width="52" height="12" rx="3" fill="rgba(255,255,255,.15)" transform="rotate(3 266 322)"/>
+          </g>
+        </svg>
+      </div>
+      <div class="fade" style="order:1;">
+        <p class="kicker">Scene 04 — The turning point</p>
+        <h2 class="display">One table. Both sides of it honest.</h2>
+        <p class="body dim">Week 1–2. We sit down with the audit in hand and build the plan together: what's realistic, what it costs, what happens first. You leave the workshop knowing exactly what we're doing and why — in plain English, not agency-speak.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 5: THE CURVE ============ -->
+  <section class="scene" id="scene-curve" style="flex-direction:column;">
+    <div class="scene-inner" style="max-width:60rem;text-align:center;">
+      <div class="fade">
+        <p class="kicker">Scene 05 — Then this happens</p>
+        <h2 class="display">Not overnight. <span class="grad">Compounding.</span></h2>
+        <p class="body dim" style="margin-left:auto;margin-right:auto;">The first weeks look modest — foundations always do. Then the work starts paying for the work. This is the same honest curve we show every client: stagnation, the turning point, then acceleration that never goes vertical but never stops either.</p>
+      </div>
+      <div class="stage fade" style="max-width:56rem;margin:0 auto;width:100%;">
+        <svg viewBox="0 0 1000 380" fill="none" role="img" aria-label="The honest growth curve: flat before Elevate, then compounding growth">
+          <defs>
+            <linearGradient id="s5-grad" x1="330" y1="254" x2="952" y2="30" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#02009A"/><stop offset="55%" stop-color="#006ABA"/><stop offset="100%" stop-color="#00A3D6"/>
+            </linearGradient>
+            <filter id="s5-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7"/></filter>
+          </defs>
+          <!-- before: dim, stagnant -->
+          <path d="M 40 226 C 110 216, 160 232, 210 237 C 250 241, 290 251, 330 254"
+                stroke="rgba(148,163,196,.55)" stroke-width="6" stroke-linecap="round" stroke-dasharray="0.1 13" fill="none"/>
+          <text x="118" y="296" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-style="italic" fill="rgba(255,255,255,.5)">Before Elevate</text>
+          <!-- after: gradient enters at the workshop -->
+          <path d="M 330 254 C 400 250, 470 236, 540 224 C 650 205, 730 176, 810 142 C 860 121, 915 95, 952 70"
+                stroke="url(#s5-grad)" stroke-width="16" opacity="0.28" filter="url(#s5-glow)" stroke-linecap="round" stroke-dasharray="0.1 13" fill="none"/>
+          <path d="M 330 254 C 400 250, 470 236, 540 224 C 650 205, 730 176, 810 142 C 860 121, 915 95, 952 70"
+                stroke="url(#s5-grad)" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 13" class="arrow-flow" fill="none"/>
+          <path d="M 941.5 91.6 L 952 70 L 928.1 71.7" stroke="url(#s5-grad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- checkpoints -->
+          <circle cx="330" cy="254" r="9" fill="#04041C" stroke="#00A3D6" stroke-width="3.5"/>
+          <circle cx="540" cy="224" r="9" fill="#04041C" stroke="#00A3D6" stroke-width="3.5"/>
+          <circle cx="810" cy="142" r="9" fill="#04041C" stroke="#00A3D6" stroke-width="3.5"/>
+          <text x="330" y="300" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#fff">Workshop</text>
+          <text x="330" y="318" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="rgba(255,255,255,.55)">Week 1–2</text>
+          <text x="540" y="270" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#fff">First results</text>
+          <text x="540" y="288" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="rgba(255,255,255,.55)">Month 1–2</text>
+          <text x="810" y="190" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#fff">Compounding</text>
+          <text x="810" y="208" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="rgba(255,255,255,.55)">Month 4–6</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OUTRO / CTA ============ -->
+  <section class="scene glow" id="outro">
+    <div style="width:100%;max-width:60rem;margin:0 auto;">
+      <div class="fade" style="text-align:center;">
+        <p class="kicker">Your scene one</p>
+        <h2 class="display">It starts with a <span class="grad">30-minute call.</span></h2>
+        <p class="body dim" style="margin:1.2rem auto 0;">A no-obligation strategy call: we look at your situation before we say a word, and you leave with clarity either way. No hard sell, no follow-up spam.</p>
+      </div>
+      <div id="cal-wrap" class="fade">
+        <div class="cal-plate">
+          <!-- Calendly inline widget begin -->
+          <div class="calendly-inline-widget" data-url="https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=00a3d6" style="min-width:320px;height:640px;"></div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <!-- Calendly inline widget end -->
+        </div>
+        <div class="cal-foot">
+          <p>Calendar not loading?</p>
+          <a href="https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1" target="_blank" rel="noopener">Open the calendar directly ↗</a>
+        </div>
+        <p style="text-align:center;font-size:.75rem;color:rgba(255,255,255,.55);margin-top:1rem;">No obligation · Free audit included · No lock-in · Senior people only</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Elevate Marketing · <a href="https://getelevateleads.com/">getelevateleads.com</a> · <a href="https://getelevateleads.com/privacy" style="color:var(--dim);">Privacy</a>
+  </footer>
+
+  <script>
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---------- progress bar ---------- */
+      var bar = document.querySelector('#progress .bar');
+      var tip = document.querySelector('#progress .tip');
+      var header = document.getElementById('miniHeader');
+
+      /* ---------- chapter dots ---------- */
+      var chapterLinks = Array.prototype.slice.call(document.querySelectorAll('#chapters a'));
+      var scenes = chapterLinks.map(function (a) { return document.getElementById(a.dataset.scene); });
+
+      /* ---------- parallax layers ---------- */
+      var layers = Array.prototype.slice.call(document.querySelectorAll('.layer'));
+
+      /* ---------- tap pulse on the ad (scene 1) ---------- */
+      var tapRing = document.getElementById('tapRing');
+      var tapDot = document.getElementById('tapDot');
+      var tapT0 = null;
+      function tapAnim(ts) {
+        if (!tapRing) return;
+        if (tapT0 === null) tapT0 = ts;
+        var t = ((ts - tapT0) % 2400) / 2400; // 2.4s loop
+        if (t < 0.25) {
+          var p = t / 0.25;
+          tapDot.setAttribute('opacity', String(p < 0.5 ? p * 2 : 1));
+          tapRing.setAttribute('opacity', String(0.9 * (1 - p)));
+          tapRing.setAttribute('r', String(14 + p * 34));
+        } else {
+          tapDot.setAttribute('opacity', '0');
+          tapRing.setAttribute('opacity', '0');
+        }
+        requestAnimationFrame(tapAnim);
+      }
+      if (!reduced) requestAnimationFrame(tapAnim);
+
+      /* ---------- scroll driver ---------- */
+      function onScroll() {
+        var y = window.scrollY || window.pageYOffset;
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        var p = max > 0 ? Math.min(1, y / max) : 0;
+
+        bar.style.transform = 'scaleX(' + p + ')';
+        tip.style.opacity = p > 0.01 ? '1' : '0';
+        header.classList.toggle('solid', y > 40);
+
+        // chapters
+        var mid = y + window.innerHeight * 0.5;
+        var active = 0;
+        scenes.forEach(function (s, i) { if (s && s.offsetTop <= mid) active = i; });
+        chapterLinks.forEach(function (a, i) { a.classList.toggle('on', i === active); });
+
+        // parallax (skip when reduced motion)
+        if (!reduced) {
+          layers.forEach(function (el) {
+            var scene = el.closest('.scene');
+            if (!scene) return;
+            var r = scene.getBoundingClientRect();
+            if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+            var depth = parseFloat(el.dataset.depth || '0.1');
+            // progress of scene through viewport: -1 (entering) .. 1 (leaving)
+            var prog = (r.top + r.height / 2 - window.innerHeight / 2) / (window.innerHeight / 2);
+            el.style.transform = 'translateY(' + (-prog * depth * 60) + 'px)';
+          });
+        }
+      }
+
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) { requestAnimationFrame(function () { onScroll(); ticking = false; }); ticking = true; }
+      }, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
+
+      /* ---------- fades ---------- */
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.18 });
+      document.querySelectorAll('.fade:not(.in)').forEach(function (el) { io.observe(el); });
+
+      /* ---------- smooth anchor scroll ---------- */
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (ev) {
+          var target = document.querySelector(a.getAttribute('href'));
+          if (target) {
+            ev.preventDefault();
+            target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -71,6 +71,18 @@
   to = "/audit/index.html"
   status = 200
 
+# The Journey — scroll-story landing page (Kimi-built, static single file).
+# Client-chosen URL is /the-journey. Must stay before the SPA catch-all.
+[[redirects]]
+  from = "/the-journey"
+  to = "/journey.html"
+  status = 200
+
+[[redirects]]
+  from = "/the-journey/"
+  to = "/journey.html"
+  status = 200
+
 # Legacy landing page (moved from / to /lp): unknown /lp/* paths serve it
 [[redirects]]
   from = "/lp/*"
