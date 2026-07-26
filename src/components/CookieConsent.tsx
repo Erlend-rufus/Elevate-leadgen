@@ -21,7 +21,7 @@ export default function CookieConsent() {
     try {
       localStorage.setItem(STORAGE_KEY, choice);
     } catch {
-      /* storage unavailable — just hide */
+      /* storage unavailable: just hide */
     }
     setVisible(false);
   };
@@ -36,7 +36,7 @@ export default function CookieConsent() {
     >
       <div className="container-site flex flex-col items-start gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-2xl text-sm leading-relaxed text-[#b9bbd9]">
-          We use analytics cookies to understand how the site is used. Accept or decline — the site
+          We use analytics cookies to understand how the site is used. Accept or decline; the site
           works the same either way.
         </p>
         <div className="flex shrink-0 gap-3">

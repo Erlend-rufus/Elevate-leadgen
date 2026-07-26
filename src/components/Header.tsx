@@ -110,7 +110,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile overlay menu — portalled to body: the header's backdrop-blur would
+      {/* Mobile overlay menu, portalled to body: the header's backdrop-blur would
           otherwise become the containing block for this fixed overlay and collapse
           its height to the header's. */}
       {mobileOpen && createPortal(

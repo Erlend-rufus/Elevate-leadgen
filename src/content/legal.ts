@@ -16,7 +16,7 @@ export interface LegalDoc {
 
 export const privacy: LegalDoc = {
   meta: {
-    title: 'Privacy policy — Elevate Marketing',
+    title: 'Privacy policy | Elevate Marketing',
     description: 'How Elevate Marketing collects, uses and protects your personal data.',
   },
   title: 'Privacy policy',
@@ -38,8 +38,8 @@ export const privacy: LegalDoc = {
     {
       heading: 'How we use your data and lawful bases',
       body: [
-        'To respond to enquiries and deliver audits — legitimate interest (UK GDPR Art. 6(1)(f)) or steps towards a contract (Art. 6(1)(b)).',
-        'To measure and improve the site — consent (Art. 6(1)(a)), given via the cookie banner. You can withdraw it at any time.',
+        'To respond to enquiries and deliver audits: legitimate interest (UK GDPR Art. 6(1)(f)) or steps towards a contract (Art. 6(1)(b)).',
+        'To measure and improve the site: consent (Art. 6(1)(a)), given via the cookie banner. You can withdraw it at any time.',
       ],
     },
     {
@@ -84,7 +84,7 @@ export const privacy: LegalDoc = {
 
 export const terms: LegalDoc = {
   meta: {
-    title: 'Terms of service — Elevate Marketing',
+    title: 'Terms of service | Elevate Marketing',
     description: 'The terms that apply to work carried out by Elevate Marketing.',
   },
   title: 'Terms of service',

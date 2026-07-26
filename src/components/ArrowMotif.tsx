@@ -1,5 +1,5 @@
 /**
- * Small gradient arrow SVG — the brand mark.
+ * Small gradient arrow SVG: the brand mark.
  * Approved applications only: Logo, FinalCTA background flourish (design.md §1).
  */
 export default function ArrowMotif({ className }: { className?: string }) {

@@ -6,12 +6,12 @@ import { usePageMeta } from '@/components/usePageMeta'
 import { bookingPage } from '@/content/book'
 
 /**
- * /book — conversion-focused landing page for the free strategy call.
+ * /book: conversion-focused landing page for the free strategy call.
  * Standalone (no site chrome): ad traffic lands here and only here.
  */
 export default function Book() {
   usePageMeta(
-    'Book a free strategy call — Elevate Marketing',
+    'Book a free strategy call | Elevate Marketing',
     'A focused 30-minute call to explore how predictable, transparent growth marketing could work for your business. No obligation, no hard sell.'
   )
 
@@ -42,7 +42,7 @@ export default function Book() {
               </p>
             </Reveal>
 
-            {/* Compact journey curve — reinforces "this call is the turning point" */}
+            {/* Compact journey curve: reinforces "this call is the turning point" */}
             <Reveal delay={0.1} className="mt-8 hidden max-w-sm lg:block">
               <JourneyCurve variant="process" className="w-full" />
             </Reveal>

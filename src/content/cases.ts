@@ -1,10 +1,10 @@
 /**
  * The 3 case studies (cases-audit-pages.md §A–B).
- * Every number is a placeholder — [REPLACE] markers stay verbatim.
+ * Every number is a placeholder; [REPLACE] markers stay verbatim.
  */
 export const resultsIndex = {
   meta: {
-    title: 'Results — Elevate Marketing',
+    title: 'Results | Elevate Marketing',
     description:
       'Case studies in numbers: lead generation, paid social and SEO results for UK businesses.',
   },
@@ -51,7 +51,7 @@ export const cases: CaseStudy[] = [
     industry: 'Trades & home services',
     service: 'Google Ads',
     summary:
-      'Google Ads spend was rising while the diary stayed empty — rebuilt tracking and a restructure around job value doubled qualified leads.',
+      'Google Ads spend was rising while the diary stayed empty. Rebuilt tracking and a restructure around job value doubled qualified leads.',
     /** [REPLACE: e.g. 6 months] */
     period: '[REPLACE: e.g. 6 months]',
     /** [REPLACE] */
@@ -88,7 +88,7 @@ export const cases: CaseStudy[] = [
       { value: '4.2×', label: 'ROAS' },
     ],
     meaning: [
-      'If you cannot say which campaign produced your last ten customers, your tracking — not your ads — is the first thing to fix.',
+      'If you cannot say which campaign produced your last ten customers, your tracking, not your ads, is the first thing to fix.',
       'Weighting budget by job value usually matters more than any bid strategy.',
     ],
     quote: {
@@ -98,9 +98,9 @@ export const cases: CaseStudy[] = [
     },
     relatedService: 'google-ads',
     meta: {
-      title: 'Case study: Doubling qualified leads for a UK trades business — Elevate Marketing',
+      title: 'Case study: Doubling qualified leads for a UK trades business | Elevate Marketing',
       description:
-        'Rebuilt tracking and restructured Google Ads around job value — 2.1× qualified leads at a lower cost per lead.',
+        'Rebuilt tracking and restructured Google Ads around job value: 2.1× qualified leads at a lower cost per lead.',
     },
   },
   {
@@ -109,7 +109,7 @@ export const cases: CaseStudy[] = [
     industry: 'Health & wellness clinic',
     service: 'Meta Ads',
     summary:
-      'Growth from word of mouth had stalled — an offer-first Meta strategy and a frictionless booking path filled the diary with consultations.',
+      'Growth from word of mouth had stalled. An offer-first Meta strategy and a frictionless booking path filled the diary with consultations.',
     /** [REPLACE] */
     period: '[REPLACE]',
     /** [REPLACE] */
@@ -155,9 +155,9 @@ export const cases: CaseStudy[] = [
     },
     relatedService: 'meta-ads',
     meta: {
-      title: "Case study: Filling a clinic's diary with Meta Ads — Elevate Marketing",
+      title: "Case study: Filling a clinic's diary with Meta Ads | Elevate Marketing",
       description:
-        'Offer-first Meta campaigns and a frictionless booking path — 63 booked consultations a month for a private clinic.',
+        'Offer-first Meta campaigns and a frictionless booking path: 63 booked consultations a month for a private clinic.',
     },
   },
   {
@@ -166,7 +166,7 @@ export const cases: CaseStudy[] = [
     industry: 'B2B professional services',
     service: 'SEO',
     summary:
-      'Every lead was bought through paid channels — technical fixes and decision-stage content built an organic pipeline that compounds.',
+      'Every lead was bought through paid channels. Technical fixes and decision-stage content built an organic pipeline that compounds.',
     /** [REPLACE] */
     period: '[REPLACE]',
     /** [REPLACE] */
@@ -190,7 +190,7 @@ export const cases: CaseStudy[] = [
       },
       {
         title: 'AI-search readiness',
-        desc: 'Content structured so AI assistants can cite it — GEO layered onto SEO.',
+        desc: 'Content structured so AI assistants can cite it: GEO layered onto SEO.',
       },
     ],
     results: [
@@ -202,7 +202,7 @@ export const cases: CaseStudy[] = [
     ],
     meaning: [
       'In B2B, the shortlisting searches are the ones worth owning.',
-      'SEO and AI search now compound together — the same work feeds both.',
+      'SEO and AI search now compound together: the same work feeds both.',
     ],
     quote: {
       text: '[REPLACE: client quote]',
@@ -211,7 +211,7 @@ export const cases: CaseStudy[] = [
     },
     relatedService: 'seo',
     meta: {
-      title: 'Case study: Compounding organic pipeline for a B2B services firm — Elevate Marketing',
+      title: 'Case study: Compounding organic pipeline for a B2B services firm | Elevate Marketing',
       description:
         'Technical SEO and decision-stage content compounded into +312% organic demo requests for a B2B firm.',
     },

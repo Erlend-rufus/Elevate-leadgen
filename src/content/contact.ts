@@ -3,7 +3,7 @@
  */
 export const contact = {
   meta: {
-    title: 'Contact — Elevate Marketing',
+    title: 'Contact | Elevate Marketing',
     description: 'Talk to a senior marketer. Email us or book a free audit.',
   },
   hero: {

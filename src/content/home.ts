@@ -3,7 +3,7 @@
  */
 export const home = {
   meta: {
-    title: 'Elevate Marketing — Performance marketing that turns into pipeline',
+    title: 'Elevate Marketing | Performance marketing that turns into pipeline',
     description:
       'Google Ads, Meta Ads, SEO and AI-search optimisation for UK businesses that measure marketing in revenue, not impressions. Book a free audit.',
   },
@@ -12,7 +12,7 @@ export const home = {
     titleBefore: 'Marketing that turns into ',
     titleHighlight: 'pipeline',
     titleAfter: '. Not just reports.',
-    sub: 'Google Ads, Meta Ads, SEO and AI-search optimisation for UK businesses that measure marketing in revenue — not impressions.',
+    sub: 'Google Ads, Meta Ads, SEO and AI-search optimisation for UK businesses that measure marketing in revenue, not impressions.',
     primaryCta: 'Book a free audit',
     secondaryCta: 'See the results',
     microcopy: 'Free audit. No obligations. Reply within one working day.',
@@ -31,7 +31,7 @@ export const home = {
       {
         icon: 'LineChart',
         title: 'Optimised for the wrong numbers',
-        body: 'Clicks, impressions and engagement are easy to inflate. They are also easy to report. None of them pay salaries — we optimise for cost per qualified lead and revenue.',
+        body: 'Clicks, impressions and engagement are easy to inflate. They are also easy to report. None of them pay salaries. We optimise for cost per qualified lead and revenue.',
       },
       {
         icon: 'Shuffle',
@@ -49,13 +49,13 @@ export const home = {
     eyebrow: 'What we do',
     title: 'One team. Every channel that matters.',
     intro:
-      'Seven services, one measurement plan. Each links to exactly what is included, who it suits — and when it is the wrong spend.',
+      'Seven services, one measurement plan. Each links to exactly what is included, who it suits, and when it is the wrong spend.',
     learnMore: 'Learn more',
     items: [
       { icon: 'Target', name: 'Google Ads', outcome: 'Capture demand that already exists.', slug: 'google-ads' },
       { icon: 'Share2', name: 'Meta Ads', outcome: 'Create demand where your buyers scroll.', slug: 'meta-ads' },
       { icon: 'Search', name: 'SEO', outcome: 'Own the searches that decide the shortlist.', slug: 'seo' },
-      { icon: 'Bot', name: 'GEO — AI search', outcome: 'Be the answer AI assistants give.', slug: 'geo' },
+      { icon: 'Bot', name: 'GEO (AI search)', outcome: 'Be the answer AI assistants give.', slug: 'geo' },
       { icon: 'LayoutTemplate', name: 'Web Design', outcome: 'Pages built to convert, not decorate.', slug: 'web-design' },
       { icon: 'Mail', name: 'Email Marketing', outcome: 'Revenue from the list you already own.', slug: 'email-marketing' },
       { icon: 'Compass', name: 'Consulting', outcome: 'Senior direction without the retainer.', slug: 'consulting' },
@@ -91,12 +91,12 @@ export const home = {
     /** [REPLACE] */
     disclaimer: 'Figures shown are placeholders pending client-approved data.',
   },
-  // Testimonials section removed from Home per client request (July 2026) —
+  // Testimonials section removed from Home per client request (July 2026);
   // reinstate with real, attributable quotes only.
   aboutTeaser: {
     eyebrow: 'Who we are',
     title: 'Senior marketers. No account-manager telephone.',
-    body: 'Elevate Marketing is a small, senior team. The people in your kickoff call are the people in your accounts. We take on few enough clients to know each P&L properly — and we say no to work we do not believe will pay.',
+    body: 'Elevate Marketing is a small, senior team. The people in your kickoff call are the people in your accounts. We take on few enough clients to know each P&L properly, and we say no to work we do not believe will pay.',
     cta: 'More about us',
   },
   faq: {
@@ -105,7 +105,7 @@ export const home = {
     items: [
       {
         q: 'How much does it cost?',
-        a: 'Most engagements start from €1,500 per month, depending on channels and spend. You see the full fee structure before signing anything — no percentage-of-spend surprises.',
+        a: 'Most engagements start from €1,500 per month, depending on channels and spend. You see the full fee structure before signing anything. No percentage-of-spend surprises.',
       },
       {
         q: 'How fast will we see results?',
@@ -127,7 +127,7 @@ export const home = {
   },
   finalCta: {
     title: 'Find out where your next customer is coming from.',
-    sub: 'The audit is free, specific to your business, and yours to keep — whoever you work with.',
+    sub: 'The audit is free, specific to your business, and yours to keep, whoever you work with.',
     cta: 'Book a free audit',
     microcopy: 'No obligations · No cold calls · Reply within one working day',
   },

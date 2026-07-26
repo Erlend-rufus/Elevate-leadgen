@@ -39,7 +39,7 @@ export const site = {
           { label: 'Google Ads', to: '/services/google-ads' },
           { label: 'Meta Ads', to: '/services/meta-ads' },
           { label: 'SEO', to: '/services/seo' },
-          { label: 'GEO — AI search', to: '/services/geo' },
+          { label: 'GEO (AI search)', to: '/services/geo' },
           { label: 'Web Design', to: '/services/web-design' },
           { label: 'Email Marketing', to: '/services/email-marketing' },
           { label: 'Consulting', to: '/services/consulting' },
