@@ -1,9 +1,9 @@
 import { Check, ShieldCheck, UserCheck, Zap } from 'lucide-react'
-import { BookingEmbed } from '@/components/BookingEmbed'
-import { JourneyCurve } from '@/components/JourneyCurve'
-import { Reveal } from '@/components/Reveal'
-import { usePageMeta } from '@/hooks/usePageMeta'
-import { bookingPage } from '@/content'
+import BookingEmbed from '@/components/BookingEmbed'
+import JourneyCurve from '@/components/JourneyCurve'
+import Reveal from '@/components/Reveal'
+import { usePageMeta } from '@/components/usePageMeta'
+import { bookingPage } from '@/content/book'
 
 /**
  * /book — conversion-focused landing page for the free strategy call.
@@ -30,7 +30,7 @@ export default function Book() {
           {/* Left: the pitch */}
           <div>
             <Reveal>
-              <p className="text-xs font-semibold tracking-[0.18em] text-brand-cyan">
+              <p className="text-xs font-semibold tracking-[0.18em] text-[#00a3d6]">
                 {bookingPage.eyebrow}
               </p>
               <h1 className="font-display mt-4 text-4xl font-bold leading-[1.08] tracking-[-0.02em] text-white sm:text-5xl">
@@ -55,7 +55,7 @@ export default function Book() {
                 {bookingPage.covers.map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className="gradient-ring mt-0.5 rounded-full p-1">
-                      <Check className="h-3.5 w-3.5 text-brand-cyan" />
+                      <Check className="h-3.5 w-3.5 text-[#00a3d6]" />
                     </span>
                     <span className="leading-relaxed text-dim">{item}</span>
                   </li>
@@ -73,7 +73,7 @@ export default function Book() {
                   key={t.label}
                   className="gradient-ring inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-white"
                 >
-                  <t.icon className="h-4 w-4 text-brand-cyan" />
+                  <t.icon className="h-4 w-4 text-[#00a3d6]" />
                   {t.label}
                 </span>
               ))}

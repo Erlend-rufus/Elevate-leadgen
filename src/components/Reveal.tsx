@@ -1,28 +1,59 @@
-import { motion, useReducedMotion } from 'framer-motion'
-import type { ReactNode } from 'react'
+import { useEffect, useRef, useState } from 'react';
+import type { ElementType, ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 
 interface RevealProps {
-  children: ReactNode
-  className?: string
-  /** Stagger delay in seconds */
-  delay?: number
-  /** Vertical travel distance in px (24–40 per the design brief) */
-  y?: number
+  children: ReactNode;
+  /** Optional stagger delay in ms. */
+  delay?: number;
+  as?: ElementType;
+  className?: string;
 }
 
-/** Calm section-level scroll reveal: fade + translate, once. */
-export function Reveal({ children, className, delay = 0, y = 32 }: RevealProps) {
-  const reduce = useReducedMotion()
+/**
+ * IntersectionObserver reveal: fade + translateY(32px), once only,
+ * 700ms ease-out. Respects prefers-reduced-motion (renders visible).
+ */
+export default function Reveal({ children, delay = 0, as, className }: RevealProps) {
+  const Tag = (as ?? 'div') as ElementType;
+  const ref = useRef<HTMLElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            observer.disconnect();
+          }
+        }
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      className={className}
-      initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+    <Tag
+      ref={ref}
+      className={cn(className)}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(32px)',
+        transition: 'opacity 700ms ease-out, transform 700ms ease-out',
+        transitionDelay: `${delay}ms`,
+        willChange: 'opacity, transform',
+      }}
     >
       {children}
-    </motion.div>
-  )
+    </Tag>
+  );
 }

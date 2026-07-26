@@ -1,54 +1,34 @@
-import type { ReactNode } from 'react'
-import { Header } from '@/sections/Header'
-import { Footer } from '@/sections/Footer'
-import { Reveal } from '@/components/Reveal'
-import { usePageMeta } from '@/hooks/usePageMeta'
+import type { LegalDoc } from '@/content/legal';
+import { usePageMeta } from './usePageMeta';
+import Reveal from './Reveal';
 
-interface LegalSection {
-  heading: string
-  body: ReactNode
-}
-
-interface LegalPageProps {
-  title: string
-  metaTitle: string
-  metaDescription: string
-  updated: string
-  intro: string
-  sections: LegalSection[]
-}
-
-/** Shared layout for privacy/terms — readable measure, same chrome as the site. */
-export function LegalPage({ title, metaTitle, metaDescription, updated, intro, sections }: LegalPageProps) {
-  usePageMeta(metaTitle, metaDescription)
-
+/**
+ * Layout for privacy/terms: title, updated date, prose sections.
+ */
+export default function LegalPage({ doc }: { doc: LegalDoc }) {
+  usePageMeta(doc.meta.title, doc.meta.description);
   return (
-    <>
-      <Header />
-      <main className="pt-32">
-        <section className="mx-auto max-w-3xl px-5 pb-24 sm:px-8">
-          <Reveal>
-            <h1 className="font-display text-4xl font-bold tracking-[-0.02em] text-white sm:text-5xl">
-              {title}
-            </h1>
-            <p className="mt-3 text-sm text-dim">Last updated: {updated}</p>
-            <p className="mt-6 text-lg leading-relaxed text-dim">{intro}</p>
-          </Reveal>
-
-          <div className="mt-12 space-y-10">
-            {sections.map((s, i) => (
-              <Reveal key={i} delay={i * 0.03}>
-                <section>
-                  <h2 className="font-display text-xl font-bold text-white">{s.heading}</h2>
-                  <div className="mt-3 space-y-3 leading-relaxed text-dim">{s.body}</div>
-                  {i < sections.length - 1 && <div className="mt-10 border-t border-subtle" />}
-                </section>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
-  )
+    <main className="section-pad">
+      <div className="container-site max-w-3xl">
+        <Reveal>
+          <h1 className="mb-3">{doc.title}</h1>
+          <p className="mb-12 text-sm text-[#7c7ea6]">{doc.updated}</p>
+        </Reveal>
+        <div className="space-y-10">
+          {doc.sections.map((section) => (
+            <Reveal key={section.heading}>
+              <section>
+                <h2 className="mb-3 text-2xl">{section.heading}</h2>
+                {section.body.map((paragraph, i) => (
+                  <p key={i} className="mb-3 text-[#b9bbd9]">
+                    {paragraph}
+                  </p>
+                ))}
+              </section>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
 }

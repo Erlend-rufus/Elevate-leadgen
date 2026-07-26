@@ -1,81 +1,86 @@
-import { Mail, MapPin, Phone } from 'lucide-react'
-import { Header } from '@/sections/Header'
-import { Footer } from '@/sections/Footer'
-import { BookingEmbed } from '@/components/BookingEmbed'
-import { Reveal } from '@/components/Reveal'
-import { usePageMeta } from '@/hooks/usePageMeta'
-import { contact } from '@/content'
+import { useEffect } from 'react';
+import { Link } from 'react-router';
+import { ArrowRight, CalendarCheck, Mail } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import Reveal from '@/components/Reveal';
+import { usePageMeta } from '@/components/usePageMeta';
+import { contact } from '@/content/contact';
 
+const cardIcons: Record<string, LucideIcon> = { Mail, CalendarCheck };
+
+const TYPEFORM_SCRIPT = 'https://embed.typeform.com/next/embed.js';
+
+/** /contact — contact page (cases-audit-pages.md §E). */
 export default function Contact() {
-  usePageMeta(
-    'Contact — Elevate Marketing',
-    'Book a free strategy call directly into our calendar, or email hello@getelevateleads.com — a senior marketer replies within one working day.'
-  )
+  usePageMeta(contact.meta.title, contact.meta.description);
 
-  const icons = [Mail, Phone, MapPin]
+  // Load the Typeform embed script once.
+  useEffect(() => {
+    if (document.querySelector(`script[src="${TYPEFORM_SCRIPT}"]`)) return;
+    const script = document.createElement('script');
+    script.src = TYPEFORM_SCRIPT;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   return (
-    <>
-      <Header />
-      <main className="pt-32">
-        <section className="mx-auto max-w-7xl px-5 sm:px-8">
-          <Reveal className="max-w-3xl">
-            <p className="text-xs font-semibold tracking-[0.18em] text-brand-cyan">CONTACT</p>
-            <h1 className="font-display mt-4 text-4xl font-bold leading-tight tracking-[-0.02em] text-white sm:text-5xl lg:text-6xl">
-              {contact.heading}
-            </h1>
-            <p className="mt-5 text-lg leading-relaxed text-dim">{contact.sub}</p>
+    <main>
+      {/* Hero */}
+      <section className="section-pad">
+        <div className="container-site">
+          <Reveal className="max-w-4xl">
+            <h1>{contact.hero.title}</h1>
           </Reveal>
-        </section>
+        </div>
+      </section>
 
-        <section className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_1.3fr]">
-          {/* Details */}
+      {/* Contact cards */}
+      <section className="border-t border-white/5">
+        <div className="container-site section-pad grid gap-6 md:grid-cols-3">
+          {contact.cards.map((card, i) => {
+            const CardIcon = cardIcons[card.icon] ?? Mail;
+            const body = (
+              <div className="card-dark flex h-full flex-col">
+                <CardIcon className="h-7 w-7 text-[#00a3d6]" aria-hidden="true" />
+                <h3 className="mt-5">{card.label}</h3>
+                <p className="mt-2 text-[0.9375rem] text-[#b9bbd9]">{card.value}</p>
+                {card.href ? (
+                  <span className="mt-auto flex justify-end pt-6">
+                    <ArrowRight className="h-5 w-5 text-[#f4f5ff]" aria-hidden="true" />
+                  </span>
+                ) : null}
+              </div>
+            );
+            return (
+              <Reveal key={card.label} delay={i * 100} className="h-full">
+                {card.href.startsWith('/') ? (
+                  <Link to={card.href} className="block h-full">
+                    {body}
+                  </Link>
+                ) : card.href ? (
+                  <a href={card.href} className="block h-full">
+                    {body}
+                  </a>
+                ) : (
+                  body
+                )}
+              </Reveal>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Form — Typeform live embed */}
+      <section className="section-pad border-t border-white/5">
+        <div className="container-site max-w-2xl">
           <Reveal>
-            <div className="card-dark h-full p-8">
-              <h2 className="font-display text-xl font-bold text-white">Direct lines</h2>
-              <ul className="mt-6 space-y-5">
-                {contact.details.map((d, i) => {
-                  const Icon = icons[i] ?? Mail
-                  const inner = (
-                    <>
-                      <span className="gradient-ring rounded-lg p-2.5">
-                        <Icon className="h-5 w-5 text-brand-cyan" />
-                      </span>
-                      <span>
-                        <span className="block text-xs uppercase tracking-[0.14em] text-dim">{d.label}</span>
-                        <span className="mt-0.5 block font-medium text-white">{d.value}</span>
-                      </span>
-                    </>
-                  )
-                  return (
-                    <li key={d.label}>
-                      {d.href ? (
-                        <a href={d.href} className="flex items-center gap-4 transition-opacity hover:opacity-80">
-                          {inner}
-                        </a>
-                      ) : (
-                        <span className="flex items-center gap-4">{inner}</span>
-                      )}
-                    </li>
-                  )
-                })}
-              </ul>
-              <p className="mt-8 border-t border-subtle pt-6 text-sm leading-relaxed text-dim">
-                {contact.responseNote}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-dim">
-                Free audit included with every strategy call · No lock-in · Cancel monthly
-              </p>
+            <div className="card-dark">
+              <div data-tf-live={contact.form.typeformId} />
+              <p className="mt-5 text-sm text-[#7c7ea6]">{contact.form.microcopy}</p>
             </div>
           </Reveal>
-
-          {/* Booking widget embedded — not a contact form */}
-          <Reveal delay={0.12}>
-            <BookingEmbed />
-          </Reveal>
-        </section>
-      </main>
-      <Footer />
-    </>
-  )
+        </div>
+      </section>
+    </main>
+  );
 }

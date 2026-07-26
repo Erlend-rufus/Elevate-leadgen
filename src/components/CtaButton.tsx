@@ -1,29 +1,35 @@
-import { ArrowUpRight } from 'lucide-react'
-import { site, cta } from '@/content'
+import type { ReactNode } from 'react';
+import { Link } from 'react-router';
+import { cn } from '@/lib/utils';
 
 interface CtaButtonProps {
-  size?: 'md' | 'lg'
-  className?: string
-  label?: string
+  to: string;
+  children: ReactNode;
+  variant?: 'primary' | 'ghost';
+  size?: 'md' | 'sm';
+  className?: string;
 }
 
-/**
- * The single primary CTA used everywhere: identical wording and styling
- * in header, hero, process and final CTA — one conversion target.
- */
-export function CtaButton({ size = 'md', className = '', label = cta.primary }: CtaButtonProps) {
-  const sizing =
-    size === 'lg' ? 'px-8 py-4 text-base' : 'px-5 py-2.5 text-sm'
-
+export default function CtaButton({
+  to,
+  children,
+  variant = 'primary',
+  size = 'md',
+  className,
+}: CtaButtonProps) {
   return (
-    <a
-      href={site.bookingDirectUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`group inline-flex items-center gap-2 rounded-xl bg-brand-gradient font-semibold text-white shadow-lg shadow-brand-navy/30 transition-all hover:shadow-brand-cyan/25 hover:brightness-110 ${sizing} ${className}`}
+    <Link
+      to={to}
+      className={cn(
+        'inline-flex items-center justify-center rounded-full font-display font-semibold transition-all duration-300',
+        size === 'md' ? 'px-7 py-3.5 text-base' : 'px-5 py-2.5 text-sm',
+        variant === 'primary'
+          ? 'bg-brand-gradient text-white hover:scale-[1.03] hover:brightness-110'
+          : 'border border-white/20 text-[#f4f5ff] hover:border-white/40',
+        className,
+      )}
     >
-      {label}
-      <ArrowUpRight className={`cta-arrow ${size === 'lg' ? 'h-5 w-5' : 'h-4 w-4'}`} />
-    </a>
-  )
+      {children}
+    </Link>
+  );
 }

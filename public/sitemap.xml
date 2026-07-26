@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://getelevateleads.com/</loc>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://getelevateleads.com/results</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://getelevateleads.com/about</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://getelevateleads.com/contact</loc>
-    <priority>0.9</priority>
-  </url>
+  <url><loc>https://getelevateleads.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://getelevateleads.com/services</loc><priority>0.9</priority></url>
+  <url><loc>https://getelevateleads.com/services/google-ads</loc><priority>0.8</priority></url>
+  <url><loc>https://getelevateleads.com/services/meta-ads</loc><priority>0.8</priority></url>
+  <url><loc>https://getelevateleads.com/services/seo</loc><priority>0.8</priority></url>
+  <url><loc>https://getelevateleads.com/services/geo</loc><priority>0.8</priority></url>
+  <url><loc>https://getelevateleads.com/services/web-design</loc><priority>0.8</priority></url>
+  <url><loc>https://getelevateleads.com/services/email-marketing</loc><priority>0.8</priority></url>
+  <url><loc>https://getelevateleads.com/services/consulting</loc><priority>0.8</priority></url>
+  <url><loc>https://getelevateleads.com/results</loc><priority>0.8</priority></url>
+  <url><loc>https://getelevateleads.com/results/trades-lead-gen</loc><priority>0.7</priority></url>
+  <url><loc>https://getelevateleads.com/results/clinic-meta-ads</loc><priority>0.7</priority></url>
+  <url><loc>https://getelevateleads.com/results/b2b-services-seo</loc><priority>0.7</priority></url>
+  <url><loc>https://getelevateleads.com/growth-audit</loc><priority>0.9</priority></url>
+  <url><loc>https://getelevateleads.com/about</loc><priority>0.6</priority></url>
+  <url><loc>https://getelevateleads.com/contact</loc><priority>0.6</priority></url>
+  <url><loc>https://getelevateleads.com/privacy</loc><priority>0.2</priority></url>
+  <url><loc>https://getelevateleads.com/terms</loc><priority>0.2</priority></url>
   <url>
     <loc>https://getelevateleads.com/book</loc>
     <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://getelevateleads.com/privacy</loc>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://getelevateleads.com/terms</loc>
-    <priority>0.2</priority>
   </url>
 </urlset>
