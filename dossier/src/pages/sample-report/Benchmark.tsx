@@ -143,7 +143,7 @@ export default function Benchmark() {
       {/* Chart */}
       <div className="srb-chart mt-10 space-y-5 border border-ink/70 bg-paper p-5 md:p-8 lg:mt-14">
         <p className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-ink-soft">
-          EXHIBIT 03-A — MENTION SHARE, 52 QUERIES
+          EXHIBIT 03-A — WHO APPEARS WHEN BUYERS ASK
         </p>
         {ROWS.map((r, i) => (
           <div key={r.name} className="srb-row group relative" tabIndex={0}>

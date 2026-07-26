@@ -6,7 +6,6 @@ const MARKERS = [
   { id: 'exhibit-b', label: 'EXHIBIT B' },
   { id: 'exhibit-c', label: 'EXHIBIT C' },
   { id: 'exhibit-d', label: 'EXHIBIT D' },
-  { id: 'exhibit-e', label: 'EXHIBIT E' },
   { id: 'form', label: 'FORM 06' },
   { id: 'closing', label: 'CLOSING' },
 ]

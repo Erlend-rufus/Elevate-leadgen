@@ -12,7 +12,7 @@ import NextStep from './sample-report/NextStep'
 
 const TITLE = 'Sample GEO Audit Report — What AI Says About You | Elevate Marketing'
 const DESCRIPTION =
-  'A complete anonymised GEO audit: Visibility Score, platform-by-platform results across ChatGPT, Gemini, Perplexity, Copilot and AI Overviews, competitor benchmark and a 90-day action plan.'
+  'A complete illustrative GEO audit: how AI assistants describe a firm, whether it appears when buyers ask, the gaps keeping it out of AI answers, and a prioritised list of fixes in plain English.'
 
 /**
  * /sample-report — "Exhibit: The Audit, In Full" (sample-report.md).
@@ -59,11 +59,11 @@ export default function SampleReport() {
       <Helmet>
         <title>{TITLE}</title>
         <meta name="description" content={DESCRIPTION} />
-        <meta name="robots" content="index,follow" />
-        <link rel="canonical" href="https://elevatemarketing.co.uk/sample-report" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://it.getelevateleads.com/audit/sample-report" />
         <meta property="og:title" content={TITLE} />
         <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:url" content="https://elevatemarketing.co.uk/sample-report" />
+        <meta property="og:url" content="https://it.getelevateleads.com/audit/sample-report" />
         <meta name="twitter:title" content={TITLE} />
         <meta name="twitter:description" content={DESCRIPTION} />
       </Helmet>

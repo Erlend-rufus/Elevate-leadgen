@@ -64,14 +64,14 @@ export default function Footer() {
           <div>
             <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-teal">Contact</h2>
             <ul className="mt-4 space-y-2.5 text-[15px]">
-              <li><a className="underline-sweep" href="mailto:hello@elevatemarketing.co.uk">hello@elevatemarketing.co.uk</a></li>
-              <li className="text-paper-on-navy/70">London · Manchester · Birmingham</li>
+              <li><a className="underline-sweep" href="mailto:post@elevatemarketing.no">post@elevatemarketing.no</a></li>
+              <li className="text-paper-on-navy/70">Serving UK IT &amp; MSP firms</li>
             </ul>
           </div>
           <div>
             <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-teal">File note</h2>
             <p className="mt-4 font-mono text-[12px] leading-relaxed text-paper-on-navy/60">
-              GEO audits for UK IT companies. 48-hour turnaround, zero obligation.
+              Free GEO audits for UK MSPs, IT support and cybersecurity firms. Zero obligation.
             </p>
             <img src={`${import.meta.env.BASE_URL}logo-mark.svg`} alt="" width={32} height={32} className="mt-6 opacity-70" />
           </div>
@@ -80,7 +80,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col items-start justify-between gap-4 border-t border-line-navy pt-8 md:flex-row md:items-center">
           <p className="font-mono text-[11px] tracking-[0.06em] text-paper-on-navy/60">
-            © 2026 Elevate Marketing Ltd · elevatemarketing.co.uk
+            © 2026 Elevate Marketing (EngeCo AS)
           </p>
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper-on-navy/50">
             Registered in England &amp; Wales

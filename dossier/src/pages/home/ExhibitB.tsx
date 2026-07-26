@@ -79,14 +79,14 @@ export default function ExhibitB() {
         <div className="mt-8 lg:col-span-5 lg:col-start-8 lg:mt-2">
           <p className="max-w-[62ch] text-[1.125rem] leading-[1.65] text-ink-soft">
             We ask ChatGPT, Gemini, Perplexity, Copilot and Google AI Overviews the questions your buyers ask — then
-            we count the names. Here's a typical mention-share result for a Manchester MSP:
+            we look at who gets named. Here's an illustrative example for a Manchester MSP:
           </p>
         </div>
 
         {/* Chart */}
         <div className="relative mt-14 lg:col-span-8 lg:mt-20">
           <Stamp color="ink" className="absolute -top-5 right-0 z-10 bg-paper">
-            TYPICAL, NOT THEORETICAL
+            ILLUSTRATIVE EXAMPLE
           </Stamp>
           <div className="eb-chart space-y-5 border border-line-paper bg-paper p-6 md:p-8">
             {ROWS.map((r) => (
@@ -138,7 +138,7 @@ export default function ExhibitB() {
                         />
                       ))}
                       <span className="ml-1.5 font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-soft">
-                        {r.platforms.filter(Boolean).length}/5 platforms
+                        named on {r.platforms.filter(Boolean).length} platforms
                       </span>
                     </>
                   )}
@@ -146,7 +146,7 @@ export default function ExhibitB() {
               </div>
             ))}
             <p className="pt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-soft/80">
-              AGGREGATE OF 50 BUYER-STYLE QUERIES ACROSS 5 PLATFORMS — ILLUSTRATIVE SAMPLE
+              ILLUSTRATIVE SAMPLE — HOW AI ANSWERS BUYER-STYLE QUESTIONS
             </p>
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function ExhibitB() {
         <aside className="mt-12 lg:col-span-4 lg:mt-24">
           <div className="border-l-2 border-orange pl-5">
             <p className="font-mono text-[0.72rem] leading-[1.6] tracking-[0.04em] text-ink-soft">
-              Most firms we audit assume they're "kind of visible". The count usually says otherwise.
+              Many firms assume they're "kind of visible". The AI answers often say otherwise.
             </p>
             <Link
               to="/sample-report"

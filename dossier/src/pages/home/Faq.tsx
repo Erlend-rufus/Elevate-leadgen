@@ -7,11 +7,11 @@ const QA: { q: string; a: React.ReactNode; plain: string }[] = [
   {
     q: 'What is GEO?',
     plain:
-      "Generative Engine Optimisation. SEO gets you ranked on Google; GEO gets you named, described correctly and recommended inside AI answers — ChatGPT, Gemini, Perplexity, Copilot and Google's AI Overviews. As buyers move from search results to AI answers, that's where visibility has to be earned.",
+      "Generative Engine Optimisation: making sure AI assistants — ChatGPT, Gemini, Perplexity, Copilot and Google's AI Overviews — describe and recommend your firm accurately when buyers ask. As buyers move from search results to AI answers, that's where visibility has to be earned.",
     a: (
       <>
-        Generative Engine Optimisation. SEO gets you ranked on Google; GEO gets you{' '}
-        <em className="font-serif italic text-ink">named, described correctly and recommended</em> inside AI answers —
+        Generative Engine Optimisation: making sure AI assistants{' '}
+        <em className="font-serif italic text-ink">describe and recommend your firm accurately</em> when buyers ask —
         ChatGPT, Gemini, Perplexity, Copilot and Google's AI Overviews. As buyers move from search results to AI
         answers, that's where visibility has to be earned.
       </>
@@ -44,22 +44,23 @@ const QA: { q: string; a: React.ReactNode; plain: string }[] = [
   {
     q: 'How long does the audit take?',
     plain:
-      '48 hours from submission to report in your inbox. The walkthrough call is 30 minutes, whenever suits you.',
+      'The audit itself is ready quickly. We go through the findings with you on a short call, so the exact timing depends on when you book it. The walkthrough call is 30 minutes.',
     a: (
       <>
-        <em className="font-serif italic text-ink">48 hours</em> from submission to report in your inbox. The
-        walkthrough call is 30 minutes, whenever suits you.
+        The audit itself is <em className="font-serif italic text-ink">ready quickly</em>. We go through the findings
+        with you on a short call, so the exact timing depends on when you book it. The walkthrough call is 30 minutes.
       </>
     ),
   },
   {
     q: 'Is this really free?',
     plain:
-      "Yes — no card, no catch. We run free audits because roughly one in three turns into a client engagement. If yours doesn't, you still keep the report.",
+      'Yes — no card, no catch. We already run lead generation for UK IT and MSP firms, and some audits turn into client engagements. Whatever happens, the findings are yours to keep.',
     a: (
       <>
-        Yes — <em className="font-serif italic text-ink">no card, no catch</em>. We run free audits because roughly one
-        in three turns into a client engagement. If yours doesn't, you still keep the report.
+        Yes — <em className="font-serif italic text-ink">no card, no catch</em>. We already run lead generation for UK
+        IT and MSP firms, and some audits turn into client engagements. Whatever happens, the findings are yours to
+        keep.
       </>
     ),
   },
@@ -109,8 +110,8 @@ export default function Faq() {
             </h2>
             <p className="mt-8 font-mono text-[0.72rem] leading-[1.6] tracking-[0.04em] text-ink-soft">
               Anything else?{' '}
-              <a href="mailto:hello@elevatemarketing.co.uk" className="underline-sweep text-ink">
-                hello@elevatemarketing.co.uk
+              <a href="mailto:post@elevatemarketing.no" className="underline-sweep text-ink">
+                post@elevatemarketing.no
               </a>
             </p>
           </div>

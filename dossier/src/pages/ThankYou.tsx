@@ -120,15 +120,15 @@ const Silhouettes = memo(function Silhouettes({ visible }: { visible: boolean })
 const STEPS = [
   {
     n: '01',
-    time: 'WITHIN 1 HOUR',
+    time: 'FIRST',
     title: 'Examiner assigned',
     body: 'A real person reviews your submission and queues your query set.',
   },
   {
     n: '02',
-    time: 'WITHIN 48 HOURS',
-    title: 'Report delivered',
-    body: 'Visibility Score, competitor benchmark and your 90-day plan, as a plain-English PDF.',
+    time: 'READY QUICKLY',
+    title: 'The audit is run',
+    body: 'How AI describes you, where you appear, the gaps, and what to fix first — documented in plain English.',
   },
   {
     n: '03',
@@ -321,8 +321,8 @@ export default function ThankYou() {
           )}
 
           <p className={cn('mt-7 max-w-[52ch] text-[1.125rem] leading-[1.65] text-ink-soft', bodyCls(''))}>
-            Check your inbox — confirmation is on its way. One of our examiners picks up your file within the
-            hour, and your full report lands within 48 hours.
+            Check your inbox — confirmation is on its way. One of our examiners picks up your file, and we go
+            through the findings with you on the walkthrough call.
           </p>
 
           <div className={cn('mt-6 space-y-1.5 font-mono text-[11px] tracking-[0.06em] text-ink-soft', bodyCls('[transition-delay:120ms]'))}>
@@ -332,7 +332,7 @@ export default function ThankYou() {
               </p>
             )}
             <p className="mx-auto max-w-[52ch]">
-              TIP: add hello@elevatemarketing.co.uk to your contacts so the report doesn't land in junk.
+              TIP: add post@elevatemarketing.no to your contacts so our reply doesn't land in junk.
             </p>
           </div>
         </div>
@@ -380,10 +380,10 @@ export default function ThankYou() {
             />
             <div className="relative flex flex-col items-start gap-6 px-6 py-8 md:flex-row md:items-center md:justify-between lg:px-10">
               <p className="shrink-0 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-ink-soft">
-                WHILE YOU WAIT — 12 MIN READ
+                WHILE YOU WAIT — SAMPLE REPORT
               </p>
               <p className="font-serif text-[1.4rem] font-medium italic leading-[1.15] tracking-[-0.01em] text-ink md:max-w-[38ch]">
-                See exactly what lands in your inbox in 48 hours.
+                See exactly what your audit findings look like.
               </p>
               <div className="flex shrink-0 flex-col items-start gap-3 md:items-end">
                 <Link

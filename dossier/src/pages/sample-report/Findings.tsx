@@ -40,13 +40,13 @@ const FINDINGS: Finding[] = [
     stampColor: 'orange',
     no: 'FINDING 01',
     title: 'AI is quoting retired pricing.',
-    body: 'Perplexity and Gemini both cite a pricing page taken offline in 2023 — quoting figures 22% below current rates to every prospect who asks.',
+    body: 'Perplexity and Gemini both cite a pricing page taken offline in 2023 — quoting long-retired figures to every prospect who asks.',
     evidence: (
       <>
-        &gt; “Company X's managed plans start at <Declassify>£29/user/mo</Declassify>…”
+        &gt; “Company X's managed plans start at <Declassify>[retired price]</Declassify>…”
       </>
     ),
-    evidenceLabel: 'Quote: "Company X\'s managed plans start at £29/user/mo…"',
+    evidenceLabel: 'Quote: "Company X\'s managed plans start at [retired price]…"',
     note: 'SOURCE: CACHED PAGE, REMOVED 2023',
   },
   {

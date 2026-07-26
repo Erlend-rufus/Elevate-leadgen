@@ -263,7 +263,7 @@ const CLAUSES: LegalClause[] = [
   {
     n: 1,
     title: 'Who we are',
-    body: 'Elevate Marketing Ltd ("we", "us") is the data controller for personal data collected through elevatemarketing.co.uk. Registered in England & Wales. Contact: hello@elevatemarketing.co.uk.',
+    body: 'EngeCo AS, trading as Elevate Marketing ("we", "us"), is the data controller for personal data collected through this website. Registered in Norway. Contact: post@elevatemarketing.no.',
   },
   {
     n: 2,
@@ -298,17 +298,17 @@ const CLAUSES: LegalClause[] = [
   {
     n: 7,
     title: 'Cookies & analytics',
-    body: 'The site works without any non-essential cookies. Analytics (privacy-respecting, cookieless where possible) loads only after you accept via the banner. No advertising trackers, no fingerprinting.',
+    body: 'This site uses the Meta Pixel to measure advertising performance and build advertising audiences for the campaigns that bring visitors here. You can control cookies in your browser settings and adjust your advertising preferences in your Meta account settings. We do not use fingerprinting.',
   },
   {
     n: 8,
     title: 'Your rights (UK GDPR)',
-    body: "Access, rectification, erasure, restriction, portability, objection — and withdrawal of consent at any time. Email hello@elevatemarketing.co.uk and we respond within 30 days. You can also complain to the ICO (ico.org.uk), though we'd welcome the chance to fix things first.",
+    body: "Access, rectification, erasure, restriction, portability, objection — and withdrawal of consent at any time. Email post@elevatemarketing.no and we respond within 30 days. You can also complain to the ICO (ico.org.uk), though we'd welcome the chance to fix things first.",
   },
   {
     n: 9,
     title: 'Changes & contact',
-    body: 'Material changes are posted here with a new version number and date. Questions, requests, complaints: hello@elevatemarketing.co.uk — Elevate Marketing Ltd, London.',
+    body: 'Material changes are posted here with a new version number and date. Questions, requests, complaints: post@elevatemarketing.no — EngeCo AS (trading as Elevate Marketing).',
   },
 ]
 
@@ -321,14 +321,14 @@ export default function PrivacyPolicy() {
           name="description"
           content="How Elevate Marketing collects, uses and protects your personal data when you request a GEO audit. UK GDPR compliant."
         />
-        <meta name="robots" content="index,follow" />
-        <link rel="canonical" href="https://elevatemarketing.co.uk/privacy-policy" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://it.getelevateleads.com/audit/privacy-policy" />
         <meta property="og:title" content="Privacy Policy — Elevate Marketing" />
         <meta
           property="og:description"
           content="How Elevate Marketing collects, uses and protects your personal data when you request a GEO audit. UK GDPR compliant."
         />
-        <meta property="og:url" content="https://elevatemarketing.co.uk/privacy-policy" />
+        <meta property="og:url" content="https://it.getelevateleads.com/audit/privacy-policy" />
       </Helmet>
       <LegalDocument
         fileLabel="FILE — PRIVACY NOTICE"
@@ -339,7 +339,7 @@ export default function PrivacyPolicy() {
         meta={[
           { label: 'LAST UPDATED: 6 JANUARY 2026' },
           { label: 'CONTROLLER: ELEVATE MARKETING LTD' },
-          { label: 'QUESTIONS: hello@elevatemarketing.co.uk', href: 'mailto:hello@elevatemarketing.co.uk' },
+          { label: 'QUESTIONS: post@elevatemarketing.no', href: 'mailto:post@elevatemarketing.no' },
         ]}
         preface="The short version: we collect only what we need to run your audit, we never sell or share it, you can unsubscribe or have it deleted at any time, and we'll show you exactly what's held if you ask. The full legal version follows."
         clauses={CLAUSES}

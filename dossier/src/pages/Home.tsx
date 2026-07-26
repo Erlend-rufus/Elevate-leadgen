@@ -8,23 +8,10 @@ import ExhibitA from './home/ExhibitA'
 import ExhibitB from './home/ExhibitB'
 import ExhibitC from './home/ExhibitC'
 import ExhibitD from './home/ExhibitD'
-import ExhibitE from './home/ExhibitE'
 import AuditForm from './home/AuditForm'
 import Faq from './home/Faq'
 import FinalCta from './home/FinalCta'
 import SideRail from './home/SideRail'
-
-const FAQ_LD = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    { '@type': 'Question', name: 'What is GEO?', acceptedAnswer: { '@type': 'Answer', text: "Generative Engine Optimisation. SEO gets you ranked on Google; GEO gets you named, described correctly and recommended inside AI answers — ChatGPT, Gemini, Perplexity, Copilot and Google's AI Overviews. As buyers move from search results to AI answers, that's where visibility has to be earned." } },
-    { '@type': 'Question', name: 'How is this different from SEO?', acceptedAnswer: { '@type': 'Answer', text: 'SEO optimises for a ranked list of links. GEO optimises for the answer itself: the sources AI cites, the facts it repeats, the competitors it names. Different inputs, different levers — and right now, far less competition for them.' } },
-    { '@type': 'Question', name: 'Do I need to change my website?', acceptedAnswer: { '@type': 'Answer', text: "Usually less than you'd think. Many of the highest-impact fixes are off-site: citations, directories and the sources AI already trusts. Your audit tells you exactly which lever to pull first." } },
-    { '@type': 'Question', name: 'How long does the audit take?', acceptedAnswer: { '@type': 'Answer', text: '48 hours from submission to report in your inbox. The walkthrough call is 30 minutes, whenever suits you.' } },
-    { '@type': 'Question', name: 'Is this really free?', acceptedAnswer: { '@type': 'Answer', text: "Yes — no card, no catch. We run free audits because roughly one in three turns into a client engagement. If yours doesn't, you still keep the report." } },
-  ],
-}
 
 /** Folio mark: 1px rule with a centred mono § case-number (design.md §5). */
 function Folio({ mark }: { mark: string }) {
@@ -52,16 +39,16 @@ export default function Home() {
         <title>Is Your IT Business Invisible to ChatGPT? | Free GEO Audit — Elevate Marketing</title>
         <meta
           name="description"
-          content="50% of B2B buyers ask AI before they ask Google. Get a free 48-hour GEO audit: see if ChatGPT, Gemini and Perplexity know you exist — or send prospects to competitors."
+          content="More and more buyers start their search in AI tools. Get a free GEO audit and see how ChatGPT, Gemini and Copilot describe your firm — and what to fix first."
         />
-        <link rel="canonical" href="https://elevatemarketing.co.uk/" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://it.getelevateleads.com/audit/" />
         <meta property="og:title" content="Is Your IT Business Invisible to ChatGPT? | Free GEO Audit — Elevate Marketing" />
         <meta
           property="og:description"
-          content="50% of B2B buyers ask AI before they ask Google. Get a free 48-hour GEO audit: see if ChatGPT, Gemini and Perplexity know you exist — or send prospects to competitors."
+          content="More and more buyers start their search in AI tools. Get a free GEO audit and see how ChatGPT, Gemini and Copilot describe your firm — and what to fix first."
         />
-        <meta property="og:url" content="https://elevatemarketing.co.uk/" />
-        <script type="application/ld+json">{JSON.stringify(FAQ_LD)}</script>
+        <meta property="og:url" content="https://it.getelevateleads.com/audit/" />
       </Helmet>
 
       <Preloader />
@@ -74,7 +61,6 @@ export default function Home() {
       <ExhibitC />
       <Folio mark="§ FILE 03" />
       <ExhibitD />
-      <ExhibitE />
       <Folio mark="§ FILE 05" />
       <AuditForm />
       <Faq />
