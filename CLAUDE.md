@@ -74,9 +74,10 @@ break): `/lp` (old commission landing page + `/lp/privacy/`, `/lp/terms/`),
 
 `[REPLACE: …]` marks content awaiting client data. As of July 2026 the only remaining
 placeholders are **intentional** (client wants anonymity): case-study figures/quotes in
-`cases.ts` and home testimonials in `home.ts`. The results teaser disclaimer
-("Figures shown are placeholders pending client-approved data.") must stay while they do.
-Never invent concrete numbers, client names or quotes.
+`cases.ts`. The home testimonials section was removed at the client's request (July
+2026) — reinstate only with real, attributable quotes. The results teaser disclaimer
+("Figures shown are placeholders pending client-approved data.") must stay while the
+case placeholders do. Never invent concrete numbers, client names or quotes.
 
 Confirmed real data (do not flag as placeholder): ProofBar (£2.4M+, 4.2×, 92%, 10 years),
 pricing "From €1,500/month", response time "one working day", contract terms (90-day
