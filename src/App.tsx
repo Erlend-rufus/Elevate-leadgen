@@ -14,6 +14,8 @@ const CasePage = lazy(() => import('./pages/CasePage'));
 const Audit = lazy(() => import('./pages/Audit'));
 const Book = lazy(() => import('./pages/Book'));
 const About = lazy(() => import('./pages/About'));
+const BlogIndex = lazy(() => import('./pages/BlogIndex'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
@@ -68,6 +70,8 @@ function AppShell() {
             <Route path="/growth-audit" element={<Audit />} />
             <Route path="/book" element={<Book />} />
             <Route path="/about" element={<About />} />
+            <Route path="/blog" element={<BlogIndex />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
