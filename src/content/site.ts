@@ -28,6 +28,7 @@ export const site = {
     { label: 'Services', to: '/services' },
     { label: 'Results', to: '/results' },
     { label: 'About', to: '/about' },
+    { label: 'Blog', to: '/blog' },
     { label: 'Contact', to: '/contact' },
   ] as NavItem[],
   primaryCta: { label: 'Free audit', to: '/growth-audit' } as NavItem,
@@ -50,6 +51,7 @@ export const site = {
         links: [
           { label: 'About', to: '/about' },
           { label: 'Results', to: '/results' },
+          { label: 'Blog', to: '/blog' },
           { label: 'Contact', to: '/contact' },
           { label: 'Free audit', to: '/growth-audit' },
         ],

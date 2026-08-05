@@ -115,7 +115,7 @@ export default function BlogPost() {
             <div className="card-dark mt-14 p-8">
               <h2 className="text-xl font-semibold">See where you stand first</h2>
               <p className="mt-3 text-[#b9bbd9]">
-                Our free growth audit shows you what is working, what is not, and what to fix first —
+                Our free growth audit shows you what is working, what is not, and what to fix first,
                 before you spend another pound. No obligation, and the findings are yours to keep.
               </p>
               <div className="mt-6">
