@@ -1,0 +1,157 @@
+{
+  "company": "SMCPS Consulting",
+  "slug": "smcps-consulting-vd93js",
+  "date": "3 August 2026",
+  "lede": "What AI assistants tell buyers about Microsoft consulting, and where SMCPS appears in those answers.",
+
+  "headline": {
+    "stat": "0 of 3",
+    "stat_label": "category questions named SMCPS Consulting",
+    "body": "Copilot Studio agents and Power Platform automation. Microsoft 365 Copilot governance and adoption. Power Platform and SharePoint for a small regulated London organisation. Your three core subjects, and your name appears in none of the answers. Asked about SMCPS by name, Google answers in detail and gets it right. Buyers asking category questions never hear it."
+  },
+
+  "visibility": {
+    "title": "Who was named instead",
+    "sub": "We asked Google AI Mode, set to UK English, the questions a buyer in your market would actually ask. Three were category questions. One was a direct brand test.",
+    "close": "Nine rival firms collected the mentions across these three answers. Every one of them is in the appended screenshots.",
+    "rival_count": "9",
+    "rival_count_label": "rival firms named instead of you"
+  },
+
+  "queries": [
+    {
+      "text": "Which consultancies should a UK company talk to for Microsoft Copilot Studio agents and Power Platform automation?",
+      "named": false,
+      "named_instead": ["Intelogy", "Changing Social", "Bytes", "Synapx"]
+    },
+    {
+      "text": "We are a UK organisation rolling out Microsoft 365 Copilot and need help with governance and adoption, who should we talk to?",
+      "named": false,
+      "named_instead": ["Bridgeall", "Systech IT Solutions", "Silicon Reef", "CloudMatters", "Network Squad"]
+    },
+    {
+      "text": "Best Power Platform and SharePoint consultancies in London for a small regulated organisation?",
+      "named": false,
+      "named_instead": ["Synapx", "Intelogy"],
+      "named_instead_note": "topped the list"
+    },
+    {
+      "text": "Is SMCPS Consulting (smcpsconsulting.co.uk) a good Microsoft consultancy?",
+      "named": true
+    }
+  ],
+
+  "accuracy": {
+    "title": "What Google says when asked about you by name",
+    "sub": "In most audits this section lists factual errors. Here we found none worth reporting.",
+    "quotes": [
+      "a highly specialized, boutique Microsoft consultancy that is excellent for organizations needing a mix of senior-level technical architecture, strict compliance governance, and user adoption strategy",
+      "Managing Consultant Surajit Mukherjee brings over 20 years of Microsoft delivery experience, including SC-cleared architecture for UK Government bodies (like the Ministry of Justice)",
+      "Note on a Common Mix-up: Ensure you do not confuse SMCPS with CPS (cps.co.uk), which is a completely different, much larger UK Microsoft partner"
+    ],
+    "flag_quote_index": 2,
+    "source": "Google AI Mode, brand test, 3 August 2026. Verbatim.",
+    "body": [
+      "It also named your own tool, Scenarios + ASCEND, unprompted, and repeated the positioning your site leads with. This answer is an asset worth protecting.",
+      "The third quote is the one to watch. Google is warning buyers not to confuse you with CPS, a firm of 50 to 200 people doing enterprise ERP and 24/7 managed IT. In the Copilot Studio category answer we ran, cps.co.uk appeared among the visible cited sources. Unmanaged, the name overlap feeds their record rather than yours."
+    ]
+  },
+
+  "gaps": {
+    "title": "Four reasons category answers skip you",
+    "sub": "Each of these is tied to something observed above, not to general best practice.",
+    "items": [
+      {
+        "title": "No verifiable legal identity",
+        "body": "The site shows no company number, and we could not locate a Companies House record under the SMCPS name. It may well exist under another registered name, but a machine cannot make that connection, and machines now do the first pass of due diligence."
+      },
+      {
+        "title": "Entity markup stops halfway",
+        "body": "The site carries ProfessionalService markup, which is more than most firms we audit. What it lacks is a full Organization and founder graph with a company number and sameAs links. That is precisely what would separate SMCPS from CPS by machine rather than by footnote."
+      },
+      {
+        "title": "Absent from the source pool",
+        "body": "The three category answers were assembled from 17, 12 and 13 sites. The visible ones included marra.co.uk, Intelogy, cps.co.uk, Bridgeall, Silicon Reef, Wavenet, Synapx and threesixfive DGTL. SMCPS appears in none of them, so there is nothing for the engine to lift."
+      },
+      {
+        "title": "No independent evidence layer",
+        "body": "Your brand answer cited seven sites: your own domain, your LinkedIn page and your own support pages. Accurate, because you wrote it. There is nothing independent underneath it."
+      }
+    ],
+    "already_works": "an accurate and detailed brand answer with no factual errors, a clear page title and meta description, ProfessionalService markup already in place, and a named proprietary tool, Scenarios + ASCEND, that Google repeats without being asked."
+  },
+
+  "fixes": {
+    "title": "What we would do, and what each fix changes",
+    "sub": "Ordered by effect against effort. The left half is the work, the right half is what a machine can do afterwards that it cannot do today.",
+    "items": [
+      {
+        "title": "Publish the legal identity",
+        "how": "Registered name and company number in the footer and on the contact page.",
+        "effect": "A machine can verify you exist and tie site, register and LinkedIn into one record."
+      },
+      {
+        "title": "Complete the entity markup",
+        "how": "Full Organization and founder graph, sameAs links, service schema.",
+        "effect": "SMCPS becomes one unambiguous entity, and the CPS confusion loses its technical basis."
+      },
+      {
+        "title": "Publish proof and disambiguation pages",
+        "how": "Plain-text pages in buyer vocabulary, including an explicit page on the difference from cps.co.uk.",
+        "effect": "Engines quote plain text. You control the sentence they lift."
+      },
+      {
+        "title": "Enter the source pool",
+        "how": "Profiles and listings in the directories and partner lists these answers actually cite.",
+        "effect": "You appear where answers are assembled, not only on your own site."
+      },
+      {
+        "title": "Re-measure and compare",
+        "how": "The same four queries re-run after the recrawl window, four to six weeks out.",
+        "effect": "You see movement in screenshots, not in promises."
+      }
+    ],
+    "disclaimer": "We do not promise rankings, mentions or timelines. AI answers vary between runs. What we change is what the systems read, and a repeat measurement shows what moved."
+  },
+
+  "screenshots": [
+    {
+      "file": "s1-copilot-studio.jpg",
+      "caption": "Google AI Mode, 3 August 2026. “Which consultancies should a UK company talk to for Microsoft Copilot Studio agents and Power Platform automation?” SMCPS not named. Note cps.co.uk among the cited sources on the right."
+    },
+    {
+      "file": "s2-copilot-governance.jpg",
+      "caption": "Google AI Mode, 3 August 2026. “We are a UK organisation rolling out Microsoft 365 Copilot and need help with governance and adoption, who should we talk to?” SMCPS not named."
+    },
+    {
+      "file": "s3-power-platform-london.jpg",
+      "caption": "Google AI Mode, 3 August 2026. “Best Power Platform and SharePoint consultancies in London for a small regulated organisation?” The top recommendation, Synapx, carries a business profile in Galle, Sri Lanka. SMCPS not named."
+    },
+    {
+      "file": "s4-brand-test.jpg",
+      "caption": "Google AI Mode brand test, 3 August 2026. Accurate and detailed, including the Ministry of Justice work and Scenarios + ASCEND, and the warning about confusion with CPS."
+    }
+  ],
+
+  "method": [
+    "All queries were run manually in a browser on 3 August 2026, in English, phrased the way a real buyer would ask rather than as keywords.",
+    "Engine: Google AI Mode with UK region and language settings. Four queries in total, three category and one brand test. ChatGPT, Perplexity and Copilot were not run in this round.",
+    "Queries were run from Norway with UK language and region settings, so answers to region-specific questions may differ slightly for a buyer physically in the UK.",
+    "One answer is one data point, not a verdict. Repeating these queries will produce some variation, which is why the re-measurement uses the same wording.",
+    "Website facts were taken from the live pages at smcpsconsulting.co.uk, including page source for structured data. Register checks were made directly against Companies House the same day rather than taken from any AI answer."
+  ],
+
+  "cta": {
+    "title": "Google already tells your story well. The job is making sure buyers get to hear it.",
+    "body": "Every finding above is documented in the screenshots, and this report is yours to keep whichever way you decide. If you want to go through it line by line, book a slot and we will work from your own results rather than a generic presentation.",
+    "button_text": "Book a 30 minute walkthrough",
+    "button_url": "https://growwithelevate.eu/book"
+  },
+
+  "signature": {
+    "entity": "Elevate Marketing (EngeCo AS, Norwegian company no. 924 490 926)",
+    "address": "Midtfjellet 66, 5363 Ågotnes, Norway",
+    "email": "post@elevatemarketing.no",
+    "ownership": "This report belongs to SMCPS Consulting and may be used freely by the recipient."
+  }
+}

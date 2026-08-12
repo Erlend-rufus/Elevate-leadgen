@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>GEO audit: SMCPS Consulting</title>
+<meta name="description" content="Private GEO audit prepared for SMCPS Consulting by Elevate Marketing.">
+<meta name="theme-color" content="#14213D">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --navy:#14213D; --navy-2:#1B2A4E; --navy-3:#22335C;
+  --amber:#FCA311;            /* accents + text on navy only */
+  --amber-ink:#7A4A00;        /* amber-family text on light: WCAG AA on white */
+  --light:#F4F6F9; --white:#fff; --grey:#5A6070; --ink:#1A1D24; --line:#D8DBE2;
+  --red:#B3261E; --red-bg:#FCEBEA; --green:#1E7D46; --green-bg:#E9F3EC;
+  --sky:#CADCFC; --sky-dim:#9AA3B5;
+  --serif:Georgia,'Iowan Old Style','Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --ease:cubic-bezier(.16,.84,.44,1);
+}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);font-size:17px;line-height:1.62;background:var(--white)}
+h1,h2,h3{font-family:var(--serif);color:var(--navy);line-height:1.2;margin:0;font-weight:700}
+a{color:var(--navy)}
+img{max-width:100%}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px}
+.kicker{font-size:12px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--amber-ink);margin:0 0 10px;display:flex;align-items:center;gap:10px}
+.kicker .n{font-family:var(--serif);font-size:13px;letter-spacing:0;color:var(--grey);font-weight:400}
+.kicker .n::after{content:'';display:inline-block;width:18px;height:1px;background:var(--line);vertical-align:middle;margin-left:10px}
+
+/* scroll progress */
+.prog{position:fixed;inset:0 auto auto 0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--amber);z-index:50}
+
+/* hero */
+.hero{background:var(--navy);color:var(--white);padding:76px 0 68px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;inset:auto -10% -60% 55%;height:340px;background:radial-gradient(circle at 50% 50%,rgba(252,163,17,.14),transparent 68%);pointer-events:none}
+.hero .kicker{color:var(--amber)}
+.hero .kicker .n{color:var(--sky-dim)}
+.hero h1{color:var(--white);font-size:clamp(36px,6.4vw,56px);margin:0 0 18px;letter-spacing:-.01em}
+.hero .lede{color:var(--sky);font-size:clamp(17px,2.4vw,20px);margin:0 0 28px;max-width:56ch}
+.rule{width:64px;height:3px;background:var(--amber);margin:0 0 22px;transform-origin:0 50%}
+.hero .meta{color:var(--sky-dim);font-size:14px;margin:0}
+
+/* headline stat */
+.headline{background:var(--navy-2);color:var(--white);padding:56px 0;position:relative}
+.headline .kicker{color:var(--amber)}
+.headline .kicker .n{color:var(--sky-dim)}
+.statrow{display:flex;align-items:flex-start;gap:clamp(20px,5vw,48px);flex-wrap:wrap}
+.big{font-family:var(--serif);font-size:clamp(60px,14vw,116px);font-weight:700;color:var(--amber);line-height:.9;margin:0;letter-spacing:-.02em}
+.big-sub{font-family:var(--serif);font-size:clamp(20px,3.4vw,27px);font-weight:700;color:var(--white);margin:10px 0 0;max-width:24ch}
+.dots{display:flex;gap:9px;margin:20px 0 0}
+.dot{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.16);flex:none}
+.dot.miss{background:#E5544B}
+.dot.hit{background:#39C07C}
+.headline p.body{color:var(--sky);margin:26px 0 0;max-width:64ch}
+
+section{padding:56px 0;border-bottom:1px solid var(--line)}
+section h2{font-size:clamp(25px,4vw,33px);margin:0 0 10px}
+section .sub{color:var(--grey);margin:0 0 30px;max-width:66ch}
+p{margin:0 0 16px}
+
+/* query cards */
+.q{background:var(--light);border-radius:12px;padding:22px 24px;margin:0 0 14px;border:1px solid transparent}
+.q.brand{background:var(--green-bg);border-color:rgba(30,125,70,.22)}
+.qt{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--ink);margin:0 0 16px}
+.verdict{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:12px;letter-spacing:1.1px;text-transform:uppercase;padding:5px 11px;border-radius:100px;white-space:nowrap}
+.verdict.no{background:var(--red-bg);color:var(--red)}
+.verdict.yes{background:#D7EBDF;color:var(--green)}
+.verdict::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+.lbl{display:block;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--grey);margin:16px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{background:var(--white);border:1px solid var(--line);border-radius:100px;padding:5px 13px;font-size:14px;font-weight:600;color:var(--navy)}
+.chip-note{font-size:14px;color:var(--grey)}
+
+/* rival tally */
+.tally{display:flex;align-items:center;gap:20px;background:var(--navy);color:var(--white);border-radius:12px;padding:24px 26px;margin:26px 0 0}
+.tally .n{font-family:var(--serif);font-size:clamp(42px,9vw,62px);font-weight:700;color:var(--amber);line-height:.9}
+.tally .t{font-size:16px;color:var(--sky);max-width:26ch}
+
+/* quotes */
+blockquote{margin:0 0 16px;padding:18px 22px;background:var(--light);border-left:4px solid var(--amber);border-radius:0 10px 10px 0}
+blockquote p{margin:0;font-family:var(--serif);font-style:italic;font-size:17px}
+blockquote.flag{background:#FFF6E6;border-left-color:var(--amber-ink)}
+blockquote.flag .tag{display:block;font-family:var(--sans);font-style:normal;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--amber-ink);margin:0 0 8px}
+.src{font-size:13px;color:var(--grey);margin:-4px 0 24px}
+
+/* gaps + fixes */
+.gap,.fix{display:flex;gap:18px;padding:24px 0;border-top:1px solid var(--line)}
+.gap:first-of-type,.fix:first-of-type{border-top:none;padding-top:6px}
+.num{flex:0 0 36px;height:36px;border-radius:50%;background:var(--amber);color:var(--navy);font-family:var(--serif);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px}
+.gap h3,.fix h3{font-size:19px;margin:5px 0 7px}
+.gap p{margin:0}
+.good{background:var(--green-bg);border-radius:12px;padding:22px 24px;margin:28px 0 0;border:1px solid rgba(30,125,70,.2)}
+.good p{margin:0}
+.good strong{color:var(--green)}
+.fix .how{color:var(--grey);font-size:15px;margin:0 0 10px}
+.eff{margin:0;font-size:15px;padding:10px 14px;background:var(--light);border-radius:8px;border-left:3px solid var(--amber);display:flex;gap:9px}
+.eff::before{content:'→';color:var(--amber-ink);font-weight:700;flex:none}
+
+/* evidence */
+figure{margin:0 0 30px}
+.shot{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--light);overflow:hidden;cursor:zoom-in;position:relative}
+.shot img{display:block;width:100%;height:auto}
+.shot .zoom{position:absolute;inset:auto 10px 10px auto;background:rgba(20,33,61,.88);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 10px;border-radius:6px;opacity:0;transition:opacity .18s}
+.shot:hover .zoom,.shot:focus-visible .zoom{opacity:1}
+.missing{border:1px dashed var(--line);border-radius:10px;background:var(--light);padding:34px 24px;text-align:center;color:var(--grey);font-size:14px}
+.missing code{font-size:13px;color:var(--ink)}
+figcaption{font-size:14px;color:var(--grey);margin:12px 0 0;line-height:1.55}
+
+/* lightbox */
+dialog.lb{border:none;padding:0;background:transparent;max-width:96vw;max-height:96vh;width:auto}
+dialog.lb::backdrop{background:rgba(10,16,30,.9)}
+dialog.lb img{display:block;max-width:96vw;max-height:88vh;width:auto;border-radius:8px}
+dialog.lb .x{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:6px}
+dialog.lb form{position:relative}
+
+/* method */
+.method{background:var(--light);border-radius:12px;padding:26px 28px}
+.method p{font-size:15px;color:var(--grey)}
+.method p:last-child{margin:0}
+
+/* cta */
+.cta{background:var(--navy);color:var(--white);padding:64px 0;position:relative;overflow:hidden}
+.cta::after{content:'';position:absolute;inset:-40% 60% auto -10%;height:420px;background:radial-gradient(circle at 50% 50%,rgba(252,163,17,.12),transparent 68%);pointer-events:none}
+.cta .kicker{color:var(--amber)}
+.cta .kicker .n{color:var(--sky-dim)}
+.cta h2{color:var(--white);font-size:clamp(25px,4.2vw,35px);margin:0 0 16px;max-width:30ch}
+.cta p{color:var(--sky);max-width:58ch}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:var(--navy);font-weight:700;text-decoration:none;padding:16px 30px;border-radius:8px;margin:14px 0 26px;font-size:17px;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(252,163,17,.28)}
+.btn::after{content:'→'}
+.sign{color:var(--sky-dim);font-size:14px;line-height:1.7;margin:0}
+.sign a{color:var(--sky)}
+
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+@media(max-width:640px){
+  body{font-size:16px}
+  section{padding:42px 0}
+  .hero{padding:56px 0 48px}
+  .gap,.fix{gap:14px}
+  .num{flex-basis:32px;height:32px;font-size:15px}
+  .statrow{gap:18px}
+  .tally{flex-direction:column;align-items:flex-start;gap:8px}
+}
+
+/* ---- animation: opt-in via .js, so no-JS and print show everything ---- */
+.js .reveal{opacity:0;transform:translateY(22px)}
+.js .reveal.in{opacity:1;transform:none;transition:opacity .62s var(--ease),transform .62s var(--ease)}
+.js .reveal.in.d1{transition-delay:.08s}.js .reveal.in.d2{transition-delay:.16s}
+.js .reveal.in.d3{transition-delay:.24s}.js .reveal.in.d4{transition-delay:.32s}
+.js .rule{transform:scaleX(0)}
+.js .rule.in{transform:none;transition:transform .7s var(--ease) .2s}
+.js .big{opacity:0;transform:scale(.9)}
+.js .big.in{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.js .dot{transform:scale(0)}
+.js .dot.in{transform:none;transition:transform .42s var(--ease)}
+.js .chip{opacity:0;transform:translateY(6px)}
+.js .chip.in{opacity:1;transform:none;transition:opacity .34s var(--ease),transform .34s var(--ease)}
+/* numbered circles ride on their parent .reveal — they are not observed
+   directly, so they must key off the ancestor's .in class or they stay at
+   scale(0) and disappear entirely. */
+.js .num{transform:scale(0)}
+.js .reveal.in .num{transform:none;transition:transform .46s var(--ease) .12s}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num{opacity:1!important;transform:none!important;transition:none!important}
+  .prog{display:none}
+  .btn:hover{transform:none}
+}
+
+@media print{
+  .prog,.btn,dialog.lb,.shot .zoom{display:none!important}
+  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num{opacity:1!important;transform:none!important}
+  body{font-size:11pt}
+  .hero,.headline,.cta{background:var(--white)!important;color:var(--ink)!important;padding:24pt 0!important}
+  .hero::after,.cta::after{display:none}
+  .hero h1,.cta h2{color:var(--navy)!important}
+  .hero .lede,.headline p.body,.cta p{color:var(--ink)!important}
+  .hero .meta,.sign{color:var(--grey)!important}
+  .headline .big-sub{color:var(--navy)!important}
+  .tally{background:var(--light)!important;color:var(--ink)!important}
+  .tally .t{color:var(--ink)!important}
+  .shot{cursor:default}
+  section,.q,.gap,.fix,figure,.method,.tally{page-break-inside:avoid}
+  h1,h2,h3{page-break-after:avoid}
+  a[href^="http"]::after{content:' (' attr(href) ')';font-size:9pt;color:var(--grey)}
+}</style>
+</head>
+<body>
+<script>document.documentElement.className+=' js';</script>
+<div class="prog" aria-hidden="true"></div>
+
+<header class="hero"><div class="wrap">
+  <p class="kicker reveal">GEO audit</p>
+  <h1 class="reveal d1">SMCPS Consulting</h1>
+  <p class="lede reveal d2">What AI assistants tell buyers about Microsoft consulting, and where SMCPS appears in those answers.</p>
+  <div class="rule"></div>
+  <p class="meta reveal d3">Prepared for SMCPS Consulting by Elevate Marketing &middot; 3 August 2026</p>
+</div></header>
+
+<div class="headline"><div class="wrap">
+  <p class="kicker reveal">The headline</p>
+  <div class="statrow">
+    <div>
+      <p class="big">0 of 3</p>
+      <div class="dots" data-stagger=".dot" aria-hidden="true"><span class="dot miss"></span><span class="dot miss"></span><span class="dot miss"></span></div>
+    </div>
+    <p class="big-sub reveal d1">category questions named SMCPS Consulting</p>
+  </div>
+  <p class="body reveal d2">Copilot Studio agents and Power Platform automation. Microsoft 365 Copilot governance and adoption. Power Platform and SharePoint for a small regulated London organisation. Your three core subjects, and your name appears in none of the answers. Asked about SMCPS by name, Google answers in detail and gets it right. Buyers asking category questions never hear it.</p>
+</div></div>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">01</span> Visibility</p>
+  <h2 class="reveal">Who was named instead</h2>
+  <p class="sub reveal d1">We asked Google AI Mode, set to UK English, the questions a buyer in your market would actually ask. Three were category questions. One was a direct brand test.</p>
+      <div class="q reveal" data-stagger=".chip">
+        <p class="qt">&ldquo;Which consultancies should a UK company talk to for Microsoft Copilot Studio agents and Power Platform automation?&rdquo;</p>
+        <span class="verdict no">Not named</span>
+        <span class="lbl">Named instead</span>
+        <div class="chips"><span class="chip">Intelogy</span><span class="chip">Changing Social</span><span class="chip">Bytes</span><span class="chip">Synapx</span></div>
+      </div>
+      <div class="q reveal" data-stagger=".chip">
+        <p class="qt">&ldquo;We are a UK organisation rolling out Microsoft 365 Copilot and need help with governance and adoption, who should we talk to?&rdquo;</p>
+        <span class="verdict no">Not named</span>
+        <span class="lbl">Named instead</span>
+        <div class="chips"><span class="chip">Bridgeall</span><span class="chip">Systech IT Solutions</span><span class="chip">Silicon Reef</span><span class="chip">CloudMatters</span><span class="chip">Network Squad</span></div>
+      </div>
+      <div class="q reveal" data-stagger=".chip">
+        <p class="qt">&ldquo;Best Power Platform and SharePoint consultancies in London for a small regulated organisation?&rdquo;</p>
+        <span class="verdict no">Not named</span>
+        <span class="lbl">Named instead</span>
+        <div class="chips"><span class="chip">Synapx</span><span class="chip">Intelogy</span><span class="chip-note">topped the list</span></div>
+      </div>
+      <div class="q reveal brand">
+        <p class="qt">&ldquo;Is SMCPS Consulting (smcpsconsulting.co.uk) a good Microsoft consultancy?&rdquo;</p>
+        <span class="verdict yes">Named</span>
+      </div>
+  <div class="tally reveal">
+    <span class="n" data-count="9">9</span>
+    <span class="t">rival firms named instead of you</span>
+  </div>
+  <p class="reveal" style="margin-top:22px">Nine rival firms collected the mentions across these three answers. Every one of them is in the appended screenshots.</p>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">02</span> Accuracy</p>
+  <h2 class="reveal">What Google says when asked about you by name</h2>
+  <p class="sub reveal d1">In most audits this section lists factual errors. Here we found none worth reporting.</p>
+  <blockquote class="reveal"><p>&ldquo;a highly specialized, boutique Microsoft consultancy that is excellent for organizations needing a mix of senior-level technical architecture, strict compliance governance, and user adoption strategy&rdquo;</p></blockquote>
+  <blockquote class="reveal"><p>&ldquo;Managing Consultant Surajit Mukherjee brings over 20 years of Microsoft delivery experience, including SC-cleared architecture for UK Government bodies (like the Ministry of Justice)&rdquo;</p></blockquote>
+  <blockquote class="reveal flag"><span class="tag">Worth watching</span><p>&ldquo;Note on a Common Mix-up: Ensure you do not confuse SMCPS with CPS (cps.co.uk), which is a completely different, much larger UK Microsoft partner&rdquo;</p></blockquote>
+  <p class="src reveal">Google AI Mode, brand test, 3 August 2026. Verbatim.</p>
+  <p class="reveal">It also named your own tool, Scenarios + ASCEND, unprompted, and repeated the positioning your site leads with. This answer is an asset worth protecting.</p>
+  <p class="reveal">The third quote is the one to watch. Google is warning buyers not to confuse you with CPS, a firm of 50 to 200 people doing enterprise ERP and 24/7 managed IT. In the Copilot Studio category answer we ran, cps.co.uk appeared among the visible cited sources. Unmanaged, the name overlap feeds their record rather than yours.</p>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">03</span> Gaps</p>
+  <h2 class="reveal">Four reasons category answers skip you</h2>
+  <p class="sub reveal d1">Each of these is tied to something observed above, not to general best practice.</p>
+  <div class="gap reveal">
+    <div class="num" aria-hidden="true">1</div>
+    <div><h3>No verifiable legal identity</h3><p>The site shows no company number, and we could not locate a Companies House record under the SMCPS name. It may well exist under another registered name, but a machine cannot make that connection, and machines now do the first pass of due diligence.</p></div>
+  </div>
+  <div class="gap reveal">
+    <div class="num" aria-hidden="true">2</div>
+    <div><h3>Entity markup stops halfway</h3><p>The site carries ProfessionalService markup, which is more than most firms we audit. What it lacks is a full Organization and founder graph with a company number and sameAs links. That is precisely what would separate SMCPS from CPS by machine rather than by footnote.</p></div>
+  </div>
+  <div class="gap reveal">
+    <div class="num" aria-hidden="true">3</div>
+    <div><h3>Absent from the source pool</h3><p>The three category answers were assembled from 17, 12 and 13 sites. The visible ones included marra.co.uk, Intelogy, cps.co.uk, Bridgeall, Silicon Reef, Wavenet, Synapx and threesixfive DGTL. SMCPS appears in none of them, so there is nothing for the engine to lift.</p></div>
+  </div>
+  <div class="gap reveal">
+    <div class="num" aria-hidden="true">4</div>
+    <div><h3>No independent evidence layer</h3><p>Your brand answer cited seven sites: your own domain, your LinkedIn page and your own support pages. Accurate, because you wrote it. There is nothing independent underneath it.</p></div>
+  </div>
+  <div class="good reveal"><p><strong>Already working for you: </strong>an accurate and detailed brand answer with no factual errors, a clear page title and meta description, ProfessionalService markup already in place, and a named proprietary tool, Scenarios + ASCEND, that Google repeats without being asked.</p></div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">04</span> The work</p>
+  <h2 class="reveal">What we would do, and what each fix changes</h2>
+  <p class="sub reveal d1">Ordered by effect against effort. The left half is the work, the right half is what a machine can do afterwards that it cannot do today.</p>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">1</div>
+    <div>
+      <h3>Publish the legal identity</h3>
+      <p class="how">Registered name and company number in the footer and on the contact page.</p>
+      <p class="eff">A machine can verify you exist and tie site, register and LinkedIn into one record.</p>
+    </div>
+  </div>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">2</div>
+    <div>
+      <h3>Complete the entity markup</h3>
+      <p class="how">Full Organization and founder graph, sameAs links, service schema.</p>
+      <p class="eff">SMCPS becomes one unambiguous entity, and the CPS confusion loses its technical basis.</p>
+    </div>
+  </div>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">3</div>
+    <div>
+      <h3>Publish proof and disambiguation pages</h3>
+      <p class="how">Plain-text pages in buyer vocabulary, including an explicit page on the difference from cps.co.uk.</p>
+      <p class="eff">Engines quote plain text. You control the sentence they lift.</p>
+    </div>
+  </div>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">4</div>
+    <div>
+      <h3>Enter the source pool</h3>
+      <p class="how">Profiles and listings in the directories and partner lists these answers actually cite.</p>
+      <p class="eff">You appear where answers are assembled, not only on your own site.</p>
+    </div>
+  </div>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">5</div>
+    <div>
+      <h3>Re-measure and compare</h3>
+      <p class="how">The same four queries re-run after the recrawl window, four to six weeks out.</p>
+      <p class="eff">You see movement in screenshots, not in promises.</p>
+    </div>
+  </div>
+  <p class="reveal" style="margin-top:26px">We do not promise rankings, mentions or timelines. AI answers vary between runs. What we change is what the systems read, and a repeat measurement shows what moved.</p>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">05</span> Evidence</p>
+  <h2 class="reveal">Screenshots of every answer quoted</h2>
+  <p class="sub reveal d1">All captured 3 August 2026. Nothing in this report is paraphrased from memory.</p>
+      <figure class="reveal">
+        <div class="missing">Screenshot pending: drop <code>s1-copilot-studio.jpg</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
+        <figcaption>Google AI Mode, 3 August 2026. “Which consultancies should a UK company talk to for Microsoft Copilot Studio agents and Power Platform automation?” SMCPS not named. Note cps.co.uk among the cited sources on the right.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <div class="missing">Screenshot pending: drop <code>s2-copilot-governance.jpg</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
+        <figcaption>Google AI Mode, 3 August 2026. “We are a UK organisation rolling out Microsoft 365 Copilot and need help with governance and adoption, who should we talk to?” SMCPS not named.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <div class="missing">Screenshot pending: drop <code>s3-power-platform-london.jpg</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
+        <figcaption>Google AI Mode, 3 August 2026. “Best Power Platform and SharePoint consultancies in London for a small regulated organisation?” The top recommendation, Synapx, carries a business profile in Galle, Sri Lanka. SMCPS not named.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <div class="missing">Screenshot pending: drop <code>s4-brand-test.jpg</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
+        <figcaption>Google AI Mode brand test, 3 August 2026. Accurate and detailed, including the Ministry of Justice work and Scenarios + ASCEND, and the warning about confusion with CPS.</figcaption>
+      </figure>
+</div></section>
+
+<dialog class="lb"><form method="dialog"><button class="x" aria-label="Close">&times;</button><img src="" alt=""></form></dialog>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">06</span> Method</p>
+  <h2 class="reveal">How this was measured</h2>
+  <div class="method reveal d1">
+    <p>All queries were run manually in a browser on 3 August 2026, in English, phrased the way a real buyer would ask rather than as keywords.</p>
+    <p>Engine: Google AI Mode with UK region and language settings. Four queries in total, three category and one brand test. ChatGPT, Perplexity and Copilot were not run in this round.</p>
+    <p>Queries were run from Norway with UK language and region settings, so answers to region-specific questions may differ slightly for a buyer physically in the UK.</p>
+    <p>One answer is one data point, not a verdict. Repeating these queries will produce some variation, which is why the re-measurement uses the same wording.</p>
+    <p>Website facts were taken from the live pages at smcpsconsulting.co.uk, including page source for structured data. Register checks were made directly against Companies House the same day rather than taken from any AI answer.</p>
+  </div>
+</div></section>
+
+<div class="cta"><div class="wrap">
+  <p class="kicker reveal">Next step</p>
+  <h2 class="reveal">Google already tells your story well. The job is making sure buyers get to hear it.</h2>
+  <p class="reveal d1">Every finding above is documented in the screenshots, and this report is yours to keep whichever way you decide. If you want to go through it line by line, book a slot and we will work from your own results rather than a generic presentation.</p>
+  <a class="btn reveal d2" href="https://growwithelevate.eu/book">Book a 30 minute walkthrough</a>
+  <p class="sign reveal d3">Elevate Marketing (EngeCo AS, Norwegian company no. 924 490 926)<br>Midtfjellet 66, 5363 Ågotnes, Norway<br><a href="mailto:post@elevatemarketing.no">post@elevatemarketing.no</a></p>
+  <p class="sign reveal d3" style="margin-top:18px">This report belongs to SMCPS Consulting and may be used freely by the recipient.</p>
+</div></div>
+
+<script>
+(function(){
+  var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll progress
+  var p = document.querySelector('.prog');
+  if (p && !rm) {
+    var tick = function(){
+      var h = document.documentElement.scrollHeight - innerHeight;
+      p.style.transform = 'scaleX(' + (h > 0 ? scrollY / h : 0) + ')';
+    };
+    addEventListener('scroll', tick, {passive:true});
+    addEventListener('resize', tick); tick();
+  }
+
+  // reveal on enter; stagger children marked data-stagger
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      io.unobserve(el);
+      var kids = el.dataset.stagger ? el.querySelectorAll(el.dataset.stagger) : null;
+      if (kids && kids.length) {
+        Array.prototype.forEach.call(kids, function(k, i){
+          setTimeout(function(){ k.classList.add('in'); }, i * 90);
+        });
+      }
+      el.classList.add('in');
+      if (el.dataset.count) countUp(el, +el.dataset.count);
+    });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:0.15});
+
+  document.querySelectorAll('.reveal,.rule,.big,[data-stagger],[data-count]')
+    .forEach(function(el){ io.observe(el); });
+
+  function countUp(el, to){
+    if (rm || to > 400) { el.textContent = to; return; }
+    var t0 = null, dur = 900;
+    (function step(t){
+      if (t0 === null) t0 = t;
+      var k = Math.min((t - t0) / dur, 1);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(step);
+    })(performance.now());
+    requestAnimationFrame(function(t){ t0 = t; });
+  }
+
+  // screenshot lightbox
+  var lb = document.querySelector('dialog.lb');
+  if (lb && lb.showModal) {
+    var img = lb.querySelector('img');
+    document.querySelectorAll('.shot').forEach(function(b){
+      b.addEventListener('click', function(){
+        img.src = b.dataset.full; img.alt = b.dataset.alt || '';
+        lb.showModal();
+      });
+    });
+    lb.addEventListener('click', function(e){ if (e.target === lb) lb.close(); });
+  }
+})();</script>
+</body>
+</html>
