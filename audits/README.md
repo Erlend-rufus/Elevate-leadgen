@@ -49,6 +49,12 @@ Useful optional fields:
 | `queries[].named_instead` | Array of competitor names, rendered as chips |
 | `queries[].named_instead_note` | Trailing note after the chips, e.g. "topped the list" |
 | `queries[].named: true` | Green "Named" card instead of red "Not named" |
+| `how_it_works` | Four-step explainer flow with connectors, revealed in sequence |
+| `pricing` | Closing section with price cards; `items[].highlight` gives one an amber border |
+| `cta` | "Book a call" block plus legal signature. **Omit it** for a report presented live in a meeting, where a booking CTA is redundant |
+
+Section numbers are assigned automatically in render order, so adding or omitting
+an optional section renumbers the rest rather than leaving a gap.
 
 ## These reports must never be indexed
 

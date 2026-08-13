@@ -117,6 +117,37 @@ dialog.lb img{display:block;max-width:96vw;max-height:88vh;width:auto;border-rad
 dialog.lb .x{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:6px}
 dialog.lb form{position:relative}
 
+/* step flow: how it works */
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+.step{background:var(--light);border-radius:12px;padding:20px 22px;position:relative}
+.step .sn{display:flex;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--serif);font-weight:700;align-items:center;justify-content:center;font-size:15px;margin:0 0 13px}
+.step h3{font-size:17px;margin:0 0 7px}
+.step p{font-size:15px;color:var(--grey);margin:0}
+.step::after{content:'';position:absolute;background:var(--line);left:35px;bottom:-18px;width:2px;height:18px}
+.step:last-child::after{display:none}
+@media(min-width:820px){
+  .flow{grid-template-columns:repeat(4,1fr);gap:16px}
+  .step::after{top:34px;left:auto;right:-16px;bottom:auto;width:16px;height:2px}
+}
+
+/* pricing */
+.prices{display:grid;gap:16px;margin:0 0 22px}
+@media(min-width:700px){.prices{grid-template-columns:1fr 1fr}}
+.price{border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;background:var(--white)}
+.price.hl{border:2px solid var(--amber);padding:23px}
+.price .pn{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--navy);margin:0 0 14px}
+.price .pv{font-family:var(--serif);font-size:clamp(34px,6.4vw,44px);font-weight:700;color:var(--navy);line-height:1;margin:0}
+.price .pu{font-size:14px;color:var(--grey);margin:7px 0 16px}
+.price .pb{font-size:15px;margin:0 0 14px}
+.price ul{margin:0;padding:0;list-style:none;font-size:15px;color:var(--grey)}
+.price li{margin:0 0 8px;padding:0 0 0 20px;position:relative}
+.price li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.price li:last-child{margin:0}
+.pnote{font-size:15px;color:var(--grey);margin:0}
+
+/* closing section (pricing): own ground, no trailing rule */
+.closing{background:var(--light);border-bottom:none}
+
 /* method */
 .method{background:var(--light);border-radius:12px;padding:26px 28px}
 .method p{font-size:15px;color:var(--grey)}
@@ -163,21 +194,26 @@ dialog.lb form{position:relative}
 /* numbered circles ride on their parent .reveal — they are not observed
    directly, so they must key off the ancestor's .in class or they stay at
    scale(0) and disappear entirely. */
+.js .step{opacity:0;transform:translateY(16px)}
+.js .step.in{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.js .step::after{opacity:0}
+.js .step.in::after{opacity:1;transition:opacity .4s var(--ease) .3s}
 .js .num{transform:scale(0)}
 .js .reveal.in .num{transform:none;transition:transform .46s var(--ease) .12s}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num{opacity:1!important;transform:none!important;transition:none!important}
+  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num,.js .step,.js .step::after{opacity:1!important;transform:none!important;transition:none!important}
   .prog{display:none}
   .btn:hover{transform:none}
 }
 
 @media print{
   .prog,.btn,dialog.lb,.shot .zoom{display:none!important}
-  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num{opacity:1!important;transform:none!important}
+  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num,.js .step,.js .step::after{opacity:1!important;transform:none!important}
   body{font-size:11pt}
   .hero,.headline,.cta{background:var(--white)!important;color:var(--ink)!important;padding:24pt 0!important}
+  .closing{background:var(--white)!important}
   .hero::after,.cta::after{display:none}
   .hero h1,.cta h2{color:var(--navy)!important}
   .hero .lede,.headline p.body,.cta p{color:var(--ink)!important}
@@ -186,7 +222,7 @@ dialog.lb form{position:relative}
   .tally{background:var(--light)!important;color:var(--ink)!important}
   .tally .t{color:var(--ink)!important}
   .shot{cursor:default}
-  section,.q,.gap,.fix,figure,.method,.tally{page-break-inside:avoid}
+  section,.q,.gap,.fix,figure,.method,.tally,.step,.price{page-break-inside:avoid}
   h1,h2,h3{page-break-after:avoid}
   a[href^="http"]::after{content:' (' attr(href) ')';font-size:9pt;color:var(--grey)}
 }</style>
@@ -200,7 +236,7 @@ dialog.lb form{position:relative}
   <h1 class="reveal d1">SMCPS Consulting</h1>
   <p class="lede reveal d2">What AI assistants tell buyers about Microsoft consulting, and where SMCPS appears in those answers.</p>
   <div class="rule"></div>
-  <p class="meta reveal d3">Prepared for SMCPS Consulting by Elevate Marketing &middot; 3 August 2026</p>
+  <p class="meta reveal d3">Prepared for SMCPS Consulting by Elevate Marketing &middot; 12 August 2026</p>
 </div></header>
 
 <div class="headline"><div class="wrap">
@@ -216,7 +252,36 @@ dialog.lb form{position:relative}
 </div></div>
 
 <section><div class="wrap">
-  <p class="kicker reveal"><span class="n">01</span> Visibility</p>
+  <p class="kicker reveal"><span class="n">01</span> How it works</p>
+  <h2 class="reveal">How an assistant decides whose name to say</h2>
+  <p class="sub reveal d1">Worth two minutes before the findings, because every gap below is a failure at one of these four steps.</p>
+  <ol class="flow" data-stagger=".step">
+    <li class="step">
+      <span class="sn" aria-hidden="true">1</span>
+      <h3>A buyer asks a real question</h3>
+      <p>Not a keyword but a full sentence. The assistant has to answer it with specific names.</p>
+    </li>
+    <li class="step">
+      <span class="sn" aria-hidden="true">2</span>
+      <h3>It goes looking for sources</h3>
+      <p>It does not copy Google’s rankings. It fetches pages it can read, then cross-checks them.</p>
+    </li>
+    <li class="step">
+      <span class="sn" aria-hidden="true">3</span>
+      <h3>It reads your site, and what others say about you</h3>
+      <p>Your own pages say what you do. Registers, directories and press decide whether it believes you.</p>
+    </li>
+    <li class="step">
+      <span class="sn" aria-hidden="true">4</span>
+      <h3>It names the firms it can verify</h3>
+      <p>Verifiable is safe to recommend. Unverifiable is a risk, so it names someone else instead.</p>
+    </li>
+  </ol>
+  <p class="reveal" style="margin-top:28px">That is the entire mechanism, and it is why GEO is two jobs rather than one: make your own pages readable and specific, and build enough independent evidence around them that a machine is willing to put your name in an answer. Nothing here is a trick, and there is no placement to buy.</p>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">02</span> Visibility</p>
   <h2 class="reveal">Who was named instead</h2>
   <p class="sub reveal d1">We asked Google AI Mode, set to UK English, the questions a buyer in your market would actually ask. Three were category questions. One was a direct brand test.</p>
       <div class="q reveal" data-stagger=".chip">
@@ -249,19 +314,19 @@ dialog.lb form{position:relative}
 </div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal"><span class="n">02</span> Accuracy</p>
+  <p class="kicker reveal"><span class="n">03</span> Accuracy</p>
   <h2 class="reveal">What Google says when asked about you by name</h2>
   <p class="sub reveal d1">In most audits this section lists factual errors. Here we found none worth reporting.</p>
   <blockquote class="reveal"><p>&ldquo;a highly specialized, boutique Microsoft consultancy that is excellent for organizations needing a mix of senior-level technical architecture, strict compliance governance, and user adoption strategy&rdquo;</p></blockquote>
   <blockquote class="reveal"><p>&ldquo;Managing Consultant Surajit Mukherjee brings over 20 years of Microsoft delivery experience, including SC-cleared architecture for UK Government bodies (like the Ministry of Justice)&rdquo;</p></blockquote>
   <blockquote class="reveal flag"><span class="tag">Worth watching</span><p>&ldquo;Note on a Common Mix-up: Ensure you do not confuse SMCPS with CPS (cps.co.uk), which is a completely different, much larger UK Microsoft partner&rdquo;</p></blockquote>
-  <p class="src reveal">Google AI Mode, brand test, 3 August 2026. Verbatim.</p>
+  <p class="src reveal">Google AI Mode, brand test, 12 August 2026. Verbatim.</p>
   <p class="reveal">It also named your own tool, Scenarios + ASCEND, unprompted, and repeated the positioning your site leads with. This answer is an asset worth protecting.</p>
   <p class="reveal">The third quote is the one to watch. Google is warning buyers not to confuse you with CPS, a firm of 50 to 200 people doing enterprise ERP and 24/7 managed IT. In the Copilot Studio category answer we ran, cps.co.uk appeared among the visible cited sources. Unmanaged, the name overlap feeds their record rather than yours.</p>
 </div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal"><span class="n">03</span> Gaps</p>
+  <p class="kicker reveal"><span class="n">04</span> Gaps</p>
   <h2 class="reveal">Four reasons category answers skip you</h2>
   <p class="sub reveal d1">Each of these is tied to something observed above, not to general best practice.</p>
   <div class="gap reveal">
@@ -284,7 +349,7 @@ dialog.lb form{position:relative}
 </div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal"><span class="n">04</span> The work</p>
+  <p class="kicker reveal"><span class="n">05</span> The work</p>
   <h2 class="reveal">What we would do, and what each fix changes</h2>
   <p class="sub reveal d1">Ordered by effect against effort. The left half is the work, the right half is what a machine can do afterwards that it cannot do today.</p>
   <div class="fix reveal">
@@ -331,34 +396,34 @@ dialog.lb form{position:relative}
 </div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal"><span class="n">05</span> Evidence</p>
+  <p class="kicker reveal"><span class="n">06</span> Evidence</p>
   <h2 class="reveal">Screenshots of every answer quoted</h2>
-  <p class="sub reveal d1">All captured 3 August 2026. Nothing in this report is paraphrased from memory.</p>
+  <p class="sub reveal d1">All captured 12 August 2026. Nothing in this report is paraphrased from memory.</p>
       <figure class="reveal">
         <div class="missing">Screenshot pending: drop <code>s1-copilot-studio.jpg</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
-        <figcaption>Google AI Mode, 3 August 2026. “Which consultancies should a UK company talk to for Microsoft Copilot Studio agents and Power Platform automation?” SMCPS not named. Note cps.co.uk among the cited sources on the right.</figcaption>
+        <figcaption>Google AI Mode, 12 August 2026. “Which consultancies should a UK company talk to for Microsoft Copilot Studio agents and Power Platform automation?” SMCPS not named. Note cps.co.uk among the cited sources on the right.</figcaption>
       </figure>
       <figure class="reveal">
         <div class="missing">Screenshot pending: drop <code>s2-copilot-governance.jpg</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
-        <figcaption>Google AI Mode, 3 August 2026. “We are a UK organisation rolling out Microsoft 365 Copilot and need help with governance and adoption, who should we talk to?” SMCPS not named.</figcaption>
+        <figcaption>Google AI Mode, 12 August 2026. “We are a UK organisation rolling out Microsoft 365 Copilot and need help with governance and adoption, who should we talk to?” SMCPS not named.</figcaption>
       </figure>
       <figure class="reveal">
         <div class="missing">Screenshot pending: drop <code>s3-power-platform-london.jpg</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
-        <figcaption>Google AI Mode, 3 August 2026. “Best Power Platform and SharePoint consultancies in London for a small regulated organisation?” The top recommendation, Synapx, carries a business profile in Galle, Sri Lanka. SMCPS not named.</figcaption>
+        <figcaption>Google AI Mode, 12 August 2026. “Best Power Platform and SharePoint consultancies in London for a small regulated organisation?” The top recommendation, Synapx, carries a business profile in Galle, Sri Lanka. SMCPS not named.</figcaption>
       </figure>
       <figure class="reveal">
         <div class="missing">Screenshot pending: drop <code>s4-brand-test.jpg</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
-        <figcaption>Google AI Mode brand test, 3 August 2026. Accurate and detailed, including the Ministry of Justice work and Scenarios + ASCEND, and the warning about confusion with CPS.</figcaption>
+        <figcaption>Google AI Mode brand test, 12 August 2026. Accurate and detailed, including the Ministry of Justice work and Scenarios + ASCEND, and the warning about confusion with CPS.</figcaption>
       </figure>
 </div></section>
 
 <dialog class="lb"><form method="dialog"><button class="x" aria-label="Close">&times;</button><img src="" alt=""></form></dialog>
 
 <section><div class="wrap">
-  <p class="kicker reveal"><span class="n">06</span> Method</p>
+  <p class="kicker reveal"><span class="n">07</span> Method</p>
   <h2 class="reveal">How this was measured</h2>
   <div class="method reveal d1">
-    <p>All queries were run manually in a browser on 3 August 2026, in English, phrased the way a real buyer would ask rather than as keywords.</p>
+    <p>All queries were run manually in a browser on 12 August 2026, in English, phrased the way a real buyer would ask rather than as keywords.</p>
     <p>Engine: Google AI Mode with UK region and language settings. Four queries in total, three category and one brand test. ChatGPT, Perplexity and Copilot were not run in this round.</p>
     <p>Queries were run from Norway with UK language and region settings, so answers to region-specific questions may differ slightly for a buyer physically in the UK.</p>
     <p>One answer is one data point, not a verdict. Repeating these queries will produce some variation, which is why the re-measurement uses the same wording.</p>
@@ -366,14 +431,40 @@ dialog.lb form{position:relative}
   </div>
 </div></section>
 
-<div class="cta"><div class="wrap">
-  <p class="kicker reveal">Next step</p>
-  <h2 class="reveal">Google already tells your story well. The job is making sure buyers get to hear it.</h2>
-  <p class="reveal d1">Every finding above is documented in the screenshots, and this report is yours to keep whichever way you decide. If you want to go through it line by line, book a slot and we will work from your own results rather than a generic presentation.</p>
-  <a class="btn reveal d2" href="https://growwithelevate.eu/book">Book a 30 minute walkthrough</a>
-  <p class="sign reveal d3">Elevate Marketing (EngeCo AS, Norwegian company no. 924 490 926)<br>Midtfjellet 66, 5363 Ågotnes, Norway<br><a href="mailto:post@elevatemarketing.no">post@elevatemarketing.no</a></p>
-  <p class="sign reveal d3" style="margin-top:18px">This report belongs to SMCPS Consulting and may be used freely by the recipient.</p>
-</div></div>
+<section class="closing"><div class="wrap">
+  <p class="kicker reveal"><span class="n">08</span> Investment</p>
+  <h2 class="reveal">What this costs</h2>
+  <p class="sub reveal d1">Two parts: a one-off piece of engineering to fix what is broken, then continuous work to build the evidence layer that takes longer.</p>
+  <div class="prices">
+    <div class="price hl reveal">
+      <p class="pn">Technical GEO review</p>
+      <p class="pv">£1,500</p>
+      <p class="pu">one-off</p>
+      <p class="pb">The first three fixes above, delivered and verified. This is the part that can be finished.</p>
+      <ul>
+        <li>Legal identity published and verifiable</li>
+        <li>Full Organization and founder markup, sameAs links, service schema</li>
+        <li>Proof and disambiguation pages, including the difference from cps.co.uk</li>
+        <li>Re-measurement of the same four queries after the recrawl window</li>
+      </ul>
+    </div>
+    <div class="price reveal">
+      <p class="pn">Ongoing GEO visibility</p>
+      <p class="pv">£800</p>
+      <p class="pu">per month</p>
+      <p class="pb">Corroboration is the slow half. It compounds, and it does not finish.</p>
+      <ul>
+        <li>Entry into the directories and partner lists these answers cite</li>
+        <li>Continuing content work in buyer vocabulary</li>
+        <li>The same query set re-run monthly, logged in screenshots</li>
+        <li>A short written record of what moved and what did not</li>
+      </ul>
+    </div>
+  </div>
+  <p class="pnote reveal">Prices are in pounds sterling and exclude VAT. The review stands on its own: it is worth doing whether or not the monthly work follows.</p>
+</div></section>
+
+
 
 <script>
 (function(){

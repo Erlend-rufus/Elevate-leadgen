@@ -39,7 +39,7 @@ function validate(d, file) {
     console.error(`\n  ✗ ${basename(file)}: ${msg}\n`);
     process.exit(1);
   };
-  for (const k of ['company', 'slug', 'date', 'lede', 'headline', 'visibility', 'queries', 'accuracy', 'gaps', 'fixes', 'method', 'cta'])
+  for (const k of ['company', 'slug', 'date', 'lede', 'headline', 'visibility', 'queries', 'accuracy', 'gaps', 'fixes', 'method'])
     if (!d[k]) die(`missing required section "${k}"`);
   if (!/^[a-z0-9-]+-[a-z0-9]{5,}$/.test(d.slug))
     die(`slug "${d.slug}" needs a random suffix of at least 5 characters (guessable URLs expose other clients' reports)`);
@@ -50,7 +50,11 @@ function validate(d, file) {
   if (!Array.isArray(d.gaps.items) || !d.gaps.items.length) die('gaps.items must be a non-empty array');
   if (!Array.isArray(d.fixes.items) || !d.fixes.items.length) die('fixes.items must be a non-empty array');
   if (!Array.isArray(d.method) || !d.method.length) die('method must be a non-empty array');
-  if (!d.cta.title || !d.cta.button_text || !d.cta.button_url) die('cta needs title, button_text and button_url');
+  // cta, how_it_works and pricing are optional: a report presented live in a
+  // meeting has no use for a "book a call" block, but one sent cold does.
+  if (d.cta && (!d.cta.title || !d.cta.button_text || !d.cta.button_url)) die('cta needs title, button_text and button_url');
+  if (d.how_it_works && !Array.isArray(d.how_it_works.steps)) die('how_it_works needs a steps array');
+  if (d.pricing && !Array.isArray(d.pricing.items)) die('pricing needs an items array');
 }
 
 /* --------------------------------------------------------------------- CSS */
@@ -164,6 +168,37 @@ dialog.lb img{display:block;max-width:96vw;max-height:88vh;width:auto;border-rad
 dialog.lb .x{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:6px}
 dialog.lb form{position:relative}
 
+/* step flow: how it works */
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+.step{background:var(--light);border-radius:12px;padding:20px 22px;position:relative}
+.step .sn{display:flex;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--serif);font-weight:700;align-items:center;justify-content:center;font-size:15px;margin:0 0 13px}
+.step h3{font-size:17px;margin:0 0 7px}
+.step p{font-size:15px;color:var(--grey);margin:0}
+.step::after{content:'';position:absolute;background:var(--line);left:35px;bottom:-18px;width:2px;height:18px}
+.step:last-child::after{display:none}
+@media(min-width:820px){
+  .flow{grid-template-columns:repeat(4,1fr);gap:16px}
+  .step::after{top:34px;left:auto;right:-16px;bottom:auto;width:16px;height:2px}
+}
+
+/* pricing */
+.prices{display:grid;gap:16px;margin:0 0 22px}
+@media(min-width:700px){.prices{grid-template-columns:1fr 1fr}}
+.price{border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;background:var(--white)}
+.price.hl{border:2px solid var(--amber);padding:23px}
+.price .pn{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--navy);margin:0 0 14px}
+.price .pv{font-family:var(--serif);font-size:clamp(34px,6.4vw,44px);font-weight:700;color:var(--navy);line-height:1;margin:0}
+.price .pu{font-size:14px;color:var(--grey);margin:7px 0 16px}
+.price .pb{font-size:15px;margin:0 0 14px}
+.price ul{margin:0;padding:0;list-style:none;font-size:15px;color:var(--grey)}
+.price li{margin:0 0 8px;padding:0 0 0 20px;position:relative}
+.price li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.price li:last-child{margin:0}
+.pnote{font-size:15px;color:var(--grey);margin:0}
+
+/* closing section (pricing): own ground, no trailing rule */
+.closing{background:var(--light);border-bottom:none}
+
 /* method */
 .method{background:var(--light);border-radius:12px;padding:26px 28px}
 .method p{font-size:15px;color:var(--grey)}
@@ -210,21 +245,26 @@ dialog.lb form{position:relative}
 /* numbered circles ride on their parent .reveal — they are not observed
    directly, so they must key off the ancestor's .in class or they stay at
    scale(0) and disappear entirely. */
+.js .step{opacity:0;transform:translateY(16px)}
+.js .step.in{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.js .step::after{opacity:0}
+.js .step.in::after{opacity:1;transition:opacity .4s var(--ease) .3s}
 .js .num{transform:scale(0)}
 .js .reveal.in .num{transform:none;transition:transform .46s var(--ease) .12s}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num{opacity:1!important;transform:none!important;transition:none!important}
+  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num,.js .step,.js .step::after{opacity:1!important;transform:none!important;transition:none!important}
   .prog{display:none}
   .btn:hover{transform:none}
 }
 
 @media print{
   .prog,.btn,dialog.lb,.shot .zoom{display:none!important}
-  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num{opacity:1!important;transform:none!important}
+  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num,.js .step,.js .step::after{opacity:1!important;transform:none!important}
   body{font-size:11pt}
   .hero,.headline,.cta{background:var(--white)!important;color:var(--ink)!important;padding:24pt 0!important}
+  .closing{background:var(--white)!important}
   .hero::after,.cta::after{display:none}
   .hero h1,.cta h2{color:var(--navy)!important}
   .hero .lede,.headline p.body,.cta p{color:var(--ink)!important}
@@ -233,7 +273,7 @@ dialog.lb form{position:relative}
   .tally{background:var(--light)!important;color:var(--ink)!important}
   .tally .t{color:var(--ink)!important}
   .shot{cursor:default}
-  section,.q,.gap,.fix,figure,.method,.tally{page-break-inside:avoid}
+  section,.q,.gap,.fix,figure,.method,.tally,.step,.price{page-break-inside:avoid}
   h1,h2,h3{page-break-after:avoid}
   a[href^="http"]::after{content:' (' attr(href) ')';font-size:9pt;color:var(--grey)}
 }`;
@@ -342,7 +382,8 @@ function renderShot(s, i, hasFile) {
 }
 
 function render(d, shotsPresent) {
-  const n = (x) => `<span class="n">${x}</span>`;
+  let secN = 0;
+  const n = () => `<span class="n">${String(++secN).padStart(2, '0')}</span>`;
   const sig = d.signature || {};
   const flag = d.accuracy.flag_quote_index;
 
@@ -382,8 +423,21 @@ function render(d, shotsPresent) {
   <p class="body reveal d2">${esc(d.headline.body)}</p>
 </div></div>
 
-<section><div class="wrap">
-  <p class="kicker reveal">${n('01')} Visibility</p>
+${d.how_it_works ? `<section><div class="wrap">
+  <p class="kicker reveal">${n()} How it works</p>
+  <h2 class="reveal">${esc(d.how_it_works.title)}</h2>
+  <p class="sub reveal d1">${esc(d.how_it_works.sub || '')}</p>
+  <ol class="flow" data-stagger=".step">
+${d.how_it_works.steps.map((st, i) => `    <li class="step">
+      <span class="sn" aria-hidden="true">${i + 1}</span>
+      <h3>${esc(st.title)}</h3>
+      <p>${esc(st.body)}</p>
+    </li>`).join('\n')}
+  </ol>
+${d.how_it_works.close ? `  <p class="reveal" style="margin-top:28px">${esc(d.how_it_works.close)}</p>\n` : ''}</div></section>
+
+` : ''}<section><div class="wrap">
+  <p class="kicker reveal">${n()} Visibility</p>
   <h2 class="reveal">${esc(d.visibility.title)}</h2>
   <p class="sub reveal d1">${esc(d.visibility.sub)}</p>
 ${d.queries.map(renderQuery).join('\n')}
@@ -393,7 +447,7 @@ ${d.visibility.rival_count ? `  <div class="tally reveal">
   </div>\n` : ''}${d.visibility.close ? `  <p class="reveal" style="margin-top:22px">${esc(d.visibility.close)}</p>\n` : ''}</div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal">${n('02')} Accuracy</p>
+  <p class="kicker reveal">${n()} Accuracy</p>
   <h2 class="reveal">${esc(d.accuracy.title)}</h2>
   <p class="sub reveal d1">${esc(d.accuracy.sub)}</p>
 ${d.accuracy.quotes.map((q, i) => `  <blockquote class="reveal${i === flag ? ' flag' : ''}">${
@@ -404,7 +458,7 @@ ${d.accuracy.body.map((p) => `  <p class="reveal">${esc(p)}</p>`).join('\n')}
 </div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal">${n('03')} Gaps</p>
+  <p class="kicker reveal">${n()} Gaps</p>
   <h2 class="reveal">${esc(d.gaps.title)}</h2>
   <p class="sub reveal d1">${esc(d.gaps.sub)}</p>
 ${d.gaps.items.map((g, i) => `  <div class="gap reveal">
@@ -414,7 +468,7 @@ ${d.gaps.items.map((g, i) => `  <div class="gap reveal">
 ${d.gaps.already_works ? `  <div class="good reveal"><p><strong>Already working for you: </strong>${esc(d.gaps.already_works)}</p></div>\n` : ''}</div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal">${n('04')} The work</p>
+  <p class="kicker reveal">${n()} The work</p>
   <h2 class="reveal">${esc(d.fixes.title)}</h2>
   <p class="sub reveal d1">${esc(d.fixes.sub)}</p>
 ${d.fixes.items.map((f, i) => `  <div class="fix reveal">
@@ -428,7 +482,7 @@ ${d.fixes.items.map((f, i) => `  <div class="fix reveal">
 ${d.fixes.disclaimer ? `  <p class="reveal" style="margin-top:26px">${esc(d.fixes.disclaimer)}</p>\n` : ''}</div></section>
 
 ${(d.screenshots || []).length ? `<section><div class="wrap">
-  <p class="kicker reveal">${n('05')} Evidence</p>
+  <p class="kicker reveal">${n()} Evidence</p>
   <h2 class="reveal">Screenshots of every answer quoted</h2>
   <p class="sub reveal d1">All captured ${esc(d.date)}. Nothing in this report is paraphrased from memory.</p>
 ${d.screenshots.map((s, i) => renderShot(s, i, shotsPresent.has(s.file))).join('\n')}
@@ -437,14 +491,27 @@ ${d.screenshots.map((s, i) => renderShot(s, i, shotsPresent.has(s.file))).join('
 <dialog class="lb"><form method="dialog"><button class="x" aria-label="Close">&times;</button><img src="" alt=""></form></dialog>
 ` : ''}
 <section><div class="wrap">
-  <p class="kicker reveal">${n('06')} Method</p>
+  <p class="kicker reveal">${n()} Method</p>
   <h2 class="reveal">How this was measured</h2>
   <div class="method reveal d1">
 ${d.method.map((p) => `    <p>${esc(p)}</p>`).join('\n')}
   </div>
 </div></section>
 
-<div class="cta"><div class="wrap">
+${d.pricing ? `<section class="closing"><div class="wrap">
+  <p class="kicker reveal">${n()} Investment</p>
+  <h2 class="reveal">${esc(d.pricing.title)}</h2>
+  <p class="sub reveal d1">${esc(d.pricing.sub || '')}</p>
+  <div class="prices">
+${d.pricing.items.map((it) => `    <div class="price${it.highlight ? ' hl' : ''} reveal">
+      <p class="pn">${esc(it.name)}</p>
+      <p class="pv">${esc(it.price)}</p>
+      <p class="pu">${esc(it.unit || '')}</p>
+${it.body ? `      <p class="pb">${esc(it.body)}</p>\n` : ''}${(it.bullets || []).length ? `      <ul>\n${it.bullets.map((bl) => `        <li>${esc(bl)}</li>`).join('\n')}\n      </ul>\n` : ''}    </div>`).join('\n')}
+  </div>
+${d.pricing.note ? `  <p class="pnote reveal">${esc(d.pricing.note)}</p>\n` : ''}</div></section>
+
+` : ''}${d.cta ? `<div class="cta"><div class="wrap">
   <p class="kicker reveal">Next step</p>
   <h2 class="reveal">${esc(d.cta.title)}</h2>
   <p class="reveal d1">${esc(d.cta.body || '')}</p>
@@ -452,7 +519,7 @@ ${d.method.map((p) => `    <p>${esc(p)}</p>`).join('\n')}
   <p class="sign reveal d3">${sig.entity ? esc(sig.entity) + '<br>' : ''}${sig.address ? esc(sig.address) + '<br>' : ''}${
     sig.email ? `<a href="mailto:${esc(sig.email)}">${esc(sig.email)}</a>` : ''
   }</p>
-${sig.ownership ? `  <p class="sign reveal d3" style="margin-top:18px">${esc(sig.ownership)}</p>\n` : ''}</div></div>
+${sig.ownership ? `  <p class="sign reveal d3" style="margin-top:18px">${esc(sig.ownership)}</p>\n` : ''}</div></div>` : ''}
 
 <script>${js}</script>
 </body>
