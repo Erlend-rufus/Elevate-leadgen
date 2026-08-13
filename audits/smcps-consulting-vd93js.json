@@ -175,7 +175,7 @@
     "items": [
       {
         "name": "Technical GEO review",
-        "price": "£1,500",
+        "price": "£1,950",
         "unit": "one-off",
         "highlight": true,
         "body": "The first three fixes above, delivered and verified. This is the part that can be finished.",
@@ -188,7 +188,7 @@
       },
       {
         "name": "Ongoing GEO visibility",
-        "price": "£800",
+        "price": "£1,300",
         "unit": "per month",
         "body": "Corroboration is the slow half. It compounds, and it does not finish.",
         "bullets": [
