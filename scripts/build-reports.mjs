@@ -353,8 +353,15 @@ function renderDots(stat) {
   return `<div class="dots" data-stagger=".dot" aria-hidden="true">${dots}</div>`;
 }
 
+/** named_instead is written either as an array or as a comma-separated string. */
+function rivals(v) {
+  if (Array.isArray(v)) return v.filter(Boolean);
+  if (typeof v === 'string' && v.trim()) return v.split(',').map((x) => x.trim()).filter(Boolean);
+  return [];
+}
+
 function renderQuery(q) {
-  const chips = (q.named_instead || []).map((n) => `<span class="chip">${esc(n)}</span>`).join('');
+  const chips = rivals(q.named_instead).map((n) => `<span class="chip">${esc(n)}</span>`).join('');
   const note = q.named_instead_note ? `<span class="chip-note">${esc(q.named_instead_note)}</span>` : '';
   return `      <div class="q reveal${q.named ? ' brand' : ''}"${chips ? ' data-stagger=".chip"' : ''}>
         <p class="qt">&ldquo;${esc(q.text)}&rdquo;</p>
@@ -364,17 +371,18 @@ ${chips ? `        <span class="lbl">Named instead</span>
 }
 
 function renderShot(s, i, hasFile) {
+  const src = s.file.split('/').pop();
   const cap = esc(s.caption || '');
   const alt = esc(s.alt || s.caption || `Screenshot ${i + 1}`);
   if (!hasFile) {
     return `      <figure class="reveal">
-        <div class="missing">Screenshot pending: drop <code>${esc(s.file)}</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
+        <div class="missing">Screenshot pending: drop <code>${esc(src)}</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
         <figcaption>${cap}</figcaption>
       </figure>`;
   }
   return `      <figure class="reveal">
-        <button type="button" class="shot" data-full="${esc(s.file)}" data-alt="${alt}" aria-label="Enlarge screenshot ${i + 1}">
-          <img src="${esc(s.file)}" alt="${alt}" loading="lazy" decoding="async">
+        <button type="button" class="shot" data-full="${esc(src)}" data-alt="${alt}" aria-label="Enlarge screenshot ${i + 1}">
+          <img src="${esc(src)}" alt="${alt}" loading="lazy" decoding="async">
           <span class="zoom">Enlarge</span>
         </button>
         <figcaption>${cap}</figcaption>
@@ -516,9 +524,9 @@ ${d.pricing.note ? `  <p class="pnote reveal">${esc(d.pricing.note)}</p>\n` : ''
   <h2 class="reveal">${esc(d.cta.title)}</h2>
   <p class="reveal d1">${esc(d.cta.body || '')}</p>
   <a class="btn reveal d2" href="${esc(d.cta.button_url)}">${esc(d.cta.button_text)}</a>
-  <p class="sign reveal d3">${sig.entity ? esc(sig.entity) + '<br>' : ''}${sig.address ? esc(sig.address) + '<br>' : ''}${
+${sig.entity || sig.address || sig.email ? `  <p class="sign reveal d3">${sig.entity ? esc(sig.entity) + '<br>' : ''}${sig.address ? esc(sig.address) + '<br>' : ''}${
     sig.email ? `<a href="mailto:${esc(sig.email)}">${esc(sig.email)}</a>` : ''
-  }</p>
+  }</p>\n` : ''}
 ${sig.ownership ? `  <p class="sign reveal d3" style="margin-top:18px">${esc(sig.ownership)}</p>\n` : ''}</div></div>` : ''}
 
 <script>${js}</script>
@@ -534,6 +542,7 @@ if (!existsSync(SRC)) {
   process.exit(0);
 }
 
+let missingAny = false;
 const files = readdirSync(SRC).filter((f) => f.endsWith('.json'));
 if (!files.length) {
   console.log('  reports: no audit data files, nothing to build');
@@ -562,17 +571,25 @@ for (const f of files) {
   const present = new Set();
   const missing = [];
   for (const s of data.screenshots || []) {
-    const from = join(shotDir, s.file);
-    if (existsSync(from) && statSync(from).isFile() && ['.jpg', '.jpeg', '.png', '.webp'].includes(extname(s.file).toLowerCase())) {
-      copyFileSync(from, join(dir, s.file));
+    // file may carry a full path from wherever the audit was assembled
+    const base = s.file.split('/').pop();
+    const from = join(shotDir, base);
+    if (existsSync(from) && statSync(from).isFile() && ['.jpg', '.jpeg', '.png', '.webp'].includes(extname(base).toLowerCase())) {
+      copyFileSync(from, join(dir, base));
       present.add(s.file);
     } else {
-      missing.push(s.file);
+      missing.push(base);
     }
   }
 
   writeFileSync(join(dir, 'index.html'), render(data, present));
   const kb = (statSync(join(dir, 'index.html')).size / 1024).toFixed(1);
   console.log(`  reports: /report/${data.slug} (${kb} kB HTML, ${present.size}/${(data.screenshots || []).length} screenshots)`);
-  if (missing.length) console.log(`    ⚠ missing screenshots in audits/${data.slug}/: ${missing.join(', ')}`);
+  if (missing.length) {
+    missingAny = true;
+    console.log(`    ⚠ MISSING EVIDENCE in audits/${data.slug}/: ${missing.join(', ')}`);
+    console.log(`      The page claims "screenshots of every answer quoted". Do not send it until these are in place.`);
+  }
 }
+
+if (missingAny) console.log('\n  \u26a0 Evidence screenshots are missing (listed above). Reports are not deliverable until they render.');

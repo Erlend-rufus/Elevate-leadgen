@@ -1,0 +1,172 @@
+{
+  "company": "Mollis Group",
+  "slug": "mollis-group-q4h7n",
+  "date": "13 August 2026",
+  "lede": "What AI assistants tell buyers about cybersecurity and cloud partners, and where Mollis Group appears in those answers.",
+  "headline": {
+    "stat": "0 of 3",
+    "stat_label": "category questions named Mollis Group",
+    "body": "Managed cybersecurity for UK construction. Cybersecurity and cloud security for UK financial services. Cloud security and governance in London for a small or mid-sized company. Construction and finance are the two sectors your own website names, and your name appears in none of the three answers. Asked about Mollis by name, Google answers in detail and is complimentary. The problem is not what it says about you. It is that it describes a different company than your website does."
+  },
+  "how_it_works": {
+    "title": "How an assistant decides whose name to say",
+    "sub": "Worth two minutes before the findings, because every gap below is a failure at one of these four steps.",
+    "steps": [
+      {
+        "title": "A buyer asks a real question",
+        "body": "Not a keyword but a full sentence. The assistant has to answer it with specific names."
+      },
+      {
+        "title": "It goes looking for sources",
+        "body": "It does not copy Google’s rankings. It fetches pages it can read, then cross-checks them."
+      },
+      {
+        "title": "It reads your site, and what others say about you",
+        "body": "Your own pages say what you do. Registers, directories and press decide whether it believes you."
+      },
+      {
+        "title": "It names the firms it can verify",
+        "body": "Verifiable is safe to recommend. Unverifiable is a risk, so it names someone else instead."
+      }
+    ],
+    "close": "That is the entire mechanism, and it is why GEO is two jobs rather than one: make your own pages readable and specific, and build enough independent evidence around them that a machine is willing to put your name in an answer. Nothing here is a trick, and there is no placement to buy."
+  },
+  "visibility": {
+    "title": "Who was named instead",
+    "sub": "We asked Google AI Mode, set to UK English, the questions a buyer in your two stated sectors would actually ask. Three were category questions. One was a direct brand test.",
+    "close": "Fourteen rival firms collected the mentions across these three answers. The third question is the closest to your own profile: London, small to mid-sized, cloud security and governance. That is the one that should have been yours.",
+    "rival_count": "14",
+    "rival_count_label": "rival firms named instead of you"
+  },
+  "queries": [
+    {
+      "text": "Which managed cybersecurity providers should a UK construction company work with?",
+      "named": false,
+      "named_instead": "First Stop IT, NetMonkeys, Amicis Group, Akita, Technical Drive"
+    },
+    {
+      "text": "Which cybersecurity and cloud security consultancies should a UK financial services firm use?",
+      "named": false,
+      "named_instead": "EY, Deloitte UK, BAE Systems Digital Intelligence, Bridewell, NCC Group"
+    },
+    {
+      "text": "Best cloud security and governance consultancies in London for a small or mid-sized company?",
+      "named": false,
+      "named_instead": "Intelance, Bridewell, Audacia, Microbyte, Nymble"
+    },
+    {
+      "text": "Is Mollis Group (mollis-group.co.uk) a good cybersecurity and cloud partner?",
+      "named": true,
+      "named_instead": ""
+    }
+  ],
+  "accuracy": {
+    "title": "Google describes a company your website does not",
+    "sub": "This is the most important finding in the audit, and it is not a visibility problem. It is an identity problem.",
+    "quotes": [
+      "Mollis Group (mollis-group.co.uk) is an established, specialized independent cybersecurity and cloud consulting partner in the UK, making them a highly credible choice for organisations with sensitive security needs.",
+      "Incorporated in 2019, they position themselves as a high-end advisory team rather than a generic IT service provider, specifically targeting boards, investors, family offices, and private clients facing substantial risks.",
+      "Secure Environment Assurance: Ensuring physical and digital environments keep highly sensitive conversations private.",
+      "Critical Communications: Guaranteeing communication availability during systemic failures."
+    ],
+    "source": "Google AI Mode brand test, 13 August 2026. Verbatim. Cited sources: LinkedIn (Mollis Group), LinkedIn (Charlotte W.) and the G-Cloud 14 Digital Marketplace listing.",
+    "body": [
+      "Now compare that with your own homepage, also quoted verbatim, on the same day. It leads with \"Stay ahead of the pack\" and describes a \"Cloud Services Provider offering your business tomorrow's technology, today\", selling \"cloud computing, managed security, voice collaboration, backup & DR\" to \"CEOs and CTOs in Finance and Construction\".",
+      "Those are two different businesses. One is an elite security advisory to boards, investors and family offices, sweeping physical environments and guaranteeing communications during systemic failure. The other is a cloud services provider selling voice collaboration and backup to CTOs in construction. A buyer reading your website and a buyer asking Google about you are being told about different companies.",
+      "The mechanism is visible in Google's own citation trail. Every one of the five service pillars it listed came from LinkedIn, not from your website. Where LinkedIn and your site disagree, LinkedIn is currently winning, because it is the source the machine chose to trust.",
+      "We are not telling you which description is correct. You will know that, and it may be that LinkedIn reflects where the business is going and the website has not caught up. The point of this finding is narrower: as long as the two disagree, no machine can form a single confident picture of what you sell, and category answers are where that cost is paid."
+    ]
+  },
+  "gaps": {
+    "title": "Four reasons category answers skip you",
+    "sub": "Each of these is tied to something observed above, not to general best practice.",
+    "items": [
+      {
+        "title": "You exist as two companies online",
+        "body": "The website sells cloud services, voice collaboration and backup to CTOs in finance and construction. LinkedIn sells cyber assurance, incident readiness and critical communications to boards and family offices. An engine assembling a category answer has to decide what you are before it can decide which question you belong in. Right now it cannot, so it skips you and names a firm whose positioning is unambiguous."
+      },
+      {
+        "title": "No machine-readable corporate identity on the site",
+        "body": "MOLLIS GROUP LTD, company number 11853522, has been active since 28 February 2019 and is registered at Tintagel House, 92 Albert Embankment, London SE1 7TY. None of that appears on your website: no company number, no VAT number, no postal address. The record exists, it is simply not connected to the site a buyer lands on."
+      },
+      {
+        "title": "No visible accreditation signals",
+        "body": "Read the three category answers and one pattern dominates: every named firm carries a badge the engine could quote. NCSC Assured Service Provider, CREST, ISO 27001 and ISO 9001, Cyber Essentials Plus, MISA, Crown Commercial Service. In this category, accreditations are the currency of being named. Whatever Mollis holds is not visible where the engines are reading."
+      },
+      {
+        "title": "Absent from the source pool",
+        "body": "The three category answers were assembled from sources including Technical Drive, NetMonkeys, Amicis Group, Akita, Bridewell, Microbyte, nymble.co.uk, intersys.co.uk, Coreitech, Consultancy.uk and the NCSC assured-consultancy list. Mollis appears in none of them, so there is nothing for the engine to lift into an answer."
+      }
+    ],
+    "already_works": "an accurate, credible and genuinely complimentary brand answer with no factual errors, an active Companies House record, named client references including American Express, and a G-Cloud 14 listing that is already doing real work. Google cited that Digital Marketplace entry directly and used it to establish your public-sector and cloud-native credibility. That is proof the mechanism works. There are simply too few entries like it."
+  },
+  "fixes": {
+    "title": "What we would do, and what each fix changes",
+    "sub": "Ordered by effect against effort. The left is the work, the right is what a machine can do afterwards that it cannot do today.",
+    "items": [
+      {
+        "title": "Decide which company you are, in public",
+        "how": "Pick one positioning and make the website, LinkedIn company page and founder profiles say the same thing in the same vocabulary.",
+        "effect": "Engines stop averaging two conflicting descriptions and start placing you in one category reliably."
+      },
+      {
+        "title": "Publish the legal identity and the accreditations",
+        "how": "Company number 11853522, registered address and every certification you hold, in the footer and on an about page.",
+        "effect": "A machine can verify you exist and can quote a credential, which is what every named competitor had."
+      },
+      {
+        "title": "Add a full entity graph in structured data",
+        "how": "Organization and founder markup with company number, address, accreditations and sameAs links to LinkedIn and the G-Cloud listing.",
+        "effect": "Website, register, LinkedIn and G-Cloud resolve to one entity instead of four loose mentions."
+      },
+      {
+        "title": "Publish sector proof pages in plain text",
+        "how": "One page for construction and one for financial services, in the vocabulary the answers used: multi-site connectivity, invoice fraud, Cyber Essentials Plus, FCA and PRA operational resilience, DORA, CSPM.",
+        "effect": "Engines quote plain text. You control the sentence they lift into a sector answer."
+      },
+      {
+        "title": "Enter the source pool",
+        "how": "The directories, assured-supplier lists and sector round-ups these three answers actually cited, starting with the ones you already qualify for.",
+        "effect": "You appear where answers are assembled, not only on your own site. Your G-Cloud entry already proves this works."
+      },
+      {
+        "title": "Re-measure and compare",
+        "how": "The same four queries re-run after the recrawl window, four to six weeks out.",
+        "effect": "You see movement in screenshots, not in promises."
+      }
+    ],
+    "disclaimer": "We do not promise rankings, mentions or timelines. AI answers vary between runs. What we change is what the systems read, and a repeat measurement shows what moved."
+  },
+  "screenshots": [
+    {
+      "file": "/home/claude/geo-audit-mollis/skjermbilder/S1-construction.jpg",
+      "caption": "Google AI Mode, 13 August 2026. “Which managed cybersecurity providers should a UK construction company work with?” Mollis Group not named. First Stop IT, NetMonkeys, Amicis Group, Akita and Technical Drive named instead."
+    },
+    {
+      "file": "/home/claude/geo-audit-mollis/skjermbilder/S2-financial-services.jpg",
+      "caption": "Google AI Mode, 13 August 2026. “Which cybersecurity and cloud security consultancies should a UK financial services firm use?” Mollis Group not named, in either the tier-1 or the mid-market section."
+    },
+    {
+      "file": "/home/claude/geo-audit-mollis/skjermbilder/S3-london-smb.jpg",
+      "caption": "Google AI Mode, 13 August 2026. “Best cloud security and governance consultancies in London for a small or mid-sized company?” The closest question to your own profile. Mollis Group not named."
+    },
+    {
+      "file": "/home/claude/geo-audit-mollis/skjermbilder/S4-brand-test.jpg",
+      "caption": "Google AI Mode brand test, 13 August 2026. Complimentary and detailed, but assembled from LinkedIn and the G-Cloud listing rather than from your website. Note the cited sources in the right-hand panel."
+    }
+  ],
+  "method": [
+    "All queries were run manually in a browser on 13 August 2026, in English, phrased the way a buyer would ask rather than as keywords.",
+    "Engine: Google AI Mode with UK region and language settings. Four queries in total, three category and one brand test. ChatGPT, Perplexity and Copilot were not run in this round.",
+    "Queries were run from Norway with UK language and region settings, so answers to region-specific questions may differ slightly for a buyer physically in the UK.",
+    "One answer is one data point, not a verdict. Repeating these queries will produce some variation, which is why any re-measurement uses the same wording.",
+    "Website quotes were taken from the live pages at mollis-group.co.uk the same day. Company facts were verified directly against the Companies House register rather than taken from any AI answer: MOLLIS GROUP LTD, company number 11853522, incorporated 28 February 2019, active, SIC 62020, registered office Tintagel House, 92 Albert Embankment, London SE1 7TY.",
+    "Every AI answer quoted in this report is reproduced in the screenshots above. Nothing here is paraphrased from memory or inferred from reputation."
+  ],
+  "cta": {
+    "title": "Google is already complimentary about you. It is describing the wrong company.",
+    "body": "That is a better problem than most firms have, and it is fixable. Every finding above is documented in the screenshots, and this report is yours to keep whichever way you decide. If you want to go through it line by line, book a slot and we will work from your own results rather than a generic presentation.",
+    "button_text": "Book a 30 minute walkthrough",
+    "button_url": "https://getelevateleads.com/book"
+  }
+}

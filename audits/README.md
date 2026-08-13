@@ -22,7 +22,8 @@ No code changes needed.
    The filename must match the `slug` field exactly.
 
 3. **Drop the screenshots** in `audits/<slug>/`, filenames matching the
-   `screenshots[].file` values. JPG, PNG or WebP. Export at roughly 1400 px wide:
+   `screenshots[].file` values. Only the basename is used, so a value carrying a
+   full path from wherever the audit was assembled works as-is. JPG, PNG or WebP. Export at roughly 1400 px wide:
    they are the evidence, so legibility matters more than a few kB. Any file that
    is missing renders a visible "screenshot pending" placeholder and prints a
    build warning rather than failing the build.
@@ -46,7 +47,7 @@ Useful optional fields:
 | `headline.stat` as `"N of M"` | Renders M indicator dots, first N green, rest red |
 | `visibility.rival_count` | Renders the dark tally card with a count-up animation |
 | `accuracy.flag_quote_index` | Marks that quote "Worth watching" with a warm highlight |
-| `queries[].named_instead` | Array of competitor names, rendered as chips |
+| `queries[].named_instead` | Competitor names as chips. Array or comma-separated string both work |
 | `queries[].named_instead_note` | Trailing note after the chips, e.g. "topped the list" |
 | `queries[].named: true` | Green "Named" card instead of red "Not named" |
 | `how_it_works` | Four-step explainer flow with connectors, revealed in sequence |
