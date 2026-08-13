@@ -3,6 +3,11 @@
 One URL per client, sent as a link instead of a PDF or PowerPoint attachment.
 Live at `https://getelevateleads.com/report/<slug>/`.
 
+If an agent or colleague is assembling the audit rather than you, hand them
+[BRIEF-FOR-AUDIT-AUTHORS.md](BRIEF-FOR-AUDIT-AUTHORS.md): it is the delivery
+contract for pushing an audit to a branch, and covers the data schema, the
+screenshot rules and the content rules.
+
 ## Publishing a new audit
 
 No code changes needed.
