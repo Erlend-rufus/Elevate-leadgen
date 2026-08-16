@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pick a time | Elevate Marketing</title>
+
+<meta name="robots" content="noindex,nofollow">
+
+<meta name="theme-color" content="#04041C">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- og:image omitted while public/og-image.jpg still carries a growwithelevate.eu badge. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --page:#04041C; --surface:#0B0B2E; --raised:#12123D;
+  --heading:#f4f5ff; --body:#b9bbd9; --muted:#7c7ea6;
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.16);
+  --brand:#00a3d6;
+  --grad:linear-gradient(135deg,#00a3d6,#006aba,#02009a);
+  --warn-bg:rgba(252,163,17,.07); --warn-line:rgba(252,163,17,.34); --warn:#f0b455;
+  --display:'Space Grotesk',system-ui,sans-serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.16,.84,.44,1);
+}
+*{margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--body);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:var(--brand);color:#fff}
+h1,h2,h3{font-family:var(--display);color:var(--heading);font-weight:600;line-height:1.14;letter-spacing:-.02em}
+.mono{font-family:var(--mono)}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.col{max-width:66ch}
+a{color:var(--heading);text-decoration-color:rgba(255,255,255,.3);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--brand)}
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--brand);color:#fff;padding:12px 20px;z-index:99;font-size:14px}
+.skip:focus{left:0}
+p{margin-bottom:18px;max-width:66ch}
+strong{color:var(--heading);font-weight:600}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);font-weight:600;display:block}
+.btn{display:inline-block;background:var(--grad);color:#fff;padding:16px 32px;font-size:15.5px;font-weight:600;text-decoration:none;border-radius:8px;line-height:1;transition:transform .18s var(--ease),box-shadow .18s var(--ease);border:none;cursor:pointer;font-family:var(--sans)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,163,214,.28);color:#fff;text-decoration:none}
+.bar{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hero{padding:64px 0 56px}
+.hero h1{font-size:clamp(34px,5.6vw,60px);max-width:18ch;margin-top:22px;text-wrap:balance}
+.hero .lede{font-size:clamp(18px,2.1vw,21px);max-width:60ch;margin-top:26px}
+.swing{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:44px 0 0;grid-template-columns:1fr}
+@media(min-width:760px){.swing{grid-template-columns:1fr 1fr 1fr}}
+.swing-cell{background:var(--surface);padding:26px 24px}
+.swing-cell.now{background:var(--raised)}
+.swing .lbl{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:14px}
+.swing .fig{font-family:var(--display);font-size:clamp(34px,5.4vw,46px);font-weight:700;line-height:1;letter-spacing:-.03em;color:var(--heading);display:block}
+.swing .sub{font-size:14px;color:var(--muted);margin-top:9px;display:block}
+.swing-cell.now .fig{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.swing .delta{font-family:var(--mono);font-size:13px;color:var(--brand);margin-top:12px;display:block}
+.hero .cta-row{margin-top:40px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 26px}
+.hero .quiet{font-size:15px;color:var(--body)}
+section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:20px}
+.shead{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+.shead .n{font-family:var(--mono);font-size:13px;color:var(--brand)}
+h2{font-size:clamp(26px,3.6vw,36px);text-wrap:balance}
+section > .sub{color:var(--muted);margin:14px 0 0;max-width:66ch}
+h3{font-size:20px;margin:32px 0 12px}
+.calc{border:1px solid var(--line-2);border-radius:14px;background:var(--surface);overflow:hidden;margin:34px 0 0}
+.calc-head{padding:18px 24px;border-bottom:1px solid var(--line);background:var(--raised)}
+.calc-head .t{font-family:var(--display);font-size:19px;color:var(--heading);font-weight:600;display:block}
+.calc-head .s{font-size:13.5px;color:var(--muted);margin-top:6px;display:block}
+.calc-body{padding:24px;display:grid;gap:26px}
+@media(min-width:820px){.calc-body{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:40px}}
+.field{margin-bottom:22px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:13.5px;color:var(--body);margin-bottom:9px;font-weight:500}
+.field .row{display:flex;align-items:center;gap:10px}
+.field .pfx{font-family:var(--mono);font-size:15px;color:var(--muted)}
+.field input[type=number]{flex:1;min-width:0;background:var(--page);border:1px solid var(--line-2);border-radius:8px;color:var(--heading);font-family:var(--mono);font-size:16px;padding:11px 13px}
+.field input[type=range]{width:100%;accent-color:var(--brand);margin-top:4px}
+.field .rangeval{font-family:var(--mono);font-size:14px;color:var(--brand);min-width:44px;text-align:right}
+.field .hint{font-size:12.5px;color:var(--muted);margin-top:7px;max-width:none}
+.out{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:11px;overflow:hidden;align-content:start;align-self:start;grid-template-columns:1fr}
+@media(min-width:480px){.out{grid-template-columns:1fr 1fr}}
+.out-cell{background:var(--raised);padding:20px}
+.out-cell.wide{grid-column:1/-1;background:var(--surface)}
+.out .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px}
+.out .v{font-family:var(--display);font-size:clamp(26px,4vw,34px);font-weight:700;line-height:1;color:var(--heading);display:block;font-variant-numeric:tabular-nums}
+.out-cell.wide .v{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.out .n{font-size:13px;color:var(--muted);margin-top:9px;display:block}
+.calc-note{padding:16px 24px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);line-height:1.6;background:var(--page);max-width:none}
+.calc-note strong{color:var(--warn)}
+.ex{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:30px 0;overflow:hidden}
+.ex-cap{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--raised);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ex-cap span:first-child{color:var(--brand);font-weight:600}
+.ex-body{padding:18px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ex-note{padding:14px 18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);line-height:1.6;max-width:none}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;min-width:520px}
+caption{text-align:left;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 0 12px;font-family:var(--sans)}
+th,td{padding:10px;text-align:right;color:var(--body)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line-2);font-weight:500;font-family:var(--sans);vertical-align:bottom}
+tbody th[scope=row]{color:var(--heading);font-weight:500;white-space:nowrap}
+tbody td{white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--line)}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tfoot th,tfoot td{border-top:1px solid var(--line-2);color:var(--heading);font-weight:500}
+.caution{border:1px solid var(--warn-line);border-radius:12px;background:var(--warn-bg);overflow:hidden;margin:30px 0}
+.caution-strip{background:rgba(252,163,17,.14);color:var(--warn);padding:11px 20px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--warn-line);font-weight:600}
+.caution-body{padding:22px 24px}
+.caution-body p:last-child{margin-bottom:0}
+.caution-body ul{margin:0 0 18px 1.25em}
+.caution-body li{margin-bottom:10px}
+.limits{display:grid;gap:14px;margin:30px 0 0}
+@media(min-width:760px){.limits{grid-template-columns:1fr 1fr}}
+.limit{border:1px solid var(--line);border-radius:11px;background:var(--surface);padding:20px 22px}
+.limit h3{font-size:16.5px;font-family:var(--sans);font-weight:600;margin:0 0 9px}
+.limit p{font-size:14.5px;margin:0;color:var(--muted)}
+ol.steps{list-style:none;margin:30px 0 0;padding:0;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
+ol.steps li:first-child{border-top:none;padding-top:4px}
+ol.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--raised);border:1px solid var(--line-2);color:var(--brand);font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center}
+ul.tl{list-style:none;margin:28px 0;padding:0 0 0 26px;position:relative}
+ul.tl::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:var(--line-2)}
+ul.tl li{position:relative;padding-bottom:20px;max-width:64ch}
+ul.tl li:last-child{padding-bottom:0}
+ul.tl li::before{content:'';position:absolute;left:-26px;top:8px;width:11px;height:11px;border-radius:50%;background:var(--brand)}
+.tl .d{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin-bottom:4px}
+ul.ver{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+ul.ver li{border:1px solid var(--line);border-radius:11px;padding:18px 20px;background:var(--surface);display:flex;flex-direction:column;gap:7px}
+.src{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);font-weight:600}
+.url{font-size:12.5px;word-break:break-all;font-family:var(--mono)}
+.final .btn{margin-top:10px}
+.smallprint{margin-top:22px;font-size:13.5px;color:var(--muted);max-width:62ch}
+footer{border-top:1px solid var(--line);padding:26px 0 60px;font-size:12.5px;color:var(--muted)}
+footer div{display:flex;flex-direction:column;gap:7px}
+@media(max-width:640px){
+  body{font-size:16px}
+  section{padding:48px 0}
+  .hero{padding:44px 0 40px}
+  .calc-body{padding:18px}
+  .ex-body{padding:14px}
+}
+.js .rv{opacity:0;transform:translateY(28px)}
+.js .rv.in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .rv{opacity:1!important;transform:none!important;transition:none!important}
+  .btn:hover{transform:none}
+}
+@media print{
+  .btn,.skip{display:none!important}
+  .js .rv{opacity:1!important;transform:none!important}
+  body{background:#fff!important;color:#1a1d24!important;font-size:10.5pt}
+  h1,h2,h3,strong,tbody th[scope=row]{color:#04041C!important}
+  .grad,.swing-cell.now .fig,.out-cell.wide .v{background:none!important;color:#04041C!important;-webkit-text-fill-color:#04041C}
+  .ex,.calc,.caution,.limit,ul.ver li,.swing-cell{background:#fff!important;border-color:#d8dbe2!important}
+  .ex-cap,.calc-head,.out-cell{background:#f4f6f9!important}
+  .eyebrow,.src,.shead .n,.ex-cap span:first-child,.tl .d{color:#7A4A00!important}
+  p,li,td,th,.sub,.ex-note,.calc-note,.smallprint,footer{color:#1a1d24!important}
+  section,.ex,.calc,.caution,table,.swing{page-break-inside:avoid}
+  a[href^="http"]::after{content:' (' attr(href) ')';font-size:8pt}
+}
+/* funnel pages */
+.funnel{min-height:100vh;display:flex;flex-direction:column}
+.funnel-head{padding:26px 0;border-bottom:1px solid var(--line)}
+.funnel-logo{font-family:var(--display);font-size:17px;font-weight:600;color:var(--heading);text-decoration:none;letter-spacing:-.01em}
+.funnel-main{flex:1 1 auto;display:flex;flex-direction:column}
+.tf-wrap{flex:1 1 auto;min-height:640px;display:flex}
+.tf-wrap > div{flex:1 1 auto;width:100%}
+.funnel-mid{padding:56px 0 72px}
+.funnel-mid h1{font-size:clamp(28px,4.4vw,42px);max-width:20ch;margin-bottom:20px;text-wrap:balance}
+.cal-wrap{margin-top:34px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);min-height:700px}
+.noscript-note{border:1px solid var(--warn-line);background:var(--warn-bg);color:var(--warn);border-radius:10px;padding:16px 20px;margin-top:24px;font-size:14.5px;max-width:none}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<script>document.documentElement.className+=' js';</script>
+<script src="/js/consent.js" data-pixel="1466790598245604"></script>
+
+<div class="funnel">
+  <header class="funnel-head"><div class="wrap">
+    <a class="funnel-logo" href="/case/what-a-client-costs">Elevate Marketing</a>
+  </div></header>
+
+  <main class="funnel-main funnel-mid" id="main"><div class="wrap">
+    <span class="eyebrow">Qualified</span>
+    <h1 style="margin-top:16px">Pick a time that suits you</h1>
+    <p>Thanks. From your answers this looks like a conversation worth having, so here is the calendar.</p>
+    <p>Half an hour, about your numbers rather than our pitch. If it turns out paid acquisition is not right for you yet, we will say so on the call.</p>
+    <div class="cal-wrap">
+      <div class="calendly-inline-widget" data-url="https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1?hide_gdpr_banner=1&primary_color=00a3d6" style="min-width:320px;height:700px"></div>
+    </div>
+    <noscript>
+      <p class="noscript-note">The calendar needs JavaScript. Email
+      hello@getelevateleads.com and we will send you times by reply.</p>
+    </noscript>
+  </div></main>
+</div>
+
+<script>
+
+var UTM = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+function newLeadId(){
+  try { if (crypto && crypto.randomUUID) return 'l_' + crypto.randomUUID().replace(/-/g,'').slice(0,20); } catch(e){}
+  return 'l_' + Date.now().toString(36) + Math.random().toString(36).slice(2,10);
+}
+function readParams(){
+  var q = new URLSearchParams(location.search), out = {};
+  UTM.concat(['fbclid','lead_id','calc_acv','calc_close_rate','calc_requests_wanted','src'])
+    .forEach(function(k){ var v = q.get(k); if (v) out[k] = v; });
+  return out;
+}
+function store(o){ try { sessionStorage.setItem('elevate:funnel', JSON.stringify(o)); } catch(e){} }
+function restore(){ try { return JSON.parse(sessionStorage.getItem('elevate:funnel') || '{}'); } catch(e){ return {}; } }
+/** URL wins, session fills gaps, lead_id is minted if still absent.
+ *  markDirect is set only on /apply: arriving there without a lead_id means the
+ *  visitor skipped the landing page, via a shared link or a direct hit, and that
+ *  is worth recording. Minting one on the landing page is the normal path and
+ *  must not be labelled direct, or every ad click would be. */
+function funnelState(markDirect){
+  var s = restore(), p = readParams(), out = {};
+  Object.keys(s).forEach(function(k){ out[k] = s[k]; });
+  Object.keys(p).forEach(function(k){ out[k] = p[k]; });
+  if (!out.lead_id) {
+    out.lead_id = newLeadId();
+    if (markDirect && !out.utm_source && !out.fbclid) out.src = 'direct';
+  }
+  store(out);
+  return out;
+}
+function toQuery(o){
+  var q = new URLSearchParams();
+  Object.keys(o).forEach(function(k){ if (o[k] !== '' && o[k] != null) q.set(k, o[k]); });
+  return q.toString();
+}
+
+(function () {
+  var state = funnelState();
+
+  /* The conversion. This is the only place in the funnel it fires: not on a CTA
+     click, not on form submit, and never on /thanks. Queued until consent, and
+     dropped entirely if the visitor declined. */
+  if (window.ElevateConsent) {
+    window.ElevateConsent.track('QualifiedMeetingITC', {
+      lead_id: state.lead_id || '',
+      utm_source: state.utm_source || '',
+      utm_campaign: state.utm_campaign || ''
+    });
+  }
+
+  /* Prefill Calendly with what we already know, so the booker does not retype it. */
+  var w = document.querySelector('.calendly-inline-widget');
+  if (w) {
+    var u = w.getAttribute('data-url');
+    var extra = new URLSearchParams();
+    if (state.lead_id) extra.set('utm_content', state.lead_id);
+    if (state.utm_source) extra.set('utm_source', state.utm_source);
+    if (state.utm_campaign) extra.set('utm_campaign', state.utm_campaign);
+    if (state.utm_medium) extra.set('utm_medium', state.utm_medium);
+    var q = extra.toString();
+    if (q) w.setAttribute('data-url', u + '&' + q);
+  }
+
+  var s = document.createElement('script');
+  s.src = 'https://assets.calendly.com/assets/external/widget.js';
+  s.async = true;
+  document.body.appendChild(s);
+})();
+</script>
+</body>
+</html>

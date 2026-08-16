@@ -53,6 +53,14 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
 
+# The funnel pages under the case study are not entrances and must not rank.
+# The glob does not match the bare parent /case/what-a-client-costs, which stays
+# indexable. Each page also carries a robots meta; this is defence in depth.
+[[headers]]
+  for = "/case/what-a-client-costs/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # Nevari client proposal (served at /nevari/). Keep it out of search indexes:
 # it contains commercial terms and must not be indexable.
 [[headers]]
@@ -113,20 +121,41 @@
 # public/case/<slug>/index.html, so the .html redirects below cannot loop:
 # there is no file at the .html path to serve any more. Same shape as the
 # proven /the-journey rule above. Must stay before the SPA catch-all.
+# /case/avant-it is retired. It duplicated this case study, so it consolidates
+# into it with a permanent redirect rather than a 404: the URL may already have
+# been shared in email or outreach, and a dead link to a prospect is worse than
+# the duplicate we are removing. 301, not 302, so the duplicate actually
+# consolidates and any earned authority transfers.
 [[redirects]]
   from = "/case/avant-it"
-  to = "/case/avant-it/index.html"
-  status = 200
+  to = "/case/what-a-client-costs"
+  status = 301
 
+[[redirects]]
+  from = "/case/avant-it.html"
+  to = "/case/what-a-client-costs"
+  status = 301
+
+# The case study and its funnel. Files live at public/case/<slug>/**/index.html.
 [[redirects]]
   from = "/case/what-a-client-costs"
   to = "/case/what-a-client-costs/index.html"
   status = 200
 
 [[redirects]]
-  from = "/case/avant-it.html"
-  to = "/case/avant-it"
-  status = 301
+  from = "/case/what-a-client-costs/apply"
+  to = "/case/what-a-client-costs/apply/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/case/what-a-client-costs/booking"
+  to = "/case/what-a-client-costs/booking/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/case/what-a-client-costs/thanks"
+  to = "/case/what-a-client-costs/thanks/index.html"
+  status = 200
 
 [[redirects]]
   from = "/case/what-a-client-costs.html"

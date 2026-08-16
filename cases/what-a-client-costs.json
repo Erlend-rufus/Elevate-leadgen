@@ -1,0 +1,220 @@
+{
+  "slug": "what-a-client-costs",
+  "meta": {
+    "title": "What a new client costs in paid search | Elevate Marketing",
+    "description": "Nine documented months for an IT consultancy: four quote requests a month at £320 became twenty five at £39. What that arithmetic looks like in your business.",
+    "ogTitle": "What a new client costs in paid search",
+    "ogDescription": "A documented case file. Four quote requests a month at £320 became twenty five at £39. Work out what that means for your own contract value."
+  },
+
+  "funnel": {
+    "typeformId": "01M0531Q810E2Y8Y3XDB8DKZAC",
+    "calendlyUrl": "https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1",
+    "conversionEvent": "QualifiedMeetingITC",
+    "endings": {
+      "_comment": "Typeform ending refs. Anything not listed as fit routes to /thanks, which is the safe default: showing a calendar to an unqualified lead is the exact failure this funnel exists to prevent.",
+      "fit": [],
+      "notFit": []
+    }
+  },
+
+  "bar": ["Case file · Paid acquisition", "IT consultancy, 22 people", "Sep 2024 to Jul 2025"],
+
+  "hero": {
+    "eyebrow": "Documented case study",
+    "h1Before": "A new client cost this consultancy ",
+    "h1Keyword": "about two and a half percent of the contract",
+    "lede": "Nine reported months of paid search for an IT consultancy. The account went from four quote requests a month to twenty five, and the cost of each one fell by 88 percent. Below is every figure, where it came from, what it does not prove, and a calculator so you can put your own contract value against it. Most UK consultancies sell larger contracts than this one did, which makes the percentage smaller, not larger.",
+    "swing": [
+      { "label": "Before, per month", "figure": "4", "sub": "quote requests, at £320 each" },
+      { "label": "After, per month", "figure": "25", "sub": "quote requests, at £39 each", "delta": "6.2× the volume, 88% cheaper", "highlight": true },
+      { "label": "Total, nine months", "figure": "214", "sub": "quote requests for £8,700 of media" }
+    ],
+    "cta": "Book a call about your pipeline",
+    "ctaQuiet": "See the month by month evidence"
+  },
+
+  "calculator": {
+    "title": "What that arithmetic looks like in your business",
+    "sub": "The consultancy above sold implementations averaging £3,700, which is small for an IT consultancy. The larger your contract, the smaller the media cost looks against it. Put your own numbers in.",
+    "cardTitle": "Your cost per won client",
+    "cardSub": "Applies our documented £39 per quote request to your contract value and your close rate.",
+    "costPerRequest": 39,
+    "defaults": { "contractValue": 15000, "closeRate": 30, "requests": 10 },
+    "fields": {
+      "contractValue": { "label": "Your average contract value", "hint": "What one new client is typically worth to you." },
+      "closeRate": { "label": "Your close rate on quote requests", "hint": "Of the people who ask you to quote, how many become clients." },
+      "requests": { "label": "Quote requests you want per month", "hint": "The account above averaged 25 a month once it was rebuilt." }
+    },
+    "outputs": {
+      "spend": { "key": "Media per month", "note": "at £39 per quote request" },
+      "clients": { "key": "New clients per month", "note": "at your close rate" },
+      "perClient": { "key": "Media cost per won client" }
+    },
+    "note": "This is arithmetic, not a forecast. It applies one documented cost per quote request to numbers you supply. Yours will differ: click prices vary by market and by how competitive your keywords are, the account above ran in Norway, and no account produces its steady-state cost in month one. Treat the output as a way to sense check whether paid search is worth a conversation, not as a projection of your results."
+  },
+
+  "sections": [
+    {
+      "id": "narrow",
+      "title": "The month that reads like a failure",
+      "sub": "July 2025 is the smallest number in the whole account, and it is the one worth copying.",
+      "body": [
+        "Impressions fell from a normal 80,000 to 8,130. It was deliberate. We ran a narrow campaign on a single proposition, security as a service, aimed at one buyer problem rather than the full service list.",
+        "<strong>439 clicks produced 18 quote requests.</strong> A conversion rate of 4 percent, against an account average of 0.5 percent. Roughly eight times better. Cost per request rose to £62 and volume collapsed, and we accepted both on purpose.",
+        "That trade is the argument we make in every sales conversation, and July is the month where we made it with someone else's budget rather than in a slide. A specific offer to a specific buyer converts several times better than a broad one. If you take one thing from this page and never speak to us, take that."
+      ],
+      "caution": {
+        "strip": "What we got wrong in the same month",
+        "body": [
+          "The July report states plainly that retargeting produced no conversions. Lookalike audiences built from converters did. Retargeting was the wrong tool for a narrow, high intent offer, and we found that out on the client's money.",
+          "It is in here because an account where everything worked is an account you are not being told about in full."
+        ]
+      }
+    },
+    {
+      "id": "work",
+      "title": "What was actually done",
+      "sub": "No reinvention. A sequence, in order, where each stage exists because of what the one before it produced.",
+      "steps": [
+        "<strong>Measurement first.</strong> Conversion tracking and the landing pages were rebuilt so that a quote request meant a quote request, and nothing softer counted as one. Everything below is worthless without this step.",
+        "<strong>Performance Max, deliberately and temporarily.</strong> Run early to harvest search term data at volume. A means to an end, not a permanent strategy.",
+        "<strong>Search campaigns built from evidence.</strong> The harvested terms became tightly themed campaigns aimed at the queries that had actually produced quote requests, not the ones we assumed would.",
+        "<strong>Retargeting.</strong> Added to stay present with visitors who had not yet asked for a quote. How that ended is in section 02.",
+        "<strong>Lookalike audiences from converters, not visitors.</strong> The difference between those two source audiences is most of the value."
+      ]
+    }
+  ],
+
+  "evidence": {
+    "title": "The evidence, month by month",
+    "sub": "Reproduced from the nine monthly reports. The baseline is the previous provider's performance. The after column is the average across five consecutive stable months, September 2024 to January 2025.",
+    "exhibits": [
+      {
+        "label": "Exhibit A",
+        "caption": "Headline comparison, per monthly reports",
+        "tableCaption": "Before and after, monthly average",
+        "head": ["Metric", "Before", "After", "Change"],
+        "rows": [
+          ["Quote requests per month", "4", "25", "6.2 times"],
+          ["Cost per quote request", "£320", "£39", "minus 88%"],
+          ["Cost per click", "£0.91", "£0.19", "minus 79%"],
+          ["Click through rate", "4.6%", "6.9%", "plus 51%"],
+          ["Impressions per month", "28,488", "76,581", "plus 169%"]
+        ],
+        "note": "Industry benchmarks as stated in the original reports: click through rate 4.4%, cost per click £0.41. The after column beats both."
+      },
+      {
+        "label": "Exhibit B",
+        "caption": "All nine reported months",
+        "tableCaption": "Every period as stated in the source reports, converted to pounds",
+        "head": ["Period", "CTR", "CPC", "Impressions", "Clicks", "Quote requests", "Cost per request"],
+        "rows": [
+          ["Sep 2024", "6.2%", "£0.20", "71,556", "4,436", "23", "£39"],
+          ["Oct 2024", "6.8%", "£0.19", "73,478", "4,752", "25", "£35"],
+          ["Nov 2024", "7.1%", "£0.19", "75,348", "4,642", "23", "£39"],
+          ["Dec 2024", "7.2%", "£0.19", "80,125", "5,769", "26", "£43"],
+          ["Jan 2025", "7.4%", "£0.19", "82,400", "6,097", "27", "£40"],
+          ["Mar to May 2025", "7.1%", "£0.16", "224,000", "13,676", "72", "£38"],
+          ["Jul 2025", "5.4%", "£0.25", "8,130", "439", "18", "£62"]
+        ],
+        "foot": ["Total", "", "", "", "39,811", "214", "£8,700"],
+        "note": "March to May is a pooled figure in the source report. July was the deliberately narrow campaign covered in section 02. The reports are in Norwegian kroner, converted here at 13.5 kroner to the pound, so individual rows carry rounding of up to a pound."
+      },
+      {
+        "label": "Exhibit C",
+        "caption": "Filed accounts, shown for scale only",
+        "tableCaption": "Operating revenue and profit, thousands of pounds, converted from filed accounts",
+        "head": ["Year", "Revenue", "Operating profit"],
+        "rows": [
+          ["2021", "£4,304", "£315"],
+          ["2022", "£4,916", "£377"],
+          ["2023", "£5,123", "£195"],
+          ["2024", "£5,595", "£484"],
+          ["2025", "£6,213", "£829"]
+        ],
+        "note": "This is here to establish scale and nothing else: a real operating business of roughly £6.2 million turnover with 22 people, whose entire media budget across the engagement was about one seventh of one percent of a single year's revenue. The company also had salespeople, referral flow, client expansion and resale revenue. Drawing a line from the advertising to the revenue would be exactly the claim this page exists to avoid."
+      }
+    ]
+  },
+
+  "limits": {
+    "title": "What this does not prove",
+    "sub": "Four things, gathered in one place rather than buried next to the numbers they qualify.",
+    "supplied": {
+      "strip": "Client supplied figures · not evidenced by us",
+      "intro": "Everything else on this page comes from the nine monthly reports, the filed accounts or a public announcement. These three statements came from the client verbally. They do not appear in the reports, we hold no written confirmation, and we cannot evidence them.",
+      "items": [
+        "Close to half of the quote requests converted into work.",
+        "An implementation averages around £3,700.",
+        "Over the period the company deliberately narrowed its offer, growing one service line while others declined."
+      ],
+      "close": "They are published because they are the numbers a buyer actually decides on, and because they are consistent with the documented record. Consistent is not the same as proven. The headline on this page rests on the first two, so treat that headline accordingly."
+    },
+    "cards": [
+      { "title": "It does not transfer cleanly to the UK", "body": "This account ran in Norway. Click prices, competition and buyer behaviour differ, and the client's own sector focus was narrow. The mechanism transfers. The specific cost per request should not be assumed." },
+      { "title": "It is one account, not a pattern", "body": "Nine months, one client, one market, one service line. It shows what happened once, in documented detail. It is evidence, not a law, and anyone presenting a single account as a guarantee is selling you something." },
+      { "title": "We did not cause the acquisition", "body": "Avoki acquired the client one month into the engagement. Deals like that are negotiated for months before announcement, so the dates make any such claim impossible. What is a credential is that the new owner reviewed the contract and kept it running." },
+      { "title": "The 214 are not all one service", "body": "July's 18 requests came from a security campaign, not the main proposition. The accurate description is 214 quote requests for the client's services, with one service line as the primary proposition across most of the period." }
+    ],
+    "timeline": [
+      { "date": "1 August 2001", "text": "The consultancy is founded in Oslo." },
+      { "date": "September 2024", "text": "First monthly report of the engagement. The account is rebuilt as described in section 03." },
+      { "date": "2 October 2024", "text": "Avoki announces the acquisition, one month after our first report." },
+      { "date": "12 December 2024", "text": "The company is renamed Avoki IT AS." },
+      { "date": "Into 2025", "text": "The account keeps running through the integration and into the merged group, nine reported months in total." }
+    ]
+  },
+
+  "verification": {
+    "title": "Check it yourself",
+    "sub": "Every external claim on this page resolves to a public record. That is deliberate, and it is the standard we think case studies should be held to.",
+    "sources": [
+      { "label": "Norwegian company register · Brønnøysund", "text": "Company number 983 591 744, founding date, sector, and the rename to Avoki IT AS.", "url": "https://virksomhet.brreg.no/nb/oppslag/enheter/983591744", "display": "virksomhet.brreg.no/nb/oppslag/enheter/983591744" },
+      { "label": "Filed accounts · proff.no", "text": "Operating revenue and profit, 2021 to 2025, as reproduced in Exhibit C.", "url": "https://www.proff.no/selskap/avoki-it-as/oslo/it-konsulenter-og-radgivning/IG9LS8W03DC", "display": "proff.no/selskap/avoki-it-as/oslo/it-konsulenter-og-radgivning" },
+      { "label": "Acquisition announcement · Avoki, 2 October 2024", "text": "The announcement itself, in the acquirer's own words.", "url": "https://www.mynewsdesk.com/no/avoki/pressreleases/avoki-kjoeper-avant-it-styrker-sin-posisjon-i-det-nordiske-markedet-3346482", "display": "mynewsdesk.com/no/avoki/pressreleases/avoki-kjoeper-avant-it" }
+    ],
+    "close": "Campaign figures are reproduced from the nine monthly reports and converted to pounds at 13.5 Norwegian kroner to the pound. The source reports and the filed accounts are in kroner, so anyone checking against them will see kroner figures. The client has approved the publication of this account."
+  },
+
+  "call": {
+    "title": "Thirty minutes about your numbers",
+    "body": [
+      "If you run an IT consultancy of 10 to 50 people and your pipeline still runs on referrals, this page was written for you. The next step is not a proposal and not a pitch. It is half an hour on what a client is worth to you, what you have already tried, and what paid acquisition would have to cost before it made sense.",
+      "Sometimes the honest answer is that it is not worth your money yet, and we say so. We work on a low monthly fee plus a fee for each client you sign, with a ceiling agreed before we start. Your total cost is known in advance and it does not move, however well the account performs. The first ninety days run as a fixed-price pilot, refunded in full if we miss the number of qualified meetings we agreed. We take on a small number of IT consultancies at a time."
+    ],
+    "cta": "Book a call about your pipeline",
+    "smallprint": "No obligation, and nothing on this page becomes a promise about your account. Your market, your offer and your starting position are yours."
+  },
+
+  "footer": [
+    "Case file · Prepared by Elevate Marketing · getelevateleads.com",
+    "All figures in pounds sterling, converted from Norwegian kroner at 13.5 kroner to the pound. The source reports and filed accounts are in kroner."
+  ],
+
+  "apply": {
+    "title": "A few questions before we book | Elevate Marketing",
+    "heading": "A few questions before we book",
+    "sub": "Two minutes. They decide whether a call is worth your time as much as ours."
+  },
+
+  "booking": {
+    "title": "Pick a time | Elevate Marketing",
+    "heading": "Pick a time that suits you",
+    "body": [
+      "Thanks. From your answers this looks like a conversation worth having, so here is the calendar.",
+      "Half an hour, about your numbers rather than our pitch. If it turns out paid acquisition is not right for you yet, we will say so on the call."
+    ]
+  },
+
+  "thanks": {
+    "title": "Thanks for your time | Elevate Marketing",
+    "heading": "Not right now, and we would rather say so",
+    "body": [
+      "Thanks for answering honestly. Sometimes the honest answer is that it is not worth your money yet, and we say so rather than book a call that wastes an hour of your day.",
+      "From what you have told us, paid acquisition would struggle to pay for itself at your current contract value and volume. That is a statement about the arithmetic, not about your business.",
+      "What would change the answer: a higher average contract value, a clearer single proposition to lead with, or a tracked way of knowing which enquiries turn into work. If any of those shift, the numbers on the case study are the ones to run again."
+    ],
+    "close": "No follow up, no email sequence, and no salesperson will call. The case study stays where it is if you want to come back to it."
+  }
+}
