@@ -109,6 +109,30 @@
   to = "/404.html"
   status = 404
 
+# Case studies use extensionless URLs. The files live at
+# public/case/<slug>/index.html, so the .html redirects below cannot loop:
+# there is no file at the .html path to serve any more. Same shape as the
+# proven /the-journey rule above. Must stay before the SPA catch-all.
+[[redirects]]
+  from = "/case/avant-it"
+  to = "/case/avant-it/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/case/what-a-client-costs"
+  to = "/case/what-a-client-costs/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/case/avant-it.html"
+  to = "/case/avant-it"
+  status = 301
+
+[[redirects]]
+  from = "/case/what-a-client-costs.html"
+  to = "/case/what-a-client-costs"
+  status = 301
+
 # Legacy landing page (moved from / to /lp): unknown /lp/* paths serve it
 [[redirects]]
   from = "/lp/*"
