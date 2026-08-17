@@ -238,12 +238,20 @@ body.apply .funnel-main{flex:1 1 auto;min-height:0}
 .apply-intro h1{font-size:clamp(22px,2.6vw,28px);max-width:26ch}
 .apply-intro p{color:var(--muted);margin:8px 0 0;font-size:15px}
 .tf-host{flex:1 1 auto;min-height:0;display:flex;justify-content:center;padding:0 24px 24px}
-.tf-host #tf{width:100%;max-width:980px;height:100%;min-height:420px;border-radius:14px;
-  overflow:hidden;border:1px solid var(--line-2);background:#fff}
+/* No border and no light fallback: the form carries the site's own dark theme,
+   so any frame reads as a seam and a white fallback flashes on load. The
+   background matches the page so the host is invisible behind the iframe. */
+.tf-host #tf{width:100%;max-width:980px;height:100%;min-height:420px;
+  overflow:hidden;border:none;background:var(--page)}
+/* Typeform injects its iframe with an inline height that does not fill the host,
+   which left a band of the host's own white background below the form. The
+   iframe element itself is styleable from here even though its document is not,
+   and !important is required because the inline style would otherwise win. */
+.tf-host #tf iframe{width:100%!important;height:100%!important;border:0!important;display:block}
 @media(max-width:640px){
   .apply-intro{padding:16px 0 12px}
   .tf-host{padding:0 14px 14px}
-  .tf-host #tf{border-radius:10px}
+  .tf-host #tf{border-radius:0}
 }
 .funnel-mid{padding:56px 0 72px}
 .funnel-mid h1{font-size:clamp(28px,4.4vw,42px);max-width:20ch;margin-bottom:20px;text-wrap:balance}
@@ -629,10 +637,19 @@ ${PARAM_JS}
     go(BASE + (isFit ? '/booking' : '/thanks'));
   }
 
+  /* Logged so the ending reference can be read off a real submission: open the
+     console, submit once, and copy the ref into funnel.endings.fit. Typeform
+     does not surface it anywhere else that is easy to reach. */
+  function log(where, payload) {
+    try { console.info('[elevate] typeform ' + where, payload); } catch (e) {}
+  }
+
   window.elevateTfEnding = function (payload) {
+    log('ending-button-click', payload);
     route(payload && (payload.ref || payload.endingRef));
   };
   window.elevateTfSubmit = function (payload) {
+    log('submit', payload);
     route(payload && (payload.ref || payload.endingRef));
   };
 
@@ -642,6 +659,7 @@ ${PARAM_JS}
     if (!/typeform\\.com$/.test(String(e.origin).replace(/^https?:\\/\\//, '').split('/')[0] || '')) return;
     var t = e.data && (e.data.type || e.data.event);
     if (t === 'form-submit' || t === 'form-ready-to-redirect' || t === 'thank-you-screen-button-click') {
+      log('message:' + t, e.data);
       route(e.data.ref || (e.data.data && e.data.data.ref));
     }
   });
