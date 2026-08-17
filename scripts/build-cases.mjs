@@ -111,8 +111,7 @@ strong{color:var(--heading);font-weight:600}
 .hero .cta-row{margin-top:40px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 26px}
 .hero .quiet{font-size:15px;color:var(--body)}
 section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:20px}
-.shead{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
-.shead .n{font-family:var(--mono);font-size:13px;color:var(--brand)}
+.shead{margin-bottom:8px}
 h2{font-size:clamp(26px,3.6vw,36px);text-wrap:balance}
 section > .sub{color:var(--muted);margin:14px 0 0;max-width:66ch}
 h3{font-size:20px;margin:32px 0 12px}
@@ -167,10 +166,11 @@ tfoot th,tfoot td{border-top:1px solid var(--line-2);color:var(--heading);font-w
 .limit{border:1px solid var(--line);border-radius:11px;background:var(--surface);padding:20px 22px}
 .limit h3{font-size:16.5px;font-family:var(--sans);font-weight:600;margin:0 0 9px}
 .limit p{font-size:14.5px;margin:0;color:var(--muted)}
-ol.steps{list-style:none;margin:30px 0 0;padding:0;counter-reset:s}
-ol.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
-ol.steps li:first-child{border-top:none;padding-top:4px}
-ol.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--raised);border:1px solid var(--line-2);color:var(--brand);font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center}
+/* No numerals. The stages already open with a bold lead-in and the prose says
+   they run in order, so digits would restate what the words carry. */
+ol.steps{list-style:none;margin:30px 0 0;padding:0}
+ol.steps li{padding:18px 0;border-top:1px solid var(--line);max-width:70ch}
+ol.steps li:first-child{border-top:none;padding-top:2px}
 ul.tl{list-style:none;margin:28px 0;padding:0 0 0 26px;position:relative}
 ul.tl::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:var(--line-2)}
 ul.tl li{position:relative;padding-bottom:20px;max-width:64ch}
@@ -207,7 +207,7 @@ footer div{display:flex;flex-direction:column;gap:7px}
   .grad,.swing-cell.now .fig,.out-cell.wide .v{background:none!important;color:#04041C!important;-webkit-text-fill-color:#04041C}
   .ex,.calc,.caution,.limit,ul.ver li,.swing-cell{background:#fff!important;border-color:#d8dbe2!important}
   .ex-cap,.calc-head,.out-cell{background:#f4f6f9!important}
-  .eyebrow,.src,.shead .n,.ex-cap span:first-child,.tl .d{color:#7A4A00!important}
+  .eyebrow,.src,.ex-cap span:first-child,.tl .d{color:#7A4A00!important}
   p,li,td,th,.sub,.ex-note,.calc-note,.smallprint,footer{color:#1a1d24!important}
   section,.ex,.calc,.caution,table,.swing{page-break-inside:avoid}
   a[href^="http"]::after{content:' (' attr(href) ')';font-size:8pt}
@@ -353,9 +353,6 @@ function renderCase(d) {
   const pct = (perClient / def.contractValue) * 100;
   const money = (n) => '£' + Math.round(n).toLocaleString('en-GB');
 
-  let n = 0;
-  const num = () => String(++n).padStart(2, '0');
-
   const exhibit = (x) => `      <div class="ex rv">
         <div class="ex-cap"><span>${esc(x.label)}</span><span>${esc(x.caption)}</span></div>
         <div class="ex-body">
@@ -396,7 +393,7 @@ ${s.delta ? `        <span class="delta">${esc(s.delta)}</span>\n` : ''}      </
   <main id="main">
 
     <section id="yours">
-      <div class="shead"><span class="n mono">${num()}</span><h2 class="rv">${esc(c.title)}</h2></div>
+      <div class="shead"><h2 class="rv">${esc(c.title)}</h2></div>
       <p class="sub rv">${esc(c.sub)}</p>
       <div class="calc rv">
         <div class="calc-head">
@@ -440,9 +437,9 @@ ${s.delta ? `        <span class="delta">${esc(s.delta)}</span>\n` : ''}      </
     </section>
 
 ${d.sections.map((s) => `    <section id="${esc(s.id)}">
-      <div class="shead"><span class="n mono">${num()}</span><h2 class="rv">${esc(s.title)}</h2></div>
+      <div class="shead"><h2 class="rv">${esc(s.title)}</h2></div>
       <p class="sub rv">${esc(s.sub)}</p>
-${s.body ? `      <div class="col">\n${s.body.map((p) => `        <p class="rv">${raw(p)}</p>`).join('\n')}\n      </div>\n` : ''}${s.steps ? `      <ol class="steps">\n${s.steps.map((t) => `        <li class="rv"><div>${raw(t)}</div></li>`).join('\n')}\n      </ol>\n` : ''}${s.caution ? `      <div class="caution rv">
+${s.body ? `      <div class="col">\n${s.body.map((p) => `        <p class="rv">${raw(p)}</p>`).join('\n')}\n      </div>\n` : ''}${s.steps ? `      <ol class="steps">\n${s.steps.map((t) => `        <li class="rv">${raw(t)}</li>`).join('\n')}\n      </ol>\n` : ''}${s.caution ? `      <div class="caution rv">
         <div class="caution-strip">${esc(s.caution.strip)}</div>
         <div class="caution-body">
 ${s.caution.body.map((p) => `          <p>${raw(p)}</p>`).join('\n')}
@@ -450,13 +447,13 @@ ${s.caution.body.map((p) => `          <p>${raw(p)}</p>`).join('\n')}
       </div>\n` : ''}    </section>`).join('\n\n')}
 
     <section id="evidence">
-      <div class="shead"><span class="n mono">${num()}</span><h2 class="rv">${esc(d.evidence.title)}</h2></div>
+      <div class="shead"><h2 class="rv">${esc(d.evidence.title)}</h2></div>
       <p class="sub rv">${esc(d.evidence.sub)}</p>
 ${d.evidence.exhibits.map(exhibit).join('\n\n')}
     </section>
 
     <section id="limits">
-      <div class="shead"><span class="n mono">${num()}</span><h2 class="rv">${esc(d.limits.title)}</h2></div>
+      <div class="shead"><h2 class="rv">${esc(d.limits.title)}</h2></div>
       <p class="sub rv">${esc(d.limits.sub)}</p>
       <div class="caution rv">
         <div class="caution-strip">${esc(d.limits.supplied.strip)}</div>
@@ -475,7 +472,7 @@ ${d.limits.timeline.map((t) => `        <li><span class="d">${esc(t.date)}</span
     </section>
 
     <section id="verification">
-      <div class="shead"><span class="n mono">${num()}</span><h2 class="rv">${esc(d.verification.title)}</h2></div>
+      <div class="shead"><h2 class="rv">${esc(d.verification.title)}</h2></div>
       <p class="sub rv">${esc(d.verification.sub)}</p>
       <ul class="ver">
 ${d.verification.sources.map((s) => `        <li class="rv">
@@ -488,7 +485,7 @@ ${d.verification.sources.map((s) => `        <li class="rv">
     </section>
 
     <section id="call" class="final">
-      <div class="shead"><span class="n mono">${num()}</span><h2 class="rv">${esc(d.call.title)}</h2></div>
+      <div class="shead"><h2 class="rv">${esc(d.call.title)}</h2></div>
       <div class="col">
 ${d.call.body.map((p) => `        <p class="rv">${esc(p)}</p>`).join('\n')}
       </div>
