@@ -12,29 +12,6 @@
 <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 <link rel="stylesheet" href="/css/geo.css">
 
-<!-- Meta Pixel Code -->
-<!-- This is the ONLY page that fires the custom event LeadGEOUK. It marks a qualified
-     GEO lead and is reached exclusively via the qualified Typeform redirect.
-     The event name is intentionally separate from the commission funnel's Lead event
-     so the two audiences never mix. Do not add LeadGEOUK to any other page, and do
-     not add fbq('track', 'Lead') here. -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1466790598245604');
-fbq('track', 'PageView');
-fbq('trackCustom', 'LeadGEOUK');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1466790598245604&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 
 <!-- Google Analytics 4 (replace GA_MEASUREMENT_ID with your actual ID) -->
 <!--
@@ -47,6 +24,7 @@ src="https://www.facebook.com/tr?id=1466790598245604&ev=PageView&noscript=1"
 </script>
 -->
 
+<script src="/js/consent.js" data-pixel="1466790598245604" data-track="Lead" data-track-custom="LeadGEOUK"></script>
 </head>
 <body>
 
