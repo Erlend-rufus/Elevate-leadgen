@@ -69,8 +69,7 @@ strong{color:var(--heading);font-weight:600}
 .hero .cta-row{margin-top:40px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 26px}
 .hero .quiet{font-size:15px;color:var(--body)}
 section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:20px}
-.shead{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
-.shead .n{font-family:var(--mono);font-size:13px;color:var(--brand)}
+.shead{margin-bottom:8px}
 h2{font-size:clamp(26px,3.6vw,36px);text-wrap:balance}
 section > .sub{color:var(--muted);margin:14px 0 0;max-width:66ch}
 h3{font-size:20px;margin:32px 0 12px}
@@ -125,10 +124,11 @@ tfoot th,tfoot td{border-top:1px solid var(--line-2);color:var(--heading);font-w
 .limit{border:1px solid var(--line);border-radius:11px;background:var(--surface);padding:20px 22px}
 .limit h3{font-size:16.5px;font-family:var(--sans);font-weight:600;margin:0 0 9px}
 .limit p{font-size:14.5px;margin:0;color:var(--muted)}
-ol.steps{list-style:none;margin:30px 0 0;padding:0;counter-reset:s}
-ol.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
-ol.steps li:first-child{border-top:none;padding-top:4px}
-ol.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--raised);border:1px solid var(--line-2);color:var(--brand);font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center}
+/* No numerals. The stages already open with a bold lead-in and the prose says
+   they run in order, so digits would restate what the words carry. */
+ol.steps{list-style:none;margin:30px 0 0;padding:0}
+ol.steps li{padding:18px 0;border-top:1px solid var(--line);max-width:70ch}
+ol.steps li:first-child{border-top:none;padding-top:2px}
 ul.tl{list-style:none;margin:28px 0;padding:0 0 0 26px;position:relative}
 ul.tl::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:var(--line-2)}
 ul.tl li{position:relative;padding-bottom:20px;max-width:64ch}
@@ -165,7 +165,7 @@ footer div{display:flex;flex-direction:column;gap:7px}
   .grad,.swing-cell.now .fig,.out-cell.wide .v{background:none!important;color:#04041C!important;-webkit-text-fill-color:#04041C}
   .ex,.calc,.caution,.limit,ul.ver li,.swing-cell{background:#fff!important;border-color:#d8dbe2!important}
   .ex-cap,.calc-head,.out-cell{background:#f4f6f9!important}
-  .eyebrow,.src,.shead .n,.ex-cap span:first-child,.tl .d{color:#7A4A00!important}
+  .eyebrow,.src,.ex-cap span:first-child,.tl .d{color:#7A4A00!important}
   p,li,td,th,.sub,.ex-note,.calc-note,.smallprint,footer{color:#1a1d24!important}
   section,.ex,.calc,.caution,table,.swing{page-break-inside:avoid}
   a[href^="http"]::after{content:' (' attr(href) ')';font-size:8pt}
@@ -256,7 +256,7 @@ body.apply .funnel-main{flex:1 1 auto;min-height:0}
   <main id="main">
 
     <section id="yours">
-      <div class="shead"><span class="n mono">01</span><h2 class="rv">What that arithmetic looks like in your business</h2></div>
+      <div class="shead"><h2 class="rv">What that arithmetic looks like in your business</h2></div>
       <p class="sub rv">The consultancy above sold implementations averaging £3,700, which is small for an IT consultancy. The larger your contract, the smaller the media cost looks against it. Put your own numbers in.</p>
       <div class="calc rv">
         <div class="calc-head">
@@ -300,7 +300,7 @@ body.apply .funnel-main{flex:1 1 auto;min-height:0}
     </section>
 
     <section id="narrow">
-      <div class="shead"><span class="n mono">02</span><h2 class="rv">The month that reads like a failure</h2></div>
+      <div class="shead"><h2 class="rv">The month that reads like a failure</h2></div>
       <p class="sub rv">July 2025 is the smallest number in the whole account, and it is the one worth copying.</p>
       <div class="col">
         <p class="rv">Impressions fell from a normal 80,000 to 8,130. It was deliberate. We ran a narrow campaign on a single proposition, security as a service, aimed at one buyer problem rather than the full service list.</p>
@@ -317,19 +317,19 @@ body.apply .funnel-main{flex:1 1 auto;min-height:0}
     </section>
 
     <section id="work">
-      <div class="shead"><span class="n mono">03</span><h2 class="rv">What was actually done</h2></div>
+      <div class="shead"><h2 class="rv">What was actually done</h2></div>
       <p class="sub rv">No reinvention. A sequence, in order, where each stage exists because of what the one before it produced.</p>
       <ol class="steps">
-        <li class="rv"><div><strong>Measurement first.</strong> Conversion tracking and the landing pages were rebuilt so that a quote request meant a quote request, and nothing softer counted as one. Everything below is worthless without this step.</div></li>
-        <li class="rv"><div><strong>Performance Max, deliberately and temporarily.</strong> Run early to harvest search term data at volume. A means to an end, not a permanent strategy.</div></li>
-        <li class="rv"><div><strong>Search campaigns built from evidence.</strong> The harvested terms became tightly themed campaigns aimed at the queries that had actually produced quote requests, not the ones we assumed would.</div></li>
-        <li class="rv"><div><strong>Retargeting.</strong> Added to stay present with visitors who had not yet asked for a quote. How that ended is in section 02.</div></li>
-        <li class="rv"><div><strong>Lookalike audiences from converters, not visitors.</strong> The difference between those two source audiences is most of the value.</div></li>
+        <li class="rv"><strong>Measurement first.</strong> Conversion tracking and the landing pages were rebuilt so that a quote request meant a quote request, and nothing softer counted as one. Everything below is worthless without this step.</li>
+        <li class="rv"><strong>Performance Max, deliberately and temporarily.</strong> Run early to harvest search term data at volume. A means to an end, not a permanent strategy.</li>
+        <li class="rv"><strong>Search campaigns built from evidence.</strong> The harvested terms became tightly themed campaigns aimed at the queries that had actually produced quote requests, not the ones we assumed would.</li>
+        <li class="rv"><strong>Retargeting.</strong> Added to stay present with visitors who had not yet asked for a quote. How that ended is under the narrow month above.</li>
+        <li class="rv"><strong>Lookalike audiences from converters, not visitors.</strong> The difference between those two source audiences is most of the value.</li>
       </ol>
     </section>
 
     <section id="evidence">
-      <div class="shead"><span class="n mono">04</span><h2 class="rv">The evidence, month by month</h2></div>
+      <div class="shead"><h2 class="rv">The evidence, month by month</h2></div>
       <p class="sub rv">Reproduced from the nine monthly reports. The baseline is the previous provider's performance. The after column is the average across five consecutive stable months, September 2024 to January 2025.</p>
       <div class="ex rv">
         <div class="ex-cap"><span>Exhibit A</span><span>Headline comparison, per monthly reports</span></div>
@@ -367,7 +367,7 @@ body.apply .funnel-main{flex:1 1 auto;min-height:0}
             <tfoot><tr><th scope="row">Total</th><td></td><td></td><td></td><td>39,811</td><td>214</td><td>£8,700</td></tr></tfoot>
           </table>
         </div>
-        <p class="ex-note">March to May is a pooled figure in the source report. July was the deliberately narrow campaign covered in section 02. The reports are in Norwegian kroner, converted here at 13.5 kroner to the pound, so individual rows carry rounding of up to a pound.</p>
+        <p class="ex-note">March to May is a pooled figure in the source report. July was the deliberately narrow campaign covered above. The reports are in Norwegian kroner, converted here at 13.5 kroner to the pound, so individual rows carry rounding of up to a pound.</p>
       </div>
 
       <div class="ex rv">
@@ -390,7 +390,7 @@ body.apply .funnel-main{flex:1 1 auto;min-height:0}
     </section>
 
     <section id="limits">
-      <div class="shead"><span class="n mono">05</span><h2 class="rv">What this does not prove</h2></div>
+      <div class="shead"><h2 class="rv">What this does not prove</h2></div>
       <p class="sub rv">Four things, gathered in one place rather than buried next to the numbers they qualify.</p>
       <div class="caution rv">
         <div class="caution-strip">Client supplied figures · not evidenced by us</div>
@@ -408,7 +408,7 @@ body.apply .funnel-main{flex:1 1 auto;min-height:0}
       </div>
       <ul class="tl rv">
         <li><span class="d">1 August 2001</span>The consultancy is founded in Oslo.</li>
-        <li><span class="d">September 2024</span>First monthly report of the engagement. The account is rebuilt as described in section 03.</li>
+        <li><span class="d">September 2024</span>First monthly report of the engagement. The account is rebuilt as described under what was actually done.</li>
         <li><span class="d">2 October 2024</span>Avoki announces the acquisition, one month after our first report.</li>
         <li><span class="d">12 December 2024</span>The company is renamed Avoki IT AS.</li>
         <li><span class="d">Into 2025</span>The account keeps running through the integration and into the merged group, nine reported months in total.</li>
@@ -416,7 +416,7 @@ body.apply .funnel-main{flex:1 1 auto;min-height:0}
     </section>
 
     <section id="verification">
-      <div class="shead"><span class="n mono">06</span><h2 class="rv">Check it yourself</h2></div>
+      <div class="shead"><h2 class="rv">Check it yourself</h2></div>
       <p class="sub rv">Every external claim on this page resolves to a public record. That is deliberate, and it is the standard we think case studies should be held to.</p>
       <ul class="ver">
         <li class="rv">
@@ -439,7 +439,7 @@ body.apply .funnel-main{flex:1 1 auto;min-height:0}
     </section>
 
     <section id="call" class="final">
-      <div class="shead"><span class="n mono">07</span><h2 class="rv">Thirty minutes about your numbers</h2></div>
+      <div class="shead"><h2 class="rv">Thirty minutes about your numbers</h2></div>
       <div class="col">
         <p class="rv">If you run an IT consultancy of 10 to 50 people and your pipeline still runs on referrals, this page was written for you. The next step is not a proposal and not a pitch. It is half an hour on what a client is worth to you, what you have already tried, and what paid acquisition would have to cost before it made sense.</p>
         <p class="rv">Sometimes the honest answer is that it is not worth your money yet, and we say so. We work on a low monthly fee plus a fee for each client you sign, with a ceiling agreed before we start. Your total cost is known in advance and it does not move, however well the account performs. The first ninety days run as a fixed-price pilot, refunded in full if we miss the number of qualified meetings we agreed. We take on a small number of IT consultancies at a time.</p>
