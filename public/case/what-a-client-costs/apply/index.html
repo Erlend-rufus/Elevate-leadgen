@@ -173,19 +173,30 @@ footer div{display:flex;flex-direction:column;gap:7px}
 .funnel-step{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .funnel-main{flex:1 1 auto;display:flex;flex-direction:column}
 
-/* Typeform host. Full bleed and given an explicit height, because the embed
-   sizes its iframe to 100% of this element. Do NOT put .wrap on it: .wrap sets
-   margin:0 auto, and auto cross-axis margins cancel flex stretch, so the
-   element collapses to the width of its content, which is an empty div. That
-   is what made the form render at Typeform's fallback size. */
-.apply-intro{padding:24px 0 18px}
-.apply-intro h1{font-size:clamp(23px,3vw,30px);max-width:26ch}
-.apply-intro p{color:var(--muted);margin:10px 0 0;font-size:15.5px}
-.tf-host{flex:1 1 auto;width:100%;display:block}
-.tf-host #tf{width:100%;height:calc(100vh - 200px);height:calc(100dvh - 200px);min-height:560px}
+/* Typeform host.
+   The page is locked to the viewport so the form fills whatever is left below
+   the intro: no dead band underneath, and no page scroll competing with the
+   form's own. The height chain has to stay definite the whole way down, because
+   the embed sizes its iframe to 100% of this element and a percentage height
+   against an indefinite parent resolves to nothing.
+   The width is capped and centred with justify-content, never with auto
+   margins: auto cross-axis margins cancel flex stretch, which is what once
+   collapsed this element to zero width and made Typeform fall back to a small
+   card. Edge to edge also looks wrong on a wide screen, because Typeform
+   centres its own narrow column and the rest is bare white. */
+body.apply{height:100vh;height:100dvh;overflow:hidden}
+body.apply .funnel{height:100%}
+body.apply .funnel-main{flex:1 1 auto;min-height:0}
+.apply-intro{padding:22px 0 16px;flex:0 0 auto}
+.apply-intro h1{font-size:clamp(22px,2.6vw,28px);max-width:26ch}
+.apply-intro p{color:var(--muted);margin:8px 0 0;font-size:15px}
+.tf-host{flex:1 1 auto;min-height:0;display:flex;justify-content:center;padding:0 24px 24px}
+.tf-host #tf{width:100%;max-width:980px;height:100%;min-height:420px;border-radius:14px;
+  overflow:hidden;border:1px solid var(--line-2);background:#fff}
 @media(max-width:640px){
-  .apply-intro{padding:18px 0 14px}
-  .tf-host #tf{height:calc(100vh - 178px);height:calc(100dvh - 178px);min-height:520px}
+  .apply-intro{padding:16px 0 12px}
+  .tf-host{padding:0 14px 14px}
+  .tf-host #tf{border-radius:10px}
 }
 .funnel-mid{padding:56px 0 72px}
 .funnel-mid h1{font-size:clamp(28px,4.4vw,42px);max-width:20ch;margin-bottom:20px;text-wrap:balance}
@@ -193,7 +204,7 @@ footer div{display:flex;flex-direction:column;gap:7px}
 .noscript-note{border:1px solid var(--warn-line);background:var(--warn-bg);color:var(--warn);border-radius:10px;padding:16px 20px;margin-top:24px;font-size:14.5px;max-width:none}
 </style>
 </head>
-<body>
+<body class="apply">
 <a class="skip" href="#main">Skip to content</a>
 <script>document.documentElement.className+=' js';</script>
 <script src="/js/consent.js" data-pixel="1466790598245604"></script>
