@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -84,12 +84,31 @@ function AppShell() {
   );
 }
 
+/**
+ * A route change in a single-page app fires no page load, so the pixel would
+ * only ever record the first screen. Consent already sends PageView on load,
+ * which is why the first render is skipped here.
+ */
+function PixelPageViews() {
+  const { pathname } = useLocation();
+  const first = useRef(true);
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    window.ElevateConsent?.pageView();
+  }, [pathname]);
+  return null;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <ScrollProgress />
       <AppShell />
       <CookieConsent />
+      <PixelPageViews />
     </BrowserRouter>
   );
 }

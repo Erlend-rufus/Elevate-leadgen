@@ -708,12 +708,13 @@ ${PARAM_JS}
      click, not on form submit, and never on /thanks. Queued until consent, and
      dropped entirely if the visitor declined. */
   if (window.ElevateConsent) {
-    window.ElevateConsent.track('${esc(f.conversionEvent)}', {
+    var meta = {
       lead_id: state.lead_id || '',
       utm_source: state.utm_source || '',
       utm_campaign: state.utm_campaign || ''
-    });
-  }
+    };
+    window.ElevateConsent.track('${esc(f.conversionEvent)}', meta);
+${f.conversionEventStandard ? `    window.ElevateConsent.trackStandard('${esc(f.conversionEventStandard)}', meta);\n` : ''}  }
 
   /* Prefill Calendly with what we already know, so the booker does not retype it. */
   var w = document.querySelector('.calendly-inline-widget');

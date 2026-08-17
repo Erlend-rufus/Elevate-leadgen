@@ -6,54 +6,89 @@
     "ogTitle": "What a new client costs in paid search",
     "ogDescription": "A documented case file. Four quote requests a month at £320 became twenty five at £39. Work out what that means for your own contract value."
   },
-
   "funnel": {
     "typeformId": "01M0531Q810E2Y8Y3XDB8DKZAC",
     "calendlyUrl": "https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1",
     "conversionEvent": "QualifiedMeetingITC",
+    "conversionEventStandard": "Lead",
     "endings": {
       "_comment": "Typeform ending refs. Anything not listed as fit routes to /thanks, which is the safe default: showing a calendar to an unqualified lead is the exact failure this funnel exists to prevent.",
       "fit": [],
       "notFit": []
     }
   },
-
-  "bar": ["Case file · Paid acquisition", "IT consultancy, 22 people", "Sep 2024 to Jul 2025"],
-
+  "bar": [
+    "Case file · Paid acquisition",
+    "IT consultancy, 22 people",
+    "Sep 2024 to Jul 2025"
+  ],
   "hero": {
     "eyebrow": "Documented case study",
     "h1Before": "A new client cost this consultancy ",
     "h1Keyword": "about two and a half percent of the contract",
     "lede": "Nine reported months of paid search for an IT consultancy. The account went from four quote requests a month to twenty five, and the cost of each one fell by 88 percent. Below is every figure, where it came from, what it does not prove, and a calculator so you can put your own contract value against it. Most UK consultancies sell larger contracts than this one did, which makes the percentage smaller, not larger.",
     "swing": [
-      { "label": "Before, per month", "figure": "4", "sub": "quote requests, at £320 each" },
-      { "label": "After, per month", "figure": "25", "sub": "quote requests, at £39 each", "delta": "6.2× the volume, 88% cheaper", "highlight": true },
-      { "label": "Total, nine months", "figure": "214", "sub": "quote requests for £8,700 of media" }
+      {
+        "label": "Before, per month",
+        "figure": "4",
+        "sub": "quote requests, at £320 each"
+      },
+      {
+        "label": "After, per month",
+        "figure": "25",
+        "sub": "quote requests, at £39 each",
+        "delta": "6.2× the volume, 88% cheaper",
+        "highlight": true
+      },
+      {
+        "label": "Total, nine months",
+        "figure": "214",
+        "sub": "quote requests for £8,700 of media"
+      }
     ],
     "cta": "Book a call about your pipeline",
     "ctaQuiet": "See the month by month evidence"
   },
-
   "calculator": {
     "title": "What that arithmetic looks like in your business",
     "sub": "The consultancy above sold implementations averaging £3,700, which is small for an IT consultancy. The larger your contract, the smaller the media cost looks against it. Put your own numbers in.",
     "cardTitle": "Your cost per won client",
     "cardSub": "Applies our documented £39 per quote request to your contract value and your close rate.",
     "costPerRequest": 39,
-    "defaults": { "contractValue": 15000, "closeRate": 30, "requests": 10 },
+    "defaults": {
+      "contractValue": 15000,
+      "closeRate": 30,
+      "requests": 10
+    },
     "fields": {
-      "contractValue": { "label": "Your average contract value", "hint": "What one new client is typically worth to you." },
-      "closeRate": { "label": "Your close rate on quote requests", "hint": "Of the people who ask you to quote, how many become clients." },
-      "requests": { "label": "Quote requests you want per month", "hint": "The account above averaged 25 a month once it was rebuilt." }
+      "contractValue": {
+        "label": "Your average contract value",
+        "hint": "What one new client is typically worth to you."
+      },
+      "closeRate": {
+        "label": "Your close rate on quote requests",
+        "hint": "Of the people who ask you to quote, how many become clients."
+      },
+      "requests": {
+        "label": "Quote requests you want per month",
+        "hint": "The account above averaged 25 a month once it was rebuilt."
+      }
     },
     "outputs": {
-      "spend": { "key": "Media per month", "note": "at £39 per quote request" },
-      "clients": { "key": "New clients per month", "note": "at your close rate" },
-      "perClient": { "key": "Media cost per won client" }
+      "spend": {
+        "key": "Media per month",
+        "note": "at £39 per quote request"
+      },
+      "clients": {
+        "key": "New clients per month",
+        "note": "at your close rate"
+      },
+      "perClient": {
+        "key": "Media cost per won client"
+      }
     },
     "note": "This is arithmetic, not a forecast. It applies one documented cost per quote request to numbers you supply. Yours will differ: click prices vary by market and by how competitive your keywords are, the account above ran in Norway, and no account produces its steady-state cost in month one. Treat the output as a way to sense check whether paid search is worth a conversation, not as a projection of your results."
   },
-
   "sections": [
     {
       "id": "narrow",
@@ -85,7 +120,6 @@
       ]
     }
   ],
-
   "evidence": {
     "title": "The evidence, month by month",
     "sub": "Reproduced from the nine monthly reports. The baseline is the previous provider's performance. The after column is the average across five consecutive stable months, September 2024 to January 2025.",
@@ -94,13 +128,43 @@
         "label": "Exhibit A",
         "caption": "Headline comparison, per monthly reports",
         "tableCaption": "Before and after, monthly average",
-        "head": ["Metric", "Before", "After", "Change"],
+        "head": [
+          "Metric",
+          "Before",
+          "After",
+          "Change"
+        ],
         "rows": [
-          ["Quote requests per month", "4", "25", "6.2 times"],
-          ["Cost per quote request", "£320", "£39", "minus 88%"],
-          ["Cost per click", "£0.91", "£0.19", "minus 79%"],
-          ["Click through rate", "4.6%", "6.9%", "plus 51%"],
-          ["Impressions per month", "28,488", "76,581", "plus 169%"]
+          [
+            "Quote requests per month",
+            "4",
+            "25",
+            "6.2 times"
+          ],
+          [
+            "Cost per quote request",
+            "£320",
+            "£39",
+            "minus 88%"
+          ],
+          [
+            "Cost per click",
+            "£0.91",
+            "£0.19",
+            "minus 79%"
+          ],
+          [
+            "Click through rate",
+            "4.6%",
+            "6.9%",
+            "plus 51%"
+          ],
+          [
+            "Impressions per month",
+            "28,488",
+            "76,581",
+            "plus 169%"
+          ]
         ],
         "note": "Industry benchmarks as stated in the original reports: click through rate 4.4%, cost per click £0.41. The after column beats both."
       },
@@ -108,36 +172,131 @@
         "label": "Exhibit B",
         "caption": "All nine reported months",
         "tableCaption": "Every period as stated in the source reports, converted to pounds",
-        "head": ["Period", "CTR", "CPC", "Impressions", "Clicks", "Quote requests", "Cost per request"],
-        "rows": [
-          ["Sep 2024", "6.2%", "£0.20", "71,556", "4,436", "23", "£39"],
-          ["Oct 2024", "6.8%", "£0.19", "73,478", "4,752", "25", "£35"],
-          ["Nov 2024", "7.1%", "£0.19", "75,348", "4,642", "23", "£39"],
-          ["Dec 2024", "7.2%", "£0.19", "80,125", "5,769", "26", "£43"],
-          ["Jan 2025", "7.4%", "£0.19", "82,400", "6,097", "27", "£40"],
-          ["Mar to May 2025", "7.1%", "£0.16", "224,000", "13,676", "72", "£38"],
-          ["Jul 2025", "5.4%", "£0.25", "8,130", "439", "18", "£62"]
+        "head": [
+          "Period",
+          "CTR",
+          "CPC",
+          "Impressions",
+          "Clicks",
+          "Quote requests",
+          "Cost per request"
         ],
-        "foot": ["Total", "", "", "", "39,811", "214", "£8,700"],
+        "rows": [
+          [
+            "Sep 2024",
+            "6.2%",
+            "£0.20",
+            "71,556",
+            "4,436",
+            "23",
+            "£39"
+          ],
+          [
+            "Oct 2024",
+            "6.8%",
+            "£0.19",
+            "73,478",
+            "4,752",
+            "25",
+            "£35"
+          ],
+          [
+            "Nov 2024",
+            "7.1%",
+            "£0.19",
+            "75,348",
+            "4,642",
+            "23",
+            "£39"
+          ],
+          [
+            "Dec 2024",
+            "7.2%",
+            "£0.19",
+            "80,125",
+            "5,769",
+            "26",
+            "£43"
+          ],
+          [
+            "Jan 2025",
+            "7.4%",
+            "£0.19",
+            "82,400",
+            "6,097",
+            "27",
+            "£40"
+          ],
+          [
+            "Mar to May 2025",
+            "7.1%",
+            "£0.16",
+            "224,000",
+            "13,676",
+            "72",
+            "£38"
+          ],
+          [
+            "Jul 2025",
+            "5.4%",
+            "£0.25",
+            "8,130",
+            "439",
+            "18",
+            "£62"
+          ]
+        ],
+        "foot": [
+          "Total",
+          "",
+          "",
+          "",
+          "39,811",
+          "214",
+          "£8,700"
+        ],
         "note": "March to May is a pooled figure in the source report. July was the deliberately narrow campaign covered above. The reports are in Norwegian kroner, converted here at 13.5 kroner to the pound, so individual rows carry rounding of up to a pound."
       },
       {
         "label": "Exhibit C",
         "caption": "Filed accounts, shown for scale only",
         "tableCaption": "Operating revenue and profit, thousands of pounds, converted from filed accounts",
-        "head": ["Year", "Revenue", "Operating profit"],
+        "head": [
+          "Year",
+          "Revenue",
+          "Operating profit"
+        ],
         "rows": [
-          ["2021", "£4,304", "£315"],
-          ["2022", "£4,916", "£377"],
-          ["2023", "£5,123", "£195"],
-          ["2024", "£5,595", "£484"],
-          ["2025", "£6,213", "£829"]
+          [
+            "2021",
+            "£4,304",
+            "£315"
+          ],
+          [
+            "2022",
+            "£4,916",
+            "£377"
+          ],
+          [
+            "2023",
+            "£5,123",
+            "£195"
+          ],
+          [
+            "2024",
+            "£5,595",
+            "£484"
+          ],
+          [
+            "2025",
+            "£6,213",
+            "£829"
+          ]
         ],
         "note": "This is here to establish scale and nothing else: a real operating business of roughly £6.2 million turnover with 22 people, whose entire media budget across the engagement was about one seventh of one percent of a single year's revenue. The company also had salespeople, referral flow, client expansion and resale revenue. Drawing a line from the advertising to the revenue would be exactly the claim this page exists to avoid."
       }
     ]
   },
-
   "limits": {
     "title": "What this does not prove",
     "sub": "Four things, gathered in one place rather than buried next to the numbers they qualify.",
@@ -152,31 +311,71 @@
       "close": "They are published because they are the numbers a buyer actually decides on, and because they are consistent with the documented record. Consistent is not the same as proven. The headline on this page rests on the first two, so treat that headline accordingly."
     },
     "cards": [
-      { "title": "It does not transfer cleanly to the UK", "body": "This account ran in Norway. Click prices, competition and buyer behaviour differ, and the client's own sector focus was narrow. The mechanism transfers. The specific cost per request should not be assumed." },
-      { "title": "It is one account, not a pattern", "body": "Nine months, one client, one market, one service line. It shows what happened once, in documented detail. It is evidence, not a law, and anyone presenting a single account as a guarantee is selling you something." },
-      { "title": "We did not cause the acquisition", "body": "Avoki acquired the client one month into the engagement. Deals like that are negotiated for months before announcement, so the dates make any such claim impossible. What is a credential is that the new owner reviewed the contract and kept it running." },
-      { "title": "The 214 are not all one service", "body": "July's 18 requests came from a security campaign, not the main proposition. The accurate description is 214 quote requests for the client's services, with one service line as the primary proposition across most of the period." }
+      {
+        "title": "It does not transfer cleanly to the UK",
+        "body": "This account ran in Norway. Click prices, competition and buyer behaviour differ, and the client's own sector focus was narrow. The mechanism transfers. The specific cost per request should not be assumed."
+      },
+      {
+        "title": "It is one account, not a pattern",
+        "body": "Nine months, one client, one market, one service line. It shows what happened once, in documented detail. It is evidence, not a law, and anyone presenting a single account as a guarantee is selling you something."
+      },
+      {
+        "title": "We did not cause the acquisition",
+        "body": "Avoki acquired the client one month into the engagement. Deals like that are negotiated for months before announcement, so the dates make any such claim impossible. What is a credential is that the new owner reviewed the contract and kept it running."
+      },
+      {
+        "title": "The 214 are not all one service",
+        "body": "July's 18 requests came from a security campaign, not the main proposition. The accurate description is 214 quote requests for the client's services, with one service line as the primary proposition across most of the period."
+      }
     ],
     "timeline": [
-      { "date": "1 August 2001", "text": "The consultancy is founded in Oslo." },
-      { "date": "September 2024", "text": "First monthly report of the engagement. The account is rebuilt as described under what was actually done." },
-      { "date": "2 October 2024", "text": "Avoki announces the acquisition, one month after our first report." },
-      { "date": "12 December 2024", "text": "The company is renamed Avoki IT AS." },
-      { "date": "Into 2025", "text": "The account keeps running through the integration and into the merged group, nine reported months in total." }
+      {
+        "date": "1 August 2001",
+        "text": "The consultancy is founded in Oslo."
+      },
+      {
+        "date": "September 2024",
+        "text": "First monthly report of the engagement. The account is rebuilt as described under what was actually done."
+      },
+      {
+        "date": "2 October 2024",
+        "text": "Avoki announces the acquisition, one month after our first report."
+      },
+      {
+        "date": "12 December 2024",
+        "text": "The company is renamed Avoki IT AS."
+      },
+      {
+        "date": "Into 2025",
+        "text": "The account keeps running through the integration and into the merged group, nine reported months in total."
+      }
     ]
   },
-
   "verification": {
     "title": "Check it yourself",
     "sub": "Every external claim on this page resolves to a public record. That is deliberate, and it is the standard we think case studies should be held to.",
     "sources": [
-      { "label": "Norwegian company register · Brønnøysund", "text": "Company number 983 591 744, founding date, sector, and the rename to Avoki IT AS.", "url": "https://virksomhet.brreg.no/nb/oppslag/enheter/983591744", "display": "virksomhet.brreg.no/nb/oppslag/enheter/983591744" },
-      { "label": "Filed accounts · proff.no", "text": "Operating revenue and profit, 2021 to 2025, as reproduced in Exhibit C.", "url": "https://www.proff.no/selskap/avoki-it-as/oslo/it-konsulenter-og-radgivning/IG9LS8W03DC", "display": "proff.no/selskap/avoki-it-as/oslo/it-konsulenter-og-radgivning" },
-      { "label": "Acquisition announcement · Avoki, 2 October 2024", "text": "The announcement itself, in the acquirer's own words.", "url": "https://www.mynewsdesk.com/no/avoki/pressreleases/avoki-kjoeper-avant-it-styrker-sin-posisjon-i-det-nordiske-markedet-3346482", "display": "mynewsdesk.com/no/avoki/pressreleases/avoki-kjoeper-avant-it" }
+      {
+        "label": "Norwegian company register · Brønnøysund",
+        "text": "Company number 983 591 744, founding date, sector, and the rename to Avoki IT AS.",
+        "url": "https://virksomhet.brreg.no/nb/oppslag/enheter/983591744",
+        "display": "virksomhet.brreg.no/nb/oppslag/enheter/983591744"
+      },
+      {
+        "label": "Filed accounts · proff.no",
+        "text": "Operating revenue and profit, 2021 to 2025, as reproduced in Exhibit C.",
+        "url": "https://www.proff.no/selskap/avoki-it-as/oslo/it-konsulenter-og-radgivning/IG9LS8W03DC",
+        "display": "proff.no/selskap/avoki-it-as/oslo/it-konsulenter-og-radgivning"
+      },
+      {
+        "label": "Acquisition announcement · Avoki, 2 October 2024",
+        "text": "The announcement itself, in the acquirer's own words.",
+        "url": "https://www.mynewsdesk.com/no/avoki/pressreleases/avoki-kjoeper-avant-it-styrker-sin-posisjon-i-det-nordiske-markedet-3346482",
+        "display": "mynewsdesk.com/no/avoki/pressreleases/avoki-kjoeper-avant-it"
+      }
     ],
     "close": "Campaign figures are reproduced from the nine monthly reports and converted to pounds at 13.5 Norwegian kroner to the pound. The source reports and the filed accounts are in kroner, so anyone checking against them will see kroner figures. The client has approved the publication of this account."
   },
-
   "call": {
     "title": "Thirty minutes about your numbers",
     "body": [
@@ -186,18 +385,15 @@
     "cta": "Book a call about your pipeline",
     "smallprint": "No obligation, and nothing on this page becomes a promise about your account. Your market, your offer and your starting position are yours."
   },
-
   "footer": [
     "Case file · Prepared by Elevate Marketing · getelevateleads.com",
     "All figures in pounds sterling, converted from Norwegian kroner at 13.5 kroner to the pound. The source reports and filed accounts are in kroner."
   ],
-
   "apply": {
     "title": "A few questions before we book | Elevate Marketing",
     "heading": "A few questions before we book",
     "sub": "Two minutes. They decide whether a call is worth your time as much as ours."
   },
-
   "booking": {
     "title": "Pick a time | Elevate Marketing",
     "heading": "Pick a time that suits you",
@@ -206,7 +402,6 @@
       "Half an hour, about your numbers rather than our pitch. If it turns out paid acquisition is not right for you yet, we will say so on the call."
     ]
   },
-
   "thanks": {
     "title": "Thanks for your time | Elevate Marketing",
     "heading": "Not right now, and we would rather say so",

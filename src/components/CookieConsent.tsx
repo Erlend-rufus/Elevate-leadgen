@@ -3,9 +3,25 @@ import { useEffect, useState } from 'react';
 const STORAGE_KEY = 'elevate-cookie-consent';
 
 /**
- * Fixed bottom cookie bar. Accept/decline stored in localStorage.
- * Analytics cookies only load after consent.
+ * Fixed bottom cookie bar. The choice is stored in localStorage under the same
+ * key public/js/consent.js uses, so it carries across the app and the static
+ * funnel pages: nobody is asked twice.
+ *
+ * This banner is what actually gates the Meta Pixel. consent.js is loaded from
+ * index.html with its own banner suppressed, and only loads the pixel when
+ * accept() is called here or the stored choice is already "accepted". Declining
+ * loads nothing.
  */
+declare global {
+  interface Window {
+    ElevateConsent?: {
+      accept: () => void;
+      decline: () => void;
+      pageView: () => void;
+      status: () => string | null;
+    };
+  }
+}
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
@@ -21,8 +37,11 @@ export default function CookieConsent() {
     try {
       localStorage.setItem(STORAGE_KEY, choice);
     } catch {
-      /* storage unavailable: just hide */
+      /* storage unavailable: the choice holds for this page only */
     }
+    // Hand the choice to consent.js, which owns loading (or not loading) the pixel.
+    if (choice === 'accepted') window.ElevateConsent?.accept();
+    else window.ElevateConsent?.decline();
     setVisible(false);
   };
 
