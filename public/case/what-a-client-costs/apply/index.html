@@ -305,10 +305,19 @@ function toQuery(o){
     go(BASE + (isFit ? '/booking' : '/thanks'));
   }
 
+  /* Logged so the ending reference can be read off a real submission: open the
+     console, submit once, and copy the ref into funnel.endings.fit. Typeform
+     does not surface it anywhere else that is easy to reach. */
+  function log(where, payload) {
+    try { console.info('[elevate] typeform ' + where, payload); } catch (e) {}
+  }
+
   window.elevateTfEnding = function (payload) {
+    log('ending-button-click', payload);
     route(payload && (payload.ref || payload.endingRef));
   };
   window.elevateTfSubmit = function (payload) {
+    log('submit', payload);
     route(payload && (payload.ref || payload.endingRef));
   };
 
@@ -318,6 +327,7 @@ function toQuery(o){
     if (!/typeform\.com$/.test(String(e.origin).replace(/^https?:\/\//, '').split('/')[0] || '')) return;
     var t = e.data && (e.data.type || e.data.event);
     if (t === 'form-submit' || t === 'form-ready-to-redirect' || t === 'thank-you-screen-button-click') {
+      log('message:' + t, e.data);
       route(e.data.ref || (e.data.data && e.data.data.ref));
     }
   });
