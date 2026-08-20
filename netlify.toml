@@ -162,6 +162,26 @@
   to = "/case/what-a-client-costs"
   status = 301
 
+# UK recruitment funnel. These must resolve to their own files: the SPA
+# catch-all below answers 200 for any path, so a routing mistake here would not
+# 404, it would serve the empty app shell with no pixel and look alive. The
+# catch-all is not forced, so real files already win, and these rules make the
+# three paths explicit rather than relying on that.
+[[redirects]]
+  from = "/uk-recruitment"
+  to = "/uk-recruitment/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/uk-recruitment/thanks-booked"
+  to = "/uk-recruitment/thanks-booked/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/uk-recruitment/thanks-review"
+  to = "/uk-recruitment/thanks-review/index.html"
+  status = 200
+
 # Legacy landing page (moved from / to /lp): unknown /lp/* paths serve it
 [[redirects]]
   from = "/lp/*"
