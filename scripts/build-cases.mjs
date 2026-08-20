@@ -219,6 +219,10 @@ footer div{display:flex;flex-direction:column;gap:7px}
 .funnel-logo{font-family:var(--display);font-size:17px;font-weight:600;color:var(--heading);text-decoration:none;letter-spacing:-.01em}
 .funnel-step{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .funnel-main{flex:1 1 auto;display:flex;flex-direction:column}
+/* .wrap sets margin:0 auto, and auto cross-axis margins cancel flex stretch, so
+   a wrap inside this column shrinks to its content instead of filling. An
+   explicit width leaves the auto margins no free space to take. */
+.funnel-main > .wrap{width:100%}
 
 /* Typeform host.
    The page is locked to the viewport so the form fills whatever is left below
@@ -689,8 +693,28 @@ ${CONSENT_TAG}
     <h1 style="margin-top:16px">${esc(d.booking.heading)}</h1>
 ${d.booking.body.map((p) => `    <p>${esc(p)}</p>`).join('\n')}
     <div class="cal-wrap">
-      <div class="calendly-inline-widget" data-url="${esc(f.calendlyUrl)}?hide_gdpr_banner=1&primary_color=00a3d6" style="min-width:320px;height:700px"></div>
+      <div class="calendly-inline-widget" data-url="${esc(f.calendlyUrl)}?hide_gdpr_banner=1&amp;primary_color=00a3d6" style="min-width:320px;height:700px"></div>
     </div>
+    <!-- Prefill runs between the widget and Calendly's script so data-url is
+         final before widget.js scans the page. The script tag is static rather
+         than injected, matching the pattern already proven on takk.html. -->
+    <script>
+    (function () {
+      try {
+        var w = document.querySelector('.calendly-inline-widget');
+        if (!w) return;
+        var q = new URLSearchParams(location.search), extra = new URLSearchParams();
+        var lead = q.get('lead_id');
+        if (lead) extra.set('utm_content', lead);
+        ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) {
+          var v = q.get(k); if (v) extra.set(k, v);
+        });
+        var s = extra.toString();
+        if (s) w.setAttribute('data-url', w.getAttribute('data-url') + '&' + s);
+      } catch (e) { /* prefill is a convenience, never block the calendar */ }
+    })();
+    </script>
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <noscript>
       <p class="noscript-note">The calendar needs JavaScript. Email
       hello@getelevateleads.com and we will send you times by reply.</p>
@@ -716,23 +740,6 @@ ${PARAM_JS}
     window.ElevateConsent.track('${esc(f.conversionEvent)}', meta);
 ${f.conversionEventStandard ? `    window.ElevateConsent.trackStandard('${esc(f.conversionEventStandard)}', meta);\n` : ''}  }
 
-  /* Prefill Calendly with what we already know, so the booker does not retype it. */
-  var w = document.querySelector('.calendly-inline-widget');
-  if (w) {
-    var u = w.getAttribute('data-url');
-    var extra = new URLSearchParams();
-    if (state.lead_id) extra.set('utm_content', state.lead_id);
-    if (state.utm_source) extra.set('utm_source', state.utm_source);
-    if (state.utm_campaign) extra.set('utm_campaign', state.utm_campaign);
-    if (state.utm_medium) extra.set('utm_medium', state.utm_medium);
-    var q = extra.toString();
-    if (q) w.setAttribute('data-url', u + '&' + q);
-  }
-
-  var s = document.createElement('script');
-  s.src = 'https://assets.calendly.com/assets/external/widget.js';
-  s.async = true;
-  document.body.appendChild(s);
 })();
 </script>
 </body>
