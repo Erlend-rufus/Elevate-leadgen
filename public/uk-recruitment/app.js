@@ -4,13 +4,21 @@
   'use strict';
 
   /* ------------------------------------------------------------------ */
-  /* PLACEHOLDERS. Both must be replaced before a single pound is spent.  */
-  /* They are deliberately ugly so they cannot survive a review: a        */
-  /* placeholder that looks like a valid URL is a placeholder that ships. */
+  /* PLACEHOLDER. Must be replaced before a single pound is spent. It is  */
+  /* deliberately ugly so it cannot survive a review: a placeholder that  */
+  /* looks like a valid URL is a placeholder that ships.                  */
   /* ------------------------------------------------------------------ */
 
-  var CALENDLY_URL = 'https://calendly.com/REPLACE-ME/uk-recruitment-walkthrough';
-  var ZAPIER_HOOK  = 'https://hooks.zapier.com/hooks/catch/REPLACE-ME/REPLACE-ME/';
+  var ZAPIER_HOOK = 'https://hooks.zapier.com/hooks/catch/REPLACE-ME/REPLACE-ME/';
+
+  /* Colours and the hidden page details come from the event's own booking
+     page settings, so they are already in this URL. Do not re-add them
+     below: a duplicated query key is a coin toss over which one Calendly
+     reads. */
+  var CALENDLY_URL = 'https://calendly.com/eb-growwithelevate/' +
+    'elevate-marketing-x-geo-audit' +
+    '?hide_event_type_details=1&hide_gdpr_banner=1' +
+    '&text_color=12123d&primary_color=006aba';
 
   var CONTACT_EMAIL = 'hello@getelevateleads.com';
   var QUALIFIED = ['Recruitment agency', 'Executive search'];
@@ -210,8 +218,8 @@
        in-app browser, which is where most of this traffic arrives. */
     var url = CALENDLY_URL +
       (CALENDLY_URL.indexOf('?') === -1 ? '?' : '&') +
-      'hide_gdpr_banner=1' +
-      '&name=' + encodeURIComponent(payload.full_name) +
+      (CALENDLY_URL.indexOf('hide_gdpr_banner=') === -1 ? 'hide_gdpr_banner=1&' : '') +
+      'name=' + encodeURIComponent(payload.full_name) +
       '&email=' + encodeURIComponent(payload.email) +
       '&utm_content=' + encodeURIComponent(attr.lead_id);
     UTM.forEach(function (k) {
