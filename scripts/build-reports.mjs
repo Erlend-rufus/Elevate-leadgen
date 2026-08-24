@@ -362,50 +362,91 @@ function rivals(v) {
   return [];
 }
 
-function renderQuery(q) {
+function renderQuery(q, t) {
   const chips = rivals(q.named_instead).map((n) => `<span class="chip">${esc(n)}</span>`).join('');
   const note = q.named_instead_note ? `<span class="chip-note">${esc(q.named_instead_note)}</span>` : '';
   return `      <div class="q reveal${q.named ? ' brand' : ''}"${chips ? ' data-stagger=".chip"' : ''}>
         <p class="qt">&ldquo;${esc(q.text)}&rdquo;</p>
-        <span class="verdict ${q.named ? 'yes' : 'no'}">${q.named ? 'Named' : 'Not named'}</span>
-${chips ? `        <span class="lbl">Named instead</span>
+        <span class="verdict ${q.named ? 'yes' : 'no'}">${q.named ? t.named : t.notNamed}</span>
+${chips ? `        <span class="lbl">${t.namedInstead}</span>
         <div class="chips">${chips}${note}</div>\n` : ''}      </div>`;
 }
 
-function renderShot(s, i, hasFile) {
+function renderShot(s, i, hasFile, t) {
   const src = s.file.split('/').pop();
   const cap = esc(s.caption || '');
   const alt = esc(s.alt || s.caption || `Screenshot ${i + 1}`);
   if (!hasFile) {
     return `      <figure class="reveal">
-        <div class="missing">Screenshot pending: drop <code>${esc(src)}</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.</div>
+        <div class="missing">${t.missingShot(esc(src))}</div>
         <figcaption>${cap}</figcaption>
       </figure>`;
   }
   return `      <figure class="reveal">
-        <button type="button" class="shot" data-full="${esc(src)}" data-alt="${alt}" aria-label="Enlarge screenshot ${i + 1}">
+        <button type="button" class="shot" data-full="${esc(src)}" data-alt="${alt}" aria-label="${esc(t.enlargeAlt(i + 1))}">
           <img src="${esc(src)}" alt="${alt}" loading="lazy" decoding="async">
-          <span class="zoom">Enlarge</span>
+          <span class="zoom">${t.enlarge}</span>
         </button>
         <figcaption>${cap}</figcaption>
       </figure>`;
 }
+
+/* UI chrome: labels the JSON itself never carries. "lang": "nb" on an audit
+   switches all of these; the JSON's own prose (queries, quotes, findings) is
+   written directly in whatever language the audit was conducted in either
+   way, and is untouched by this. Defaults to English so every existing
+   report keeps rendering exactly as before. */
+const STRINGS = {
+  en: {
+    htmlLang: 'en-GB', kicker: 'GEO audit', titlePrefix: 'GEO audit: ',
+    metaDescription: (c) => `Private GEO audit prepared for ${c} by Elevate Marketing.`,
+    preparedFor: (c, date) => `Prepared for ${esc(c)} by Elevate Marketing &middot; ${esc(date)}`,
+    kHeadline: 'The headline', kHowItWorks: 'How it works', kVisibility: 'Visibility',
+    kAccuracy: 'Accuracy', kGaps: 'Gaps', kWork: 'The work', kEvidence: 'Evidence',
+    kMethod: 'Method', kInvestment: 'Investment', kNextStep: 'Next step',
+    named: 'Named', notNamed: 'Not named', namedInstead: 'Named instead',
+    worthWatching: 'Worth watching', alreadyWorking: 'Already working for you: ',
+    defaultRivalLabel: 'rival firms named instead of you',
+    evidenceTitle: 'Screenshots of every answer quoted',
+    evidenceSub: (date) => `All captured ${date}. Nothing in this report is paraphrased from memory.`,
+    enlarge: 'Enlarge', enlargeAlt: (i) => `Enlarge screenshot ${i}`, close: 'Close',
+    methodTitle: 'How this was measured',
+    missingShot: (f) => `Screenshot pending: drop <code>${f}</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.`
+  },
+  nb: {
+    htmlLang: 'nb-NO', kicker: 'GEO-rapport', titlePrefix: 'GEO-rapport: ',
+    metaDescription: (c) => `Privat GEO-rapport utarbeidet for ${c} av Elevate Marketing.`,
+    preparedFor: (c, date) => `Utarbeidet for ${esc(c)} av Elevate Marketing &middot; ${esc(date)}`,
+    kHeadline: 'Hovedfunn', kHowItWorks: 'Slik gjør vi det', kVisibility: 'Synlighet',
+    kAccuracy: 'Nøyaktighet', kGaps: 'Svakheter', kWork: 'Tiltakene', kEvidence: 'Bevis',
+    kMethod: 'Metode', kInvestment: 'Investering', kNextStep: 'Neste steg',
+    named: 'Navngitt', notNamed: 'Ikke navngitt', namedInstead: 'Navngitt i stedet',
+    worthWatching: 'Verdt å følge med på', alreadyWorking: 'Det som allerede fungerer: ',
+    defaultRivalLabel: 'konkurrenter navngitt i stedet for dere',
+    evidenceTitle: 'Skjermbilder av hvert svar som er sitert',
+    evidenceSub: (date) => `Alle tatt ${date}. Ingenting i denne rapporten er gjengitt fra hukommelsen.`,
+    enlarge: 'Forstørr', enlargeAlt: (i) => `Forstørr skjermbilde ${i}`, close: 'Lukk',
+    methodTitle: 'Hvordan dette ble målt',
+    missingShot: (f) => `Skjermbilde mangler: legg <code>${f}</code> i <code>audits/&lt;slug&gt;/</code> og bygg på nytt.`
+  }
+};
 
 function render(d, shotsPresent) {
   let secN = 0;
   const n = () => `<span class="n">${String(++secN).padStart(2, '0')}</span>`;
   const sig = d.signature || {};
   const flag = d.accuracy.flag_quote_index;
+  const t = STRINGS[d.lang] || STRINGS.en;
 
   return `<!doctype html>
-<html lang="en-GB">
+<html lang="${t.htmlLang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
 <meta name="referrer" content="no-referrer">
-<title>GEO audit: ${esc(d.company)}</title>
-<meta name="description" content="Private GEO audit prepared for ${esc(d.company)} by Elevate Marketing.">
+<title>${t.titlePrefix}${esc(d.company)}</title>
+<meta name="description" content="${esc(t.metaDescription(d.company))}">
 <meta name="theme-color" content="#14213D">
 <style>${css}</style>
 </head>
@@ -414,15 +455,15 @@ function render(d, shotsPresent) {
 <div class="prog" aria-hidden="true"></div>
 
 <header class="hero"><div class="wrap">
-  <p class="kicker reveal">GEO audit</p>
+  <p class="kicker reveal">${t.kicker}</p>
   <h1 class="reveal d1">${esc(d.company)}</h1>
   <p class="lede reveal d2">${esc(d.lede)}</p>
   <div class="rule"></div>
-  <p class="meta reveal d3">Prepared for ${esc(d.company)} by Elevate Marketing &middot; ${esc(d.date)}</p>
+  <p class="meta reveal d3">${t.preparedFor(d.company, d.date)}</p>
 </div></header>
 
 <div class="headline"><div class="wrap">
-  <p class="kicker reveal">The headline</p>
+  <p class="kicker reveal">${t.kHeadline}</p>
   <div class="statrow">
     <div>
       <p class="big">${esc(d.headline.stat)}</p>
@@ -434,7 +475,7 @@ function render(d, shotsPresent) {
 </div></div>
 
 ${d.how_it_works ? `<section><div class="wrap">
-  <p class="kicker reveal">${n()} How it works</p>
+  <p class="kicker reveal">${n()} ${t.kHowItWorks}</p>
   <h2 class="reveal">${esc(d.how_it_works.title)}</h2>
   <p class="sub reveal d1">${esc(d.how_it_works.sub || '')}</p>
   <ol class="flow" data-stagger=".step">
@@ -447,38 +488,38 @@ ${d.how_it_works.steps.map((st, i) => `    <li class="step">
 ${d.how_it_works.close ? `  <p class="reveal" style="margin-top:28px">${esc(d.how_it_works.close)}</p>\n` : ''}</div></section>
 
 ` : ''}<section><div class="wrap">
-  <p class="kicker reveal">${n()} Visibility</p>
+  <p class="kicker reveal">${n()} ${t.kVisibility}</p>
   <h2 class="reveal">${esc(d.visibility.title)}</h2>
   <p class="sub reveal d1">${esc(d.visibility.sub)}</p>
-${d.queries.map(renderQuery).join('\n')}
+${d.queries.map((q) => renderQuery(q, t)).join('\n')}
 ${d.visibility.rival_count ? `  <div class="tally reveal">
     <span class="n" data-count="${esc(d.visibility.rival_count)}">${esc(d.visibility.rival_count)}</span>
-    <span class="t">${esc(d.visibility.rival_count_label || 'rival firms named instead of you')}</span>
+    <span class="t">${esc(d.visibility.rival_count_label || t.defaultRivalLabel)}</span>
   </div>\n` : ''}${d.visibility.close ? `  <p class="reveal" style="margin-top:22px">${esc(d.visibility.close)}</p>\n` : ''}</div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal">${n()} Accuracy</p>
+  <p class="kicker reveal">${n()} ${t.kAccuracy}</p>
   <h2 class="reveal">${esc(d.accuracy.title)}</h2>
   <p class="sub reveal d1">${esc(d.accuracy.sub)}</p>
 ${d.accuracy.quotes.map((q, i) => `  <blockquote class="reveal${i === flag ? ' flag' : ''}">${
-    i === flag ? '<span class="tag">Worth watching</span>' : ''
+    i === flag ? `<span class="tag">${t.worthWatching}</span>` : ''
   }<p>&ldquo;${esc(q)}&rdquo;</p></blockquote>`).join('\n')}
   <p class="src reveal">${esc(d.accuracy.source || '')}</p>
 ${d.accuracy.body.map((p) => `  <p class="reveal">${esc(p)}</p>`).join('\n')}
 </div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal">${n()} Gaps</p>
+  <p class="kicker reveal">${n()} ${t.kGaps}</p>
   <h2 class="reveal">${esc(d.gaps.title)}</h2>
   <p class="sub reveal d1">${esc(d.gaps.sub)}</p>
 ${d.gaps.items.map((g, i) => `  <div class="gap reveal">
     <div class="num" aria-hidden="true">${i + 1}</div>
     <div><h3>${esc(g.title)}</h3><p>${esc(g.body)}</p></div>
   </div>`).join('\n')}
-${d.gaps.already_works ? `  <div class="good reveal"><p><strong>Already working for you: </strong>${esc(d.gaps.already_works)}</p></div>\n` : ''}</div></section>
+${d.gaps.already_works ? `  <div class="good reveal"><p><strong>${t.alreadyWorking}</strong>${esc(d.gaps.already_works)}</p></div>\n` : ''}</div></section>
 
 <section><div class="wrap">
-  <p class="kicker reveal">${n()} The work</p>
+  <p class="kicker reveal">${n()} ${t.kWork}</p>
   <h2 class="reveal">${esc(d.fixes.title)}</h2>
   <p class="sub reveal d1">${esc(d.fixes.sub)}</p>
 ${d.fixes.items.map((f, i) => `  <div class="fix reveal">
@@ -492,24 +533,24 @@ ${d.fixes.items.map((f, i) => `  <div class="fix reveal">
 ${d.fixes.disclaimer ? `  <p class="reveal" style="margin-top:26px">${esc(d.fixes.disclaimer)}</p>\n` : ''}</div></section>
 
 ${(d.screenshots || []).length ? `<section><div class="wrap">
-  <p class="kicker reveal">${n()} Evidence</p>
-  <h2 class="reveal">Screenshots of every answer quoted</h2>
-  <p class="sub reveal d1">All captured ${esc(d.date)}. Nothing in this report is paraphrased from memory.</p>
-${d.screenshots.map((s, i) => renderShot(s, i, shotsPresent.has(s.file))).join('\n')}
+  <p class="kicker reveal">${n()} ${t.kEvidence}</p>
+  <h2 class="reveal">${t.evidenceTitle}</h2>
+  <p class="sub reveal d1">${esc(t.evidenceSub(d.date))}</p>
+${d.screenshots.map((s, i) => renderShot(s, i, shotsPresent.has(s.file), t)).join('\n')}
 </div></section>
 
-<dialog class="lb"><form method="dialog"><button class="x" aria-label="Close">&times;</button><img src="" alt=""></form></dialog>
+<dialog class="lb"><form method="dialog"><button class="x" aria-label="${t.close}">&times;</button><img src="" alt=""></form></dialog>
 ` : ''}
 <section><div class="wrap">
-  <p class="kicker reveal">${n()} Method</p>
-  <h2 class="reveal">How this was measured</h2>
+  <p class="kicker reveal">${n()} ${t.kMethod}</p>
+  <h2 class="reveal">${t.methodTitle}</h2>
   <div class="method reveal d1">
 ${d.method.map((p) => `    <p>${esc(p)}</p>`).join('\n')}
   </div>
 </div></section>
 
 ${d.pricing ? `<section class="closing"><div class="wrap">
-  <p class="kicker reveal">${n()} Investment</p>
+  <p class="kicker reveal">${n()} ${t.kInvestment}</p>
   <h2 class="reveal">${esc(d.pricing.title)}</h2>
   <p class="sub reveal d1">${esc(d.pricing.sub || '')}</p>
   <div class="prices">
@@ -522,7 +563,7 @@ ${it.body ? `      <p class="pb">${esc(it.body)}</p>\n` : ''}${(it.bullets || []
 ${d.pricing.note ? `  <p class="pnote reveal">${esc(d.pricing.note)}</p>\n` : ''}</div></section>
 
 ` : ''}${d.cta ? `<div class="cta"><div class="wrap">
-  <p class="kicker reveal">Next step</p>
+  <p class="kicker reveal">${t.kNextStep}</p>
   <h2 class="reveal">${esc(d.cta.title)}</h2>
   <p class="reveal d1">${esc(d.cta.body || '')}</p>
   <a class="btn reveal d2" href="${esc(d.cta.button_url)}">${esc(d.cta.button_text)}</a>
