@@ -1,0 +1,214 @@
+{
+  "company": "Headvisor, Trond Henanger",
+  "slug": "headvisor-trond-henanger-v2-w4nq8",
+  "lang": "nb",
+  "date": "24. august 2026",
+  "lede": "Hva AI-assistenter svarer når en oppdragsgiver leter etter hjelp til å ansette en toppleder, og hvor Headvisor og Trond Henanger dukker opp i de svarene.",
+  "headline": {
+    "stat": "0 av 4",
+    "stat_label": "spørsmål om topplederrekruttering navnga Headvisor",
+    "body": "Executive search i Norge. Ny administrerende direktør i et entreprenørselskap. Etatsdirektør i en offentlig virksomhet. Ny daglig leder til et selskap på Vestlandet. Fire spørsmål på det nivået Headvisor faktisk jobber, og navnet står ikke i noen av svarene. 24 andre byråer ble navngitt. Spurt om Headvisor og om Trond Henanger ved navn svarer Google derimot presist og rosende. Én teknisk detalj forklarer mye av avstanden mellom de to."
+  },
+  "visibility": {
+    "title": "Hvem ble navngitt i stedet",
+    "sub": "Vi stilte Google AI Mode, satt til norsk og Norge, fire spørsmål på topplederivå. Ingen av dem handler om enkeltdisipliner som ingeniører, fordi det ikke er der Headvisor konkurrerer. To spørsmål om navn er behandlet for seg, under Nøyaktighet.",
+    "close": "Det tredje spørsmålet er verdt å stoppe ved. Spurt om hvem som kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør, navnga Google seks byråer med spisskompetanse på offentlig sektor. Spurt om Headvisor ved navn sier den samme motoren at Headvisor har bred erfaring med rekruttering til både kommuner, etater og privat næringsliv. Kunnskapen finnes. Den kobles bare ikke til spørsmålet.",
+    "rival_count": "24",
+    "rival_count_label": "byråer navngitt på tvers av de fire spørsmålene"
+  },
+  "queries": [
+    {
+      "text": "Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge?",
+      "named": false,
+      "named_instead": [
+        "Amrop Norge",
+        "Boyden Norway",
+        "Korn Ferry",
+        "Heidrick & Struggles",
+        "BackerSkeie",
+        "Visindi",
+        "Bønes Virik",
+        "Habberstad",
+        "Agile Executive Search",
+        "MeyerHaugen",
+        "Visere",
+        "Skagerak & Co"
+      ],
+      "named_instead_note": "en kategorisert tabell over store internasjonale nettverk, etablerte norske spesialister, KI-drevne utfordrere og regionale eksperter"
+    },
+    {
+      "text": "Vi skal ansette ny administrerende direktør i et entreprenørselskap, hvilket rekrutteringsselskap bør vi bruke?",
+      "named": false,
+      "named_instead": [
+        "BackerSkeie",
+        "Humano",
+        "Cruit",
+        "MeyerHaugen",
+        "Amrop Norge",
+        "Agile Gruppen",
+        "Personalhuset Executive Search"
+      ],
+      "named_instead_note": "de tre første under overskriften Spesialister på Eiendom, Bygg og Anlegg"
+    },
+    {
+      "text": "Hvem kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør?",
+      "named": false,
+      "named_instead": [
+        "Amrop Norge",
+        "Capus",
+        "Cruit",
+        "Humano",
+        "Compass HRG",
+        "BackerSkeie"
+      ],
+      "named_instead_note": "alle seks omtalt som byråer med spisskompetanse på kravene i offentlig sektor"
+    },
+    {
+      "text": "Hvilket rekrutteringsselskap bør vi bruke for å finne ny daglig leder til et selskap på Vestlandet?",
+      "named": false,
+      "named_instead": [
+        "Garuda",
+        "Bønes Virik",
+        "Visere",
+        "Human AS",
+        "Matee",
+        "de Lange Executive Search",
+        "Agile Executive Search",
+        "Jefferson Wells",
+        "Ascender"
+      ],
+      "named_instead_note": "de fem første under overskriften Regionale spesialister på lederrekruttering, flere av dem med kontor i Bergen"
+    }
+  ],
+  "accuracy": {
+    "title": "Google kjenner Trond godt, og siden hans finnes bare når du klikker deg dit",
+    "sub": "Denne delen måler ikke synlighet. Den måler om maskinene har rett om dere, og hvor de henter det fra.",
+    "quotes": [
+      "Trond Henanger er Partner i rekrutterings- og hodejegerselskapet Headvisor, tilknyttet selskapets kontor i Bergen. Han er en svært aktiv hodejeger som i 2025 ble rangert blant de ti hodejegerne i Norge med flest rekrutteringer til faste stillinger.",
+      "Lederstillinger: Rekruttering av toppledere, mellomledere og daglige ledere til både privat og offentlig sektor.",
+      "Headvisor er et solid, etablert og anerkjent nasjonalt rekrutteringsselskap i Norge."
+    ],
+    "flag_quote_index": 1,
+    "source": "Google AI Mode, 24. august 2026, ordrett. De to første er fra spørsmålet om Trond Henanger, det tredje fra spørsmålet om Headvisor. Begge er synlige i skjermbildene under.",
+    "body": [
+      "Først en advarsel om hva denne delen ikke beviser. At en assistent svarer pent når den blir spurt om dere ved navn, er ikke et mål på synlighet. Vi testet det på oss selv: spurt om Elevate Marketing svarte den samme motoren balansert og nokså skeptisk, med formuleringer som at det finnes svært lite uavhengige anmeldelser. Den knyttet i tillegg vårt domene til et helt annet selskap, med et annet organisasjonsnummer og en annen daglig leder. Skjermbildet ligger ved. Poenget er at navnetesten sier noe om nøyaktighet og kilder, ikke om hvor ofte dere blir anbefalt.",
+      "Med det forbeholdet på plass: svaret om Trond er uvanlig godt. Det oppgir rolle, kontor, bakgrunn fra åtte år som Managing Partner i Rada, utdanning fra NTNU, og at han i 2025 ble rangert blant de ti hodejegerne i Norge med flest faste rekrutteringer. Det nevner til og med en konkret prosess, rekrutteringen av ny direktør til Vest-Norges Brusselkontor.",
+      "Kildepanelet forteller hvor dette kommer fra: LinkedIn-profilen hans, et LinkedIn-innlegg, og oversiktssiden Våre rådgivere på headvisor.no. Hans egen rådgiverside er ikke blant kildene, og grunnen er teknisk.",
+      "Klikker du deg fra Våre rådgivere til Trond Henanger, laster siden helt fint. Den viser bilde, tittel, telefon, e-post og en biografi der han selv oppgir at han jobber mest i bygg, eiendom og anlegg samt energisektoren, og rekrutterer toppledere, mellomledere og fagspesialister. Kopierer du så adressen i adressefeltet og åpner den i en ny fane, svarer nøyaktig samme URL Page Not Found. Begge tilstandene er dokumentert i skjermbildene under.",
+      "Det er en klassisk feil i nettsider som bygges som applikasjoner: klikk håndteres inne i nettleseren, men serveren har ingen rute for adressen. Konsekvensen er at siden finnes for et menneske som allerede er inne på nettstedet, og ikke finnes for noe annet. Ikke for en delt lenke i en e-post, ikke for en indekseringsrobot, ikke for en AI-assistent. Det gjelder alle ti rådgiversidene, også siden til Managing Partner.",
+      "Legg merke til hva det koster akkurat her. Trond skriver selv hvilke bransjer og nivåer han dekker. Den setningen er det eneste stedet på nettstedet som kobler ham til bygg, eiendom, anlegg og energi. Ingen maskin har lest den."
+    ]
+  },
+  "gaps": {
+    "title": "Fem grunner til at svarene hopper over dere",
+    "sub": "Hver av disse er knyttet til noe vi observerte, ikke til generell beste praksis.",
+    "items": [
+      {
+        "title": "Rådgiversidene finnes bare ved klikk, ikke ved oppslag",
+        "body": "Samme URL gir innhold når du navigerer dit inne på nettstedet, og Page Not Found når den etterspørres direkte. Det rammer alt som ikke er en surfende bruker: delte lenker, indeksering, forhåndsvisning i LinkedIn og e-post, og alle AI-assistenter. Dette er den største enkeltfeilen i auditen, og den bør rettes uansett hva dere gjør videre med synlighet."
+      },
+      {
+        "title": "Ingen egen tittel eller beskrivelse per rådgiver",
+        "body": "Selv når siden rendres, står sidetittelen som Headvisor, Møt våre rådgivere og hodejegere, og metabeskrivelsen er den generelle teksten om teamet. Det er den samme tittelen for alle ti. En maskin som skulle vise et treff på Trond Henanger har ingen egen overskrift å vise."
+      },
+      {
+        "title": "Ingen strukturerte data og ingen organisasjonsnummer",
+        "body": "Vi fant ingen JSON-LD på sidene vi åpnet, verken Organization eller Person. Organisasjonsnummer 985 395 993 står ikke på nettstedet, det hentet Google fra Proff. Det finnes ingenting maskinlesbart som binder nettsted, LinkedIn-profiler og foretaksregister til én enhet."
+      },
+      {
+        "title": "Bransje- og nivåkompetansen står bare i en biografi maskinene ikke når",
+        "body": "Spørsmålet om administrerende direktør i et entreprenørselskap ble besvart med byråer som har en egen bolk for eiendom, bygg og anlegg. Trond oppgir nøyaktig den kombinasjonen i sin egen biografi, men den ligger på en side som ikke svarer ved direkte oppslag. På selskapsnivå beskriver headvisor.no tjenester, ikke bransjer."
+      },
+      {
+        "title": "Fraværende fra kildene svarene bygges av",
+        "body": "Kildene bak de fire svarene inkluderer Nordic Executive List, Proff, humano.no, cruit.no, jeffersonwells.no, Agile Gruppen, BackerSkeie, Compass HRG, Visere, Ascender og de Lange. Headvisor er ikke blant de synlige kildene i noen av dem."
+      }
+    ],
+    "already_works": "et presist og rosende svar om selskapet, og et uvanlig detaljert svar om Trond personlig, helt ned til en navngitt prosess og en rangering blant de ti mest aktive hodejegerne i Norge i 2025. LinkedIn gjør denne jobben nesten alene, og oversiktssiden Våre rådgivere blir faktisk sitert. Råmaterialet er altså på plass og det er korrekt. Det som mangler er en side maskinene kan feste det til."
+  },
+  "fixes": {
+    "title": "Hva vi ville gjort, og hva hver fiks endrer",
+    "sub": "Sortert etter effekt mot innsats. Til venstre står arbeidet, til høyre står hva en maskin kan gjøre etterpå som den ikke kan i dag.",
+    "items": [
+      {
+        "title": "Gjør rådgiversidene tilgjengelige ved direkte oppslag",
+        "how": "Server-side rute eller forhåndsgenerering for /avdelinger/ansatte/, slik at adressen svarer med innhold også når den etterspørres uten at brukeren har klikket seg dit.",
+        "effect": "Siden kan deles, indekseres og siteres. Uten dette har ingen av de andre tiltakene noe å feste seg i."
+      },
+      {
+        "title": "Gi hver rådgiver egen tittel og beskrivelse",
+        "how": "Unik sidetittel med navn og rolle, og en metabeskrivelse som sier hvilke bransjer og nivåer vedkommende dekker.",
+        "effect": "Et treff på Trond Henanger kan vises som Trond Henanger, ikke som den generelle teamsiden."
+      },
+      {
+        "title": "Løft bransje- og nivåkompetansen opp på selskapsnivå",
+        "how": "Egne sider for de bransjene Headvisor faktisk dekker, i klartekst og i den vokabularen kjøperne bruker: topplederrekruttering til offentlig sektor, daglig leder, entreprenør og eiendom, energi.",
+        "effect": "En maskin som skal koble et bransjespørsmål til et byrå finner en setning å hente, i stedet for bare en tjenesteliste."
+      },
+      {
+        "title": "Legg på Person- og Organization-markup",
+        "how": "Person-schema per rådgiver med rolle, arbeidssted og sameAs til LinkedIn, og Organization med organisasjonsnummer 985 395 993 og alle kontorer.",
+        "effect": "Nettsted, LinkedIn og foretaksregister låses sammen til én enhet i stedet for tre løse omtaler."
+      },
+      {
+        "title": "Inn i kildene svarene siterer",
+        "how": "Start med Nordic Executive List og Proff-oversikten over executive search-selskaper, som begge ble sitert direkte i svarene.",
+        "effect": "Dere dukker opp der svarene settes sammen, ikke bare på eget nettsted."
+      },
+      {
+        "title": "Mål på nytt og sammenlign",
+        "how": "De samme spørsmålene kjørt på nytt etter at sidene er rettet og Google har rukket å hente dem inn, fire til seks uker fram.",
+        "effect": "Dere ser bevegelsen i skjermbilder, ikke i lovnader."
+      }
+    ],
+    "disclaimer": "Vi lover ikke plasseringer, omtaler eller tidslinjer. AI-svar varierer mellom kjøringer, og vi så det selv: svaret om Headvisor oppga i går over 20 års erfaring og i dag røtter over 40 år tilbake. Det vi endrer er hva systemene leser, og en ny måling viser hva som flyttet seg."
+  },
+  "screenshots": [
+    {
+      "file": "S1-executive-search.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge? Tolv byråer i en kategorisert tabell. Headvisor ikke nevnt."
+    },
+    {
+      "file": "S2-adm-dir-entreprenor.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Ny administrerende direktør i et entreprenørselskap. BackerSkeie, Humano og Cruit navngitt under Spesialister på Eiendom, Bygg og Anlegg, deretter fire generelle executive search-selskaper. Headvisor ikke nevnt."
+    },
+    {
+      "file": "S3-etatsdirektor.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Hvem kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør? Amrop Norge, Capus, Cruit, Humano, Compass HRG og BackerSkeie navngitt. Headvisor ikke nevnt."
+    },
+    {
+      "file": "S4-daglig-leder-vestlandet.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Ny daglig leder til et selskap på Vestlandet. Garuda, Bønes Virik, Visere, Human AS og Matee navngitt som regionale spesialister, flere med kontor i Bergen. Headvisor ikke nevnt."
+    },
+    {
+      "file": "S5-brand-test-trond.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Spurt om Trond Henanger svarer Google med rolle, kontor, bakgrunn fra Rada, utdanning fra NTNU og en rangering blant de ti mest aktive hodejegerne i Norge i 2025. Se kildepanelet: LinkedIn-profilen, et LinkedIn-innlegg og oversiktssiden Våre rådgivere. Hans egen side er ikke blant kildene."
+    },
+    {
+      "file": "S6-brand-test-headvisor.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Spurt om Headvisor ved navn svarer Google utfyllende og positivt, med tjenester, metodikk og kontorer. Organisasjonsnummer 985 395 993 er hentet fra Proff, ikke fra nettstedet."
+    },
+    {
+      "file": "S7-kontrolltest-elevate.jpg",
+      "caption": "Kontrolltest, Google AI Mode, 24. august 2026. Vi stilte samme type spørsmål om vårt eget byrå. Svaret er balansert og skeptisk, og peker på at det finnes svært lite uavhengige anmeldelser. Det knytter i tillegg domenet vårt til et annet selskap med annet organisasjonsnummer og annen daglig leder. En navnetest måler nøyaktighet, ikke synlighet."
+    },
+    {
+      "file": "S8-side-virker-ved-klikk.jpg",
+      "caption": "headvisor.no/avdelinger/ansatte/trond-henanger, 24. august 2026, nådd ved å klikke fra Våre rådgivere. Siden viser navn, rolle, kontaktinformasjon og biografi, der Trond selv oppgir bygg, eiendom og anlegg samt energisektoren."
+    },
+    {
+      "file": "S9-side-404-direkte-url.jpg",
+      "caption": "Nøyaktig samme adresse, samme nettleser, åpnet direkte i stedet for ved klikk. Svaret er Page Not Found. Dette er det en delt lenke, en indekseringsrobot og en AI-assistent får se."
+    }
+  ],
+  "method": [
+    "Dette er versjon 2 av auditen. Den første runden stilte spørsmål om rekruttering av byggingeniører og om bemanning til et enkeltprosjekt. Begge deler traff feil nivå: Headvisor rekrutterer ledere og nøkkelpersoner til virksomheter, ikke fagpersonell til prosjekter. Spørsmålssettet er derfor byttet ut i sin helhet, og navnetestene er flyttet ut av synlighetsmålingen.",
+    "Alle spørsmål ble stilt manuelt i nettleser 24. august 2026, på norsk, formulert slik en oppdragsgiver faktisk ville spurt.",
+    "Motor: Google AI Mode med norsk språk og Norge som region. Fire kategorispørsmål, to spørsmål om navn og én kontrolltest på vårt eget byrå.",
+    "De nøyaktige URL-ene, slik at målingen kan gjentas ord for ord: google.com/search?udm=50&hl=no&gl=NO med q satt til Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge?, Vi skal ansette ny administrerende direktør i et entreprenørselskap, hvilket rekrutteringsselskap bør vi bruke?, Hvem kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør? og Hvilket rekrutteringsselskap bør vi bruke for å finne ny daglig leder til et selskap på Vestlandet?",
+    "Hvert skjermbilde viser hele svaret, satt sammen av to fangster der svaret var lengre enn skjermen. Hvert byrånavn og hvert sitat i rapporten er synlig i skjermbildet det tilskrives.",
+    "Spørsmålene ble kjørt fra Norge med norske innstillinger, i en pålogget Google-konto, så personalisering kan ikke utelukkes helt.",
+    "Ett svar er ett datapunkt, ikke en dom. Vi så variasjonen selv: svaret om Headvisor oppga 23. august over 20 års erfaring og 24. august røtter over 40 år tilbake. Derfor bruker enhver ny måling samme ordlyd.",
+    "Forholdene på nettstedet ble sjekket direkte samme dag. Rådgiversiden ble først nådd ved å klikke fra /raadgivere/, der den lastet med full biografi, og deretter etterspurt direkte på samme adresse, der den svarte Page Not Found. Sidetittel og metabeskrivelse ble lest fra den rendrede siden. Vi fant ingen JSON-LD, og intet organisasjonsnummer på nettstedet."
+  ]
+}
