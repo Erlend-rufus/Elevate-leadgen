@@ -1,0 +1,171 @@
+{
+  "company": "Headvisor, Trond Henanger",
+  "slug": "headvisor-trond-henanger-r6pt2",
+  "date": "24. august 2026",
+  "lede": "Hva AI-assistenter svarer når en arbeidsgiver leter etter et rekrutteringsselskap, og hvor Headvisor og Trond Henanger dukker opp i de svarene.",
+
+  "headline": {
+    "stat": "0 av 3",
+    "stat_label": "kategorispørsmål navnga Headvisor",
+    "body": "Rekrutteringsbyrå for byggingeniører. Rekruttering av ingeniører til et prosjekt i Bergen. Executive search og lederrekruttering i Norge. Tre spørsmål som beskriver akkurat det Headvisor selger, og navnet står ikke i noen av svarene. Spørsmål om Headvisor og om Trond Henanger ved navn gir derimot lange, presise og rosende svar. Forskjellen forklares av ett teknisk forhold: rådgiversiden til Trond finnes ikke. Den svarer 404."
+  },
+
+  "visibility": {
+    "title": "Hvem ble navngitt i stedet",
+    "sub": "Vi stilte Google AI Mode, satt til norsk og Norge, de spørsmålene en oppdragsgiver faktisk stiller. Tre var kategorispørsmål. To var direkte tester på navn. Hvert skjermbilde viser hele svaret, ikke bare toppen.",
+    "close": "21 konkurrenter ble navngitt på tvers av de tre kategorisvarene. Det andre spørsmålet er nærmest hjemmebane: Google lagde en egen bolk for lokale executive- og spesialistbyråer i Bergen, og navnga Garuda Bergen, Visere og Bønes Virik. Headvisor har kontor i Media City Bergen.",
+    "rival_count": "21",
+    "rival_count_label": "konkurrenter navngitt i de tre kategorisvarene"
+  },
+
+  "queries": [
+    {
+      "text": "Hvilket rekrutteringsbyrå bør vi bruke for å ansette byggingeniører?",
+      "named": false,
+      "named_instead": ["Jobway", "Cruit", "Compass Human Resources Group", "Jefferson Wells", "Humano"],
+      "named_instead_note": "delt i spesialister på bygg og anlegg og spesialister på ingeniørfag, med Jobway omtalt som et rendyrket rekrutteringsbyrå for byggbransjen"
+    },
+    {
+      "text": "Vi skal rekruttere ingeniører til et prosjekt i Bergen, hvilket rekrutteringsselskap bør vi kontakte?",
+      "named": false,
+      "named_instead": ["Jefferson Wells Bergen", "Akkodis Norway", "MDE Bergen", "Bergen Technology AS", "Jobway Bergen", "Garuda Bergen", "Visere", "Bønes Virik"],
+      "named_instead_note": "de tre siste under en egen overskrift for lokale executive- og spesialistbyråer i Bergen"
+    },
+    {
+      "text": "Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge?",
+      "named": false,
+      "named_instead": ["Visindi", "BackerSkeie", "Habberstad", "Amrop Norge", "Korn Ferry", "Heidrick & Struggles", "Agile Executive Search", "MeyerHaugen", "Kvant", "Visere", "Bønes Virik", "InterSearch Norway"],
+      "named_instead_note": "presentert som en kategorisert tabell, der Bønes Virik og Visere står oppført som regionale spesialister på Vestlandet"
+    },
+    {
+      "text": "Er Headvisor (headvisor.no) et godt rekrutteringsselskap?",
+      "named": true
+    },
+    {
+      "text": "Hvem er Trond Henanger i Headvisor, og hva rekrutterer han innen?",
+      "named": true
+    }
+  ],
+
+  "accuracy": {
+    "title": "Google kjenner Trond godt. Nettsiden er bare ikke der kunnskapen kommer fra",
+    "sub": "Dette er det viktigste funnet, og det er ikke et markedsføringsproblem. Det er en feil på nettstedet.",
+    "quotes": [
+      "Trond Henanger er partner og hodejeger ved Bergenskontoret til rekrutteringsselskapet Headvisor. Han er utdannet sivilingeniør fra NTNU og har lang erfaring som leder innen eiendom, entreprenørvirksomhet og konsulentbransjen før han gikk inn i rekruttering.",
+      "Han er anerkjent som en av de mest aktive hodejegerne i Norge på faste ansettelser.",
+      "Headvisor regnes som et solid og veletablert rekrutteringsselskap i Norge, med over 20 års erfaring innen lederutvelgelse og spesialistrekruttering."
+    ],
+    "flag_quote_index": 1,
+    "source": "Google AI Mode, 24. august 2026, ordrett. De to første er fra spørsmålet om Trond Henanger, det tredje fra spørsmålet om Headvisor. Alle tre er synlige i skjermbildene under.",
+    "body": [
+      "Svaret om Trond er bedre enn det de fleste bedrifter får om seg selv. Det oppgir utdanning, bakgrunn, geografi og hvilke roller han fyller. Spørsmålet er hvor det kommer fra. Kildepanelet viser LinkedIn-profilen hans, et LinkedIn-innlegg, og oversiktssiden Våre rådgivere på headvisor.no. Ikke en egen side om Trond, for den finnes ikke.",
+      "Vi åpnet URL-en headvisor.no/avdelinger/ansatte/trond-henanger. Den svarer Page Not Found. Deretter testet vi resten: oversiktssiden Våre rådgivere lenker til ti rådgiversider, én per ansatt, og alle ti svarer Page Not Found. Også siden til Managing Partner. Skjermbilde av 404-siden er lagt ved.",
+      "Det betyr at oppgaven ikke er å gjøre undersiden synlig. Den er å lage den. Akkurat nå er hvert eneste rådgivernavn på nettstedet en død lenke, og LinkedIn er det eneste stedet en maskin finner noe substansielt om Trond.",
+      "At målet er oppnåelig, viser det andre kategorisvaret: der navngir Google et lokalkontor med navngitt leder, Jefferson Wells Bergen ledet av Rønnaug Nymark. Assistenter navngir gjerne enkeltrådgivere når det finnes en side å hente det fra.",
+      "En siste presisering, og den er viktig for målet. Google beskriver Trond som rekrutterer av toppledere, mellomledere og tunge fagspesialister. Ordet byggingeniør forekommer ikke, verken i svaret om ham eller noe sted på headvisor.no. Skal han bli synlig på rekrutteringsfirma byggingeniør, holder det ikke å ha en side. Siden må også si at han rekrutterer den disiplinen, forutsatt at det stemmer."
+    ]
+  },
+
+  "gaps": {
+    "title": "Fem grunner til at kategorisvarene hopper over dere",
+    "sub": "Hver av disse er knyttet til noe vi observerte, ikke til generell beste praksis.",
+    "items": [
+      {
+        "title": "Alle ti rådgiversider svarer 404",
+        "body": "Oversiktssiden Våre rådgivere lenker til én side per rådgiver under /avdelinger/ansatte/. Vi åpnet dem, og de svarer Page Not Found. Dette er den største enkeltfeilen i auditen, og den er ikke et markedsføringstiltak. Den er en feil som bør rettes uansett hva dere velger å gjøre videre."
+      },
+      {
+        "title": "Nettstedet krever JavaScript for å vise innhold",
+        "body": "Da vi hentet headvisor.no med en vanlig klient uten JavaScript, fikk vi metadata og en melding om at JavaScript kreves, ikke brødteksten. Enklere botter og indekseringsverktøy ser det samme. Innholdet finnes, men det leveres på en måte ikke alle lesere får tak i."
+      },
+      {
+        "title": "Ingen strukturerte data og ingen organisasjonsnummer",
+        "body": "Vi fant ingen JSON-LD på sidene vi åpnet, verken Organization eller Person. Organisasjonsnummer 985 395 993 står ikke på nettstedet, det fant Google via Proff. Det finnes dermed ingenting maskinlesbart som knytter nettsted, LinkedIn-profiler og foretaksregister til én og samme enhet."
+      },
+      {
+        "title": "Ingen side sier hvilke fagdisipliner dere rekrutterer innen",
+        "body": "Spørsmålet om byggingeniører ble besvart med byråer som sier rett ut at de rekrutterer til bygg og anlegg. Headvisor beskriver tjenester, altså executive search, annonsert rekruttering, kandidatvurdering og styrerekruttering, men ikke disipliner. En maskin som skal koble byggingeniør til et byrå, finner ingen setning å hente."
+      },
+      {
+        "title": "Fraværende fra kildene svarene bygges av",
+        "body": "Kildene bak de tre kategorisvarene inkluderer jobway.no, cruit.no, humano.no, jeffersonwells.no, MDE Group, Visere, Agile Gruppen og en Proff-oversikt med tittelen Executive Search, 31 selskaper i Norge. Headvisor er ikke blant de synlige kildene i noen av dem."
+      }
+    ],
+    "already_works": "et sterkt og korrekt merkevaresvar om selskapet, og et uvanlig godt svar om Trond personlig, med utdanning, bakgrunn, geografi og rolletyper. LinkedIn-profilen og LinkedIn-innleggene gjør tung jobb her, og oversiktssiden Våre rådgivere blir faktisk sitert. Grunnlaget er altså på plass. Det som mangler er en side å peke det mot."
+  },
+
+  "fixes": {
+    "title": "Hva vi ville gjort, og hva hver fiks endrer",
+    "sub": "Sortert etter effekt mot innsats. Til venstre står arbeidet, til høyre står hva en maskin kan gjøre etterpå som den ikke kan i dag.",
+    "items": [
+      {
+        "title": "Rett de ti døde rådgiversidene",
+        "how": "Enten gjenopprett sidene under /avdelinger/ansatte/, eller endre lenkene på oversiktssiden til adresser som faktisk svarer.",
+        "effect": "Det finnes en side om Trond å rangere, sitere og lenke til. Uten dette har ingen av de andre tiltakene noe å feste seg i."
+      },
+      {
+        "title": "Skriv rådgiversiden slik at den svarer på kjøperspørsmålet",
+        "how": "Fagdisipliner i klartekst, inkludert bygg og anlegg dersom det stemmer, geografi, rollenivåer, og et par konkrete eksempler på stillinger han har fylt.",
+        "effect": "En maskin kan koble Trond til disiplinen en oppdragsgiver spør om, ikke bare til ordet lederrekruttering."
+      },
+      {
+        "title": "Sørg for at innholdet ligger i første HTML-respons",
+        "how": "Server-rendret eller forhåndsgenerert markup for rådgiversidene og tjenestesidene.",
+        "effect": "Lesere uten JavaScript, som en del botter og verktøy, ser samme innhold som en nettleser."
+      },
+      {
+        "title": "Legg på Person- og Organization-markup",
+        "how": "Person-schema for hver rådgiver med stillingstittel, arbeidssted og sameAs til LinkedIn, og Organization med organisasjonsnummer 985 395 993 og alle kontorer.",
+        "effect": "Nettsted, LinkedIn og foretaksregister låses sammen til én enhet i stedet for tre løse omtaler."
+      },
+      {
+        "title": "Inn i kildene svarene siterer",
+        "how": "Start med Proff-oversikten over executive search-selskaper i Norge, som ble sitert direkte i det tredje svaret, og bransjeoversiktene som ble brukt i de to andre.",
+        "effect": "Dere dukker opp der svarene settes sammen, ikke bare på eget nettsted."
+      },
+      {
+        "title": "Mål på nytt og sammenlign",
+        "how": "De samme fem spørsmålene kjørt på nytt etter at Google har rukket å hente inn sidene igjen, fire til seks uker fram.",
+        "effect": "Dere ser bevegelsen i skjermbilder, ikke i lovnader."
+      }
+    ],
+    "disclaimer": "Vi lover ikke plasseringer, omtaler eller tidslinjer. AI-svar varierer mellom kjøringer. Det vi endrer er hva systemene leser, og en ny måling viser hva som flyttet seg."
+  },
+
+  "screenshots": [
+    {
+      "file": "S1-byggingenior.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Hvilket rekrutteringsbyrå bør vi bruke for å ansette byggingeniører? Jobway, Cruit, Compass Human Resources Group, Jefferson Wells og Humano navngitt. Headvisor ikke nevnt."
+    },
+    {
+      "file": "S2-bergen-ingeniorer.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Vi skal rekruttere ingeniører til et prosjekt i Bergen. Åtte selskaper navngitt, og en egen bolk for lokale executive- og spesialistbyråer i Bergen med Garuda, Visere og Bønes Virik. Headvisor ikke nevnt, til tross for kontor i Media City Bergen."
+    },
+    {
+      "file": "S3-executive-search.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Executive search og lederrekruttering i Norge. Tolv selskaper i en kategorisert tabell, der Bønes Virik og Visere står som regionale spesialister på Vestlandet. Headvisor ikke nevnt. Merk kildekortet Executive Search, 31 selskaper i Norge, fra Proff."
+    },
+    {
+      "file": "S4-brand-test-headvisor.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Spurt om Headvisor ved navn svarer Google utfyllende og positivt, med etableringsår, kontorer og tjenester. Organisasjonsnummer 985 395 993 er hentet fra Proff, ikke fra nettstedet."
+    },
+    {
+      "file": "S5-brand-test-trond.jpg",
+      "caption": "Google AI Mode, 24. august 2026. Spurt om Trond Henanger svarer Google med utdanning, bakgrunn, geografi og rolletyper. Se kildepanelet til høyre: LinkedIn-profilen, et LinkedIn-innlegg og oversiktssiden Våre rådgivere. Ingen egen side om Trond, fordi den ikke finnes."
+    },
+    {
+      "file": "S6-404-radgiverside.jpg",
+      "caption": "headvisor.no/avdelinger/ansatte/trond-henanger, 24. august 2026. Siden som oversikten Våre rådgivere lenker til svarer Page Not Found. Det samme gjør de ni andre rådgiversidene, inkludert siden til Managing Partner."
+    }
+  ],
+
+  "method": [
+    "Alle spørsmål ble stilt manuelt i nettleser 24. august 2026, på norsk, formulert slik en oppdragsgiver faktisk ville spurt og ikke som søkeord.",
+    "Motor: Google AI Mode med norsk språk og Norge som region. Fem spørsmål totalt, tre kategorispørsmål og to tester på navn. ChatGPT, Perplexity og Copilot ble ikke kjørt i denne runden.",
+    "De nøyaktige URL-ene, slik at målingen kan gjentas ord for ord: google.com/search?udm=50&hl=no&gl=NO med q satt til Hvilket rekrutteringsbyrå bør vi bruke for å ansette byggingeniører?, Vi skal rekruttere ingeniører til et prosjekt i Bergen, hvilket rekrutteringsselskap bør vi kontakte?, Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge?, Er Headvisor (headvisor.no) et godt rekrutteringsselskap? og Hvem er Trond Henanger i Headvisor, og hva rekrutterer han innen?",
+    "Hvert skjermbilde viser hele svaret som det ble returnert, tatt med redusert sidezoom slik at ingenting vi siterer ligger utenfor bildet. Hvert selskapsnavn og hvert sitat i rapporten er synlig i skjermbildet det tilskrives.",
+    "Spørsmålene ble kjørt fra Norge med norske innstillinger, i en pålogget Google-konto, så personalisering kan ikke utelukkes helt.",
+    "Ett svar er ett datapunkt, ikke en dom. Gjentas spørsmålene vil svarene variere noe, og derfor bruker enhver ny måling samme ordlyd.",
+    "Forholdene på nettstedet ble sjekket direkte samme dag, ikke hentet fra noe AI-svar: URL-ene /avdelinger/ansatte/trond-henanger og /avdelinger/ansatte/lars-jakob-arnoey ble åpnet i nettleser og returnerte begge Page Not Found, og oversiktssiden /raadgivere/ lenker til ti slike adresser. Vi fant ingen JSON-LD på sidene vi åpnet, og intet organisasjonsnummer på nettstedet. Organisasjonsnummer 985 395 993 er hentet fra Proff via Googles eget kildekort."
+  ]
+}

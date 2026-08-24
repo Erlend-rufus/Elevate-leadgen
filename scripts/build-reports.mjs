@@ -344,7 +344,9 @@ const js = `
 /* --------------------------------------------------------------- rendering */
 
 function renderDots(stat) {
-  const m = /^(\d+)\s+of\s+(\d+)$/.exec(String(stat).trim());
+  // "of" for English reports, "av" for Norwegian ones (e.g. "0 av 3") - purely
+  // additive, existing "N of M" reports parse exactly as before.
+  const m = /^(\d+)\s+(?:of|av)\s+(\d+)$/.exec(String(stat).trim());
   if (!m) return '';
   const hit = +m[1], total = +m[2];
   if (total < 1 || total > 12) return '';
