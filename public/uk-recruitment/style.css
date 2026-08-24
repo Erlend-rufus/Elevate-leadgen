@@ -93,56 +93,15 @@ ul.gets li::before{content:'';position:absolute;left:2px;top:9px;width:9px;heigh
 .acc .body{padding:0 0 18px;color:var(--body)}
 .acc .body p{margin:0}
 
-/* form */
+/* form: Typeform live embed. No border/background rules target the embed's
+   own iframe: Typeform's live-embed auto-sizes to its content and this site's
+   one existing embed (/contact) already proved that forcing a height here is
+   what causes the white band and shrink-to-content bugs, not the fix for them. */
 #form{scroll-margin-top:14px}
 .form-head h2{margin-bottom:8px}
 .form-head p{color:var(--muted);margin-bottom:26px}
-.q{padding:20px 0;border-top:1px solid var(--line)}
-.q:first-of-type{border-top:none}
-.q > .label{display:block;color:var(--white);font-weight:600;font-size:16.5px;
-  margin-bottom:6px}
-.q .num{color:var(--green);font-weight:700;margin-right:9px}
-.q .help{display:block;font-size:14px;color:var(--muted);margin-bottom:13px}
-.q .help.tight{margin-bottom:11px}
-
-.contact-block{border-top:1px solid var(--line-2);margin-top:8px;padding-top:8px}
-
-input[type=text],input[type=url],input[type=email],input[type=tel]{
-  width:100%;background:var(--surface);border:1px solid var(--line-2);border-radius:9px;
-  color:var(--white);font-family:var(--sans);font-size:16px;padding:14px 15px;
-  -webkit-appearance:none}
-input::placeholder{color:#6c7386}
-input:focus{border-color:var(--green);outline:none}
-.stack{display:flex;flex-direction:column;gap:10px}
-
-.opts{display:flex;flex-direction:column;gap:9px}
-.opt{display:flex;align-items:center;gap:12px;background:var(--surface);
-  border:1px solid var(--line-2);border-radius:9px;padding:14px 15px;cursor:pointer;
-  transition:border-color .15s var(--ease),background .15s var(--ease)}
-.opt:hover{border-color:rgba(255,255,255,.32)}
-.opt input{appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:none;
-  border:2px solid var(--line-2);border-radius:50%;margin:0;cursor:pointer;
-  display:grid;place-content:center}
-.opt input::after{content:'';width:10px;height:10px;border-radius:50%;
-  transform:scale(0);transition:transform .12s var(--ease);background:var(--green)}
-.opt input:checked::after{transform:scale(1)}
-.opt input:checked{border-color:var(--green)}
-.opt:has(input:checked){border-color:var(--green);background:rgba(0,212,126,.07)}
-.opt span{font-size:15.5px;color:var(--body)}
-.opt:has(input:checked) span{color:var(--white)}
-
-.err{display:none;color:var(--red);font-size:14px;margin-top:9px}
-.q.invalid .err{display:block}
-.q.invalid input[type=text],.q.invalid input[type=url],
-.q.invalid input[type=email],.q.invalid input[type=tel]{border-color:var(--red)}
-.q.invalid .opts .opt{border-color:rgba(255,138,128,.5)}
-
-.submit-row{padding-top:26px}
-.form-error{display:none;margin-top:16px;background:rgba(255,138,128,.09);
-  border:1px solid rgba(255,138,128,.4);border-radius:10px;padding:16px 18px;
-  color:var(--white);font-size:15px}
-.form-error a{color:var(--green)}
-.form-error.on{display:block}
+.tf-card{background:var(--surface);border:1px solid var(--line-2);border-radius:16px;
+  padding:28px 24px}
 
 /* calendar */
 #calendar{display:none;padding:34px 0 10px;scroll-margin-top:14px}
