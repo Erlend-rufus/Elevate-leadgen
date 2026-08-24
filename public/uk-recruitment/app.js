@@ -4,17 +4,16 @@
   'use strict';
 
   /* ------------------------------------------------------------------ */
-  /* PLACEHOLDERS. Both must be replaced before a single pound is spent.  */
-  /* They are deliberately ugly so they cannot survive a review: a        */
-  /* placeholder that looks like a valid ID is a placeholder that ships.  */
+  /* PLACEHOLDER. Must be replaced before a single pound is spent. It is  */
+  /* deliberately ugly so it cannot survive a review: a placeholder that  */
+  /* looks like a valid ref is a placeholder that ships.                  */
   /*                                                                      */
-  /* TYPEFORM_ID: the live embed ID from the form's Share tab.            */
   /* FIT_ENDINGS: the ending screen ref(s) that mean "qualified". Submit   */
   /* the live form once for each ending, read the ref off the console log */
   /* this file prints on every submission, and paste the real value(s) in. */
   /* ------------------------------------------------------------------ */
 
-  var TYPEFORM_ID = 'REPLACE-ME';
+  var TYPEFORM_ID = '01M0SBWKH1TCX79J528JAPSH17';
   var FIT_ENDINGS = ['REPLACE-ME'];
 
   /* Colours and the hidden page details come from the event's own booking
