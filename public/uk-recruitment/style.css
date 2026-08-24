@@ -103,11 +103,9 @@ ul.gets li::before{content:'';position:absolute;left:2px;top:9px;width:9px;heigh
 .tf-card{background:var(--surface);border:1px solid var(--line-2);border-radius:16px;
   padding:28px 24px}
 
-/* calendar */
-#calendar{display:none;padding:34px 0 10px;scroll-margin-top:14px}
-#calendar.on{display:block}
-#calendar h2{margin-bottom:8px}
-#calendar .sub{color:var(--muted);margin-bottom:22px}
+/* calendar: used on /uk-recruitment/booking, a dedicated page reached via
+   Typeform's own redirect on the qualified ending - always visible there,
+   so no show/hide toggle is needed here any more. */
 .cal-host{border:1px solid var(--line);border-radius:12px;overflow:hidden;
   background:var(--surface);min-height:760px}
 .cal-host > div{width:100%;min-width:280px;height:760px}
