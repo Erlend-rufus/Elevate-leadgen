@@ -98,7 +98,7 @@
   <section id="form"><div class="wrap">
     <div class="form-head">
       <h2>Book your walkthrough</h2>
-      <p>Six questions, then pick a time. We run the review before we speak.</p>
+      <p>A couple of minutes, then pick a time. We run the review before we speak.</p>
     </div>
 
     <noscript>
@@ -107,92 +107,9 @@
       </div>
     </noscript>
 
-    <form id="lead-form" novalidate>
-
-      <div class="q">
-        <span class="label"><span class="num">1</span>Which best describes your business?</span>
-        <div class="opts">
-          <label class="opt"><input type="radio" name="business_type" value="Recruitment agency"><span>Recruitment agency</span></label>
-          <label class="opt"><input type="radio" name="business_type" value="Executive search"><span>Executive search</span></label>
-          <label class="opt"><input type="radio" name="business_type" value="In-house talent team"><span>In-house talent team</span></label>
-          <label class="opt"><input type="radio" name="business_type" value="Something else"><span>Something else</span></label>
-        </div>
-        <span class="err"></span>
-      </div>
-
-      <div class="q">
-        <label class="label" for="website"><span class="num">2</span>Company website</label>
-        <span class="help">This is what we run the review against</span>
-        <input type="url" id="website" name="website" inputmode="url" autocomplete="url" placeholder="yourfirm.co.uk">
-        <span class="err"></span>
-      </div>
-
-      <div class="q">
-        <label class="label" for="company_name"><span class="num">3</span>Company name</label>
-        <input type="text" id="company_name" name="company_name" autocomplete="organization">
-        <span class="err"></span>
-      </div>
-
-      <div class="q">
-        <label class="label" for="specialism"><span class="num">4</span>What do you mainly recruit for?</label>
-        <input type="text" id="specialism" name="specialism" placeholder="e.g. fintech engineering, London">
-        <span class="err"></span>
-      </div>
-
-      <div class="q">
-        <span class="label"><span class="num">5</span>How many consultants work at the firm?</span>
-        <div class="opts">
-          <label class="opt"><input type="radio" name="consultants" value="1-4"><span>1-4</span></label>
-          <label class="opt"><input type="radio" name="consultants" value="5-19"><span>5-19</span></label>
-          <label class="opt"><input type="radio" name="consultants" value="20-49"><span>20-49</span></label>
-          <label class="opt"><input type="radio" name="consultants" value="50+"><span>50+</span></label>
-        </div>
-        <span class="err"></span>
-      </div>
-
-      <div class="q">
-        <span class="label"><span class="num">6</span>Which firms do you most often compete against?</span>
-        <span class="help tight">Helps us set the searches up properly</span>
-        <div class="stack">
-          <input type="text" name="competitor_1" aria-label="First competing firm" placeholder="Optional">
-          <input type="text" name="competitor_2" aria-label="Second competing firm" placeholder="Optional">
-        </div>
-      </div>
-
-      <div class="q">
-        <span class="label">Roughly what is your annual turnover?</span>
-        <div class="opts">
-          <label class="opt"><input type="radio" name="turnover" value="Under £500k"><span>Under &pound;500k</span></label>
-          <label class="opt"><input type="radio" name="turnover" value="£500k-£2m"><span>&pound;500k-&pound;2m</span></label>
-          <label class="opt"><input type="radio" name="turnover" value="£2m-£10m"><span>&pound;2m-&pound;10m</span></label>
-          <label class="opt"><input type="radio" name="turnover" value="£10m+"><span>&pound;10m+</span></label>
-        </div>
-        <span class="err"></span>
-      </div>
-
-      <div class="contact-block">
-        <div class="q">
-          <label class="label" for="full_name">Full name</label>
-          <input type="text" id="full_name" name="full_name" autocomplete="name">
-          <span class="err"></span>
-        </div>
-        <div class="q">
-          <label class="label" for="email">Work email</label>
-          <input type="email" id="email" name="email" inputmode="email" autocomplete="email">
-          <span class="err"></span>
-        </div>
-        <div class="q">
-          <label class="label" for="mobile">Mobile</label>
-          <input type="tel" id="mobile" name="mobile" inputmode="tel" autocomplete="tel">
-          <span class="err"></span>
-        </div>
-      </div>
-
-      <div class="submit-row">
-        <button type="submit" class="btn" id="submit-btn">Book your walkthrough</button>
-        <div class="form-error" id="form-error"></div>
-      </div>
-    </form>
+    <div class="tf-card">
+      <div id="tf"></div>
+    </div>
   </div></section>
 
   <section id="calendar"><div class="wrap">
