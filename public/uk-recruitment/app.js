@@ -3,18 +3,25 @@
 (function () {
   'use strict';
 
-  /* ------------------------------------------------------------------ */
-  /* PLACEHOLDER. Must be replaced before a single pound is spent. It is  */
-  /* deliberately ugly so it cannot survive a review: a placeholder that  */
-  /* looks like a valid ref is a placeholder that ships.                  */
-  /*                                                                      */
-  /* FIT_ENDINGS: the ending screen ref(s) that mean "qualified". Submit   */
-  /* the live form once for each ending, read the ref off the console log */
-  /* this file prints on every submission, and paste the real value(s) in. */
-  /* ------------------------------------------------------------------ */
-
   var TYPEFORM_ID = '01M0SDA0DGYFWWYMF3C94YM82M';
-  var FIT_ENDINGS = ['REPLACE-ME'];
+
+  /* Erlend filters wrong-fit leads inside Typeform itself: the "Ending B /
+     feil lead" screen redirects straight to /uk-recruitment/thanks-review,
+     so that path never reaches this file at all. Everything else - the
+     normal ending, and any submission this code cannot identify - defaults
+     to qualified and shows the calendar.
+
+     This inverts the funnel's earlier "safe by default" design on purpose.
+     Showing Calendly to an unqualified lead now costs one wasted call slot;
+     the previous default cost a qualified lead never reaching a calendar at
+     all, which is the more expensive mistake to make silently.
+
+     MISMATCH_ENDINGS is a second, optional line of defence for the same
+     "Ending B" ref, in case the Typeform redirect ever fails to fire (an
+     ad blocker, an in-app browser eating the navigation). It is not
+     required to launch: leave it empty until there is a real ref to add,
+     read off the console log this file prints on every submission. */
+  var MISMATCH_ENDINGS = [];
 
   /* Colours and the hidden page details come from the event's own booking
      page settings, so they are already in this URL. Do not re-add them
@@ -97,16 +104,15 @@
 
     /* Logged so the ending reference can be read off a real submission: open
        the console, submit once per ending, and copy the ref into
-       FIT_ENDINGS above. Typeform does not surface it anywhere else that is
-       easy to reach. */
+       MISMATCH_ENDINGS above. Typeform does not surface it anywhere else
+       that is easy to reach. */
     try { console.info('[elevate] typeform ending ref:', ref); } catch (e) {}
 
-    /* Unknown or missing ref goes to thanks-review. Showing a calendar to a
-       lead we cannot confirm as qualified is the exact failure this funnel
-       exists to prevent, so the safe default is the one that does not book
-       a call or fire a conversion. */
-    var isFit = ref && FIT_ENDINGS.indexOf(String(ref)) !== -1;
-    if (!isFit) {
+    /* Default is qualified. The wrong-fit path is filtered out in Typeform
+       itself (see MISMATCH_ENDINGS above), so under normal operation this
+       code only ever sees the qualified ending, or no ref at all. */
+    var isMismatch = ref && MISMATCH_ENDINGS.indexOf(String(ref)) !== -1;
+    if (isMismatch) {
       location.href = '/uk-recruitment/thanks-review?' + toQuery().toString();
       return;
     }
