@@ -116,6 +116,21 @@
       location.href = '/uk-recruitment/thanks-review?' + toQuery().toString();
       return;
     }
+
+    /* This is the only signal that someone finished the Typeform and was not
+       filtered to Ending B: everything from here on happens inline on this
+       same page (the calendar swaps in, no navigation), so there is no page
+       load left to hang a conversion off. Distinct from Schedule, which
+       fires on /thanks-booked only once a time slot is actually booked -
+       this fires on qualifying, whether or not a booking follows. */
+    if (window.ElevateConsent) {
+      window.ElevateConsent.trackStandard('Lead', {
+        lead_id: attr.lead_id || '',
+        utm_source: attr.utm_source || '',
+        utm_campaign: attr.utm_campaign || ''
+      });
+    }
+
     showCalendar();
   }
 
