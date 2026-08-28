@@ -149,6 +149,54 @@ dialog.lb form{position:relative}
 .price li:last-child{margin:0}
 .pnote{font-size:15px;color:var(--grey);margin:0}
 
+/* pricing: the figure is the thing the reader is looking for, so it is set
+   large and first. Options sit side by side because they are alternatives;
+   a recurring item is marked and de-emphasised because it is an add-on to
+   whichever option is chosen, not a third option. */
+.pgrid{display:grid;gap:16px;margin:0 0 22px}
+@media(min-width:720px){
+  /* auto-fit rather than a fixed pair: two options sit side by side, and a
+     report with only one package fills the row instead of leaving half of it
+     empty next to the card */
+  .pgrid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  /* auto-fit cannot collapse the second track when the recurring card spans
+     both, so a report with a single package is told explicitly to fill the row
+     rather than sit in half of it */
+  .pgrid.single .pcard{grid-column:1/-1}
+  /* the recurring item spans the row and lays itself out in two columns:
+     identity on the left, detail on the right. Each element needs its own
+     cell; putting terms and the get-box in one cell stacks them on top of
+     each other and the terms disappear. */
+  .pcard.recurring{grid-column:1/-1;display:grid;
+    grid-template-columns:minmax(190px,250px) 1fr;gap:0 32px;align-content:start}
+  .pcard.recurring .pname{grid-column:1;grid-row:1}
+  .pcard.recurring .pfig{grid-column:1;grid-row:2;margin:0}
+  .pcard.recurring .pterms{grid-column:2;grid-row:1/span 2;margin:0 0 14px}
+  .pcard.recurring .pget{grid-column:2;grid-row:3;margin:0}}
+.pcard{border:1px solid var(--line);border-top:3px solid var(--amber);border-radius:12px;
+  padding:24px 26px;background:var(--white);display:flex;flex-direction:column}
+.pcard.recurring{border-top-color:var(--line-strong,var(--line));background:var(--light)}
+.pname{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--amber-ink);margin:0 0 12px}
+.pcard.recurring .pname{color:var(--grey)}
+.pfig{font-family:var(--serif);font-size:clamp(30px,4.6vw,40px);font-weight:700;
+  color:var(--navy);line-height:1;margin:0 0 16px;display:flex;align-items:baseline;
+  gap:10px;flex-wrap:wrap}
+.punit{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--grey)}
+.pterms{font-size:15px;color:var(--grey);margin:0 0 16px}
+.pget{margin:auto 0 0;padding:14px 16px;background:var(--light);border-radius:8px}
+.pcard.recurring .pget{background:var(--white)}
+.pget span{display:block;font-size:11px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--amber-ink);margin:0 0 6px}
+.pget p{margin:0;font-size:15px}
+.pnotes{display:grid;gap:14px;margin:0 0 20px}
+.pnote{border-left:3px solid var(--line);padding:2px 0 2px 18px}
+.pnote h3{font-size:16px;margin:0 0 5px}
+.pnote p{margin:0;font-size:15px;color:var(--grey)}
+.pnote-eff{margin-top:6px!important;color:var(--ink)!important}
+.pnote-foot{font-size:15px;color:var(--grey);margin:0}
+
 /* closing section (pricing): own ground, no trailing rule */
 .closing{background:var(--light);border-bottom:none}
 
@@ -410,38 +458,25 @@ dialog.lb form{position:relative}
   <p class="kicker reveal"><span class="n">06</span> What this costs</p>
   <h2 class="reveal">What this costs and what you get</h2>
   <p class="sub reveal d1">One fixed price, one fixed scope, one fixed end date. No retainer is required to take it, and nothing renews on its own.</p>
-  <div class="fix reveal">
-    <div class="num" aria-hidden="true">1</div>
-    <div>
-      <h3>GEO fix package, first phase</h3>
-      <p class="how">GBP 1,850, invoiced half on start and half on delivery. Thirty days from the point we have your content. The employer entry point that does not exist today, the geographic coverage written out by name, the verification layer covering 1999, Brentwood and the FCSA membership, structured data, and directory entries.</p>
-      <p class="eff">Up to six published pages, plus two re-measurements of the same three questions on 10 October 2026 (day 45) and 24 November 2026 (day 90), reported with screenshots whichever way they go.</p>
+  <div class="pgrid single">
+    <div class="pcard reveal">
+      <p class="pname">GEO fix package, first phase</p>
+      <p class="pfig">GBP 1,850<span class="punit">one-off</span></p>
+      <p class="pterms">Invoiced half on start and half on delivery. Thirty days from the point we have your content. The employer entry point that does not exist today, the geographic coverage written out by name, the verification layer covering 1999, Brentwood and the FCSA membership, structured data, and directory entries.</p>
+      <div class="pget"><span>What you get</span><p>Up to six published pages, plus two re-measurements of the same three questions on 10 October 2026 (day 45) and 24 November 2026 (day 90), reported with screenshots whichever way they go.</p></div>
+    </div>
+    <div class="pcard recurring reveal">
+      <p class="pname">Ongoing measurement, optional</p>
+      <p class="pfig">GBP 450<span class="punit">per month</span></p>
+      <p class="pterms">The question set re-run monthly, plus one new page each month aimed at a question you still lose. No minimum term and no notice period.</p>
+      <div class="pget"><span>What you get</span><p>You can stop the month you stop seeing value. If the 24 November 2026 re-measurement shows no movement on any of the three questions, the next three months are free.</p></div>
     </div>
   </div>
-  <div class="fix reveal">
-    <div class="num" aria-hidden="true">2</div>
-    <div>
-      <h3>We are not proposing a new website</h3>
-      <p class="how">The site functions. What is missing is a route through it for the person doing the hiring, and pages that state a specialism an engine can match. That is content architecture, not a rebuild.</p>
-      <p class="eff">You pay for the pages that answer the questions, not for a redesign that would leave the same gap.</p>
-    </div>
+  <div class="pnotes reveal">
+    <div class="pnote"><h3>We are not proposing a new website</h3><p>The site functions. What is missing is a route through it for the person doing the hiring, and pages that state a specialism an engine can match. That is content architecture, not a rebuild.</p><p class="pnote-eff">You pay for the pages that answer the questions, not for a redesign that would leave the same gap.</p></div>
+    <div class="pnote"><h3>Sector pages, quoted separately</h3><p>The specialisms sit with your Associate Partners rather than with head office. Pricing that work before we know how many of them take part would be a guess. We suggest running the first phase, re-measuring, and deciding on the evidence.</p><p class="pnote-eff">You are not committing to an internal exercise you have not yet agreed with your partners.</p></div>
   </div>
-  <div class="fix reveal">
-    <div class="num" aria-hidden="true">3</div>
-    <div>
-      <h3>Sector pages, quoted separately</h3>
-      <p class="how">The specialisms sit with your Associate Partners rather than with head office. Pricing that work before we know how many of them take part would be a guess. We suggest running the first phase, re-measuring, and deciding on the evidence.</p>
-      <p class="eff">You are not committing to an internal exercise you have not yet agreed with your partners.</p>
-    </div>
-  </div>
-  <div class="fix reveal">
-    <div class="num" aria-hidden="true">4</div>
-    <div>
-      <h3>Ongoing measurement, optional</h3>
-      <p class="how">GBP 450 per month. The question set re-run monthly, plus one new page each month aimed at a question you still lose. No minimum term and no notice period.</p>
-      <p class="eff">You can stop the month you stop seeing value. If the 24 November 2026 re-measurement shows no movement on any of the three questions, the next three months are free.</p>
-    </div>
-  </div>
+
 </div></section>
 
 <section><div class="wrap">

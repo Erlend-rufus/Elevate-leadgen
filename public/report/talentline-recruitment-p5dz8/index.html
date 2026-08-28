@@ -149,6 +149,54 @@ dialog.lb form{position:relative}
 .price li:last-child{margin:0}
 .pnote{font-size:15px;color:var(--grey);margin:0}
 
+/* pricing: the figure is the thing the reader is looking for, so it is set
+   large and first. Options sit side by side because they are alternatives;
+   a recurring item is marked and de-emphasised because it is an add-on to
+   whichever option is chosen, not a third option. */
+.pgrid{display:grid;gap:16px;margin:0 0 22px}
+@media(min-width:720px){
+  /* auto-fit rather than a fixed pair: two options sit side by side, and a
+     report with only one package fills the row instead of leaving half of it
+     empty next to the card */
+  .pgrid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  /* auto-fit cannot collapse the second track when the recurring card spans
+     both, so a report with a single package is told explicitly to fill the row
+     rather than sit in half of it */
+  .pgrid.single .pcard{grid-column:1/-1}
+  /* the recurring item spans the row and lays itself out in two columns:
+     identity on the left, detail on the right. Each element needs its own
+     cell; putting terms and the get-box in one cell stacks them on top of
+     each other and the terms disappear. */
+  .pcard.recurring{grid-column:1/-1;display:grid;
+    grid-template-columns:minmax(190px,250px) 1fr;gap:0 32px;align-content:start}
+  .pcard.recurring .pname{grid-column:1;grid-row:1}
+  .pcard.recurring .pfig{grid-column:1;grid-row:2;margin:0}
+  .pcard.recurring .pterms{grid-column:2;grid-row:1/span 2;margin:0 0 14px}
+  .pcard.recurring .pget{grid-column:2;grid-row:3;margin:0}}
+.pcard{border:1px solid var(--line);border-top:3px solid var(--amber);border-radius:12px;
+  padding:24px 26px;background:var(--white);display:flex;flex-direction:column}
+.pcard.recurring{border-top-color:var(--line-strong,var(--line));background:var(--light)}
+.pname{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--amber-ink);margin:0 0 12px}
+.pcard.recurring .pname{color:var(--grey)}
+.pfig{font-family:var(--serif);font-size:clamp(30px,4.6vw,40px);font-weight:700;
+  color:var(--navy);line-height:1;margin:0 0 16px;display:flex;align-items:baseline;
+  gap:10px;flex-wrap:wrap}
+.punit{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--grey)}
+.pterms{font-size:15px;color:var(--grey);margin:0 0 16px}
+.pget{margin:auto 0 0;padding:14px 16px;background:var(--light);border-radius:8px}
+.pcard.recurring .pget{background:var(--white)}
+.pget span{display:block;font-size:11px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--amber-ink);margin:0 0 6px}
+.pget p{margin:0;font-size:15px}
+.pnotes{display:grid;gap:14px;margin:0 0 20px}
+.pnote{border-left:3px solid var(--line);padding:2px 0 2px 18px}
+.pnote h3{font-size:16px;margin:0 0 5px}
+.pnote p{margin:0;font-size:15px;color:var(--grey)}
+.pnote-eff{margin-top:6px!important;color:var(--ink)!important}
+.pnote-foot{font-size:15px;color:var(--grey);margin:0}
+
 /* closing section (pricing): own ground, no trailing rule */
 .closing{background:var(--light);border-bottom:none}
 
@@ -409,30 +457,27 @@ dialog.lb form{position:relative}
   <p class="kicker reveal"><span class="n">06</span> What this costs</p>
   <h2 class="reveal">What this costs and what you get</h2>
   <p class="sub reveal d1">Two options. The difference between them is whether the fixes go onto the site you have or onto one built to carry them.</p>
-  <div class="fix reveal">
-    <div class="num" aria-hidden="true">1</div>
-    <div>
-      <h3>Option one, GEO fix package</h3>
-      <p class="how">GBP 1,850, invoiced half on start and half on delivery. Thirty days from the point we have your content. The verification layer, one page per mandate type, the page title and metadata, structured data, and entry into the directories these three answers cited.</p>
-      <p class="eff">Up to six published pages on your current site, plus two re-measurements on 10 October 2026 (day 45) and 24 November 2026 (day 90), reported with screenshots whichever way they go.</p>
+  <div class="pgrid">
+    <div class="pcard reveal">
+      <p class="pname">Option one, GEO fix package</p>
+      <p class="pfig">GBP 1,850<span class="punit">one-off</span></p>
+      <p class="pterms">Invoiced half on start and half on delivery. Thirty days from the point we have your content. The verification layer, one page per mandate type, the page title and metadata, structured data, and entry into the directories these three answers cited.</p>
+      <div class="pget"><span>What you get</span><p>Up to six published pages on your current site, plus two re-measurements on 10 October 2026 (day 45) and 24 November 2026 (day 90), reported with screenshots whichever way they go.</p></div>
+    </div>
+    <div class="pcard reveal">
+      <p class="pname">Option two, the same fixes delivered as a new site</p>
+      <p class="pfig">GBP 3,250<span class="punit">one-off</span></p>
+      <p class="pterms">All in. Your current site is a single portal page titled Talentline Portal, which is why the brand name and the domain are not connected in any index. Rather than adding pages to it, we build the site the fixes need: a home page, one page per mandate type, an about page carrying the verification layer, and a contact route for employers.</p>
+      <div class="pget"><span>What you get</span><p>The same measurement and the same two re-measurements, on a site that can carry the evidence rather than one that has to be worked around.</p></div>
+    </div>
+    <div class="pcard recurring reveal">
+      <p class="pname">Ongoing measurement, optional</p>
+      <p class="pfig">GBP 450<span class="punit">per month</span></p>
+      <p class="pterms">The question set re-run monthly, plus one new page each month aimed at a question you still lose. No minimum term and no notice period.</p>
+      <div class="pget"><span>What you get</span><p>You can stop the month you stop seeing value. If the 24 November 2026 re-measurement shows no movement on any of the three questions, the next three months are free.</p></div>
     </div>
   </div>
-  <div class="fix reveal">
-    <div class="num" aria-hidden="true">2</div>
-    <div>
-      <h3>Option two, the same fixes delivered as a new site</h3>
-      <p class="how">GBP 3,250 all in. Your current site is a single portal page titled Talentline Portal, which is why the brand name and the domain are not connected in any index. Rather than adding pages to it, we build the site the fixes need: a home page, one page per mandate type, an about page carrying the verification layer, and a contact route for employers.</p>
-      <p class="eff">The same measurement and the same two re-measurements, on a site that can carry the evidence rather than one that has to be worked around.</p>
-    </div>
-  </div>
-  <div class="fix reveal">
-    <div class="num" aria-hidden="true">3</div>
-    <div>
-      <h3>Ongoing measurement, optional</h3>
-      <p class="how">GBP 450 per month. The question set re-run monthly, plus one new page each month aimed at a question you still lose. No minimum term and no notice period.</p>
-      <p class="eff">You can stop the month you stop seeing value. If the 24 November 2026 re-measurement shows no movement on any of the three questions, the next three months are free.</p>
-    </div>
-  </div>
+
 </div></section>
 
 <section><div class="wrap">

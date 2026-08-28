@@ -149,6 +149,54 @@ dialog.lb form{position:relative}
 .price li:last-child{margin:0}
 .pnote{font-size:15px;color:var(--grey);margin:0}
 
+/* pricing: the figure is the thing the reader is looking for, so it is set
+   large and first. Options sit side by side because they are alternatives;
+   a recurring item is marked and de-emphasised because it is an add-on to
+   whichever option is chosen, not a third option. */
+.pgrid{display:grid;gap:16px;margin:0 0 22px}
+@media(min-width:720px){
+  /* auto-fit rather than a fixed pair: two options sit side by side, and a
+     report with only one package fills the row instead of leaving half of it
+     empty next to the card */
+  .pgrid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  /* auto-fit cannot collapse the second track when the recurring card spans
+     both, so a report with a single package is told explicitly to fill the row
+     rather than sit in half of it */
+  .pgrid.single .pcard{grid-column:1/-1}
+  /* the recurring item spans the row and lays itself out in two columns:
+     identity on the left, detail on the right. Each element needs its own
+     cell; putting terms and the get-box in one cell stacks them on top of
+     each other and the terms disappear. */
+  .pcard.recurring{grid-column:1/-1;display:grid;
+    grid-template-columns:minmax(190px,250px) 1fr;gap:0 32px;align-content:start}
+  .pcard.recurring .pname{grid-column:1;grid-row:1}
+  .pcard.recurring .pfig{grid-column:1;grid-row:2;margin:0}
+  .pcard.recurring .pterms{grid-column:2;grid-row:1/span 2;margin:0 0 14px}
+  .pcard.recurring .pget{grid-column:2;grid-row:3;margin:0}}
+.pcard{border:1px solid var(--line);border-top:3px solid var(--amber);border-radius:12px;
+  padding:24px 26px;background:var(--white);display:flex;flex-direction:column}
+.pcard.recurring{border-top-color:var(--line-strong,var(--line));background:var(--light)}
+.pname{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--amber-ink);margin:0 0 12px}
+.pcard.recurring .pname{color:var(--grey)}
+.pfig{font-family:var(--serif);font-size:clamp(30px,4.6vw,40px);font-weight:700;
+  color:var(--navy);line-height:1;margin:0 0 16px;display:flex;align-items:baseline;
+  gap:10px;flex-wrap:wrap}
+.punit{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--grey)}
+.pterms{font-size:15px;color:var(--grey);margin:0 0 16px}
+.pget{margin:auto 0 0;padding:14px 16px;background:var(--light);border-radius:8px}
+.pcard.recurring .pget{background:var(--white)}
+.pget span{display:block;font-size:11px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--amber-ink);margin:0 0 6px}
+.pget p{margin:0;font-size:15px}
+.pnotes{display:grid;gap:14px;margin:0 0 20px}
+.pnote{border-left:3px solid var(--line);padding:2px 0 2px 18px}
+.pnote h3{font-size:16px;margin:0 0 5px}
+.pnote p{margin:0;font-size:15px;color:var(--grey)}
+.pnote-eff{margin-top:6px!important;color:var(--ink)!important}
+.pnote-foot{font-size:15px;color:var(--grey);margin:0}
+
 /* closing section (pricing): own ground, no trailing rule */
 .closing{background:var(--light);border-bottom:none}
 
@@ -476,7 +524,7 @@ dialog.lb form{position:relative}
       </ul>
     </div>
   </div>
-  <p class="pnote reveal">Prices are in pounds sterling and exclude VAT. The review stands on its own: it is worth doing whether or not the monthly work follows.</p>
+  <p class="pnote-foot reveal">Prices are in pounds sterling and exclude VAT. The review stands on its own: it is worth doing whether or not the monthly work follows.</p>
 </div></section>
 
 <section><div class="wrap">
