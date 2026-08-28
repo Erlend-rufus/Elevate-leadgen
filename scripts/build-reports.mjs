@@ -144,6 +144,7 @@ p{margin:0 0 16px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .chip{background:var(--white);border:1px solid var(--line);border-radius:100px;padding:5px 13px;font-size:14px;font-weight:600;color:var(--navy)}
 .chip-note{font-size:14px;color:var(--grey)}
+.qnote{margin:16px 0 0;padding:14px 16px;background:var(--white);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;font-size:15px;color:var(--ink)}
 
 /* rival tally */
 .tally{display:flex;align-items:center;gap:20px;background:var(--navy);color:var(--white);border-radius:12px;padding:24px 26px;margin:26px 0 0}
@@ -384,11 +385,16 @@ function rivals(v) {
 function renderQuery(q, t) {
   const chips = rivals(q.named_instead).map((n) => `<span class="chip">${esc(n)}</span>`).join('');
   const note = q.named_instead_note ? `<span class="chip-note">${esc(q.named_instead_note)}</span>` : '';
+  /* q.note is a framing note about the question itself, not about who was
+     named: used to state up front why a query is in the set when its answer
+     would otherwise read as a mismatch. Sits below the chips, visually
+     separated, so it reads as our commentary rather than as more findings. */
+  const qnote = q.note ? `        <p class="qnote">${esc(q.note)}</p>\n` : '';
   return `      <div class="q reveal${q.named ? ' brand' : ''}"${chips ? ' data-stagger=".chip"' : ''}>
         <p class="qt">&ldquo;${esc(q.text)}&rdquo;</p>
         <span class="verdict ${q.named ? 'yes' : 'no'}">${q.named ? t.named : t.notNamed}</span>
 ${chips ? `        <span class="lbl">${t.namedInstead}</span>
-        <div class="chips">${chips}${note}</div>\n` : ''}      </div>`;
+        <div class="chips">${chips}${note}</div>\n` : ''}${qnote}      </div>`;
 }
 
 function renderShot(s, i, hasFile, t) {
@@ -422,7 +428,7 @@ const STRINGS = {
     preparedFor: (c, date) => `Prepared for ${esc(c)} by Elevate Marketing &middot; ${esc(date)}`,
     kHeadline: 'The headline', kHowItWorks: 'How it works', kVisibility: 'Visibility',
     kAccuracy: 'Accuracy', kGaps: 'Gaps', kWork: 'The work', kEvidence: 'Evidence',
-    kMethod: 'Method', kInvestment: 'Investment', kNextStep: 'Next step',
+    kMethod: 'Method', kInvestment: 'What this costs', kNextStep: 'Next step',
     named: 'Named', notNamed: 'Not named', namedInstead: 'Named instead',
     worthWatching: 'Worth watching', alreadyWorking: 'Already working for you: ',
     defaultRivalLabel: 'rival firms named instead of you',
@@ -581,7 +587,7 @@ ${d.fixes.items.map((f, i) => `  <div class="fix reveal">
   </div>`).join('\n')}
 ${d.fixes.disclaimer ? `  <p class="reveal" style="margin-top:26px">${esc(d.fixes.disclaimer)}</p>\n` : ''}</div></section>
 
-${renderPricing()}${(d.screenshots || []).length ? `<section><div class="wrap">
+${(d.screenshots || []).length ? `<section><div class="wrap">
   <p class="kicker reveal">${n()} ${t.kEvidence}</p>
   <h2 class="reveal">${t.evidenceTitle}</h2>
   <p class="sub reveal d1">${esc(t.evidenceSub(d.date))}</p>
@@ -590,7 +596,7 @@ ${d.screenshots.map((s, i) => renderShot(s, i, shotsPresent.has(s.file), t)).joi
 
 <dialog class="lb"><form method="dialog"><button class="x" aria-label="${t.close}">&times;</button><img src="" alt=""></form></dialog>
 ` : ''}
-<section><div class="wrap">
+${renderPricing()}<section><div class="wrap">
   <p class="kicker reveal">${n()} ${t.kMethod}</p>
   <h2 class="reveal">${t.methodTitle}</h2>
   <div class="method reveal d1">
@@ -602,7 +608,7 @@ ${d.cta ? `<div class="cta"><div class="wrap">
   <p class="kicker reveal">${t.kNextStep}</p>
   <h2 class="reveal">${esc(d.cta.title)}</h2>
   <p class="reveal d1">${esc(d.cta.body || '')}</p>
-${d.cta.button_url && d.cta.button_text ? `  <a class="btn reveal d2" href="${esc(d.cta.button_url)}">${esc(d.cta.button_text)}</a>\n` : ''}${d.cta.contact ? `  <p class="reveal d2" style="margin-top:18px"><a href="mailto:${esc(d.cta.contact)}" style="color:var(--amber)">${esc(d.cta.contact)}</a></p>\n` : ''}${sig.entity || sig.address || sig.email ? `  <p class="sign reveal d3">${sig.entity ? esc(sig.entity) + '<br>' : ''}${sig.address ? esc(sig.address) + '<br>' : ''}${
+${d.cta.button_url && d.cta.button_text ? `  <a class="btn reveal d2" href="${esc(d.cta.button_url)}">${esc(d.cta.button_text)}</a>\n` : ''}${d.cta.contact ? `  <p class="reveal d2" style="margin-top:18px"><a href="mailto:${esc(d.cta.contact)}${d.cta.contact_subject ? '?subject=' + encodeURIComponent(d.cta.contact_subject) : ''}" style="color:var(--amber)">${esc(d.cta.contact)}</a></p>\n` : ''}${sig.entity || sig.address || sig.email ? `  <p class="sign reveal d3">${sig.entity ? esc(sig.entity) + '<br>' : ''}${sig.address ? esc(sig.address) + '<br>' : ''}${
     sig.email ? `<a href="mailto:${esc(sig.email)}">${esc(sig.email)}</a>` : ''
   }</p>\n` : ''}
 ${sig.ownership ? `  <p class="sign reveal d3" style="margin-top:18px">${esc(sig.ownership)}</p>\n` : ''}</div></div>` : ''}
