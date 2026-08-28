@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="nb-NO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>GEO-rapport: Headvisor, Trond Henanger</title>
+<meta name="description" content="Privat GEO-rapport utarbeidet for Headvisor, Trond Henanger av Elevate Marketing.">
+<meta name="theme-color" content="#14213D">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --navy:#14213D; --navy-2:#1B2A4E; --navy-3:#22335C;
+  --amber:#FCA311;            /* accents + text on navy only */
+  --amber-ink:#7A4A00;        /* amber-family text on light: WCAG AA on white */
+  --light:#F4F6F9; --white:#fff; --grey:#5A6070; --ink:#1A1D24; --line:#D8DBE2;
+  --red:#B3261E; --red-bg:#FCEBEA; --green:#1E7D46; --green-bg:#E9F3EC;
+  --sky:#CADCFC; --sky-dim:#9AA3B5;
+  --serif:Georgia,'Iowan Old Style','Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --ease:cubic-bezier(.16,.84,.44,1);
+}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);font-size:17px;line-height:1.62;background:var(--white)}
+h1,h2,h3{font-family:var(--serif);color:var(--navy);line-height:1.2;margin:0;font-weight:700}
+a{color:var(--navy)}
+img{max-width:100%}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px}
+.kicker{font-size:12px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--amber-ink);margin:0 0 10px;display:flex;align-items:center;gap:10px}
+.kicker .n{font-family:var(--serif);font-size:13px;letter-spacing:0;color:var(--grey);font-weight:400}
+.kicker .n::after{content:'';display:inline-block;width:18px;height:1px;background:var(--line);vertical-align:middle;margin-left:10px}
+
+/* scroll progress */
+.prog{position:fixed;inset:0 auto auto 0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--amber);z-index:50}
+
+/* hero */
+.hero{background:var(--navy);color:var(--white);padding:76px 0 68px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;inset:auto -10% -60% 55%;height:340px;background:radial-gradient(circle at 50% 50%,rgba(252,163,17,.14),transparent 68%);pointer-events:none}
+.hero .kicker{color:var(--amber)}
+.hero .kicker .n{color:var(--sky-dim)}
+.hero h1{color:var(--white);font-size:clamp(36px,6.4vw,56px);margin:0 0 18px;letter-spacing:-.01em}
+.hero .lede{color:var(--sky);font-size:clamp(17px,2.4vw,20px);margin:0 0 28px;max-width:56ch}
+.rule{width:64px;height:3px;background:var(--amber);margin:0 0 22px;transform-origin:0 50%}
+.hero .meta{color:var(--sky-dim);font-size:14px;margin:0}
+
+/* headline stat */
+.headline{background:var(--navy-2);color:var(--white);padding:56px 0;position:relative}
+.headline .kicker{color:var(--amber)}
+.headline .kicker .n{color:var(--sky-dim)}
+.statrow{display:flex;align-items:flex-start;gap:clamp(20px,5vw,48px);flex-wrap:wrap}
+.big{font-family:var(--serif);font-size:clamp(60px,14vw,116px);font-weight:700;color:var(--amber);line-height:.9;margin:0;letter-spacing:-.02em}
+.big-sub{font-family:var(--serif);font-size:clamp(20px,3.4vw,27px);font-weight:700;color:var(--white);margin:10px 0 0;max-width:24ch}
+.dots{display:flex;gap:9px;margin:20px 0 0}
+.dot{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.16);flex:none}
+.dot.miss{background:#E5544B}
+.dot.hit{background:#39C07C}
+.headline p.body{color:var(--sky);margin:26px 0 0;max-width:64ch}
+
+section{padding:56px 0;border-bottom:1px solid var(--line)}
+section h2{font-size:clamp(25px,4vw,33px);margin:0 0 10px}
+section .sub{color:var(--grey);margin:0 0 30px;max-width:66ch}
+p{margin:0 0 16px}
+
+/* query cards */
+.q{background:var(--light);border-radius:12px;padding:22px 24px;margin:0 0 14px;border:1px solid transparent}
+.q.brand{background:var(--green-bg);border-color:rgba(30,125,70,.22)}
+.qt{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--ink);margin:0 0 16px}
+.verdict{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:12px;letter-spacing:1.1px;text-transform:uppercase;padding:5px 11px;border-radius:100px;white-space:nowrap}
+.verdict.no{background:var(--red-bg);color:var(--red)}
+.verdict.yes{background:#D7EBDF;color:var(--green)}
+.verdict::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+.lbl{display:block;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--grey);margin:16px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{background:var(--white);border:1px solid var(--line);border-radius:100px;padding:5px 13px;font-size:14px;font-weight:600;color:var(--navy)}
+.chip-note{font-size:14px;color:var(--grey)}
+.qnote{margin:16px 0 0;padding:14px 16px;background:var(--white);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;font-size:15px;color:var(--ink)}
+
+/* rival tally */
+.tally{display:flex;align-items:center;gap:20px;background:var(--navy);color:var(--white);border-radius:12px;padding:24px 26px;margin:26px 0 0}
+.tally .n{font-family:var(--serif);font-size:clamp(42px,9vw,62px);font-weight:700;color:var(--amber);line-height:.9}
+.tally .t{font-size:16px;color:var(--sky);max-width:26ch}
+
+/* quotes */
+blockquote{margin:0 0 16px;padding:18px 22px;background:var(--light);border-left:4px solid var(--amber);border-radius:0 10px 10px 0}
+blockquote p{margin:0;font-family:var(--serif);font-style:italic;font-size:17px}
+blockquote.flag{background:#FFF6E6;border-left-color:var(--amber-ink)}
+blockquote.flag .tag{display:block;font-family:var(--sans);font-style:normal;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--amber-ink);margin:0 0 8px}
+.src{font-size:13px;color:var(--grey);margin:-4px 0 24px}
+
+/* gaps + fixes */
+.gap,.fix{display:flex;gap:18px;padding:24px 0;border-top:1px solid var(--line)}
+.gap:first-of-type,.fix:first-of-type{border-top:none;padding-top:6px}
+.num{flex:0 0 36px;height:36px;border-radius:50%;background:var(--amber);color:var(--navy);font-family:var(--serif);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px}
+.gap h3,.fix h3{font-size:19px;margin:5px 0 7px}
+.gap p{margin:0}
+.good{background:var(--green-bg);border-radius:12px;padding:22px 24px;margin:28px 0 0;border:1px solid rgba(30,125,70,.2)}
+.good p{margin:0}
+.good strong{color:var(--green)}
+.fix .how{color:var(--grey);font-size:15px;margin:0 0 10px}
+.eff{margin:0;font-size:15px;padding:10px 14px;background:var(--light);border-radius:8px;border-left:3px solid var(--amber);display:flex;gap:9px}
+.eff::before{content:'→';color:var(--amber-ink);font-weight:700;flex:none}
+
+/* evidence */
+figure{margin:0 0 30px}
+.shot{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--light);overflow:hidden;cursor:zoom-in;position:relative}
+.shot img{display:block;width:100%;height:auto}
+.shot .zoom{position:absolute;inset:auto 10px 10px auto;background:rgba(20,33,61,.88);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 10px;border-radius:6px;opacity:0;transition:opacity .18s}
+.shot:hover .zoom,.shot:focus-visible .zoom{opacity:1}
+.missing{border:1px dashed var(--line);border-radius:10px;background:var(--light);padding:34px 24px;text-align:center;color:var(--grey);font-size:14px}
+.missing code{font-size:13px;color:var(--ink)}
+figcaption{font-size:14px;color:var(--grey);margin:12px 0 0;line-height:1.55}
+
+/* lightbox */
+dialog.lb{border:none;padding:0;background:transparent;max-width:96vw;max-height:96vh;width:auto}
+dialog.lb::backdrop{background:rgba(10,16,30,.9)}
+dialog.lb img{display:block;max-width:96vw;max-height:88vh;width:auto;border-radius:8px}
+dialog.lb .x{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:6px}
+dialog.lb form{position:relative}
+
+/* step flow: how it works */
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+.step{background:var(--light);border-radius:12px;padding:20px 22px;position:relative}
+.step .sn{display:flex;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--serif);font-weight:700;align-items:center;justify-content:center;font-size:15px;margin:0 0 13px}
+.step h3{font-size:17px;margin:0 0 7px}
+.step p{font-size:15px;color:var(--grey);margin:0}
+.step::after{content:'';position:absolute;background:var(--line);left:35px;bottom:-18px;width:2px;height:18px}
+.step:last-child::after{display:none}
+@media(min-width:820px){
+  .flow{grid-template-columns:repeat(4,1fr);gap:16px}
+  .step::after{top:34px;left:auto;right:-16px;bottom:auto;width:16px;height:2px}
+}
+
+/* pricing */
+.prices{display:grid;gap:16px;margin:0 0 22px}
+@media(min-width:700px){.prices{grid-template-columns:1fr 1fr}}
+.price{border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;background:var(--white)}
+.price.hl{border:2px solid var(--amber);padding:23px}
+.price .pn{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--navy);margin:0 0 14px}
+.price .pv{font-family:var(--serif);font-size:clamp(34px,6.4vw,44px);font-weight:700;color:var(--navy);line-height:1;margin:0}
+.price .pu{font-size:14px;color:var(--grey);margin:7px 0 16px}
+.price .pb{font-size:15px;margin:0 0 14px}
+.price ul{margin:0;padding:0;list-style:none;font-size:15px;color:var(--grey)}
+.price li{margin:0 0 8px;padding:0 0 0 20px;position:relative}
+.price li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.price li:last-child{margin:0}
+.pnote{font-size:15px;color:var(--grey);margin:0}
+
+/* closing section (pricing): own ground, no trailing rule */
+.closing{background:var(--light);border-bottom:none}
+
+/* method */
+.method{background:var(--light);border-radius:12px;padding:26px 28px}
+.method p{font-size:15px;color:var(--grey)}
+.method p:last-child{margin:0}
+
+/* cta */
+.cta{background:var(--navy);color:var(--white);padding:64px 0;position:relative;overflow:hidden}
+.cta::after{content:'';position:absolute;inset:-40% 60% auto -10%;height:420px;background:radial-gradient(circle at 50% 50%,rgba(252,163,17,.12),transparent 68%);pointer-events:none}
+.cta .kicker{color:var(--amber)}
+.cta .kicker .n{color:var(--sky-dim)}
+.cta h2{color:var(--white);font-size:clamp(25px,4.2vw,35px);margin:0 0 16px;max-width:30ch}
+.cta p{color:var(--sky);max-width:58ch}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:var(--navy);font-weight:700;text-decoration:none;padding:16px 30px;border-radius:8px;margin:14px 0 26px;font-size:17px;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(252,163,17,.28)}
+.btn::after{content:'→'}
+.sign{color:var(--sky-dim);font-size:14px;line-height:1.7;margin:0}
+.sign a{color:var(--sky)}
+
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+@media(max-width:640px){
+  body{font-size:16px}
+  section{padding:42px 0}
+  .hero{padding:56px 0 48px}
+  .gap,.fix{gap:14px}
+  .num{flex-basis:32px;height:32px;font-size:15px}
+  .statrow{gap:18px}
+  .tally{flex-direction:column;align-items:flex-start;gap:8px}
+}
+
+/* ---- animation: opt-in via .js, so no-JS and print show everything ---- */
+.js .reveal{opacity:0;transform:translateY(22px)}
+.js .reveal.in{opacity:1;transform:none;transition:opacity .62s var(--ease),transform .62s var(--ease)}
+.js .reveal.in.d1{transition-delay:.08s}.js .reveal.in.d2{transition-delay:.16s}
+.js .reveal.in.d3{transition-delay:.24s}.js .reveal.in.d4{transition-delay:.32s}
+.js .rule{transform:scaleX(0)}
+.js .rule.in{transform:none;transition:transform .7s var(--ease) .2s}
+.js .big{opacity:0;transform:scale(.9)}
+.js .big.in{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.js .dot{transform:scale(0)}
+.js .dot.in{transform:none;transition:transform .42s var(--ease)}
+.js .chip{opacity:0;transform:translateY(6px)}
+.js .chip.in{opacity:1;transform:none;transition:opacity .34s var(--ease),transform .34s var(--ease)}
+/* numbered circles ride on their parent .reveal — they are not observed
+   directly, so they must key off the ancestor's .in class or they stay at
+   scale(0) and disappear entirely. */
+.js .step{opacity:0;transform:translateY(16px)}
+.js .step.in{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.js .step::after{opacity:0}
+.js .step.in::after{opacity:1;transition:opacity .4s var(--ease) .3s}
+.js .num{transform:scale(0)}
+.js .reveal.in .num{transform:none;transition:transform .46s var(--ease) .12s}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num,.js .step,.js .step::after{opacity:1!important;transform:none!important;transition:none!important}
+  .prog{display:none}
+  .btn:hover{transform:none}
+}
+
+@media print{
+  .prog,.btn,dialog.lb,.shot .zoom{display:none!important}
+  .js .reveal,.js .rule,.js .big,.js .dot,.js .chip,.js .num,.js .reveal.in .num,.js .step,.js .step::after{opacity:1!important;transform:none!important}
+  body{font-size:11pt}
+  .hero,.headline,.cta{background:var(--white)!important;color:var(--ink)!important;padding:24pt 0!important}
+  .closing{background:var(--white)!important}
+  .hero::after,.cta::after{display:none}
+  .hero h1,.cta h2{color:var(--navy)!important}
+  .hero .lede,.headline p.body,.cta p{color:var(--ink)!important}
+  .hero .meta,.sign{color:var(--grey)!important}
+  .headline .big-sub{color:var(--navy)!important}
+  .tally{background:var(--light)!important;color:var(--ink)!important}
+  .tally .t{color:var(--ink)!important}
+  .shot{cursor:default}
+  section,.q,.gap,.fix,figure,.method,.tally,.step,.price{page-break-inside:avoid}
+  h1,h2,h3{page-break-after:avoid}
+  a[href^="http"]::after{content:' (' attr(href) ')';font-size:9pt;color:var(--grey)}
+}</style>
+</head>
+<body>
+<script>document.documentElement.className+=' js';</script>
+<div class="prog" aria-hidden="true"></div>
+
+<header class="hero"><div class="wrap">
+  <p class="kicker reveal">GEO-rapport</p>
+  <h1 class="reveal d1">Headvisor, Trond Henanger</h1>
+  <p class="lede reveal d2">Hva AI-assistenter svarer når en oppdragsgiver leter etter hjelp til å ansette en toppleder, og hvor Headvisor og Trond Henanger dukker opp i de svarene.</p>
+  <div class="rule"></div>
+  <p class="meta reveal d3">Utarbeidet for Headvisor, Trond Henanger av Elevate Marketing &middot; 24. august 2026</p>
+</div></header>
+
+<div class="headline"><div class="wrap">
+  <p class="kicker reveal">Hovedfunn</p>
+  <div class="statrow">
+    <div>
+      <p class="big">0 av 4</p>
+      <div class="dots" data-stagger=".dot" aria-hidden="true"><span class="dot miss"></span><span class="dot miss"></span><span class="dot miss"></span><span class="dot miss"></span></div>
+    </div>
+    <p class="big-sub reveal d1">spørsmål om topplederrekruttering navnga Headvisor</p>
+  </div>
+  <p class="body reveal d2">Executive search i Norge. Ny administrerende direktør i et entreprenørselskap. Etatsdirektør i en offentlig virksomhet. Ny daglig leder til et selskap på Vestlandet. Fire spørsmål på det nivået Headvisor faktisk jobber, og navnet står ikke i noen av svarene. 23 andre byråer ble navngitt. Spurt om Headvisor og om Trond Henanger ved navn svarer Google derimot presist og rosende. Én teknisk detalj forklarer mye av avstanden mellom de to.</p>
+</div></div>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">01</span> Synlighet</p>
+  <h2 class="reveal">Hvem ble navngitt i stedet</h2>
+  <p class="sub reveal d1">Vi stilte Google AI Mode, satt til norsk og Norge, fire spørsmål på topplederivå. Ingen av dem handler om enkeltdisipliner som ingeniører, fordi det ikke er der Headvisor konkurrerer. To spørsmål om navn er behandlet for seg, under Nøyaktighet.</p>
+      <div class="q reveal" data-stagger=".chip">
+        <p class="qt">&ldquo;Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge?&rdquo;</p>
+        <span class="verdict no">Ikke navngitt</span>
+        <span class="lbl">Navngitt i stedet</span>
+        <div class="chips"><span class="chip">Amrop Norge</span><span class="chip">Boyden Norway</span><span class="chip">Korn Ferry</span><span class="chip">Heidrick &amp; Struggles</span><span class="chip">BackerSkeie</span><span class="chip">Visindi</span><span class="chip">Bønes Virik</span><span class="chip">Habberstad</span><span class="chip">Agile Executive Search</span><span class="chip">MeyerHaugen</span><span class="chip">Visere</span><span class="chip">Skagerak &amp; Co</span><span class="chip-note">en kategorisert tabell over store internasjonale nettverk, etablerte norske spesialister, KI-drevne utfordrere og regionale eksperter</span></div>
+      </div>
+      <div class="q reveal" data-stagger=".chip">
+        <p class="qt">&ldquo;Vi skal ansette ny administrerende direktør i et entreprenørselskap, hvilket rekrutteringsselskap bør vi bruke?&rdquo;</p>
+        <span class="verdict no">Ikke navngitt</span>
+        <span class="lbl">Navngitt i stedet</span>
+        <div class="chips"><span class="chip">BackerSkeie</span><span class="chip">Humano</span><span class="chip">Cruit</span><span class="chip">MeyerHaugen</span><span class="chip">Amrop Norge</span><span class="chip">Agile Gruppen</span><span class="chip">Personalhuset Executive Search</span><span class="chip-note">de tre første under overskriften Spesialister på Eiendom, Bygg og Anlegg</span></div>
+      </div>
+      <div class="q reveal" data-stagger=".chip">
+        <p class="qt">&ldquo;Hvem kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør?&rdquo;</p>
+        <span class="verdict no">Ikke navngitt</span>
+        <span class="lbl">Navngitt i stedet</span>
+        <div class="chips"><span class="chip">Amrop Norge</span><span class="chip">Capus</span><span class="chip">Cruit</span><span class="chip">Humano</span><span class="chip">Compass HRG</span><span class="chip">BackerSkeie</span><span class="chip-note">alle seks omtalt som byråer med spisskompetanse på kravene i offentlig sektor</span></div>
+      </div>
+      <div class="q reveal" data-stagger=".chip">
+        <p class="qt">&ldquo;Hvilket rekrutteringsselskap bør vi bruke for å finne ny daglig leder til et selskap på Vestlandet?&rdquo;</p>
+        <span class="verdict no">Ikke navngitt</span>
+        <span class="lbl">Navngitt i stedet</span>
+        <div class="chips"><span class="chip">Garuda</span><span class="chip">Bønes Virik</span><span class="chip">Visere</span><span class="chip">Human AS</span><span class="chip">Matee</span><span class="chip">de Lange Executive Search</span><span class="chip">Agile Executive Search</span><span class="chip">Jefferson Wells</span><span class="chip">Ascender</span><span class="chip-note">de fem første under overskriften Regionale spesialister på lederrekruttering, flere av dem med kontor i Bergen</span></div>
+      </div>
+  <div class="tally reveal">
+    <span class="n" data-count="23">23</span>
+    <span class="t">byråer navngitt på tvers av de fire spørsmålene</span>
+  </div>
+  <p class="reveal" style="margin-top:22px">Det tredje spørsmålet er verdt å stoppe ved. Spurt om hvem som kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør, navnga Google seks byråer med spisskompetanse på offentlig sektor. Spurt om Headvisor ved navn sier den samme motoren at Headvisor har bred erfaring med rekruttering til både kommuner, etater og privat næringsliv. Kunnskapen finnes. Den kobles bare ikke til spørsmålet.</p>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">02</span> Nøyaktighet</p>
+  <h2 class="reveal">Google kjenner Trond godt, og siden hans finnes bare når du klikker deg dit</h2>
+  <p class="sub reveal d1">Denne delen måler ikke synlighet. Den måler om maskinene har rett om dere, og hvor de henter det fra.</p>
+  <blockquote class="reveal"><p>&ldquo;Trond Henanger er Partner i rekrutterings- og hodejegerselskapet Headvisor, tilknyttet selskapets kontor i Bergen. Han er en svært aktiv hodejeger som i 2025 ble rangert blant de ti hodejegerne i Norge med flest rekrutteringer til faste stillinger.&rdquo;</p></blockquote>
+  <blockquote class="reveal flag"><span class="tag">Verdt å følge med på</span><p>&ldquo;Lederstillinger: Rekruttering av toppledere, mellomledere og daglige ledere til både privat og offentlig sektor.&rdquo;</p></blockquote>
+  <blockquote class="reveal"><p>&ldquo;Headvisor er et solid, etablert og anerkjent nasjonalt rekrutteringsselskap i Norge.&rdquo;</p></blockquote>
+  <p class="src reveal">Google AI Mode, 24. august 2026, ordrett. De to første er fra spørsmålet om Trond Henanger, det tredje fra spørsmålet om Headvisor. Begge er synlige i skjermbildene under.</p>
+  <p class="reveal">Først en advarsel om hva denne delen ikke beviser. At en assistent svarer pent når den blir spurt om dere ved navn, er ikke et mål på synlighet. Vi testet det på oss selv: spurt om Elevate Marketing svarte den samme motoren balansert og nokså skeptisk, med formuleringer som at det finnes svært lite uavhengige anmeldelser. Den knyttet i tillegg vårt domene til et helt annet selskap, med et annet organisasjonsnummer og en annen daglig leder. Skjermbildet ligger ved. Poenget er at navnetesten sier noe om nøyaktighet og kilder, ikke om hvor ofte dere blir anbefalt.</p>
+  <p class="reveal">Med det forbeholdet på plass: svaret om Trond er uvanlig godt. Det oppgir rolle, kontor, bakgrunn fra åtte år som Managing Partner i Rada, utdanning fra NTNU, og at han i 2025 ble rangert blant de ti hodejegerne i Norge med flest faste rekrutteringer. Det nevner til og med en konkret prosess, rekrutteringen av ny direktør til Vest-Norges Brusselkontor.</p>
+  <p class="reveal">Kildepanelet forteller hvor dette kommer fra: LinkedIn-profilen hans, et LinkedIn-innlegg, og oversiktssiden Våre rådgivere på headvisor.no. Hans egen rådgiverside er ikke blant kildene, og grunnen er teknisk.</p>
+  <p class="reveal">Klikker du deg fra Våre rådgivere til Trond Henanger, laster siden helt fint. Den viser bilde, tittel, telefon, e-post og en biografi der han selv oppgir at han jobber mest i bygg, eiendom og anlegg samt energisektoren, og rekrutterer toppledere, mellomledere og fagspesialister. Kopierer du så adressen i adressefeltet og åpner den i en ny fane, svarer nøyaktig samme URL Page Not Found. Begge tilstandene er dokumentert i skjermbildene under.</p>
+  <p class="reveal">Det er en klassisk feil i nettsider som bygges som applikasjoner: klikk håndteres inne i nettleseren, men serveren har ingen rute for adressen. Konsekvensen er at siden finnes for et menneske som allerede er inne på nettstedet, og ikke finnes for noe annet. Ikke for en delt lenke i en e-post, ikke for en indekseringsrobot, ikke for en AI-assistent. Det gjelder alle ti rådgiversidene, også siden til Managing Partner.</p>
+  <p class="reveal">Legg merke til hva det koster akkurat her. Trond skriver selv hvilke bransjer og nivåer han dekker. Den setningen er det eneste stedet på nettstedet som kobler ham til bygg, eiendom, anlegg og energi. Ingen maskin har lest den.</p>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">03</span> Svakheter</p>
+  <h2 class="reveal">Fem grunner til at svarene hopper over dere</h2>
+  <p class="sub reveal d1">Hver av disse er knyttet til noe vi observerte, ikke til generell beste praksis.</p>
+  <div class="gap reveal">
+    <div class="num" aria-hidden="true">1</div>
+    <div><h3>Rådgiversidene finnes bare ved klikk, ikke ved oppslag</h3><p>Samme URL gir innhold når du navigerer dit inne på nettstedet, og Page Not Found når den etterspørres direkte. Det rammer alt som ikke er en surfende bruker: delte lenker, indeksering, forhåndsvisning i LinkedIn og e-post, og alle AI-assistenter. Dette er den største enkeltfeilen i auditen, og den bør rettes uansett hva dere gjør videre med synlighet.</p></div>
+  </div>
+  <div class="gap reveal">
+    <div class="num" aria-hidden="true">2</div>
+    <div><h3>Ingen egen tittel eller beskrivelse per rådgiver</h3><p>Selv når siden rendres, står sidetittelen som Headvisor, Møt våre rådgivere og hodejegere, og metabeskrivelsen er den generelle teksten om teamet. Det er den samme tittelen for alle ti. En maskin som skulle vise et treff på Trond Henanger har ingen egen overskrift å vise.</p></div>
+  </div>
+  <div class="gap reveal">
+    <div class="num" aria-hidden="true">3</div>
+    <div><h3>Ingen strukturerte data og ingen organisasjonsnummer</h3><p>Vi fant ingen JSON-LD på sidene vi åpnet, verken Organization eller Person. Organisasjonsnummer 985 395 993 står ikke på nettstedet, det hentet Google fra Proff. Det finnes ingenting maskinlesbart som binder nettsted, LinkedIn-profiler og foretaksregister til én enhet.</p></div>
+  </div>
+  <div class="gap reveal">
+    <div class="num" aria-hidden="true">4</div>
+    <div><h3>Bransje- og nivåkompetansen står bare i en biografi maskinene ikke når</h3><p>Spørsmålet om administrerende direktør i et entreprenørselskap ble besvart med byråer som har en egen bolk for eiendom, bygg og anlegg. Trond oppgir nøyaktig den kombinasjonen i sin egen biografi, men den ligger på en side som ikke svarer ved direkte oppslag. På selskapsnivå beskriver headvisor.no tjenester, ikke bransjer.</p></div>
+  </div>
+  <div class="gap reveal">
+    <div class="num" aria-hidden="true">5</div>
+    <div><h3>Fraværende fra kildene svarene bygges av</h3><p>Kildene bak de fire svarene inkluderer Nordic Executive List, Proff, humano.no, cruit.no, jeffersonwells.no, Agile Gruppen, BackerSkeie, Compass HRG, Visere, Ascender og de Lange. Headvisor er ikke blant de synlige kildene i noen av dem.</p></div>
+  </div>
+  <div class="good reveal"><p><strong>Det som allerede fungerer: </strong>et presist og rosende svar om selskapet, og et uvanlig detaljert svar om Trond personlig, helt ned til en navngitt prosess og en rangering blant de ti mest aktive hodejegerne i Norge i 2025. LinkedIn gjør denne jobben nesten alene, og oversiktssiden Våre rådgivere blir faktisk sitert. Råmaterialet er altså på plass og det er korrekt. Det som mangler er en side maskinene kan feste det til.</p></div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">04</span> Tiltakene</p>
+  <h2 class="reveal">Hva vi ville gjort, og hva hver fiks endrer</h2>
+  <p class="sub reveal d1">Sortert etter effekt mot innsats. Til venstre står arbeidet, til høyre står hva en maskin kan gjøre etterpå som den ikke kan i dag.</p>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">1</div>
+    <div>
+      <h3>Gjør rådgiversidene tilgjengelige ved direkte oppslag</h3>
+      <p class="how">Server-side rute eller forhåndsgenerering for /avdelinger/ansatte/, slik at adressen svarer med innhold også når den etterspørres uten at brukeren har klikket seg dit.</p>
+      <p class="eff">Siden kan deles, indekseres og siteres. Uten dette har ingen av de andre tiltakene noe å feste seg i.</p>
+    </div>
+  </div>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">2</div>
+    <div>
+      <h3>Gi hver rådgiver egen tittel og beskrivelse</h3>
+      <p class="how">Unik sidetittel med navn og rolle, og en metabeskrivelse som sier hvilke bransjer og nivåer vedkommende dekker.</p>
+      <p class="eff">Et treff på Trond Henanger kan vises som Trond Henanger, ikke som den generelle teamsiden.</p>
+    </div>
+  </div>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">3</div>
+    <div>
+      <h3>Løft bransje- og nivåkompetansen opp på selskapsnivå</h3>
+      <p class="how">Egne sider for de bransjene Headvisor faktisk dekker, i klartekst og i den vokabularen kjøperne bruker: topplederrekruttering til offentlig sektor, daglig leder, entreprenør og eiendom, energi.</p>
+      <p class="eff">En maskin som skal koble et bransjespørsmål til et byrå finner en setning å hente, i stedet for bare en tjenesteliste.</p>
+    </div>
+  </div>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">4</div>
+    <div>
+      <h3>Legg på Person- og Organization-markup</h3>
+      <p class="how">Person-schema per rådgiver med rolle, arbeidssted og sameAs til LinkedIn, og Organization med organisasjonsnummer 985 395 993 og alle kontorer.</p>
+      <p class="eff">Nettsted, LinkedIn og foretaksregister låses sammen til én enhet i stedet for tre løse omtaler.</p>
+    </div>
+  </div>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">5</div>
+    <div>
+      <h3>Inn i kildene svarene siterer</h3>
+      <p class="how">Start med Nordic Executive List og Proff-oversikten over executive search-selskaper, som begge ble sitert direkte i svarene.</p>
+      <p class="eff">Dere dukker opp der svarene settes sammen, ikke bare på eget nettsted.</p>
+    </div>
+  </div>
+  <div class="fix reveal">
+    <div class="num" aria-hidden="true">6</div>
+    <div>
+      <h3>Mål på nytt og sammenlign</h3>
+      <p class="how">De samme spørsmålene kjørt på nytt etter at sidene er rettet og Google har rukket å hente dem inn, fire til seks uker fram.</p>
+      <p class="eff">Dere ser bevegelsen i skjermbilder, ikke i lovnader.</p>
+    </div>
+  </div>
+  <p class="reveal" style="margin-top:26px">Vi lover ikke plasseringer, omtaler eller tidslinjer. AI-svar varierer mellom kjøringer, og vi så det selv: svaret om Headvisor oppga i går over 20 års erfaring og i dag røtter over 40 år tilbake. Det vi endrer er hva systemene leser, og en ny måling viser hva som flyttet seg.</p>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">05</span> Bevis</p>
+  <h2 class="reveal">Skjermbilder av hvert svar som er sitert</h2>
+  <p class="sub reveal d1">Alle tatt 24. august 2026. Ingenting i denne rapporten er gjengitt fra hukommelsen.</p>
+      <figure class="reveal">
+        <button type="button" class="shot" data-full="S1-executive-search.jpg" data-alt="Google AI Mode, 24. august 2026. Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge? Tolv byråer i en kategorisert tabell. Headvisor ikke nevnt." aria-label="Forstørr skjermbilde 1">
+          <img src="S1-executive-search.jpg" alt="Google AI Mode, 24. august 2026. Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge? Tolv byråer i en kategorisert tabell. Headvisor ikke nevnt." loading="lazy" decoding="async">
+          <span class="zoom">Forstørr</span>
+        </button>
+        <figcaption>Google AI Mode, 24. august 2026. Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge? Tolv byråer i en kategorisert tabell. Headvisor ikke nevnt.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <button type="button" class="shot" data-full="S2-adm-dir-entreprenor.jpg" data-alt="Google AI Mode, 24. august 2026. Ny administrerende direktør i et entreprenørselskap. BackerSkeie, Humano og Cruit navngitt under Spesialister på Eiendom, Bygg og Anlegg, deretter fire generelle executive search-selskaper. Headvisor ikke nevnt." aria-label="Forstørr skjermbilde 2">
+          <img src="S2-adm-dir-entreprenor.jpg" alt="Google AI Mode, 24. august 2026. Ny administrerende direktør i et entreprenørselskap. BackerSkeie, Humano og Cruit navngitt under Spesialister på Eiendom, Bygg og Anlegg, deretter fire generelle executive search-selskaper. Headvisor ikke nevnt." loading="lazy" decoding="async">
+          <span class="zoom">Forstørr</span>
+        </button>
+        <figcaption>Google AI Mode, 24. august 2026. Ny administrerende direktør i et entreprenørselskap. BackerSkeie, Humano og Cruit navngitt under Spesialister på Eiendom, Bygg og Anlegg, deretter fire generelle executive search-selskaper. Headvisor ikke nevnt.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <button type="button" class="shot" data-full="S3-etatsdirektor.jpg" data-alt="Google AI Mode, 24. august 2026. Hvem kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør? Amrop Norge, Capus, Cruit, Humano, Compass HRG og BackerSkeie navngitt. Headvisor ikke nevnt." aria-label="Forstørr skjermbilde 3">
+          <img src="S3-etatsdirektor.jpg" alt="Google AI Mode, 24. august 2026. Hvem kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør? Amrop Norge, Capus, Cruit, Humano, Compass HRG og BackerSkeie navngitt. Headvisor ikke nevnt." loading="lazy" decoding="async">
+          <span class="zoom">Forstørr</span>
+        </button>
+        <figcaption>Google AI Mode, 24. august 2026. Hvem kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør? Amrop Norge, Capus, Cruit, Humano, Compass HRG og BackerSkeie navngitt. Headvisor ikke nevnt.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <button type="button" class="shot" data-full="S4-daglig-leder-vestlandet.jpg" data-alt="Google AI Mode, 24. august 2026. Ny daglig leder til et selskap på Vestlandet. Garuda, Bønes Virik, Visere, Human AS og Matee navngitt som regionale spesialister, flere med kontor i Bergen. Headvisor ikke nevnt." aria-label="Forstørr skjermbilde 4">
+          <img src="S4-daglig-leder-vestlandet.jpg" alt="Google AI Mode, 24. august 2026. Ny daglig leder til et selskap på Vestlandet. Garuda, Bønes Virik, Visere, Human AS og Matee navngitt som regionale spesialister, flere med kontor i Bergen. Headvisor ikke nevnt." loading="lazy" decoding="async">
+          <span class="zoom">Forstørr</span>
+        </button>
+        <figcaption>Google AI Mode, 24. august 2026. Ny daglig leder til et selskap på Vestlandet. Garuda, Bønes Virik, Visere, Human AS og Matee navngitt som regionale spesialister, flere med kontor i Bergen. Headvisor ikke nevnt.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <button type="button" class="shot" data-full="S5-brand-test-trond.jpg" data-alt="Google AI Mode, 24. august 2026. Spurt om Trond Henanger svarer Google med rolle, kontor, bakgrunn fra Rada, utdanning fra NTNU og en rangering blant de ti mest aktive hodejegerne i Norge i 2025. Se kildepanelet: LinkedIn-profilen, et LinkedIn-innlegg og oversiktssiden Våre rådgivere. Hans egen side er ikke blant kildene." aria-label="Forstørr skjermbilde 5">
+          <img src="S5-brand-test-trond.jpg" alt="Google AI Mode, 24. august 2026. Spurt om Trond Henanger svarer Google med rolle, kontor, bakgrunn fra Rada, utdanning fra NTNU og en rangering blant de ti mest aktive hodejegerne i Norge i 2025. Se kildepanelet: LinkedIn-profilen, et LinkedIn-innlegg og oversiktssiden Våre rådgivere. Hans egen side er ikke blant kildene." loading="lazy" decoding="async">
+          <span class="zoom">Forstørr</span>
+        </button>
+        <figcaption>Google AI Mode, 24. august 2026. Spurt om Trond Henanger svarer Google med rolle, kontor, bakgrunn fra Rada, utdanning fra NTNU og en rangering blant de ti mest aktive hodejegerne i Norge i 2025. Se kildepanelet: LinkedIn-profilen, et LinkedIn-innlegg og oversiktssiden Våre rådgivere. Hans egen side er ikke blant kildene.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <button type="button" class="shot" data-full="S6-brand-test-headvisor.jpg" data-alt="Google AI Mode, 24. august 2026. Spurt om Headvisor ved navn svarer Google utfyllende og positivt, med tjenester, metodikk og kontorer. Organisasjonsnummer 985 395 993 er hentet fra Proff, ikke fra nettstedet." aria-label="Forstørr skjermbilde 6">
+          <img src="S6-brand-test-headvisor.jpg" alt="Google AI Mode, 24. august 2026. Spurt om Headvisor ved navn svarer Google utfyllende og positivt, med tjenester, metodikk og kontorer. Organisasjonsnummer 985 395 993 er hentet fra Proff, ikke fra nettstedet." loading="lazy" decoding="async">
+          <span class="zoom">Forstørr</span>
+        </button>
+        <figcaption>Google AI Mode, 24. august 2026. Spurt om Headvisor ved navn svarer Google utfyllende og positivt, med tjenester, metodikk og kontorer. Organisasjonsnummer 985 395 993 er hentet fra Proff, ikke fra nettstedet.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <button type="button" class="shot" data-full="S7-kontrolltest-elevate.jpg" data-alt="Kontrolltest, Google AI Mode, 24. august 2026. Vi stilte samme type spørsmål om vårt eget byrå. Svaret er balansert og skeptisk, og peker på at det finnes svært lite uavhengige anmeldelser. Det knytter i tillegg domenet vårt til et annet selskap med annet organisasjonsnummer og annen daglig leder. En navnetest måler nøyaktighet, ikke synlighet." aria-label="Forstørr skjermbilde 7">
+          <img src="S7-kontrolltest-elevate.jpg" alt="Kontrolltest, Google AI Mode, 24. august 2026. Vi stilte samme type spørsmål om vårt eget byrå. Svaret er balansert og skeptisk, og peker på at det finnes svært lite uavhengige anmeldelser. Det knytter i tillegg domenet vårt til et annet selskap med annet organisasjonsnummer og annen daglig leder. En navnetest måler nøyaktighet, ikke synlighet." loading="lazy" decoding="async">
+          <span class="zoom">Forstørr</span>
+        </button>
+        <figcaption>Kontrolltest, Google AI Mode, 24. august 2026. Vi stilte samme type spørsmål om vårt eget byrå. Svaret er balansert og skeptisk, og peker på at det finnes svært lite uavhengige anmeldelser. Det knytter i tillegg domenet vårt til et annet selskap med annet organisasjonsnummer og annen daglig leder. En navnetest måler nøyaktighet, ikke synlighet.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <button type="button" class="shot" data-full="S8-side-virker-ved-klikk.jpg" data-alt="headvisor.no/avdelinger/ansatte/trond-henanger, 24. august 2026, nådd ved å klikke fra Våre rådgivere. Siden viser navn, rolle, kontaktinformasjon og biografi, der Trond selv oppgir bygg, eiendom og anlegg samt energisektoren." aria-label="Forstørr skjermbilde 8">
+          <img src="S8-side-virker-ved-klikk.jpg" alt="headvisor.no/avdelinger/ansatte/trond-henanger, 24. august 2026, nådd ved å klikke fra Våre rådgivere. Siden viser navn, rolle, kontaktinformasjon og biografi, der Trond selv oppgir bygg, eiendom og anlegg samt energisektoren." loading="lazy" decoding="async">
+          <span class="zoom">Forstørr</span>
+        </button>
+        <figcaption>headvisor.no/avdelinger/ansatte/trond-henanger, 24. august 2026, nådd ved å klikke fra Våre rådgivere. Siden viser navn, rolle, kontaktinformasjon og biografi, der Trond selv oppgir bygg, eiendom og anlegg samt energisektoren.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <button type="button" class="shot" data-full="S9-side-404-direkte-url.jpg" data-alt="Nøyaktig samme adresse, samme nettleser, åpnet direkte i stedet for ved klikk. Svaret er Page Not Found. Dette er det en delt lenke, en indekseringsrobot og en AI-assistent får se." aria-label="Forstørr skjermbilde 9">
+          <img src="S9-side-404-direkte-url.jpg" alt="Nøyaktig samme adresse, samme nettleser, åpnet direkte i stedet for ved klikk. Svaret er Page Not Found. Dette er det en delt lenke, en indekseringsrobot og en AI-assistent får se." loading="lazy" decoding="async">
+          <span class="zoom">Forstørr</span>
+        </button>
+        <figcaption>Nøyaktig samme adresse, samme nettleser, åpnet direkte i stedet for ved klikk. Svaret er Page Not Found. Dette er det en delt lenke, en indekseringsrobot og en AI-assistent får se.</figcaption>
+      </figure>
+</div></section>
+
+<dialog class="lb"><form method="dialog"><button class="x" aria-label="Lukk">&times;</button><img src="" alt=""></form></dialog>
+
+<section><div class="wrap">
+  <p class="kicker reveal"><span class="n">06</span> Metode</p>
+  <h2 class="reveal">Hvordan dette ble målt</h2>
+  <div class="method reveal d1">
+    <p>Dette er versjon 2 av auditen. Den første runden stilte spørsmål om rekruttering av byggingeniører og om bemanning til et enkeltprosjekt. Begge deler traff feil nivå: Headvisor rekrutterer ledere og nøkkelpersoner til virksomheter, ikke fagpersonell til prosjekter. Spørsmålssettet er derfor byttet ut i sin helhet, og navnetestene er flyttet ut av synlighetsmålingen.</p>
+    <p>Alle spørsmål ble stilt manuelt i nettleser 24. august 2026, på norsk, formulert slik en oppdragsgiver faktisk ville spurt.</p>
+    <p>Motor: Google AI Mode med norsk språk og Norge som region. Fire kategorispørsmål, to spørsmål om navn og én kontrolltest på vårt eget byrå.</p>
+    <p>De nøyaktige URL-ene, slik at målingen kan gjentas ord for ord: google.com/search?udm=50&amp;hl=no&amp;gl=NO med q satt til Hvilket selskap bør vi bruke til executive search og lederrekruttering i Norge?, Vi skal ansette ny administrerende direktør i et entreprenørselskap, hvilket rekrutteringsselskap bør vi bruke?, Hvem kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør? og Hvilket rekrutteringsselskap bør vi bruke for å finne ny daglig leder til et selskap på Vestlandet?</p>
+    <p>Hvert skjermbilde viser hele svaret, satt sammen av to fangster der svaret var lengre enn skjermen. Hvert byrånavn og hvert sitat i rapporten er synlig i skjermbildet det tilskrives.</p>
+    <p>Spørsmålene ble kjørt fra Norge med norske innstillinger, i en pålogget Google-konto, så personalisering kan ikke utelukkes helt.</p>
+    <p>Ett svar er ett datapunkt, ikke en dom. Vi så variasjonen selv: svaret om Headvisor oppga 23. august over 20 års erfaring og 24. august røtter over 40 år tilbake. Derfor bruker enhver ny måling samme ordlyd.</p>
+    <p>Forholdene på nettstedet ble sjekket direkte samme dag. Rådgiversiden ble først nådd ved å klikke fra /raadgivere/, der den lastet med full biografi, og deretter etterspurt direkte på samme adresse, der den svarte Page Not Found. Sidetittel og metabeskrivelse ble lest fra den rendrede siden. Vi fant ingen JSON-LD, og intet organisasjonsnummer på nettstedet.</p>
+  </div>
+</div></section>
+
+
+
+<script>
+(function(){
+  var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll progress
+  var p = document.querySelector('.prog');
+  if (p && !rm) {
+    var tick = function(){
+      var h = document.documentElement.scrollHeight - innerHeight;
+      p.style.transform = 'scaleX(' + (h > 0 ? scrollY / h : 0) + ')';
+    };
+    addEventListener('scroll', tick, {passive:true});
+    addEventListener('resize', tick); tick();
+  }
+
+  // reveal on enter; stagger children marked data-stagger
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      io.unobserve(el);
+      var kids = el.dataset.stagger ? el.querySelectorAll(el.dataset.stagger) : null;
+      if (kids && kids.length) {
+        Array.prototype.forEach.call(kids, function(k, i){
+          setTimeout(function(){ k.classList.add('in'); }, i * 90);
+        });
+      }
+      el.classList.add('in');
+      if (el.dataset.count) countUp(el, +el.dataset.count);
+    });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:0.15});
+
+  document.querySelectorAll('.reveal,.rule,.big,[data-stagger],[data-count]')
+    .forEach(function(el){ io.observe(el); });
+
+  function countUp(el, to){
+    if (rm || to > 400) { el.textContent = to; return; }
+    var t0 = null, dur = 900;
+    (function step(t){
+      if (t0 === null) t0 = t;
+      var k = Math.min((t - t0) / dur, 1);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(step);
+    })(performance.now());
+    requestAnimationFrame(function(t){ t0 = t; });
+  }
+
+  // screenshot lightbox
+  var lb = document.querySelector('dialog.lb');
+  if (lb && lb.showModal) {
+    var img = lb.querySelector('img');
+    document.querySelectorAll('.shot').forEach(function(b){
+      b.addEventListener('click', function(){
+        img.src = b.dataset.full; img.alt = b.dataset.alt || '';
+        lb.showModal();
+      });
+    });
+    lb.addEventListener('click', function(e){ if (e.target === lb) lb.close(); });
+  }
+})();</script>
+</body>
+</html>
