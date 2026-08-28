@@ -1,0 +1,193 @@
+{
+  "company": "Additional Resources",
+  "slug": "additional-resources-h2vm6",
+  "date": "26 August 2026",
+  "lede": "What AI assistants tell UK employers looking for a recruitment agency, and where Additional Resources appears in those answers.",
+  "headline": {
+    "stat": "0 of 3",
+    "stat_label": "employer questions named Additional Resources",
+    "body": "Executive search in the UK. Permanent hiring across several sectors for a small business. Recruitment agencies in Yorkshire. Three questions covering what you told us you do, where your vacancies actually are, and your name appears in none of the answers. Reed does appear, in two of the three. Asked about Additional Resources by name, Google answers accurately and at length, and in doing so it explains the structural reason you are hard to find."
+  },
+  "visibility": {
+    "title": "Who was named instead",
+    "sub": "We asked Google AI Mode, set to UK English, the questions an employer would actually ask. The brand test is handled separately under Accuracy, because a positive answer to a question about you by name is not a measure of reach.",
+    "close": "Two of these answers name Reed, one of the two firms you told us you compete against most often. The Yorkshire answer is the sharpest: Google named specialists in Leeds, Sheffield and Doncaster, and your own live vacancies at the time of this audit were in Castleford, Sheffield, Doncaster and Market Weighton.",
+    "rival_count": "21",
+    "rival_count_label": "rival agencies named across the three answers"
+  },
+  "queries": [
+    {
+      "text": "We need to hire a senior leader in the UK, which executive search firms should we consider?",
+      "named": false,
+      "named_instead": [
+        "Korn Ferry",
+        "Spencer Stuart",
+        "Russell Reynolds Associates",
+        "Egon Zehnder",
+        "Heidrick & Struggles",
+        "Odgers Berndtson",
+        "Stanton Chase London",
+        "Wilson & Bain"
+      ],
+      "named_instead_note": "split into the global giants and UK-headquartered mid-tier firms"
+    },
+    {
+      "text": "Which UK recruitment agencies can handle permanent hiring across several different sectors for a small business?",
+      "named": false,
+      "named_instead": [
+        "Reed",
+        "Hays UK",
+        "Michael Page",
+        "Tiger Recruitment",
+        "DISRUPT Recruitment",
+        "Huntress"
+      ],
+      "named_instead_note": "split into large multi-sector agencies and boutique or medium-sized alternatives for small businesses"
+    },
+    {
+      "text": "Which recruitment agencies in Yorkshire should an employer use for permanent hires?",
+      "named": false,
+      "named_instead": [
+        "Nigel Wright Group",
+        "Reed Recruitment Agency",
+        "Robert Half",
+        "Jo Holdsworth Recruitment",
+        "Headway Recruitment",
+        "Lucy Walker Recruitment",
+        "Sue Ross Recruitment",
+        "Benchmark Recruit"
+      ],
+      "named_instead_note": "broken down by sub-region, with separate lists for West Yorkshire and South Yorkshire"
+    }
+  ],
+  "accuracy": {
+    "title": "Google understands your model better than the market does",
+    "sub": "This section is not a measure of visibility. Assistants answer at length about almost any named business with a website. What matters is what the answer says and which sources it was built from.",
+    "quotes": [
+      "Additional Resources (additionalresources.co.uk) is a legitimate and well-established UK recruitment agency that has been operating since 1999.",
+      "Rather than operating as a traditional single-office agency, it uses a unique \"Associate Partner\" or franchise model. This means they support a vast network of independent, self-employed recruitment consultants across the UK who utilize Additional Resources' central branding, compliance, and back-office infrastructure.",
+      "Inconsistent Experience: Since the agency relies on a massive network of autonomous freelance consultants, there is no single standardised customer service experience."
+    ],
+    "flag_quote_index": 1,
+    "source": "Google AI Mode, brand test, 26 August 2026. Verbatim. All three sentences are visible in the fourth capture below.",
+    "body": [
+      "The brand answer is accurate and, in places, more precise than your own homepage. It gives a founding year of 1999, a head office in Brentwood, Essex, a business model described as a recruitment franchise, core industries of IT, legal, engineering, accountancy, construction and automotive, and confirms FCSA Recruiter Partner accreditation. None of that came from a page written to be quoted.",
+      "The second quote is the finding. The associate partner model is a genuine commercial strength, and it is also the structural reason you are absent from category answers. When an engine assembles a list of agencies, it looks for one entity with a consistent, documented specialism. A brand that provides branding, compliance and back office to a network of independent consultants presents no such single specialism. Your consultants have the sector expertise; the brand carries the infrastructure.",
+      "Note also what your homepage leads with. The main heading a visitor sees is Looking for a job? That speaks to candidates. Every question in this audit was asked by an employer. There is no equivalent page written for the person who would ask them.",
+      "You told us your most frequent competitors are Reed and Katie Bard. Reed is named in two of the three answers above. That is not a comment on relative quality, it is a comment on which of you has published something an engine can lift."
+    ]
+  },
+  "gaps": {
+    "title": "Four reasons the answers skip you",
+    "sub": "Each of these is tied to something observed above, not to general best practice.",
+    "items": [
+      {
+        "title": "The brand carries no single documented specialism",
+        "body": "Google itself described the model: a central brand supporting a network of independent consultants. Category answers are assembled by matching a firm to a specialism. Where the specialism sits with individual associates rather than with the brand, there is nothing at brand level for the engine to match."
+      },
+      {
+        "title": "The site speaks to candidates, not employers",
+        "body": "The homepage heading is Looking for a job? and the visible content is a vacancy list. Every question in this audit came from an employer choosing an agency. There is no page addressed to that reader, so there is no text for an engine to quote when the question is asked from the hiring side."
+      },
+      {
+        "title": "No regional pages where your vacancies actually are",
+        "body": "The Yorkshire answer was structured by sub-region and named agencies in Leeds, Sheffield and Doncaster. Your live vacancies included Castleford, Sheffield, Doncaster and Market Weighton. The presence is real. The page that states it is not there."
+      },
+      {
+        "title": "No machine-readable corporate identity",
+        "body": "We found no company registration number and no structured data on the pages we fetched. The FCSA accreditation and the 1999 founding date that Google reported came from elsewhere, not from a page you control."
+      }
+    ],
+    "already_works": "an accurate, detailed and positive brand answer with a founding year, a head office, a named business model, six core industries and confirmed FCSA Recruiter Partner status. Google also noted strong ratings on Glassdoor and Indeed from your own recruiters. The record is there and it is favourable. It is simply not attached to any page that answers an employer's question."
+  },
+  "fixes": {
+    "title": "What we would do, and what each fix changes",
+    "sub": "Ordered by effect against effort. The left is the work, the right is what a machine can do afterwards that it cannot do today.",
+    "items": [
+      {
+        "title": "Write the employer-facing side of the site",
+        "how": "A page for hiring managers that states what the brand does, how the associate model works for a client, and what an employer gets, in plain text.",
+        "effect": "There is something to quote when the question comes from the hiring side rather than the candidate side."
+      },
+      {
+        "title": "Publish sector pages at brand level",
+        "how": "One page each for the six industries Google already attributes to you: IT, legal, engineering, accountancy, construction and automotive.",
+        "effect": "The brand acquires a documented specialism, which is the thing category answers match against."
+      },
+      {
+        "title": "Publish regional pages where you actually place",
+        "how": "Start with Yorkshire, naming the towns your vacancies are in, and describing the roles you fill there.",
+        "effect": "You can be matched to a regional question instead of being invisible in your own catchment."
+      },
+      {
+        "title": "Publish the legal identity and accreditation, and add entity markup",
+        "how": "Registered name and number, the Brentwood address, FCSA Recruiter Partner status, and Organization markup with sameAs links to your Glassdoor, Indeed and FCSA listings.",
+        "effect": "The favourable third-party record Google already found becomes formally attached to your own domain."
+      },
+      {
+        "title": "Re-measure and compare",
+        "how": "The same four questions re-run after the recrawl window, four to six weeks out, using the URLs recorded in the method note.",
+        "effect": "You see movement in screenshots, not in promises."
+      }
+    ],
+    "disclaimer": "We do not promise rankings, mentions or timelines. AI answers vary between runs. What we change is what the systems read, and a repeat measurement shows what moved."
+  },
+  "screenshots": [
+    {
+      "file": "S1-executive-search-uk.jpg",
+      "caption": "Google AI Mode, 26 August 2026. “We need to hire a senior leader in the UK, which executive search firms should we consider?” Eight firms named across two tiers. Additional Resources not named."
+    },
+    {
+      "file": "S2-multi-sector-smb.jpg",
+      "caption": "Google AI Mode, 26 August 2026. “Which UK recruitment agencies can handle permanent hiring across several different sectors for a small business?” Reed heads the list, followed by Hays and Michael Page, then three boutique alternatives. Additional Resources not named."
+    },
+    {
+      "file": "S3-yorkshire.jpg",
+      "caption": "Google AI Mode, 26 August 2026. “Which recruitment agencies in Yorkshire should an employer use for permanent hires?” The answer is structured by sub-region and names specialists in Leeds, Sheffield and Doncaster. Additional Resources not named, despite live vacancies in Castleford, Sheffield and Doncaster."
+    },
+    {
+      "file": "S4-brand-test.jpg",
+      "caption": "Google AI Mode brand test, 26 August 2026. Accurate and favourable, with founding year, head office, business model, six core industries and FCSA accreditation. Read the Associate Partner paragraph: it describes both the commercial model and the reason category answers cannot match the brand to a specialism."
+    }
+  ],
+  "method": [
+    "All queries were run manually in a browser on 26 August 2026, in English, phrased the way an employer would ask rather than as keywords.",
+    "Engine: Google AI Mode with UK region and language settings. Three category questions and one brand test. ChatGPT, Perplexity and Copilot were not run in this round.",
+    "The exact URLs, so the measurement can be repeated word for word: google.com/search?udm=50&hl=en-GB&gl=GB with q set to \"We need to hire a senior leader in the UK, which executive search firms should we consider?\", \"Which UK recruitment agencies can handle permanent hiring across several different sectors for a small business?\", \"Which recruitment agencies in Yorkshire should an employer use for permanent hires?\" and \"Is Additional Resources (additionalresources.co.uk) a good recruitment agency?\".",
+    "Each capture shows the answer as returned, at reduced page zoom so that nothing quoted sits outside the image. Every agency name and every sentence quoted in this report is visible in the capture it is attributed to.",
+    "Queries were run from Norway with UK language and region settings, so answers to region-specific questions may differ slightly for a buyer physically in the UK. The session was signed in to a Google account, so personalisation cannot be fully excluded.",
+    "One answer is one data point, not a verdict. Repeating these queries will produce some variation, which is why any re-measurement uses the same wording.",
+    "Website facts were taken from the live pages at additionalresources.co.uk the same day: the page title reads Additional Resources, AR, the main heading reads Looking for a job?, and the visible vacancies at the time of the audit were located in Castleford, Sheffield, Doncaster, Market Weighton and London. We found no company registration number and no structured data on the pages fetched. The founding year, head office, business model and FCSA status quoted above are Google's, not ours, and are reproduced as observed rather than independently verified."
+  ],
+  "pricing": {
+    "title": "What this costs and what you get",
+    "sub": "One fixed price, one fixed scope, one fixed end date. No retainer is required to take it, and nothing renews on its own.",
+    "items": [
+      {
+        "title": "GEO fix package, first phase",
+        "how": "GBP 1,850, invoiced half on start and half on delivery. Thirty days from the point we have your content. The employer entry point that does not exist today, the geographic coverage written out by name, the verification layer covering 1999, Brentwood and the FCSA membership, structured data, and directory entries.",
+        "effect": "Up to six published pages, plus two re-measurements of the same three questions at day 45 and day 90, reported with screenshots whichever way they go."
+      },
+      {
+        "title": "We are not proposing a new website",
+        "how": "The site functions. What is missing is a route through it for the person doing the hiring, and pages that state a specialism an engine can match. That is content architecture, not a rebuild.",
+        "effect": "You pay for the pages that answer the questions, not for a redesign that would leave the same gap."
+      },
+      {
+        "title": "Sector pages, quoted separately",
+        "how": "The specialisms sit with your Associate Partners rather than with head office. Pricing that work before we know how many of them take part would be a guess. We suggest running the first phase, re-measuring, and deciding on the evidence.",
+        "effect": "You are not committing to an internal exercise you have not yet agreed with your partners."
+      },
+      {
+        "title": "Ongoing measurement, optional",
+        "how": "GBP 450 per month. The question set re-run monthly, plus one new page each month aimed at a question you still lose. No minimum term and no notice period.",
+        "effect": "You can stop the month you stop seeing value. If the day 90 re-measurement shows no movement on any of the three questions, the next three months are free."
+      }
+    ]
+  },
+  "cta": {
+    "title": "The next step",
+    "body": "Whatever you decide, these three questions get asked again. We will re-run them and send you the comparison either way. If you want the fixes done, reply to this and we will start the thirty days from the point we have what we need from you.",
+    "contact": "post@elevatemarketing.no"
+  }
+}
