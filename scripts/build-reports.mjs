@@ -225,6 +225,54 @@ dialog.lb form{position:relative}
 .price li:last-child{margin:0}
 .pnote{font-size:15px;color:var(--grey);margin:0}
 
+/* pricing: the figure is the thing the reader is looking for, so it is set
+   large and first. Options sit side by side because they are alternatives;
+   a recurring item is marked and de-emphasised because it is an add-on to
+   whichever option is chosen, not a third option. */
+.pgrid{display:grid;gap:16px;margin:0 0 22px}
+@media(min-width:720px){
+  /* auto-fit rather than a fixed pair: two options sit side by side, and a
+     report with only one package fills the row instead of leaving half of it
+     empty next to the card */
+  .pgrid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  /* auto-fit cannot collapse the second track when the recurring card spans
+     both, so a report with a single package is told explicitly to fill the row
+     rather than sit in half of it */
+  .pgrid.single .pcard{grid-column:1/-1}
+  /* the recurring item spans the row and lays itself out in two columns:
+     identity on the left, detail on the right. Each element needs its own
+     cell; putting terms and the get-box in one cell stacks them on top of
+     each other and the terms disappear. */
+  .pcard.recurring{grid-column:1/-1;display:grid;
+    grid-template-columns:minmax(190px,250px) 1fr;gap:0 32px;align-content:start}
+  .pcard.recurring .pname{grid-column:1;grid-row:1}
+  .pcard.recurring .pfig{grid-column:1;grid-row:2;margin:0}
+  .pcard.recurring .pterms{grid-column:2;grid-row:1/span 2;margin:0 0 14px}
+  .pcard.recurring .pget{grid-column:2;grid-row:3;margin:0}}
+.pcard{border:1px solid var(--line);border-top:3px solid var(--amber);border-radius:12px;
+  padding:24px 26px;background:var(--white);display:flex;flex-direction:column}
+.pcard.recurring{border-top-color:var(--line-strong,var(--line));background:var(--light)}
+.pname{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--amber-ink);margin:0 0 12px}
+.pcard.recurring .pname{color:var(--grey)}
+.pfig{font-family:var(--serif);font-size:clamp(30px,4.6vw,40px);font-weight:700;
+  color:var(--navy);line-height:1;margin:0 0 16px;display:flex;align-items:baseline;
+  gap:10px;flex-wrap:wrap}
+.punit{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--grey)}
+.pterms{font-size:15px;color:var(--grey);margin:0 0 16px}
+.pget{margin:auto 0 0;padding:14px 16px;background:var(--light);border-radius:8px}
+.pcard.recurring .pget{background:var(--white)}
+.pget span{display:block;font-size:11px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--amber-ink);margin:0 0 6px}
+.pget p{margin:0;font-size:15px}
+.pnotes{display:grid;gap:14px;margin:0 0 20px}
+.pnote{border-left:3px solid var(--line);padding:2px 0 2px 18px}
+.pnote h3{font-size:16px;margin:0 0 5px}
+.pnote p{margin:0;font-size:15px;color:var(--grey)}
+.pnote-eff{margin-top:6px!important;color:var(--ink)!important}
+.pnote-foot{font-size:15px;color:var(--grey);margin:0}
+
 /* closing section (pricing): own ground, no trailing rule */
 .closing{background:var(--light);border-bottom:none}
 
@@ -446,7 +494,8 @@ const STRINGS = {
     enlarge: 'Enlarge', enlargeAlt: (i) => `Enlarge screenshot ${i}`, close: 'Close',
     methodTitle: 'How this was measured',
     missingShot: (f) => `Screenshot pending: drop <code>${f}</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.`,
-    seeDraft: 'See what this looks like'
+    seeDraft: 'See what this looks like',
+    oneOff: 'one-off', whatYouGet: 'What you get'
   },
   nb: {
     htmlLang: 'nb-NO', kicker: 'GEO-rapport', titlePrefix: 'GEO-rapport: ',
@@ -463,7 +512,8 @@ const STRINGS = {
     enlarge: 'Forstørr', enlargeAlt: (i) => `Forstørr skjermbilde ${i}`, close: 'Lukk',
     methodTitle: 'Hvordan dette ble målt',
     missingShot: (f) => `Skjermbilde mangler: legg <code>${f}</code> i <code>audits/&lt;slug&gt;/</code> og bygg på nytt.`,
-    seeDraft: 'Se hvordan dette ser ut'
+    seeDraft: 'Se hvordan dette ser ut',
+    oneOff: 'engangssum', whatYouGet: 'Dette får dere'
   }
 };
 
@@ -479,28 +529,65 @@ function render(d, shotsPresent) {
      work it pays for. Built here rather than inline because the section is
      placed between fixes and method, and the section counter must run in
      document order. */
+  /* Pricing.
+     The items arrive in the same shape as fixes (title + how + effect), and
+     rendering them that way was a mistake: the figure ended up as the third
+     word of a grey paragraph, and the numbered circles read as steps one to
+     three when the first two are alternatives and the last is an add-on.
+     Two of the items are not priced at all, they are statements ("we are not
+     proposing a new website"), so listing them alongside the packages made
+     them look like products.
+     So the items are split on whether `how` opens with a figure. Priced ones
+     become cards with the figure set large and the terms beneath it; the rest
+     become plain notes under them, which is what they are. */
   const priceItems = (d.pricing && d.pricing.items) || [];
   const scopeShaped = priceItems.length > 0 && priceItems.every((it) => it.title && it.how);
+  /* the digit group must not end on the comma that separates the figure from
+     the sentence after it, or the card reads "GBP 1,850," */
+  const PRICE_RE = /^([A-Z]{3}\s?[\d,]*\d(?:\.\d+)?)(\s+per\s+\w+)?\s*[.,]?\s*/;
+  const priced = [];
+  const notes = [];
+  if (scopeShaped) {
+    for (const it of priceItems) {
+      const m = PRICE_RE.exec(it.how);
+      if (m) {
+        priced.push({
+          title: it.title,
+          figure: m[1].trim(),
+          unit: (m[2] || '').trim() || t.oneOff,
+          /* the figure is lifted out of the front of the sentence, so what is
+             left starts mid-sentence and lowercase */
+          terms: (() => { const r = it.how.slice(m[0].length).trim();
+            return r ? r[0].toUpperCase() + r.slice(1) : r; })(),
+          effect: it.effect,
+          recurring: /per\s+\w+/.test(m[2] || ''),
+        });
+      } else {
+        notes.push(it);
+      }
+    }
+  }
+
   const renderPricing = () => !d.pricing ? '' : `<section class="closing"><div class="wrap">
   <p class="kicker reveal">${n()} ${t.kInvestment}</p>
   <h2 class="reveal">${esc(d.pricing.title)}</h2>
   <p class="sub reveal d1">${esc(d.pricing.sub || '')}</p>
-${scopeShaped
-    ? priceItems.map((it, i) => `  <div class="fix reveal">
-    <div class="num" aria-hidden="true">${i + 1}</div>
-    <div>
-      <h3>${esc(it.title)}</h3>
-      <p class="how">${esc(it.how)}</p>
-${it.effect ? `      <p class="eff">${esc(it.effect)}</p>\n` : ''}    </div>
-  </div>`).join('\n')
-    : `  <div class="prices">
+${scopeShaped ? `  <div class="pgrid${priced.filter((x) => !x.recurring).length === 1 ? ' single' : ''}">
+${priced.map((it) => `    <div class="pcard${it.recurring ? ' recurring' : ''} reveal">
+      <p class="pname">${esc(it.title)}</p>
+      <p class="pfig">${esc(it.figure)}<span class="punit">${esc(it.unit)}</span></p>
+${it.terms ? `      <p class="pterms">${esc(it.terms)}</p>\n` : ''}${it.effect ? `      <div class="pget"><span>${t.whatYouGet}</span><p>${esc(it.effect)}</p></div>\n` : ''}    </div>`).join('\n')}
+  </div>
+${notes.length ? `  <div class="pnotes reveal">
+${notes.map((it) => `    <div class="pnote"><h3>${esc(it.title)}</h3><p>${esc(it.how)}</p>${it.effect ? `<p class="pnote-eff">${esc(it.effect)}</p>` : ''}</div>`).join('\n')}
+  </div>\n` : ''}` : `  <div class="prices">
 ${priceItems.map((it) => `    <div class="price${it.highlight ? ' hl' : ''} reveal">
       <p class="pn">${esc(it.name)}</p>
       <p class="pv">${esc(it.price)}</p>
       <p class="pu">${esc(it.unit || '')}</p>
 ${it.body ? `      <p class="pb">${esc(it.body)}</p>\n` : ''}${(it.bullets || []).length ? `      <ul>\n${it.bullets.map((bl) => `        <li>${esc(bl)}</li>`).join('\n')}\n      </ul>\n` : ''}    </div>`).join('\n')}
   </div>`}
-${d.pricing.note ? `  <p class="pnote reveal">${esc(d.pricing.note)}</p>\n` : ''}</div></section>
+${d.pricing.note ? `  <p class="pnote-foot reveal">${esc(d.pricing.note)}</p>\n` : ''}</div></section>
 
 `;
 

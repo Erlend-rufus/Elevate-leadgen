@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>Draft — Talentline Recruitment: homepage concept</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:#0E1116;font-family:Poppins,system-ui,sans-serif}
+  a{color:#00FFC5;text-decoration:none}
+  a:hover{color:#00D9A8}
+  .dc-banner{position:sticky;top:0;z-index:99;display:flex;align-items:center;gap:14px;
+    min-height:40px;padding:8px 32px;background:#0E1116;
+    border-bottom:1px solid rgba(0,255,197,0.5)}
+  .dc-banner i{display:block;width:20px;height:2px;background:#00FFC5;flex:none}
+  .dc-banner span{font-family:Poppins,sans-serif;font-size:12px;letter-spacing:0.06em;color:#fff}
+</style>
+<style>
+@media (max-width:640px){
+  [style*="padding:0 72px"],[style*="padding:16px 72px"],[style*="padding:24px 72px"],
+  [style*="padding:32px 72px"],[style*="padding:34px 72px"],[style*="padding:56px 72px"],
+  [style*="padding:60px 72px"],[style*="padding:72px 72px"],[style*="padding:64px 60px"],
+  [style*="padding:60px 54px"]{padding-left:20px!important;padding-right:20px!important}
+  [style*="padding:56px 72px"],[style*="padding:60px 72px"],[style*="padding:72px 72px"],
+  [style*="padding:64px 60px"],[style*="padding:60px 54px"]{padding-top:28px!important;padding-bottom:28px!important}
+  [style*="margin:0 72px"],[style*="margin:36px 72px"],[style*="margin:40px 72px"],
+  [style*="margin:44px 72px"]{margin-left:20px!important;margin-right:20px!important}
+  [style*="gap:44px"],[style*="gap:48px"],[style*="gap:56px"],
+  [style*="gap:60px"],[style*="gap:64px"],[style*="gap:72px"]{gap:22px!important}
+  [style*="font-size:40px"],[style*="font-size:42px"]{font-size:27px!important}
+  [style*="font-size:46px"],[style*="font-size:48px"]{font-size:29px!important}
+  [style*="font-size:28px"],[style*="font-size:29px"],[style*="font-size:30px"],
+  [style*="font-size:32px"]{font-size:22px!important}
+  /* the concepts use display type up to 72px, which sets a min-content width
+     wider than a phone and drags the whole column out with it */
+  [style*="font-size:44px"],[style*="font-size:50px"],[style*="font-size:52px"]{font-size:29px!important}
+  [style*="font-size:66px"],[style*="font-size:68px"],[style*="font-size:72px"]{font-size:31px!important}
+  /* a long unbroken word in a narrow column is the other way a page widens */
+  h1,h2,h3,p,span,em,li{overflow-wrap:break-word!important}
+  /* the verification fields stay two-up so the band keeps its shape and height
+     instead of becoming a long stack that pushes itself off the screen */
+  [style*="grid-template-columns:repeat(4,1fr)"],
+  [style*="grid-template-columns:1.5fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
+  [style*="grid-template-columns:repeat(3,1fr)"],[style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns:240px 1fr"],[style*="grid-template-columns:1fr 320px"],
+  [style*="grid-template-columns:1fr 380px"],[style*="grid-template-columns:1fr 420px"],
+  [style*="grid-template-columns:1fr 460px"],
+  [style*="grid-template-columns:1fr 400px"],[style*="grid-template-columns:1fr 440px"],
+  [style*="grid-template-columns:1fr 480px"],[style*="grid-template-columns:1fr 520px"],
+  [style*="grid-template-columns:340px 1fr"],[style*="grid-template-columns:480px 1fr"]{grid-template-columns:1fr!important}
+  /* the concept exports use wider grids and non-wrapping flex rows than the
+     first batch did; on a phone both push the page sideways */
+  [style*="grid-template-columns:repeat(5,1fr)"],
+  [style*="grid-template-columns:1.4fr 1fr 1fr 1.3fr"],
+  [style*="grid-template-columns:1.4fr 1fr 1fr 1.2fr"]{grid-template-columns:1fr 1fr!important}
+  [style*="display:flex"]:not([style*="flex-direction:column"]){flex-wrap:wrap!important}
+  [style*="gap:38px"],[style*="gap:36px"],[style*="gap:34px"],
+  [style*="gap:32px"],[style*="gap:30px"]{gap:14px!important}
+  /* tighten the mid-size blocks so the verification band still clears the fold
+     on a narrower handset (360x740), not just on a 375-wide one */
+  [style*="padding:28px 32px"]{padding:18px 20px 20px!important}
+  [style*="padding:26px 28px"],[style*="padding:20px 22px"]{padding:16px 18px!important}
+  [style*="padding:30px"]{padding:16px!important}
+  [style*="padding:22px 24px"],[style*="padding:22px 0 22px 24px"]{padding:14px 16px!important}
+  [style*="gap:28px"]{gap:16px!important}
+  [style*="gap:24px"]{gap:13px!important}
+  [style*="gap:20px"]{gap:12px!important}
+  /* the client's own site header: fixed 76px with a 36px-gap nav row beside the
+     wordmark, which on a phone squeezes the nav into three-line items. Let it
+     stack and breathe instead. */
+  [style*="height:76px"][style*="justify-content:space-between"]{
+    height:auto!important;flex-wrap:wrap!important;gap:6px 16px!important;
+    padding-top:12px!important;padding-bottom:12px!important}
+  [style*="height:76px"][style*="justify-content:space-between"] [style*="gap:36px"]{
+    gap:14px!important;flex-wrap:wrap!important}
+  .dc-banner{padding-left:20px!important;padding-right:20px!important}
+  .dc-nav{padding-left:20px!important;padding-right:20px!important}
+}
+/* Print. These sheets get printed for the meeting, so the nav chips are dead
+   weight on paper and the dark strip is a waste of toner. The banner itself
+   stays: on a printed page that is the only thing saying this is not the
+   client's real site, so it is kept and inverted rather than hidden. */
+@media print{
+  .dc-nav{display:none!important}
+  .dc-banner{position:static!important;background:#fff!important;
+    border-bottom:2px solid #000!important;padding:6px 0!important}
+  .dc-banner span{color:#000!important;font-weight:700!important}
+  .dc-banner i{background:#000!important}
+}</style>
+</head>
+<body>
+<div class="dc-banner"><i></i><span>Draft prepared by Elevate Marketing. Not published by Talentline Recruitment.</span></div>
+<div style="max-width:1440px;width:100%;background:#F7F5F1;font-family:Poppins,system-ui,sans-serif">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;height:88px;padding:0 88px;background:#FFFFFF;border-bottom:1px solid #E3E0D9">
+    <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:20px;letter-spacing:-0.01em;color:#12161C">Talentline Recruitment</span>
+    <div style="display:flex;align-items:center;gap:38px">
+      <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:400;color:#3E4753">Mandates</span>
+      <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:400;color:#3E4753">How we work</span>
+      <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:400;color:#3E4753">About</span>
+      <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:500;color:#FFFFFF;background:#16304F;border-radius:6px;padding:12px 22px">Brief a mandate</span>
+    </div>
+  </div>
+
+  <div style="padding:120px 88px 104px;background:#FFFFFF">
+    <div style="display:grid;grid-template-columns:1fr 400px;gap:88px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:30px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:36px;height:2px;background:#16304F"></div>
+          <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#16304F">Search and selection · UK and the Gulf</span>
+        </div>
+        <h1 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:68px;line-height:1.02;letter-spacing:-0.03em;color:#12161C;margin:0;max-width:880px;text-wrap:pretty">Financial crime and compliance appointments, handled by people who know what the regulator will ask.</h1>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:20px;line-height:1.6;color:#3E4753;margin:0;max-width:660px;text-wrap:pretty">We work with employers filling roles where somebody will eventually need to justify who holds them. Financial crime, compliance, and finance leadership in sponsor backed businesses.</p>
+        <div style="display:flex;gap:14px;padding-top:10px">
+          <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:500;color:#FFFFFF;background:#16304F;border-radius:6px;padding:16px 30px">Brief a mandate</span>
+          <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:500;color:#16304F;border:1px solid #16304F;border-radius:6px;padding:16px 30px">How a mandate runs</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:22px;border-left:1px solid #E3E0D9;padding-left:44px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#8A8E8C">Who you are dealing with</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.75;color:#3E4753"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Registered company name to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span>, company number <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span>. Registered in England at <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span>.</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.75;color:#3E4753">Founded by <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">registered name of founder to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span>. Trading since <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span>.</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:400;font-size:14px;color:#16304F">saqib@talentlinerecruitment.com</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:104px 88px;background:#F7F5F1">
+    <div style="display:flex;flex-direction:column;gap:18px;max-width:760px;padding-bottom:56px">
+      <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#16304F">Mandates</span>
+      <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:44px;line-height:1.1;letter-spacing:-0.025em;color:#12161C;margin:0;text-wrap:pretty">Three things we are briefed on. Nothing else.</h2>
+      <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:18px;line-height:1.65;color:#3E4753;margin:0">A generalist agency will take any role you send. We will tell you when a mandate is outside what we can do properly.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <div style="background:#FFFFFF;border:1px solid #E3E0D9;border-top:3px solid #16304F;border-radius:6px;padding:38px 34px;display:flex;flex-direction:column;gap:16px;min-height:300px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:15px;letter-spacing:-0.01em;color:#8A8E8C">01</span>
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.02em;color:#12161C;line-height:1.18">Financial crime and compliance</span>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#3E4753;margin:0;flex:1">MLRO and deputy MLRO, heads of financial crime, sanctions and screening leads, client due diligence, and compliance officers carrying approved person responsibilities.</p>
+        <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:500;color:#16304F">See the mandate terms</span>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E3E0D9;border-top:3px solid #16304F;border-radius:6px;padding:38px 34px;display:flex;flex-direction:column;gap:16px;min-height:300px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:15px;letter-spacing:-0.01em;color:#8A8E8C">02</span>
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.02em;color:#12161C;line-height:1.18">CFO and Finance Director, sponsor backed</span>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#3E4753;margin:0;flex:1">Finance leadership for private equity backed businesses, from a first CFO hire through to the reporting discipline an investor expects after a deal.</p>
+        <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:500;color:#16304F">See the mandate terms</span>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E3E0D9;border-top:3px solid #16304F;border-radius:6px;padding:38px 34px;display:flex;flex-direction:column;gap:16px;min-height:300px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:15px;letter-spacing:-0.01em;color:#8A8E8C">03</span>
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.02em;color:#12161C;line-height:1.18">The UK to Gulf corridor</span>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#3E4753;margin:0;flex:1">Finance and compliance professionals moving between UK and Gulf employers. The markets we actually cover are <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span>.</p>
+        <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:500;color:#16304F">See the mandate terms</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:104px 88px;background:#FFFFFF">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#16304F">How a mandate runs</span>
+        <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:44px;line-height:1.1;letter-spacing:-0.025em;color:#12161C;margin:0;text-wrap:pretty">Agreed in writing before anybody is approached.</h2>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:18px;line-height:1.65;color:#3E4753;margin:0;max-width:520px">Fee percentages vary by mandate and are not published here. What is fixed in writing at the start is the basis of the engagement, the shortlist commitment, the timetable, and what happens if the appointment does not complete.</p>
+        <div style="display:flex;flex-direction:column;gap:14px;border-top:1px solid #E3E0D9;margin-top:16px;padding-top:26px">
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#3E4753">Fee basis: <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">retained, exclusive or contingent, and rebate period, to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#3E4753">Invoicing and payment terms: <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#3E4753">Governing law and jurisdiction: <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:grid;grid-template-columns:52px 1fr;gap:24px;padding:24px 0;border-bottom:1px solid #E3E0D9">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:30px;letter-spacing:-0.03em;color:#16304F;line-height:1">01</span>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;color:#12161C">A written brief, not a phone call</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#3E4753">The role, the reporting line, the permissions attached to it, and the profile that will pass your own approval process.</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr;gap:24px;padding:24px 0;border-bottom:1px solid #E3E0D9">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:30px;letter-spacing:-0.03em;color:#16304F;line-height:1">02</span>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;color:#12161C">The search map is agreed first</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#3E4753">You see which firms we intend to approach before we approach them. No surprises, and no calls into your own clients.</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr;gap:24px;padding:24px 0;border-bottom:1px solid #E3E0D9">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:30px;letter-spacing:-0.03em;color:#16304F;line-height:1">03</span>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;color:#12161C">Everyone on the shortlist has been met</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#3E4753">Each candidate comes with a written note on fit, risk and motivation. Brief to shortlist normally takes <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span>.</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr;gap:24px;padding:24px 0">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:30px;letter-spacing:-0.03em;color:#16304F;line-height:1">04</span>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;color:#12161C">If it is not working we say so</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#3E4753">A search that is not landing gets re-scoped rather than padded with profiles. You are updated <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span>.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:104px 88px;background:#12161C">
+    <div style="display:grid;grid-template-columns:340px 1fr;gap:80px;align-items:start">
+      <div style="width:240px;height:300px;border:1px dashed #D6A800;border-radius:3px;background:#FFFBEA;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box"><span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;line-height:1.5;color:#3A2C00;text-align:center">[[TO CONFIRM: photograph]]</span></div>
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#00FFC5">The person behind the mandate</span>
+        <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:44px;line-height:1.1;letter-spacing:-0.025em;color:#FFFFFF;margin:0;max-width:720px;text-wrap:pretty">You will be dealing with one named person, and you can check who that person is.</h2>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:18px;line-height:1.7;color:#9AA3AF;margin:0;max-width:700px;text-wrap:pretty">In a market where anyone can register a company and call it a search firm, being able to verify who you are talking to is part of the service rather than an afterthought. The name, the registered company behind it, and a public professional profile are all published.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;border-top:1px solid rgba(255,255,255,0.14);padding-top:32px;margin-top:12px;max-width:760px">
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280">Founder</span>
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.015em;color:#FFFFFF;line-height:1.3"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Registered name to confirm</em><span style="display:inline-block;width:5px;height:5px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:5px"></span></span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;color:#9AA3AF"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Job title to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280">Verify independently</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#9AA3AF">LinkedIn profile <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">URL to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#9AA3AF">Companies House filing history, company number <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:104px 88px;background:#F7F5F1">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:64px;padding-bottom:48px">
+      <div style="display:flex;flex-direction:column;gap:18px;max-width:640px">
+        <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#16304F">Sectors and geography</span>
+        <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:44px;line-height:1.1;letter-spacing:-0.025em;color:#12161C;margin:0;text-wrap:pretty">We name the sectors we have placed into, not the ones we would like to.</h2>
+      </div>
+      <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#55606E;max-width:400px">Coverage across regulated financial services is uneven for any firm of this size. Claiming all of it would be the easiest sentence to write and the least useful one to read.</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid #DCD9D2">
+      <div style="padding:32px 44px 32px 0;border-right:1px solid #DCD9D2;display:flex;flex-direction:column;gap:11px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:20px;color:#12161C;line-height:1.25">Sectors with completed placements</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#3E4753"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">To confirm. Banking, payments, wealth, insurance, crypto asset firms and professional services are the candidate list</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+      </div>
+      <div style="padding:32px 44px;border-right:1px solid #DCD9D2;display:flex;flex-direction:column;gap:11px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:20px;color:#12161C;line-height:1.25">United Kingdom</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#3E4753">Permanent and interim appointments, from analyst level through to board.</span>
+      </div>
+      <div style="padding:32px 0 32px 44px;display:flex;flex-direction:column;gap:11px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:20px;color:#12161C;line-height:1.25">The Gulf</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#3E4753">Markets covered are <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span>, along with the jurisdiction our contracts are governed by.</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:88px 88px;background:#FFFFFF;border-top:1px solid #E3E0D9">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:32px;padding-bottom:30px">
+      <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#8A8E8C">Employers we have worked with</span>
+      <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#8A8E8C"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Client names to be supplied, only with written permission to publish</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px">
+      <div style="height:88px;border:1px dashed #DCD9D2;border-radius:4px"></div>
+      <div style="height:88px;border:1px dashed #DCD9D2;border-radius:4px"></div>
+      <div style="height:88px;border:1px dashed #DCD9D2;border-radius:4px"></div>
+      <div style="height:88px;border:1px dashed #DCD9D2;border-radius:4px"></div>
+      <div style="height:88px;border:1px dashed #DCD9D2;border-radius:4px"></div>
+    </div>
+  </div>
+
+  <div style="padding:112px 88px;background:#16304F;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.6)">For employers</span>
+      <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:46px;line-height:1.08;letter-spacing:-0.03em;color:#FFFFFF;margin:0;text-wrap:pretty">Send the role. You will get a straight answer on whether we should take it.</h2>
+      <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:18px;line-height:1.65;color:rgba(255,255,255,0.75);margin:0;max-width:520px">The job title, the reporting line, the location and the deadline is enough to start. Feasibility comes before any candidate work.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:22px;background:#FFFFFF;border-radius:6px;padding:40px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <span style="font-family:Poppins,sans-serif;font-size:12px;font-weight:500;color:#55606E">Your name</span>
+          <div style="height:44px;background:#F7F5F1;border:1px solid #E3E0D9;border-radius:4px"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <span style="font-family:Poppins,sans-serif;font-size:12px;font-weight:500;color:#55606E">Company</span>
+          <div style="height:44px;background:#F7F5F1;border:1px solid #E3E0D9;border-radius:4px"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <span style="font-family:Poppins,sans-serif;font-size:12px;font-weight:500;color:#55606E">Work email</span>
+          <div style="height:44px;background:#F7F5F1;border:1px solid #E3E0D9;border-radius:4px"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <span style="font-family:Poppins,sans-serif;font-size:12px;font-weight:500;color:#55606E">Role you are filling</span>
+          <div style="height:44px;background:#F7F5F1;border:1px solid #E3E0D9;border-radius:4px"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px;grid-column:1 / -1">
+          <span style="font-family:Poppins,sans-serif;font-size:12px;font-weight:500;color:#55606E">Reporting line, location and deadline</span>
+          <div style="height:92px;background:#F7F5F1;border:1px solid #E3E0D9;border-radius:4px"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:20px">
+        <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:500;color:#FFFFFF;background:#16304F;border-radius:6px;padding:14px 28px">Send the brief</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.55;color:#55606E;text-align:right">Replies within <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#16304F;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:72px 88px 40px;background:#12161C">
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:56px;padding-bottom:52px">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.01em;color:#FFFFFF">Talentline Recruitment</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;line-height:1.7;color:#9AA3AF;max-width:280px">Search and selection for financial crime, compliance and senior finance appointments in the UK and the Gulf.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280;padding-bottom:4px">Mandates</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Financial crime and compliance</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">CFO and Finance Director</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">UK to Gulf corridor</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280;padding-bottom:4px">Company</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">How we work</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">About</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">talentlinerecruitment.com</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Looking for a role: <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">route to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280;padding-bottom:4px">Registered details</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;line-height:1.75;color:#9AA3AF"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Registered company name to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>, company number <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>, registered office <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>.</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Professional membership <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:32px;border-top:1px solid rgba(255,255,255,0.1);padding-top:28px">
+      <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;color:#6B7280">saqib@talentlinerecruitment.com</span>
+      <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;color:#6B7280">Telephone <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

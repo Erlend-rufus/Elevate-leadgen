@@ -5,7 +5,8 @@
     "This file maps each draft to its unguessable slug and its page routes; the slug",
     "suffix is a security control, exactly as on the audit reports: without it anyone",
     "could guess /draft/a-competitor/ and read another prospect's draft.",
-    "Regenerate the published output with: node scripts/build-drafts.mjs"
+    "Regenerate the published output with: node scripts/build-drafts.mjs",
+    "homepage-concepts/ also holds Mollis Group and Headvisor exports that are not configured above. Add a block here to publish either; nothing else is needed."
   ],
   "drafts": [
     {
@@ -73,6 +74,63 @@
           "file": "meeting-sheet.html",
           "route": "checklist",
           "nav": null
+        }
+      ]
+    },
+    {
+      "dir": "homepage-concepts",
+      "company": "Talentline Recruitment",
+      "slug": "talentline-home-zz4wff",
+      "pages": [
+        {
+          "canvas": "Talentline Recruitment - homepage concept.dc.html",
+          "part": "page",
+          "route": "",
+          "title": "Draft — Talentline Recruitment: homepage concept"
+        },
+        {
+          "canvas": "Talentline Recruitment - homepage concept.dc.html",
+          "part": "note",
+          "route": "checklist",
+          "title": "Draft — Talentline Recruitment: homepage concept, what we need confirmed"
+        }
+      ]
+    },
+    {
+      "dir": "homepage-concepts",
+      "company": "Additional Resources",
+      "slug": "additional-resources-home-4iwkny",
+      "pages": [
+        {
+          "canvas": "Additional Resources - homepage concept.dc.html",
+          "part": "page",
+          "route": "",
+          "title": "Draft — Additional Resources: homepage concept"
+        },
+        {
+          "canvas": "Additional Resources - homepage concept.dc.html",
+          "part": "note",
+          "route": "checklist",
+          "title": "Draft — Additional Resources: homepage concept, what we need confirmed"
+        }
+      ]
+    },
+    {
+      "dir": "homepage-concepts",
+      "company": "Rounded IT",
+      "slug": "rounded-it-home-ah9qns",
+      "pages": [
+        {
+          "canvas": "Rounded IT - homepage concept.dc.html",
+          "part": "page",
+          "route": "",
+          "title": "Draft — Rounded IT: homepage concept"
+        },
+        {
+          "canvas": "Rounded IT - homepage concept.dc.html",
+          "part": "note",
+          "route": "checklist",
+          "title": "Draft — Rounded IT: homepage concept, what we need confirmed"
         }
       ]
     }

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>Draft — Additional Resources: homepage concept, what we need confirmed</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:#0E1116;font-family:Poppins,system-ui,sans-serif}
+  a{color:#00FFC5;text-decoration:none}
+  a:hover{color:#00D9A8}
+  .dc-banner{position:sticky;top:0;z-index:99;display:flex;align-items:center;gap:14px;
+    min-height:40px;padding:8px 32px;background:#0E1116;
+    border-bottom:1px solid rgba(0,255,197,0.5)}
+  .dc-banner i{display:block;width:20px;height:2px;background:#00FFC5;flex:none}
+  .dc-banner span{font-family:Poppins,sans-serif;font-size:12px;letter-spacing:0.06em;color:#fff}
+</style>
+<style>
+@media (max-width:640px){
+  [style*="padding:0 72px"],[style*="padding:16px 72px"],[style*="padding:24px 72px"],
+  [style*="padding:32px 72px"],[style*="padding:34px 72px"],[style*="padding:56px 72px"],
+  [style*="padding:60px 72px"],[style*="padding:72px 72px"],[style*="padding:64px 60px"],
+  [style*="padding:60px 54px"]{padding-left:20px!important;padding-right:20px!important}
+  [style*="padding:56px 72px"],[style*="padding:60px 72px"],[style*="padding:72px 72px"],
+  [style*="padding:64px 60px"],[style*="padding:60px 54px"]{padding-top:28px!important;padding-bottom:28px!important}
+  [style*="margin:0 72px"],[style*="margin:36px 72px"],[style*="margin:40px 72px"],
+  [style*="margin:44px 72px"]{margin-left:20px!important;margin-right:20px!important}
+  [style*="gap:44px"],[style*="gap:48px"],[style*="gap:56px"],
+  [style*="gap:60px"],[style*="gap:64px"],[style*="gap:72px"]{gap:22px!important}
+  [style*="font-size:40px"],[style*="font-size:42px"]{font-size:27px!important}
+  [style*="font-size:46px"],[style*="font-size:48px"]{font-size:29px!important}
+  [style*="font-size:28px"],[style*="font-size:29px"],[style*="font-size:30px"],
+  [style*="font-size:32px"]{font-size:22px!important}
+  /* the concepts use display type up to 72px, which sets a min-content width
+     wider than a phone and drags the whole column out with it */
+  [style*="font-size:44px"],[style*="font-size:50px"],[style*="font-size:52px"]{font-size:29px!important}
+  [style*="font-size:66px"],[style*="font-size:68px"],[style*="font-size:72px"]{font-size:31px!important}
+  /* a long unbroken word in a narrow column is the other way a page widens */
+  h1,h2,h3,p,span,em,li{overflow-wrap:break-word!important}
+  /* the verification fields stay two-up so the band keeps its shape and height
+     instead of becoming a long stack that pushes itself off the screen */
+  [style*="grid-template-columns:repeat(4,1fr)"],
+  [style*="grid-template-columns:1.5fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
+  [style*="grid-template-columns:repeat(3,1fr)"],[style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns:240px 1fr"],[style*="grid-template-columns:1fr 320px"],
+  [style*="grid-template-columns:1fr 380px"],[style*="grid-template-columns:1fr 420px"],
+  [style*="grid-template-columns:1fr 460px"],
+  [style*="grid-template-columns:1fr 400px"],[style*="grid-template-columns:1fr 440px"],
+  [style*="grid-template-columns:1fr 480px"],[style*="grid-template-columns:1fr 520px"],
+  [style*="grid-template-columns:340px 1fr"],[style*="grid-template-columns:480px 1fr"]{grid-template-columns:1fr!important}
+  /* the concept exports use wider grids and non-wrapping flex rows than the
+     first batch did; on a phone both push the page sideways */
+  [style*="grid-template-columns:repeat(5,1fr)"],
+  [style*="grid-template-columns:1.4fr 1fr 1fr 1.3fr"],
+  [style*="grid-template-columns:1.4fr 1fr 1fr 1.2fr"]{grid-template-columns:1fr 1fr!important}
+  [style*="display:flex"]:not([style*="flex-direction:column"]){flex-wrap:wrap!important}
+  [style*="gap:38px"],[style*="gap:36px"],[style*="gap:34px"],
+  [style*="gap:32px"],[style*="gap:30px"]{gap:14px!important}
+  /* tighten the mid-size blocks so the verification band still clears the fold
+     on a narrower handset (360x740), not just on a 375-wide one */
+  [style*="padding:28px 32px"]{padding:18px 20px 20px!important}
+  [style*="padding:26px 28px"],[style*="padding:20px 22px"]{padding:16px 18px!important}
+  [style*="padding:30px"]{padding:16px!important}
+  [style*="padding:22px 24px"],[style*="padding:22px 0 22px 24px"]{padding:14px 16px!important}
+  [style*="gap:28px"]{gap:16px!important}
+  [style*="gap:24px"]{gap:13px!important}
+  [style*="gap:20px"]{gap:12px!important}
+  /* the client's own site header: fixed 76px with a 36px-gap nav row beside the
+     wordmark, which on a phone squeezes the nav into three-line items. Let it
+     stack and breathe instead. */
+  [style*="height:76px"][style*="justify-content:space-between"]{
+    height:auto!important;flex-wrap:wrap!important;gap:6px 16px!important;
+    padding-top:12px!important;padding-bottom:12px!important}
+  [style*="height:76px"][style*="justify-content:space-between"] [style*="gap:36px"]{
+    gap:14px!important;flex-wrap:wrap!important}
+  .dc-banner{padding-left:20px!important;padding-right:20px!important}
+  .dc-nav{padding-left:20px!important;padding-right:20px!important}
+}
+/* Print. These sheets get printed for the meeting, so the nav chips are dead
+   weight on paper and the dark strip is a waste of toner. The banner itself
+   stays: on a printed page that is the only thing saying this is not the
+   client's real site, so it is kept and inverted rather than hidden. */
+@media print{
+  .dc-nav{display:none!important}
+  .dc-banner{position:static!important;background:#fff!important;
+    border-bottom:2px solid #000!important;padding:6px 0!important}
+  .dc-banner span{color:#000!important;font-weight:700!important}
+  .dc-banner i{background:#000!important}
+}</style>
+</head>
+<body>
+<div class="dc-banner"><i></i><span>Draft prepared by Elevate Marketing. Not published by Additional Resources.</span></div>
+<div style="max-width:1440px;width:100%;padding:64px 0 96px;background:#0E1116">
+  <div style="background:#191C20;border:1px solid rgba(255,255,255,0.07);border-left:3px solid #00FFC5;border-radius:12px;padding:44px 48px;display:flex;flex-direction:column;gap:34px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#00FFC5">Canvas note · not part of the page</span>
+      <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.02em;color:#FFFFFF;line-height:1.25">Additional Resources, homepage concept</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px">
+      <div style="display:flex;flex-direction:column;gap:26px">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280">The question this page is built to answer, quoted from the audit</span>
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:17px;line-height:1.45;color:#FFFFFF">"Which UK recruitment agencies can handle permanent hiring across several different sectors for a small business?"</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280">What is weak about the current site</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#9AA3AF">The front page opens with "Looking for a job?", while the questions that bring buyers to this category come from employers.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280">Three facts Google publishes that the client has never told us</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#9AA3AF">Established 1999, an address in Brentwood in Essex, and FCSA Recruiter Partner status. All three are drawn as placeholders rather than printed, because we have not heard any of them from the company.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280">The one to press on</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#9AA3AF">What Castleford, Sheffield, Doncaster and Market Weighton actually are. Four town names set that large implies four offices. If they are coverage areas the page has to say so.</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280">Every placeholder on the page, fifteen fields</span>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-family:Poppins,sans-serif;font-weight:400;font-size:13px;line-height:1.5;color:#C7CCD3">Unverified, currently only from Google</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.55;color:#9AA3AF">01 Year established, stated as 1999<br>02 Registered office, stated as Brentwood in Essex<br>03 FCSA Recruiter Partner status and membership number</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;padding-top:6px">
+          <span style="font-family:Poppins,sans-serif;font-weight:400;font-size:13px;line-height:1.5;color:#C7CCD3">Company and commercial</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.55;color:#9AA3AF">04 Registered company name<br>05 Company registration number<br>06 Terms of business: fee basis and rebate period<br>07 Which entity an employer signs with</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;padding-top:6px">
+          <span style="font-family:Poppins,sans-serif;font-weight:400;font-size:13px;line-height:1.5;color:#C7CCD3">Associate Partner model</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.55;color:#9AA3AF">08 Number of desks currently in operation<br>09 Minimum experience required to run one<br>10 Sectors with an active Associate Partner today</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;padding-top:6px">
+          <span style="font-family:Poppins,sans-serif;font-weight:400;font-size:13px;line-height:1.5;color:#C7CCD3">Coverage and contact</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.55;color:#9AA3AF">11 What each of the four locations is: office, consultant base or coverage area<br>12 Employer contact point<br>13 Response commitment on employer enquiries</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;padding-top:6px">
+          <span style="font-family:Poppins,sans-serif;font-weight:400;font-size:13px;line-height:1.5;color:#C7CCD3">Images and permissions</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.55;color:#9AA3AF">14 Hero photography<br>15 Client logos, with written permission to publish</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

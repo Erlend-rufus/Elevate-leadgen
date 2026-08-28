@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>Draft — Rounded IT: homepage concept</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:#0E1116;font-family:Poppins,system-ui,sans-serif}
+  a{color:#00FFC5;text-decoration:none}
+  a:hover{color:#00D9A8}
+  .dc-banner{position:sticky;top:0;z-index:99;display:flex;align-items:center;gap:14px;
+    min-height:40px;padding:8px 32px;background:#0E1116;
+    border-bottom:1px solid rgba(0,255,197,0.5)}
+  .dc-banner i{display:block;width:20px;height:2px;background:#00FFC5;flex:none}
+  .dc-banner span{font-family:Poppins,sans-serif;font-size:12px;letter-spacing:0.06em;color:#fff}
+</style>
+<style>
+@media (max-width:640px){
+  [style*="padding:0 72px"],[style*="padding:16px 72px"],[style*="padding:24px 72px"],
+  [style*="padding:32px 72px"],[style*="padding:34px 72px"],[style*="padding:56px 72px"],
+  [style*="padding:60px 72px"],[style*="padding:72px 72px"],[style*="padding:64px 60px"],
+  [style*="padding:60px 54px"]{padding-left:20px!important;padding-right:20px!important}
+  [style*="padding:56px 72px"],[style*="padding:60px 72px"],[style*="padding:72px 72px"],
+  [style*="padding:64px 60px"],[style*="padding:60px 54px"]{padding-top:28px!important;padding-bottom:28px!important}
+  [style*="margin:0 72px"],[style*="margin:36px 72px"],[style*="margin:40px 72px"],
+  [style*="margin:44px 72px"]{margin-left:20px!important;margin-right:20px!important}
+  [style*="gap:44px"],[style*="gap:48px"],[style*="gap:56px"],
+  [style*="gap:60px"],[style*="gap:64px"],[style*="gap:72px"]{gap:22px!important}
+  [style*="font-size:40px"],[style*="font-size:42px"]{font-size:27px!important}
+  [style*="font-size:46px"],[style*="font-size:48px"]{font-size:29px!important}
+  [style*="font-size:28px"],[style*="font-size:29px"],[style*="font-size:30px"],
+  [style*="font-size:32px"]{font-size:22px!important}
+  /* the concepts use display type up to 72px, which sets a min-content width
+     wider than a phone and drags the whole column out with it */
+  [style*="font-size:44px"],[style*="font-size:50px"],[style*="font-size:52px"]{font-size:29px!important}
+  [style*="font-size:66px"],[style*="font-size:68px"],[style*="font-size:72px"]{font-size:31px!important}
+  /* a long unbroken word in a narrow column is the other way a page widens */
+  h1,h2,h3,p,span,em,li{overflow-wrap:break-word!important}
+  /* the verification fields stay two-up so the band keeps its shape and height
+     instead of becoming a long stack that pushes itself off the screen */
+  [style*="grid-template-columns:repeat(4,1fr)"],
+  [style*="grid-template-columns:1.5fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important}
+  [style*="grid-template-columns:repeat(3,1fr)"],[style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns:240px 1fr"],[style*="grid-template-columns:1fr 320px"],
+  [style*="grid-template-columns:1fr 380px"],[style*="grid-template-columns:1fr 420px"],
+  [style*="grid-template-columns:1fr 460px"],
+  [style*="grid-template-columns:1fr 400px"],[style*="grid-template-columns:1fr 440px"],
+  [style*="grid-template-columns:1fr 480px"],[style*="grid-template-columns:1fr 520px"],
+  [style*="grid-template-columns:340px 1fr"],[style*="grid-template-columns:480px 1fr"]{grid-template-columns:1fr!important}
+  /* the concept exports use wider grids and non-wrapping flex rows than the
+     first batch did; on a phone both push the page sideways */
+  [style*="grid-template-columns:repeat(5,1fr)"],
+  [style*="grid-template-columns:1.4fr 1fr 1fr 1.3fr"],
+  [style*="grid-template-columns:1.4fr 1fr 1fr 1.2fr"]{grid-template-columns:1fr 1fr!important}
+  [style*="display:flex"]:not([style*="flex-direction:column"]){flex-wrap:wrap!important}
+  [style*="gap:38px"],[style*="gap:36px"],[style*="gap:34px"],
+  [style*="gap:32px"],[style*="gap:30px"]{gap:14px!important}
+  /* tighten the mid-size blocks so the verification band still clears the fold
+     on a narrower handset (360x740), not just on a 375-wide one */
+  [style*="padding:28px 32px"]{padding:18px 20px 20px!important}
+  [style*="padding:26px 28px"],[style*="padding:20px 22px"]{padding:16px 18px!important}
+  [style*="padding:30px"]{padding:16px!important}
+  [style*="padding:22px 24px"],[style*="padding:22px 0 22px 24px"]{padding:14px 16px!important}
+  [style*="gap:28px"]{gap:16px!important}
+  [style*="gap:24px"]{gap:13px!important}
+  [style*="gap:20px"]{gap:12px!important}
+  /* the client's own site header: fixed 76px with a 36px-gap nav row beside the
+     wordmark, which on a phone squeezes the nav into three-line items. Let it
+     stack and breathe instead. */
+  [style*="height:76px"][style*="justify-content:space-between"]{
+    height:auto!important;flex-wrap:wrap!important;gap:6px 16px!important;
+    padding-top:12px!important;padding-bottom:12px!important}
+  [style*="height:76px"][style*="justify-content:space-between"] [style*="gap:36px"]{
+    gap:14px!important;flex-wrap:wrap!important}
+  .dc-banner{padding-left:20px!important;padding-right:20px!important}
+  .dc-nav{padding-left:20px!important;padding-right:20px!important}
+}
+/* Print. These sheets get printed for the meeting, so the nav chips are dead
+   weight on paper and the dark strip is a waste of toner. The banner itself
+   stays: on a printed page that is the only thing saying this is not the
+   client's real site, so it is kept and inverted rather than hidden. */
+@media print{
+  .dc-nav{display:none!important}
+  .dc-banner{position:static!important;background:#fff!important;
+    border-bottom:2px solid #000!important;padding:6px 0!important}
+  .dc-banner span{color:#000!important;font-weight:700!important}
+  .dc-banner i{background:#000!important}
+}</style>
+</head>
+<body>
+<div class="dc-banner"><i></i><span>Draft prepared by Elevate Marketing. Not published by Rounded IT.</span></div>
+<div style="max-width:1440px;width:100%;background:#0E1116;font-family:Poppins,system-ui,sans-serif">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;height:88px;padding:0 88px;background:#0E1116;border-bottom:1px solid rgba(255,255,255,0.07)">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <div style="width:18px;height:2px;background:#00FFC5"></div>
+        <div style="width:12px;height:2px;background:#00FFC5"></div>
+      </div>
+      <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:20px;letter-spacing:-0.01em;color:#FFFFFF">Rounded IT</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:38px">
+      <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:400;color:#9AA3AF">Managed IT</span>
+      <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:400;color:#9AA3AF">Business broadband</span>
+      <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:400;color:#9AA3AF">Cyber security</span>
+      <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:400;color:#9AA3AF">Accreditations</span>
+      <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:500;color:#0E1116;background:#00FFC5;border-radius:8px;padding:12px 22px">Talk to an engineer</span>
+    </div>
+  </div>
+
+  <div style="position:relative;padding:112px 88px 0;background:#0E1116;overflow:hidden">
+    <div style="position:absolute;left:0;right:0;top:0;height:340px;background:linear-gradient(180deg,rgba(0,255,197,0.05),rgba(0,255,197,0))"></div>
+    <div style="position:relative;display:grid;grid-template-columns:1fr 520px;gap:80px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:36px;height:2px;background:#00FFC5"></div>
+          <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#00FFC5">Managed IT · West Yorkshire</span>
+        </div>
+        <h1 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:66px;line-height:1.03;letter-spacing:-0.03em;color:#FFFFFF;margin:0;text-wrap:pretty">Certified IT support for businesses that cannot afford to stop.</h1>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:20px;line-height:1.6;color:#9AA3AF;margin:0;max-width:620px;text-wrap:pretty">Managed IT, business broadband and cyber security for small and medium businesses across Leeds, Halifax and Bradford. Audited against the standards your insurer and your clients ask about.</p>
+        <div style="display:flex;gap:14px;padding-top:8px">
+          <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:500;color:#0E1116;background:#00FFC5;border-radius:8px;padding:16px 30px;box-shadow:0 0 40px rgba(0,255,197,0.25)">Book a systems review</span>
+          <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:500;color:#FFFFFF;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:16px 30px">See our accreditations</span>
+        </div>
+      </div>
+      <div style="width:240px;height:300px;border:1px dashed #D6A800;border-radius:3px;background:#FFFBEA;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box"><span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;line-height:1.5;color:#3A2C00;text-align:center">[[TO CONFIRM: photograph]]</span></div>
+    </div>
+
+    <div style="position:relative;margin-top:88px;padding:36px 0 40px;border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07)">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:32px;padding-bottom:26px">
+        <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#00FFC5">Independently certified</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.55;color:#6B7280">Certificate numbers and validity dates are published on our accreditations page. Ask us for the certificate and check it against the issuing body's register.</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,0.07)">
+        <div style="background:#0E1116;padding:22px 24px 22px 0;display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.015em;color:#FFFFFF;line-height:1.2">Cyber Essentials</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#6B7280"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Status and certificate number to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+        </div>
+        <div style="background:#0E1116;padding:22px 24px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.015em;color:#FFFFFF;line-height:1.2">Cyber Essentials Plus</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#6B7280"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Status and certificate number to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+        </div>
+        <div style="background:#0E1116;padding:22px 24px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.015em;color:#FFFFFF;line-height:1.2">ISO 27001</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#6B7280"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Status and certificate number to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+        </div>
+        <div style="background:#0E1116;padding:22px 24px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.015em;color:#FFFFFF;line-height:1.2">IASME Cyber Assurance</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#6B7280"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Status and level to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+        </div>
+        <div style="background:#0E1116;padding:22px 0 22px 24px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.015em;color:#FFFFFF;line-height:1.2">Microsoft Solutions Partner</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#6B7280"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Designation and solutions area to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:112px 88px;background:#13161B">
+    <div style="display:flex;flex-direction:column;gap:20px;max-width:760px;padding-bottom:60px">
+      <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#00FFC5">What we look after</span>
+      <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:44px;line-height:1.1;letter-spacing:-0.025em;color:#FFFFFF;margin:0;text-wrap:pretty">One provider for the systems, the line and the security around both.</h2>
+      <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:18px;line-height:1.65;color:#9AA3AF;margin:0">Most faults that take a business offline sit between two suppliers. Holding all three removes the argument about whose problem it is.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <div style="background:#191C20;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:36px 34px;display:flex;flex-direction:column;gap:18px">
+        <div style="width:28px;height:2px;background:#00FFC5"></div>
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.02em;color:#FFFFFF;line-height:1.2">Managed IT support</span>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#9AA3AF;margin:0">Monitoring, patching, backup checks and a service desk your staff can ring. Support hours are <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>, with out of hours cover <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>.</p>
+        <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:500;color:#00FFC5;padding-top:4px">How support works</span>
+      </div>
+      <div style="background:#191C20;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:36px 34px;display:flex;flex-direction:column;gap:18px">
+        <div style="width:28px;height:2px;background:#00FFC5"></div>
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.02em;color:#FFFFFF;line-height:1.2">Business broadband</span>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#9AA3AF;margin:0">Connectivity sold with a service level rather than a consumer contract. The products we supply are <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>, including whether leased lines and failover are available.</p>
+        <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:500;color:#00FFC5;padding-top:4px">Check your postcode</span>
+      </div>
+      <div style="background:#191C20;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:36px 34px;display:flex;flex-direction:column;gap:18px">
+        <div style="width:28px;height:2px;background:#00FFC5"></div>
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.02em;color:#FFFFFF;line-height:1.2">Cyber security</span>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#9AA3AF;margin:0">The five Cyber Essentials controls applied properly: firewalls, secure configuration, access control, malware protection and patching. Plus help getting your own certification.</p>
+        <span style="font-family:Poppins,sans-serif;font-size:14px;font-weight:500;color:#00FFC5;padding-top:4px">Get certified</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:112px 88px;background:#0E1116">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#00FFC5">When something breaks</span>
+        <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:44px;line-height:1.1;letter-spacing:-0.025em;color:#FFFFFF;margin:0;text-wrap:pretty">You get an engineer, not a ticket number in a queue.</h2>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:18px;line-height:1.65;color:#9AA3AF;margin:0">Our response targets by priority level are <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>. They are published because a target you cannot see is not a commitment.</p>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:grid;grid-template-columns:56px 1fr;gap:24px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,0.07)">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:32px;letter-spacing:-0.03em;color:#00FFC5;line-height:1">01</span>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;color:#FFFFFF">You ring a person</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.6;color:#9AA3AF">Not a portal first. The engineer who answers can see your systems while you are still on the call.</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:56px 1fr;gap:24px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,0.07)">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:32px;letter-spacing:-0.03em;color:#00FFC5;line-height:1">02</span>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;color:#FFFFFF">We tell you what it is and how long</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.6;color:#9AA3AF">An honest estimate at the start, and a call if it changes. Silence during an outage is the thing that costs you.</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:56px 1fr;gap:24px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,0.07)">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:32px;letter-spacing:-0.03em;color:#00FFC5;line-height:1">03</span>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;color:#FFFFFF">It gets fixed, then it gets prevented</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.6;color:#9AA3AF">Every repeat fault is a monitoring gap. We close the gap rather than log the same job twice.</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:56px 1fr;gap:24px;padding:26px 0">
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:32px;letter-spacing:-0.03em;color:#00FFC5;line-height:1">04</span>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:19px;color:#FFFFFF">You see it in the monthly review</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.6;color:#9AA3AF">What broke, what we changed, what needs replacing before it fails. In plain words, not a dashboard export.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:112px 88px;background:#13161B">
+    <div style="display:grid;grid-template-columns:480px 1fr;gap:88px;align-items:center">
+      <div style="width:240px;height:300px;border:1px dashed #D6A800;border-radius:3px;background:#FFFBEA;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box"><span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;line-height:1.5;color:#3A2C00;text-align:center">[[TO CONFIRM: photograph]]</span></div>
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#00FFC5">West Yorkshire</span>
+        <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:44px;line-height:1.1;letter-spacing:-0.025em;color:#FFFFFF;margin:0;text-wrap:pretty">An engineer who can be at your door the same day.</h2>
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:18px;line-height:1.65;color:#9AA3AF;margin:0;max-width:640px">Remote support fixes most things. Some things need somebody standing in the server cupboard. We work across West Yorkshire, and we say where we are rather than claiming national coverage.</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.07);margin-top:14px">
+          <div style="background:#13161B;padding:24px 24px 24px 0;display:flex;flex-direction:column;gap:9px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.02em;color:#FFFFFF">Leeds</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#6B7280"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Office, engineer base or coverage area, to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+          </div>
+          <div style="background:#13161B;padding:24px;display:flex;flex-direction:column;gap:9px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.02em;color:#FFFFFF">Halifax</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#6B7280"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Office, engineer base or coverage area, to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+          </div>
+          <div style="background:#13161B;padding:24px 0 24px 24px;display:flex;flex-direction:column;gap:9px">
+            <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.02em;color:#FFFFFF">Bradford</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#6B7280"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Office, engineer base or coverage area, to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:112px 88px;background:#0E1116">
+    <div style="display:flex;flex-direction:column;gap:20px;max-width:720px;padding-bottom:56px">
+      <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#00FFC5">Changing provider</span>
+      <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:44px;line-height:1.1;letter-spacing:-0.025em;color:#FFFFFF;margin:0;text-wrap:pretty">Switching is the part people dread. It is the part we plan first.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(255,255,255,0.07)">
+      <div style="padding:34px 40px 34px 0;border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:20px;color:#FFFFFF;line-height:1.25">We audit before we touch anything</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#9AA3AF">Licences, backups, domains, who holds the admin accounts. Most of the risk in a handover is in the things nobody documented.</span>
+      </div>
+      <div style="padding:34px 40px;border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:20px;color:#FFFFFF;line-height:1.25">Migration happens out of hours</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#9AA3AF">Typical transition time for a business of twenty to fifty staff is <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>, planned around your working week.</span>
+      </div>
+      <div style="padding:34px 0 34px 40px;display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:20px;color:#FFFFFF;line-height:1.25">Terms you can leave</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:15px;line-height:1.65;color:#9AA3AF">Contract length and notice period are <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>. A provider confident in the service does not need to lock you in.</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:88px 88px;background:#13161B">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:32px;padding-bottom:32px">
+      <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#6B7280">Businesses we look after</span>
+      <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;line-height:1.5;color:#6B7280"><em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">Client logos to be supplied, with written permission to publish</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px">
+      <div style="height:96px;border:1px dashed rgba(255,255,255,0.14);border-radius:8px"></div>
+      <div style="height:96px;border:1px dashed rgba(255,255,255,0.14);border-radius:8px"></div>
+      <div style="height:96px;border:1px dashed rgba(255,255,255,0.14);border-radius:8px"></div>
+      <div style="height:96px;border:1px dashed rgba(255,255,255,0.14);border-radius:8px"></div>
+      <div style="height:96px;border:1px dashed rgba(255,255,255,0.14);border-radius:8px"></div>
+    </div>
+  </div>
+
+  <div style="padding:120px 88px;background:#0E1116;display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center;border-top:1px solid rgba(255,255,255,0.07)">
+    <span style="font-family:Poppins,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#00FFC5">Next step</span>
+    <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:52px;line-height:1.08;letter-spacing:-0.03em;color:#FFFFFF;margin:0;max-width:900px;text-wrap:pretty">Start with a systems review, not a sales call.</h2>
+    <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:19px;line-height:1.6;color:#9AA3AF;margin:0;max-width:660px">An engineer goes through your setup and tells you what is at risk, what is over specified and what you are paying twice for. You keep the findings whether or not you move to us.</p>
+    <div style="display:flex;gap:14px;padding-top:10px">
+      <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:500;color:#0E1116;background:#00FFC5;border-radius:8px;padding:16px 32px">Book a systems review</span>
+      <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:500;color:#FFFFFF;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:16px 32px">info@roundedit.co.uk</span>
+    </div>
+    <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#6B7280;padding-top:6px">Telephone <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span></span>
+  </div>
+
+  <div style="padding:72px 88px 40px;background:#191C20;border-top:1px solid rgba(255,255,255,0.07)">
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:56px;padding-bottom:52px">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <div style="width:18px;height:2px;background:#00FFC5"></div>
+            <div style="width:12px;height:2px;background:#00FFC5"></div>
+          </div>
+          <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.01em;color:#FFFFFF">Rounded IT</span>
+        </div>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;line-height:1.7;color:#9AA3AF;max-width:280px">Managed IT, business broadband and cyber security for businesses across West Yorkshire.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280;padding-bottom:4px">Services</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Managed IT support</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Business broadband</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Cyber security</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Cyber Essentials certification</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280;padding-bottom:4px">Company</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Accreditations</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Changing provider</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">Contact</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">roundedit.co.uk</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280;padding-bottom:4px">Registered details</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;line-height:1.7;color:#9AA3AF">Rounded IT is the trading name of <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">registered company name to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>, company number <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>, registered at <em style="font-style:normal;background:#FFE066;border:1px solid #D6A800;color:#3A2C00;border-radius:3px;padding:1px 6px;font-weight:500;white-space:normal;box-decoration-break:clone;-webkit-box-decoration-break:clone">to confirm</em><span style="display:inline-block;width:4px;height:4px;background:#00FFC5;border-radius:50%;vertical-align:super;margin-left:4px"></span>.</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#9AA3AF">info@roundedit.co.uk</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:32px;border-top:1px solid rgba(255,255,255,0.07);padding-top:28px">
+      <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;color:#6B7280">A separate and unrelated business from Rounded.com and RoundWorks IT.</span>
+      <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;color:#6B7280">Every email from us ends in roundedit.co.uk</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
