@@ -126,7 +126,7 @@
       },
       {
         "title": "Re-measure and compare",
-        "how": "The same four questions re-run after the recrawl window, four to six weeks out, using the URLs recorded in the method note.",
+        "how": "The same three category questions and the brand test re-run on 10 October 2026 (day 45) and again on 24 November 2026 (day 90), using the URLs recorded in the method note.",
         "effect": "You see movement in screenshots, not in promises."
       }
     ],
@@ -166,7 +166,7 @@
       {
         "title": "Option one, GEO fix package",
         "how": "GBP 1,850, invoiced half on start and half on delivery. Thirty days from the point we have your content. The verification layer, one page per mandate type, the page title and metadata, structured data, and entry into the directories these three answers cited.",
-        "effect": "Up to six published pages on your current site, plus two re-measurements at day 45 and day 90, reported with screenshots whichever way they go."
+        "effect": "Up to six published pages on your current site, plus two re-measurements on 10 October 2026 (day 45) and 24 November 2026 (day 90), reported with screenshots whichever way they go."
       },
       {
         "title": "Option two, the same fixes delivered as a new site",
@@ -176,13 +176,14 @@
       {
         "title": "Ongoing measurement, optional",
         "how": "GBP 450 per month. The question set re-run monthly, plus one new page each month aimed at a question you still lose. No minimum term and no notice period.",
-        "effect": "You can stop the month you stop seeing value. If the day 90 re-measurement shows no movement on any of the three questions, the next three months are free."
+        "effect": "You can stop the month you stop seeing value. If the 24 November 2026 re-measurement shows no movement on any of the three questions, the next three months are free."
       }
     ]
   },
   "cta": {
     "title": "The next step",
-    "body": "Whatever you decide, these three questions get asked again. We will re-run them and send you the comparison either way. If you want the fixes done, reply to this and we will start the thirty days from the point we have what we need from you.",
-    "contact": "post@elevatemarketing.no"
+    "body": "Whatever you decide, we will re-run these questions on 10 October and again on 24 November, and send you the comparison either way. If you want the fixes done, email us and we will start the thirty days from the point we have what we need from you.",
+    "contact": "post@elevatemarketing.no",
+    "contact_subject": "GEO audit follow-up - Talentline Recruitment"
   }
 }

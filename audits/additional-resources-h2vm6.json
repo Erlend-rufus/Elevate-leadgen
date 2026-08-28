@@ -29,7 +29,8 @@
         "Stanton Chase London",
         "Wilson & Bain"
       ],
-      "named_instead_note": "split into the global giants and UK-headquartered mid-tier firms"
+      "named_instead_note": "split into the global giants and UK-headquartered mid-tier firms",
+      "note": "Question one is a deliberate ceiling test. The firms it returned are the global executive search houses, and no agency of this size appears in that answer. It is included so the range is visible. At the top of the market you are not competing. At questions two and three you are, and you are still not named."
     },
     {
       "text": "Which UK recruitment agencies can handle permanent hiring across several different sectors for a small business?",
@@ -126,7 +127,7 @@
       },
       {
         "title": "Re-measure and compare",
-        "how": "The same four questions re-run after the recrawl window, four to six weeks out, using the URLs recorded in the method note.",
+        "how": "The same three category questions and the brand test re-run on 10 October 2026 (day 45) and again on 24 November 2026 (day 90), using the URLs recorded in the method note.",
         "effect": "You see movement in screenshots, not in promises."
       }
     ],
@@ -166,7 +167,7 @@
       {
         "title": "GEO fix package, first phase",
         "how": "GBP 1,850, invoiced half on start and half on delivery. Thirty days from the point we have your content. The employer entry point that does not exist today, the geographic coverage written out by name, the verification layer covering 1999, Brentwood and the FCSA membership, structured data, and directory entries.",
-        "effect": "Up to six published pages, plus two re-measurements of the same three questions at day 45 and day 90, reported with screenshots whichever way they go."
+        "effect": "Up to six published pages, plus two re-measurements of the same three questions on 10 October 2026 (day 45) and 24 November 2026 (day 90), reported with screenshots whichever way they go."
       },
       {
         "title": "We are not proposing a new website",
@@ -181,13 +182,14 @@
       {
         "title": "Ongoing measurement, optional",
         "how": "GBP 450 per month. The question set re-run monthly, plus one new page each month aimed at a question you still lose. No minimum term and no notice period.",
-        "effect": "You can stop the month you stop seeing value. If the day 90 re-measurement shows no movement on any of the three questions, the next three months are free."
+        "effect": "You can stop the month you stop seeing value. If the 24 November 2026 re-measurement shows no movement on any of the three questions, the next three months are free."
       }
     ]
   },
   "cta": {
     "title": "The next step",
-    "body": "Whatever you decide, these three questions get asked again. We will re-run them and send you the comparison either way. If you want the fixes done, reply to this and we will start the thirty days from the point we have what we need from you.",
-    "contact": "post@elevatemarketing.no"
+    "body": "Whatever you decide, we will re-run these questions on 10 October and again on 24 November, and send you the comparison either way. If you want the fixes done, email us and we will start the thirty days from the point we have what we need from you.",
+    "contact": "post@elevatemarketing.no",
+    "contact_subject": "GEO audit follow-up - Additional Resources"
   }
 }
