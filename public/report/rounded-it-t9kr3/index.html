@@ -100,6 +100,9 @@ blockquote.flag .tag{display:block;font-family:var(--sans);font-style:normal;fon
 .fix .how{color:var(--grey);font-size:15px;margin:0 0 10px}
 .eff{margin:0;font-size:15px;padding:10px 14px;background:var(--light);border-radius:8px;border-left:3px solid var(--amber);display:flex;gap:9px}
 .eff::before{content:'→';color:var(--amber-ink);font-weight:700;flex:none}
+.draftlink{display:inline-flex;align-items:center;gap:9px;background:var(--navy);color:#fff;font-weight:700;text-decoration:none;padding:14px 24px;border-radius:8px;font-size:16px}
+.draftlink::after{content:'→'}
+.draftlink:hover{background:var(--navy-3)}
 
 /* evidence */
 figure{margin:0 0 30px}
@@ -362,6 +365,7 @@ dialog.lb form{position:relative}
       <p class="eff">You see movement in screenshots, not in promises.</p>
     </div>
   </div>
+  <p class="reveal" style="margin-top:26px"><a class="draftlink" href="/draft/rounded-it-tiz9dg/">See what this looks like</a></p>
   <p class="reveal" style="margin-top:26px">We do not promise rankings, mentions or timelines. AI answers vary between runs. What we change is what the systems read, and a repeat measurement shows what moved.</p>
 </div></section>
 

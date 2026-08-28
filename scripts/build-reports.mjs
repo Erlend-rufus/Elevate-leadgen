@@ -65,6 +65,12 @@ function validate(d, file) {
   // pricing items also come in two shapes: priced cards (name + price) or
   // scope cards sharing the fixes shape (title + how + effect). Mixing the two
   // inside one report would render half the cards blank, so reject that.
+  // fixes.draft_url points at the design draft for this client. Restricted to
+  // a /draft/ path on purpose: this link sits inside a client-facing report,
+  // and the drafts are the one thing on this site that look like the client's
+  // own website.
+  if (d.fixes.draft_url && !/^\/draft\/[a-z0-9-]+\/$/.test(d.fixes.draft_url))
+    die(`fixes.draft_url must be a /draft/<slug>/ path, got "${d.fixes.draft_url}"`);
   if (d.pricing) {
     if (!Array.isArray(d.pricing.items) || !d.pricing.items.length) die('pricing needs a non-empty items array');
     const scope = d.pricing.items.filter((i) => i.title && i.how);
@@ -170,6 +176,9 @@ blockquote.flag .tag{display:block;font-family:var(--sans);font-style:normal;fon
 .fix .how{color:var(--grey);font-size:15px;margin:0 0 10px}
 .eff{margin:0;font-size:15px;padding:10px 14px;background:var(--light);border-radius:8px;border-left:3px solid var(--amber);display:flex;gap:9px}
 .eff::before{content:'→';color:var(--amber-ink);font-weight:700;flex:none}
+.draftlink{display:inline-flex;align-items:center;gap:9px;background:var(--navy);color:#fff;font-weight:700;text-decoration:none;padding:14px 24px;border-radius:8px;font-size:16px}
+.draftlink::after{content:'→'}
+.draftlink:hover{background:var(--navy-3)}
 
 /* evidence */
 figure{margin:0 0 30px}
@@ -436,7 +445,8 @@ const STRINGS = {
     evidenceSub: (date) => `All captured ${date}. Nothing in this report is paraphrased from memory.`,
     enlarge: 'Enlarge', enlargeAlt: (i) => `Enlarge screenshot ${i}`, close: 'Close',
     methodTitle: 'How this was measured',
-    missingShot: (f) => `Screenshot pending: drop <code>${f}</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.`
+    missingShot: (f) => `Screenshot pending: drop <code>${f}</code> into <code>audits/&lt;slug&gt;/</code> and rebuild.`,
+    seeDraft: 'See what this looks like'
   },
   nb: {
     htmlLang: 'nb-NO', kicker: 'GEO-rapport', titlePrefix: 'GEO-rapport: ',
@@ -452,7 +462,8 @@ const STRINGS = {
     evidenceSub: (date) => `Alle tatt ${date}. Ingenting i denne rapporten er gjengitt fra hukommelsen.`,
     enlarge: 'Forstørr', enlargeAlt: (i) => `Forstørr skjermbilde ${i}`, close: 'Lukk',
     methodTitle: 'Hvordan dette ble målt',
-    missingShot: (f) => `Skjermbilde mangler: legg <code>${f}</code> i <code>audits/&lt;slug&gt;/</code> og bygg på nytt.`
+    missingShot: (f) => `Skjermbilde mangler: legg <code>${f}</code> i <code>audits/&lt;slug&gt;/</code> og bygg på nytt.`,
+    seeDraft: 'Se hvordan dette ser ut'
   }
 };
 
@@ -585,7 +596,7 @@ ${d.fixes.items.map((f, i) => `  <div class="fix reveal">
       <p class="eff">${esc(f.effect)}</p>
     </div>
   </div>`).join('\n')}
-${d.fixes.disclaimer ? `  <p class="reveal" style="margin-top:26px">${esc(d.fixes.disclaimer)}</p>\n` : ''}</div></section>
+${d.fixes.draft_url ? `  <p class="reveal" style="margin-top:26px"><a class="draftlink" href="${esc(d.fixes.draft_url)}">${t.seeDraft}</a></p>\n` : ''}${d.fixes.disclaimer ? `  <p class="reveal" style="margin-top:26px">${esc(d.fixes.disclaimer)}</p>\n` : ''}</div></section>
 
 ${(d.screenshots || []).length ? `<section><div class="wrap">
   <p class="kicker reveal">${n()} ${t.kEvidence}</p>

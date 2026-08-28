@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>Draft — Additional Resources: meeting sheet</title>
+<style>
+/* tokens/fonts.css */
+/* ==========================================================================
+   Elevate Marketing — Webfonts
+   Montserrat (headlines, 700/800/900) · Poppins (body, 300/400/500)
+   Loaded from Google Fonts. If you need self-hosted/offline binaries,
+   ask the Elevate team — see CAVEATS in readme.md.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap');
+
+/* tokens/colors.css */
+/* ==========================================================================
+   Elevate Marketing — Color tokens
+   Dark, premium, restrained. One electric mint accent — used sparingly.
+   ========================================================================== */
+
+:root {
+  /* ---- Base palette (raw values) ---------------------------------------- */
+  --em-navy-900: #0E1116;   /* deepest — vignette / behind panels        */
+  --em-navy-800: #13161B;   /* canvas — primary background               */
+  --em-navy-700: #191C20;   /* panel / card surface                      */
+  --em-navy-600: #20242A;   /* raised panel / hover surface              */
+  --em-navy-500: #2A2F36;   /* hairline-on-dark / inset                  */
+
+  --em-mint-500: #00FFC5;   /* THE accent — CTA, highlight, big numbers  */
+  --em-mint-600: #00D9A8;   /* accent hover / pressed                    */
+  --em-mint-700: #00B08A;   /* accent on light / deep                    */
+  --em-mint-100: rgba(0, 255, 197, 0.12); /* accent tint wash            */
+  --em-mint-080: rgba(0, 255, 197, 0.08); /* faint accent wash           */
+
+  --em-white:    #FFFFFF;   /* primary text on dark                      */
+  --em-gray-300: #C7CCD3;   /* bright secondary                          */
+  --em-gray-400: #9AA3AF;   /* muted secondary text                      */
+  --em-gray-500: #6B7280;   /* tertiary / captions / disabled            */
+  --em-gray-600: #434A54;   /* faint labels                              */
+
+  /* Hairlines & strokes */
+  --em-line-100: rgba(255, 255, 255, 0.07); /* default hairline on dark  */
+  --em-line-200: rgba(255, 255, 255, 0.12); /* stronger divider          */
+  --em-line-mint: rgba(0, 255, 197, 0.55);  /* thin accent rule          */
+
+  /* ---- Semantic aliases -------------------------------------------------- */
+  --surface-canvas:    var(--em-navy-800);
+  --surface-deep:      var(--em-navy-900);
+  --surface-panel:     var(--em-navy-700);
+  --surface-raised:    var(--em-navy-600);
+  --surface-inset:     var(--em-navy-500);
+
+  --accent:            var(--em-mint-500);
+  --accent-hover:      var(--em-mint-600);
+  --accent-pressed:    var(--em-mint-700);
+  --accent-wash:       var(--em-mint-100);
+  --accent-wash-faint: var(--em-mint-080);
+  --accent-line:       var(--em-line-mint);
+
+  --text-primary:      var(--em-white);
+  --text-secondary:    var(--em-gray-400);
+  --text-bright:       var(--em-gray-300);
+  --text-tertiary:     var(--em-gray-500);
+  --text-faint:        var(--em-gray-600);
+  --text-on-accent:    var(--em-navy-900);  /* dark ink on mint CTA       */
+
+  --line:              var(--em-line-100);
+  --line-strong:       var(--em-line-200);
+
+  --focus-ring:        rgba(0, 255, 197, 0.45);
+}
+
+/* tokens/typography.css */
+/* ==========================================================================
+   Elevate Marketing — Typography tokens
+   Montserrat 800/900 — headlines, tight tracking, often UPPERCASE.
+   Poppins 300/400/500 — body, captions, generous leading.
+   ========================================================================== */
+
+:root {
+  /* ---- Families --------------------------------------------------------- */
+  --font-display: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    'Poppins', 'Helvetica Neue', Arial, sans-serif;
+
+  /* ---- Weights ---------------------------------------------------------- */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-bold:     700;
+  --weight-heavy:    800;
+  --weight-black:    900;
+
+  /* ---- Display / headline scale (Montserrat) ---------------------------- */
+  /* Tuned for 16:9 @ 1280x720 and 1920x1080 slide canvases.                */
+  --text-mega:    128px;  /* hero big-number / one-word statement          */
+  --text-display: 84px;   /* title-slide headline                          */
+  --text-h1:      56px;   /* slide headline                                */
+  --text-h2:      40px;   /* slide subhead / section title                 */
+  --text-h3:      28px;   /* panel title                                   */
+  --text-stat:    96px;   /* the "store tall" — big KPI numbers            */
+
+  /* ---- Body scale (Poppins) --------------------------------------------- */
+  --text-lead:    24px;   /* lead paragraph / deck body                    */
+  --text-body:    18px;   /* default body                                  */
+  --text-sm:      15px;   /* dense body / list                             */
+  --text-caption: 13px;   /* captions, footnotes                           */
+  --text-eyebrow: 13px;   /* uppercase label above headlines               */
+
+  /* ---- Line heights ----------------------------------------------------- */
+  --leading-tight:   1.02;  /* mega / display headlines                     */
+  --leading-snug:    1.12;  /* h1 / h2                                      */
+  --leading-normal:  1.5;   /* body                                         */
+  --leading-relaxed: 1.65;  /* light body paragraphs                        */
+
+  /* ---- Letter spacing --------------------------------------------------- */
+  --tracking-tightest: -0.03em;  /* mega / display                          */
+  --tracking-tight:    -0.02em;  /* headlines                               */
+  --tracking-snug:     -0.01em;  /* subheads                                */
+  --tracking-normal:   0em;      /* body                                    */
+  --tracking-eyebrow:  0.22em;   /* uppercase eyebrow labels                */
+  --tracking-wide:     0.08em;   /* small caps / buttons                    */
+}
+
+/* tokens/spacing.css */
+/* ==========================================================================
+   Elevate Marketing — Spacing, radii, borders, shadows
+   Generous negative space. Thin lines. Minimal, low-spread shadows.
+   ========================================================================== */
+
+:root {
+  /* ---- Spacing scale (8px base) ----------------------------------------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* Slide safe margins (16:9) */
+  --slide-margin-x: 96px;   /* @1280 wide → scale up for 1920              */
+  --slide-margin-y: 80px;
+
+  /* ---- Radii — restrained, mostly square-ish ---------------------------- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;   /* default panel / card                            */
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* ---- Border widths ---------------------------------------------------- */
+  --border-hairline: 1px;
+  --border-accent:   2px;   /* thin mint accent rule                       */
+
+  /* ---- Shadows — subtle, for floating panels on dark -------------------- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.40);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.50);
+  /* Accent glow — use VERY sparingly (one CTA / one stat per view) */
+  --glow-accent: 0 0 0 1px rgba(0, 255, 197, 0.30), 0 8px 32px rgba(0, 255, 197, 0.14);
+}
+
+/* tokens/base.css */
+/* ==========================================================================
+   Elevate Marketing — Base layer
+   Page defaults + a few brand primitives reused across slides & docs.
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--surface-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: var(--weight-light);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headlines default to the display family, heavy + tight */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-heavy);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+  margin: 0;
+  color: var(--text-primary);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+/* ---- Brand primitives (utility classes) --------------------------------- */
+
+/* Uppercase eyebrow label that sits above headlines */
+.em-eyebrow {
+  font-family: var(--font-body);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Thin accent rule — a recurring motif */
+.em-rule {
+  width: 56px;
+  height: var(--border-accent);
+  background: var(--accent);
+  border: 0;
+  margin: 0;
+}
+
+.em-rule--full {
+  width: 100%;
+  height: var(--border-hairline);
+  background: var(--line);
+}
+
+/* Mint highlight applied to a single word/number inside a headline */
+.em-accent-text { color: var(--accent); }
+
+/* Generic panel surface */
+.em-panel {
+  background: var(--surface-panel);
+  border: var(--border-hairline) solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+/* styles.css */
+/* ==========================================================================
+   Elevate Marketing — Design System
+   Global stylesheet entry point. Consumers link THIS file only.
+   Keep this file as @import lines only — no rules inline.
+   ========================================================================== */
+
+@import url('./tokens/fonts.css');
+@import url('./tokens/colors.css');
+@import url('./tokens/typography.css');
+@import url('./tokens/spacing.css');
+@import url('./tokens/base.css');
+
+</style>
+<style>
+  html,body{margin:0;padding:0;background:#E8EAED;}
+  body{font-family:Poppins,system-ui,sans-serif;}
+  .dc-banner{position:sticky;top:0;z-index:99;display:flex;align-items:center;gap:14px;
+    min-height:40px;padding:8px 32px;background:#0E1116;border-bottom:1px solid rgba(0,255,197,0.5);}
+  .dc-banner i{display:block;width:20px;height:2px;background:#00FFC5;flex:none;}
+  .dc-banner span{font-family:Poppins,sans-serif;font-size:12px;letter-spacing:0.06em;color:#fff;}
+  .dc-nav{display:flex;gap:6px;flex-wrap:wrap;padding:10px 32px;background:#12161C;
+    border-bottom:1px solid rgba(255,255,255,0.1);}
+  .dc-nav a{font-family:Poppins,sans-serif;font-size:12.5px;color:#C7CCD3;text-decoration:none;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.16);border-radius:3px;}
+  .dc-nav a[aria-current]{color:#0E1116;background:#00FFC5;border-color:#00FFC5;}
+  section{display:block;}
+  @media print{.dc-banner,.dc-nav{position:static;}}
+</style>
+</head>
+<body>
+<div class="dc-banner"><i></i><span>Draft prepared by Elevate Marketing. Not published by Additional Resources.</span></div>
+<div class="dc-nav"><a href="index.html">Hiring through Additional Resources</a><a href="meeting-sheet.html" aria-current="page">Meeting sheet</a></div>
+  <section style="display:flex;flex-direction:column;gap:24px">
+    
+
+    <div style="width:100%;max-width:794px;margin:0 auto;min-height:1123px;background:#FFFFFF;border-radius:4px;;padding:64px 60px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;flex-direction:column;gap:10px;border-bottom:2px solid #2A4A38;padding-bottom:20px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#2A4A38">Elevate Marketing · client meeting · 31 August 2026</span>
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:30px;letter-spacing:-0.02em;color:#1A1D22;line-height:1.15">Additional Resources: what we need confirmed</span>
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:13px;color:#55606E">Eleven fields. Three of them are facts Google publishes about the company that we have never heard from the company.</span>
+      </div>
+
+      <div style="background:#F6F5F1;border-left:3px solid #2A4A38;padding:20px 22px;display:flex;flex-direction:column;gap:8px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#6B7480">The question this page is built to answer, quoted from the audit</span>
+        <span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:17px;line-height:1.4;color:#1A1D22">"Which UK recruitment agencies can handle permanent hiring across several different sectors for a small business?"</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#2A4A38;padding-bottom:8px">Facts Google states and we have not verified</span>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0;background:#FFF9E0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">01</span><span style="font-family:Poppins,sans-serif;font-weight:400;font-size:14px;color:#1A1D22;flex:1">Year established. Google states 1999</span></div>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0;background:#FFF9E0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">02</span><span style="font-family:Poppins,sans-serif;font-weight:400;font-size:14px;color:#1A1D22;flex:1">Registered office. Google states Brentwood, Essex. We need the full address</span></div>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0;background:#FFF9E0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">03</span><span style="font-family:Poppins,sans-serif;font-weight:400;font-size:14px;color:#1A1D22;flex:1">FCSA Recruiter Partner status, and the membership number if there is one</span></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#2A4A38;padding-bottom:8px">Company and commercial</span>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">04</span><span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#1A1D22;flex:1">Registered company name and registration number</span></div>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">05</span><span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#1A1D22;flex:1">Terms of business: fee basis and rebate period</span></div>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">06</span><span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#1A1D22;flex:1">Which entity an employer signs with</span></div>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">07</span><span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#1A1D22;flex:1">Employer contact point and response commitment</span></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-family:Poppins,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#2A4A38;padding-bottom:8px">Associate Partner model and coverage</span>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">08</span><span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#1A1D22;flex:1">Number of Associate Partners currently active</span></div>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">09</span><span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#1A1D22;flex:1">Minimum experience requirement to become an Associate Partner</span></div>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">10</span><span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#1A1D22;flex:1">Sectors with an active Associate Partner today</span></div>
+        <div style="display:flex;gap:14px;border-bottom:1px solid #EDEAE3;padding:9px 0"><span style="font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;color:#2A4A38;width:22px">11</span><span style="font-family:Poppins,sans-serif;font-weight:300;font-size:14px;color:#1A1D22;flex:1">What Castleford, Sheffield, Doncaster and Market Weighton each are: an office, a consultant base, or a coverage area</span></div>
+      </div>
+
+      <div style="margin-top:auto;padding-top:24px;border-top:1px solid #EDEAE3;display:flex;justify-content:space-between;align-items:flex-end;gap:24px">
+        <span style="font-family:Poppins,sans-serif;font-weight:300;font-size:11px;line-height:1.6;color:#6B7480;max-width:440px">Draft prepared by Elevate Marketing. Not published by Additional Resources. Colour and type are a direction, not finished branding. No pricing appears in this draft.</span>
+        <span style="font-family:Poppins,sans-serif;font-size:11px;color:#6B7480">Elevate Marketing · EngeCo AS</span>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
