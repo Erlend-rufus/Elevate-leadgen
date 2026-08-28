@@ -7,13 +7,13 @@
   "headline": {
     "stat": "0 av 4",
     "stat_label": "spørsmål om topplederrekruttering navnga Headvisor",
-    "body": "Executive search i Norge. Ny administrerende direktør i et entreprenørselskap. Etatsdirektør i en offentlig virksomhet. Ny daglig leder til et selskap på Vestlandet. Fire spørsmål på det nivået Headvisor faktisk jobber, og navnet står ikke i noen av svarene. 24 andre byråer ble navngitt. Spurt om Headvisor og om Trond Henanger ved navn svarer Google derimot presist og rosende. Én teknisk detalj forklarer mye av avstanden mellom de to."
+    "body": "Executive search i Norge. Ny administrerende direktør i et entreprenørselskap. Etatsdirektør i en offentlig virksomhet. Ny daglig leder til et selskap på Vestlandet. Fire spørsmål på det nivået Headvisor faktisk jobber, og navnet står ikke i noen av svarene. 23 andre byråer ble navngitt. Spurt om Headvisor og om Trond Henanger ved navn svarer Google derimot presist og rosende. Én teknisk detalj forklarer mye av avstanden mellom de to."
   },
   "visibility": {
     "title": "Hvem ble navngitt i stedet",
     "sub": "Vi stilte Google AI Mode, satt til norsk og Norge, fire spørsmål på topplederivå. Ingen av dem handler om enkeltdisipliner som ingeniører, fordi det ikke er der Headvisor konkurrerer. To spørsmål om navn er behandlet for seg, under Nøyaktighet.",
     "close": "Det tredje spørsmålet er verdt å stoppe ved. Spurt om hvem som kan hjelpe en offentlig virksomhet med å rekruttere en etatsdirektør, navnga Google seks byråer med spisskompetanse på offentlig sektor. Spurt om Headvisor ved navn sier den samme motoren at Headvisor har bred erfaring med rekruttering til både kommuner, etater og privat næringsliv. Kunnskapen finnes. Den kobles bare ikke til spørsmålet.",
-    "rival_count": "24",
+    "rival_count": "23",
     "rival_count_label": "byråer navngitt på tvers av de fire spørsmålene"
   },
   "queries": [
