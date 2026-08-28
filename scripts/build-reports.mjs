@@ -52,9 +52,28 @@ function validate(d, file) {
   if (!Array.isArray(d.method) || !d.method.length) die('method must be a non-empty array');
   // cta, how_it_works and pricing are optional: a report presented live in a
   // meeting has no use for a "book a call" block, but one sent cold does.
-  if (d.cta && (!d.cta.title || !d.cta.button_text || !d.cta.button_url)) die('cta needs title, button_text and button_url');
+  // cta comes in two shapes: a button block (title + button_text + button_url)
+  // for a report sent cold, or a plain closing block (title + body, optional
+  // contact) for one walked through in a meeting. Require one or the other.
+  if (d.cta) {
+    if (!d.cta.title) die('cta needs a title');
+    const hasButton = d.cta.button_text && d.cta.button_url;
+    const hasBody = d.cta.body;
+    if (!hasButton && !hasBody) die('cta needs either button_text + button_url, or body');
+  }
   if (d.how_it_works && !Array.isArray(d.how_it_works.steps)) die('how_it_works needs a steps array');
-  if (d.pricing && !Array.isArray(d.pricing.items)) die('pricing needs an items array');
+  // pricing items also come in two shapes: priced cards (name + price) or
+  // scope cards sharing the fixes shape (title + how + effect). Mixing the two
+  // inside one report would render half the cards blank, so reject that.
+  if (d.pricing) {
+    if (!Array.isArray(d.pricing.items) || !d.pricing.items.length) die('pricing needs a non-empty items array');
+    const scope = d.pricing.items.filter((i) => i.title && i.how);
+    const priced = d.pricing.items.filter((i) => i.name && i.price);
+    if (scope.length + priced.length !== d.pricing.items.length)
+      die('every pricing item needs either name + price, or title + how');
+    if (scope.length && priced.length)
+      die('pricing items mix the priced shape (name + price) and the scope shape (title + how) — pick one per report');
+  }
 }
 
 /* --------------------------------------------------------------------- CSS */
@@ -125,6 +144,7 @@ p{margin:0 0 16px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .chip{background:var(--white);border:1px solid var(--line);border-radius:100px;padding:5px 13px;font-size:14px;font-weight:600;color:var(--navy)}
 .chip-note{font-size:14px;color:var(--grey)}
+.qnote{margin:16px 0 0;padding:14px 16px;background:var(--white);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;font-size:15px;color:var(--ink)}
 
 /* rival tally */
 .tally{display:flex;align-items:center;gap:20px;background:var(--navy);color:var(--white);border-radius:12px;padding:24px 26px;margin:26px 0 0}
@@ -365,11 +385,16 @@ function rivals(v) {
 function renderQuery(q, t) {
   const chips = rivals(q.named_instead).map((n) => `<span class="chip">${esc(n)}</span>`).join('');
   const note = q.named_instead_note ? `<span class="chip-note">${esc(q.named_instead_note)}</span>` : '';
+  /* q.note is a framing note about the question itself, not about who was
+     named: used to state up front why a query is in the set when its answer
+     would otherwise read as a mismatch. Sits below the chips, visually
+     separated, so it reads as our commentary rather than as more findings. */
+  const qnote = q.note ? `        <p class="qnote">${esc(q.note)}</p>\n` : '';
   return `      <div class="q reveal${q.named ? ' brand' : ''}"${chips ? ' data-stagger=".chip"' : ''}>
         <p class="qt">&ldquo;${esc(q.text)}&rdquo;</p>
         <span class="verdict ${q.named ? 'yes' : 'no'}">${q.named ? t.named : t.notNamed}</span>
 ${chips ? `        <span class="lbl">${t.namedInstead}</span>
-        <div class="chips">${chips}${note}</div>\n` : ''}      </div>`;
+        <div class="chips">${chips}${note}</div>\n` : ''}${qnote}      </div>`;
 }
 
 function renderShot(s, i, hasFile, t) {
@@ -403,7 +428,7 @@ const STRINGS = {
     preparedFor: (c, date) => `Prepared for ${esc(c)} by Elevate Marketing &middot; ${esc(date)}`,
     kHeadline: 'The headline', kHowItWorks: 'How it works', kVisibility: 'Visibility',
     kAccuracy: 'Accuracy', kGaps: 'Gaps', kWork: 'The work', kEvidence: 'Evidence',
-    kMethod: 'Method', kInvestment: 'Investment', kNextStep: 'Next step',
+    kMethod: 'Method', kInvestment: 'What this costs', kNextStep: 'Next step',
     named: 'Named', notNamed: 'Not named', namedInstead: 'Named instead',
     worthWatching: 'Worth watching', alreadyWorking: 'Already working for you: ',
     defaultRivalLabel: 'rival firms named instead of you',
@@ -437,6 +462,36 @@ function render(d, shotsPresent) {
   const sig = d.signature || {};
   const flag = d.accuracy.flag_quote_index;
   const t = STRINGS[d.lang] || STRINGS.en;
+
+  /* Pricing renders in two shapes (see validate): priced cards, or scope cards
+     that reuse the fixes layout so cost sits in the same visual grammar as the
+     work it pays for. Built here rather than inline because the section is
+     placed between fixes and method, and the section counter must run in
+     document order. */
+  const priceItems = (d.pricing && d.pricing.items) || [];
+  const scopeShaped = priceItems.length > 0 && priceItems.every((it) => it.title && it.how);
+  const renderPricing = () => !d.pricing ? '' : `<section class="closing"><div class="wrap">
+  <p class="kicker reveal">${n()} ${t.kInvestment}</p>
+  <h2 class="reveal">${esc(d.pricing.title)}</h2>
+  <p class="sub reveal d1">${esc(d.pricing.sub || '')}</p>
+${scopeShaped
+    ? priceItems.map((it, i) => `  <div class="fix reveal">
+    <div class="num" aria-hidden="true">${i + 1}</div>
+    <div>
+      <h3>${esc(it.title)}</h3>
+      <p class="how">${esc(it.how)}</p>
+${it.effect ? `      <p class="eff">${esc(it.effect)}</p>\n` : ''}    </div>
+  </div>`).join('\n')
+    : `  <div class="prices">
+${priceItems.map((it) => `    <div class="price${it.highlight ? ' hl' : ''} reveal">
+      <p class="pn">${esc(it.name)}</p>
+      <p class="pv">${esc(it.price)}</p>
+      <p class="pu">${esc(it.unit || '')}</p>
+${it.body ? `      <p class="pb">${esc(it.body)}</p>\n` : ''}${(it.bullets || []).length ? `      <ul>\n${it.bullets.map((bl) => `        <li>${esc(bl)}</li>`).join('\n')}\n      </ul>\n` : ''}    </div>`).join('\n')}
+  </div>`}
+${d.pricing.note ? `  <p class="pnote reveal">${esc(d.pricing.note)}</p>\n` : ''}</div></section>
+
+`;
 
   return `<!doctype html>
 <html lang="${t.htmlLang}">
@@ -541,7 +596,7 @@ ${d.screenshots.map((s, i) => renderShot(s, i, shotsPresent.has(s.file), t)).joi
 
 <dialog class="lb"><form method="dialog"><button class="x" aria-label="${t.close}">&times;</button><img src="" alt=""></form></dialog>
 ` : ''}
-<section><div class="wrap">
+${renderPricing()}<section><div class="wrap">
   <p class="kicker reveal">${n()} ${t.kMethod}</p>
   <h2 class="reveal">${t.methodTitle}</h2>
   <div class="method reveal d1">
@@ -549,25 +604,11 @@ ${d.method.map((p) => `    <p>${esc(p)}</p>`).join('\n')}
   </div>
 </div></section>
 
-${d.pricing ? `<section class="closing"><div class="wrap">
-  <p class="kicker reveal">${n()} ${t.kInvestment}</p>
-  <h2 class="reveal">${esc(d.pricing.title)}</h2>
-  <p class="sub reveal d1">${esc(d.pricing.sub || '')}</p>
-  <div class="prices">
-${d.pricing.items.map((it) => `    <div class="price${it.highlight ? ' hl' : ''} reveal">
-      <p class="pn">${esc(it.name)}</p>
-      <p class="pv">${esc(it.price)}</p>
-      <p class="pu">${esc(it.unit || '')}</p>
-${it.body ? `      <p class="pb">${esc(it.body)}</p>\n` : ''}${(it.bullets || []).length ? `      <ul>\n${it.bullets.map((bl) => `        <li>${esc(bl)}</li>`).join('\n')}\n      </ul>\n` : ''}    </div>`).join('\n')}
-  </div>
-${d.pricing.note ? `  <p class="pnote reveal">${esc(d.pricing.note)}</p>\n` : ''}</div></section>
-
-` : ''}${d.cta ? `<div class="cta"><div class="wrap">
+${d.cta ? `<div class="cta"><div class="wrap">
   <p class="kicker reveal">${t.kNextStep}</p>
   <h2 class="reveal">${esc(d.cta.title)}</h2>
   <p class="reveal d1">${esc(d.cta.body || '')}</p>
-  <a class="btn reveal d2" href="${esc(d.cta.button_url)}">${esc(d.cta.button_text)}</a>
-${sig.entity || sig.address || sig.email ? `  <p class="sign reveal d3">${sig.entity ? esc(sig.entity) + '<br>' : ''}${sig.address ? esc(sig.address) + '<br>' : ''}${
+${d.cta.button_url && d.cta.button_text ? `  <a class="btn reveal d2" href="${esc(d.cta.button_url)}">${esc(d.cta.button_text)}</a>\n` : ''}${d.cta.contact ? `  <p class="reveal d2" style="margin-top:18px"><a href="mailto:${esc(d.cta.contact)}${d.cta.contact_subject ? '?subject=' + encodeURIComponent(d.cta.contact_subject) : ''}" style="color:var(--amber)">${esc(d.cta.contact)}</a></p>\n` : ''}${sig.entity || sig.address || sig.email ? `  <p class="sign reveal d3">${sig.entity ? esc(sig.entity) + '<br>' : ''}${sig.address ? esc(sig.address) + '<br>' : ''}${
     sig.email ? `<a href="mailto:${esc(sig.email)}">${esc(sig.email)}</a>` : ''
   }</p>\n` : ''}
 ${sig.ownership ? `  <p class="sign reveal d3" style="margin-top:18px">${esc(sig.ownership)}</p>\n` : ''}</div></div>` : ''}

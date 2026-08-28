@@ -1,0 +1,189 @@
+{
+  "company": "Talentline Recruitment",
+  "slug": "talentline-recruitment-p5dz8",
+  "date": "26 August 2026",
+  "lede": "What AI assistants tell employers looking for finance and compliance recruiters, and where Talentline Recruitment appears in those answers.",
+  "headline": {
+    "stat": "0 of 3",
+    "stat_label": "buyer questions named Talentline Recruitment",
+    "body": "Financial crime and compliance hiring in the UK. Recruiters used by private equity backed companies to hire a CFO. Finance and compliance placement across London, Dubai and Singapore. Three questions that restate your own homepage almost word for word, and your name appears in none of the answers. Michael Page does appear. Asked about Talentline by name, Google is complimentary, and the shape of that answer is itself the most useful finding in this audit."
+  },
+  "visibility": {
+    "title": "Who was named instead",
+    "sub": "We asked Google AI Mode, set to UK English, the questions an employer in your niche would actually ask. Each one mirrors a phrase from your own site. The brand test is handled separately under Accuracy, because a positive answer to a question about you by name is not a measure of reach.",
+    "close": "The second question is the closest to your own words. Your homepage describes an exclusive gateway for investor-backed firms to access top-tier finance talent. Google answered that exact question by naming six private equity finance boutiques, none of them you.",
+    "rival_count": "20",
+    "rival_count_label": "rival agencies named across the three answers"
+  },
+  "queries": [
+    {
+      "text": "Which recruitment agencies specialise in financial crime and compliance hiring in the UK?",
+      "named": false,
+      "named_instead": [
+        "Barclay Simpson",
+        "Rutherford Search",
+        "Broadgate Search",
+        "Danos Group",
+        "MERJE Governance",
+        "Pure Search",
+        "Robert Walters",
+        "Michael Page",
+        "Selby Jennings"
+      ],
+      "named_instead_note": "the first six as dedicated specialists, the last three as multinationals with standalone financial crime desks"
+    },
+    {
+      "text": "Which recruiters do private equity backed companies use to hire a CFO or Finance Director in the UK?",
+      "named": false,
+      "named_instead": [
+        "Finatal",
+        "FD Capital",
+        "PER (Private Equity Recruitment)",
+        "Walker Hamill",
+        "FD Recruit",
+        "Marks Sattin",
+        "Redgrave Search"
+      ],
+      "named_instead_note": "the first five described as operating exclusively within the private capital and investor-backed ecosystem"
+    },
+    {
+      "text": "Which recruitment firms place finance and compliance professionals across global financial hubs like London, Dubai and Singapore?",
+      "named": false,
+      "named_instead": [
+        "Selby Jennings",
+        "Robert Walters",
+        "Morgan McKinley",
+        "Robert Half",
+        "Tiger Finance",
+        "AP Executive"
+      ],
+      "named_instead_note": "each with a hub-by-hub capability table showing physical presence in London, Dubai and Singapore"
+    }
+  ],
+  "accuracy": {
+    "title": "Legitimate, and shelved next to the scam warnings",
+    "sub": "This section is not a measure of visibility. Assistants answer at length about almost any named business with a website. What matters is what the answer says and which sources it was built from.",
+    "quotes": [
+      "Talentline Recruitment (talentlinerecruitment.com) is a legitimate, boutique executive search firm, but evaluating whether it is \"good\" depends heavily on your career level and industry. It is not a broad-market job board or a temporary staffing agency; instead, it is a specialized, founder-led firm focusing strictly on high-level finance, compliance, and leadership roles.",
+      "High Legitimacy, Low Public Footprint: Website safety analysis like Scamadviser clear the domain as safe and legitimate. However, because executive search firms operate via direct networking and targeted outreach rather than public volume hiring, you will find very few public reviews or employee ratings online compared to massive agencies.",
+      "Protect Yourself from Spoofing: Recruitment scams often impersonate legitimate boutique agencies. Keep in mind that a legitimate recruiter will never ask you to pay a fee for document processing, background checks, or interviews. If you are contacted by someone claiming to be from Talentline, ensure their email address matches the official @talentlinerecruitment.com domain."
+    ],
+    "flag_quote_index": 2,
+    "source": "Google AI Mode, brand test, 26 August 2026. Verbatim. All three passages are visible in the fourth capture below.",
+    "body": [
+      "Read the second and third quotes together. Google says the firm is legitimate, and then spends two paragraphs on how to verify that it is legitimate, citing Scamadviser and a Quora thread titled how to know if the online recruitment agency I am dealing with is legit. Nobody accused you of anything. The answer simply had so little public material to work with that safety-checking content was the nearest available evidence.",
+      "That is the cost of a thin public footprint in this specific category, and it is worse here than in most. Finance and compliance buyers are risk-averse by profession. An answer that pairs your name with advice about recruitment scams is not neutral, even when every sentence in it is favourable.",
+      "The rest of the answer is accurate and flattering: boutique, founder-led, strictly high-level finance and compliance, Series B fintech and private equity backed portfolio companies, bridging UK and Gulf markets. That positioning is precise and it is exactly what the three category questions were asking for. It exists only in an answer nobody will think to ask for.",
+      "Two smaller observations. Your page title reads Talentline Portal rather than the company name, which is the label a machine shows when it has nothing better. And Google names the founder as Saqib \"Zac\" Hussain, while our enquiry came from Saqib Awan. We have not established which is correct or whether these are the same person; we note it only because a mismatch between the name in the public record and the name on your correspondence is the kind of thing a cautious finance buyer checks."
+    ]
+  },
+  "gaps": {
+    "title": "Four reasons the answers skip you",
+    "sub": "Each of these is tied to something observed above, not to general best practice.",
+    "items": [
+      {
+        "title": "Almost no public footprint in a category where buyers verify",
+        "body": "Google described your public footprint as low and reached for Scamadviser and a scam-awareness thread to fill the gap. Every firm named in the three category answers had a documented specialism, a client type and usually a named team. In finance and compliance recruitment, verifiability is the product."
+      },
+      {
+        "title": "The site is a portal, not an argument",
+        "body": "The page title reads Talentline Portal and the site presents a single positioning sentence. There is no page that explains what a financial crime mandate looks like, what a private equity CFO search involves, or which hubs you cover. The claim is stated; it is never evidenced."
+      },
+      {
+        "title": "No machine-readable corporate identity",
+        "body": "We found no company registration number and no structured data on the pages fetched. There is nothing binding the domain, the company record, the founder and any profile into one entity, which is what would let a machine treat the firm as verified rather than merely safe."
+      },
+      {
+        "title": "Absent from the sources these answers are built from",
+        "body": "The three answers drew on specialist directories, agency comparison pages and sector round-ups. Talentline appears in none of the visible cited sources, so there is nothing for an engine to lift into a shortlist."
+      }
+    ],
+    "already_works": "an accurate and complimentary brand answer that gets the positioning exactly right: boutique, founder-led, strictly senior finance and compliance, Series B fintech and private equity backed portfolio companies, bridging the UK and Gulf markets. Google also confirmed the domain as safe and legitimate. The proposition is sharp and correctly understood. It has almost nothing published behind it."
+  },
+  "fixes": {
+    "title": "What we would do, and what each fix changes",
+    "sub": "Ordered by effect against effort. The left is the work, the right is what a machine can do afterwards that it cannot do today.",
+    "items": [
+      {
+        "title": "Publish the verification layer first",
+        "how": "Registered company name and number, registered address, the founder named with a linked profile, and any professional memberships, on the site and in Organization and Person markup.",
+        "effect": "A cautious buyer, and an engine, can verify the firm rather than being handed advice on how to check for scams."
+      },
+      {
+        "title": "Write one page per mandate type",
+        "how": "Financial crime and compliance, private equity backed CFO and Finance Director, and the UK to Gulf corridor, each in plain text describing the roles, the process and the sectors.",
+        "effect": "Engines quote plain text. You control the sentence they lift into a specialist answer."
+      },
+      {
+        "title": "Fix the page title and metadata",
+        "how": "A title that names the company and the specialism instead of Talentline Portal, and a description written for an employer rather than a candidate.",
+        "effect": "The firm is shown under its own name and specialism rather than under a generic label."
+      },
+      {
+        "title": "Enter the source pool",
+        "how": "The specialist directories and agency comparison sites these three answers cited, starting with those covering financial crime and private equity finance recruitment.",
+        "effect": "You appear where the shortlists are assembled, not only on your own domain."
+      },
+      {
+        "title": "Re-measure and compare",
+        "how": "The same three category questions and the brand test re-run on 10 October 2026 (day 45) and again on 24 November 2026 (day 90), using the URLs recorded in the method note.",
+        "effect": "You see movement in screenshots, not in promises."
+      }
+    ],
+    "disclaimer": "We do not promise rankings, mentions or timelines. AI answers vary between runs. What we change is what the systems read, and a repeat measurement shows what moved."
+  },
+  "screenshots": [
+    {
+      "file": "S1-financial-crime.jpg",
+      "caption": "Google AI Mode, 26 August 2026. “Which recruitment agencies specialise in financial crime and compliance hiring in the UK?” Nine firms named, six of them dedicated specialists. Talentline not named."
+    },
+    {
+      "file": "S2-pe-backed-cfo.jpg",
+      "caption": "Google AI Mode, 26 August 2026. “Which recruiters do private equity backed companies use to hire a CFO or Finance Director in the UK?” Six boutiques described as operating exclusively within the investor-backed ecosystem, which is the phrase your own homepage uses. Talentline not named."
+    },
+    {
+      "file": "S3-global-hubs.jpg",
+      "caption": "Google AI Mode, 26 August 2026. “Which recruitment firms place finance and compliance professionals across global financial hubs like London, Dubai and Singapore?” Six firms named with a hub-by-hub capability table. Talentline not named."
+    },
+    {
+      "file": "S4-brand-test.jpg",
+      "caption": "Google AI Mode brand test, 26 August 2026. Complimentary and accurate about the positioning, but note the two bullets under What Job Seekers Should Keep In Mind, and the sources on the right: alongside your own site sit Glassdoor and a Quora thread on how to tell whether a recruitment agency is legitimate."
+    }
+  ],
+  "method": [
+    "All queries were run manually in a browser on 26 August 2026, in English, phrased the way an employer in this niche would ask rather than as keywords.",
+    "Engine: Google AI Mode with UK region and language settings. Three category questions and one brand test. ChatGPT, Perplexity and Copilot were not run in this round.",
+    "The exact URLs, so the measurement can be repeated word for word: google.com/search?udm=50&hl=en-GB&gl=GB with q set to \"Which recruitment agencies specialise in financial crime and compliance hiring in the UK?\", \"Which recruiters do private equity backed companies use to hire a CFO or Finance Director in the UK?\", \"Which recruitment firms place finance and compliance professionals across global financial hubs like London, Dubai and Singapore?\" and \"Is Talentline Recruitment (talentlinerecruitment.com) a good recruitment agency?\".",
+    "Each capture shows the answer as returned, at reduced page zoom so that nothing quoted sits outside the image. Every agency name and every sentence quoted in this report is visible in the capture it is attributed to.",
+    "Queries were run from Norway with UK language and region settings, so answers to region-specific questions may differ slightly for a buyer physically in the UK. The session was signed in to a Google account, so personalisation cannot be fully excluded.",
+    "One answer is one data point, not a verdict. Repeating these queries will produce some variation, which is why any re-measurement uses the same wording.",
+    "Website facts were taken from the live pages at talentlinerecruitment.com the same day: the page title reads Talentline Portal and the description reads an exclusive gateway for investor-backed firms to access top-tier finance and financial-crime talent across global financial hubs. We found no company registration number and no structured data on the pages fetched. The founder name, sectors and market focus quoted above are Google's, not ours, and are reproduced as observed rather than independently verified."
+  ],
+  "pricing": {
+    "title": "What this costs and what you get",
+    "sub": "Two options. The difference between them is whether the fixes go onto the site you have or onto one built to carry them.",
+    "items": [
+      {
+        "title": "Option one, GEO fix package",
+        "how": "GBP 1,850, invoiced half on start and half on delivery. Thirty days from the point we have your content. The verification layer, one page per mandate type, the page title and metadata, structured data, and entry into the directories these three answers cited.",
+        "effect": "Up to six published pages on your current site, plus two re-measurements on 10 October 2026 (day 45) and 24 November 2026 (day 90), reported with screenshots whichever way they go."
+      },
+      {
+        "title": "Option two, the same fixes delivered as a new site",
+        "how": "GBP 3,250 all in. Your current site is a single portal page titled Talentline Portal, which is why the brand name and the domain are not connected in any index. Rather than adding pages to it, we build the site the fixes need: a home page, one page per mandate type, an about page carrying the verification layer, and a contact route for employers.",
+        "effect": "The same measurement and the same two re-measurements, on a site that can carry the evidence rather than one that has to be worked around."
+      },
+      {
+        "title": "Ongoing measurement, optional",
+        "how": "GBP 450 per month. The question set re-run monthly, plus one new page each month aimed at a question you still lose. No minimum term and no notice period.",
+        "effect": "You can stop the month you stop seeing value. If the 24 November 2026 re-measurement shows no movement on any of the three questions, the next three months are free."
+      }
+    ]
+  },
+  "cta": {
+    "title": "The next step",
+    "body": "Whatever you decide, we will re-run these questions on 10 October and again on 24 November, and send you the comparison either way. If you want the fixes done, email us and we will start the thirty days from the point we have what we need from you.",
+    "contact": "post@elevatemarketing.no",
+    "contact_subject": "GEO audit follow-up - Talentline Recruitment"
+  }
+}
