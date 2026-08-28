@@ -1,0 +1,80 @@
+{
+  "_comment": [
+    "Source of truth for the design drafts published at /draft/<slug>/.",
+    "The HTML in drafts/<dir>/ comes from Claude Design and is edited there, not here.",
+    "This file maps each draft to its unguessable slug and its page routes; the slug",
+    "suffix is a security control, exactly as on the audit reports: without it anyone",
+    "could guess /draft/a-competitor/ and read another prospect's draft.",
+    "Regenerate the published output with: node scripts/build-drafts.mjs"
+  ],
+  "drafts": [
+    {
+      "dir": "talentline",
+      "company": "Talentline Recruitment",
+      "slug": "talentline-72v54s",
+      "pages": [
+        {
+          "file": "index.html",
+          "route": "",
+          "nav": "Home",
+          "mobileHoistChild": 3,
+          "mobileHoistWhy": "The verification band. On a phone the hero alone is taller than the fold, so the band cannot also fit below it. Hoisted above the hero on mobile only, because the acceptance test for this page is that an employer sees registered name, company number, address and membership without scrolling. Desktop keeps the designed order."
+        },
+        {
+          "file": "mandate-page-financial-crime-and-complia.html",
+          "route": "financial-crime",
+          "nav": "Financial crime and compliance"
+        },
+        {
+          "file": "about.html",
+          "route": "about",
+          "nav": "About"
+        },
+        {
+          "file": "contact-for-employers.html",
+          "route": "contact",
+          "nav": "Contact"
+        },
+        {
+          "file": "meeting-sheet.html",
+          "route": "checklist",
+          "nav": null
+        }
+      ]
+    },
+    {
+      "dir": "additional-resources",
+      "company": "Additional Resources",
+      "slug": "additional-resources-7mbv2a",
+      "pages": [
+        {
+          "file": "index.html",
+          "route": "",
+          "nav": null
+        },
+        {
+          "file": "meeting-sheet.html",
+          "route": "checklist",
+          "nav": null
+        }
+      ]
+    },
+    {
+      "dir": "rounded-it",
+      "company": "Rounded IT",
+      "slug": "rounded-it-tiz9dg",
+      "pages": [
+        {
+          "file": "index.html",
+          "route": "",
+          "nav": null
+        },
+        {
+          "file": "meeting-sheet.html",
+          "route": "checklist",
+          "nav": null
+        }
+      ]
+    }
+  ]
+}

@@ -104,6 +104,7 @@
   "fixes": {
     "title": "What we would do, and what each fix changes",
     "sub": "Ordered by effect against effort. The left is the work, the right is what a machine can do afterwards that it cannot do today.",
+    "draft_url": "/draft/additional-resources-7mbv2a/",
     "items": [
       {
         "title": "Write the employer-facing side of the site",
