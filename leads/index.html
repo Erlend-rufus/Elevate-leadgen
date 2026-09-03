@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kundene dine spør en AI hvilket regnskapsbyrå de skal velge · Elevate Marketing</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F7F5F0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23F7F5F0'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%2300A862'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/fraunces-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/geist-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+  /* Spoler heroen tilbake før første maling (ARBEIDSORDRE 4.1). Sluttbildet
+     ligger i HTML-en under. hero.js spiller sekvensen framover og fjerner
+     klassen når den er ferdig. Kommer ikke hero.js i gang innen 2,5 s
+     (feil, treg linje), vises sluttbildet uansett. */
+  (function () {
+    try {
+      var d = document.documentElement;
+      d.className += ' js';
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        d.className += ' hero-anim';
+        setTimeout(function () {
+          if (!window.EM_HERO_RUNNING) d.classList.remove('hero-anim');
+        }, 2500);
+      }
+      /* Rad 6 («Ditt byrå») og trekkspillet i «Rett fram» håndteres her,
+         ikke i hero.js, så de virker fra første klikk, også om hero.js
+         kommer sent eller aldri. Uten JavaScript sender skjemaet rundt
+         rad 6 nettleseren til #skjema, og alle svarene i trekkspillet
+         er synlige (derfor står aria-expanded="true" i HTML-en). */
+      document.addEventListener('DOMContentLoaded', function () {
+        var k = document.querySelectorAll('.faq-knapp');
+        for (var i = 0; i < k.length; i++) {
+          var p = document.getElementById(k[i].getAttribute('aria-controls'));
+          if (p && p.classList.contains('er-lukket')) k[i].setAttribute('aria-expanded', 'false');
+        }
+      });
+      document.addEventListener('click', function (e) {
+        var t = e.target;
+        while (t && t.nodeType === 1) {
+          if (t.id === 'rad6') {
+            var s = document.getElementById('skjema');
+            if (!s) return;
+            e.preventDefault();
+            s.scrollIntoView({ block: 'start' });
+            try { s.focus({ preventScroll: true }); } catch (x) { s.focus(); }
+            return;
+          }
+          if (t.classList && t.classList.contains('faq-knapp')) {
+            var aapen = t.getAttribute('aria-expanded') === 'true';
+            var panel = document.getElementById(t.getAttribute('aria-controls'));
+            t.setAttribute('aria-expanded', aapen ? 'false' : 'true');
+            if (panel) { if (aapen) panel.classList.add('er-lukket'); else panel.classList.remove('er-lukket'); }
+            return;
+          }
+          t = t.parentNode;
+        }
+      });
+    } catch (e) {}
+  })();
+</script>
+<script src="assets/js/config.js" defer></script>
+<script src="assets/js/hero.js" defer onerror="document.documentElement.classList.remove('hero-anim')"></script>
+<script src="assets/js/params.js" defer></script>
+<script src="assets/js/consent.js" defer></script>
+</head>
+<body>
+<div class="side">
+
+<header class="topp">
+  <div class="wrap">
+    <picture>
+      <source srcset="assets/img/logo-ink.webp" type="image/webp">
+      <img class="logo" src="assets/img/logo-ink.png" width="418" height="168" alt="Elevate Marketing">
+    </picture>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================================
+     Hero. HTML-en er SLUTTBILDET: søkefeltet ferdig utfylt, panelet
+     synlig, rad 1–5 inne, rad 6 klikkbar, KILDER synlig. Animasjonen
+     er kun additiv og styres av html.hero-anim + hero.js.
+     ============================================================ -->
+<section class="hero" aria-labelledby="hero-h1">
+  <div class="wrap">
+
+    <div class="hero-tekst">
+      <p class="eyebrow">For norske regnskapsbyråer</p>
+      <h1 id="hero-h1">Kundene dine spør en AI hvilket regnskapsbyrå de skal velge. Den nevner <em class="uthev">konkurrentene dine</em>.</h1>
+      <p class="ingress hero-ingress">Vi kjører de samme søkene kundene dine kjører, registrerer hvilke byråer som blir anbefalt, og går gjennom resultatet med deg på tjue minutter. Gratis.</p>
+      <a class="knapp hero-knapp" id="hero-cta" href="#skjema">Se hvem som blir anbefalt i stedet</a>
+      <p class="hero-note">Ingen kostnad. Ingen presentasjon. Tjue minutter.</p>
+    </div>
+
+    <div class="hero-demo er-skriver" id="hero-demo">
+      <p class="eyebrow">Slik svarer AI-en</p>
+
+      <label class="sok">
+        <svg class="sok-ikon" viewBox="0 0 24 24" fill="none" stroke="#4A5162" stroke-width="2" stroke-linecap="square" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <div class="sok-inn">
+          <span class="sok-tekst" data-hero-tekst>beste regnskapsfører i</span>
+          <input class="sok-by" data-hero-by type="text" value="Bergen" aria-label="By eller region" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="done">
+          <span class="sok-markor" aria-hidden="true"></span>
+        </div>
+      </label>
+
+      <div class="svar">
+        <div class="svar-bg" data-hero-panel aria-hidden="true"></div>
+        <div class="svar-kort" id="svar-kort">
+          <div class="svar-etikett" data-hero-panel>
+            <span class="svar-prikk" aria-hidden="true"></span>
+            <span class="svar-etikett-tekst">AI-svar</span>
+          </div>
+          <p class="sr-only">Fem byråer er nevnt. Navnene er sladdet i illustrasjonen.</p>
+
+          <!-- Rad 1–5: generisk beskrivende tekst, ingen firmanavn. Sladdet
+               visuelt (blur) og skjult for skjermlesere. Rad 2 er endret
+               fra designfilen (ARBEIDSORDRE 11.1). -->
+          <div class="svar-rad" data-hero-rad="1">
+            <span class="svar-nr" aria-hidden="true">1</span>
+            <div class="svar-sladd" aria-hidden="true">
+              <div class="svar-navn">Autorisert regnskapsbyrå</div>
+              <div class="svar-desc">Årsregnskap, lønn og rådgivning for små bedrifter</div>
+            </div>
+          </div>
+          <div class="svar-rad" data-hero-rad="2">
+            <span class="svar-nr" aria-hidden="true">2</span>
+            <div class="svar-sladd" aria-hidden="true">
+              <div class="svar-navn">Regnskap, lønn og rådgivning</div>
+              <div class="svar-desc">Regnskapsførerselskap for håndverk og handel</div>
+            </div>
+          </div>
+          <div class="svar-rad" data-hero-rad="3">
+            <span class="svar-nr" aria-hidden="true">3</span>
+            <div class="svar-sladd" aria-hidden="true">
+              <div class="svar-navn">Regnskapskontoret i sentrum</div>
+              <div class="svar-desc">Lønn, fakturering og årsoppgjør</div>
+            </div>
+          </div>
+          <div class="svar-rad" data-hero-rad="4">
+            <span class="svar-nr" aria-hidden="true">4</span>
+            <div class="svar-sladd" aria-hidden="true">
+              <div class="svar-navn">Økonomi og regnskap</div>
+              <div class="svar-desc">Skybasert regnskap for små og mellomstore bedrifter</div>
+            </div>
+          </div>
+          <div class="svar-rad" data-hero-rad="5">
+            <span class="svar-nr" aria-hidden="true">5</span>
+            <div class="svar-sladd" aria-hidden="true">
+              <div class="svar-navn">Regnskapsførerselskapet</div>
+              <div class="svar-desc">Autorisert. Regnskap, lønn og rådgivning</div>
+            </div>
+          </div>
+
+          <!-- Rad 6 er knappen. I DOM fra første øyeblikk, klikkbar og
+               fokuserbar før animasjonen er ferdig. Står alltid med
+               «Ditt byrå», uansett hva som skrives i byfeltet. -->
+          <form class="rad6-form" action="#skjema" method="get">
+            <button type="submit" class="svar-rad6" data-hero-rad6 id="rad6" aria-label="Ditt byrå. Gå til skjemaet og book gjennomgangen">
+              <span class="svar-nr" aria-hidden="true">6</span>
+              <span class="rad6-felt" aria-hidden="true"><span class="rad6-tekst">Ditt byrå</span><span class="rad6-markor"></span></span>
+            </button>
+          </form>
+
+          <div class="svar-kilder" data-hero-kilder>
+            <span class="svar-kilder-etikett">Kilder</span>
+            <span class="pille">Brønnøysundregistrene</span>
+            <span class="pille">Finanstilsynets register</span>
+            <span class="pille">Egen nettside</span>
+          </div>
+        </div>
+        <div class="svar-prikker" aria-hidden="true"><span></span><span></span><span></span></div>
+      </div>
+
+      <p class="hero-illu">Illustrasjon. Den faktiske gjennomgangen kjøres manuelt på søkene for din region.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Hva vi faktisk gjør -->
+<section class="seksjon seksjon--linje" aria-labelledby="steg-h">
+  <div class="wrap to-kol">
+    <div class="kol-tittel">
+      <div class="strek"></div>
+      <h2 id="steg-h">Hva vi faktisk gjør</h2>
+    </div>
+    <div class="kol-innhold">
+      <ol class="steg" role="list">
+        <li><span class="steg-nr" aria-hidden="true">1</span><p>Vi tar søkene en bedriftsleder kjører når han skal velge regnskapsfører, for eksempel «beste regnskapsfører i Bergen» eller «regnskapsbyrå for småbedrift i Oslo».</p></li>
+        <li><span class="steg-nr" aria-hidden="true">2</span><p>Vi kjører dem gjennom Google AI Mode og ChatGPT, og registrerer hvilke byråer som blir navngitt.</p></li>
+        <li><span class="steg-nr" aria-hidden="true">3</span><p>Vi sporer hvor svarene kommer fra: Brønnøysundregistrene, Finanstilsynets register, Regnskap Norge, katalogene og byråenes egne nettsider.</p></li>
+        <li><span class="steg-nr" aria-hidden="true">4</span><p>Vi viser deg avviket mellom det de kildene sier om dere, og det de sier om byråene som blir nevnt.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- En liste du aldri får se -->
+<section class="seksjon seksjon--marine" aria-labelledby="liste-h">
+  <div class="wrap to-kol">
+    <div class="kol-tittel">
+      <div class="strek"></div>
+      <h2 id="liste-h">En liste du aldri får se</h2>
+    </div>
+    <div class="kol-innhold">
+      <p class="ingress">Regnskap har alltid handlet om tillit og anbefaling, og det gjør det fortsatt. Men en økende andel av førstekontakten starter et annet sted: noen skriver et spørsmål inn i en AI og får tilbake en håndfull byråer ved navn.</p>
+      <p class="ingress">Er ikke ditt blant dem, skjer det ingenting. Ingen tapt anbudsrunde, ingen e-post som spretter. Du hører bare aldri om kunden. Det er den delen som er verdt tjue minutter.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Hva du får på møtet -->
+<section class="seksjon mote" aria-labelledby="mote-h">
+  <div class="wrap to-kol">
+    <div class="kol-tittel">
+      <div class="strek"></div>
+      <h2 id="mote-h">Hva du får på møtet</h2>
+    </div>
+    <div class="kol-innhold">
+      <ul class="hakeliste">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#00A862" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>De nøyaktige søkene vi kjørte for din region og nisje, med skjermbilder av svarene</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#00A862" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Byråene som ble nevnt i stedet for dere</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#00A862" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Kildene svarene ble hentet fra</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#00A862" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>De to eller tre endringene som ville flyttet posisjonen deres mest</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#00A862" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Alt skriftlig etter møtet</span></li>
+      </ul>
+      <div class="notat">
+        <p>Vi lager rapporten før møtet, men vi sender den ikke på forhånd. Skjermbildene er den enkle delen. Hva de betyr for tilgangen deres på nye kunder er grunnen til å snakke sammen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Rett fram (trekkspill). Første punkt åpent ved lasting. -->
+<section class="seksjon seksjon--linje" aria-labelledby="faq-h">
+  <div class="wrap to-kol">
+    <div class="kol-tittel">
+      <div class="strek"></div>
+      <h2 id="faq-h">Rett fram</h2>
+    </div>
+    <div class="kol-innhold">
+      <div class="faq">
+        <div class="faq-post">
+          <h3 class="faq-h"><button type="button" class="faq-knapp" id="faq-1-knapp" aria-expanded="true" aria-controls="faq-1"><span class="faq-sp">Er dette SEO?</span><span class="faq-ikon" aria-hidden="true"></span></button></h3>
+          <div class="faq-panel" id="faq-1" role="region" aria-labelledby="faq-1-knapp"><p>Nei. Dette er andre systemer som leser andre kilder. Et byrå kan ligge høyt på Google og likevel aldri bli nevnt i et AI-svar.</p></div>
+        </div>
+        <div class="faq-post">
+          <h3 class="faq-h"><button type="button" class="faq-knapp" id="faq-2-knapp" aria-expanded="true" aria-controls="faq-2"><span class="faq-sp">Trenger dere tilgang til nettsiden vår?</span><span class="faq-ikon" aria-hidden="true"></span></button></h3>
+          <div class="faq-panel er-lukket" id="faq-2" role="region" aria-labelledby="faq-2-knapp"><p>Ikke for gjennomgangen. Vi jobber utelukkende med det som er offentlig synlig, som er nøyaktig det AI-en ser.</p></div>
+        </div>
+        <div class="faq-post">
+          <h3 class="faq-h"><button type="button" class="faq-knapp" id="faq-3-knapp" aria-expanded="true" aria-controls="faq-3"><span class="faq-sp">Hva koster det?</span><span class="faq-ikon" aria-hidden="true"></span></button></h3>
+          <div class="faq-panel er-lukket" id="faq-3" role="region" aria-labelledby="faq-3-knapp"><p>Gjennomgangen og møtet er gratis. Vil dere at vi gjør jobben etterpå, priser vi den separat. Det er ingenting å signere for å få gjennomgangen.</p></div>
+        </div>
+        <div class="faq-post">
+          <h3 class="faq-h"><button type="button" class="faq-knapp" id="faq-4-knapp" aria-expanded="true" aria-controls="faq-4"><span class="faq-sp">Hvem passer dette for?</span><span class="faq-ikon" aria-hidden="true"></span></button></h3>
+          <div class="faq-panel er-lukket" id="faq-4" role="region" aria-labelledby="faq-4-knapp"><p>Norske regnskapsbyråer med egen kundebase. Er byrået yngre enn ett år, er vi som regel ikke rett leverandør ennå, og da sier vi det.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Hvem vi er -->
+<section class="seksjon seksjon--linje om" aria-labelledby="om-h">
+  <div class="wrap to-kol">
+    <div class="kol-tittel">
+      <div class="strek"></div>
+      <h2 id="om-h">Hvem vi er</h2>
+    </div>
+    <div class="kol-innhold">
+      <p class="ingress">Elevate Marketing er et resultatdrevet markedsføringsbyrå som drives under EngeCo AS. Vi jobber med tjenestebedrifter som kan måle hva en ny kunde er verdt. Mesteparten av arbeidet vårt betales etter resultat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Book gjennomgangen. Typeform-embeden settes inn av params.js med
+     skjulte felter fra URL-en. Containeren har eksplisitt høyde i CSS. -->
+<section class="seksjon seksjon--linje skjema" id="skjema" aria-labelledby="skjema-h" tabindex="-1">
+  <div class="wrap to-kol">
+    <div class="kol-tittel">
+      <div class="strek"></div>
+      <h2 id="skjema-h">Book gjennomgangen</h2>
+      <p class="skjema-ingress">Syv spørsmål, så velger du et tidspunkt. Vi kjører gjennomgangen før vi snakkes.</p>
+    </div>
+    <div class="kol-innhold">
+      <div class="embed embed--typeform" id="typeform-vert">
+        <noscript><div class="embed-melding"><div><p>Skjemaet trenger JavaScript for å vises. Slå på JavaScript og last siden på nytt.</p></div></div></noscript>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="bunn">
+  <div class="wrap">
+    <picture>
+      <source srcset="assets/img/logo-white.webp" type="image/webp">
+      <img class="logo" src="assets/img/logo-white.png" width="418" height="168" alt="Elevate Marketing">
+    </picture>
+    <p>Elevate Marketing drives av EngeCo AS, org.nr 924 490 926, Midtfjellet 66, 5363 Ågotnes.</p>
+  </div>
+</footer>
+
+</div>
+
+<!-- Det faste knappebåndet (11.4). Skjult til hero-knappen er scrollet ut
+     av syne, borte igjen når skjemaseksjonen nås. Styres av hero.js. -->
+<div class="baand" id="baand">
+  <a class="knapp baand-knapp" href="#skjema">Se hvem som blir anbefalt i stedet</a>
+</div>
+
+</body>
+</html>

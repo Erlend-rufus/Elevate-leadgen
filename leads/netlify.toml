@@ -1,0 +1,64 @@
+# leads.elevatemarketing.no
+#
+# Eget Netlify-nettsted koblet til dette repoet, med «Base directory» satt
+# til `leads` i Netlify. Denne filen leses da i stedet for netlify.toml på
+# repo-roten. Ingen byggkommando: mappen er ferdige filer, og publish er
+# relativ til base-mappen.
+#
+# DNS: CNAME leads → <site>.netlify.app
+
+[build]
+  publish = "."
+
+# noindex på alle ruter (ARBEIDSORDRE punkt 9), i tillegg til <meta> i
+# hver side. Ikke bruk Disallow i robots.txt: det hindrer crawling, ikke
+# indeksering, og gjør URL-ene lettere å finne.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Fonter og logo endrer seg ikke: cache lenge.
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# CSS og JS har ingen innholdshash (ingen byggesteg), så kort levetid:
+# en rettelse er ute hos alle innen ti minutter.
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=600, must-revalidate"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=600, must-revalidate"
+
+# Dokumentasjonen ligger i publish-mappen, men skal ikke serveres offentlig.
+[[redirects]]
+  from = "/README.md"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/KONFIG.md"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/"
+  status = 404
+  force = true

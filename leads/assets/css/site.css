@@ -1,0 +1,351 @@
+/* =====================================================================
+   leads.elevatemarketing.no · én delt stilfil for alle fire sidene
+   Tokens og typografi fra ARBEIDSORDRE punkt 3. Ingenting er hentet
+   fra _ds/ i Claude Design-prosjektet. cqw er byttet til vw og media
+   queries (punkt 11.2). Brytepunktet som betyr noe er 600px (11.3).
+   ===================================================================== */
+
+/* ---------- Fonter (selvhostet, subsett latin + æøåÆØÅ) ---------- */
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:700;font-display:swap;src:url("../fonts/fraunces-700.woff2") format("woff2")}
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:900;font-display:swap;src:url("../fonts/fraunces-900.woff2") format("woff2")}
+@font-face{font-family:"Geist";font-style:normal;font-weight:400;font-display:swap;src:url("../fonts/geist-400.woff2") format("woff2")}
+@font-face{font-family:"Geist";font-style:normal;font-weight:500;font-display:swap;src:url("../fonts/geist-500.woff2") format("woff2")}
+@font-face{font-family:"Geist";font-style:normal;font-weight:700;font-display:swap;src:url("../fonts/geist-700.woff2") format("woff2")}
+
+/* ---------- Tokens ---------- */
+:root{
+  /* Flater */
+  --papir:#F7F5F0;
+  --hvit:#FFFFFF;
+  --marine:#0A1628;
+  --marine-bunn:#04041C;
+  /* Tekst */
+  --blekk:#10141C;
+  --gra:#4A5162;
+  /* Grønn */
+  --gronn:#00A862;
+  --gronn-mork:#00D47E;   /* kun på marine bakgrunn */
+  /* Linjer */
+  --linje:#CFCBC0;
+  --linje-svak:#EFEDE7;
+  --linje-fast:#E3E0D8;
+  /* Fonter og mål */
+  --serif:Fraunces,"Iowan Old Style",Georgia,serif;
+  --sans:Geist,"Geist Sans",Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --side-pad:clamp(24px,3.4vw,48px);
+  --seksjon-pad:clamp(56px,7vw,100px);
+  /* Settes av consent.js mens samtykkebåndet vises, så det faste
+     knappebåndet legger seg over det i stedet for bak det. */
+  --samtykke-h:0px;
+}
+
+/* ---------- Grunnlag ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--papir)}
+body{
+  margin:0;
+  /* Plass til samtykkebåndet mens det vises, så bunnteksten kan scrolles fram. */
+  padding-bottom:var(--samtykke-h);
+  background:var(--papir);
+  color:var(--blekk);
+  font-family:var(--sans);
+  /* 18px er et gulv på mobil, ikke et mål. Ikke gå under. */
+  font-size:clamp(18px,1.32vw,19px);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+img{display:block;max-width:100%}
+p{margin:0}
+a{color:var(--gronn)}
+a:hover{color:var(--blekk)}
+button{font:inherit}
+
+/* Synlig fokusmarkering overalt (punkt 10) */
+:focus-visible{outline:2px solid var(--gronn);outline-offset:2px}
+.seksjon--marine :focus-visible,.samtykke :focus-visible{outline-color:var(--gronn-mork)}
+
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+/* ---------- Typografi ---------- */
+h1,h2,h3{margin:0;font-family:var(--serif);letter-spacing:-0.025em;line-height:1.02;text-wrap:pretty}
+h1{font-weight:900;font-size:clamp(38px,4.2vw,60px)}
+h1.h1-side{font-size:clamp(38px,4vw,56px)}   /* S2–S4 */
+h2{font-weight:700;font-size:clamp(30px,3vw,44px)}
+.ingress{font-size:clamp(19px,1.5vw,22px);line-height:1.5;text-wrap:pretty}
+.eyebrow{margin:0;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:13px;line-height:1.2;color:var(--gra)}
+.pille{display:inline-block;border:1px solid var(--linje);border-radius:999px;padding:5px 10px;background:var(--papir);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;line-height:1.2;color:var(--gra);white-space:nowrap}
+.brod{text-wrap:pretty}
+
+/* Uthevingen i H1. Under 600px bærer grønnfargen uthevingen alene.
+   Fra 600px: blekkfarget tekst med grønn understrek, som i referansebildet.
+   Vil du ha grønn tekst også over 600px, fjern «color:inherit» under. */
+.uthev{font-style:normal;color:var(--gronn)}
+@media (min-width:600px){
+  .uthev{
+    color:inherit;
+    text-decoration:underline;
+    text-decoration-color:var(--gronn);
+    text-decoration-thickness:0.08em;
+    text-underline-offset:0.1em;
+    text-decoration-skip-ink:none;
+  }
+}
+
+/* ---------- Layout ---------- */
+.wrap{box-sizing:content-box;max-width:1120px;margin:0 auto;padding:0 var(--side-pad)}  /* 1120px er innholdsbredden, paddingen kommer utenpå */
+.seksjon{padding:var(--seksjon-pad) 0}
+.seksjon--linje{border-top:1px solid var(--linje)}
+.to-kol{display:flex;flex-wrap:wrap;gap:clamp(32px,4vw,64px) 48px;align-items:flex-start}
+.kol-tittel{flex:1 1 280px;min-width:0}
+.kol-innhold{flex:2 1 520px;min-width:0}
+.strek{width:40px;height:3px;background:var(--gronn);margin-bottom:20px}
+
+.side{min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+.side > main{flex:1}
+
+/* ---------- Topp og bunn ---------- */
+.topp{padding:clamp(18px,1.6vw,24px) 0}
+.logo{display:block;height:clamp(48px,3.6vw,56px);width:auto}
+.bunn{background:var(--marine);color:#fff;padding:clamp(40px,4vw,56px) 0}
+.bunn .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 48px}
+.bunn .logo{height:clamp(40px,3.2vw,46px)}
+.bunn p{font-size:17px;line-height:1.5;color:rgba(255,255,255,0.8);max-width:560px;text-wrap:pretty}
+
+/* ---------- Knapper ---------- */
+.knapp{
+  appearance:none;border:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  width:100%;max-width:440px;min-height:60px;padding:14px 24px;
+  border-radius:8px;background:var(--gronn);color:#fff;
+  font-family:inherit;font-weight:500;font-size:clamp(17px,1.25vw,18px);line-height:1.25;
+  text-align:center;text-decoration:none;
+  transition:filter .15s ease;
+}
+.knapp:hover{filter:brightness(0.92);color:#fff}
+
+/* =====================================================================
+   S1 · Hero
+   HTML-en er sluttbildet. Startilstanden settes KUN under html.hero-anim,
+   som legges på av et lite skript i <head> og fjernes av hero.js når
+   sekvensen er ferdig. Uten JavaScript, ved JavaScript-feil eller med
+   prefers-reduced-motion står sluttbildet der fra første maling.
+   ===================================================================== */
+.hero{padding:clamp(24px,3vw,56px) 0 var(--seksjon-pad)}
+.hero .wrap{display:flex;flex-wrap:wrap-reverse;align-items:center;gap:clamp(40px,4vw,64px) 64px}
+.hero-tekst{flex:1 1 560px;min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+.hero-tekst h1{margin-top:20px}
+.hero-ingress{margin-top:24px;max-width:600px}
+.hero-knapp{margin-top:32px}
+.hero-note{margin-top:14px;font-size:18px;line-height:1.5;color:var(--gra)}
+
+.hero-demo{flex:1 1 360px;max-width:480px;min-width:0;display:flex;flex-direction:column}
+
+/* Søkefeltet */
+/* <label> rundt hele feltet: trykk hvor som helst i de 56 px fokuserer byfeltet. */
+.sok{margin-top:14px;display:flex;align-items:center;gap:12px;background:var(--papir);border:1px solid var(--linje);border-radius:10px;padding:12px 16px;min-height:56px;cursor:text}
+.sok-ikon{flex:none;width:18px;height:18px}
+.sok-inn{display:flex;flex-wrap:nowrap;overflow:hidden;align-items:center;gap:0 6px;min-height:24px;min-width:0;font-size:17px;font-weight:500;line-height:1.3;color:var(--blekk)}
+.sok-tekst{flex:none;white-space:pre}
+/* Én linje uansett bredde, så heroen ikke skifter høyde mens byen skrives.
+   Under 390px får ikke søket plass på én linje i 17px. */
+@media (max-width:389px){.sok-inn{font-size:16px}}
+.sok-by{
+  appearance:none;border:0;border-bottom:2px solid var(--gronn);border-radius:0;
+  background:transparent;font:inherit;color:var(--blekk);
+  padding:0 2px;margin:0;width:7ch;max-width:100%;min-width:0;flex:0 1 auto;
+  transition:opacity .2s ease;
+}
+.sok-by:focus-visible{outline:2px solid var(--gronn);outline-offset:2px;border-radius:2px}
+.sok-markor{display:inline-block;width:2px;height:1.15em;background:var(--blekk);opacity:0}
+
+/* Svarpanelet */
+.svar{position:relative;margin-top:14px}
+.svar-bg{
+  position:absolute;top:0;left:0;right:0;height:100%;
+  background:var(--hvit);border:1px solid var(--linje);border-radius:14px;
+  box-shadow:0 24px 48px -32px rgba(16,20,28,0.25);
+  transition:height .3s ease,opacity .3s ease;
+}
+.svar-kort{position:relative;padding:18px clamp(18px,1.6vw,22px) 16px}
+.svar-etikett{display:flex;align-items:center;gap:8px;padding-bottom:12px;transition:opacity .3s ease}
+.svar-prikk{width:8px;height:8px;border-radius:50%;background:var(--gronn)}
+.svar-etikett-tekst,.svar-kilder-etikett{font-weight:700;text-transform:uppercase;letter-spacing:0.16em;font-size:11px;line-height:1.2;color:var(--gra)}
+.svar-rad{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--linje-svak);transition:opacity .3s ease,transform .3s ease}
+.svar-nr{font-family:var(--serif);font-weight:700;font-size:17px;color:var(--gra);line-height:1}
+/* Sladdede rader: generisk tekst, ingen firmanavn, aria-hidden i HTML */
+.svar-sladd{filter:blur(5px);user-select:none;-webkit-user-select:none;pointer-events:none;min-width:0}
+.svar-navn{font-size:16px;font-weight:500;line-height:1.3;color:var(--blekk);white-space:nowrap;overflow:hidden}
+.svar-desc{margin-top:3px;font-size:13px;line-height:1.3;color:var(--gra);white-space:nowrap;overflow:hidden}
+/* Rad 6 er en ekte knapp i full radbredde. Animasjonen rører kun opacity
+   og clip-path, aldri pointer-events eller visibility. */
+.svar-rad6{
+  appearance:none;border:0;border-top:1px solid var(--linje-svak);border-radius:0;
+  background:transparent;width:100%;display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:center;
+  padding:12px 0 6px;margin:0;cursor:pointer;text-align:left;font-family:inherit;color:inherit;
+  transition:opacity .3s ease,background .2s ease;
+}
+.svar-rad6:hover{background:rgba(0,168,98,0.06)}
+.rad6-form{margin:0}
+.rad6-felt{display:flex;align-items:center;gap:2px;min-height:44px;padding:0 12px;border:1.5px solid var(--gronn);border-radius:8px;clip-path:inset(0 0 0 0 round 8px);transition:clip-path .45s ease}
+.rad6-tekst{font-size:16px;font-weight:500;line-height:1.3;color:var(--gronn)}
+.rad6-markor{display:inline-block;width:2px;height:1.15em;background:var(--gronn);animation:em-blink 1s steps(1) infinite}
+.svar-kilder{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding-top:14px;border-top:1px solid var(--linje-svak);transition:opacity .3s ease}
+.svar-kilder-etikett{margin-right:4px}
+.svar-prikker{position:absolute;top:22px;left:clamp(18px,1.6vw,22px);display:flex;gap:6px;pointer-events:none;opacity:0;transition:opacity .2s ease}
+.svar-prikker span{width:7px;height:7px;border-radius:50%;background:var(--gra)}
+.hero-illu{margin-top:12px;font-size:15px;line-height:1.5;color:var(--gra);text-wrap:pretty}
+
+/* Startilstand, kun under .hero-anim (ARBEIDSORDRE 4.1) */
+.hero-anim [data-hero-tekst]{opacity:0}
+.hero-anim [data-hero-rad]{opacity:0;transform:translateY(6px)}
+.hero-anim [data-hero-panel]{opacity:0}
+.hero-anim [data-hero-rad6]{opacity:0}
+.hero-anim [data-hero-kilder]{opacity:0}
+.hero-anim [data-hero-by]{opacity:0}
+.hero-anim [data-hero-rad6] .rad6-felt{clip-path:inset(0 100% 0 0 round 8px)}
+.hero-anim .rad6-markor{animation:none}
+/* Tilstander hero.js legger på underveis */
+.hero-anim .er-inne{opacity:1;transform:none}
+.hero-anim [data-hero-rad6].er-inne .rad6-felt{clip-path:inset(0 0 0 0 round 8px)}
+.hero-anim [data-hero-rad6].er-inne .rad6-markor{animation:em-blink 1s steps(1) infinite}
+.hero-anim .er-skriver .sok-markor{opacity:1;animation:em-blink 1s steps(1) infinite}
+.hero-anim .er-tenker .svar-prikker{opacity:1}
+.hero-anim .er-tenker .svar-prikker span{animation:em-pulse .9s ease-in-out infinite}
+.hero-anim .er-tenker .svar-prikker span:nth-child(2){animation-delay:.15s}
+.hero-anim .er-tenker .svar-prikker span:nth-child(3){animation-delay:.3s}
+
+@keyframes em-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes em-pulse{0%,100%{opacity:0.25}50%{opacity:1}}
+
+/* =====================================================================
+   S1 · Seksjoner
+   ===================================================================== */
+/* Hva vi faktisk gjør */
+.steg{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.steg li{display:grid;grid-template-columns:clamp(52px,5vw,80px) 1fr;gap:0 clamp(16px,1.6vw,28px);padding:clamp(20px,2vw,28px) 0;border-top:1px solid var(--linje);align-items:start}
+.steg li:last-child{border-bottom:1px solid var(--linje)}
+.steg-nr{font-family:var(--serif);font-weight:900;font-size:clamp(48px,4.4vw,64px);line-height:0.9;letter-spacing:-0.03em;color:var(--gronn)}
+.steg p{max-width:680px;text-wrap:pretty}
+
+/* En liste du aldri får se */
+.seksjon--marine{background:linear-gradient(180deg,var(--marine) 0%,var(--marine-bunn) 100%);color:#fff;padding:clamp(64px,7.5vw,112px) 0}
+.seksjon--marine .strek{background:var(--gronn-mork)}
+.seksjon--marine .kol-innhold{display:flex;flex-direction:column;gap:22px;max-width:680px}
+
+/* Hva du får på møtet */
+.mote .kol-innhold{display:flex;flex-direction:column;gap:32px;max-width:680px}
+.hakeliste{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+.hakeliste li{display:grid;grid-template-columns:26px 1fr;gap:14px;align-items:start;text-wrap:pretty}
+.hakeliste svg{display:block;width:26px;height:26px}
+.notat{background:var(--linje-svak);border-radius:12px;padding:clamp(22px,2vw,28px) clamp(22px,2.2vw,32px)}
+.notat p{text-wrap:pretty}
+
+/* Rett fram (trekkspill) */
+.faq{display:flex;flex-direction:column;border-top:1px solid var(--linje)}
+.faq-post{border-bottom:1px solid var(--linje)}
+.faq-h{margin:0;font:inherit}
+.faq-knapp{
+  appearance:none;border:0;background:transparent;width:100%;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:clamp(18px,1.6vw,22px) 0;min-height:44px;cursor:pointer;text-align:left;color:var(--blekk);
+  font-family:var(--serif);font-weight:700;font-size:clamp(20px,1.6vw,23px);line-height:1.15;letter-spacing:-0.015em;
+}
+.faq-sp{flex:1 1 auto;min-width:0}
+.faq-ikon{position:relative;flex:none;width:24px;height:24px}
+.faq-ikon::before,.faq-ikon::after{content:"";position:absolute;left:5px;top:11px;width:14px;height:2px;background:var(--blekk)}
+.faq-ikon::after{transform:rotate(90deg)}
+.faq-knapp[aria-expanded="true"] .faq-ikon::after{display:none}
+.faq-panel p{padding:0 44px clamp(18px,1.6vw,24px) 0;max-width:640px;text-wrap:pretty}
+/* Lukkede punkter skjules bare når JavaScript finnes; uten JavaScript
+   er alle svar synlige. Første punkt er åpent ved lasting. */
+.js .faq-panel.er-lukket{display:none}
+html:not(.js) .faq-ikon{display:none}
+
+/* Hvem vi er */
+.om .kol-innhold{max-width:680px}
+
+/* Book gjennomgangen + embed-containere.
+   Høyden er satt i CSS FØR embed-en laster. Dette feilet i forrige
+   kampanje. 640px på mobil, 720px fra 900px (punkt 5 og 6). */
+.skjema{scroll-margin-top:8px}
+.skjema-ingress{margin-top:18px;color:var(--gra);max-width:400px;text-wrap:pretty}
+.embed{width:100%;height:640px;background:var(--hvit);border:1px solid var(--linje);border-radius:12px;overflow:hidden;position:relative}
+.embed--calendly{height:680px}
+@media (min-width:900px){.embed,.embed--calendly{height:720px}}
+.embed > div,.embed > iframe{width:100%;height:100%}
+/* Typeforms live-embed legger sin egen widget inni elementet vårt, med egen
+   høyde fra Typeform-innstillingene. Containerens høyde skal vinne. */
+.embed [data-tf-live],.embed [data-tf-widget],.embed .tf-v1-widget,.embed iframe{width:100%!important;height:100%!important}
+.embed-melding{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--gra)}
+.embed-melding div{max-width:380px;display:flex;flex-direction:column;gap:12px}
+.embed-melding .eyebrow{color:var(--gra)}
+.embed-melding p{font-size:17px;line-height:1.5}
+.embed-melding code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.9em;background:var(--linje-svak);padding:1px 5px;border-radius:4px}
+
+/* =====================================================================
+   Det faste knappebåndet (11.4). Papirfarge, topplinje, skygge. Vises
+   først når hero-knappen er scrollet ut av syne, forsvinner når
+   skjemaseksjonen nås. Ligger over samtykkebåndet om begge vises.
+   ===================================================================== */
+.baand{
+  position:fixed;left:0;right:0;bottom:var(--samtykke-h);z-index:20;
+  background:var(--papir);border-top:1px solid var(--linje-fast);
+  box-shadow:0 -12px 24px -16px rgba(16,20,28,0.18);
+  padding:14px clamp(20px,3.4vw,48px) calc(16px + env(safe-area-inset-bottom));
+  transform:translateY(110%);visibility:hidden;
+  transition:transform .25s ease,bottom .25s ease,visibility 0s linear .25s;
+}
+.baand.er-synlig{transform:none;visibility:visible;transition:transform .25s ease,bottom .25s ease,visibility 0s linear 0s}
+/* Ligger båndet oppå samtykkebåndet, har det båndet allerede safe-area. */
+.samtykke-vises .baand{padding-bottom:16px}
+.baand-knapp{max-width:520px;min-height:56px;margin:0 auto;padding:12px 24px;font-size:17px}
+
+/* =====================================================================
+   Samtykkebåndet (punkt 8). Bunnbånd, ikke modal. To like synlige knapper.
+   Bygges av consent.js, så personvernlenken kommer fra ett sted.
+   ===================================================================== */
+.samtykke{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  background:var(--marine);color:#fff;border-top:1px solid rgba(255,255,255,0.12);
+  padding:18px var(--side-pad) calc(18px + env(safe-area-inset-bottom));
+  font-size:inherit;line-height:1.5;   /* samme gulv som brødteksten: 18px på mobil */
+}
+.samtykke-inn{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
+.samtykke p{flex:1 1 360px;min-width:0;max-width:640px;color:rgba(255,255,255,0.88);text-wrap:pretty}
+.samtykke a{color:#fff;text-decoration:underline;text-underline-offset:0.15em}
+.samtykke a:hover{color:var(--gronn-mork)}
+.samtykke-knapper{display:flex;flex-wrap:wrap;gap:12px;flex:0 0 auto}
+.samtykke-knapp{
+  appearance:none;cursor:pointer;min-height:44px;padding:10px 18px;border-radius:8px;
+  border:1.5px solid rgba(255,255,255,0.7);background:transparent;color:#fff;
+  font-family:inherit;font-weight:500;font-size:17px;line-height:1.25;white-space:nowrap;
+}
+.samtykke-knapp:hover{background:rgba(255,255,255,0.1)}
+@media (max-width:599px){
+  .samtykke-knapper{width:100%}
+  .samtykke-knapp{flex:1 1 auto}
+}
+
+/* =====================================================================
+   S2–S4
+   ===================================================================== */
+.side-hode{max-width:720px}
+.side-hode h1{margin-top:0}
+.side-hode .ingress{margin-top:20px}
+.booking{padding:clamp(24px,3vw,56px) 0 clamp(64px,7vw,100px)}
+.booking .wrap{display:flex;flex-direction:column;gap:clamp(36px,3.4vw,48px)}
+.midt{display:flex;align-items:center}
+.midt-seksjon{width:100%;padding:clamp(40px,5vw,80px) 0 clamp(64px,7vw,100px)}
+.midt-inn{max-width:680px;margin:0 auto;display:flex;flex-direction:column;align-items:flex-start}
+.midt-inn h1{margin-top:24px}
+.midt-inn .ingress{margin-top:24px}
+.midt-inn .brod{margin-top:20px}
+.hake-sirkel{width:64px;height:64px;border-radius:50%;border:2px solid var(--gronn);display:flex;align-items:center;justify-content:center}
+.hake-sirkel svg{display:block;width:32px;height:32px}
+.hake-sirkel + h1{margin-top:28px}
