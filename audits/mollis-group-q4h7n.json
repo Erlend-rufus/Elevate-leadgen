@@ -163,38 +163,6 @@
     "Website quotes were taken from the live pages at mollis-group.co.uk the same day. Company facts were verified directly against the Companies House register rather than taken from any AI answer: MOLLIS GROUP LTD, company number 11853522, incorporated 28 February 2019, active, SIC 62020, registered office Tintagel House, 92 Albert Embankment, London SE1 7TY.",
     "Every AI answer quoted in this report is reproduced in the screenshots above. Nothing here is paraphrased from memory or inferred from reputation."
   ],
-  "pricing": {
-    "title": "What this costs",
-    "sub": "Two parts: a one-off piece of work to resolve the identity conflict and publish what a machine can verify, then continuous work on the evidence layer that takes longer.",
-    "items": [
-      {
-        "name": "Technical GEO review",
-        "price": "£1,950",
-        "unit": "one-off",
-        "highlight": true,
-        "body": "The fixes above that can be finished, delivered and verified.",
-        "bullets": [
-          "One agreed positioning, applied across the website, LinkedIn and founder profiles",
-          "Company number 11853522, registered address and every accreditation you hold, published",
-          "Full entity graph in structured data, with sameAs links to LinkedIn and the G-Cloud listing",
-          "Sector proof pages for construction and financial services, in the vocabulary the answers used"
-        ]
-      },
-      {
-        "name": "Ongoing GEO visibility",
-        "price": "£1,300",
-        "unit": "per month",
-        "body": "Corroboration is the slow half. It compounds, and it does not finish.",
-        "bullets": [
-          "Entry into the directories, assured-supplier lists and sector round-ups these answers cite",
-          "Continuing content work in buyer vocabulary",
-          "The same four queries re-run monthly, logged in screenshots",
-          "A short written record of what moved and what did not"
-        ]
-      }
-    ],
-    "note": "Prices are in pounds sterling and exclude VAT. The review stands on its own: it is worth doing whether or not the monthly work follows."
-  },
   "cta": {
     "title": "Google is already complimentary about you. It is describing the wrong company.",
     "body": "That is a better problem than most firms have, and it is fixable. Every finding above is documented in the screenshots, and this report is yours to keep whichever way you decide. If you want to go through it line by line, book a slot and we will work from your own results rather than a generic presentation.",
