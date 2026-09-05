@@ -1,0 +1,143 @@
+{
+  "company": "Paradis Regnskap AS",
+  "lang": "nb",
+  "slug": "paradis-regnskap-p34rgj",
+  "date": "5. september 2026",
+  "lede": "Hva Google svarer når en bedriftsleder i Bergen spør hvilket regnskapsbyrå han bør velge, og hvor Paradis Regnskap står i de svarene.",
+  "headline": {
+    "stat": "1 av 3",
+    "stat_label": "spørsmål navnga Paradis Regnskap",
+    "body": "Vi stilte Google AI Mode, satt til norsk og Norge, tre spørsmål en bedriftsleder i Bergen faktisk stiller når han skal velge regnskapsfører. Paradis Regnskap ble navngitt i ett av dem: det som allerede inneholdt ordet Nesttun. I de to spørsmålene som bare sa Bergen, ble ti andre byråer navngitt, og dere var ikke blant dem. Spurt om dere ved navn svarer Google derimot presist og rosende. Det er den kombinasjonen som er verdt en samtale."
+  },
+  "visibility": {
+    "title": "Hvem ble navngitt i stedet",
+    "sub": "Vi spurte om Bergen, ikke om Nesttun. Det er slik en bedriftsleder som ennå ikke kjenner dere formulerer seg.",
+    "close": "Ti byråer samlet omtalen i de to Bergen-spørsmålene. Det tredje spørsmålet nevnte Nesttun, og der kom dere med som ett av seks kontorer. Skillet går altså ikke mellom kjent og ukjent, men mellom bydel og by.",
+    "rival_count": "10",
+    "rival_count_label": "byråer navngitt i stedet for dere"
+  },
+  "queries": [
+    {
+      "text": "beste regnskapsfører i Bergen",
+      "named": false,
+      "named_instead": "Devold Consulting AS, Storetvedt Regnskapsbyrå AS, Primo Services AS, Amesto AccountHouse Bergen, Azets Bergen",
+      "named_instead_note": "delt i to segmenter: mindre bedrifter og SMB"
+    },
+    {
+      "text": "regnskapsbyrå for småbedrift i Bergen",
+      "named": false,
+      "named_instead": "Devold Consulting AS, Headwind Økonomi AS, Storetvedt Regnskapsbyrå AS, Regnskap Vest AS, Arjo Regnskap AS",
+      "named_instead_note": "svaret handlet spesifikt om små bedrifter, ENK og små AS"
+    },
+    {
+      "text": "regnskapsfører på Nesttun i Bergen",
+      "named": true
+    },
+    {
+      "text": "Er Paradis Regnskap AS et godt regnskapsbyrå?",
+      "named": true
+    }
+  ],
+  "accuracy": {
+    "title": "Spurt om dere ved navn svarer Google presist",
+    "sub": "Merkevaretesten er den delen som fungerer, og den forklarer hvorfor kategorisvarene er et løsbart problem og ikke et omdømmeproblem.",
+    "quotes": [
+      "Paradis Regnskap AS fremstår som et solid, stabilt og pålitelig regnskapsbyrå med base på Nesttun i Bergen.",
+      "Selskapet har 11 ansatte, hvorav hele 6 er autoriserte regnskapsførere.",
+      "Som et uavhengig byrå står de friere til å tilpasse verktøy og prosesser etter kundenes unike behov, fremfor å være låst til sentrale kjedekrav.",
+      "Driftsmarginen deres ligger noe under gjennomsnittet for regnskapsbransjen i Vestland fylke.",
+      "Lokalkjent i Bergen og Vaksdal"
+    ],
+    "flag_quote_index": 3,
+    "source": "Google AI Mode, merkevaretest, 5. september 2026. Ordrett. Oppgitte kilder: Paradis Regnskap AS (egen nettside), Proff, Regnskapsførertilbud, Bergens Tidende.",
+    "body": [
+      "Svaret er positivt, det er detaljert, og det er i hovedsak korrekt. Google leser deres egen nettside og gjengir den nesten ordrett: formuleringen om kjedeuavhengighet og tett dialog står på forsiden deres. Nettsiden blir altså lest. Den blir bare ikke brukt til å plassere dere i svaret på et spørsmål som ikke nevner dere ved navn.",
+      "Tallet på ansatte er verdt å merke seg. Google sier 11 ansatte, hvorav 6 autoriserte. Det er hentet fra deres egen om oss-side, som sier det samme. Enhetsregisteret oppgir 8 ansatte per 5. september 2026. Vi tar ikke stilling til hvilket tall som er riktig, men de to offentlige kildene er uenige, og en AI som veier kilder mot hverandre vil før eller siden treffe på det avviket.",
+      "Setningen om driftsmargin er hentet fra Bergens Tidendes bedriftsdata og lagt inn under en overskrift om ting man bør være oppmerksom på. Den er ikke feil, og den er ikke dramatisk. Den er verdt å kjenne til fordi den er det eneste forbeholdet i et ellers rosende svar, og fordi den kommer fra en kilde dere ikke selv har lagt ut.",
+      "Formuleringen om Vaksdal finner vi ikke igjen på nettsiden deres. Vi vet ikke hvor den kommer fra. Er den riktig, bør den stå et sted dere kontrollerer. Er den feil, er den et eksempel på hva som fyller tomrommet når en kilde mangler."
+    ]
+  },
+  "gaps": {
+    "title": "Tre grunner til at Bergen-svarene hopper over dere",
+    "sub": "Hvert punkt er knyttet til noe vi observerte i svarene over, ikke til generelle råd.",
+    "items": [
+      {
+        "title": "Svarene sorterer på regnskapssystem, og deres system er ikke blant dem som nevnes",
+        "body": "Det første Bergen-svaret sier at valget avhenger av hvilke regnskapssystemer, som Fiken, Tripletex eller PowerOffice Go, kunden ønsker å bruke. I det andre svaret beskrives byråene med systemene sine: PowerOffice Go og Tripletex hos ett, Visma eAccounting hos et annet. Deres egen nettside lister Uni Micro først blant programmene. Merkevaresvaret beskriver dere som brukere av moderne skybaserte systemer som Uni Micro. Vi påstår ikke at Uni Micro er dårligere. Vi observerer at kategorisvarene behandler tre andre navn som standard, og at et byrå uten dem sjeldnere passer inn i listen."
+      },
+      {
+        "title": "Dere er beskrevet som et Nesttun-kontor, ikke som et Bergen-byrå",
+        "body": "Dere kom med i svaret som nevnte Nesttun, og ikke i de to som sa Bergen. De byråene som ble navngitt i Bergen-svarene holder til i Tertnes, Minde, Loddefjord og Fyllingsdalen, altså i bydeler på samme måte som dere. Geografien er derfor ikke forklaringen. Forskjellen er hvordan stedet er beskrevet i kildene: adressen deres står som Nesttun, og lite annet knytter dere til Bergen som marked."
+      },
+      {
+        "title": "Anmeldelser og tredjepartsomtale bærer de andre",
+        "body": "Byråene som ble navngitt beskrives med stjernevurderinger, antall anmeldelser og sitater fra kunder. Ett fikk plass med 5 av 5 stjerner basert på mange Google-anmeldelser. Et annet med at kunder trekker frem at de har vært en strålende samarbeidspartner fra oppstartsfasen. Deres merkevaresvar bygger på nettsiden deres og på Proff, altså på registerdata og egen omtale, ikke på hva kunder har skrevet."
+      }
+    ],
+    "already_works": "Merkevaresvaret. Spurt om dere ved navn gir Google et presist, positivt og godt kildebelagt svar, som gjengir posisjoneringen fra deres egen nettside nesten ordrett. Det er ikke gitt. Mange byråer i samme størrelse får enten et tomt svar eller et svar som blander dem med et annet selskap. Nettsiden deres blir lest, og den blir gjengitt riktig. Arbeidet under handler om å få den lest i flere sammenhenger, ikke om å reparere noe som er galt."
+  },
+  "fixes": {
+    "title": "Hva vi ville gjort, og hva hvert grep endrer",
+    "sub": "Sortert etter effekt mot innsats. Til venstre står arbeidet, til høyre hva en maskin kan gjøre med det etterpå.",
+    "items": [
+      {
+        "title": "Skriv systemvalget eksplisitt, på en side som kan siteres",
+        "how": "En side som sier hvilke systemer dere fører regnskap i, hvilke dere kan overta en kunde fra, og hva dere anbefaler for en liten bedrift. Nevn navnene, inkludert dem dere ikke bruker daglig, der det er sant at dere håndterer dem.",
+        "effect": "Kategorisvarene sorterer på systemnavn. Står navnene ingen steder dere kontrollerer, kan svaret ikke plassere dere når noen spør etter dem."
+      },
+      {
+        "title": "Beskriv markedet som Bergen, ikke som Nesttun",
+        "how": "Nesttun er adressen. Bergen er markedet. Om oss, tittelen på forsiden og beskrivelsen i Google Business Profile bør si Bergen først og Nesttun som sted.",
+        "effect": "Et spørsmål som sier Bergen kan da matche dere. I dag matcher det bare når spørsmålet allerede sier Nesttun, og da vet den som spør stort sett hvem dere er fra før."
+      },
+      {
+        "title": "Rydd i ansattetallet",
+        "how": "Nettsiden sier 11, Enhetsregisteret sier 8. Avklar hvilket som stemmer og få det andre oppdatert. Er begge riktige på hver sin måte, for eksempel ansatte mot årsverk, si det på siden.",
+        "effect": "To offentlige kilder som er uenige om et etterprøvbart tall er den typen avvik som gjør at en maskin hedger i stedet for å anbefale."
+      },
+      {
+        "title": "Gjør kundeomtale synlig og lesbar",
+        "how": "Be om Google-anmeldelser systematisk etter årsoppgjør, og legg to eller tre navngitte kundehistorier på nettsiden med bransje og hva dere faktisk gjorde.",
+        "effect": "Det var anmeldelser og kundesitater som ga de andre plassen i listen. Dette er det tregeste grepet, og det som er vanskeligst for en konkurrent å kopiere."
+      },
+      {
+        "title": "Avklar Vaksdal",
+        "how": "Finn ut hvor påstanden kommer fra. Stemmer den, lag en side for det stedet. Stemmer den ikke, sørg for at kildene som sier det blir rettet.",
+        "effect": "Enten får dere et marked til som kan matche et geografisk spørsmål, eller så fjerner dere en påstand dere ikke kan stå for."
+      }
+    ],
+    "disclaimer": "Vi lover ikke plassering, omtale eller når en effekt inntreffer. AI-svar varierer mellom kjøringer, og de samme spørsmålene kan gi andre navn i morgen. Det vi kan gjøre er å fjerne de konkrete grunnene til at svaret hopper over dere i dag, og måle det samme på nytt senere."
+  },
+  "screenshots": [
+    {
+      "file": "S1-bergen-generelt.jpg",
+      "caption": "Google AI Mode, 5. september 2026. Spørsmålet er «beste regnskapsfører i Bergen». Fem byråer navngis under overskriften «Anbefalte regnskapsførere i Bergen». Paradis Regnskap er ikke blant dem."
+    },
+    {
+      "file": "S2-bergen-smabedrift.jpg",
+      "caption": "Google AI Mode, 5. september 2026. Spørsmålet er «regnskapsbyrå for småbedrift i Bergen». Fem byråer navngis under «Lokale regnskapsbyråer med godt rykte», beskrevet med bydel, adresse og hvorfor de passer. Paradis Regnskap er ikke blant dem."
+    },
+    {
+      "file": "S3-nesttun-lokalt.jpg",
+      "caption": "Google AI Mode, 5. september 2026. Spørsmålet er «regnskapsfører på Nesttun i Bergen». Her navngis Paradis Regnskap AS, som ett av seks kontorer, med riktig adresse og en beskrivelse hentet fra egen nettside."
+    },
+    {
+      "file": "S4-merkevaretest.jpg",
+      "caption": "Google AI Mode, 5. september 2026. Merkevaretesten: «Er Paradis Regnskap AS et godt regnskapsbyrå?» Svaret er positivt og detaljert, med Proff og egen nettside som oppgitte kilder."
+    }
+  ],
+  "method": [
+    "Alle spørsmål ble kjørt manuelt i nettleser 5. september 2026, i Google AI Mode, med språk satt til norsk og region satt til Norge. Spørsmålene er formulert slik en bedriftsleder ville skrevet dem, ikke som søkeord.",
+    "Tre kategorispørsmål og én merkevaretest. Ett skjermbilde per spørsmål. Ingenting i denne rapporten er gjengitt fra hukommelsen: hvert sitat er synlig i skjermbildet det hører til.",
+    "Selskapsopplysninger er kontrollert mot Enhetsregisteret 5. september 2026: Paradis Regnskap AS, org.nr 999 054 463, stiftet 22. oktober 2012, næringskode 69.202 Regnskapsføring og bokføring, forretningsadresse 5224 Nesttun i Bergen kommune, 8 ansatte registrert, ikke under konkurs eller avvikling.",
+    "Nettsiden paradisregnskap.no ble lest samme dag. Opplysningen om 11 ansatte, hvorav 6 autoriserte, står på om oss-siden. Avviket mot Enhetsregisteret er rapportert, ikke avgjort.",
+    "AI-svar varierer mellom kjøringer, mellom kontoer og over tid. Et svar er et øyeblikksbilde, ikke en rangering. Konklusjonene bygger på mønsteret på tvers av spørsmålene, ikke på ett enkelt svar.",
+    "Vi har ikke hatt tilgang til nettsiden, analysedata eller noen konto hos Paradis Regnskap. Alt i rapporten er hentet fra det som er offentlig synlig, som er nøyaktig det AI-en også ser."
+  ],
+  "cta": {
+    "title": "Nettsiden deres blir lest. Den blir bare ikke brukt når spørsmålet ikke nevner dere.",
+    "body": "Det er en bedre utgangsposisjon enn de fleste byråer har, og den er løsbar. Hvert funn over er knyttet til noe konkret i et svar vi har skjermbilde av. Tjue minutter, så går vi gjennom det sammen.",
+    "button_text": "Book en gjennomgang på tjue minutter",
+    "button_url": "https://leads.elevatemarketing.no/ai-synlighet/"
+  }
+}
