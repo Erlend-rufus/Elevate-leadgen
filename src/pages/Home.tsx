@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import CtaButton from '@/components/CtaButton';
+import CountUpValue from '@/components/CountUpValue';
 import Reveal from '@/components/Reveal';
 import Icon from '@/components/Icon';
 import JourneyCurve from '@/components/JourneyCurve';
@@ -62,7 +63,7 @@ export default function Home() {
           {home.proofBar.map((metric, i) => (
             <Reveal key={metric.label} delay={i * 100} className="px-6 py-4 text-center">
               <div className="text-gradient font-display text-4xl font-bold md:text-5xl">
-                {metric.value}
+                <CountUpValue value={metric.value} />
               </div>
               <div className="mt-2 text-sm text-[#7c7ea6]">{metric.label}</div>
             </Reveal>

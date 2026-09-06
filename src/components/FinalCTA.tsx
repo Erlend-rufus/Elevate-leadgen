@@ -19,7 +19,9 @@ export default function FinalCTA() {
           <h2>{finalCta.title}</h2>
           <p className="mt-6 text-lg text-[#b9bbd9]">{finalCta.sub}</p>
           <div className="mt-10">
-            <CtaButton to="/growth-audit">{finalCta.cta}</CtaButton>
+            <CtaButton to="/growth-audit" magnetic>
+              {finalCta.cta}
+            </CtaButton>
           </div>
           <p className="mt-5 text-sm text-[#7c7ea6]">{finalCta.microcopy}</p>
         </Reveal>

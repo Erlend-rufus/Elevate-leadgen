@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router';
 import { ArrowRight } from 'lucide-react';
 import CtaButton from '@/components/CtaButton';
+import CountUpValue from '@/components/CountUpValue';
 import FinalCTA from '@/components/FinalCTA';
 import Reveal from '@/components/Reveal';
 import { usePageMeta } from '@/components/usePageMeta';
@@ -105,7 +106,7 @@ export default function CasePage() {
                 {study.results.map((metric) => (
                   <div key={metric.label} className="px-4 py-4 text-center md:px-6">
                     <div className="text-gradient font-display text-4xl font-bold md:text-5xl">
-                      {metric.value}
+                      <CountUpValue value={metric.value} />
                     </div>
                     <div className="mt-2 text-sm text-[#7c7ea6]">{metric.label}</div>
                   </div>
