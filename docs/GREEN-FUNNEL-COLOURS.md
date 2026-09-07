@@ -90,6 +90,37 @@ Notes on the choices:
 only the background to `#0B0B2E`. Everything else on that page is the same green
 on the same navy, so every other field above carries over unchanged.
 
+## The cookie banner
+
+`public/js/consent.js` draws the consent bar on every static page, and its
+Accept button shipped the cyan brand gradient everywhere. On the green pages it
+was the only blue element left once Calendly was fixed.
+
+The button now takes its skin from a `data-accent` attribute on the script tag:
+
+```html
+<script src="/js/consent.js" data-pixel="..." data-accent="green"></script>
+```
+
+`green` is `#00D47E` fill with `#04241A` ink, 8.42:1. Anything else, including
+a missing attribute, keeps the gradient with white text, so a page that never
+opts in is unchanged rather than broken.
+
+Fifteen pages opt in: `/lp` and its privacy and terms pages, `/takk.html`,
+`/not-a-fit.html`, the three `/geo-audit` pages, the four `/uk-recruitment`
+pages, and `/case/be-shaping`, `/case/cruxit` and `/case/ignite`. Those three
+case pages are on the green palette too, less obviously: they pull
+`css/styles.css` through `case-study.css` and their CTA is a `.btn-g` pointing
+at `/lp/#form`.
+
+Left on the gradient: `/journey` and the four `/case/what-a-client-costs` pages,
+which run on the cyan brand and are correct as they are.
+
+`/audit`, the Visibility Dossier, is neither. It has a palette of its own, teal
+`#00d4aa` on `#1a1a2e` with cream text, so the gradient is wrong there but the
+funnel green would be too. Left alone deliberately; it needs its own value if
+anyone wants it matched.
+
 ## Calendly
 
 Set in the markup, already applied to `public/takk.html` and
