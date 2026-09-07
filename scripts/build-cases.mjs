@@ -344,7 +344,12 @@ ${noindex ? '' : `<meta property="og:title" content="${esc(d.meta.ogTitle)}">
 }
 
 /* Consent-gated pixel. Loaded on every funnel page; nothing fires before accept. */
-const CONSENT_TAG = '<script src="/js/consent.js" data-pixel="1466790598245604"></script>';
+// The ?v= token is the cache-buster for the unhashed files under /js and /css;
+// see the /js/* header block in netlify.toml. Bump it here when consent.js
+// changes, or these four generated pages keep serving the copy a returning
+// visitor already has. Editing the generated HTML does not work: prebuild
+// rewrites it.
+const CONSENT_TAG = '<script src="/js/consent.js?v=3" data-pixel="1466790598245604"></script>';
 
 /* ------------------------------------------------------------- case study */
 

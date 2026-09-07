@@ -18,16 +18,29 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Legacy funnel assets (shared by /lp, /takk.html, /geo-audit, /case)
+# Legacy funnel assets (shared by /lp, /takk.html, /geo-audit, /case).
+#
+# These must revalidate, unlike /assets/* above. Vite content-hashes its output,
+# so a changed file arrives under a new name and can be cached forever. These
+# files do not: /js/consent.js keeps that name for ever, so "immutable" for a
+# year meant an edit reached first-time visitors and nobody else, for up to a
+# year, with no way to force it. That is how the consent banner and the pixel
+# gate are delivered, so a stale copy is not cosmetic.
+#
+# max-age=0 with must-revalidate is a conditional request, not a download: the
+# CDN answers 304 with no body while the file is unchanged. Every reference to
+# these files also carries a ?v= token; bump it on the file you changed, which
+# is what breaks copies already sitting in a browser cache from before this
+# rule, since changing a header does not expire a response already stored.
 [[headers]]
   for = "/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/js/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 # The Visibility Dossier SPA is served at /audit/ (prebuilt output committed in
 # public/audit/ — rebuild via: cd dossier && npm run build && cp -r dist ../public/audit).

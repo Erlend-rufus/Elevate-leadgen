@@ -51,9 +51,13 @@ break): `/lp` (old commission landing page + `/lp/privacy/`, `/lp/terms/`),
    it would be processed before netlify.toml and break the order). Rule order is
    critical: `/audit/*` (Dossier SPA fallback) then `/lp/*` then the SPA catch-all
    `/* /index.html 200` LAST. Do not reorder or delete.
-6. `vite.config.ts` has `base: '/'` — required for direct loads of nested routes. Do not
+6. Files under `/css` and `/js` are not content-hashed, so they revalidate
+   (`max-age=0, must-revalidate` in `netlify.toml`) and every reference carries
+   a `?v=N` token. Change one of those files → bump its token everywhere it is
+   referenced, or the edit reaches new visitors only.
+7. `vite.config.ts` has `base: '/'` — required for direct loads of nested routes. Do not
    revert to `'./'` (regression: blank pages on refresh of /services/* etc.).
-7. Mobile nav overlay is portalled to `document.body` (Header.tsx) — the header's
+8. Mobile nav overlay is portalled to `document.body` (Header.tsx) — the header's
    `backdrop-blur` collapses fixed children otherwise. Do not move it back inside.
 
 ## Design DNA (non-negotiable)
