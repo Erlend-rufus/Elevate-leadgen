@@ -41,8 +41,16 @@
       <p>Book a time below for the walkthrough of your findings.</p>
     </div>
     <div class="geo-cal">
+      <!-- Calendly colours. background_color/text_color match the card this
+           widget sits in, so the white default panel stops floating on the dark
+           page. primary_color is 007f4c, NOT the funnel green 00d47e: Calendly
+           always draws white text on the primary colour, and white on 00d47e is
+           1.96:1, far under the 4.5:1 AA floor. 007f4c is the same hue (156deg),
+           darkened until white passes at 5.1:1. Do not "correct" it back to the
+           brand green: the bright green stays everywhere the page controls the
+           text colour, which is why the buttons on /lp use black ink on it. -->
       <!-- Calendly inline widget begin -->
-      <div class="calendly-inline-widget" data-url="https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
+      <div class="calendly-inline-widget" data-url="https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1?hide_gdpr_banner=1&amp;background_color=111d2e&amp;text_color=f6f1e7&amp;primary_color=007f4c" style="min-width:320px;height:700px;"></div>
       <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
       <!-- Calendly inline widget end -->
     </div>
