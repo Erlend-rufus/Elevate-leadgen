@@ -20,6 +20,10 @@
  *   <script src="/js/consent.js" data-pixel="..." data-track="Lead"
  *           data-track-custom="LeadGEOUK"></script>
  *
+ * Pages on the funnel green rather than the cyan brand gradient say so, and
+ * the Accept button follows the page instead of fighting it:
+ *   <script src="/js/consent.js" data-pixel="..." data-accent="green"></script>
+ *
  * The React app suppresses the built-in banner and drives the choice itself:
  *   <script src="/js/consent.js" data-pixel="..." data-banner="off"></script>
  *   ElevateConsent.accept()   ElevateConsent.decline()   ElevateConsent.pageView()
@@ -32,6 +36,18 @@
   var d = (self && self.dataset) || {};
   var PIXEL = d.pixel || '1466790598245604';
   var SHOW_BANNER = d.banner !== 'off';
+
+  /* Accent for the Accept button. The banner runs on two palettes: the cyan
+     brand gradient (/case, /journey, /audit) and the funnel green (/lp,
+     /takk.html, /geo-audit, /uk-recruitment). Opt in per page with
+     data-accent="green" on the script tag. Anything else keeps the gradient,
+     so a page that never sets the attribute is unchanged rather than broken.
+     Green is a fill under dark ink, never white on green: white on #00D47E is
+     1.96:1 and #04241A on it is 8.42:1. Same reasoning as the Calendly
+     parameters, see docs/GREEN-FUNNEL-COLOURS.md. */
+  var ACCEPT_SKIN = d.accent === 'green'
+    ? 'background:#00D47E;color:#04241A'
+    : 'background:linear-gradient(135deg,#00a3d6,#006aba,#02009a);color:#fff';
 
   var list = function (v) {
     return (v || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
@@ -94,9 +110,9 @@
       '<button type="button" data-c="declined" style="background:none;border:1px solid ' +
       'rgba(255,255,255,.2);color:#b9bbd9;padding:10px 20px;border-radius:8px;font:inherit;' +
       'font-size:14px;cursor:pointer">Decline</button>' +
-      '<button type="button" data-c="accepted" style="background:linear-gradient(135deg,' +
-      '#00a3d6,#006aba,#02009a);border:none;color:#fff;padding:10px 22px;border-radius:8px;' +
-      'font:inherit;font-size:14px;font-weight:600;cursor:pointer">Accept</button>' +
+      '<button type="button" data-c="accepted" style="' + ACCEPT_SKIN + ';border:none;' +
+      'padding:10px 22px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;' +
+      'cursor:pointer">Accept</button>' +
       '</div></div>';
     el.addEventListener('click', function (e) {
       var c = e.target && e.target.dataset && e.target.dataset.c;
