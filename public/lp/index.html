@@ -418,10 +418,29 @@
           <p class="tf-trust-stats">First lead in 7-10 days <span class="sep"></span> 40-50% close rate <span class="sep"></span> &pound;0 upfront cost</p>
         </div>
         <div class="tfbox">
-          <div data-tf-live="01KN2053F8KF4QQ632YVB99B1S"
+          <div data-tf-live="01M294R5AM8X2YEPZ6PGHAA8YA"
                data-tf-hidden="utm_source=,utm_medium=,utm_campaign=,utm_content=,utm_term="
                style="width:100%;height:500px;">
           </div>
+          <!-- Fill the hidden fields before the embed script runs, not after.
+               js/main.js also does this, but on DOMContentLoaded, which is too
+               late: when the embed script below executes, document.readyState is
+               still "loading" and data-tf-hidden still holds the empty
+               placeholder, so an embed that reads the attribute synchronously
+               takes empty UTMs and the ad attribution is silently lost. This
+               runs first and writes the same values, so the later pass in
+               main.js is a harmless no-op. -->
+          <script>
+            (function () {
+              var p = new URLSearchParams(window.location.search);
+              var el = document.currentScript.previousElementSibling;
+              while (el && !el.hasAttribute('data-tf-live')) el = el.previousElementSibling;
+              if (!el) return;
+              el.setAttribute('data-tf-hidden',
+                ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+                  .map(function (f) { return f + '=' + (p.get(f) || ''); }).join(','));
+            })();
+          </script>
           <script src="//embed.typeform.com/next/embed.js"></script>
         </div>
         <p class="tf-field-note">You'll need your company name, work email, and website URL.</p>
