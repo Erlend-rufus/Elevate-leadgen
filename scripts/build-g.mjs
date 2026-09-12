@@ -676,7 +676,12 @@ function jsonLd(d) {
 }
 
 function shell(d, { title, description, noindex, path, mono, structured, bodyClass, eyebrow }) {
-  const url = `${d.origin}/g/${d.slug}${path}`;
+  /* Netlify 301s an extensionless path to its trailing-slash form before the
+     rules in netlify.toml are consulted, so that is the URL actually served.
+     Confirmed on the deploy preview, and /case/what-a-client-costs behaves the
+     same way. Pointing the canonical anywhere else would name a URL that
+     redirects, and would put a hop in front of every ad click. */
+  const url = `${d.origin}/g/${d.slug}${path}/`;
   const font = (f) => `<link rel="preload" href="/g/_assets/fonts/${f}" as="font" type="font/woff2" crossorigin>`;
   return `<!DOCTYPE html>
 <html lang="en-GB">
@@ -950,7 +955,7 @@ ${consentBar(d)}
 <script>
 ${consts(d, [
     `var CALENDLY_URL = ${JSON.stringify(d.funnel.calendlyUrl)};`,
-    `var BOOKED_PATH = ${JSON.stringify(`/g/${d.slug}/booked`)};`,
+    `var BOOKED_PATH = ${JSON.stringify(`/g/${d.slug}/booked/`)};`,
   ])}
 ${FRAME_BUSTER}
 ${PARAM_JS}

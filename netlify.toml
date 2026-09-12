@@ -288,9 +288,13 @@
   to = "/uk-recruitment/thanks-review/index.html"
   status = 200
 
-# Campaign funnel at /g/<slug>. Same shape as /uk-recruitment above: the five
-# paths are named explicitly so a routing mistake 404s instead of serving the
-# empty SPA shell, which answers 200 for any path and looks alive.
+# Campaign funnel at /g/<slug>. Same shape as /uk-recruitment above. Netlify
+# canonicalises an extensionless path to its trailing-slash form with a 301
+# before it reaches these rules, so in practice they are documentation rather
+# than what serves the page, exactly as for /case/what-a-client-costs. The rules
+# that do the work are the two 404s below. Verified on the deploy preview for
+# PR #67: /g/ and /g/<typo> both answer 404 rather than falling through to the
+# SPA shell.
 [[redirects]]
   from = "/g/uk-private-clinics"
   to = "/g/uk-private-clinics/index.html"

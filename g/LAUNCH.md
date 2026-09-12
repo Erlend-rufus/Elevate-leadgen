@@ -106,17 +106,17 @@ pipes are inserted from Typeform's own variable picker, not typed by hand.
 
 Qualified:
 ```
-https://getelevateleads.com/g/uk-private-clinics/booking?utm_source={{hidden:utm_source}}&utm_medium={{hidden:utm_medium}}&utm_campaign={{hidden:utm_campaign}}&utm_content={{hidden:utm_content}}&utm_term={{hidden:utm_term}}&fbclid={{hidden:fbclid}}&lead_id={{hidden:lead_id}}
+https://getelevateleads.com/g/uk-private-clinics/booking/?utm_source={{hidden:utm_source}}&utm_medium={{hidden:utm_medium}}&utm_campaign={{hidden:utm_campaign}}&utm_content={{hidden:utm_content}}&utm_term={{hidden:utm_term}}&fbclid={{hidden:fbclid}}&lead_id={{hidden:lead_id}}
 ```
 
 Not a fit:
 ```
-https://getelevateleads.com/g/uk-private-clinics/not-a-fit?utm_source={{hidden:utm_source}}&utm_campaign={{hidden:utm_campaign}}&lead_id={{hidden:lead_id}}
+https://getelevateleads.com/g/uk-private-clinics/not-a-fit/?utm_source={{hidden:utm_source}}&utm_campaign={{hidden:utm_campaign}}&lead_id={{hidden:lead_id}}
 ```
 
 Not now:
 ```
-https://getelevateleads.com/g/uk-private-clinics/not-now?utm_source={{hidden:utm_source}}&utm_campaign={{hidden:utm_campaign}}&lead_id={{hidden:lead_id}}
+https://getelevateleads.com/g/uk-private-clinics/not-now/?utm_source={{hidden:utm_source}}&utm_campaign={{hidden:utm_campaign}}&lead_id={{hidden:lead_id}}
 ```
 
 **The host must be `getelevateleads.com`, not `it.getelevateleads.com`.** The
@@ -204,7 +204,7 @@ The ad URL. `utm_content` is the creative, and it stays the creative the whole
 way through:
 
 ```
-https://getelevateleads.com/g/uk-private-clinics?utm_source=meta&utm_medium=paid&utm_campaign=uk_clinics_sep&utm_content=ad_a_waiting_room&utm_term=broad
+https://getelevateleads.com/g/uk-private-clinics/?utm_source=meta&utm_medium=paid&utm_campaign=uk_clinics_sep&utm_content=ad_a_waiting_room&utm_term=broad
 ```
 
 1. **Landing page.** Mints `lead_id=l_9f3c…`, keeps everything from the URL, and
