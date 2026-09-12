@@ -11,7 +11,7 @@
   "funnel": {
     "_comment": "typeformId is the 26-character live-embed id. calendlyUrl is the event URL with no query string: the page adds its own parameters. conversionEvent is a custom event, deliberately not the generic Lead, so the campaign can optimise against it directly. It fires on S3 only.",
     "typeformId": "",
-    "calendlyUrl": "https://calendly.com/d/dtrb-7m9-krs/elevate-marketing-commission-i-private-clinic",
+    "calendlyUrl": "https://calendly.com/d/dtrb-7m9-krs/elevate-marketing-clinic-intake-call",
     "conversionEvent": "ClinicBookedUK",
     "pixelId": "1466790598245604",
     "hiddenFields": [

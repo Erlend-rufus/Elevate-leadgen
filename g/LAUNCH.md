@@ -135,19 +135,25 @@ and the embed is 640px tall on a phone.
 
 ## 3. Calendly
 
-The event is live: `https://calendly.com/d/dtrb-7m9-krs/elevate-marketing-commission-i-private-clinic`,
+The event is live: `https://calendly.com/d/dtrb-7m9-krs/elevate-marketing-clinic-intake-call`,
 30 minutes, video, and it is in `funnel.calendlyUrl`. Only the base URL is
 stored; the page adds `hide_gdpr_banner=1`, the colours and the tracking
 parameters itself, so whatever is ticked in Calendly's embed dialog does not
 reach the page.
 
-**Rename the event to "Clinic intake call".** It is currently called
-"Elevate Marketing | Commission I Private clinic". The embed hides the title, so
-it is not on the page, but it is in the calendar invitation and the confirmation
-email, which is what the clinic reads immediately after a page that spends a
-whole answer explaining why this is not a referral fee under the GMC and GDC
-rules. Renaming an event does not change its URL, so nothing in the repo has to
-move.
+The event was renamed from "Elevate Marketing | Commission I Private clinic" on
+12 September, because the old name put the word commission in the calendar
+invitation and the confirmation email, which is what a clinic reads immediately
+after a page that spends a whole answer explaining why this is not a referral
+fee under the GMC and GDC rules.
+
+**Renaming a Calendly event rewrites the slug.** The path changed from
+`elevate-marketing-commission-i-private-clinic` to
+`elevate-marketing-clinic-intake-call`, and the stored URL was stale until it
+was updated. Rename the event again and `funnel.calendlyUrl` has to be updated
+in the same change, or the booking page renders an empty calendar at the one
+step the whole funnel exists to reach. Take the URL from Share, Add to website,
+Inline embed, and keep only the part before the question mark.
 
 Two settings matter:
 
