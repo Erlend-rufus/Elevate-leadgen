@@ -1,7 +1,7 @@
 {
   "slug": "uk-private-clinics",
   "_comment_live": "false keeps the build green while typeformId and calendlyUrl are empty: the pages are generated so the PR can be reviewed and a deploy preview can build, but every page carries noindex and the embeds are replaced by a visible 'not configured' notice. Flip to true once both ids are in, and the build then fails hard if either is missing. The exchange rate is NOT gated by this flag: it fails the build either way, as the work order requires.",
-  "live": false,
+  "live": true,
   "_comment_origin": "One host for the whole chain. localStorage (consent) and sessionStorage (the fire-once guard) are per origin, so the ad URL, the three Typeform redirects and the Calendly forward must all use this one. Do not mix in it.getelevateleads.com.",
   "origin": "https://getelevateleads.com",
   "meta": {
