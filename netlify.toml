@@ -87,6 +87,47 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow, noarchive"
 
+# Campaign funnel pages under /g/<slug>. Everything except the landing page
+# itself is a step in the funnel, not an entrance, and must not rank. The
+# wildcard is attached to the page name rather than placed after a slash
+# (/booking* not /booking/*), so it covers /booking and /booking/ but cannot
+# match the bare parent /g/uk-private-clinics, which is the one page here that
+# is meant to be found. Each page also carries a robots meta; this is defence
+# in depth.
+[[headers]]
+  for = "/g/uk-private-clinics/booking*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-private-clinics/booked*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-private-clinics/not-a-fit*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-private-clinics/not-now*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# Self-hosted fonts and logos shared by every /g campaign. The filenames carry
+# a version (fraunces-v1.woff2), so a replaced file arrives under a new name
+# and this can safely be immutable; bump the name, never the file, or the old
+# copy sits in browsers for a year. Same lesson as the /js block above.
+[[headers]]
+  for = "/g/_assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/g/_assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # The funnel pages under the case study are not entrances and must not rank.
 # The glob does not match the bare parent /case/what-a-client-costs, which stays
 # indexable. Each page also carries a robots meta; this is defence in depth.
@@ -246,6 +287,53 @@
   from = "/uk-recruitment/thanks-review"
   to = "/uk-recruitment/thanks-review/index.html"
   status = 200
+
+# Campaign funnel at /g/<slug>. Same shape as /uk-recruitment above. Netlify
+# canonicalises an extensionless path to its trailing-slash form with a 301
+# before it reaches these rules, so in practice they are documentation rather
+# than what serves the page, exactly as for /case/what-a-client-costs. The rules
+# that do the work are the two 404s below. Verified on the deploy preview for
+# PR #67: /g/ and /g/<typo> both answer 404 rather than falling through to the
+# SPA shell.
+[[redirects]]
+  from = "/g/uk-private-clinics"
+  to = "/g/uk-private-clinics/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-clinics/booking"
+  to = "/g/uk-private-clinics/booking/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-clinics/booked"
+  to = "/g/uk-private-clinics/booked/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-clinics/not-a-fit"
+  to = "/g/uk-private-clinics/not-a-fit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-clinics/not-now"
+  to = "/g/uk-private-clinics/not-now/index.html"
+  status = 200
+
+# Same shape as /report, /draft and /r above: real files under public/g/ win,
+# including the fonts under /g/_assets, so these only catch paths that do not
+# exist. Without them a mistyped ad URL such as /g/uk-private-clinicz falls
+# through to the SPA catch-all and returns 200 with the homepage: no pixel, no
+# form, and nothing to tell anyone it is the wrong page.
+[[redirects]]
+  from = "/g"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/g/*"
+  to = "/404.html"
+  status = 404
 
 # Legacy landing page (moved from / to /lp): unknown /lp/* paths serve it
 [[redirects]]
