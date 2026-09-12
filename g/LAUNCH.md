@@ -183,6 +183,33 @@ standard `Lead`: the previous campaign optimised against form fills and Meta
 learned to find people who fill in forms. 262 of them, 76 per cent archived as
 unqualified, none signed.
 
+### The rule
+
+```
+Event:              ClinicBookedUK
+AND URL contains:   getelevateleads.com/g/uk-private-clinics/booked
+```
+
+Both halves matter.
+
+**Event, not "All URL traffic".** A URL-only rule hangs the conversion on
+PageView, which fires on every load of that page: a refresh, a back button, a
+bookmarked return all count again. The fire-once guard in the page sits on the
+custom event, so against a URL rule it is decoration and Meta optimises against
+a number inflated by reloads.
+
+**Contains, not equals.** The page is reached at
+`https://getelevateleads.com/g/uk-private-clinics/booked/?utm_source=…&lead_id=…`
+: a trailing slash, and a query string longer than the path itself. An exact
+match against the bare path never sees it.
+
+The URL half is there to keep Netlify deploy previews out. They load the same
+live pixel and their events land in the same production statistics, so the host
+has to be part of the rule.
+
+Custom conversion for this funnel: **ClinicBookedUK, id 1958436048183359**,
+created 12 September on dataset 1466790598245604 in DMP - Intern - V.2.
+
 ### Create the custom conversion in this order
 
 Events Manager only lists events it has already received, so the order is not
