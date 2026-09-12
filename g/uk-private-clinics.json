@@ -1,0 +1,227 @@
+{
+  "slug": "uk-private-clinics",
+
+  "_comment_live": "false keeps the build green while typeformId and calendlyUrl are empty: the pages are generated so the PR can be reviewed and a deploy preview can build, but every page carries noindex and the embeds are replaced by a visible 'not configured' notice. Flip to true once both ids are in, and the build then fails hard if either is missing. The exchange rate is NOT gated by this flag: it fails the build either way, as the work order requires.",
+  "live": false,
+
+  "_comment_origin": "One host for the whole chain. localStorage (consent) and sessionStorage (the fire-once guard) are per origin, so the ad URL, the three Typeform redirects and the Calendly forward must all use this one. Do not mix in it.getelevateleads.com.",
+  "origin": "https://getelevateleads.com",
+
+  "meta": {
+    "title": "Private clinic marketing, paid on attended consultations | Elevate Marketing",
+    "description": "We run Google Ads for private clinics and invoice a fixed fee per consultation the patient actually attended. Not per booking. Nine questions to see whether we would take you on."
+  },
+
+  "funnel": {
+    "_comment": "typeformId is the 26-character live-embed id. calendlyUrl is the event URL with no query string: the page adds its own parameters. conversionEvent is a custom event, deliberately not the generic Lead, so the campaign can optimise against it directly. It fires on S3 only.",
+    "typeformId": "",
+    "calendlyUrl": "",
+    "conversionEvent": "ClinicBookedUK",
+    "pixelId": "1466790598245604",
+    "hiddenFields": ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "lead_id", "page_slug"]
+  },
+
+  "figures": {
+    "_comment": "Pounds are NEVER stored. Every £ figure on the page is spend_nok * currency_rate_nok_to_gbp, rounded to the nearest whole pound at build time. The footnote is rendered from these same fields. A rate of 0 or a missing rate fails the build.",
+    "currency_rate_nok_to_gbp": 0.08,
+    "rate_source": "Norges Bank",
+    "rate_date": "2026-09-11",
+    "export_date": "2026-09-11",
+    "client_name": "C-Medical",
+    "platform": "Google Ads",
+    "permission_statement": "Published with their written permission.",
+    "label": "C-Medical. Twenty-four months of Google Ads.",
+    "columns": {
+      "spend": "Spend",
+      "bookings": "Booked consultations",
+      "costPerBooking": "Cost per booking"
+    },
+    "rows": [
+      { "label": "24 months, all campaigns", "spend_nok": 4044000, "bookings": 6124, "cost_per_booking_nok": 660 },
+      { "label": "24 months, excluding brand searches", "spend_nok": 3477000, "bookings": 3269, "cost_per_booking_nok": 1064, "highlight": true },
+      { "label": "Last 12 months", "spend_nok": 2052000, "bookings": 3189, "cost_per_booking_nok": 643 }
+    ]
+  },
+
+  "testimonial": {
+    "_comment": "From C-Medical, not yet obtained. While quote is empty the entire section is not rendered: no empty marine band, no placeholder, no coming soon. Never invent a version of this, not even as an example.",
+    "quote": "",
+    "attribution": ""
+  },
+
+  "s1": {
+    "eyebrow": "Patient demand for private clinics",
+    "h1": "This is what a private clinic's account looks like when it is run for bookings.",
+    "lede": [
+      "The second row is the one that matters. Strip out people already searching for the clinic by name, and a booked consultation costs £85. We show you the expensive number first because you would have found it yourself in about four minutes. And we invoice on the ones who turn up, not on the bookings.",
+      "The clinic is a Norwegian group, not a British one. The health system is different. What a patient types into Google when they are looking for a specialist is not, and neither is what it costs to be the answer."
+    ],
+    "cta": "See whether we would take you on",
+    "ctaNote": "Nine questions. We turn most clinics down.",
+
+    "compliance": {
+      "eyebrow": "Before the model, before the money",
+      "h2": "Every ad is signed off by your clinician before it runs",
+      "points": [
+        "Your named clinician approves every ad and every landing page before it goes live. Nothing runs on your account that you have not seen.",
+        "No prescription-only medicine is named anywhere in the campaign. Not in copy, not in a hashtag, not in a testimonial.",
+        "No countdown timers, no limited slots, no before-and-after claims we cannot evidence, no language that trades on how someone feels about their appearance.",
+        "Every claim we make about outcomes is one we can show you the source for, in writing, before it runs."
+      ],
+      "note": "In a review published in March 2026, the ASA assessed more than 900 ads for one cosmetic procedure and found 11.5 per cent of them compliant. Six clinics were told to amend or withdraw ads and three were referred to Meta for removal. Under the CAP Code the clinic is the advertiser, not the agency. That is why this section is second on the page and not in the small print."
+    },
+
+    "notDo": {
+      "h2": "Three things we do not do",
+      "items": [
+        {
+          "title": "We do not lead with Meta.",
+          "body": "Meta classifies clinics as a health and wellness data source and restricts what its algorithm is allowed to learn from your patients. Campaigns that depend on it get worse quietly. Search is where the intent is, and search is where we start."
+        },
+        {
+          "title": "We do not touch treatment data.",
+          "body": "We are paid on attended consultations, and a monthly number is all we need. We never ask for, receive or process anything about who the patient was or what they came in for."
+        },
+        {
+          "title": "We do not talk to your patients.",
+          "body": "No calls, no chasing, no follow-up sequences in your name. The booking lands in your calendar and the rest is your clinic."
+        }
+      ]
+    },
+
+    "fit": {
+      "worksTitle": "This works if",
+      "works": [
+        "A meaningful share of your revenue is self-pay",
+        "Patients can book online today, in a system that records whether they attended",
+        "You could see at least twenty more new patients next month",
+        "One named clinician can approve campaign material within a couple of days"
+      ],
+      "notTitle": "This does not work if",
+      "not": [
+        "Nearly all your income is insured or contracted volume",
+        "Booking is by phone only, with no record we can both see",
+        "You are already at capacity, in which case come back when you are not",
+        "Nobody clinical has time to sign anything off"
+      ]
+    },
+
+    "model": {
+      "h2": "How we get paid",
+      "body": [
+        "We invoice a fixed fee for each consultation that came from a campaign we run and that the patient actually attended. Not per booking. If they do not turn up, there is nothing to invoice and nothing to argue about.",
+        "The table at the top of this page counts bookings, because that is what an ad account can see. We invoice on the ones who turn up, which only your clinic can see. We are comfortable being paid on the smaller number.",
+        "Your booking system is the record, and an aggregate count is all we need. We never ask who the patient was or what they came in for.",
+        "There is no retainer, no setup fee and no minimum term. The fee depends on your speciality and what a consultation is worth to you, so we agree it before anything runs. There is nothing to sign to have the conversation."
+      ]
+    },
+
+    "faq": {
+      "h2": "Straight answers",
+      "items": [
+        {
+          "q": "Is this a referral fee?",
+          "a": "No. A referral fee is money paid to someone who sends you a patient, and that is what the GMC and GDC rules are about. We are paid for advertising that we produce and run, in the same way you would pay any agency, with the amount tied to how well it worked."
+        },
+        {
+          "q": "What counts as an attended consultation?",
+          "a": "A patient who came from a campaign we run, booked, and turned up. Rescheduled appointments count when the patient attends the new time. Cancellations, no-shows and anything you decline to see do not. You send a monthly count from your own system and we invoice against it."
+        },
+        {
+          "q": "Who owns the ad accounts?",
+          "a": "You do. They are opened in your name, you hold the billing, and if we stop working together you keep everything, including the campaign history."
+        },
+        {
+          "q": "What do you need from us to start?",
+          "a": "A named clinician who can approve material, access to your booking figures, and a decision on how many new patients you can take."
+        },
+        {
+          "q": "What if it does not work?",
+          "a": "Then you have paid for the advertising you would have paid for anyway. If nobody turns up, you have paid us nothing at all. That is the whole point of the model, and it is also why we are selective about who we take on."
+        },
+        {
+          "q": "Are you regulated to give clinical advice?",
+          "a": "No, and we do not. Everything clinical is yours."
+        }
+      ]
+    },
+
+    "who": {
+      "eyebrow": "Who we are",
+      "body": "Elevate Marketing is operated by EngeCo AS. We work with service businesses that can measure what a new customer is worth. Most of what we do is paid on results."
+    },
+
+    "form": {
+      "h2": "See whether we would take you on",
+      "sub": "Nine questions, about two minutes. We turn most clinics down, and we would rather do that now than in a meeting.",
+      "noscript": "This form needs JavaScript. Email hello@getelevateleads.com with your clinic name and what you treat, and we will send the questions by reply."
+    }
+  },
+
+  "s2": {
+    "eyebrow": "Step two of two",
+    "h1": "Pick a time that works",
+    "lede": "Thirty minutes, on video. We read your answers before we join, so we start where you left off. If the time stops working, move it from the confirmation email. We hold the slot for you until you do.",
+    "noscript": "The calendar needs JavaScript. Email hello@getelevateleads.com and we will send you times by reply."
+  },
+
+  "s3": {
+    "eyebrow": "Confirmed",
+    "h1": "You are booked in",
+    "body": [
+      "You will get a confirmation by email with a link to the call.",
+      "Before we speak we will look at how your clinic appears in search for your specialities and your area, and what that is likely to be costing you. That work happens beforehand, so tell us early if the time stops working.",
+      "Nothing to prepare. Bring the number of new patients you could take next month and we will take it from there."
+    ]
+  },
+
+  "s4": {
+    "eyebrow": "Your answers, read",
+    "h1": "Thank you for the straight answers",
+    "body": [
+      "We work with clinics where a meaningful share of the revenue is self-pay and where patients can book online. From what you have told us, that is not where you are right now, and we are not going to book a call and pretend otherwise.",
+      "We have your details. If that changes, so does our answer."
+    ]
+  },
+
+  "s5": {
+    "eyebrow": "Three months from now",
+    "h1": "Thanks for the straight answer",
+    "body": [
+      "You told us you are at capacity. Sending you patients now would waste your time and ours, so we are not going to book a call and pretend otherwise.",
+      "We will come back to you in three months. If things change before then, reply to the email we just sent."
+    ]
+  },
+
+  "consent": {
+    "_comment": "This page owns its banner because the shared one in /js/consent.js is styled for the dark site. The wording names Meta, because a Meta advertising pixel is what it loads. Do not soften it to 'analytics cookies'.",
+    "body": "We use a Meta cookie to measure whether our advertising works. Nothing is loaded until you choose. The page works the same either way.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "privacyLabel": "Privacy",
+    "privacyUrl": "/lp/privacy/"
+  },
+
+  "footer": "Elevate Marketing is operated by EngeCo AS, company no. 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norway.",
+
+  "organisation": {
+    "_comment": "Matches src/components/HomeStructuredData.tsx so the site does not claim two different entities, plus the legal entity details the footer already states.",
+    "name": "Elevate Marketing",
+    "legalName": "EngeCo AS",
+    "url": "https://getelevateleads.com",
+    "email": "hello@getelevateleads.com",
+    "vatID": "924 490 926",
+    "address": {
+      "street": "Midtfjellet 66",
+      "postalCode": "5363",
+      "locality": "Ågotnes",
+      "country": "NO"
+    }
+  },
+
+  "service": {
+    "name": "Paid search for private clinics",
+    "description": "Google Ads campaigns for private healthcare clinics in the United Kingdom, invoiced as a fixed fee for each consultation a patient attended rather than for each booking.",
+    "areaServed": "GB"
+  }
+}

@@ -13,6 +13,14 @@
 > | `nevari/` | `public/nevari/` | `/nevari/` |
 > | `css/`, `js/`, `images/` | `public/css/`, `public/js/`, `public/images/` | `/css/*`, `/js/*`, `/images/*` |
 >
+> **September 2026:** a second generated funnel joined the case study one. `/g/<slug>/*`
+> is built by `scripts/build-g.mjs` from `g/<slug>.json`; the first variant is
+> `/g/uk-private-clinics` (paid search for UK private clinics). It runs the paper and ink
+> palette from its own approved design, not the site's dark theme, and self-hosts
+> Fraunces, Geist and Geist Mono under `/g/_assets/fonts/`. Its launch settings, the
+> Typeform questions and endings, the Calendly event and the Meta custom conversion are
+> written down in `g/LAUNCH.md`.
+>
 > The Dossier *source* stays in `dossier/` (repo root, not deployed).
 > Typeform/Calendly redirect URLs pointing at `/takk.html` and `/geo-audit/*`
 > keep working. Ads pointing at the domain root now land on the new site —
