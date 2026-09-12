@@ -579,11 +579,15 @@ const BOOKING_JS = `
 
   var host = document.getElementById('cal');
   if (host && CALENDLY_URL) {
-    /* Calendly accepts five tracking parameters and no more. lead_id rides in
+    /* background_color is the white of the card the embed sits in (.embed), not
+       the paper of the page behind it: Calendly fills its own panel, and the
+       paper value would draw a visible seam inside a white box.
+
+       Calendly accepts five tracking parameters and no more. lead_id rides in
        utm_term so utm_content keeps carrying the creative: overwrite that and
        a booking can no longer be traced to the ad that produced it, which is
        the whole point of running four of them. */
-    var p = ['hide_gdpr_banner=1', 'background_color=F7F5F0', 'text_color=10141C', 'primary_color=0073BD'];
+    var p = ['hide_gdpr_banner=1', 'background_color=FFFFFF', 'text_color=10141C', 'primary_color=0073BD'];
     if (s.lead_id) p.push('utm_term=' + encodeURIComponent(s.lead_id));
     ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function(k){
       if (s[k]) p.push(k + '=' + encodeURIComponent(s[k]));

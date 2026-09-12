@@ -1,26 +1,30 @@
 {
   "slug": "uk-private-clinics",
-
   "_comment_live": "false keeps the build green while typeformId and calendlyUrl are empty: the pages are generated so the PR can be reviewed and a deploy preview can build, but every page carries noindex and the embeds are replaced by a visible 'not configured' notice. Flip to true once both ids are in, and the build then fails hard if either is missing. The exchange rate is NOT gated by this flag: it fails the build either way, as the work order requires.",
   "live": false,
-
   "_comment_origin": "One host for the whole chain. localStorage (consent) and sessionStorage (the fire-once guard) are per origin, so the ad URL, the three Typeform redirects and the Calendly forward must all use this one. Do not mix in it.getelevateleads.com.",
   "origin": "https://getelevateleads.com",
-
   "meta": {
     "title": "Private clinic marketing, paid on attended consultations | Elevate Marketing",
     "description": "We run Google Ads for private clinics and invoice a fixed fee per consultation the patient actually attended. Not per booking. Nine questions to see whether we would take you on."
   },
-
   "funnel": {
     "_comment": "typeformId is the 26-character live-embed id. calendlyUrl is the event URL with no query string: the page adds its own parameters. conversionEvent is a custom event, deliberately not the generic Lead, so the campaign can optimise against it directly. It fires on S3 only.",
     "typeformId": "",
-    "calendlyUrl": "",
+    "calendlyUrl": "https://calendly.com/d/dtrb-7m9-krs/elevate-marketing-commission-i-private-clinic",
     "conversionEvent": "ClinicBookedUK",
     "pixelId": "1466790598245604",
-    "hiddenFields": ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "lead_id", "page_slug"]
+    "hiddenFields": [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "utm_content",
+      "utm_term",
+      "fbclid",
+      "lead_id",
+      "page_slug"
+    ]
   },
-
   "figures": {
     "_comment": "Pounds are NEVER stored. Every £ figure on the page is spend_nok * currency_rate_nok_to_gbp, rounded to the nearest whole pound at build time. The footnote is rendered from these same fields. A rate of 0 or a missing rate fails the build.",
     "currency_rate_nok_to_gbp": 0.08,
@@ -37,18 +41,32 @@
       "costPerBooking": "Cost per booking"
     },
     "rows": [
-      { "label": "24 months, all campaigns", "spend_nok": 4044000, "bookings": 6124, "cost_per_booking_nok": 660 },
-      { "label": "24 months, excluding brand searches", "spend_nok": 3477000, "bookings": 3269, "cost_per_booking_nok": 1064, "highlight": true },
-      { "label": "Last 12 months", "spend_nok": 2052000, "bookings": 3189, "cost_per_booking_nok": 643 }
+      {
+        "label": "24 months, all campaigns",
+        "spend_nok": 4044000,
+        "bookings": 6124,
+        "cost_per_booking_nok": 660
+      },
+      {
+        "label": "24 months, excluding brand searches",
+        "spend_nok": 3477000,
+        "bookings": 3269,
+        "cost_per_booking_nok": 1064,
+        "highlight": true
+      },
+      {
+        "label": "Last 12 months",
+        "spend_nok": 2052000,
+        "bookings": 3189,
+        "cost_per_booking_nok": 643
+      }
     ]
   },
-
   "testimonial": {
     "_comment": "From C-Medical, not yet obtained. While quote is empty the entire section is not rendered: no empty marine band, no placeholder, no coming soon. Never invent a version of this, not even as an example.",
     "quote": "",
     "attribution": ""
   },
-
   "s1": {
     "eyebrow": "Patient demand for private clinics",
     "h1": "This is what a private clinic's account looks like when it is run for bookings.",
@@ -58,7 +76,6 @@
     ],
     "cta": "See whether we would take you on",
     "ctaNote": "Nine questions. We turn most clinics down.",
-
     "compliance": {
       "eyebrow": "Before the model, before the money",
       "h2": "Every ad is signed off by your clinician before it runs",
@@ -70,7 +87,6 @@
       ],
       "note": "In a review published in March 2026, the ASA assessed more than 900 ads for one cosmetic procedure and found 11.5 per cent of them compliant. Six clinics were told to amend or withdraw ads and three were referred to Meta for removal. Under the CAP Code the clinic is the advertiser, not the agency. That is why this section is second on the page and not in the small print."
     },
-
     "notDo": {
       "h2": "Three things we do not do",
       "items": [
@@ -88,7 +104,6 @@
         }
       ]
     },
-
     "fit": {
       "worksTitle": "This works if",
       "works": [
@@ -105,7 +120,6 @@
         "Nobody clinical has time to sign anything off"
       ]
     },
-
     "model": {
       "h2": "How we get paid",
       "body": [
@@ -115,7 +129,6 @@
         "There is no retainer, no setup fee and no minimum term. The fee depends on your speciality and what a consultation is worth to you, so we agree it before anything runs. There is nothing to sign to have the conversation."
       ]
     },
-
     "faq": {
       "h2": "Straight answers",
       "items": [
@@ -145,26 +158,22 @@
         }
       ]
     },
-
     "who": {
       "eyebrow": "Who we are",
       "body": "Elevate Marketing is operated by EngeCo AS. We work with service businesses that can measure what a new customer is worth. Most of what we do is paid on results."
     },
-
     "form": {
       "h2": "See whether we would take you on",
       "sub": "Nine questions, about two minutes. We turn most clinics down, and we would rather do that now than in a meeting.",
       "noscript": "This form needs JavaScript. Email hello@getelevateleads.com with your clinic name and what you treat, and we will send the questions by reply."
     }
   },
-
   "s2": {
     "eyebrow": "Step two of two",
     "h1": "Pick a time that works",
     "lede": "Thirty minutes, on video. We read your answers before we join, so we start where you left off. If the time stops working, move it from the confirmation email. We hold the slot for you until you do.",
     "noscript": "The calendar needs JavaScript. Email hello@getelevateleads.com and we will send you times by reply."
   },
-
   "s3": {
     "eyebrow": "Confirmed",
     "h1": "You are booked in",
@@ -174,7 +183,6 @@
       "Nothing to prepare. Bring the number of new patients you could take next month and we will take it from there."
     ]
   },
-
   "s4": {
     "eyebrow": "Your answers, read",
     "h1": "Thank you for the straight answers",
@@ -183,7 +191,6 @@
       "We have your details. If that changes, so does our answer."
     ]
   },
-
   "s5": {
     "eyebrow": "Three months from now",
     "h1": "Thanks for the straight answer",
@@ -192,7 +199,6 @@
       "We will come back to you in three months. If things change before then, reply to the email we just sent."
     ]
   },
-
   "consent": {
     "_comment": "This page owns its banner because the shared one in /js/consent.js is styled for the dark site. The wording names Meta, because a Meta advertising pixel is what it loads. Do not soften it to 'analytics cookies'.",
     "body": "We use a Meta cookie to measure whether our advertising works. Nothing is loaded until you choose. The page works the same either way.",
@@ -201,9 +207,7 @@
     "privacyLabel": "Privacy",
     "privacyUrl": "/lp/privacy/"
   },
-
   "footer": "Elevate Marketing is operated by EngeCo AS, company no. 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norway.",
-
   "organisation": {
     "_comment": "Matches src/components/HomeStructuredData.tsx so the site does not claim two different entities, plus the legal entity details the footer already states.",
     "name": "Elevate Marketing",
@@ -218,7 +222,6 @@
       "country": "NO"
     }
   },
-
   "service": {
     "name": "Paid search for private clinics",
     "description": "Google Ads campaigns for private healthcare clinics in the United Kingdom, invoiced as a fixed fee for each consultation a patient attended rather than for each booking.",

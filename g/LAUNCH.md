@@ -135,10 +135,19 @@ and the embed is 640px tall on a phone.
 
 ## 3. Calendly
 
-Create an event called **Clinic intake call**, 30 minutes, video. Put the URL
-with no query string in `funnel.calendlyUrl`, for example
-`https://calendly.com/eb-growwithelevate/clinic-intake-call`. The page adds its
-own parameters.
+The event is live: `https://calendly.com/d/dtrb-7m9-krs/elevate-marketing-commission-i-private-clinic`,
+30 minutes, video, and it is in `funnel.calendlyUrl`. Only the base URL is
+stored; the page adds `hide_gdpr_banner=1`, the colours and the tracking
+parameters itself, so whatever is ticked in Calendly's embed dialog does not
+reach the page.
+
+**Rename the event to "Clinic intake call".** It is currently called
+"Elevate Marketing | Commission I Private clinic". The embed hides the title, so
+it is not on the page, but it is in the calendar invitation and the confirmation
+email, which is what the clinic reads immediately after a page that spends a
+whole answer explaining why this is not a referral fee under the GMC and GDC
+rules. Renaming an event does not change its URL, so nothing in the repo has to
+move.
 
 Two settings matter:
 
@@ -147,7 +156,7 @@ Two settings matter:
   booked page itself, with the tracking parameters intact. Calendly's redirect
   is unreliable inside the Facebook in-app browser and hands us no control over
   the query string. With both switched on the visitor is sent twice.
-- Colour parameters (`background_color=F7F5F0`, `text_color=10141C`,
+- Colour parameters (`background_color=FFFFFF`, `text_color=10141C`,
   `primary_color=0073BD`) are set in the markup, but **Calendly ignores them on
   the free plan.** Standard or above is needed, or the calendar renders white
   with a blue button on a paper page. Same note as `docs/GREEN-FUNNEL-COLOURS.md`.

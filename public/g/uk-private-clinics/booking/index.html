@@ -285,7 +285,7 @@ footer .legal{font-size:17px;line-height:1.5;color:var(--white);opacity:.85}
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
-    <div class="embed embed--cal"><p class="embed-off">The calendar is not connected yet. Put the Calendly URL in g/uk-private-clinics.json.</p></div>
+    <div class="embed embed--cal" id="cal"></div>
     <noscript><p class="foot-note">The calendar needs JavaScript. Email hello@getelevateleads.com and we will send you times by reply.</p></noscript>
   </section>
 </main>
@@ -310,7 +310,7 @@ footer .legal{font-size:17px;line-height:1.5;color:var(--white);opacity:.85}
 <script>
 var SLUG = "uk-private-clinics";
 var HIDDEN_FIELDS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","lead_id","page_slug"];
-var CALENDLY_URL = "";
+var CALENDLY_URL = "https://calendly.com/d/dtrb-7m9-krs/elevate-marketing-commission-i-private-clinic";
 var BOOKED_PATH = "/g/uk-private-clinics/booked/";
 
 if (window.top !== window.self) { try { window.top.location.replace(location.href); } catch (e) {} }
@@ -359,11 +359,15 @@ function query(o){
 
   var host = document.getElementById('cal');
   if (host && CALENDLY_URL) {
-    /* Calendly accepts five tracking parameters and no more. lead_id rides in
+    /* background_color is the white of the card the embed sits in (.embed), not
+       the paper of the page behind it: Calendly fills its own panel, and the
+       paper value would draw a visible seam inside a white box.
+
+       Calendly accepts five tracking parameters and no more. lead_id rides in
        utm_term so utm_content keeps carrying the creative: overwrite that and
        a booking can no longer be traced to the ad that produced it, which is
        the whole point of running four of them. */
-    var p = ['hide_gdpr_banner=1', 'background_color=F7F5F0', 'text_color=10141C', 'primary_color=0073BD'];
+    var p = ['hide_gdpr_banner=1', 'background_color=FFFFFF', 'text_color=10141C', 'primary_color=0073BD'];
     if (s.lead_id) p.push('utm_term=' + encodeURIComponent(s.lead_id));
     ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function(k){
       if (s[k]) p.push(k + '=' + encodeURIComponent(s[k]));
