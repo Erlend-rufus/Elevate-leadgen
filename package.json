@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/build-reports.mjs && node scripts/build-drafts.mjs && node scripts/build-cases.mjs && node scripts/build-g.mjs && node scripts/check-placeholders.mjs",
+    "prebuild": "node scripts/build-reports.mjs && node scripts/build-drafts.mjs && node scripts/build-cases.mjs && node scripts/build-g.mjs && node scripts/build-g-it.mjs && node scripts/check-placeholders.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test:g-it": "node --test \"g/uk-it-larger-firms/test/*.test.mjs\"",
     "preview": "vite preview"
   },
   "dependencies": {

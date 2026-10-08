@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thank you. Come back when you have capacity. | Elevate Marketing</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#F7F5F0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/g/_assets/fonts/geist-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/g/_assets/fonts/fraunces-v1.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.className='js'</script>
+<style>/* /g/uk-it-larger-firms. Values are the approved reference's (UK-IT-*.dc.html),
+   written as classes instead of inline styles.
+
+   Units. The reference measures against the width of the page with cqw, which
+   needs a container query. That is unavailable in older WebViews, including
+   some Facebook in-app browsers, and an unsupported unit makes the whole clamp()
+   invalid, so every font size would fall back to the browser default. The work
+   order allows vw as an approximation. --u is 1vw; the two agree to within the
+   width of a scrollbar.
+
+   Colour. Only the tokens below. No green, no accent. build-g-it.mjs fails the
+   build on any other colour literal, so a stray value cannot slip in. */
+
+:root{
+  --paper:#F7F5F0; --paper-dark:#EFEDE7; --white:#FFFFFF;
+  --hair:#CFCBC0; --soft:#E3E0D8; --field:#8B909C;
+  --ink:#10141C; --muted:#4A5162; --ink-hover:#2A3140;
+  --marine:#0A1628; --error:#B3261E;
+  --u:1vw;
+  --pad:clamp(24px,calc(5*var(--u)),64px);
+  --serif:Fraunces,'Iowan Old Style',Georgia,serif;
+  --sans:Geist,'Geist Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+@font-face{font-family:Fraunces;src:url(/g/_assets/fonts/fraunces-v1.woff2) format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:Geist;src:url(/g/_assets/fonts/geist-v1.woff2) format('woff2');font-weight:100 900;font-display:swap}
+
+/* Box model: the reference uses the browser default (content-box) and asks for
+   border-box only where it says so. An FAQ answer with max-width:660px is 660px
+   of text plus its padding, a summary with min-height:44px is 44px of content
+   plus its padding. A global border-box here made both smaller than the design,
+   so border-box is listed, not assumed. */
+.cta,.btn,.opt,.txt,.apply,.consent,.sticky,.general,.embed-box,.outcome-sec,.ring{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-bottom:24px}
+/* A fixed banner or button must not hide the control keyboard focus just moved to.
+   The classes are set by common.js and client.js while each is showing. */
+html.banner-open{scroll-padding-bottom:260px}
+html.has-sticky{scroll-padding-bottom:96px}
+#form{scroll-margin-top:8px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55;
+  font-size:clamp(18px,calc(1.3*var(--u)),19px);-webkit-font-smoothing:antialiased}
+a{color:var(--ink)}
+a:hover{color:var(--muted)}
+h1,h2,h3,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+img{display:block}
+picture{display:block;width:fit-content}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--pad)}
+.sec{padding:clamp(56px,calc(7*var(--u)),96px) 0}
+.rule-top{border-top:1px solid var(--ink)}
+.stack{display:flex;flex-direction:column}
+h2,.h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,calc(2.9*var(--u)),40px);line-height:1.15;letter-spacing:-0.015em}
+h3{font-family:var(--sans);font-weight:600;font-size:18px;line-height:1.3}
+.foot-note{font-size:15px;line-height:1.5;color:var(--muted)}
+.balance{text-wrap:balance}
+.pretty{text-wrap:pretty}
+
+/* top bar and header */
+.topbar{background:var(--paper-dark);border-bottom:1px solid var(--hair);padding:10px 0}
+.topbar .wrap{font-size:14px;line-height:1.4;font-weight:500;letter-spacing:.01em}
+.site-header{padding:clamp(18px,calc(2*var(--u)),28px) 0;border-bottom:1px solid var(--hair)}
+.logo{height:clamp(48px,calc(3.8*var(--u)),56px);width:auto}
+
+/* hero */
+.hero{padding:clamp(48px,calc(6*var(--u)),88px) 0 clamp(64px,calc(8*var(--u)),120px)}
+.hero .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(36px,calc(4*var(--u)),56px) clamp(40px,calc(6*var(--u)),96px)}
+.hero h1{flex:2 1 560px;min-width:0;font-family:var(--serif);font-weight:400;font-size:clamp(34px,calc(4.6*var(--u)),64px);line-height:1.08;letter-spacing:-0.02em;text-wrap:balance}
+.hero h1 span{display:block}
+.hero h1 span+span{margin-top:.3em}
+.hero-side{flex:1 1 340px;min-width:0;max-width:520px;display:flex;flex-direction:column;align-items:flex-start;gap:28px}
+.lede{font-size:clamp(18px,calc(1.45*var(--u)),20px);line-height:1.55;text-wrap:pretty}
+.cta-block{display:flex;flex-direction:column;align-items:flex-start;gap:14px;width:100%}
+.micro{font-size:16px;line-height:1.5;color:var(--muted);text-wrap:pretty}
+.cta{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;padding:14px 20px;border-radius:2px;
+  background:var(--ink);color:var(--white);font-weight:500;font-size:17px;line-height:1.25;text-align:center;text-wrap:balance;text-decoration:none}
+.cta:hover{background:var(--ink-hover);color:var(--white)}
+.cta:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+/* fit */
+.fit .wrap{display:flex;flex-direction:column;gap:clamp(40px,calc(4*var(--u)),56px)}
+.fit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(56px,calc(6*var(--u)),96px) clamp(40px,calc(6*var(--u)),96px)}
+.fit-list{margin:28px 0 0;border-bottom:1px solid var(--hair)}
+.fit-list li{padding:20px 0;border-top:1px solid var(--hair);text-wrap:pretty}
+.fit-list strong{font-weight:700}
+
+/* paid */
+.paid{background:var(--marine);color:var(--white)}
+.paid .wrap{display:flex;flex-direction:column;gap:clamp(40px,calc(5*var(--u)),72px)}
+.paid h2{max-width:760px;text-wrap:balance}
+.paid h2 .dim{color:rgba(255,255,255,0.7)}
+.paid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:28px clamp(40px,calc(6*var(--u)),96px);border-top:1px solid rgba(255,255,255,0.24);padding-top:clamp(28px,calc(3*var(--u)),40px)}
+.paid-grid p{max-width:540px;font-size:clamp(18px,calc(1.3*var(--u)),19px);line-height:1.55;color:rgba(255,255,255,0.86);text-wrap:pretty}
+
+/* keep */
+.keep .wrap{display:flex;flex-direction:column;gap:clamp(40px,calc(5*var(--u)),72px)}
+.keep h2{max-width:820px;text-wrap:balance}
+.keep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(32px,calc(3*var(--u)),48px) clamp(24px,calc(3*var(--u)),48px)}
+.keep-item{border-top:1px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:14px}
+.keep-item p{text-wrap:pretty}
+
+/* meeting */
+.meeting .wrap{display:flex;flex-direction:column;gap:clamp(40px,calc(5*var(--u)),72px)}
+.meeting-top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:28px clamp(40px,calc(6*var(--u)),96px)}
+.meeting-top>div{flex:1 1 380px;min-width:0}
+.meeting-top h2{text-wrap:balance}
+.meeting-top p{flex:1 1 340px;min-width:0;max-width:520px;font-size:clamp(18px,calc(1.45*var(--u)),20px);line-height:1.55;text-wrap:pretty}
+.steps{border-bottom:1px solid var(--hair)}
+.steps li{display:grid;grid-template-columns:clamp(32px,calc(4*var(--u)),56px) 1fr;gap:0 clamp(8px,calc(1.5*var(--u)),24px);padding:20px 0;border-top:1px solid var(--hair);align-items:baseline}
+.step-n{font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.step-body{display:flex;flex-wrap:wrap;gap:8px clamp(24px,calc(4*var(--u)),64px)}
+.step-body h3{flex:1 1 200px;min-width:0;line-height:1.4}
+.step-body p{flex:2 1 320px;min-width:0;max-width:640px;text-wrap:pretty}
+.notice{border-top:1px solid var(--hair);padding-top:24px;max-width:760px}
+.notice p{text-wrap:pretty}
+
+/* clients */
+.clients .wrap{display:flex;flex-direction:column;gap:clamp(32px,calc(4*var(--u)),56px)}
+.clients-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(24px,calc(3*var(--u)),48px)}
+.client{border-top:1px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:8px}
+.client-name{font-family:var(--serif);font-weight:400;font-size:clamp(21px,calc(1.8*var(--u)),25px);line-height:1.2;letter-spacing:-0.01em}
+.client-sector{font-size:16px;line-height:1.45;color:var(--muted)}
+
+/* faq */
+.faq .wrap{display:flex;flex-wrap:wrap;gap:clamp(32px,calc(4*var(--u)),64px) clamp(40px,calc(6*var(--u)),96px);align-items:flex-start}
+.faq-head{flex:1 1 260px;min-width:0}
+.faq-list{flex:2 1 520px;min-width:0;border-top:1px solid var(--hair)}
+.faq details{border-bottom:1px solid var(--hair)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:44px;padding:clamp(18px,calc(1.6*var(--u)),22px) 0;
+  font-family:var(--serif);font-weight:400;font-size:clamp(19px,calc(1.6*var(--u)),22px);line-height:1.3;letter-spacing:-0.005em;list-style:none;cursor:pointer}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.faq summary span{flex:1 1 auto;min-width:0}
+.faq summary svg{flex:none}
+.faq details[open] .em-plus{display:none}
+.faq details:not([open]) .em-minus{display:none}
+.faq details p{padding:0 44px clamp(20px,calc(2*var(--u)),28px) 0;max-width:660px;text-wrap:pretty}
+
+/* form section */
+.form-sec{background:var(--paper-dark)}
+.form-sec .wrap{display:flex;flex-wrap:wrap;gap:clamp(32px,calc(4*var(--u)),64px) clamp(40px,calc(6*var(--u)),96px);align-items:flex-start}
+.form-intro{flex:1 1 280px;min-width:0;max-width:420px}
+.form-intro h2{text-wrap:balance}
+.form-intro p{margin-top:20px;text-wrap:pretty}
+.form-main{flex:2 1 520px;min-width:0}
+
+/* footer */
+.site-footer{background:var(--marine);color:var(--white);padding:clamp(48px,calc(6*var(--u)),72px) 0}
+.site-footer .wrap{display:flex;flex-direction:column;gap:28px}
+.footer-top{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:28px clamp(40px,calc(6*var(--u)),96px)}
+.logo-foot{height:clamp(40px,calc(3.2*var(--u)),46px);width:auto}
+.legal{font-size:17px;line-height:1.5;color:rgba(255,255,255,0.82);max-width:560px;flex:1 1 320px;text-wrap:pretty}
+.footer-links{display:flex;gap:28px;font-size:17px}
+.footer-links a{display:inline-flex;align-items:center;min-height:44px;color:var(--white)}
+.footer-links a:hover{color:rgba(255,255,255,0.7)}
+.footer-links a:focus-visible{outline:3px solid var(--white);outline-offset:2px}
+body.has-sticky .site-footer{padding-bottom:calc(clamp(48px,calc(6*var(--u)),72px) + 72px)}
+html.banner-open .site-footer{padding-bottom:calc(clamp(48px,calc(6*var(--u)),72px) + 230px)}
+
+/* consent banner: the only shadow on the page, apart from the sticky button */
+.consent{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-height:calc(100vh - 24px);overflow:auto;z-index:30;max-width:620px;margin:0 auto;background:var(--white);color:var(--ink);
+  border:1px solid var(--field);border-radius:4px;box-shadow:0 8px 24px -8px rgba(16,20,28,0.25);padding:20px;display:flex;flex-direction:column;gap:16px}
+.consent[hidden]{display:none}
+.consent p{font-size:16px;line-height:1.5;text-wrap:pretty}
+.consent-btns{display:flex;gap:12px}
+.consent button{appearance:none;cursor:pointer;flex:1 1 0;min-height:52px;padding:12px 16px;border-radius:2px;border:1.5px solid var(--ink);background:var(--white);color:var(--ink);font:inherit;font-weight:600;font-size:17px}
+.consent button:hover{background:var(--ink);color:var(--white)}
+.consent button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+/* sticky button, narrow screens only */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--soft);
+  box-shadow:0 -12px 24px -16px rgba(16,20,28,0.18);padding:14px 20px calc(16px + env(safe-area-inset-bottom))}
+.sticky[hidden]{display:none}
+.sticky a{max-width:520px;margin:0 auto;padding:12px 16px}
+@media (min-width:768px){.sticky{display:none!important}}
+
+/* outcome pages */
+.outcome{display:flex;flex-direction:column;min-height:clamp(844px,calc(62.5*var(--u)),900px)}
+.outcome.is-book{min-height:0}
+.outcome main{flex:1;display:flex;align-items:center}
+.outcome-sec{width:100%;padding:clamp(48px,calc(6*var(--u)),88px) 0 clamp(64px,calc(8*var(--u)),120px)}
+.outcome-sec .wrap{display:flex;flex-direction:column;gap:clamp(36px,calc(4*var(--u)),56px)}
+.outcome-text{max-width:820px;display:flex;flex-direction:column;align-items:flex-start}
+.outcome h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,calc(3.8*var(--u)),52px);line-height:1.12;letter-spacing:-0.02em;text-wrap:balance}
+.outcome-text p{margin-top:28px;max-width:640px;font-size:clamp(18px,calc(1.45*var(--u)),20px);line-height:1.55;text-wrap:pretty}
+.embed-box{width:100%;height:clamp(640px,calc(50*var(--u)),720px);background:var(--white);border:1px solid var(--hair);border-radius:4px;overflow:hidden}
+.embed-box .calendly-inline-widget{width:100%;height:100%;min-width:320px}
+.embed-off{height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font-weight:700;letter-spacing:.16em;font-size:14px;line-height:1.2;color:var(--muted)}
+
+/* the application form */
+.apply{width:100%;max-width:760px;background:var(--white);border:1px solid var(--hair);border-radius:4px;padding:clamp(22px,calc(3.6*var(--u)),40px);
+  display:flex;flex-direction:column;gap:clamp(24px,calc(3*var(--u)),32px);font-size:18px;line-height:1.5}
+.q{margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:18px;outline:none}
+.q h2{padding:0;margin:0 0 4px;font-size:clamp(22px,calc(2.1*var(--u)),28px);line-height:1.2;letter-spacing:-0.01em;text-wrap:pretty}
+.hint{margin:-6px 0 0;font-size:17px;line-height:1.45;color:var(--muted)}
+/* no JavaScript: every question on the page, divided by a thin rule */
+.q~.q{padding-top:28px;border-top:1px solid var(--soft)}
+.apply .steps-head{display:none}
+.js .apply.is-steps .steps-head{display:flex;flex-direction:column;gap:14px}
+.js .apply.is-steps .q{display:none}
+.js .apply.is-steps .q.is-current{display:flex}
+.js .apply.is-steps .q~.q{padding-top:0;border-top:0}
+.back-row{min-height:40px;display:flex;align-items:center}
+.back{appearance:none;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:44px;margin:0 0 0 -8px;padding:0 8px;font:inherit;font-size:17px;font-weight:500;color:var(--ink)}
+.back[hidden]{display:none}
+.back:hover{color:var(--muted)}
+.back:focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:4px}
+.bar{height:3px;background:var(--soft);overflow:hidden}
+.bar-fill{height:100%;background:var(--ink);transition:width .3s ease}
+
+.opts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));position:relative}
+.opt{box-sizing:border-box;text-align:left;font-size:18px;line-height:1.35;color:var(--ink);background:var(--white);border:1.5px solid var(--field);border-radius:4px;min-height:56px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;margin:0}
+.opt .lbl{min-width:0}
+.ring{flex:none;box-sizing:border-box;width:22px;height:22px;border-radius:50%;border:2px solid var(--field);display:flex;align-items:center;justify-content:center}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--ink);opacity:0}
+.opt:hover{border-color:var(--ink)}
+.opts.has-error .opt{border-color:var(--error)}
+input[type=radio]:checked+.opt{background:var(--paper);border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+input[type=radio]:checked+.opt .ring{border-color:var(--ink)}
+input[type=radio]:checked+.opt .dot{opacity:1}
+input[type=radio]:focus-visible+.opt{outline:3px solid var(--ink);outline-offset:3px}
+
+.txt{box-sizing:border-box;width:100%;min-height:56px;padding:14px 18px;font:inherit;font-size:18px;color:var(--ink);background:var(--white);border:1.5px solid var(--field);border-radius:4px;outline:3px solid transparent;outline-offset:2px}
+.txt:focus{border-color:var(--ink);box-shadow:0 0 0 3px var(--ink)}
+.txt.is-bad{border-color:var(--error)}
+.txt.is-bad:focus{border-color:var(--ink)}
+.txt::placeholder{color:var(--muted);opacity:1}
+.other{display:none;grid-column:1/-1}
+input.is-other:checked~.other{display:block}
+.details{display:grid;gap:18px 16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.field label{font-size:16px;font-weight:500;line-height:1.3}
+
+.err{display:flex;gap:8px;align-items:flex-start;color:var(--error);font-size:16px;line-height:1.4;font-weight:500}
+.err svg{flex:none;margin-top:2px}
+
+.submit-area{display:flex;flex-direction:column;gap:16px}
+.general{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--error);border-radius:4px;padding:14px 16px;color:var(--error);font-size:16px;line-height:1.45;font-weight:500}
+.general svg{flex:none;margin-top:1px}
+.general a{color:var(--error)}
+.general:focus{outline:none}
+.note a:focus-visible,.general a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.btn{appearance:none;border:0;cursor:pointer;width:100%;max-width:440px;min-height:56px;padding:14px 24px;border-radius:2px;background:var(--ink);color:var(--white);
+  font:inherit;font-weight:500;font-size:17px;line-height:1.25;display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;text-wrap:balance}
+.btn:hover{background:var(--ink-hover)}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.btn[disabled]{opacity:.75;cursor:default}
+.btn[disabled]:hover{background:var(--ink)}
+.spin{animation:em-spin .9s linear infinite}
+.note{font-size:16px;line-height:1.45;color:var(--muted)}
+.js .apply.is-steps:not(.at-last) .note{display:none}
+@keyframes em-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:2.4s!important}
+  .bar-fill{transition:none}
+}
+
+/* Windows High Contrast and other forced-colour modes drop author colours and
+   box-shadow, which is all the selected state, the progress fill and the dark
+   button are made of. System colour keywords only, so no new colour is added. */
+@media (forced-colors:active){
+  .dot{background:CanvasText;forced-color-adjust:none}
+  input[type=radio]:checked+.opt{border-width:3px}
+  .bar-fill{background:Highlight;forced-color-adjust:none}
+  .btn,.cta{border:2px solid ButtonText}
+}
+</style>
+<script src="/js/consent.js?v=3" data-pixel="1466790598245604" data-banner="off"></script>
+</head>
+<body>
+<div class="outcome">
+<header class="site-header">
+  <div class="wrap">
+    <picture>
+      <source srcset="/g/_assets/logo-ink.webp" type="image/webp">
+      <img class="logo" src="/g/_assets/logo-ink.png" width="418" height="168" alt="Elevate Marketing">
+    </picture>
+  </div>
+</header>
+<main>
+<section class="outcome-sec" data-section="outcome">
+  <div class="wrap">
+    <div class="outcome-text">
+      <h1>Thank you. Come back when you have capacity.</h1>
+      <p>If you are at capacity now, we will ask again in three months.</p>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <picture>
+      <source srcset="/g/_assets/logo-white.webp" type="image/webp">
+      <img class="logo-foot" src="/g/_assets/logo-white.png" width="418" height="168" alt="Elevate Marketing">
+    </picture>
+      <p class="legal">Elevate Marketing is operated by EngeCo AS, company no. 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norway.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/lp/privacy/">Privacy</a>
+      <a href="/lp/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+</div>
+<div class="consent" id="consent" role="region" aria-label="Cookies" hidden>
+  <p>We use a Meta cookie to measure whether our advertising works. Nothing is loaded until you choose. The page works the same either way.</p>
+  <div class="consent-btns">
+    <button type="button" data-c="yes">Accept</button>
+    <button type="button" data-c="no">Decline</button>
+  </div>
+</div>
+<script>window.UKIT={"slug":"uk-it-larger-firms","applyPath":"/g/uk-it-larger-firms/apply","hidden":["lead_id","page_slug","utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","referrer"],"questions":[{"id":"website","kind":"url","title":"Company website"},{"id":"company","kind":"text","title":"Company name"},{"id":"area","kind":"choice","title":"What is your main area of IT services?","options":["IT strategy and digital transformation","Managed IT services","Software development","Data and AI","Cybersecurity","Other"],"otherIndex":5,"otherPlaceholder":"Please tell us"},{"id":"turnover","kind":"choice","title":"Roughly what did the business turn over in the last financial year?","options":["Under £1m","£1m to £4m","£4m to £10m","£10m to £25m","£25m or more","I would rather not say"]},{"id":"people","kind":"choice","title":"How many people work in the business?","options":["Under 10","10 to 24","25 to 49","50 to 99","100 or more"]},{"id":"marketing","kind":"choice","title":"What does the business spend on marketing in a typical month, all channels?","options":["Under £1,000","£1,000 to £5,000","£5,000 to £15,000","£15,000 or more","I do not know"]},{"id":"value","kind":"choice","title":"What is a typical new client worth to you in the first year?","options":["Under £10k","£10k to £25k","£25k to £50k","£50k to £150k","£150k or more"]},{"id":"cycle","kind":"choice","title":"How long does a typical sale take, from first meeting to signed?","options":["Under four weeks","One to three months","Three to six months","Over six months"]},{"id":"target","kind":"text","optional":true,"title":"What turnover are you aiming for next year?","hint":"Optional. It helps us prepare for the call."},{"id":"decider","kind":"choice","title":"Who would decide whether to work with us?","options":["Me","Me, with a co-founder or board","Someone else, I would bring them in","A procurement process"]},{"id":"capacity","kind":"choice","title":"How many new clients could you take on in the next three months?","options":["None, we are at capacity","One to three","Four to ten","More than ten"]},{"id":"details","kind":"details","title":"Your details","fields":[{"key":"first","label":"First name","type":"text"},{"key":"last","label":"Last name","type":"text"},{"key":"title","label":"Job title","type":"text"},{"key":"email","label":"Work email","type":"email"},{"key":"mobile","label":"Mobile","type":"tel"}]}],"messages":{"website":"Please enter a valid website","email":"Please enter a valid work email","choice":"Please choose one option","required":"[TEKST MANGLER]","_pending":"required","general":"Something went wrong. Please try again, or email "},"labels":{"back":"Back","next":"Next","submit":"See whether we would take you on","progress":"Progress"},"icon":"\u003csvg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"square\" aria-hidden=\"true\" focusable=\"false\">\u003ccircle cx=\"12\" cy=\"12\" r=\"9\">\u003c/circle>\u003cpath d=\"M12 7v6M12 16.5v.5\">\u003c/path>\u003c/svg>","email":"post@elevatemarketing.no","calendlyUrl":"","takkPath":"/g/uk-it-larger-firms/takk/"};</script>
+<script>/**
+ * Validation shared by the browser and the server for /g/uk-it-larger-firms.
+ *
+ * One file, two homes. The generator inlines this text into the landing page,
+ * where it defines window.UkItCore. The Netlify Function requires it. Because
+ * both run the same code, "the client and the server agree on what is valid"
+ * is not something to test for, it cannot be otherwise.
+ *
+ * Plain ES5 on purpose: the traffic is Meta, much of it arrives inside the
+ * Facebook in-app browser, and a syntax error in an old WebView would leave
+ * the form dead with nothing to say why. No arrow functions, no spread, no
+ * optional chaining.
+ *
+ * The rules are the ones in the approved prototype (UK-IT-Form), nothing more:
+ *   url      a domain or URL, protocol optional
+ *   text     not empty, unless the question is optional
+ *   choice   one option picked
+ *   details  email must look like an email, every other field not empty
+ * The copy for each message is passed in. This file carries none, so the
+ * placeholder for the empty-field message cannot end up hard-coded here.
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.UkItCore = api;
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  var WEBSITE_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i;
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  /* Not in the work order. Caps keep a hostile or broken client from posting
+     megabytes into a lead record. 254 is the longest a real address can be. */
+  var MAX = { text: 200, url: 300, email: 254, other: 200 };
+
+  function str(v) {
+    if (v === null || v === undefined) return '';
+    /* Control characters never belong in a lead field, and a newline in an
+       email or name is how a value gets smuggled into a header or a CSV row. */
+    return String(v).replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/^\s+|\s+$/g, '');
+  }
+
+  function isChoiceIndex(v, q) {
+    return typeof v === 'number' && v % 1 === 0 && v >= 0 && v < q.options.length;
+  }
+
+  /**
+   * Build the answers object from anything with a lookup: a URLSearchParams,
+   * a FormData, or a plain object. Choice answers become integer indexes,
+   * which is how the prototype's state holds them; everything else is a
+   * trimmed string. A choice that is missing or not a valid index is null.
+   */
+  function answersFrom(questions, get) {
+    var a = {};
+    for (var i = 0; i < questions.length; i++) {
+      var q = questions[i];
+      if (q.kind === 'details') {
+        for (var f = 0; f < q.fields.length; f++) {
+          var key = q.id + '_' + q.fields[f].key;
+          a[key] = str(get(key)).slice(0, q.fields[f].type === 'email' ? MAX.email + 1 : MAX.text);
+        }
+      } else if (q.kind === 'choice') {
+        var raw = get(q.id);
+        /* Digits only. Number('') and Number(' ') are 0 and Number('0x1') is 1: a non-answer must not become option 0. */
+        var n = /^[0-9]{1,3}$/.test(String(raw === null || raw === undefined ? '' : raw)) ? Number(raw) : NaN;
+        a[q.id] = isChoiceIndex(n, q) ? n : null;
+        if (q.otherIndex !== undefined) a[q.id + '_other'] = str(get(q.id + '_other')).slice(0, MAX.other);
+      } else {
+        a[q.id] = str(get(q.id));
+      }
+    }
+    return a;
+  }
+
+  /** One question. Returns null when fine, a string for a single message, or an object keyed by field for details. */
+  function validateQuestion(q, a, msg) {
+    var v;
+    if (q.kind === 'url') {
+      v = str(a[q.id]);
+      return v.length <= MAX.url && WEBSITE_RE.test(v) ? null : msg.website;
+    }
+    if (q.kind === 'text') {
+      v = str(a[q.id]);
+      return q.optional || v ? null : msg.required;
+    }
+    if (q.kind === 'choice') {
+      return isChoiceIndex(a[q.id], q) ? null : msg.choice;
+    }
+    var e = {}, any = false;
+    for (var i = 0; i < q.fields.length; i++) {
+      var f = q.fields[i];
+      v = str(a[q.id + '_' + f.key]);
+      if (f.type === 'email') {
+        if (v.length > MAX.email || !EMAIL_RE.test(v)) { e[f.key] = msg.email; any = true; }
+      } else if (!v) {
+        e[f.key] = msg.required; any = true;
+      }
+    }
+    return any ? e : null;
+  }
+
+  /** Every question. errors is keyed by question id; firstId is the first question, in order, that failed. */
+  function validateAll(questions, a, msg) {
+    var errors = {}, firstId = null;
+    for (var i = 0; i < questions.length; i++) {
+      var r = validateQuestion(questions[i], a, msg);
+      if (r) { errors[questions[i].id] = r; if (firstId === null) firstId = questions[i].id; }
+    }
+    return { ok: firstId === null, errors: errors, firstId: firstId };
+  }
+
+  /** The answers as a person would read them, for the lead record. Labels, not just indexes, so a receiving system needs no copy of the form. */
+  function describe(questions, a) {
+    var out = {};
+    for (var i = 0; i < questions.length; i++) {
+      var q = questions[i];
+      if (q.kind === 'details') {
+        var d = {};
+        for (var f = 0; f < q.fields.length; f++) d[q.fields[f].key] = str(a[q.id + '_' + q.fields[f].key]);
+        out[q.id] = d;
+      } else if (q.kind === 'choice') {
+        var idx = a[q.id];
+        out[q.id] = isChoiceIndex(idx, q)
+          ? { index: idx, label: q.options[idx], other: q.otherIndex === idx ? str(a[q.id + '_other']) : '' }
+          : { index: null, label: '', other: '' };
+      } else {
+        out[q.id] = str(a[q.id]).slice(0, q.kind === 'url' ? MAX.url : MAX.text);
+      }
+    }
+    return out;
+  }
+
+  return {
+    WEBSITE_RE: WEBSITE_RE, EMAIL_RE: EMAIL_RE, MAX: MAX,
+    str: str, isChoiceIndex: isChoiceIndex,
+    answersFrom: answersFrom, validateQuestion: validateQuestion,
+    validateAll: validateAll, describe: describe
+  };
+});
+</script>
+<script>/**
+ * What every page in the funnel shares: attribution and the consent question.
+ * Inlined after core.cjs and before client.js (landing) or outcome.js.
+ *
+ * Attribution. lead_id is minted once per visit and kept in sessionStorage, so
+ * a refresh or the walk from the form to an outcome page does not split one
+ * visitor into two leads. UTMs and fbclid come from the URL and win over what
+ * was stored. referrer is document.referrer, the page the visitor came from.
+ *
+ * Consent. /js/consent.js owns whether the pixel loads and remembers the
+ * choice; it is loaded with data-banner="off" so its dark banner stays away.
+ * This only asks the question in this page's own clothes. Same storage key, so
+ * nobody who chose elsewhere on the site is asked again. Nothing here loads
+ * anything: until Accept, no pixel and no cookie.
+ *
+ * Plain ES5 for the same reason as client.js.
+ */
+(function () {
+  'use strict';
+  var K = window.UKIT;
+  if (!K) return;
+  var UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  var STORE = 'elevate:g:' + K.slug;
+
+  function fromStore() { try { return JSON.parse(sessionStorage.getItem(STORE) || '{}'); } catch (e) { return {}; } }
+  function toStore(o) { try { sessionStorage.setItem(STORE, JSON.stringify(o)); } catch (e) {} }
+  function mintLeadId() {
+    var body;
+    try { if (window.crypto && crypto.randomUUID) body = crypto.randomUUID().replace(/-/g, '').slice(0, 20); } catch (e) {}
+    if (!body) body = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    return 'l_' + body;
+  }
+
+  /** @param {boolean} mint false on pages that must not invent a lead (outcome pages): they only carry what exists. */
+  function attribution(mint) {
+    var s = fromStore(), q = null, out = {}, k;
+    for (k in s) if (Object.prototype.hasOwnProperty.call(s, k)) out[k] = s[k];
+    try { q = new URLSearchParams(location.search); } catch (e) {}
+    if (q) UTM.concat(['fbclid', 'lead_id']).forEach(function (n) { var v = q.get(n); if (v) out[n] = v.slice(0, 200); });
+    if (mint && !out.lead_id) out.lead_id = mintLeadId();
+    if (mint && !Object.prototype.hasOwnProperty.call(out, 'referrer')) {
+      try { out.referrer = (document.referrer || '').slice(0, 300); } catch (e) { out.referrer = ''; }
+    }
+    toStore(out);
+    return out;
+  }
+
+  var reduced = false;
+  try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  var banner = { closed: true, listeners: [], onClose: function (fn) { banner.listeners.push(fn); } };
+  var C = window.ElevateConsent, bar = document.getElementById('consent');
+  if (!C) {
+    try { console.error('[uk-it] /js/consent.js did not load: nothing is gated and nothing will fire'); } catch (e) {}
+  } else if (bar && !C.status()) {
+    banner.closed = false;
+    bar.hidden = false;
+    document.documentElement.classList.add('banner-open');
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('button[data-c]');
+      if (!b) return;
+      if (b.getAttribute('data-c') === 'yes') C.accept(); else C.decline();
+      bar.hidden = true;
+      banner.closed = true;
+      document.documentElement.classList.remove('banner-open');
+      for (var i = 0; i < banner.listeners.length; i++) banner.listeners[i]();
+    });
+  }
+
+  window.UkItCommon = { attribution: attribution, banner: banner, reduced: reduced, UTM: UTM };
+})();
+</script>
+<script>/**
+ * The five outcome pages. Only /book has anything to do: it puts the calendar
+ * in the box and, when Calendly says a time was booked, sends the visitor on to
+ * /takk with the same tracking parameters. The other four pages need nothing
+ * from a script beyond the consent question, which common.js handles.
+ *
+ * Calendly's own redirect-after-booking is deliberately not used: it is
+ * unreliable inside the Facebook in-app browser and gives no control over the
+ * query string. The same reasoning, and the same mechanism, as the booking
+ * page in /g/uk-private-clinics. The event's own redirect setting must stay
+ * off in Calendly, or the visitor is sent twice. There is no timer: a timeout
+ * would send someone to "You are booked in" who never booked.
+ *
+ * Plain ES5.
+ */
+(function () {
+  'use strict';
+  var K = window.UKIT, Common = window.UkItCommon;
+  if (!K || !Common) return;
+  var a = Common.attribution(false);
+
+  var host = document.getElementById('cal');
+  if (!host || !K.calendlyUrl) return;
+
+  /* Colours are the page's: a white panel, ink text, an ink button. Calendly
+     draws white text on the primary colour, so the primary has to be dark.
+     Calendly ignores these on its free plan; see LAUNCH.md.
+
+     lead_id rides in utm_term because Calendly accepts five tracking
+     parameters and no more, and utm_content must keep naming the creative.
+     Same convention as /g/uk-private-clinics. */
+  var p = ['hide_gdpr_banner=1', 'background_color=FFFFFF', 'text_color=10141C', 'primary_color=10141C'];
+  if (a.lead_id) p.push('utm_term=' + encodeURIComponent(a.lead_id));
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'].forEach(function (k) {
+    if (a[k]) p.push(k + '=' + encodeURIComponent(a[k]));
+  });
+
+  var w = document.createElement('div');
+  w.className = 'calendly-inline-widget';
+  w.setAttribute('data-url', K.calendlyUrl + '?' + p.join('&'));
+  host.innerHTML = '';
+  host.appendChild(w);
+  var sc = document.createElement('script');
+  sc.src = 'https://assets.calendly.com/assets/external/widget.js';
+  sc.async = true;
+  document.head.appendChild(sc);
+
+  window.addEventListener('message', function (e) {
+    if (!/^https:\/\/([a-z0-9-]+\.)*calendly\.com$/.test(String(e.origin))) return;
+    if (e.data && e.data.event === 'calendly.event_scheduled') {
+      var q = [];
+      Common.UTM.concat(['fbclid', 'lead_id']).forEach(function (k) { if (a[k]) q.push(k + '=' + encodeURIComponent(a[k])); });
+      location.href = K.takkPath + (q.length ? '?' + q.join('&') : '');
+    }
+  });
+})();
+</script>
+</body>
+</html>

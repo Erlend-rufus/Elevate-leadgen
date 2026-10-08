@@ -1,0 +1,145 @@
+{
+  "_comment": "Verbatim from chapter 8 of the work order. Do not reword, tidy or shorten. {THRESHOLD} and {OFFER} are replaced from config.json at build time; **bold** becomes <strong>. A key named _pending marks text that has not been delivered: the build refuses live: true while any exists.",
+  "topbar": "For UK IT services firms with {THRESHOLD}+ turnover",
+  "hero": {
+    "h1": ["More of the right sales conversations.", "We are paid when a deal closes."],
+    "lede": "We fill your sales team's calendar with meetings that fit your best clients. You keep the ad accounts and the data. We invoice only on deals that close.",
+    "cta": "See whether we would take you on",
+    "micro": "A few questions, about three minutes. We turn most firms down, and would rather say so now than in a meeting."
+  },
+  "fit": {
+    "worksTitle": "This works if",
+    "works": [
+      "You run a UK IT services firm turning over **{THRESHOLD}** or more",
+      "You sell projects or contracts where one new client is worth **£25,000** or more in the first year",
+      "Your own sales team takes the meetings, and can respond within **two working days**",
+      "You have capacity to take on new clients now"
+    ],
+    "notTitle": "This does not work if",
+    "not": [
+      "You are below **{THRESHOLD}** turnover or have been trading for less than **two years**",
+      "You sell products or software licences rather than services",
+      "You are at capacity, in which case come back when you are not",
+      "You want leads without a sales team to follow them up"
+    ],
+    "footnote": "Turnover is checked against public records after you apply."
+  },
+  "paid": {
+    "h2": "We are paid when a deal closes.",
+    "h2muted": "Nothing before that.",
+    "p1": "No retainer, no setup fee, no minimum term. We invoice a commission on deals that close from campaigns we run. If nothing closes, there is nothing to invoice. The advertising budget is separate. You pay it directly to the platforms, from your own accounts.",
+    "p2": "The commission depends on what a client is worth to you, so we agree it before anything runs. It is not published, because it is not the same for two firms."
+  },
+  "keep": {
+    "h2": "Your accounts. Your data. Your sales team.",
+    "items": [
+      { "title": "The ad accounts are yours", "text": "Campaigns run in ad accounts you own. You pay the platforms directly, with no markup from us." },
+      { "title": "The data is yours", "text": "Leads, results and sales are tracked in your own CRM. If we stop working together, you keep all of it." },
+      { "title": "Your team takes the meetings", "text": "We do not replace your sales team. We fill their calendar with conversations that fit." }
+    ]
+  },
+  "meeting": {
+    "h2": "The first meeting: a {OFFER}",
+    "lede": "We do not pitch. We sit down with your numbers and work out what it would take to reach next year's target.",
+    "steps": [
+      { "title": "Before the call", "text": "You tell us your turnover, your target for next year, and what a typical new client is worth." },
+      { "title": "On the call", "text": "We confirm four numbers together: last year's turnover, next year's target, what a new client is worth in year one, and how many sales meetings turn into clients." },
+      { "title": "Within 24 hours", "text": "You receive a one page sheet with the arithmetic: new clients per month needed, sales meetings per month that requires, and how that compares with your pipeline today." }
+    ],
+    "notice": "You keep the sheet whether or not we work together. It contains your numbers only. No quote, no commission rate, no promise."
+  },
+  "clients": {
+    "h2": "Who we have worked with",
+    "items": [
+      { "name": "Ignite Consulting", "sector": "Innovation and change consultancy" },
+      { "name": "Be | Shaping the Future", "sector": "Management and technology consultancy" },
+      { "name": "Crux IT Consulting", "sector": "IT services and eLearning consultancy" }
+    ],
+    "footnote": "Named with each client's written permission."
+  },
+  "faq": {
+    "h2": "Straight answers",
+    "items": [
+      { "q": "How is this different from an agency on a retainer?", "a": "A retainer is paid whether or not anything closes. Our invoice depends on a deal closing, so we only earn when your sales team does." },
+      { "q": "Who owns the ad accounts?", "a": "You do. We work inside them. If we stop, they stay with you." },
+      { "q": "Who pays for the advertising?", "a": "You do, directly to the platforms and from ad accounts you own. We add no markup. Our commission is a separate matter and is only invoiced when a deal closes." },
+      { "q": "What do you need from us to start?", "a": "Access to your ad accounts, your CRM, and about an hour with whoever runs sales. Your sales team needs to be able to follow up within two working days." },
+      { "q": "Why do you ask for turnover?", "a": "Because the arithmetic only works above a certain size. We would rather say no early than start something neither of us can make pay." },
+      { "q": "Do you guarantee results?", "a": "No. We can show you the arithmetic and the method. We cannot promise a number of meetings or deals." },
+      { "q": "What if we want to stop?", "a": "There is no minimum term. You stop, and you keep the accounts and the data." }
+    ]
+  },
+  "formSection": {
+    "h2": "See whether we would take you on",
+    "text": "A few questions, about three minutes. We turn most firms down."
+  },
+  "footer": {
+    "legal": "Elevate Marketing is operated by EngeCo AS, company no. 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norway.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "consent": {
+    "body": "We use a Meta cookie to measure whether our advertising works. Nothing is loaded until you choose. The page works the same either way.",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "sticky": "See whether we would take you on",
+  "form": {
+    "labels": {
+      "back": "Back",
+      "next": "Next",
+      "submit": "See whether we would take you on",
+      "progress": "Progress"
+    },
+    "privacyNote": {
+      "text": "We use your details only to reply to this application.",
+      "link": "Privacy"
+    },
+    "errors": {
+      "website": "Please enter a valid website",
+      "email": "Please enter a valid work email",
+      "choice": "Please choose one option",
+      "required": "[TEKST MANGLER]",
+      "_pending": "required",
+      "general": "Something went wrong. Please try again, or email "
+    },
+    "questions": [
+      { "id": "website", "kind": "url", "title": "Company website" },
+      { "id": "company", "kind": "text", "title": "Company name" },
+      { "id": "area", "kind": "choice", "title": "What is your main area of IT services?",
+        "options": ["IT strategy and digital transformation", "Managed IT services", "Software development", "Data and AI", "Cybersecurity", "Other"],
+        "otherIndex": 5, "otherPlaceholder": "Please tell us" },
+      { "id": "turnover", "kind": "choice", "title": "Roughly what did the business turn over in the last financial year?",
+        "options": ["Under £1m", "£1m to £4m", "£4m to £10m", "£10m to £25m", "£25m or more", "I would rather not say"] },
+      { "id": "people", "kind": "choice", "title": "How many people work in the business?",
+        "options": ["Under 10", "10 to 24", "25 to 49", "50 to 99", "100 or more"] },
+      { "id": "marketing", "kind": "choice", "title": "What does the business spend on marketing in a typical month, all channels?",
+        "options": ["Under £1,000", "£1,000 to £5,000", "£5,000 to £15,000", "£15,000 or more", "I do not know"] },
+      { "id": "value", "kind": "choice", "title": "What is a typical new client worth to you in the first year?",
+        "options": ["Under £10k", "£10k to £25k", "£25k to £50k", "£50k to £150k", "£150k or more"] },
+      { "id": "cycle", "kind": "choice", "title": "How long does a typical sale take, from first meeting to signed?",
+        "options": ["Under four weeks", "One to three months", "Three to six months", "Over six months"] },
+      { "id": "target", "kind": "text", "optional": true, "title": "What turnover are you aiming for next year?",
+        "hint": "Optional. It helps us prepare for the call." },
+      { "id": "decider", "kind": "choice", "title": "Who would decide whether to work with us?",
+        "options": ["Me", "Me, with a co-founder or board", "Someone else, I would bring them in", "A procurement process"] },
+      { "id": "capacity", "kind": "choice", "title": "How many new clients could you take on in the next three months?",
+        "options": ["None, we are at capacity", "One to three", "Four to ten", "More than ten"] },
+      { "id": "details", "kind": "details", "title": "Your details",
+        "fields": [
+          { "key": "first", "label": "First name", "type": "text" },
+          { "key": "last", "label": "Last name", "type": "text" },
+          { "key": "title", "label": "Job title", "type": "text" },
+          { "key": "email", "label": "Work email", "type": "email" },
+          { "key": "mobile", "label": "Mobile", "type": "tel" }
+        ] }
+    ]
+  },
+  "outcomes": {
+    "book": { "h1": "Thank you. Choose a time that suits you.", "text": "Pick a slot for a {OFFER}. Your own numbers are all we need." },
+    "takk": { "h1": "You are booked in.", "text": "We will send a confirmation and a short note on what to have to hand: last year's turnover, next year's target, and what a typical new client is worth." },
+    "review": { "h1": "Thank you. We will be in touch within one working day.", "text": "We want to check a few things before we suggest a time." },
+    "not-now": { "h1": "Thank you. Come back when you have capacity.", "text": "If you are at capacity now, we will ask again in three months." },
+    "not-a-fit": { "h1": "Thank you. This is not the right fit at the moment.", "text": "We work with UK IT services firms above a certain size. If that changes, we would be glad to hear from you." }
+  }
+}

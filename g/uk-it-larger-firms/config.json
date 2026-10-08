@@ -1,0 +1,38 @@
+{
+  "_comment": "Everything in this funnel that is a setting rather than copy. Copy is in copy.json and is verbatim from the work order: do not edit it to fit a layout. Rules for choosing an outcome page are in routing.json.",
+  "slug": "uk-it-larger-firms",
+  "origin": "https://getelevateleads.com",
+  "live": false,
+  "_live": "While false every page carries noindex, the build stays green with items missing, and the apply endpoint refuses every submission with a 503. Set true only when the build says nothing is outstanding. The build enforces calendlyUrl, routing and finished copy once this is true.",
+  "indexable": false,
+  "_indexable": "The work order does not say whether the landing page should be findable in search. False keeps it out. It can be turned on later; it cannot be taken back quickly.",
+  "variables": {
+    "THRESHOLD": "£4m",
+    "OFFER": "30 minute pipeline review"
+  },
+  "links": {
+    "privacy": "/lp/privacy/",
+    "terms": "/lp/terms/",
+    "_comment": "The work order says Privacy and Terms are delivered separately. These point at the existing Elevate Marketing pages, the same ones /g/uk-private-clinics uses for its consent bar. Check that /lp/privacy/ covers what this form collects (turnover, contact details) and the Meta cookie before launch, then swap the two paths here."
+  },
+  "contact": {
+    "email": "post@elevatemarketing.no"
+  },
+  "funnel": {
+    "pixelId": "1466790598245604",
+    "calendlyUrl": "",
+    "_calendlyUrl": "Event URL with no query string, from Calendly: Share, Add to website, Inline embed. Empty is allowed only while live is false. The booking page adds its own parameters.",
+    "applyPath": "/g/uk-it-larger-firms/apply"
+  },
+  "hiddenFields": [
+    "lead_id",
+    "page_slug",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "utm_term",
+    "fbclid",
+    "referrer"
+  ]
+}
