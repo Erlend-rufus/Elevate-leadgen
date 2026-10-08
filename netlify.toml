@@ -5,6 +5,13 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# The first function on this site: /g/uk-it-larger-firms/apply, which receives
+# the application form. esbuild is named rather than left to the default so the
+# bundle is the same wherever it builds: the function imports plain CommonJS
+# modules from g/uk-it-larger-firms/, which a bundler has to follow.
+[functions]
+  node_bundler = "esbuild"
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -111,6 +118,35 @@
 
 [[headers]]
   for = "/g/uk-private-clinics/not-now*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# /g/uk-it-larger-firms: same rule, same reason. Only the five outcome pages are
+# named here. The landing page's indexing is decided by config.indexable in
+# g/uk-it-larger-firms/config.json, through its robots meta, so that turning it
+# on later is one setting in one place and not a setting here that overrides it.
+[[headers]]
+  for = "/g/uk-it-larger-firms/book*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-it-larger-firms/takk*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-it-larger-firms/review*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-it-larger-firms/not-now*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-it-larger-firms/not-a-fit*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
@@ -318,6 +354,48 @@
 [[redirects]]
   from = "/g/uk-private-clinics/not-now"
   to = "/g/uk-private-clinics/not-now/index.html"
+  status = 200
+
+# The application endpoint. It has to come BEFORE the /g/* 404 below: there is
+# no file at this path, so that rule would otherwise answer every submission
+# with a 404 and the form would fail for every visitor, with nothing on the
+# page to say why. The function also declares this path itself; both are kept
+# so that neither a changed precedence nor a missing config can break it.
+[[redirects]]
+  from = "/g/uk-it-larger-firms/apply"
+  to = "/.netlify/functions/uk-it-apply"
+  status = 200
+
+# The funnel's pages. As for /g/uk-private-clinics, Netlify serves these from
+# their files; the rules document the paths.
+[[redirects]]
+  from = "/g/uk-it-larger-firms"
+  to = "/g/uk-it-larger-firms/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-larger-firms/book"
+  to = "/g/uk-it-larger-firms/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-larger-firms/takk"
+  to = "/g/uk-it-larger-firms/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-larger-firms/review"
+  to = "/g/uk-it-larger-firms/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-larger-firms/not-now"
+  to = "/g/uk-it-larger-firms/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-larger-firms/not-a-fit"
+  to = "/g/uk-it-larger-firms/not-a-fit/index.html"
   status = 200
 
 # Same shape as /report, /draft and /r above: real files under public/g/ win,

@@ -1,0 +1,11 @@
+{
+  "_comment": "Which answers send a lead to which outcome page. NOT SUPPLIED in the work order, so nothing is guessed here. Until status is \"configured\" the apply endpoint refuses every submission and the build refuses live: true.",
+  "status": "not_configured",
+  "_format": {
+    "rules": "Evaluated top to bottom, first match wins. Each rule: { \"id\": \"short-name\", \"when\": { \"<question id>\": [<option index>, ...] }, \"then\": \"<page>\" }. A rule matches when EVERY question in `when` holds one of the listed option indexes (indexes count from 0 in the order the options appear on the form). `when` may only name choice questions.",
+    "pages": ["book", "takk", "review", "not-now", "not-a-fit"],
+    "fallback": "The page for a lead no rule matches. Required once status is configured, so every lead lands somewhere on purpose."
+  },
+  "rules": [],
+  "fallback": null
+}
