@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * /g/uk-it-larger-firms generator: landing page, application form, five outcome
+ * /uk-it-firms generator: landing page, application form, five outcome
  * pages, and the pre-rendered shell the apply function needs.
  *
  * A second generator beside scripts/build-g.mjs, not an extension of it. That
@@ -11,10 +11,10 @@
  * that does not run JavaScript. Here that matters twice, because this funnel's
  * requirement is that it works with no script at all.
  *
- * Source of truth is g/uk-it-larger-firms/. Nothing in public/g/uk-it-larger-firms
+ * Source of truth is g/uk-it-larger-firms/. Nothing in public/uk-it-firms
  * or netlify/functions/uk-it-apply/data.generated.mjs is edited by hand.
  *
- * IMPORTANT: this removes only public/g/uk-it-larger-firms. public/g/_assets
+ * IMPORTANT: this removes only public/uk-it-firms (config.path). public/g/_assets
  * holds the fonts and logos every /g campaign shares and must survive every
  * build, so the slug "_assets" is refused and public/g is never enumerated.
  */
@@ -26,7 +26,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(root, 'g', 'uk-it-larger-firms');
-const OUT = join(root, 'public', 'g');
+const PUBLIC = join(root, 'public');
 const FN = join(root, 'netlify', 'functions', 'uk-it-apply');
 
 const { renderForm, esc, ALERT_ICON } = require(join(SRC, 'form.cjs'));
@@ -42,7 +42,7 @@ const copy = json('copy.json');
 const routing = json('routing.json');
 const CSS = text('style.css');
 const SLUG = cfg.slug;
-const BASE = `/g/${SLUG}`;
+const BASE = cfg.path;
 
 /* -------------------------------------------------------------- variables */
 
@@ -73,12 +73,21 @@ function pendingCopy(node, path, out) {
 function validate() {
   if (SLUG === '_assets') die('slug "_assets" is reserved for the shared fonts and logos');
   if (!/^[a-z0-9-]+$/.test(SLUG)) die(`slug "${SLUG}" must be lower-case letters, digits and hyphens`);
+  /* The address. One segment, and not a place the site already uses: a path that is
+     also a React route or another funnel would be shadowed or would shadow it. */
+  if (!/^\/[a-z0-9]+(-[a-z0-9]+)*$/.test(BASE)) die(`config.path "${BASE}" must be one lower-case segment such as /uk-it-firms`);
+  const RESERVED = ['/g', '/lp', '/audit', '/case', '/report', '/draft', '/r', '/uk-recruitment', '/css', '/js', '/images', '/assets', '/nevari', '/the-journey', '/growth-audit', '/book', '/contact', '/about', '/services', '/blog', '/cases', '/takk', '/not-a-fit'];
+  if (RESERVED.includes(BASE)) die(`config.path "${BASE}" is already used by the site`);
+  if (readFileSync(join(root, 'src', 'App.tsx'), 'utf8').includes(`"${BASE}`) || readFileSync(join(root, 'src', 'App.tsx'), 'utf8').includes(`'${BASE}`)) die(`config.path "${BASE}" is a route in the React app`);
   if (typeof cfg.live !== 'boolean') die('config.live must be true or false');
   if (!/^https:\/\/[a-z0-9.-]+$/.test(cfg.origin)) die(`origin "${cfg.origin}" must be an https host with no path`);
   if (cfg.funnel.calendlyUrl && !/^https:\/\/calendly\.com\/[^?#]+$/.test(cfg.funnel.calendlyUrl))
     die(`funnel.calendlyUrl "${cfg.funnel.calendlyUrl}" must be a calendly.com URL with no query string: the page adds its own parameters`);
-  if (!/^\/g\/[a-z0-9-]+\/apply$/.test(cfg.funnel.applyPath) || cfg.funnel.applyPath !== `${BASE}/apply`)
-    die(`funnel.applyPath must be ${BASE}/apply`);
+  if (cfg.funnel.applyPath !== `${BASE}/apply`) die(`funnel.applyPath must be ${BASE}/apply`);
+  /* The function names its own route as a literal (Netlify reads it statically). If it
+     drifts from config.path, the form posts to a path nothing answers. */
+  const fnSrc = readFileSync(join(FN, 'index.mjs'), 'utf8');
+  if (!fnSrc.includes(`path: '${BASE}/apply'`)) die(`netlify/functions/uk-it-apply/index.mjs must export config.path '${BASE}/apply'`);
   for (const [k, v] of Object.entries(VARS)) if (!String(v).trim()) die(`config.variables.${k} is empty: the copy would read as broken sentences`);
   if (copy.form.questions.length !== 12) die(`the form must have twelve questions, it has ${copy.form.questions.length}`);
   // the details question must be the last: the last step is the one that submits
@@ -399,8 +408,8 @@ const shell = noScriptShell();
 for (const [rel, html] of pages) checkOutput(`${SLUG}/${rel}`, html);
 checkOutput(`${SLUG}/(no-script shell)`, shell.before + shell.after);
 
-/* Only this slug. public/g/_assets is never enumerated, let alone removed. */
-const dir = join(OUT, SLUG);
+/* Only this path. public/g/_assets is never enumerated, let alone removed. */
+const dir = join(PUBLIC, ...BASE.split('/').filter(Boolean));
 rmSync(dir, { recursive: true, force: true });
 for (const sub of ['book', 'takk', 'review', 'not-now', 'not-a-fit']) mkdirSync(join(dir, sub), { recursive: true });
 for (const [rel, html] of pages) writeFileSync(join(dir, rel), html);
@@ -416,7 +425,7 @@ writeFileSync(join(FN, 'data.generated.mjs'),
   `export const routing = ${JSON.stringify(routing)};\n` +
   `export const shell = ${JSON.stringify(shell)};\n`);
 
-console.log(`  g-it: /g/${SLUG} + /book /takk /review /not-now /not-a-fit  (+ apply data)`);
+console.log(`  g-it: ${BASE} + /book /takk /review /not-now /not-a-fit  (+ apply data)`);
 if (!cfg.live) {
   console.log(`    ⚠ "live" is false in g/${SLUG}/config.json: every page carries noindex and the apply endpoint refuses submissions`);
   if (outstanding.length) {

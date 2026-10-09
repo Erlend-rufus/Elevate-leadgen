@@ -1,5 +1,5 @@
 /**
- * POST /g/uk-it-larger-firms/apply
+ * POST /uk-it-firms/apply
  *
  * Receives the application, checks it with the same code the browser runs,
  * decides the outcome page, hands the lead to the receiving system, and sends
@@ -50,7 +50,7 @@ export function createHandler(deps) {
   const uuid = deps.uuid || (() => globalThis.crypto.randomUUID());
   const log = deps.log || ((o) => console.error(JSON.stringify(Object.assign({ evt: 'uk-it-apply' }, o))));
   const Q = copy.form.questions, M = copy.form.errors;
-  const BASE = '/g/' + cfg.slug;
+  const BASE = cfg.path;
 
   const reply = (status, body, type, extra) =>
     new Response(body, { status, headers: Object.assign({ 'Content-Type': type }, SECURITY, extra || {}) });
@@ -185,6 +185,7 @@ export function createHandler(deps) {
 export default createHandler({ cfg: data.cfg, copy: data.copy, routing: data.routing, shell: data.shell });
 
 /* Both the path and a redirect rule in netlify.toml point here. The path alone
-   should win over the SPA fallback and the /g/* 404; the rule is there so that a
-   misremembered precedence cannot turn the endpoint into a 404 for paid traffic. */
-export const config = { path: '/g/uk-it-larger-firms/apply', method: ['POST'] };
+   should win over the SPA fallback and the /uk-it-firms/* 404; the rule is there so
+   that a misremembered precedence cannot turn the endpoint into a 404 for paid
+   traffic. The build fails if this literal and config.path in config.json differ. */
+export const config = { path: '/uk-it-firms/apply', method: ['POST'] };

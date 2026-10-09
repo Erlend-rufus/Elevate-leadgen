@@ -1,5 +1,5 @@
 /**
- * Progressive enhancement for /g/uk-it-larger-firms.
+ * Progressive enhancement for /uk-it-firms.
  *
  * The page works without this file: every question is on the page, the button
  * is a normal submit, the FAQ is <details>, the anchor is an anchor, and the
