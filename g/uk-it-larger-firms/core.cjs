@@ -1,5 +1,5 @@
 /**
- * Validation shared by the browser and the server for /g/uk-it-larger-firms.
+ * Validation shared by the browser and the server for /uk-it-firms.
  *
  * One file, two homes. The generator inlines this text into the landing page,
  * where it defines window.UkItCore. The Netlify Function requires it. Because

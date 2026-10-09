@@ -5,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# The first function on this site: /g/uk-it-larger-firms/apply, which receives
+# The first function on this site: /uk-it-firms/apply, which receives
 # the application form. esbuild is named rather than left to the default so the
 # bundle is the same wherever it builds: the function imports plain CommonJS
 # modules from g/uk-it-larger-firms/, which a bundler has to follow.
@@ -121,32 +121,32 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
-# /g/uk-it-larger-firms: same rule, same reason. Only the five outcome pages are
+# /uk-it-firms: same rule, same reason. Only the five outcome pages are
 # named here. The landing page's indexing is decided by config.indexable in
 # g/uk-it-larger-firms/config.json, through its robots meta, so that turning it
 # on later is one setting in one place and not a setting here that overrides it.
 [[headers]]
-  for = "/g/uk-it-larger-firms/book*"
+  for = "/uk-it-firms/book*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
 [[headers]]
-  for = "/g/uk-it-larger-firms/takk*"
+  for = "/uk-it-firms/takk*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
 [[headers]]
-  for = "/g/uk-it-larger-firms/review*"
+  for = "/uk-it-firms/review*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
 [[headers]]
-  for = "/g/uk-it-larger-firms/not-now*"
+  for = "/uk-it-firms/not-now*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
 [[headers]]
-  for = "/g/uk-it-larger-firms/not-a-fit*"
+  for = "/uk-it-firms/not-a-fit*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
@@ -356,47 +356,66 @@
   to = "/g/uk-private-clinics/not-now/index.html"
   status = 200
 
-# The application endpoint. It has to come BEFORE the /g/* 404 below: there is
-# no file at this path, so that rule would otherwise answer every submission
-# with a 404 and the form would fail for every visitor, with nothing on the
-# page to say why. The function also declares this path itself; both are kept
-# so that neither a changed precedence nor a missing config can break it.
+# /uk-it-firms: the application endpoint and the funnel's pages. The apply rule must
+# come BEFORE the /uk-it-firms/* 404 further down and before the SPA catch-all: there is
+# no file at that path, so either would otherwise answer every submission with a 404 or
+# the homepage shell, and the form would fail for every visitor with nothing on the page
+# to say why. The function also declares this path itself; both are kept so that neither
+# a changed precedence nor a missing config can break it.
 [[redirects]]
-  from = "/g/uk-it-larger-firms/apply"
+  from = "/uk-it-firms/apply"
   to = "/.netlify/functions/uk-it-apply"
   status = 200
 
-# The funnel's pages. As for /g/uk-private-clinics, Netlify serves these from
-# their files; the rules document the paths.
+[[redirects]]
+  from = "/uk-it-firms"
+  to = "/uk-it-firms/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/uk-it-firms/book"
+  to = "/uk-it-firms/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/uk-it-firms/takk"
+  to = "/uk-it-firms/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/uk-it-firms/review"
+  to = "/uk-it-firms/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/uk-it-firms/not-now"
+  to = "/uk-it-firms/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/uk-it-firms/not-a-fit"
+  to = "/uk-it-firms/not-a-fit/index.html"
+  status = 200
+
+# A mistyped address under the funnel must not fall through to the SPA catch-all and
+# answer 200 with the homepage: no form, no pixel, nothing to say it is the wrong page.
+# Real files win over this, so it only catches paths that do not exist.
+[[redirects]]
+  from = "/uk-it-firms/*"
+  to = "/404.html"
+  status = 404
+
+# The funnel's first address, /g/uk-it-larger-firms, was live for a day. Anything that
+# kept it lands on the new one. Permanent, so it consolidates. Before the /g/* 404.
 [[redirects]]
   from = "/g/uk-it-larger-firms"
-  to = "/g/uk-it-larger-firms/index.html"
-  status = 200
+  to = "/uk-it-firms/"
+  status = 301
 
 [[redirects]]
-  from = "/g/uk-it-larger-firms/book"
-  to = "/g/uk-it-larger-firms/book/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/g/uk-it-larger-firms/takk"
-  to = "/g/uk-it-larger-firms/takk/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/g/uk-it-larger-firms/review"
-  to = "/g/uk-it-larger-firms/review/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/g/uk-it-larger-firms/not-now"
-  to = "/g/uk-it-larger-firms/not-now/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/g/uk-it-larger-firms/not-a-fit"
-  to = "/g/uk-it-larger-firms/not-a-fit/index.html"
-  status = 200
+  from = "/g/uk-it-larger-firms/*"
+  to = "/uk-it-firms/:splat"
+  status = 301
 
 # Same shape as /report, /draft and /r above: real files under public/g/ win,
 # including the fonts under /g/_assets, so these only catch paths that do not

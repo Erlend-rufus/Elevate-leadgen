@@ -1,6 +1,8 @@
 {
   "_comment": "Everything in this funnel that is a setting rather than copy. Copy is in copy.json and is verbatim from the work order: do not edit it to fit a layout. Rules for choosing an outcome page are in routing.json.",
   "slug": "uk-it-larger-firms",
+  "path": "/uk-it-firms",
+  "_path": "The address the funnel is served at, one segment. The build checks it against the function's route and against routes the site already has. Changing it moves every page, rule and link, and leaves a permanent redirect only from the old address if you add one in netlify.toml.",
   "origin": "https://getelevateleads.com",
   "live": false,
   "_live": "While false every page carries noindex, the build stays green with items missing, and the apply endpoint refuses every submission with a 503. Set true only when the build says nothing is outstanding. The build enforces calendlyUrl, routing and finished copy once this is true.",
@@ -22,7 +24,7 @@
     "pixelId": "1466790598245604",
     "calendlyUrl": "",
     "_calendlyUrl": "Event URL with no query string, from Calendly: Share, Add to website, Inline embed. Empty is allowed only while live is false. The booking page adds its own parameters.",
-    "applyPath": "/g/uk-it-larger-firms/apply"
+    "applyPath": "/uk-it-firms/apply"
   },
   "hiddenFields": [
     "lead_id",

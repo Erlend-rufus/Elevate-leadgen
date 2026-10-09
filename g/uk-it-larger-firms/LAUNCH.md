@@ -1,4 +1,4 @@
-# Launch notes · /g/uk-it-larger-firms
+# Launch notes · /uk-it-firms
 
 UK IT services firms with £4m+ turnover. Landing page, a twelve step application
 form, and five outcome pages. Built from the work order "Arbeidsordre: UK IT,
@@ -176,13 +176,13 @@ design change and not made here.
 ```
 config.json  copy.json  routing.json          one place each
       │          │           │
-      └──────────┴───────────┴──▶ scripts/build-g-it.mjs ──▶ public/g/uk-it-larger-firms/**   static pages
+      └──────────┴───────────┴──▶ scripts/build-g-it.mjs ──▶ public/uk-it-firms/**   static pages
                                                           └─▶ netlify/functions/uk-it-apply/data.generated.mjs
 
 browser ──▶ landing page (works with no script)
               │  with JS: twelve steps, same form, same server
               ▼
-        POST /g/uk-it-larger-firms/apply   netlify/functions/uk-it-apply/index.mjs
+        POST /uk-it-firms/apply   netlify/functions/uk-it-apply/index.mjs
               │  validates with g/…/core.cjs   (the same file the browser runs)
               │  routes with     g/…/route.cjs
               │  delivers to     UK_IT_LEAD_WEBHOOK_URL
@@ -223,7 +223,7 @@ npm run test:g-it      # validation, routing, the apply function
 node scripts/build-g-it.mjs   # just this funnel
 ```
 
-Do not edit `public/g/uk-it-larger-firms/**` or
+Do not edit `public/uk-it-firms/**` or
 `netlify/functions/uk-it-apply/data.generated.mjs`: both are rewritten on every build.
 `public/g/_assets` (fonts, logos) is shared with every `/g` campaign and is never touched.
 

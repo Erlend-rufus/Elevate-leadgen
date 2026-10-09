@@ -1,4 +1,4 @@
-// Shared fixtures for the /g/uk-it-larger-firms tests. Run with: npm run test:g-it
+// Shared fixtures for the /uk-it-firms tests. Run with: npm run test:g-it
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
@@ -48,7 +48,7 @@ export const SHELL = { before: '<!doctype html><html><body><main>', after: '</ma
 
 export function post(fields, { json: asJson = true, headers = {}, type } = {}) {
   const body = new URLSearchParams(fields).toString();
-  return new Request('https://example.test/g/uk-it-larger-firms/apply', {
+  return new Request('https://example.test/uk-it-firms/apply', {
     method: 'POST',
     headers: Object.assign({ 'Content-Type': type || 'application/x-www-form-urlencoded', Accept: asJson ? 'application/json' : 'text/html' }, headers),
     body,

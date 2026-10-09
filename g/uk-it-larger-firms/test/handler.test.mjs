@@ -22,7 +22,7 @@ const bodyOf = async (res) => JSON.parse(await res.text());
 
 test('only POST is accepted', async () => {
   const { handler } = rig();
-  const res = await handler(new Request('https://x.test/g/uk-it-larger-firms/apply', { method: 'GET' }));
+  const res = await handler(new Request('https://x.test/uk-it-firms/apply', { method: 'GET' }));
   assert.equal(res.status, 405);
   assert.equal(res.headers.get('allow'), 'POST');
 });
@@ -34,7 +34,7 @@ test('a good submission is delivered once, routed, and the visitor is sent on wi
   const j = await bodyOf(res);
   assert.equal(j.ok, true);
   assert.equal(j.page, 'book');
-  assert.equal(j.next, '/g/uk-it-larger-firms/book/?lead_id=l_test123&utm_source=meta&utm_medium=paid&utm_campaign=itq4&utm_content=ad7&utm_term=solar&fbclid=FB1');
+  assert.equal(j.next, '/uk-it-firms/book/?lead_id=l_test123&utm_source=meta&utm_medium=paid&utm_campaign=itq4&utm_content=ad7&utm_term=solar&fbclid=FB1');
   assert.equal(calls.length, 1);
   const lead = calls[0].body;
   assert.equal(lead.lead_id, 'l_test123');
@@ -57,15 +57,15 @@ test('every hidden field the work order lists is stored with the lead', async ()
 
 test('routing decides the page, and the page is in the redirect', async () => {
   const { handler } = rig();
-  assert.equal((await bodyOf(await handler(post(Object.assign({}, GOOD, { turnover: '0' }))))).next.split('?')[0], '/g/uk-it-larger-firms/not-a-fit/');
-  assert.equal((await bodyOf(await handler(post(Object.assign({}, GOOD, { capacity: '0' }))))).next.split('?')[0], '/g/uk-it-larger-firms/not-now/');
+  assert.equal((await bodyOf(await handler(post(Object.assign({}, GOOD, { turnover: '0' }))))).next.split('?')[0], '/uk-it-firms/not-a-fit/');
+  assert.equal((await bodyOf(await handler(post(Object.assign({}, GOOD, { capacity: '0' }))))).next.split('?')[0], '/uk-it-firms/not-now/');
 });
 
 test('without JavaScript a good submission is a 303 to the same place', async () => {
   const { handler } = rig();
   const res = await handler(post(GOOD, { json: false }));
   assert.equal(res.status, 303);
-  assert.match(res.headers.get('location'), /^\/g\/uk-it-larger-firms\/book\/\?lead_id=l_test123/);
+  assert.match(res.headers.get('location'), /^\/uk-it-firms\/book\/\?lead_id=l_test123/);
 });
 
 test('invalid input: JSON gets the errors, and nothing is delivered', async () => {
@@ -110,7 +110,7 @@ test('the redirect carries values we built, never a location from the visitor', 
   const { handler } = rig();
   const res = await handler(post(Object.assign({}, GOOD, { utm_source: 'https://evil.test/&page=x', fbclid: '\r\nLocation: https://evil.test' })));
   const next = (await bodyOf(res)).next;
-  assert.ok(next.startsWith('/g/uk-it-larger-firms/'), next);
+  assert.ok(next.startsWith('/uk-it-firms/'), next);
   assert.equal(/\r|\n/.test(next), false);
   assert.equal(next.includes('https://evil.test'), false, 'encoded, not interpreted');
 });
@@ -191,7 +191,7 @@ test('a lead id that is not ours is replaced, not trusted', async () => {
 test('a browser without JavaScript cannot fill the UTMs in, so they are recovered from the page that posted', async () => {
   const { handler, calls } = rig();
   const fields = Object.assign({}, GOOD, { utm_source: '', utm_medium: '', utm_campaign: '', utm_content: '', utm_term: '', fbclid: '' });
-  await handler(post(fields, { json: false, headers: { Referer: 'https://getelevateleads.com/g/uk-it-larger-firms/?utm_source=meta&utm_campaign=itq4&fbclid=ZZ' } }));
+  await handler(post(fields, { json: false, headers: { Referer: 'https://getelevateleads.com/uk-it-firms/?utm_source=meta&utm_campaign=itq4&fbclid=ZZ' } }));
   assert.equal(calls[0].body.tracking.utm_source, 'meta');
   assert.equal(calls[0].body.tracking.utm_campaign, 'itq4');
   assert.equal(calls[0].body.tracking.fbclid, 'ZZ');
@@ -205,17 +205,17 @@ test('a Referer from somewhere else is ignored', async () => {
 
 test('size and type limits', async () => {
   const { handler } = rig();
-  const big = new Request('https://x.test/g/uk-it-larger-firms/apply', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'a=' + 'x'.repeat(70000) });
+  const big = new Request('https://x.test/uk-it-firms/apply', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'a=' + 'x'.repeat(70000) });
   assert.equal((await handler(big)).status, 413);
-  const xml = new Request('https://x.test/g/uk-it-larger-firms/apply', { method: 'POST', headers: { 'Content-Type': 'text/xml' }, body: '<a/>' });
+  const xml = new Request('https://x.test/uk-it-firms/apply', { method: 'POST', headers: { 'Content-Type': 'text/xml' }, body: '<a/>' });
   assert.equal((await handler(xml)).status, 415);
-  const badJson = new Request('https://x.test/g/uk-it-larger-firms/apply', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{nope' });
+  const badJson = new Request('https://x.test/uk-it-firms/apply', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{nope' });
   assert.equal((await handler(badJson)).status, 400);
 });
 
 test('JSON bodies work too', async () => {
   const { handler, calls } = rig();
-  const res = await handler(new Request('https://x.test/g/uk-it-larger-firms/apply', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(GOOD) }));
+  const res = await handler(new Request('https://x.test/uk-it-firms/apply', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(GOOD) }));
   assert.equal(res.status, 200);
   assert.equal(calls.length, 1);
 });
@@ -231,7 +231,7 @@ test('no personal data reaches the log, only an id and a reason', async () => {
 
 test('every response says it must not be cached or indexed', async () => {
   const { handler } = rig();
-  for (const res of [await handler(post(GOOD)), await handler(post({})), await handler(new Request('https://x.test/g/uk-it-larger-firms/apply'))]) {
+  for (const res of [await handler(post(GOOD)), await handler(post({})), await handler(new Request('https://x.test/uk-it-firms/apply'))]) {
     assert.equal(res.headers.get('cache-control'), 'no-store');
     assert.match(res.headers.get('x-robots-tag'), /noindex/);
   }
