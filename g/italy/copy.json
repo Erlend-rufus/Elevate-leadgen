@@ -1,0 +1,116 @@
+{
+  "_comment": "Italian copy, word for word from the brief (variant A1). Every string is a draft: AURORA TO PROOFREAD BEFORE USE. {THRESHOLD} and {OFFER} come from config.json. [text](privacy) becomes a link to the privacy notice and [text](cookies) to the cookie notice.",
+  "meta": {
+    "title": "Elevate Marketing: marketing per cybersecurity e MSSP",
+    "description": "Elevate Marketing gestisce le campagne che portano aziende ai servizi delle società di cybersecurity e degli MSSP in Italia. Analisi gratuita di 30 minuti."
+  },
+  "topbar": "Per aziende di cybersecurity e MSSP in Italia ({THRESHOLD})",
+  "hero": {
+    "h1": ["I vostri canoni crescono solo quando qualcuno vi presenta un cliente?", "Un secondo canale, accanto al passaparola."],
+    "lede": "Elevate Marketing gestisce le campagne che portano aziende interessate ai vostri servizi, con un referente in Italia. Si parte da un'analisi gratuita di 30 minuti.",
+    "cta": "Verificate se possiamo lavorare insieme",
+    "micro": "Circa tre minuti. Se possiamo esservi utili, prenotate subito l'analisi gratuita di 30 minuti. In caso contrario ve lo diciamo subito, con il motivo."
+  },
+  "fit": {
+    "h2": "Per chi lavoriamo, e per chi no",
+    "worksTitle": "Fa per voi se",
+    "works": [
+      "Offrite servizi di cybersecurity ad altre aziende.",
+      "Avete {THRESHOLD}.",
+      "Lavorate con canoni ricorrenti e volete aggiungere un canale oltre al passaparola e ai fornitori.",
+      "Potete destinare un budget pubblicitario mensile, da pagare direttamente alle piattaforme."
+    ],
+    "notTitle": "Non fa per voi se",
+    "not": [
+      "I vostri servizi non riguardano la sicurezza informatica.",
+      "Non rientrate nella fascia di dimensione indicata.",
+      "Volete una promessa sul numero di contatti o di clienti.",
+      "In questo momento non potete investire in pubblicità."
+    ]
+  },
+  "paid": {
+    "h2": "Il budget pubblicitario lo pagate voi.",
+    "h2muted": "Il nostro compenso per i servizi di lead generation ve lo spieghiamo con chiarezza prima di qualsiasi impegno.",
+    "p1": "Il budget per gli annunci va direttamente a Meta e Google. Non passa da noi.",
+    "p2": "{OFFER}"
+  },
+  "keep": {
+    "h2": "Come lavoriamo",
+    "items": [
+      { "title": "Un referente in Italia", "text": "Parlate in italiano con una persona reale, che segue le campagne insieme a voi. Non con un portale e non con un ticket." },
+      { "title": "Campagne gestite da noi", "text": "Impostiamo e gestiamo le campagne su Meta e Google. Voi non dovete diventare esperti di pubblicità." },
+      { "title": "Contano le riunioni, non i clic", "text": "Guardiamo le riunioni con aziende davvero interessate e le vendite che ne nascono. I clic da soli non ci dicono se una campagna funziona." }
+    ]
+  },
+  "meeting": {
+    "h2": "Che cosa succede nell'analisi gratuita",
+    "steps": [
+      { "title": "Rispondete a poche domande", "text": "Poche domande sulla vostra azienda e sui vostri clienti. Servono a capire se possiamo esservi utili." },
+      { "title": "Scegliete un orario", "text": "Se dalle risposte risulta che possiamo lavorare insieme, prenotate subito l'analisi nel calendario." },
+      { "title": "Facciamo l'analisi, 30 minuti", "text": "Insieme al vostro referente in Italia guardate da dove arrivano oggi i vostri clienti a canone e quali canali funzionano." },
+      { "title": "Decidete voi", "text": "Discutiamo tre idee concrete per aggiungere un canale. Se ha senso lavorare insieme, ne parliamo. Se no, finisce lì." }
+    ],
+    "notice": "Qualunque sia la vostra decisione, le idee emerse nell'analisi restano vostre. Nessun obbligo."
+  },
+  "faq": {
+    "h2": "Domande frequenti",
+    "items": [
+      { "q": "Promettete dei risultati?", "a": "No. Nessuno può promettere quante aziende risponderanno, né quando. Misuriamo le riunioni con aziende interessate e il costo di ciascuna, e vi mostriamo i numeri così come sono." },
+      { "q": "Quanto costa?", "a": "L'analisi di 30 minuti è gratuita. Il budget pubblicitario lo pagate voi. Per il nostro compenso: {OFFER}" },
+      { "q": "Gli account pubblicitari e i dati restano nostri?", "a": "Sì. Gli account pubblicitari e i dati dei contatti restano vostri." },
+      { "q": "Chi ci contatterà?", "a": "Vi contatta il referente in Italia di Elevate Marketing, non un call center." },
+      { "q": "Come trattate i nostri dati?", "a": "I dati che inserite nel modulo servono a rispondere alla vostra richiesta e a organizzare l'analisi. Chi li tratta e quali sono i vostri diritti è spiegato nell'[informativa privacy](privacy)." },
+      { "q": "Lavorate con tutte le aziende?", "a": "No. Lavoriamo con aziende di cybersecurity e MSSP in Italia ({THRESHOLD}) che offrono servizi ad altre aziende. Se non siamo la scelta giusta per voi, ve lo diciamo subito." },
+      { "q": "Avete già lavorato con aziende come la nostra?", "a": "Stiamo iniziando in Italia e non nominiamo clienti senza il loro consenso scritto. Nell'analisi vi mostriamo come lavoriamo e che cosa misuriamo." },
+      { "q": "Quanto tempo richiede?", "a": "Il modulo richiede circa tre minuti e l'analisi dura 30 minuti." }
+    ]
+  },
+  "formSection": { "h2": "Vediamo se possiamo esservi utili" },
+  "footer": {
+    "legal": "Elevate Marketing è gestito da EngeCo AS (n. di registrazione 924 490 926), Midtfjellet 66, 5363 Ågotnes, Norvegia.",
+    "privacy": "Informativa privacy",
+    "terms": "Termini"
+  },
+  "consent": {
+    "body": "Usiamo i cookie per capire se i nostri annunci funzionano. Potete accettare o rifiutare: il sito funziona in entrambi i casi.",
+    "accept": "Accetto",
+    "decline": "Rifiuto",
+    "cookieLink": "Informativa cookie"
+  },
+  "sticky": "Verificate se possiamo lavorare insieme",
+  "form": {
+    "labels": {
+      "back": "Indietro",
+      "next": "Avanti",
+      "submit": "Verificate se possiamo lavorare insieme",
+      "sending": "Invio in corso",
+      "step": "Passaggio {n} di {total}"
+    },
+    "errors": {
+      "choice": "Selezionate una risposta per continuare.",
+      "consent": "Per inviare la richiesta serve il vostro consenso.",
+      "general": "Non siamo riusciti a inviare la richiesta. Riprovate tra un attimo."
+    },
+    "questions": [
+      { "id": "offers", "kind": "choice", "title": "La vostra azienda offre servizi di cybersecurity ad altre aziende?", "options": ["Sì", "No"] },
+      { "id": "employees", "kind": "choice", "title": "Quanti dipendenti avete?", "options": ["Da 1 a 9", "Da 10 a 49", "Da 50 a 150", "Più di 150"] },
+      { "id": "source", "kind": "choice", "title": "Da dove arrivano oggi la maggior parte dei vostri clienti?", "options": ["Passaparola", "Distributori e vendor", "Online (sito, ricerca, annunci)", "Altro"] },
+      { "id": "priority", "kind": "choice", "title": "Che cosa è più importante per voi nei prossimi sei mesi?", "options": ["Più clienti a canone ricorrente", "Distinguerci dai concorrenti", "Altro"] },
+      { "id": "budget", "kind": "choice", "title": "Potete destinare un budget pubblicitario mensile, da pagare direttamente alle piattaforme?", "options": ["Sì", "Da valutare", "No"] },
+      { "id": "details", "kind": "details", "title": "Come possiamo contattarvi?",
+        "fields": [
+          { "key": "name", "label": "Nome e cognome", "type": "text", "error": "Inserite il vostro nome e cognome." },
+          { "key": "company", "label": "Nome dell'azienda", "type": "text", "error": "Inserite il nome dell'azienda." },
+          { "key": "email", "label": "Email di lavoro", "type": "email", "error": "Inserite un indirizzo email di lavoro valido." },
+          { "key": "consent", "label": "Acconsento al trattamento dei miei dati personali da parte di EngeCo AS (Elevate Marketing) per essere ricontattato in merito a questa richiesta, come descritto nell'[informativa privacy](privacy).", "type": "checkbox", "error": "Per inviare la richiesta serve il vostro consenso." }
+        ] }
+    ]
+  },
+  "outcomes": {
+    "book": { "h1": "Prenotate l'analisi gratuita", "text": "Dalle vostre risposte risulta che possiamo esservi utili. Scegliete un orario: l'analisi dura 30 minuti." },
+    "takk": { "h1": "Prenotazione confermata", "text": "Riceverete una conferma con data, ora e link all'incontro. Se volete, pensate prima a dove arrivano oggi i vostri clienti a canone: è il punto da cui partiamo." },
+    "not-now": { "h1": "Per ora non è il momento giusto", "text": "Dalle vostre risposte risulta che in questo momento non potete destinare un budget pubblicitario. Senza budget una campagna non può partire, e preferiamo dirvelo subito piuttosto che farvi perdere tempo. Se la situazione cambia, potete compilare di nuovo il modulo." },
+    "not-a-fit": { "h1": "Per ora non siamo la scelta giusta", "text": "Lavoriamo con aziende che offrono servizi di cybersecurity ad altre aziende. Dalle vostre risposte non è il vostro caso, quindi non possiamo esservi utili. Grazie per il tempo che ci avete dedicato." },
+    "not-a-fit-b": { "h1": "Per ora non siamo la scelta giusta", "text": "Lavoriamo con aziende di una certa dimensione ({THRESHOLD}). Dalle vostre risposte siete fuori da questa fascia, quindi non possiamo esservi utili. Grazie per il tempo che ci avete dedicato." }
+  }
+}

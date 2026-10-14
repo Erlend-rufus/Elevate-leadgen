@@ -1,0 +1,42 @@
+{
+  "_comment": "Elevate Marketing Italia, /italy. Built from 'Claude Design brief 1 av 2: landingssider, Elevate Marketing Italia (v2)', 14 October 2026. Variant A1 (canoni) only. Copy is in copy.json, routing in routing.json. This funnel is a deliberately separate copy of /uk-it-firms: own code, own consent key, own scripts, so that a change to one cannot break the other.",
+  "slug": "italy",
+  "path": "/italy",
+  "origin": "https://getelevateleads.com",
+  "lang": "it",
+  "live": false,
+  "_live": "While false every page carries noindex and the lead endpoint refuses every submission with a 503. The build refuses true while anything below is outstanding, and says what.",
+  "indexable": false,
+  "_indexable": "Whether the landing page may be indexed once live. Outcome pages are always noindex. Leave false until someone decides the Italian page should rank; true while live is false fails the build.",
+  "proofread": false,
+  "_proofread": "Set true when Aurora has proofread every Italian string. Required for live.",
+  "legalApproved": false,
+  "_legalApproved": "Set true when the Italian adviser has approved every line marked ADVISOR in the brief: consent text, banner, footer, the privacy and cookie notices, the wording about compensation and about who owns data and ideas. Required for live.",
+  "variables": {
+    "THRESHOLD": "{THRESHOLD}",
+    "OFFER": "{OFFER}",
+    "_pending": "Both are open decisions. The brief says to render them literally, so the page shows {THRESHOLD} and {OFFER} as written. Replace with the real text (for example 'da 10 a 150 dipendenti'); the build refuses live while either still reads as a placeholder. If the band is not 10 to 150, the options of question 2 and routing.json must change with it."
+  },
+  "links": {
+    "privacy": "/italy/privacy/",
+    "cookies": "/italy/cookie/",
+    "terms": null,
+    "_comment": "The privacy and cookie notices are legal text delivered separately and are not built here. The links point where those pages will be; the build refuses live until public/italy/privacy and public/italy/cookie exist. terms is null: the brief says to omit the link if no terms page exists at launch."
+  },
+  "consent": {
+    "storageKey": "em_it_consent",
+    "version": "v1-draft",
+    "textSha256": "c6d1e6a38bf96bd9",
+    "_textSha256": "First 16 hex digits of the sha256 of the consent checkbox label in copy.json. The build fails if the wording changes without this being updated, so that a new wording cannot be recorded under the old version. Change the wording: bump version, then set this to the value the build prints."
+  },
+  "funnel": {
+    "pixelId": "",
+    "_pixelId": "Not given in the brief. The brief wants the Italian pixel loaded only from /italy pages and only after Accetto. Empty means nothing is ever loaded. Decide whether Italy gets its own pixel or shares the UK one before any ad runs: sharing means sharing optimisation data.",
+    "calendlyUrl": "",
+    "_calendlyUrl": "Event URL with no query string, from a separate Italian event type on the Italian representative's calendar. Not the UK link. Required for live.",
+    "applyPath": "/italy/api/lead"
+  },
+  "hiddenFields": ["lead_id", "page_slug", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "referrer"],
+  "pageSlug": "canoni",
+  "contact": null
+}

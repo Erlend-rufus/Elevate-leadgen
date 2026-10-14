@@ -1,0 +1,11 @@
+{
+  "_comment": "From section 6 of the brief. Answers are captured completely before any routing. Precedence when several apply: not-a-fit (reason A, then B), then not-now. Only a lead that passes everything reaches /italy/book/. Option indexes count from 0 in the order the options appear on the form.",
+  "_pending": "threshold: rule not-a-fit-b assumes the default band 10 to 150 employees (options 'Da 1 a 9' and 'Più di 150' are outside it). If {THRESHOLD} is decided as 10 to 80, question 2 gets five options and this rule changes with it.",
+  "status": "configured",
+  "rules": [
+    { "id": "not-a-fit-a", "when": { "offers": [1] }, "then": "not-a-fit" },
+    { "id": "not-a-fit-b", "when": { "employees": [0, 3] }, "then": "not-a-fit-b" },
+    { "id": "not-now", "when": { "budget": [2] }, "then": "not-now" }
+  ],
+  "fallback": "book"
+}
