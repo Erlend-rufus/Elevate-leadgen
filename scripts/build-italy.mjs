@@ -85,6 +85,9 @@ function validate() {
   /* The address. One segment, and not a place the site already uses: a path that is
      also a React route or another funnel would be shadowed or would shadow it. */
   if (!/^\/[a-z0-9]+(-[a-z0-9]+)*$/.test(BASE)) die(`config.path "${BASE}" must be one lower-case segment such as /italy`);
+  /* /italy is written into the asset paths, the function's route, the redirects and headers in netlify.toml, the legal
+     page checks below and the page copy. The config reads as if it could be moved; it cannot, without all of those. */
+  if (BASE !== '/italy') die(`config.path must be /italy, not ${BASE}: the asset paths, the function route and the netlify.toml rules all name it`);
   const RESERVED = ['/g', '/lp', '/audit', '/case', '/report', '/draft', '/r', '/uk-recruitment', '/uk-it-firms', '/geo-audit', '/css', '/js', '/images', '/assets', '/nevari', '/the-journey', '/growth-audit', '/book', '/contact', '/about', '/services', '/blog', '/cases', '/takk', '/not-a-fit'];
   if (RESERVED.includes(BASE)) die(`config.path "${BASE}" is already used by the site`);
   const app = readFileSync(join(root, 'src', 'App.tsx'), 'utf8');
@@ -95,7 +98,7 @@ function validate() {
   if (!['canoni', 'marketing', 'nis2'].includes(cfg.pageSlug)) die(`config.pageSlug "${cfg.pageSlug}" must be one of canoni, marketing, nis2 (the brief's page_slug values)`);
   /* The folder this generator writes into must be absent, empty, or already ours. Anything else (/geo-audit, say) is
      another funnel's files, and the clean-up further down would delete them. */
-  const OURS = new Set(['index.html', 'assets', 'privacy', 'cookie', ...OUTCOMES]);
+  const OURS = new Set(['index.html', 'assets', 'privacy', 'cookie', 'terms', ...OUTCOMES]);
   const target = join(PUBLIC, ...BASE.split('/').filter(Boolean));
   if (existsSync(target)) {
     const foreign = readdirSync(target).filter((f) => !OURS.has(f));
@@ -112,7 +115,9 @@ function validate() {
   for (const k of ['privacy', 'cookies']) {
     if (cfg.links[k] !== `${BASE}/${k === 'cookies' ? 'cookie' : k}/`) die(`links.${k} must be ${BASE}/${k === 'cookies' ? 'cookie' : k}/`);
   }
-  if (cfg.links.terms !== null) die('links.terms must be null: there is no terms page at launch, and the brief says to omit the link');
+  /* No terms page at launch: the brief says to omit the link. Adding one later is this key plus copy.footer.terms, and the page itself in public/italy/terms/. */
+  if (cfg.links.terms !== null && cfg.links.terms !== `${BASE}/terms/`) die(`links.terms must be null (no terms page, no link) or ${BASE}/terms/`);
+  if (cfg.links.terms !== null && !String(copy.footer.terms || '').trim()) die('links.terms is set but copy.footer.terms is empty: the link would have no text');
   /* The function names its own route as a literal (Netlify reads it statically). If it
      drifts from config.funnel.applyPath, the form posts to a path nothing answers. */
   const fnFile = join(FN, 'index.mjs');
@@ -148,7 +153,12 @@ function validate() {
   checkRouting(qs, routing).forEach((p) => outstanding.push(`routing: ${p}`));
   if (!cfg.funnel.calendlyUrl) outstanding.push('funnel.calendlyUrl is empty (a separate Italian event type is needed)');
   if (!cfg.funnel.pixelId) outstanding.push('funnel.pixelId is empty: no pixel loads, so no Lead event is ever sent');
-  for (const [name, dir] of [['privacy notice', 'privacy'], ['cookie notice', 'cookie']])
+  if (/draft/i.test(cfg.consent.version)) outstanding.push(`config.consent.version is "${cfg.consent.version}": a draft label is not the version of approved wording. Set it when the adviser approves the consent text`);
+  try {
+    const uk = JSON.parse(readFileSync(join(root, 'g', 'uk-it-larger-firms', 'config.json'), 'utf8')).funnel.calendlyUrl;
+    if (uk && cfg.funnel.calendlyUrl === uk) outstanding.push('funnel.calendlyUrl is the UK funnel\'s event: Italy needs its own event type, on the Italian representative\'s calendar');
+  } catch (e) { /* no UK funnel to compare with */ }
+  for (const [name, dir] of [['privacy notice', 'privacy'], ['cookie notice', 'cookie'], ...(cfg.links.terms ? [['terms page', 'terms']] : [])])
     {
       const f = join(PUBLIC, 'italy', dir, 'index.html');
       if (!existsSync(f)) outstanding.push(`public/italy/${dir}/index.html does not exist: the ${name} has not been delivered`);
@@ -169,13 +179,22 @@ const RGBA_OK = new Set([
 /* Every CSS named colour (Color Module 4). "No green, no accent" has to hold for olive, aqua and seagreen too, not
    only the dozen that come to mind. The words are only looked for as a value, never inside var(--white) or a name. */
 const NAMED_COLOURS = ('aliceblue antiquewhite aqua aquamarine azure beige bisque black blanchedalmond blue blueviolet brown burlywood cadetblue chartreuse chocolate coral cornflowerblue cornsilk crimson cyan darkblue darkcyan darkgoldenrod darkgray darkgreen darkgrey darkkhaki darkmagenta darkolivegreen darkorange darkorchid darkred darksalmon darkseagreen darkslateblue darkslategray darkslategrey darkturquoise darkviolet deeppink deepskyblue dimgray dimgrey dodgerblue firebrick floralwhite forestgreen fuchsia gainsboro ghostwhite gold goldenrod gray green greenyellow grey honeydew hotpink indianred indigo ivory khaki lavender lavenderblush lawngreen lemonchiffon lightblue lightcoral lightcyan lightgoldenrodyellow lightgray lightgreen lightgrey lightpink lightsalmon lightseagreen lightskyblue lightslategray lightslategrey lightsteelblue lightyellow lime limegreen linen magenta maroon mediumaquamarine mediumblue mediumorchid mediumpurple mediumseagreen mediumslateblue mediumspringgreen mediumturquoise mediumvioletred midnightblue mintcream mistyrose moccasin navajowhite navy oldlace olive olivedrab orange orangered orchid palegoldenrod palegreen paleturquoise palevioletred papayawhip peachpuff peru pink plum powderblue purple rebeccapurple red rosybrown royalblue saddlebrown salmon sandybrown seagreen seashell sienna silver skyblue slateblue slategray slategrey snow springgreen steelblue tan teal thistle tomato turquoise violet wheat white whitesmoke yellow yellowgreen').split(' ');
-/* A colour keyword standing on its own as part of a declaration's value. Not var(--white): a custom property's name is not a colour. */
-const NAMED = new RegExp(`:\\s*[^;{}]*(?<![-\\w])(${NAMED_COLOURS.join('|')})(?![-\\w(])`, 'i');
+/* A colour keyword standing on its own inside a declaration's VALUE. Not var(--white): a custom property's name is not a
+   colour. Not a selector or a comment either: a class called .tan, or "olive" in an English comment, is not a colour, and a
+   false alarm here stops the build of the whole site, because this generator is part of the shared prebuild. */
+const NAMED = new RegExp(`(?<![-\\w])(${NAMED_COLOURS.join('|')})(?![-\\w(])`, 'i');
+/** The value of every declaration in a piece of CSS, comments removed. */
+function cssValues(css) {
+  const out = [];
+  css = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  for (const m of css.matchAll(/\{([^{}]*)\}/g)) for (const d of m[1].split(';')) { const i = d.indexOf(':'); if (i > 0) out.push(d.slice(i + 1)); }
+  return out;
+}
 /* The same words as the value of an SVG paint attribute. */
 const NAMED_ATTR = new RegExp(`\\b(?:fill|stroke|color|stop-color|flood-color)="(${NAMED_COLOURS.join('|')})"`, 'i');
 
 /** Everything in the page that is CSS: <style> blocks and style="" attributes. */
-const cssOf = (html) => [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).concat([...html.matchAll(/\sstyle="([^"]*)"/g)].map((m) => m[1])).join('\n');
+const cssOf = (html) => [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).concat([...html.matchAll(/\sstyle="([^"]*)"/g)].map((m) => `x{${m[1]}}`)).join('\n');
 
 function checkHex(path, where, text) {
   for (const m of text.matchAll(/#([0-9a-fA-F]{3,8})(?![0-9a-zA-Z_-])/g)) {
@@ -191,15 +210,25 @@ function inlineSafe(name, text, tag) {
 
 function checkOutput(path, html) {
   if (html.includes('{{')) die(`${path} still contains template syntax "{{"`);
+  /* The page without its scripts and styles: markup, attributes and text. That is where a missing copy key shows up. */
+  const bare = html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ');
+  /* A copy.json key that is missing, renamed or null is printed as the word "undefined" or "null" by String(). Nothing else
+     should ever put those words in front of a visitor. */
+  const junk = /\b(undefined|null|NaN)\b|\[object /.exec(bare);
+  if (junk) die(`${path} contains "${junk[0]}" in its markup or text: a key in copy.json or config.json is missing or is not a string`);
   /* {THRESHOLD} and {OFFER} may remain only where config says the decision is still open. */
   for (const m of html.matchAll(/\{([A-Z_]+)\}/g)) {
     if (!(m[1] in VARS) || !stillOpen(m[1])) die(`${path} still contains ${m[0]}: a variable was not resolved`);
   }
+  /* Any other brace in the page is a placeholder that did not match the {UPPER_CASE} pattern: {offer}, { OFFER }, {THRESHOLD}s. */
+  const brace = /[{}]/.exec(bare.replace(/\{([A-Z_]+)\}/g, (m, k) => ((k in VARS) && stillOpen(k) ? '' : m)));
+  if (brace) die(`${path} contains a stray "${brace[0]}" outside the open {THRESHOLD} and {OFFER}: a placeholder that was mistyped`);
   if (/fonts\.googleapis|fonts\.gstatic/.test(html)) die(`${path} requests a font from Google. Fonts are self-hosted under /italy/assets/fonts/.`);
   if (/\/g\/_assets/.test(html)) die(`${path} mentions /g/_assets: this funnel serves its own copies from /italy/assets/`);
   if (/\/js\/consent\.js|elevate-cookie-consent/.test(html)) die(`${path} uses the shared consent script or the UK consent key. This funnel owns its own consent.`);
-  /* Hex colours where a colour can be: CSS, any attribute whose whole value is one, any quoted string in a script. Not visible
-     text ("Passo #123") and not an entity (&#160;). */
+  /* Hex colours where a colour can be: CSS, any attribute whose whole value is one, any quoted hex string in a script. Not visible
+     text ("Passo #123") and not an entity (&#160;). Colours a script would set in another way (a named colour, rgb()) are not
+     looked for: the scripts here set none, and the review of any change to them is the check. */
   checkHex(path, 'CSS', cssOf(html));
   for (const m of html.matchAll(/="(#[0-9a-fA-F]{3,8})"/g)) checkHex(path, 'attribute', m[1]);
   for (const m of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)) for (const q of m[1].matchAll(/(["'])(#[0-9a-fA-F]{3,8})\1/g)) checkHex(path, 'script', q[2]);
@@ -209,8 +238,10 @@ function checkOutput(path, html) {
     const norm = m[0].replace(/\s+/g, '');
     if (!RGBA_OK.has(norm)) die(`${path} uses ${m[0]}, which is not one of the design tokens`);
   }
-  const named = NAMED.exec(cssOf(html));
-  if (named) die(`${path} uses the named colour "${named[1]}": ${named[0].slice(0, 60)}`);
+  for (const v of cssValues(cssOf(html))) {
+    const named = NAMED.exec(v);
+    if (named) die(`${path} uses the named colour "${named[1]}": ${v.trim().slice(0, 60)}`);
+  }
   const attr = NAMED_ATTR.exec(html);
   if (attr) die(`${path} uses the named colour "${attr[1]}" in ${attr[0]}`);
 }
@@ -288,14 +319,17 @@ const consentBar = () => `<div class="consent" id="consent" role="region" aria-l
 
 /** window.EMIT, then the scripts in dependency order, then this page's own. */
 function scriptBlock(extra, page) {
+  /* The form strings the script carries are the resolved ones, like the server-rendered form and the function's copy, so
+     a {THRESHOLD} or {OFFER} in a form string reads the same in every place it appears. */
+  const rc = resolved();
   const k = {
     slug: SLUG,
     page,
     applyPath: cfg.funnel.applyPath,
     hidden: cfg.hiddenFields,
-    questions: copy.form.questions,
-    messages: copy.form.errors,
-    labels: copy.form.labels,
+    questions: rc.form.questions,
+    messages: rc.form.errors,
+    labels: rc.form.labels,
     icon: ALERT_ICON,
     calendlyUrl: cfg.funnel.calendlyUrl,
     takkPath: `${BASE}/takk/`,

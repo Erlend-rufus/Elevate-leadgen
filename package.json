@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test:g-it": "node --test \"g/uk-it-larger-firms/test/*.test.mjs\"",
-    "test:italy": "node --test \"g/italy/test/*.test.mjs\"",
+    "test:italy": "node --test g/italy/test/core.test.mjs g/italy/test/route.test.mjs g/italy/test/handler.test.mjs g/italy/test/hardening.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -62,6 +62,9 @@
       return els.value;
     };
     var answers = function () { return Core.answersFrom(Q, getVal); };
+    /* The POST body is built from the raw control values, not from the cleaned answers. A lone surrogate (half an emoji, from a bad
+       paste) makes encodeURIComponent throw, and a throw in the submit handler leaves the button doing nothing. Clean and retry. */
+    var enc = function (s) { try { return encodeURIComponent(s); } catch (e) { return encodeURIComponent(Core.str(s)); } };
 
     var el = function (html) { var d = document.createElement('div'); d.innerHTML = html; return d.firstChild; };
     var errHtml = function (id, msg) {
@@ -114,7 +117,15 @@
     var focusFirstBad = function (q) {
       var root = form.querySelector('[data-q="' + q.id + '"]');
       var target = root && (root.querySelector('.is-bad') || root.querySelector('input[type=radio]') || root.querySelector('input'));
-      if (target) { try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); } }
+      if (target) {
+        try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+        /* preventScroll keeps the page from jumping to the top of the step. But when the first problem is above the fold the
+           visitor pressed the button and saw nothing happen, so bring it into view. */
+        try {
+          var r = target.getBoundingClientRect();
+          if (r.top < 0 || r.bottom > (window.innerHeight || document.documentElement.clientHeight)) target.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
+        } catch (e) {}
+      }
     };
 
     /* ---------------------------------------------------------- the steps */
@@ -143,6 +154,8 @@
     };
     var goto = function (n, focus) {
       step = n;
+      /* A failed send says so under the button on every step. Moving to another step is the visitor leaving that attempt behind. */
+      if (status === 'failed') setStatus('idle');
       qEls.forEach(function (node, i) { if (i === n) node.classList.add('is-current'); else node.classList.remove('is-current'); });
       var last = n === total - 1;
       form.classList.toggle('at-last', last);
@@ -177,7 +190,7 @@
       Array.prototype.forEach.call(form.elements, function (c) {
         if (!c.name || c.disabled || c.type === 'submit' || c.type === 'button') return;
         if ((c.type === 'radio' || c.type === 'checkbox') && !c.checked) return;
-        pairs.push(encodeURIComponent(c.name) + '=' + encodeURIComponent(c.value));
+        pairs.push(enc(c.name) + '=' + enc(c.value));
       });
       setStatus('loading');
       var ctl = window.AbortController ? new AbortController() : null;

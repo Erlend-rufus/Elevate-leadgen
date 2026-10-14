@@ -7,8 +7,13 @@
  * visitor into two leads. UTMs and fbclid come from the URL and win over what
  * was stored. referrer is document.referrer, the page the visitor came from.
  *
+ * That working data is first-party and is kept from the first load, before any
+ * choice about cookies, because the form cannot work without it: it goes to our
+ * own endpoint with the lead whether or not the visitor accepted the pixel.
+ *
  * Consent. This funnel owns its own: its own storage key, its own pixel loader.
- * Nothing is loaded until Accetto, and nothing is shared with the UK funnel.
+ * No third-party script is loaded until Accetto, and nothing is shared with the
+ * UK funnel.
  *
  * Plain ES5 for the same reason as client.js.
  */
@@ -52,9 +57,10 @@
   /* Consent and the pixel, owned by this funnel. The UK funnel loads a shared script
      and stores its choice under its own key; this one must not share
      either: a choice made on the UK site is not consent given here, and a change to the
-     shared script must not be able to switch this pixel on. Nothing is loaded, and
-     nothing is written but the choice itself, until Accetto. With no pixel id in the
-     config, nothing is ever loaded. */
+     shared script must not be able to switch this pixel on. Until Accetto no pixel is
+     loaded and no localStorage is written but the choice itself (the working data above
+     is sessionStorage and first-party). After Rifiuto nothing is ever sent to Meta.
+     With no pixel id in the config, nothing is ever loaded. */
   var KEY = K.consentKey;
   function readChoice() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
   function writeChoice(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }

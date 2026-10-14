@@ -29,7 +29,9 @@ import route from '../../../g/italy/route.cjs';
 import formMod from '../../../g/italy/form.cjs';
 import * as data from './data.generated.mjs';
 
-const { renderForm } = formMod;
+const { renderForm, consentTag } = formMod;
+/* What the visitor's page posts back as consent_version: our version and the hash of the wording. Nothing else is accepted. */
+const CONSENT_TAG_RE = /^[A-Za-z0-9._-]{1,40}:[a-f0-9]{16}$/;
 const WEBHOOK_TIMEOUT_MS = 8000;
 const MAX_BODY = 64 * 1024;
 const LEAD_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
@@ -70,8 +72,9 @@ export function createHandler(deps) {
   }
 
   /** Something other than the visitor's input went wrong. Their answers survive and they are told to try again. */
-  function refuse(req, status, code, leadId, answers, hidden) {
-    log({ code, lead_id: leadId || null });
+  function refuse(req, status, code, leadId, answers, hidden, why) {
+    /* Never personal data. `why` is only an HTTP status or an error class name, so a wrong token (401), a stale URL (404) and an outage (5xx) can be told apart in the log. */
+    log(Object.assign({ code, lead_id: leadId || null }, why || {}));
     return wantsJson(req) ? json(status, { ok: false, error: 'unavailable' })
       : rerender(status, answers || {}, {}, hidden || {}, true);
   }
@@ -124,6 +127,8 @@ export function createHandler(deps) {
     const leadId = hidden.lead_id;
 
     const answers = core.answersFrom(Q, get);
+    const shownRaw = core.str(get('consent_version'));
+    const shownTag = CONSENT_TAG_RE.test(shownRaw) ? shownRaw : '';
 
     /* A field a person never sees. Anything in it is a script, so the answer is
        the same shape as success and nothing is recorded. */
@@ -157,7 +162,9 @@ export function createHandler(deps) {
       page_slug: cfg.pageSlug,
       route: { page: routed.page, rule: routed.rule },
       answers: core.describe(Q, answers),
-      consent: { given: true, version: cfg.consent.version, text: consentText },
+      /* version and text are the server's current ones; version_shown is what the visitor's own page said when it was loaded
+         (empty when it sent none). If they differ the wording changed while the page was open: the lead is still delivered, and flagged. */
+      consent: { given: true, version: cfg.consent.version, text: consentText, version_shown: shownTag, matches_shown: shownTag === consentTag(cfg) },
       tracking: hidden,
     };
 
@@ -172,9 +179,9 @@ export function createHandler(deps) {
         redirect: 'manual',
       });
       /* ok means 2xx. A redirect is not accepted either: with redirect:'manual' it arrives as a non-ok response, so a destination that bounces us elsewhere is a refusal, not a delivery. */
-      if (!res.ok) return refuse(req, 502, 'delivery_rejected', leadId, answers, hidden);
+      if (!res.ok) return refuse(req, 502, 'delivery_rejected', leadId, answers, hidden, { status: res.status });
     } catch (err) {
-      return refuse(req, 502, err && err.name === 'AbortError' ? 'delivery_timeout' : 'delivery_failed', leadId, answers, hidden);
+      return refuse(req, 502, err && err.name === 'AbortError' ? 'delivery_timeout' : 'delivery_failed', leadId, answers, hidden, { error: String((err && err.name) || 'Error').slice(0, 40) });
     } finally { clearTimeout(timer); }
 
     /* Only values we built, URL-encoded: the destination page is chosen by us and

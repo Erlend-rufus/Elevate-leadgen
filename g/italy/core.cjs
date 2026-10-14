@@ -39,8 +39,11 @@
     /* Control characters never belong in a lead field, and a newline in an
        email or name is how a value gets smuggled into a header or a CSV row.
        A lone surrogate (half an emoji) is not text either: encodeURIComponent throws on it,
-       and a throw after the lead was delivered would tell the visitor it had failed. */
-    return dropLone(String(v).replace(/[\u0000-\u001F\u007F]/g, ' ')).replace(/^\s+|\s+$/g, '');
+       and a throw after the lead was delivered would tell the visitor it had failed.
+       Also out: the C1 controls (U+0080 to U+009F, which include NEL, a line break to some importers), the line and
+       paragraph separators (U+2028, U+2029) and the bidirectional overrides and isolates (U+202A to U+202E, U+2066 to
+       U+2069), which can make a name read backwards in a CRM or a spreadsheet. */
+    return dropLone(String(v).replace(/[\u0000-\u001F\u007F-\u009F\u2028\u2029\u202A-\u202E\u2066-\u2069]/g, ' ')).replace(/^\s+|\s+$/g, '');
   }
 
   /* No regex lookbehind: older WebViews do not parse it, and a syntax error here would kill the whole form. */

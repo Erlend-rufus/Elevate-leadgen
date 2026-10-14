@@ -109,6 +109,10 @@ function renderQuestion(q, a, e, index, firstBad, links) {
  */
 function stepText(f, n) { return f.labels.step.replace('{n}', n).replace('{total}', f.questions.length); }
 
+/** What the visitor's page said about consent, as one short tag: the version and the hash of the checkbox wording.
+    The page posts it back, so the lead records the wording the visitor actually saw, not whatever the server holds by then. */
+function consentTag(cfg) { return cfg.consent.version + ':' + cfg.consent.textSha256; }
+
 function renderForm(o) {
   var copy = o.copy, cfg = o.config, f = copy.form;
   var a = o.answers || {}, errors = o.errors || {}, hidden = o.hidden || {};
@@ -139,6 +143,7 @@ function renderForm(o) {
 
   return '<form class="apply is-steps" id="apply-form" method="post" action="' + esc(cfg.funnel.applyPath) + '" novalidate data-steps="' + f.questions.length + '">' +
     hiddenInputs +
+    '<input type="hidden" name="consent_version" value="' + esc(consentTag(cfg)) + '">' +
     '<div class="hp" aria-hidden="true"><input type="text" name="website_url" tabindex="-1" autocomplete="off" value=""></div>' +
     steps +
     f.questions.map(function (q, i) { return renderQuestion(q, a, errors[q.id], i, q.id === firstBadId, cfg.links); }).join('') +
@@ -147,4 +152,4 @@ function renderForm(o) {
     '</div></form>';
 }
 
-module.exports = { renderForm: renderForm, esc: esc, linkify: linkify, stepText: stepText, ALERT_ICON: ALERT_ICON };
+module.exports = { renderForm: renderForm, esc: esc, linkify: linkify, stepText: stepText, consentTag: consentTag, ALERT_ICON: ALERT_ICON };
