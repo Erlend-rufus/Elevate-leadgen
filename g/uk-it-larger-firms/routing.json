@@ -1,11 +1,13 @@
 {
-  "_comment": "Which answers send a lead to which outcome page. NOT SUPPLIED in the work order, so nothing is guessed here. Until status is \"configured\" the apply endpoint refuses every submission and the build refuses live: true.",
-  "status": "not_configured",
-  "_format": {
-    "rules": "Evaluated top to bottom, first match wins. Each rule: { \"id\": \"short-name\", \"when\": { \"<question id>\": [<option index>, ...] }, \"then\": \"<page>\" }. A rule matches when EVERY question in `when` holds one of the listed option indexes (indexes count from 0 in the order the options appear on the form). `when` may only name choice questions.",
-    "pages": ["book", "takk", "review", "not-now", "not-a-fit"],
-    "fallback": "The page for a lead no rule matches. Required once status is configured, so every lead lands somewhere on purpose."
-  },
-  "rules": [],
-  "fallback": null
+  "_comment": "Which answers send a lead to which outcome page. The work order did not supply rules, so these are derived from what the landing page itself says (\"This works if / does not work if\", the footnote that turnover is checked against public records, and the wording of each outcome page). They are a proposal: change a row here and nothing else. Evaluated top to bottom, first match wins. Precedence is not-a-fit, then not-now, then review, then book: structural beats temporary, and a lead that needs a person to look at it comes after both. LAUNCH.md section 1 gives the reasoning for each rule.",
+  "status": "configured",
+  "rules": [
+    { "id": "turnover-below-threshold", "when": { "turnover": [0, 1] }, "then": "not-a-fit" },
+    { "id": "client-value-too-low", "when": { "value": [0] }, "then": "not-a-fit" },
+    { "id": "at-capacity", "when": { "capacity": [0] }, "then": "not-now" },
+    { "id": "turnover-not-stated", "when": { "turnover": [5] }, "then": "review" },
+    { "id": "client-value-borderline", "when": { "value": [1] }, "then": "review" },
+    { "id": "procurement-decides", "when": { "decider": [3] }, "then": "review" }
+  ],
+  "fallback": "book"
 }

@@ -29,12 +29,13 @@ test('email: the work order\'s regex', () => {
   ['alex@northbridge', 'alex', '@x.com', 'a b@c.com', 'a@b.c', ''].forEach((v) => assert.deepEqual(run(v), { email: M.email }, JSON.stringify(v)));
 });
 
-test('empty text fields use the required message, which is still the placeholder', () => {
+test('empty text fields use the required message, which is real text and no longer pending', () => {
   const r = valid(Object.assign({}, GOOD, { company: '   ', details_first: '', details_mobile: '' }));
   assert.equal(r.errors.company, M.required);
   assert.deepEqual(r.errors.details, { first: M.required, mobile: M.required });
-  assert.equal(M.required, '[TEKST MANGLER]');
-  assert.equal(M._pending, 'required', 'the message is flagged as undelivered so the build can refuse to go live');
+  assert.equal(M.required, 'Please fill in this field');
+  assert.equal('_pending' in M, false, 'nothing in the form copy is flagged as undelivered');
+  assert.equal(/[\[\]!—]/.test(M.required), false, 'no placeholder brackets, exclamation marks or em dashes');
 });
 
 test('choices: only an integer index inside the option list counts', () => {

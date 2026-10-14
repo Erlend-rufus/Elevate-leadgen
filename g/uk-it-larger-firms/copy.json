@@ -99,8 +99,7 @@
       "website": "Please enter a valid website",
       "email": "Please enter a valid work email",
       "choice": "Please choose one option",
-      "required": "[TEKST MANGLER]",
-      "_pending": "required",
+      "required": "Please fill in this field",
       "general": "Something went wrong. Please try again, or email "
     },
     "questions": [

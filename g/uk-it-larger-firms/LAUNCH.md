@@ -4,36 +4,64 @@ UK IT services firms with £4m+ turnover. Landing page, a twelve step applicatio
 form, and five outcome pages. Built from the work order "Arbeidsordre: UK IT,
 større selskaper" (handoff `Elevate_-_Landingsside_1.zip`, 8 October 2026).
 
-**Status: built, not live.** `config.json` has `"live": false`. Every page carries
-`noindex`, and the apply endpoint answers every submission with a 503 and records
-nothing. The build says exactly what is outstanding:
+**Status: built, ready to go live, not live.** `config.json` has `"live": false`. Every
+page carries `noindex`, and the apply endpoint answers every submission with a 503 and
+records nothing. The build says what is outstanding (today: nothing; with `live: true`
+it builds clean):
 
 ```
 npm run build        # or: node scripts/build-g-it.mjs
 ```
 
-Nothing below is guessed. Four things the work order says it does not contain are
-left as one clearly marked place each. Fill them, set `"live": true`, and the build
-then refuses to finish while any is still missing.
+Going live is two steps, in this order: (1) the webhook below is set in Netlify (item 4:
+`docs/WORKORDER-UK-IT-LEAD-WEBHOOK.md` is the work order for it), then (2) `config.json`
+→ `"live": true`. Setting `live` first changes nothing a visitor sees except that the
+endpoint answers "no destination" instead of "not live": both are a 503.
 
 ---
 
-## 1. What is not supplied, and where it goes
+## 1. What was not supplied, and where it stands
 
-| # | Missing | Where it goes | What the build does until then |
+| # | Missing | Where it goes | Status |
 |---|---|---|---|
-| 1 | **Routing rules**: which answers send a lead to which outcome page | `routing.json` | Endpoint answers 503. `live: true` fails the build. |
-| 2 | **Error text for an empty text field** | `copy.json` → `form.errors.required` (and delete `_pending`) | Shows `[TEKST MANGLER]`. `live: true` fails the build. |
-| 3 | **Calendly event** for `/book` | `config.json` → `funnel.calendlyUrl` | `/book` shows `CALENDLY_EMBED`. `live: true` fails the build. |
-| 4 | **Where leads go** | Netlify environment variables (below) | Endpoint answers 503. Not checkable at build time. |
+| 1 | **Routing rules**: which answers send a lead to which outcome page | `routing.json` | **Done**, a proposal derived from the page's own criteria (below). Change a row, nothing else. |
+| 2 | **Error text for an empty text field** | `copy.json` → `form.errors.required` | **Done**: "Please fill in this field". |
+| 3 | **Calendly event** for `/book` | `config.json` → `funnel.calendlyUrl` | **Done**: the commission IT event the `/lp` funnel already books on (`/takk.html`). |
+| 4 | **Where leads go** | Netlify environment variables (below) | **Open.** Endpoint answers 503. Not checkable at build time. |
 
 ### 1. Routing rules
 
-Evaluated top to bottom, first match wins. A rule matches when **every** question in
-`when` holds one of the listed options. Options are counted from 0 in the order they
-appear on the form. Only choice questions can be tested. `fallback` is required, so
-no lead lands nowhere by omission. The build validates the table (`checkRouting`) and
-names what is wrong.
+These were not in the work order. They come from what the landing page itself tells a
+visitor ("This works if / does not work if", the footnote that turnover is checked
+against public records, and each outcome page's own wording). They are a proposal and
+belong to the business: change `routing.json` and run `npm run test:g-it` (a test pins
+the option indexes to their labels, so a reordered option fails loudly).
+
+| Rule (in order) | When | Page | Why |
+|---|---|---|---|
+| `turnover-below-threshold` | turnover under £1m, or £1m to £4m | `not-a-fit` | The page: "You are below £4m turnover". `/not-a-fit` says "above a certain size". |
+| `client-value-too-low` | a new client is worth under £10k in year one | `not-a-fit` | The page: "one new client is worth £25,000 or more in the first year". Under £10k is clearly outside. |
+| `at-capacity` | "None, we are at capacity" | `not-now` | The page: "You are at capacity, come back when you are not". `/not-now` says it will ask again in three months. |
+| `turnover-not-stated` | "I would rather not say" | `review` | The page: "Turnover is checked against public records after you apply." `/review` says "We want to check a few things before we suggest a time." |
+| `client-value-borderline` | £10k to £25k | `review` | Straddles the £25k line, so a person looks before a slot is offered. |
+| `procurement-decides` | decision is "a procurement process" | `review` | A long path, not a no. A person decides whether a 30 minute slot is useful. |
+| fallback | everything else | `book` | Includes exactly £4m to £10m: the threshold is a minimum. |
+
+Precedence: not a fit, then not now, then review, then book. Structural beats temporary
+(a firm that is too small and at capacity is "not a fit"), and a lead that needs a person
+to look comes after both. `area`, `people`, `marketing`, `cycle` and the optional `target`
+are captured and sent with the lead but never change the outcome. `people` is the one worth
+a second look: nothing stops "Under 10 people" with £4m+ turnover from booking.
+
+**`review` has no process behind it.** It promises "in touch within one working day" (see
+"Promises" in section 2). A lead routed there is delivered to the webhook like any other,
+with `route.page: "review"` and the rule id, so the receiving side can make it a task.
+
+How the matching works, for reference. Evaluated top to bottom, first match wins. A rule
+matches when **every** question in `when` holds one of the listed options. Options are
+counted from 0 in the order they appear on the form. Only choice questions can be tested.
+`fallback` is required, so no lead lands nowhere by omission. The build validates the table
+(`checkRouting`) and names what is wrong.
 
 ```json
 {
@@ -60,11 +88,6 @@ Questions and their options, for reference:
 
 Pages: `book`, `takk`, `review`, `not-now`, `not-a-fit`. `takk` is also where `/book`
 sends someone once Calendly confirms a booking.
-
-Two things to decide while writing the table, because the work order leaves them open:
-a firm that answers *I would rather not say* to turnover, and what wins when a firm is
-both too small and at capacity (the clinics funnel decided "not a fit wins over not
-now": structural beats temporary).
 
 To replace the matching logic itself, `route.cjs` is the one function: answers in, page
 out.
@@ -112,9 +135,10 @@ A lead that is accepted and goes nowhere is the worst outcome on a paid funnel.
 
 ## 2. Before going live
 
-- [ ] 1 to 4 above
+- [x] 1 to 3 above (routing, error text, Calendly)
+- [ ] 4 above: the webhook is set in Netlify (`docs/WORKORDER-UK-IT-LEAD-WEBHOOK.md`)
 - [ ] `config.json` → `"live": true`, and `npm run build` says nothing is outstanding
-- [ ] `npm run test:g-it` passes
+- [x] `npm run test:g-it` passes (54)
 - [ ] One real submission end to end, with the banner accepted: lead arrives at the
       webhook, visitor lands on the routed page, UTMs and `lead_id` present
 - [ ] **Privacy and Terms.** The links point at `/lp/privacy/` and `/lp/terms/`, the
@@ -136,6 +160,13 @@ A lead that is accepted and goes nowhere is the worst outcome on a paid funnel.
       colour parameters on its free plan (same note as `docs/GREEN-FUNNEL-COLOURS.md`).
       Calendly's own redirect-after-booking must stay **off**: the page forwards to
       `/takk` itself, and with both on the visitor is sent twice.
+- [ ] **The Calendly event is shared with the `/lp` funnel.** `/book` embeds
+      `calendly.com/d/dv8z-vdp-5xt/elevate-marketing-commission-i-it`, the event
+      `/takk.html` already uses. Bookings from both funnels land in the same event, told
+      apart by the UTMs and `lead_id` (in `utm_term`). The page and `/book` copy say "30 minute
+      pipeline review": check the event's duration in Calendly really is 30 minutes (not
+      verifiable from here), and that its confirmation e-mail does not tell a UK IT firm
+      something written for the other funnel.
 - [ ] **Indexing.** `config.json` → `indexable` is `false`. The work order does not say
       whether the landing page should be findable. Only takes effect when `live` is true.
 
