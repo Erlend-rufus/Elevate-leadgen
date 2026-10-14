@@ -9,7 +9,7 @@ function rig(over = {}) {
   const hook = over.hook || (async () => new Response('ok', { status: 200 }));
   const handler = createHandler({
     cfg: Object.assign({}, cfg, { live: true }, over.cfg || {}),
-    copy, routing: over.routing || FIXTURE_ROUTING, shell: SHELL,
+    copy, routing: over.routing || routing, shell: SHELL,
     env: () => Object.assign({ UK_IT_LEAD_WEBHOOK_URL: 'https://hooks.example.test/catch/1' }, over.env || {}),
     fetch: async (url, init) => { calls.push({ url, init, body: init.body ? JSON.parse(init.body) : null }); return hook(url, init); },
     now: () => new Date('2026-10-08T12:00:00Z'),
@@ -59,6 +59,17 @@ test('routing decides the page, and the page is in the redirect', async () => {
   const { handler } = rig();
   assert.equal((await bodyOf(await handler(post(Object.assign({}, GOOD, { turnover: '0' }))))).next.split('?')[0], '/uk-it-firms/not-a-fit/');
   assert.equal((await bodyOf(await handler(post(Object.assign({}, GOOD, { capacity: '0' }))))).next.split('?')[0], '/uk-it-firms/not-now/');
+  assert.equal((await bodyOf(await handler(post(Object.assign({}, GOOD, { turnover: '5' }))))).next.split('?')[0], '/uk-it-firms/review/');
+  assert.equal((await bodyOf(await handler(post(GOOD)))).next.split('?')[0], '/uk-it-firms/book/');
+});
+
+test('a lead that is turned away or sent to review is still delivered: the answers are kept, only the page differs', async () => {
+  const { handler, calls } = rig();
+  await handler(post(Object.assign({}, GOOD, { turnover: '0' })));
+  await handler(post(Object.assign({}, GOOD, { turnover: '5' })));
+  assert.equal(calls.length, 2);
+  assert.deepEqual(calls[0].body.route, { page: 'not-a-fit', rule: 'turnover-below-threshold' });
+  assert.deepEqual(calls[1].body.route, { page: 'review', rule: 'turnover-not-stated' });
 });
 
 test('without JavaScript a good submission is a 303 to the same place', async () => {
@@ -124,8 +135,8 @@ test('not live: every submission is refused with 503 and nothing is delivered', 
   assert.equal(calls.length, 0);
 });
 
-test('as shipped (routing not configured) a live funnel still refuses rather than guessing a page', async () => {
-  const { handler, calls, logs } = rig({ routing });
+test('a routing table that is not configured: a live funnel still refuses rather than guessing a page', async () => {
+  const { handler, calls, logs } = rig({ routing: { status: 'not_configured', rules: [], fallback: null } });
   const res = await handler(post(GOOD));
   assert.equal(res.status, 503);
   assert.equal(logs[0].code, 'routing_not_configured');
