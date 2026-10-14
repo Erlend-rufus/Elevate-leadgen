@@ -6,6 +6,8 @@
   "lang": "it",
   "live": false,
   "_live": "While false every page carries noindex and the lead endpoint refuses every submission with a 503. The build refuses true while anything below is outstanding, and says what.",
+  "indexable": false,
+  "_indexable": "Whether the landing page may be indexed once live. Outcome pages are always noindex. Leave false until someone decides the Italian page should rank; true while live is false fails the build.",
   "proofread": false,
   "_proofread": "Set true when Aurora has proofread every Italian string. Required for live.",
   "legalApproved": false,
@@ -23,7 +25,9 @@
   },
   "consent": {
     "storageKey": "em_it_consent",
-    "version": "v1-draft"
+    "version": "v1-draft",
+    "textSha256": "c6d1e6a38bf96bd9",
+    "_textSha256": "First 16 hex digits of the sha256 of the consent checkbox label in copy.json. The build fails if the wording changes without this being updated, so that a new wording cannot be recorded under the old version. Change the wording: bump version, then set this to the value the build prints."
   },
   "funnel": {
     "pixelId": "",

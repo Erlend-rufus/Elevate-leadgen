@@ -55,6 +55,8 @@ test('the lead carries the consent wording the visitor ticked, and the version o
   assert.equal(c.given, true);
   assert.equal(c.version, cfg.consent.version);
   assert.match(c.text, /^Acconsento al trattamento dei miei dati personali da parte di EngeCo AS/);
+  assert.equal(/\]\(privacy\)/.test(c.text), false, 'no raw markdown in the record');
+  assert.ok(c.text.endsWith('informativa privacy (https://getelevateleads.com/italy/privacy/).'), c.text.slice(-80));
   assert.equal(calls[0].body.answers.details.consent, true);
 });
 
@@ -63,7 +65,7 @@ test('every hidden field of the brief is stored with the lead', async () => {
   await handler(post(GOOD));
   for (const k of ['lead_id', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'referrer'])
     assert.ok(k in calls[0].body.tracking && calls[0].body.tracking[k] !== undefined, k);
-  assert.equal(calls[0].body.page_slug, 'italy');
+  assert.equal(calls[0].body.page_slug, 'canoni', 'the variant, as the brief defines the hidden field, not the folder');
 });
 
 test('routing decides the page, and the page is in the redirect', async () => {
@@ -313,4 +315,49 @@ test('the real no-script page has a first-level heading and Italian page furnitu
   assert.match(real.shell.before, /<h1 class="h2">Vediamo se possiamo esservi utili<\/h1>/);
   assert.match(real.shell.before, /<meta name="robots" content="noindex,nofollow">/);
   assert.equal(/<script/.test(real.shell.before + real.shell.after), false, 'no script and so no pixel on the no-script page');
+});
+
+test('a value cut in the middle of an emoji cannot make the function throw after the lead was delivered', async () => {
+  const { handler, calls } = rig();
+  const bad = 'a'.repeat(199) + '\u{1F600}';
+  const res = await handler(post(Object.assign({}, GOOD, { utm_source: bad, utm_content: bad, referrer: 'r'.repeat(299) + '\u{1F600}', details_company: 'b'.repeat(199) + '\u{1F600}' })));
+  assert.equal(res.status, 200, 'answered, not a 500');
+  assert.equal(calls.length, 1, 'delivered once');
+  const t = calls[0].body.tracking;
+  for (const v of [t.utm_source, t.utm_content, t.referrer, calls[0].body.answers.details.company]) assert.equal(/[\uD800-\uDFFF]/.test(v) && !/[\uD800-\uDBFF][\uDC00-\uDFFF]/.test(v), false, 'no lone surrogate in what is stored');
+  const next = (await res.json()).next;
+  assert.doesNotThrow(() => decodeURIComponent(next.split('?')[1]));
+});
+
+test('a lone surrogate sent by a script in a JSON body is dropped, and does not reach the webhook or the redirect', async () => {
+  // form encoding would turn it into U+FFFD on the way; only a JSON body can carry it, so that is how it is sent
+  const { handler, calls } = rig();
+  const body = JSON.stringify(Object.assign({}, GOOD, { utm_source: 'x\uD83Dy\uDE00z' }));
+  const res = await handler(new Request('https://x.test/italy/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body }));
+  assert.equal(res.status, 200);
+  assert.equal(calls[0].body.tracking.utm_source, 'xyz');
+});
+
+test('"0", "false" and "off" for the consent box are a refusal; the real values still pass', async () => {
+  for (const v of ['0', 'false', 'off', 'no', ' ', 'x']) {
+    const { handler, calls } = rig();
+    const res = await handler(post(Object.assign({}, GOOD, { details_consent: v })));
+    assert.equal(res.status, 422, JSON.stringify(v));
+    assert.equal(calls.length, 0, JSON.stringify(v));
+  }
+  for (const v of ['1', 'on', 'true', 'ON']) {
+    const { handler } = rig();
+    assert.equal((await handler(post(Object.assign({}, GOOD, { details_consent: v })))).status, 200, v);
+  }
+});
+
+test('an oversized set of tracking values cannot make the redirect too long: the lead id survives, the rest is dropped', async () => {
+  const { handler, calls } = rig();
+  const big = '\u6F22'.repeat(200); // 200 characters, 600 bytes encoded, each
+  const res = await handler(post(Object.assign({}, GOOD, { utm_source: big, utm_medium: big, utm_campaign: big, utm_content: big, utm_term: big, fbclid: big })));
+  assert.equal(res.status, 200);
+  assert.equal(calls.length, 1, 'still delivered');
+  const j = await res.json();
+  assert.ok(j.next.length < 4000, String(j.next.length));
+  assert.match(j.next, /^\/italy\/book\/\?lead_id=l_test123$/);
 });

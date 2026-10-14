@@ -37,6 +37,12 @@ was touched.
 | 7 | **Calendly event** (a separate Italian event type, not the UK link) | `config.json` → `funnel.calendlyUrl`, no query string | `/book` shows `CALENDLY_EMBED`. Live is refused. |
 | 8 | **Meta pixel id** (own, or shared with the UK; sharing means sharing optimisation data) | `config.json` → `funnel.pixelId` | No pixel ever loads, so no Lead event. Live is refused. |
 | 9 | **Where leads go** | Netlify environment variables, scope Functions (below) | The endpoint answers 503. Not checkable at build time. |
+| 10 | **Whether the landing page may be indexed** (outcome pages never are) | `config.json` → `indexable` | `false`: the landing page is `noindex` even when live. `true` while not live fails the build. |
+
+Two guards on the consent wording: `config.json` → `consent.textSha256` pins the checkbox text, and the
+build fails if the text changes without it. New wording is a new consent: bump `consent.version`, then
+set the hash to the value the build prints. `page_slug` in the payload is `config.json` → `pageSlug`
+(`canoni` for this variant, as the brief defines the hidden field), not the folder name.
 
 Routing is **configured** (section 6 of the brief), see `routing.json`.
 
@@ -142,6 +148,24 @@ cookie notice (item 5) should say how to withdraw. Flag this to the adviser.
 
 ---
 
+## 4b. Known limits, deliberately not changed
+
+- **No-JS double submit sends two leads.** On a browser without JavaScript the page is static, so there is no
+  lead id until the server mints one per POST. A double tap on the button gives two ids and two deliveries. The
+  JavaScript path mints the id in the browser, so a retry keeps it. Deriving the id from the visitor's email
+  would fix it but would also put an email-derived identifier into the Meta pixel's `lead_id`, so it is not done.
+  Dedupe on email in the receiving system if it matters.
+- **The honeypot is named `website_url`, as the brief says.** A browser that autofills hidden fields could fill
+  it: that visitor is silently sent to `/italy/not-a-fit/` and nothing is stored. Watch for it in the first
+  week; the UK funnel uses a name browsers do not autofill.
+- **Referer.** For a browser without JavaScript the UTMs are recovered from the Referer if its path starts with
+  `/italy`. The host is not checked. Harmless (the values are encoded and only travel on to the same site).
+- **Consent has no expiry and no way back on the page** (section 3). Ask the adviser how often it must be re-asked.
+- **Meta automatic advanced matching** may read form fields once the pixel is loaded. Check the setting in Events
+  Manager before launch; it is not controlled from this code.
+- **Cache headers** for `/italy/assets/fonts/*` and `/italy/assets/logo-*` are set in `netlify.toml` and could
+  not be checked against a deploy from here: `curl -I` one font after the first deploy preview.
+
 ## 5. How it works, and differences from `/uk-it-firms`
 
 - Source of truth: this folder. `scripts/build-italy.mjs` writes `public/italy/index.html`,
@@ -159,12 +183,15 @@ cookie notice (item 5) should say how to withdraw. Flag this to the adviser.
   `/italy/api/lead`; honeypot field `website_url`; the topbar and logo share one `<header>`.
 - Design tokens are the UK funnel's (paper, ink, marine; no green). The build refuses any
   other colour, any Google Fonts request, the shared consent script and the UK consent key.
-- Hard rules checked by the build on every string: no exclamation marks, no em dashes.
+- Hard rules checked by the build on every string, including the `OFFER` and `THRESHOLD` values: no exclamation
+  marks, no em dashes. The build also refuses a stub legal page (under 500 bytes), a folder under `public/` that
+  holds another funnel's files, any CSS named colour (not only a few), 4 and 8 digit hex, `/g/_assets`, and an
+  inlined script or style that could end its own element.
 
 ## 6. Working on it
 
 ```
-npm run test:italy                 # 51 tests: validation, routing, the function
+npm run test:italy                 # 58 tests: validation, routing, the function
 node scripts/build-italy.mjs       # regenerate public/italy and the function data
 ```
 

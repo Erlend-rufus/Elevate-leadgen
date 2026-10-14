@@ -113,7 +113,7 @@ function renderForm(o) {
   var copy = o.copy, cfg = o.config, f = copy.form;
   var a = o.answers || {}, errors = o.errors || {}, hidden = o.hidden || {};
   var hiddenInputs = cfg.hiddenFields.map(function (name) {
-    var v = name === 'page_slug' ? cfg.slug : hidden[name];
+    var v = name === 'page_slug' ? cfg.pageSlug : hidden[name];
     return '<input type="hidden" name="' + esc(name) + '" value="' + esc(v) + '">';
   }).join('');
 

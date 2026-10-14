@@ -23,7 +23,8 @@
  * Fonts and logos are copied from public/g/_assets (the one place they are kept) into
  * public/italy/assets, so this funnel does not depend on /g staying where it is.
  */
-import { readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -55,14 +56,14 @@ const OUTCOMES = PAGES; // book, takk, not-now, not-a-fit, not-a-fit-b
 
 const VARS = Object.fromEntries(Object.entries(cfg.variables).filter(([k]) => !k.startsWith('_')));
 /** {THRESHOLD} and {OFFER}, in one place. Anything else in capitals and braces is a typo. A value that is
-    itself still "{NAME}" is an open decision: the brief says to render it as written, and the live gate refuses it. */
+    itself still containing a "{NAME}" is an open decision: the brief says to render it as written, and the live gate refuses it. */
 function sub(s) {
   return String(s).replace(/\{([A-Z_]+)\}/g, (m, k) => {
     if (!(k in VARS)) die(`copy uses {${k}}, which config.variables does not define`);
     return VARS[k];
   });
 }
-const stillOpen = (k) => /^\{[A-Z_]+\}$/.test(String(VARS[k]).trim());
+const stillOpen = (k) => /\{[A-Z_]+\}/.test(String(VARS[k]));
 const links = cfg.links;
 /** Escaped, variables resolved first, with [text](privacy) and [text](cookies) as links. */
 const plain = (s) => linkify(sub(s), links);
@@ -84,11 +85,22 @@ function validate() {
   /* The address. One segment, and not a place the site already uses: a path that is
      also a React route or another funnel would be shadowed or would shadow it. */
   if (!/^\/[a-z0-9]+(-[a-z0-9]+)*$/.test(BASE)) die(`config.path "${BASE}" must be one lower-case segment such as /italy`);
-  const RESERVED = ['/g', '/lp', '/audit', '/case', '/report', '/draft', '/r', '/uk-recruitment', '/uk-it-firms', '/css', '/js', '/images', '/assets', '/nevari', '/the-journey', '/growth-audit', '/book', '/contact', '/about', '/services', '/blog', '/cases', '/takk', '/not-a-fit'];
+  const RESERVED = ['/g', '/lp', '/audit', '/case', '/report', '/draft', '/r', '/uk-recruitment', '/uk-it-firms', '/geo-audit', '/css', '/js', '/images', '/assets', '/nevari', '/the-journey', '/growth-audit', '/book', '/contact', '/about', '/services', '/blog', '/cases', '/takk', '/not-a-fit'];
   if (RESERVED.includes(BASE)) die(`config.path "${BASE}" is already used by the site`);
   const app = readFileSync(join(root, 'src', 'App.tsx'), 'utf8');
   if (app.includes(`"${BASE}`) || app.includes(`'${BASE}`)) die(`config.path "${BASE}" is a route in the React app`);
   if (typeof cfg.live !== 'boolean') die('config.live must be true or false');
+  if (typeof cfg.indexable !== 'boolean') die('config.indexable must be true or false (it was missing: a live page could never be indexed)');
+  if (cfg.indexable && !cfg.live) die('config.indexable is true while config.live is false: a page that refuses every submission must not be offered to search engines');
+  if (!['canoni', 'marketing', 'nis2'].includes(cfg.pageSlug)) die(`config.pageSlug "${cfg.pageSlug}" must be one of canoni, marketing, nis2 (the brief's page_slug values)`);
+  /* The folder this generator writes into must be absent, empty, or already ours. Anything else (/geo-audit, say) is
+     another funnel's files, and the clean-up further down would delete them. */
+  const OURS = new Set(['index.html', 'assets', 'privacy', 'cookie', ...OUTCOMES]);
+  const target = join(PUBLIC, ...BASE.split('/').filter(Boolean));
+  if (existsSync(target)) {
+    const foreign = readdirSync(target).filter((f) => !OURS.has(f));
+    if (foreign.length) die(`public${BASE} already holds files this generator does not own (${foreign.slice(0, 4).join(', ')}): refusing to build over them`);
+  }
   if (typeof cfg.proofread !== 'boolean' || typeof cfg.legalApproved !== 'boolean') die('config.proofread and config.legalApproved must be true or false');
   if (!/^https:\/\/[a-z0-9.-]+$/.test(cfg.origin)) die(`origin "${cfg.origin}" must be an https host with no path`);
   if (cfg.funnel.calendlyUrl && !/^https:\/\/calendly\.com\/[^?#]+$/.test(cfg.funnel.calendlyUrl))
@@ -115,11 +127,19 @@ function validate() {
   if (!qs[qs.length - 1].fields.some((f) => f.type === 'checkbox')) die('the details question must carry the consent checkbox');
   for (const o of OUTCOMES) if (!copy.outcomes[o]) die(`copy.outcomes.${o} is missing`);
 
-  /* Tone rules that hold for every Elevate page: no exclamation marks, no em dashes. */
-  for (const [p, s] of strings(copy, '', [])) {
-    if (s.includes('!')) die(`copy.${p} contains an exclamation mark`);
-    if (s.includes('—')) die(`copy.${p} contains an em dash`);
+  /* Tone rules that hold for every Elevate page: no exclamation marks, no em dashes. Checked on the text as the
+     visitor reads it, so a value in config.variables (the OFFER wording) is held to them too. */
+  for (const [p, s] of [...strings(resolved(), 'copy', []), ...Object.entries(VARS).map(([k, v]) => [`config.variables.${k}`, String(v)])]) {
+    if (s.includes('!')) die(`${p} contains an exclamation mark`);
+    if (s.includes('\u2014')) die(`${p} contains an em dash`);
   }
+
+  /* What a visitor agreed to is part of the lead record. If the wording changes and the version does not, old and new
+     consents look identical in the receiving system. The hash pins the wording; changing either takes a decision. */
+  const box = qs[qs.length - 1].fields.find((f) => f.type === 'checkbox');
+  const hash = createHash('sha256').update(box.label).digest('hex').slice(0, 16);
+  if (cfg.consent.textSha256 !== hash)
+    die(`the consent wording changed (sha256 ${hash}, config.consent.textSha256 says ${cfg.consent.textSha256}). New wording is a new consent: bump config.consent.version, then set textSha256 to ${hash}`);
 
   const outstanding = [];
   if (!cfg.proofread) outstanding.push('config.proofread is false: Aurora has not proofread the Italian copy');
@@ -129,7 +149,11 @@ function validate() {
   if (!cfg.funnel.calendlyUrl) outstanding.push('funnel.calendlyUrl is empty (a separate Italian event type is needed)');
   if (!cfg.funnel.pixelId) outstanding.push('funnel.pixelId is empty: no pixel loads, so no Lead event is ever sent');
   for (const [name, dir] of [['privacy notice', 'privacy'], ['cookie notice', 'cookie']])
-    if (!existsSync(join(PUBLIC, 'italy', dir, 'index.html'))) outstanding.push(`public/italy/${dir}/index.html does not exist: the ${name} has not been delivered`);
+    {
+      const f = join(PUBLIC, 'italy', dir, 'index.html');
+      if (!existsSync(f)) outstanding.push(`public/italy/${dir}/index.html does not exist: the ${name} has not been delivered`);
+      else if (statSync(f).size < 500) outstanding.push(`public/italy/${dir}/index.html is under 500 bytes: it is a stub, not the ${name}`);
+    }
 
   if (cfg.live && outstanding.length)
     die('"live" is true but these are not done, and a visitor would meet every one of them:\n' + outstanding.map((o) => '      - ' + o).join('\n'));
@@ -142,8 +166,28 @@ const RGBA_OK = new Set([
   'rgba(255,255,255,0.7)', 'rgba(255,255,255,0.24)', 'rgba(255,255,255,0.82)', 'rgba(255,255,255,0.86)',
   'rgba(16,20,28,0.25)', 'rgba(16,20,28,0.18)',
 ]);
-/* A colour keyword standing on its own. Not var(--white): a custom property's name is not a colour. */
-const NAMED = /:\s*[^;{}]*(?<![-\w])(white|black|red|green|blue|orange|yellow|teal|lime|gray|grey|purple|pink|cyan|navy)(?![-\w])/i;
+/* Every CSS named colour (Color Module 4). "No green, no accent" has to hold for olive, aqua and seagreen too, not
+   only the dozen that come to mind. The words are only looked for as a value, never inside var(--white) or a name. */
+const NAMED_COLOURS = ('aliceblue antiquewhite aqua aquamarine azure beige bisque black blanchedalmond blue blueviolet brown burlywood cadetblue chartreuse chocolate coral cornflowerblue cornsilk crimson cyan darkblue darkcyan darkgoldenrod darkgray darkgreen darkgrey darkkhaki darkmagenta darkolivegreen darkorange darkorchid darkred darksalmon darkseagreen darkslateblue darkslategray darkslategrey darkturquoise darkviolet deeppink deepskyblue dimgray dimgrey dodgerblue firebrick floralwhite forestgreen fuchsia gainsboro ghostwhite gold goldenrod gray green greenyellow grey honeydew hotpink indianred indigo ivory khaki lavender lavenderblush lawngreen lemonchiffon lightblue lightcoral lightcyan lightgoldenrodyellow lightgray lightgreen lightgrey lightpink lightsalmon lightseagreen lightskyblue lightslategray lightslategrey lightsteelblue lightyellow lime limegreen linen magenta maroon mediumaquamarine mediumblue mediumorchid mediumpurple mediumseagreen mediumslateblue mediumspringgreen mediumturquoise mediumvioletred midnightblue mintcream mistyrose moccasin navajowhite navy oldlace olive olivedrab orange orangered orchid palegoldenrod palegreen paleturquoise palevioletred papayawhip peachpuff peru pink plum powderblue purple rebeccapurple red rosybrown royalblue saddlebrown salmon sandybrown seagreen seashell sienna silver skyblue slateblue slategray slategrey snow springgreen steelblue tan teal thistle tomato turquoise violet wheat white whitesmoke yellow yellowgreen').split(' ');
+/* A colour keyword standing on its own as part of a declaration's value. Not var(--white): a custom property's name is not a colour. */
+const NAMED = new RegExp(`:\\s*[^;{}]*(?<![-\\w])(${NAMED_COLOURS.join('|')})(?![-\\w(])`, 'i');
+/* The same words as the value of an SVG paint attribute. */
+const NAMED_ATTR = new RegExp(`\\b(?:fill|stroke|color|stop-color|flood-color)="(${NAMED_COLOURS.join('|')})"`, 'i');
+
+/** Everything in the page that is CSS: <style> blocks and style="" attributes. */
+const cssOf = (html) => [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).concat([...html.matchAll(/\sstyle="([^"]*)"/g)].map((m) => m[1])).join('\n');
+
+function checkHex(path, where, text) {
+  for (const m of text.matchAll(/#([0-9a-fA-F]{3,8})(?![0-9a-zA-Z_-])/g)) {
+    if (!HEX_OK.has(m[1].toUpperCase())) die(`${path} uses the colour ${m[0]} (${where}), which is not one of the design tokens. This page has no green and no accent.`);
+  }
+}
+
+/** A text that is inlined into the page must not be able to end its own element, or open a comment. */
+function inlineSafe(name, text, tag) {
+  if (new RegExp(`</${tag}`, 'i').test(text)) die(`${name} contains "</${tag}", which would end the inlined <${tag}> early`);
+  if (tag === 'script' && /<!--/.test(text)) die(`${name} contains "<!--", which changes how the browser reads an inlined script`);
+}
 
 function checkOutput(path, html) {
   if (html.includes('{{')) die(`${path} still contains template syntax "{{"`);
@@ -152,23 +196,23 @@ function checkOutput(path, html) {
     if (!(m[1] in VARS) || !stillOpen(m[1])) die(`${path} still contains ${m[0]}: a variable was not resolved`);
   }
   if (/fonts\.googleapis|fonts\.gstatic/.test(html)) die(`${path} requests a font from Google. Fonts are self-hosted under /italy/assets/fonts/.`);
-  if (/href="\/g\/_assets|src="\/g\/_assets|srcset="\/g\/_assets|url\(\/g\/_assets/.test(html)) die(`${path} points at /g/_assets: this funnel serves its own copies from /italy/assets/`);
+  if (/\/g\/_assets/.test(html)) die(`${path} mentions /g/_assets: this funnel serves its own copies from /italy/assets/`);
   if (/\/js\/consent\.js|elevate-cookie-consent/.test(html)) die(`${path} uses the shared consent script or the UK consent key. This funnel owns its own consent.`);
-  for (const m of html.matchAll(/#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/g)) {
-    if (!HEX_OK.has(m[1].toUpperCase())) die(`${path} uses the colour ${m[0]}, which is not one of the design tokens. This page has no green and no accent.`);
-  }
+  /* Hex colours where a colour can be: CSS, any attribute whose whole value is one, any quoted string in a script. Not visible
+     text ("Passo #123") and not an entity (&#160;). */
+  checkHex(path, 'CSS', cssOf(html));
+  for (const m of html.matchAll(/="(#[0-9a-fA-F]{3,8})"/g)) checkHex(path, 'attribute', m[1]);
+  for (const m of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)) for (const q of m[1].matchAll(/(["'])(#[0-9a-fA-F]{3,8})\1/g)) checkHex(path, 'script', q[2]);
   const other = /\b(hsla?|hwb|lab|lch|oklab|oklch|color|color-mix)\(/i.exec(html.replace(/<script[\s\S]*?<\/script>/g, ''));
   if (other) die(`${path} uses a ${other[1]}() colour. Only the design tokens' hex and rgba values are allowed.`);
   for (const m of html.matchAll(/rgba?\([^)]*\)/g)) {
     const norm = m[0].replace(/\s+/g, '');
     if (!RGBA_OK.has(norm)) die(`${path} uses ${m[0]}, which is not one of the design tokens`);
   }
-  const named = NAMED.exec(CSS);
-  if (named) die(`style.css uses the named colour "${named[1]}": ${named[0].slice(0, 60)}`);
-  for (const m of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)) {
-    // an inlined script containing "</script" would end itself early; the regex above would not see it, so look for the opening tags instead
-    if (/<\/script/i.test(m[1])) die(`${path} has a script that contains "</script"`);
-  }
+  const named = NAMED.exec(cssOf(html));
+  if (named) die(`${path} uses the named colour "${named[1]}": ${named[0].slice(0, 60)}`);
+  const attr = NAMED_ATTR.exec(html);
+  if (attr) die(`${path} uses the named colour "${attr[1]}" in ${attr[0]}`);
 }
 
 /* ------------------------------------------------------------------ shell */
@@ -261,6 +305,7 @@ function scriptBlock(extra, page) {
   };
   const data = JSON.stringify(k).replace(/</g, '\\u003c');
   const file = page === 'landing' ? 'client.js' : 'outcome.js';
+  for (const f of ['core.cjs', 'common.js', file]) inlineSafe(`g/italy/${f}`, text(f), 'script');
   return `<script>window.EMIT=${data};</script>
 <script>${text('core.cjs')}</script>
 <script>${text('common.js')}</script>
@@ -440,6 +485,7 @@ ${siteFooter()}
 /* -------------------------------------------------------------------- main */
 
 const outstanding = validate();
+inlineSafe('g/italy/style.css', CSS, 'style');
 
 const pages = [
   ['index.html', renderLanding()],

@@ -73,3 +73,27 @@ test('describe() gives labels and a boolean for consent, so a receiver needs no 
   assert.deepEqual(d.details, { name: 'Marco Rossi', company: 'Rossi Cyber Srl', email: 'marco@rossicyber.it', consent: true });
   assert.equal(core.describe(Q, answers(Object.assign({}, GOOD, { details_consent: '' }))).details.consent, false);
 });
+
+test('cut() never ends in half an emoji, and str() drops stray halves wherever they are', () => {
+  assert.equal(core.cut('a'.repeat(199) + '\u{1F600}', 200), 'a'.repeat(199));
+  assert.equal(core.cut('\u{1F600}\u{1F600}', 3), '\u{1F600}');
+  assert.equal(core.cut('short', 200), 'short');
+  assert.equal(core.str('\uDE00\uDE00x'), 'x');
+  assert.equal(core.str('a\uD83D'), 'a');
+  assert.equal(core.str('a\uD83D\uD83D\uDE00'), 'a\u{1F600}');
+  assert.equal(core.str('ok \u{1F600} \u00E8'), 'ok \u{1F600} \u00E8');
+});
+
+test('every value shortened by answersFrom and describe ends on a whole character', () => {
+  const emoji = '\u{1F600}';
+  const a = core.answersFrom(Q, get(Object.assign({}, GOOD, { details_name: 'n'.repeat(199) + emoji, details_company: 'c'.repeat(199) + emoji })));
+  const lone = /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/;
+  for (const k of ['details_name', 'details_company']) assert.equal(lone.test(a[k]), false, k);
+  const d = core.describe(Q, a);
+  assert.equal(lone.test(d.details.name + d.details.company), false);
+});
+
+test('only 1, on and true tick the consent box', () => {
+  for (const v of ['1', 'on', 'true', 'TRUE', 'On']) assert.equal(answers(Object.assign({}, GOOD, { details_consent: v })).details_consent, '1', v);
+  for (const v of ['0', 'false', 'off', 'no', '', ' ', 'yes', 'x']) assert.equal(answers(Object.assign({}, GOOD, { details_consent: v })).details_consent, '', JSON.stringify(v));
+});

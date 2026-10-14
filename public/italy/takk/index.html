@@ -378,9 +378,37 @@ input.is-other:checked~.other{display:block}
   function str(v) {
     if (v === null || v === undefined) return '';
     /* Control characters never belong in a lead field, and a newline in an
-       email or name is how a value gets smuggled into a header or a CSV row. */
-    return String(v).replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/^\s+|\s+$/g, '');
+       email or name is how a value gets smuggled into a header or a CSV row.
+       A lone surrogate (half an emoji) is not text either: encodeURIComponent throws on it,
+       and a throw after the lead was delivered would tell the visitor it had failed. */
+    return dropLone(String(v).replace(/[\u0000-\u001F\u007F]/g, ' ')).replace(/^\s+|\s+$/g, '');
   }
+
+  /* No regex lookbehind: older WebViews do not parse it, and a syntax error here would kill the whole form. */
+  function dropLone(s) {
+    if (!/[\uD800-\uDFFF]/.test(s)) return s;
+    var out = '', i, c, d;
+    for (i = 0; i < s.length; i++) {
+      c = s.charCodeAt(i);
+      if (c >= 0xD800 && c <= 0xDBFF) {
+        d = s.charCodeAt(i + 1);
+        if (d >= 0xDC00 && d <= 0xDFFF) { out += s.charAt(i) + s.charAt(i + 1); i++; }
+      } else if (c < 0xDC00 || c > 0xDFFF) out += s.charAt(i);
+    }
+    return out;
+  }
+
+  /** At most n UTF-16 units, never ending in the first half of a pair. The one way to shorten a value. */
+  function cut(s, n) {
+    s = String(s === null || s === undefined ? '' : s);
+    if (s.length <= n) return s;
+    var c = s.charCodeAt(n - 1);
+    return s.slice(0, c >= 0xD800 && c <= 0xDBFF ? n - 1 : n);
+  }
+
+  /* Only these mean "ticked". A browser sends the box's value ("1"), some send "on".
+     "0", "false" and "off" from a script are a refusal, not consent. */
+  function ticked(v) { return /^(1|on|true)$/i.test(str(v)); }
 
   function isChoiceIndex(v, q) {
     return typeof v === 'number' && v % 1 === 0 && v >= 0 && v < q.options.length;
@@ -399,14 +427,14 @@ input.is-other:checked~.other{display:block}
       if (q.kind === 'details') {
         for (var f = 0; f < q.fields.length; f++) {
           var key = q.id + '_' + q.fields[f].key;
-          a[key] = q.fields[f].type === 'checkbox' ? (str(get(key)) ? '1' : '') : str(get(key)).slice(0, q.fields[f].type === 'email' ? MAX.email + 1 : MAX.text);
+          a[key] = q.fields[f].type === 'checkbox' ? (ticked(get(key)) ? '1' : '') : cut(str(get(key)), q.fields[f].type === 'email' ? MAX.email + 1 : MAX.text);
         }
       } else if (q.kind === 'choice') {
         var raw = get(q.id);
         /* Digits only. Number('') and Number(' ') are 0 and Number('0x1') is 1: a non-answer must not become option 0. */
         var n = /^[0-9]{1,3}$/.test(String(raw === null || raw === undefined ? '' : raw)) ? Number(raw) : NaN;
         a[q.id] = isChoiceIndex(n, q) ? n : null;
-        if (q.otherIndex !== undefined) a[q.id + '_other'] = str(get(q.id + '_other')).slice(0, MAX.other);
+        if (q.otherIndex !== undefined) a[q.id + '_other'] = cut(str(get(q.id + '_other')), MAX.other);
       } else {
         a[q.id] = str(get(q.id));
       }
@@ -468,7 +496,7 @@ input.is-other:checked~.other{display:block}
           ? { index: idx, label: q.options[idx], other: q.otherIndex === idx ? str(a[q.id + '_other']) : '' }
           : { index: null, label: '', other: '' };
       } else {
-        out[q.id] = str(a[q.id]).slice(0, q.kind === 'url' ? MAX.url : MAX.text);
+        out[q.id] = cut(str(a[q.id]), q.kind === 'url' ? MAX.url : MAX.text);
       }
     }
     return out;
@@ -476,7 +504,7 @@ input.is-other:checked~.other{display:block}
 
   return {
     WEBSITE_RE: WEBSITE_RE, EMAIL_RE: EMAIL_RE, MAX: MAX,
-    str: str, isChoiceIndex: isChoiceIndex,
+    str: str, cut: cut, ticked: ticked, isChoiceIndex: isChoiceIndex,
     answersFrom: answersFrom, validateQuestion: validateQuestion,
     validateAll: validateAll, describe: describe
   };
@@ -501,6 +529,10 @@ input.is-other:checked~.other{display:block}
   var K = window.EMIT;
   if (!K) return;
   var UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  var Core = window.EmItCore;
+  /* Shorten without ending in half an emoji: encodeURIComponent throws on a lone surrogate, and a throw in
+     the submit handler leaves the button doing nothing. Core.cut is the shared implementation. */
+  function cut(s, n) { return Core && Core.cut ? Core.cut(s, n) : String(s).slice(0, n); }
   var STORE = 'elevate:g:' + K.slug;
 
   function fromStore() { try { return JSON.parse(sessionStorage.getItem(STORE) || '{}'); } catch (e) { return {}; } }
@@ -517,10 +549,10 @@ input.is-other:checked~.other{display:block}
     var s = fromStore(), q = null, out = {}, k;
     for (k in s) if (Object.prototype.hasOwnProperty.call(s, k)) out[k] = s[k];
     try { q = new URLSearchParams(location.search); } catch (e) {}
-    if (q) UTM.concat(['fbclid', 'lead_id']).forEach(function (n) { var v = q.get(n); if (v) out[n] = v.slice(0, 200); });
+    if (q) UTM.concat(['fbclid', 'lead_id']).forEach(function (n) { var v = q.get(n); if (v) out[n] = cut(v, 200); });
     if (mint && !out.lead_id) out.lead_id = mintLeadId();
     if (mint && !Object.prototype.hasOwnProperty.call(out, 'referrer')) {
-      try { out.referrer = (document.referrer || '').slice(0, 300); } catch (e) { out.referrer = ''; }
+      try { out.referrer = cut(document.referrer || '', 300); } catch (e) { out.referrer = ''; }
     }
     toStore(out);
     return out;

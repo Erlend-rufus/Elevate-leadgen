@@ -17,6 +17,10 @@
   var K = window.EMIT;
   if (!K) return;
   var UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  var Core = window.EmItCore;
+  /* Shorten without ending in half an emoji: encodeURIComponent throws on a lone surrogate, and a throw in
+     the submit handler leaves the button doing nothing. Core.cut is the shared implementation. */
+  function cut(s, n) { return Core && Core.cut ? Core.cut(s, n) : String(s).slice(0, n); }
   var STORE = 'elevate:g:' + K.slug;
 
   function fromStore() { try { return JSON.parse(sessionStorage.getItem(STORE) || '{}'); } catch (e) { return {}; } }
@@ -33,10 +37,10 @@
     var s = fromStore(), q = null, out = {}, k;
     for (k in s) if (Object.prototype.hasOwnProperty.call(s, k)) out[k] = s[k];
     try { q = new URLSearchParams(location.search); } catch (e) {}
-    if (q) UTM.concat(['fbclid', 'lead_id']).forEach(function (n) { var v = q.get(n); if (v) out[n] = v.slice(0, 200); });
+    if (q) UTM.concat(['fbclid', 'lead_id']).forEach(function (n) { var v = q.get(n); if (v) out[n] = cut(v, 200); });
     if (mint && !out.lead_id) out.lead_id = mintLeadId();
     if (mint && !Object.prototype.hasOwnProperty.call(out, 'referrer')) {
-      try { out.referrer = (document.referrer || '').slice(0, 300); } catch (e) { out.referrer = ''; }
+      try { out.referrer = cut(document.referrer || '', 300); } catch (e) { out.referrer = ''; }
     }
     toStore(out);
     return out;

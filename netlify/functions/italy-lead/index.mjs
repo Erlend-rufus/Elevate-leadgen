@@ -55,6 +55,8 @@ export function createHandler(deps) {
 
   /* The wording the visitor ticked, kept with the lead: what they agreed to is the record, not the fact that a box was ticked. */
   const consentField = Q[Q.length - 1].fields.find((f) => f.type === 'checkbox');
+  /* Stored as a person would read it: the link markers turned into the notice's address. */
+  const consentText = consentField ? consentField.label.replace(/\[([^\]]+)\]\(privacy\)/g, (m, t) => t + ' (' + cfg.origin + cfg.links.privacy + ')') : '';
 
   const reply = (status, body, type, extra) =>
     new Response(body, { status, headers: Object.assign({ 'Content-Type': type }, SECURITY, extra || {}) });
@@ -113,8 +115,8 @@ export function createHandler(deps) {
     const fallback = fromReferer(req);
     cfg.hiddenFields.forEach((name) => {
       if (name === 'page_slug') return;
-      let v = core.str(get(name)).slice(0, name === 'referrer' ? 300 : 200);
-      if (!v && fallback[name]) v = core.str(fallback[name]).slice(0, 200);
+      let v = core.cut(core.str(get(name)), name === 'referrer' ? 300 : 200);
+      if (!v && fallback[name]) v = core.cut(core.str(fallback[name]), 200);
       rawHidden[name] = v;
     });
     if (!LEAD_ID_RE.test(rawHidden.lead_id || '')) rawHidden.lead_id = 'l_' + uuid().replace(/-/g, '').slice(0, 20);
@@ -152,10 +154,10 @@ export function createHandler(deps) {
       event: 'italy.lead',
       lead_id: leadId,
       received_at: now().toISOString(),
-      page_slug: cfg.slug,
+      page_slug: cfg.pageSlug,
       route: { page: routed.page, rule: routed.rule },
       answers: core.describe(Q, answers),
-      consent: { given: true, version: cfg.consent.version, text: consentField ? consentField.label : '' },
+      consent: { given: true, version: cfg.consent.version, text: consentText },
       tracking: hidden,
     };
 
@@ -180,7 +182,11 @@ export function createHandler(deps) {
     const q = [];
     UTM.concat(['fbclid']).forEach((k) => { if (hidden[k]) q.push(k + '=' + encodeURIComponent(hidden[k])); });
     q.unshift('lead_id=' + encodeURIComponent(leadId));
-    const next = BASE + '/' + routed.page + '/?' + q.join('&');
+    /* A Location header has a size limit, and a value that is all multi-byte characters encodes to nine times its length.
+       Past a sane size the tracking is dropped and the lead id kept: the lead is already delivered and must still be sent on. */
+    let query = q.join('&');
+    if (query.length > 3000) query = q[0];
+    const next = BASE + '/' + routed.page + '/?' + query;
     log({ code: 'accepted', lead_id: leadId, page: routed.page });
     return wantsJson(req) ? json(200, { ok: true, next, page: routed.page })
       : reply(303, '', 'text/plain; charset=utf-8', { Location: next });

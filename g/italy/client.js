@@ -57,8 +57,8 @@
       var els = form.elements[name];
       if (!els) return null;
       if (els.length !== undefined && els.type === undefined) return radioValue(name);   // RadioNodeList
-      /* A checkbox's .value is its value attribute whether or not it is ticked, so an unticked consent box would read as given. Like a form post, send nothing when it is off. */
-      if (els.type === 'checkbox') return els.checked ? els.value : '';
+      /* A checkbox's (or a lone radio's) .value is its value attribute whether or not it is ticked, so an unticked consent box would read as given. Like a form post, send nothing when it is off. */
+      if (els.type === 'checkbox' || els.type === 'radio') return els.checked ? els.value : '';
       return els.value;
     };
     var answers = function () { return Core.answersFrom(Q, getVal); };
@@ -129,8 +129,9 @@
       form.querySelector('.submit-area').insertBefore(node, btn);
     };
     var setStatus = function (s) {
+      var was = status;
       status = s;
-      var loading = s === 'loading', wasLoading = status === 'loading' && !loading;
+      var loading = s === 'loading', wasLoading = was === 'loading' && !loading;
       btn.disabled = loading;
       label.textContent = loading ? K.labels.sending : (step === total - 1 ? K.labels.submit : K.labels.next);
       btn.setAttribute('aria-busy', loading ? 'true' : 'false');
