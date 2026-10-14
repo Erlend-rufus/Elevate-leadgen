@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="it" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elevate Marketing: marketing per cybersecurity e MSSP</title>
+<meta name="description" content="Elevate Marketing gestisce le campagne che portano aziende ai servizi delle società di cybersecurity e degli MSSP in Italia. Analisi gratuita di 30 minuti.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#F7F5F0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/italy/assets/fonts/geist-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/italy/assets/fonts/fraunces-v1.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.className='js'</script>
+<style>/* Italian funnel. Values are the approved UK funnel reference (UK-IT-*.dc.html),
+   written as classes instead of inline styles.
+
+   Units. The reference measures against the width of the page with cqw, which
+   needs a container query. That is unavailable in older WebViews, including
+   some Facebook in-app browsers, and an unsupported unit makes the whole clamp()
+   invalid, so every font size would fall back to the browser default. The work
+   order allows vw as an approximation. --u is 1vw; the two agree to within the
+   width of a scrollbar.
+
+   Colour. Only the tokens below. No green, no accent. build-italy.mjs fails the
+   build on any other colour literal, so a stray value cannot slip in. */
+
+:root{
+  --paper:#F7F5F0; --paper-dark:#EFEDE7; --white:#FFFFFF;
+  --hair:#CFCBC0; --soft:#E3E0D8; --field:#8B909C;
+  --ink:#10141C; --muted:#4A5162; --ink-hover:#2A3140;
+  --marine:#0A1628; --error:#B3261E;
+  --u:1vw;
+  --pad:clamp(24px,calc(5*var(--u)),64px);
+  --serif:Fraunces,'Iowan Old Style',Georgia,serif;
+  --sans:Geist,'Geist Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+@font-face{font-family:Fraunces;src:url(/italy/assets/fonts/fraunces-v1.woff2) format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:Geist;src:url(/italy/assets/fonts/geist-v1.woff2) format('woff2');font-weight:100 900;font-display:swap}
+
+/* Box model: the reference uses the browser default (content-box) and asks for
+   border-box only where it says so. An FAQ answer with max-width:660px is 660px
+   of text plus its padding, a summary with min-height:44px is 44px of content
+   plus its padding. A global border-box here made both smaller than the design,
+   so border-box is listed, not assumed. */
+.cta,.btn,.opt,.txt,.apply,.consent,.sticky,.general,.embed-box,.outcome-sec,.ring{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-bottom:24px}
+/* A fixed banner or button must not hide the control keyboard focus just moved to.
+   The classes are set by common.js and client.js while each is showing. */
+html.banner-open{scroll-padding-bottom:260px}
+html.has-sticky{scroll-padding-bottom:96px}
+#form{scroll-margin-top:8px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55;
+  font-size:clamp(18px,calc(1.3*var(--u)),19px);-webkit-font-smoothing:antialiased}
+a{color:var(--ink)}
+a:hover{color:var(--muted)}
+h1,h2,h3,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+img{display:block}
+picture{display:block;width:fit-content}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--pad)}
+.sec{padding:clamp(56px,calc(7*var(--u)),96px) 0}
+.rule-top{border-top:1px solid var(--ink)}
+.stack{display:flex;flex-direction:column}
+h2,.h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,calc(2.9*var(--u)),40px);line-height:1.15;letter-spacing:-0.015em}
+h3{font-family:var(--sans);font-weight:600;font-size:18px;line-height:1.3}
+.foot-note{font-size:15px;line-height:1.5;color:var(--muted)}
+.balance{text-wrap:balance}
+.pretty{text-wrap:pretty}
+
+/* top bar and header */
+.topbar{background:var(--paper-dark);border-bottom:1px solid var(--hair);padding:10px 0}
+.topbar .wrap{font-size:14px;line-height:1.4;font-weight:500;letter-spacing:.01em}
+.site-header{padding:clamp(18px,calc(2*var(--u)),28px) 0;border-bottom:1px solid var(--hair)}
+.logo{height:clamp(48px,calc(3.8*var(--u)),56px);width:auto}
+
+/* hero */
+.hero{padding:clamp(48px,calc(6*var(--u)),88px) 0 clamp(64px,calc(8*var(--u)),120px)}
+.hero .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(36px,calc(4*var(--u)),56px) clamp(40px,calc(6*var(--u)),96px)}
+.hero h1{flex:2 1 560px;min-width:0;font-family:var(--serif);font-weight:400;font-size:clamp(34px,calc(4.6*var(--u)),64px);line-height:1.08;letter-spacing:-0.02em;text-wrap:balance}
+.hero h1 span{display:block}
+.hero h1 span+span{margin-top:.3em}
+.hero-side{flex:1 1 340px;min-width:0;max-width:520px;display:flex;flex-direction:column;align-items:flex-start;gap:28px}
+.lede{font-size:clamp(18px,calc(1.45*var(--u)),20px);line-height:1.55;text-wrap:pretty}
+.cta-block{display:flex;flex-direction:column;align-items:flex-start;gap:14px;width:100%}
+.micro{font-size:16px;line-height:1.5;color:var(--muted);text-wrap:pretty}
+.cta{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;padding:14px 20px;border-radius:2px;
+  background:var(--ink);color:var(--white);font-weight:500;font-size:17px;line-height:1.25;text-align:center;text-wrap:balance;text-decoration:none}
+.cta:hover{background:var(--ink-hover);color:var(--white)}
+.cta:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+/* fit */
+.fit .wrap{display:flex;flex-direction:column;gap:clamp(40px,calc(4*var(--u)),56px)}
+.fit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(56px,calc(6*var(--u)),96px) clamp(40px,calc(6*var(--u)),96px)}
+.fit-list{margin:28px 0 0;border-bottom:1px solid var(--hair)}
+.fit-list li{padding:20px 0;border-top:1px solid var(--hair);text-wrap:pretty}
+.fit-list strong{font-weight:700}
+
+/* paid */
+.paid{background:var(--marine);color:var(--white)}
+.paid .wrap{display:flex;flex-direction:column;gap:clamp(40px,calc(5*var(--u)),72px)}
+.paid h2{max-width:760px;text-wrap:balance}
+.paid h2 .dim{color:rgba(255,255,255,0.7)}
+.paid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:28px clamp(40px,calc(6*var(--u)),96px);border-top:1px solid rgba(255,255,255,0.24);padding-top:clamp(28px,calc(3*var(--u)),40px)}
+.paid-grid p{max-width:540px;font-size:clamp(18px,calc(1.3*var(--u)),19px);line-height:1.55;color:rgba(255,255,255,0.86);text-wrap:pretty}
+
+/* keep */
+.keep .wrap{display:flex;flex-direction:column;gap:clamp(40px,calc(5*var(--u)),72px)}
+.keep h2{max-width:820px;text-wrap:balance}
+.keep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(32px,calc(3*var(--u)),48px) clamp(24px,calc(3*var(--u)),48px)}
+.keep-item{border-top:1px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:14px}
+.keep-item p{text-wrap:pretty}
+
+/* meeting */
+.meeting .wrap{display:flex;flex-direction:column;gap:clamp(40px,calc(5*var(--u)),72px)}
+.meeting-top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:28px clamp(40px,calc(6*var(--u)),96px)}
+.meeting-top>div{flex:1 1 380px;min-width:0}
+.meeting-top h2{text-wrap:balance}
+.meeting-top p{flex:1 1 340px;min-width:0;max-width:520px;font-size:clamp(18px,calc(1.45*var(--u)),20px);line-height:1.55;text-wrap:pretty}
+.steps{border-bottom:1px solid var(--hair)}
+.steps li{display:grid;grid-template-columns:clamp(32px,calc(4*var(--u)),56px) 1fr;gap:0 clamp(8px,calc(1.5*var(--u)),24px);padding:20px 0;border-top:1px solid var(--hair);align-items:baseline}
+.step-n{font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.step-body{display:flex;flex-wrap:wrap;gap:8px clamp(24px,calc(4*var(--u)),64px)}
+.step-body h3{flex:1 1 200px;min-width:0;line-height:1.4}
+.step-body p{flex:2 1 320px;min-width:0;max-width:640px;text-wrap:pretty}
+.notice{border-top:1px solid var(--hair);padding-top:24px;max-width:760px}
+.notice p{text-wrap:pretty}
+
+/* clients */
+.clients .wrap{display:flex;flex-direction:column;gap:clamp(32px,calc(4*var(--u)),56px)}
+.clients-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(24px,calc(3*var(--u)),48px)}
+.client{border-top:1px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:8px}
+.client-name{font-family:var(--serif);font-weight:400;font-size:clamp(21px,calc(1.8*var(--u)),25px);line-height:1.2;letter-spacing:-0.01em}
+.client-sector{font-size:16px;line-height:1.45;color:var(--muted)}
+
+/* faq */
+.faq .wrap{display:flex;flex-wrap:wrap;gap:clamp(32px,calc(4*var(--u)),64px) clamp(40px,calc(6*var(--u)),96px);align-items:flex-start}
+.faq-head{flex:1 1 260px;min-width:0}
+.faq-list{flex:2 1 520px;min-width:0;border-top:1px solid var(--hair)}
+.faq details{border-bottom:1px solid var(--hair)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:44px;padding:clamp(18px,calc(1.6*var(--u)),22px) 0;
+  font-family:var(--serif);font-weight:400;font-size:clamp(19px,calc(1.6*var(--u)),22px);line-height:1.3;letter-spacing:-0.005em;list-style:none;cursor:pointer}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.faq summary span{flex:1 1 auto;min-width:0}
+.faq summary svg{flex:none}
+.faq details[open] .em-plus{display:none}
+.faq details:not([open]) .em-minus{display:none}
+.faq details p{padding:0 44px clamp(20px,calc(2*var(--u)),28px) 0;max-width:660px;text-wrap:pretty}
+
+/* form section */
+.form-sec{background:var(--paper-dark)}
+.form-sec .wrap{display:flex;flex-wrap:wrap;gap:clamp(32px,calc(4*var(--u)),64px) clamp(40px,calc(6*var(--u)),96px);align-items:flex-start}
+.form-intro{flex:1 1 280px;min-width:0;max-width:420px}
+.form-intro h2{text-wrap:balance}
+.form-intro p{margin-top:20px;text-wrap:pretty}
+.form-main{flex:2 1 520px;min-width:0}
+
+/* footer */
+.site-footer{background:var(--marine);color:var(--white);padding:clamp(48px,calc(6*var(--u)),72px) 0}
+.site-footer .wrap{display:flex;flex-direction:column;gap:28px}
+.footer-top{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:28px clamp(40px,calc(6*var(--u)),96px)}
+.logo-foot{height:clamp(40px,calc(3.2*var(--u)),46px);width:auto}
+.legal{font-size:17px;line-height:1.5;color:rgba(255,255,255,0.82);max-width:560px;flex:1 1 320px;text-wrap:pretty}
+.footer-links{display:flex;gap:28px;font-size:17px}
+.footer-links a{display:inline-flex;align-items:center;min-height:44px;color:var(--white)}
+.footer-links a:hover{color:rgba(255,255,255,0.7)}
+.footer-links a:focus-visible{outline:3px solid var(--white);outline-offset:2px}
+body.has-sticky .site-footer{padding-bottom:calc(clamp(48px,calc(6*var(--u)),72px) + 72px)}
+html.banner-open .site-footer{padding-bottom:calc(clamp(48px,calc(6*var(--u)),72px) + 230px)}
+
+/* consent banner: the only shadow on the page, apart from the sticky button */
+.consent{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-height:calc(100vh - 24px);overflow:auto;z-index:30;max-width:620px;margin:0 auto;background:var(--white);color:var(--ink);
+  border:1px solid var(--field);border-radius:4px;box-shadow:0 8px 24px -8px rgba(16,20,28,0.25);padding:20px;display:flex;flex-direction:column;gap:16px}
+.consent[hidden]{display:none}
+.consent p{font-size:16px;line-height:1.5;text-wrap:pretty}
+.consent-btns{display:flex;gap:12px}
+.consent button{appearance:none;cursor:pointer;flex:1 1 0;min-height:52px;padding:12px 16px;border-radius:2px;border:1.5px solid var(--ink);background:var(--white);color:var(--ink);font:inherit;font-weight:600;font-size:17px}
+.consent button:hover{background:var(--ink);color:var(--white)}
+.consent button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+/* sticky button, narrow screens only */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--soft);
+  box-shadow:0 -12px 24px -16px rgba(16,20,28,0.18);padding:14px 20px calc(16px + env(safe-area-inset-bottom))}
+.sticky[hidden]{display:none}
+.sticky a{max-width:520px;margin:0 auto;padding:12px 16px}
+@media (min-width:768px){.sticky{display:none!important}}
+
+/* outcome pages */
+.outcome{display:flex;flex-direction:column;min-height:clamp(844px,calc(62.5*var(--u)),900px)}
+.outcome.is-book{min-height:0}
+.outcome main{flex:1;display:flex;align-items:center}
+.outcome-sec{width:100%;padding:clamp(48px,calc(6*var(--u)),88px) 0 clamp(64px,calc(8*var(--u)),120px)}
+.outcome-sec .wrap{display:flex;flex-direction:column;gap:clamp(36px,calc(4*var(--u)),56px)}
+.outcome-text{max-width:820px;display:flex;flex-direction:column;align-items:flex-start}
+.outcome h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,calc(3.8*var(--u)),52px);line-height:1.12;letter-spacing:-0.02em;text-wrap:balance}
+.outcome-text p{margin-top:28px;max-width:640px;font-size:clamp(18px,calc(1.45*var(--u)),20px);line-height:1.55;text-wrap:pretty}
+.embed-box{width:100%;height:clamp(640px,calc(50*var(--u)),720px);background:var(--white);border:1px solid var(--hair);border-radius:4px;overflow:hidden}
+.embed-box .calendly-inline-widget{width:100%;height:100%;min-width:320px}
+.embed-off{height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font-weight:700;letter-spacing:.16em;font-size:14px;line-height:1.2;color:var(--muted)}
+
+/* the application form */
+.apply{width:100%;max-width:760px;background:var(--white);border:1px solid var(--hair);border-radius:4px;padding:clamp(22px,calc(3.6*var(--u)),40px);
+  display:flex;flex-direction:column;gap:clamp(24px,calc(3*var(--u)),32px);font-size:18px;line-height:1.5}
+.q{margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:18px;outline:none}
+.q h2{padding:0;margin:0 0 4px;font-size:clamp(22px,calc(2.1*var(--u)),28px);line-height:1.2;letter-spacing:-0.01em;text-wrap:pretty}
+.hint{margin:-6px 0 0;font-size:17px;line-height:1.45;color:var(--muted)}
+/* no JavaScript: every question on the page, divided by a thin rule */
+.q~.q{padding-top:28px;border-top:1px solid var(--soft)}
+.apply .steps-head{display:none}
+.js .apply.is-steps .steps-head{display:flex;flex-direction:column;gap:14px}
+.js .apply.is-steps .q{display:none}
+.js .apply.is-steps .q.is-current{display:flex}
+.js .apply.is-steps .q~.q{padding-top:0;border-top:0}
+.back-row{min-height:40px;display:flex;align-items:center}
+.back{appearance:none;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:44px;margin:0 0 0 -8px;padding:0 8px;font:inherit;font-size:17px;font-weight:500;color:var(--ink)}
+.back[hidden]{display:none}
+.back:hover{color:var(--muted)}
+.back:focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:4px}
+.bar{height:3px;background:var(--soft);overflow:hidden}
+.bar-fill{height:100%;background:var(--ink);transition:width .3s ease}
+
+.opts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));position:relative}
+.opt{box-sizing:border-box;text-align:left;font-size:18px;line-height:1.35;color:var(--ink);background:var(--white);border:1.5px solid var(--field);border-radius:4px;min-height:56px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;margin:0}
+.opt .lbl{min-width:0}
+.ring{flex:none;box-sizing:border-box;width:22px;height:22px;border-radius:50%;border:2px solid var(--field);display:flex;align-items:center;justify-content:center}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--ink);opacity:0}
+.opt:hover{border-color:var(--ink)}
+.opts.has-error .opt{border-color:var(--error)}
+input[type=radio]:checked+.opt{background:var(--paper);border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+input[type=radio]:checked+.opt .ring{border-color:var(--ink)}
+input[type=radio]:checked+.opt .dot{opacity:1}
+input[type=radio]:focus-visible+.opt{outline:3px solid var(--ink);outline-offset:3px}
+
+.txt{box-sizing:border-box;width:100%;min-height:56px;padding:14px 18px;font:inherit;font-size:18px;color:var(--ink);background:var(--white);border:1.5px solid var(--field);border-radius:4px;outline:3px solid transparent;outline-offset:2px}
+.txt:focus{border-color:var(--ink);box-shadow:0 0 0 3px var(--ink)}
+.txt.is-bad{border-color:var(--error)}
+.txt.is-bad:focus{border-color:var(--ink)}
+.txt::placeholder{color:var(--muted);opacity:1}
+.other{display:none;grid-column:1/-1}
+input.is-other:checked~.other{display:block}
+.details{display:grid;gap:18px 16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.field label{font-size:16px;font-weight:500;line-height:1.3}
+
+.err{display:flex;gap:8px;align-items:flex-start;color:var(--error);font-size:16px;line-height:1.4;font-weight:500}
+.err svg{flex:none;margin-top:2px}
+
+.submit-area{display:flex;flex-direction:column;gap:16px}
+.general{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--error);border-radius:4px;padding:14px 16px;color:var(--error);font-size:16px;line-height:1.45;font-weight:500}
+.general svg{flex:none;margin-top:1px}
+.general a{color:var(--error)}
+.general:focus{outline:none}
+.note a:focus-visible,.general a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.btn{appearance:none;border:0;cursor:pointer;width:100%;max-width:440px;min-height:56px;padding:14px 24px;border-radius:2px;background:var(--ink);color:var(--white);
+  font:inherit;font-weight:500;font-size:17px;line-height:1.25;display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;text-wrap:balance}
+.btn:hover{background:var(--ink-hover)}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.btn[disabled]{opacity:.75;cursor:default}
+.btn[disabled]:hover{background:var(--ink)}
+.spin{animation:em-spin .9s linear infinite}
+.note{font-size:16px;line-height:1.45;color:var(--muted)}
+.js .apply.is-steps:not(.at-last) .note{display:none}
+@keyframes em-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:2.4s!important}
+  .bar-fill{transition:none}
+}
+
+/* Windows High Contrast and other forced-colour modes drop author colours and
+   box-shadow, which is all the selected state, the progress fill and the dark
+   button are made of. System colour keywords only, so no new colour is added. */
+@media (forced-colors:active){
+  .dot{background:CanvasText;forced-color-adjust:none}
+  input[type=radio]:checked+.opt{border-width:3px}
+  .bar-fill{background:Highlight;forced-color-adjust:none}
+  .btn,.cta{border:2px solid ButtonText}
+}
+
+/* Italian funnel additions: the "Passaggio n di 6" label, the consent checkbox, and the
+   column titles of the fit list. Same tokens as everything above. */
+.step-label{margin:0;font-size:16px;font-weight:500;line-height:1.3;color:var(--muted)}
+.check{flex-direction:row;align-items:flex-start;gap:14px}
+.check label{font-size:16px;font-weight:400;line-height:1.5;min-height:44px;display:block}
+.check .err{flex-basis:100%}
+.tick{flex:none;width:24px;height:24px;margin:2px 0 0;accent-color:var(--ink)}
+.tick:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.tick[aria-invalid=true]{outline:2px solid var(--error);outline-offset:2px}
+.check{flex-wrap:wrap}
+.fit .fit-grid h3{margin:0}
+.fit .fit-list{margin-top:20px}
+.fit h2{max-width:900px}
+</style>
+</head>
+<body>
+<header class="page-top">
+<div class="topbar"><div class="wrap">Per aziende di cybersecurity e MSSP in Italia ({THRESHOLD})</div></div>
+<div class="site-header">
+  <div class="wrap">
+    <picture>
+      <source srcset="/italy/assets/logo-ink.webp" type="image/webp">
+      <img class="logo" src="/italy/assets/logo-ink.png" width="418" height="168" alt="Elevate Marketing">
+    </picture>
+  </div>
+</div>
+</header>
+<main>
+<section class="hero" data-section="hero">
+  <div class="wrap">
+    <h1><span>I vostri canoni crescono solo quando qualcuno vi presenta un cliente?</span><span>Un secondo canale, accanto al passaparola.</span></h1>
+    <div class="hero-side">
+      <p class="lede">Elevate Marketing gestisce le campagne che portano aziende interessate ai vostri servizi, con un referente in Italia. Si parte da un&#39;analisi gratuita di 30 minuti.</p>
+      <div class="cta-block">
+        <a class="cta" id="hero-cta" href="#form">Verificate se possiamo lavorare insieme</a>
+        <p class="micro">Circa tre minuti. Se possiamo esservi utili, prenotate subito l&#39;analisi gratuita di 30 minuti. In caso contrario ve lo diciamo subito, con il motivo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec fit rule-top" data-section="fit">
+  <div class="wrap">
+    <h2>Per chi lavoriamo, e per chi no</h2>
+    <div class="fit-grid">
+      <div>
+        <h3>Fa per voi se</h3>
+        <ul class="fit-list">
+          <li>Offrite servizi di cybersecurity ad altre aziende.</li>
+          <li>Avete {THRESHOLD}.</li>
+          <li>Lavorate con canoni ricorrenti e volete aggiungere un canale oltre al passaparola e ai fornitori.</li>
+          <li>Potete destinare un budget pubblicitario mensile, da pagare direttamente alle piattaforme.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Non fa per voi se</h3>
+        <ul class="fit-list">
+          <li>I vostri servizi non riguardano la sicurezza informatica.</li>
+          <li>Non rientrate nella fascia di dimensione indicata.</li>
+          <li>Volete una promessa sul numero di contatti o di clienti.</li>
+          <li>In questo momento non potete investire in pubblicità.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec paid" data-section="paid">
+  <div class="wrap">
+    <h2>Il budget pubblicitario lo pagate voi. <span class="dim">Il nostro compenso per i servizi di lead generation ve lo spieghiamo con chiarezza prima di qualsiasi impegno.</span></h2>
+    <div class="paid-grid">
+      <p>Il budget per gli annunci va direttamente a Meta e Google. Non passa da noi.</p>
+      <p>{OFFER}</p>
+    </div>
+  </div>
+</section>
+<section class="sec keep" data-section="keep">
+  <div class="wrap">
+    <h2>Come lavoriamo</h2>
+    <div class="keep-grid">
+      <div class="keep-item"><h3>Un referente in Italia</h3><p>Parlate in italiano con una persona reale, che segue le campagne insieme a voi. Non con un portale e non con un ticket.</p></div>
+      <div class="keep-item"><h3>Campagne gestite da noi</h3><p>Impostiamo e gestiamo le campagne su Meta e Google. Voi non dovete diventare esperti di pubblicità.</p></div>
+      <div class="keep-item"><h3>Contano le riunioni, non i clic</h3><p>Guardiamo le riunioni con aziende davvero interessate e le vendite che ne nascono. I clic da soli non ci dicono se una campagna funziona.</p></div>
+    </div>
+  </div>
+</section>
+<section class="sec meeting rule-top" data-section="meeting">
+  <div class="wrap">
+    <div class="meeting-top">
+      <div><h2>Che cosa succede nell&#39;analisi gratuita</h2></div>
+    </div>
+    <ol class="steps">
+      <li><div class="step-n">1</div><div class="step-body"><h3>Rispondete a poche domande</h3><p>Poche domande sulla vostra azienda e sui vostri clienti. Servono a capire se possiamo esservi utili.</p></div></li>
+      <li><div class="step-n">2</div><div class="step-body"><h3>Scegliete un orario</h3><p>Se dalle risposte risulta che possiamo lavorare insieme, prenotate subito l&#39;analisi nel calendario.</p></div></li>
+      <li><div class="step-n">3</div><div class="step-body"><h3>Facciamo l&#39;analisi, 30 minuti</h3><p>Insieme al vostro referente in Italia guardate da dove arrivano oggi i vostri clienti a canone e quali canali funzionano.</p></div></li>
+      <li><div class="step-n">4</div><div class="step-body"><h3>Decidete voi</h3><p>Discutiamo tre idee concrete per aggiungere un canale. Se ha senso lavorare insieme, ne parliamo. Se no, finisce lì.</p></div></li>
+    </ol>
+    <div class="notice"><p>Qualunque sia la vostra decisione, le idee emerse nell&#39;analisi restano vostre. Nessun obbligo.</p></div>
+  </div>
+</section>
+<section class="sec faq rule-top" data-section="faq">
+  <div class="wrap">
+    <div class="faq-head"><h2>Domande frequenti</h2></div>
+    <div class="faq-list">
+      <details open><summary><span>Promettete dei risultati?</span><svg class="em-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"></path></svg><svg class="em-minus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M5 12h14"></path></svg></summary><p>No. Nessuno può promettere quante aziende risponderanno, né quando. Misuriamo le riunioni con aziende interessate e il costo di ciascuna, e vi mostriamo i numeri così come sono.</p></details>
+      <details><summary><span>Quanto costa?</span><svg class="em-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"></path></svg><svg class="em-minus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M5 12h14"></path></svg></summary><p>L&#39;analisi di 30 minuti è gratuita. Il budget pubblicitario lo pagate voi. Per il nostro compenso: {OFFER}</p></details>
+      <details><summary><span>Gli account pubblicitari e i dati restano nostri?</span><svg class="em-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"></path></svg><svg class="em-minus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M5 12h14"></path></svg></summary><p>Sì. Gli account pubblicitari e i dati dei contatti restano vostri.</p></details>
+      <details><summary><span>Chi ci contatterà?</span><svg class="em-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"></path></svg><svg class="em-minus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M5 12h14"></path></svg></summary><p>Vi contatta il referente in Italia di Elevate Marketing, non un call center.</p></details>
+      <details><summary><span>Come trattate i nostri dati?</span><svg class="em-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"></path></svg><svg class="em-minus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M5 12h14"></path></svg></summary><p>I dati che inserite nel modulo servono a rispondere alla vostra richiesta e a organizzare l&#39;analisi. Chi li tratta e quali sono i vostri diritti è spiegato nell&#39;<a href="/italy/privacy/">informativa privacy</a>.</p></details>
+      <details><summary><span>Lavorate con tutte le aziende?</span><svg class="em-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"></path></svg><svg class="em-minus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M5 12h14"></path></svg></summary><p>No. Lavoriamo con aziende di cybersecurity e MSSP in Italia ({THRESHOLD}) che offrono servizi ad altre aziende. Se non siamo la scelta giusta per voi, ve lo diciamo subito.</p></details>
+      <details><summary><span>Avete già lavorato con aziende come la nostra?</span><svg class="em-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"></path></svg><svg class="em-minus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M5 12h14"></path></svg></summary><p>Stiamo iniziando in Italia e non nominiamo clienti senza il loro consenso scritto. Nell&#39;analisi vi mostriamo come lavoriamo e che cosa misuriamo.</p></details>
+      <details><summary><span>Quanto tempo richiede?</span><svg class="em-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"></path></svg><svg class="em-minus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10141C" stroke-width="1.5" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M5 12h14"></path></svg></summary><p>Il modulo richiede circa tre minuti e l&#39;analisi dura 30 minuti.</p></details>
+    </div>
+  </div>
+</section>
+<section class="sec form-sec rule-top" id="form" data-section="form">
+  <div class="wrap">
+    <div class="form-intro">
+      <h2>Vediamo se possiamo esservi utili</h2>
+    </div>
+    <div class="form-main">
+<form class="apply is-steps" id="apply-form" method="post" action="/italy/api/lead" novalidate data-steps="6"><input type="hidden" name="lead_id" value=""><input type="hidden" name="page_slug" value="italy"><input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="fbclid" value=""><input type="hidden" name="referrer" value=""><div class="hp" aria-hidden="true"><input type="text" name="website_url" tabindex="-1" autocomplete="off" value=""></div><div class="steps-head"><div class="back-row"><button class="back" type="button" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg><span>Indietro</span></button></div><p class="step-label" id="step-label">Passaggio 1 di 6</p><div class="bar" role="progressbar" aria-labelledby="step-label" aria-valuemin="0" aria-valuemax="6" aria-valuenow="1"><div class="bar-fill" style="width:16.666666666666668%"></div></div></div><div class="q is-current" role="group" aria-labelledby="t-offers" tabindex="-1" data-q="offers" data-kind="choice"><h2 id="t-offers">La vostra azienda offre servizi di cybersecurity ad altre aziende?</h2><div class="opts" role="radiogroup" aria-labelledby="t-offers"><input class="vh" type="radio" id="o-offers-0" name="offers" value="0"><label class="opt" for="o-offers-0"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Sì</span></label><input class="vh" type="radio" id="o-offers-1" name="offers" value="1"><label class="opt" for="o-offers-1"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">No</span></label></div></div><div class="q" role="group" aria-labelledby="t-employees" tabindex="-1" data-q="employees" data-kind="choice"><h2 id="t-employees">Quanti dipendenti avete?</h2><div class="opts" role="radiogroup" aria-labelledby="t-employees"><input class="vh" type="radio" id="o-employees-0" name="employees" value="0"><label class="opt" for="o-employees-0"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Da 1 a 9</span></label><input class="vh" type="radio" id="o-employees-1" name="employees" value="1"><label class="opt" for="o-employees-1"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Da 10 a 49</span></label><input class="vh" type="radio" id="o-employees-2" name="employees" value="2"><label class="opt" for="o-employees-2"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Da 50 a 150</span></label><input class="vh" type="radio" id="o-employees-3" name="employees" value="3"><label class="opt" for="o-employees-3"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Più di 150</span></label></div></div><div class="q" role="group" aria-labelledby="t-source" tabindex="-1" data-q="source" data-kind="choice"><h2 id="t-source">Da dove arrivano oggi la maggior parte dei vostri clienti?</h2><div class="opts" role="radiogroup" aria-labelledby="t-source"><input class="vh" type="radio" id="o-source-0" name="source" value="0"><label class="opt" for="o-source-0"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Passaparola</span></label><input class="vh" type="radio" id="o-source-1" name="source" value="1"><label class="opt" for="o-source-1"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Distributori e vendor</span></label><input class="vh" type="radio" id="o-source-2" name="source" value="2"><label class="opt" for="o-source-2"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Online (sito, ricerca, annunci)</span></label><input class="vh" type="radio" id="o-source-3" name="source" value="3"><label class="opt" for="o-source-3"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Altro</span></label></div></div><div class="q" role="group" aria-labelledby="t-priority" tabindex="-1" data-q="priority" data-kind="choice"><h2 id="t-priority">Che cosa è più importante per voi nei prossimi sei mesi?</h2><div class="opts" role="radiogroup" aria-labelledby="t-priority"><input class="vh" type="radio" id="o-priority-0" name="priority" value="0"><label class="opt" for="o-priority-0"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Più clienti a canone ricorrente</span></label><input class="vh" type="radio" id="o-priority-1" name="priority" value="1"><label class="opt" for="o-priority-1"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Distinguerci dai concorrenti</span></label><input class="vh" type="radio" id="o-priority-2" name="priority" value="2"><label class="opt" for="o-priority-2"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Altro</span></label></div></div><div class="q" role="group" aria-labelledby="t-budget" tabindex="-1" data-q="budget" data-kind="choice"><h2 id="t-budget">Potete destinare un budget pubblicitario mensile, da pagare direttamente alle piattaforme?</h2><div class="opts" role="radiogroup" aria-labelledby="t-budget"><input class="vh" type="radio" id="o-budget-0" name="budget" value="0"><label class="opt" for="o-budget-0"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Sì</span></label><input class="vh" type="radio" id="o-budget-1" name="budget" value="1"><label class="opt" for="o-budget-1"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">Da valutare</span></label><input class="vh" type="radio" id="o-budget-2" name="budget" value="2"><label class="opt" for="o-budget-2"><span class="ring" aria-hidden="true"><span class="dot"></span></span><span class="lbl">No</span></label></div></div><div class="q" role="group" aria-labelledby="t-details" tabindex="-1" data-q="details" data-kind="details"><h2 id="t-details">Come possiamo contattarvi?</h2><div class="details" role="group" aria-labelledby="t-details"><div class="field"><label for="f-details-name">Nome e cognome</label><input class="txt" type="text" id="f-details-name" name="details_name" value="" autocomplete="name" aria-invalid="false"></div><div class="field"><label for="f-details-company">Nome dell&#39;azienda</label><input class="txt" type="text" id="f-details-company" name="details_company" value="" autocomplete="organization" aria-invalid="false"></div><div class="field"><label for="f-details-email">Email di lavoro</label><input class="txt" type="email" id="f-details-email" name="details_email" value="" autocomplete="email" aria-invalid="false"></div><div class="field check"><input class="tick" type="checkbox" id="f-details-consent" name="details_consent" value="1" aria-invalid="false"><label for="f-details-consent">Acconsento al trattamento dei miei dati personali da parte di EngeCo AS (Elevate Marketing) per essere ricontattato in merito a questa richiesta, come descritto nell&#39;<a href="/italy/privacy/">informativa privacy</a>.</label></div></div></div><div class="submit-area"><button class="btn" type="submit"><span class="btn-label">Verificate se possiamo lavorare insieme</span></button></div></form>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <picture>
+      <source srcset="/italy/assets/logo-white.webp" type="image/webp">
+      <img class="logo-foot" src="/italy/assets/logo-white.png" width="418" height="168" alt="Elevate Marketing">
+    </picture>
+      <p class="legal">Elevate Marketing è gestito da EngeCo AS (n. di registrazione 924 490 926), Midtfjellet 66, 5363 Ågotnes, Norvegia.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/italy/privacy/">Informativa privacy</a>
+      <a href="/italy/cookie/">Informativa cookie</a>
+    </div>
+  </div>
+</footer>
+<div class="consent" id="consent" role="region" aria-label="Cookie" hidden>
+  <p>Usiamo i cookie per capire se i nostri annunci funzionano. Potete accettare o rifiutare: il sito funziona in entrambi i casi. <a href="/italy/cookie/">Informativa cookie</a></p>
+  <div class="consent-btns">
+    <button type="button" data-c="yes">Accetto</button>
+    <button type="button" data-c="no">Rifiuto</button>
+  </div>
+</div>
+<div class="sticky" id="sticky" hidden><a class="cta" href="#form">Verificate se possiamo lavorare insieme</a></div>
+<script>window.EMIT={"slug":"italy","page":"landing","applyPath":"/italy/api/lead","hidden":["lead_id","page_slug","utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","referrer"],"questions":[{"id":"offers","kind":"choice","title":"La vostra azienda offre servizi di cybersecurity ad altre aziende?","options":["Sì","No"]},{"id":"employees","kind":"choice","title":"Quanti dipendenti avete?","options":["Da 1 a 9","Da 10 a 49","Da 50 a 150","Più di 150"]},{"id":"source","kind":"choice","title":"Da dove arrivano oggi la maggior parte dei vostri clienti?","options":["Passaparola","Distributori e vendor","Online (sito, ricerca, annunci)","Altro"]},{"id":"priority","kind":"choice","title":"Che cosa è più importante per voi nei prossimi sei mesi?","options":["Più clienti a canone ricorrente","Distinguerci dai concorrenti","Altro"]},{"id":"budget","kind":"choice","title":"Potete destinare un budget pubblicitario mensile, da pagare direttamente alle piattaforme?","options":["Sì","Da valutare","No"]},{"id":"details","kind":"details","title":"Come possiamo contattarvi?","fields":[{"key":"name","label":"Nome e cognome","type":"text","error":"Inserite il vostro nome e cognome."},{"key":"company","label":"Nome dell'azienda","type":"text","error":"Inserite il nome dell'azienda."},{"key":"email","label":"Email di lavoro","type":"email","error":"Inserite un indirizzo email di lavoro valido."},{"key":"consent","label":"Acconsento al trattamento dei miei dati personali da parte di EngeCo AS (Elevate Marketing) per essere ricontattato in merito a questa richiesta, come descritto nell'[informativa privacy](privacy).","type":"checkbox","error":"Per inviare la richiesta serve il vostro consenso."}]}],"messages":{"choice":"Selezionate una risposta per continuare.","consent":"Per inviare la richiesta serve il vostro consenso.","general":"Non siamo riusciti a inviare la richiesta. Riprovate tra un attimo."},"labels":{"back":"Indietro","next":"Avanti","submit":"Verificate se possiamo lavorare insieme","sending":"Invio in corso","step":"Passaggio {n} di {total}"},"icon":"\u003csvg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"square\" aria-hidden=\"true\" focusable=\"false\">\u003ccircle cx=\"12\" cy=\"12\" r=\"9\">\u003c/circle>\u003cpath d=\"M12 7v6M12 16.5v.5\">\u003c/path>\u003c/svg>","calendlyUrl":"","takkPath":"/italy/takk/","consentKey":"em_it_consent","pixelId":""};</script>
+<script>/**
+ * Validation shared by the browser and the server for /italy.
+ *
+ * One file, two homes. The generator inlines this text into the landing page,
+ * where it defines window.EmItCore. The Netlify Function requires it. Because
+ * both run the same code, "the client and the server agree on what is valid"
+ * is not something to test for, it cannot be otherwise.
+ *
+ * Plain ES5 on purpose: the traffic is Meta, much of it arrives inside the
+ * Facebook in-app browser, and a syntax error in an old WebView would leave
+ * the form dead with nothing to say why. No arrow functions, no spread, no
+ * optional chaining.
+ *
+ * The rules are the ones the brief gives, nothing more:
+ *   url      a domain or URL, protocol optional
+ *   text     not empty, unless the question is optional
+ *   choice   one option picked
+ *   details  email must look like an email, a checkbox must be ticked, every other field not empty;
+ *            a field may carry its own error text, which wins over the shared one
+ * The copy for each message is passed in. This file carries none, so the
+ * placeholder for the empty-field message cannot end up hard-coded here.
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.EmItCore = api;
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  var WEBSITE_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i;
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  /* Not in the work order. Caps keep a hostile or broken client from posting
+     megabytes into a lead record. 254 is the longest a real address can be. */
+  var MAX = { text: 200, url: 300, email: 254, other: 200 };
+
+  function str(v) {
+    if (v === null || v === undefined) return '';
+    /* Control characters never belong in a lead field, and a newline in an
+       email or name is how a value gets smuggled into a header or a CSV row. */
+    return String(v).replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/^\s+|\s+$/g, '');
+  }
+
+  function isChoiceIndex(v, q) {
+    return typeof v === 'number' && v % 1 === 0 && v >= 0 && v < q.options.length;
+  }
+
+  /**
+   * Build the answers object from anything with a lookup: a URLSearchParams,
+   * a FormData, or a plain object. Choice answers become integer indexes,
+   * which is how the prototype's state holds them; everything else is a
+   * trimmed string. A choice that is missing or not a valid index is null.
+   */
+  function answersFrom(questions, get) {
+    var a = {};
+    for (var i = 0; i < questions.length; i++) {
+      var q = questions[i];
+      if (q.kind === 'details') {
+        for (var f = 0; f < q.fields.length; f++) {
+          var key = q.id + '_' + q.fields[f].key;
+          a[key] = q.fields[f].type === 'checkbox' ? (str(get(key)) ? '1' : '') : str(get(key)).slice(0, q.fields[f].type === 'email' ? MAX.email + 1 : MAX.text);
+        }
+      } else if (q.kind === 'choice') {
+        var raw = get(q.id);
+        /* Digits only. Number('') and Number(' ') are 0 and Number('0x1') is 1: a non-answer must not become option 0. */
+        var n = /^[0-9]{1,3}$/.test(String(raw === null || raw === undefined ? '' : raw)) ? Number(raw) : NaN;
+        a[q.id] = isChoiceIndex(n, q) ? n : null;
+        if (q.otherIndex !== undefined) a[q.id + '_other'] = str(get(q.id + '_other')).slice(0, MAX.other);
+      } else {
+        a[q.id] = str(get(q.id));
+      }
+    }
+    return a;
+  }
+
+  /** One question. Returns null when fine, a string for a single message, or an object keyed by field for details. */
+  function validateQuestion(q, a, msg) {
+    var v;
+    if (q.kind === 'url') {
+      v = str(a[q.id]);
+      return v.length <= MAX.url && WEBSITE_RE.test(v) ? null : msg.website;
+    }
+    if (q.kind === 'text') {
+      v = str(a[q.id]);
+      return q.optional || v ? null : msg.required;
+    }
+    if (q.kind === 'choice') {
+      return isChoiceIndex(a[q.id], q) ? null : msg.choice;
+    }
+    var e = {}, any = false;
+    for (var i = 0; i < q.fields.length; i++) {
+      var f = q.fields[i];
+      v = str(a[q.id + '_' + f.key]);
+      if (f.type === 'checkbox') {
+        if (v !== '1') { e[f.key] = f.error || msg.consent; any = true; }
+      } else if (f.type === 'email') {
+        if (v.length > MAX.email || !EMAIL_RE.test(v)) { e[f.key] = f.error || msg.email; any = true; }
+      } else if (!v) {
+        e[f.key] = f.error || msg.required; any = true;
+      }
+    }
+    return any ? e : null;
+  }
+
+  /** Every question. errors is keyed by question id; firstId is the first question, in order, that failed. */
+  function validateAll(questions, a, msg) {
+    var errors = {}, firstId = null;
+    for (var i = 0; i < questions.length; i++) {
+      var r = validateQuestion(questions[i], a, msg);
+      if (r) { errors[questions[i].id] = r; if (firstId === null) firstId = questions[i].id; }
+    }
+    return { ok: firstId === null, errors: errors, firstId: firstId };
+  }
+
+  /** The answers as a person would read them, for the lead record. Labels, not just indexes, so a receiving system needs no copy of the form. */
+  function describe(questions, a) {
+    var out = {};
+    for (var i = 0; i < questions.length; i++) {
+      var q = questions[i];
+      if (q.kind === 'details') {
+        var d = {};
+        for (var f = 0; f < q.fields.length; f++) d[q.fields[f].key] = q.fields[f].type === 'checkbox' ? str(a[q.id + '_' + q.fields[f].key]) === '1' : str(a[q.id + '_' + q.fields[f].key]);
+        out[q.id] = d;
+      } else if (q.kind === 'choice') {
+        var idx = a[q.id];
+        out[q.id] = isChoiceIndex(idx, q)
+          ? { index: idx, label: q.options[idx], other: q.otherIndex === idx ? str(a[q.id + '_other']) : '' }
+          : { index: null, label: '', other: '' };
+      } else {
+        out[q.id] = str(a[q.id]).slice(0, q.kind === 'url' ? MAX.url : MAX.text);
+      }
+    }
+    return out;
+  }
+
+  return {
+    WEBSITE_RE: WEBSITE_RE, EMAIL_RE: EMAIL_RE, MAX: MAX,
+    str: str, isChoiceIndex: isChoiceIndex,
+    answersFrom: answersFrom, validateQuestion: validateQuestion,
+    validateAll: validateAll, describe: describe
+  };
+});
+</script>
+<script>/**
+ * What every page in the funnel shares: attribution and the consent question.
+ * Inlined after core.cjs and before client.js (landing) or outcome.js.
+ *
+ * Attribution. lead_id is minted once per visit and kept in sessionStorage, so
+ * a refresh or the walk from the form to an outcome page does not split one
+ * visitor into two leads. UTMs and fbclid come from the URL and win over what
+ * was stored. referrer is document.referrer, the page the visitor came from.
+ *
+ * Consent. This funnel owns its own: its own storage key, its own pixel loader.
+ * Nothing is loaded until Accetto, and nothing is shared with the UK funnel.
+ *
+ * Plain ES5 for the same reason as client.js.
+ */
+(function () {
+  'use strict';
+  var K = window.EMIT;
+  if (!K) return;
+  var UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  var STORE = 'elevate:g:' + K.slug;
+
+  function fromStore() { try { return JSON.parse(sessionStorage.getItem(STORE) || '{}'); } catch (e) { return {}; } }
+  function toStore(o) { try { sessionStorage.setItem(STORE, JSON.stringify(o)); } catch (e) {} }
+  function mintLeadId() {
+    var body;
+    try { if (window.crypto && crypto.randomUUID) body = crypto.randomUUID().replace(/-/g, '').slice(0, 20); } catch (e) {}
+    if (!body) body = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    return 'l_' + body;
+  }
+
+  /** @param {boolean} mint false on pages that must not invent a lead (outcome pages): they only carry what exists. */
+  function attribution(mint) {
+    var s = fromStore(), q = null, out = {}, k;
+    for (k in s) if (Object.prototype.hasOwnProperty.call(s, k)) out[k] = s[k];
+    try { q = new URLSearchParams(location.search); } catch (e) {}
+    if (q) UTM.concat(['fbclid', 'lead_id']).forEach(function (n) { var v = q.get(n); if (v) out[n] = v.slice(0, 200); });
+    if (mint && !out.lead_id) out.lead_id = mintLeadId();
+    if (mint && !Object.prototype.hasOwnProperty.call(out, 'referrer')) {
+      try { out.referrer = (document.referrer || '').slice(0, 300); } catch (e) { out.referrer = ''; }
+    }
+    toStore(out);
+    return out;
+  }
+
+  var reduced = false;
+  try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  /* Consent and the pixel, owned by this funnel. The UK funnel loads a shared script
+     and stores its choice under its own key; this one must not share
+     either: a choice made on the UK site is not consent given here, and a change to the
+     shared script must not be able to switch this pixel on. Nothing is loaded, and
+     nothing is written but the choice itself, until Accetto. With no pixel id in the
+     config, nothing is ever loaded. */
+  var KEY = K.consentKey;
+  function readChoice() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function writeChoice(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  var pixelLoaded = false, queued = [];
+  function loadPixel() {
+    if (pixelLoaded || !K.pixelId) return;
+    pixelLoaded = true;
+    /* eslint-disable */
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+    (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    /* eslint-enable */
+    window.fbq('init', K.pixelId);
+    window.fbq('track', 'PageView');
+    while (queued.length) { var ev = queued.shift(); window.fbq('track', ev[0], ev[1]); if (ev[2]) ev[2](); }
+  }
+  var Consent = {
+    status: readChoice,
+    accept: function () { writeChoice('accepted'); loadPixel(); },
+    decline: function () { writeChoice('declined'); queued.length = 0; },
+    /** Sent only when accepted. Before the choice it waits; after Rifiuto it is dropped.
+        sent() runs when the event really went out, and only then: a caller that records
+        "already sent" must not do it earlier, or a visitor who leaves before choosing
+        would never be counted on a later visit. */
+    track: function (name, params, sent) {
+      if (readChoice() === 'declined') return;
+      if (pixelLoaded && window.fbq) { window.fbq('track', name, params || {}); if (sent) sent(); }
+      else queued.push([name, params || {}, sent]);
+    }
+  };
+  if (readChoice() === 'accepted') loadPixel();
+
+  var banner = { closed: true, listeners: [], onClose: function (fn) { banner.listeners.push(fn); } };
+  var bar = document.getElementById('consent');
+  if (bar && !readChoice()) {
+    banner.closed = false;
+    bar.hidden = false;
+    document.documentElement.classList.add('banner-open');
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('button[data-c]');
+      if (!b) return;
+      if (b.getAttribute('data-c') === 'yes') Consent.accept(); else Consent.decline();
+      bar.hidden = true;
+      banner.closed = true;
+      document.documentElement.classList.remove('banner-open');
+      for (var i = 0; i < banner.listeners.length; i++) banner.listeners[i]();
+    });
+  }
+
+  window.EmItCommon = { attribution: attribution, banner: banner, consent: Consent, reduced: reduced, UTM: UTM };
+})();
+</script>
+<script>/**
+ * Progressive enhancement for /italy.
+ *
+ * The page works without this file: every question is on the page, the button
+ * is a normal submit, the FAQ is <details>, the anchor is an anchor, and the
+ * server validates. This adds what a script can do better: one question at a
+ * time, a progress bar, focus that follows the visitor, errors beside the
+ * field, a submit that does not leave the page until it knows the outcome,
+ * the consent question, and the sticky button on a phone.
+ *
+ * Plain ES5, inlined after core.cjs. Reads window.EMIT, written by the
+ * generator: { slug, questions, messages, labels, applyPath, hidden, icon }.
+ */
+(function () {
+  'use strict';
+  var K = window.EMIT, Core = window.EmItCore;
+  if (!K || !Core) { try { document.documentElement.className = document.documentElement.className.replace(/\bjs\b/, 'no-js'); console.error('[it-italia] core or config missing: the form stays in its no-script layout'); } catch (e) {} return; }
+
+  var Common = window.EmItCommon;
+  if (!Common) { try { document.documentElement.className = document.documentElement.className.replace(/\bjs\b/, 'no-js'); console.error('[it-italia] common.js missing: the form stays in its no-script layout'); } catch (e) {} return; }
+  var form = document.getElementById('apply-form');
+  var reduced = Common.reduced;
+  /* The page is marked "js" in the head, which is what hides all but one question.
+     If this script then fails, put the page back as it is without one, so a visitor
+     is left with a form they can finish instead of one question and a final submit. */
+  function revert() { document.documentElement.className = document.documentElement.className.replace(/\bjs\b/, 'no-js'); }
+
+  /* The hidden fields are filled as soon as the script runs, from the URL and
+     from the session. lead_id is minted here, so it exists before the visitor
+     has typed anything and is the same one on every page that follows. */
+  function fillHidden() {
+    var a = Common.attribution(true);
+    K.hidden.forEach(function (name) {
+      var el = form.elements[name];
+      if (!el || name === 'page_slug') return;
+      el.value = a[name] || '';
+    });
+  }
+
+  /* -------------------------------------------------------------- the form */
+
+  try { if (form) {
+    var qEls = Array.prototype.slice.call(form.querySelectorAll('.q'));
+    var Q = K.questions, M = K.messages, total = Q.length;
+    var step = 0, status = 'idle';
+    var btn = form.querySelector('.btn'), label = form.querySelector('.btn-label');
+    var back = form.querySelector('.back'), bar = form.querySelector('.bar'), fill = form.querySelector('.bar-fill');
+    var SPIN = '<svg class="spin" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" stroke-opacity="0.25"></circle><path d="M21 12a9 9 0 0 0-9-9" stroke-linecap="round"></path></svg>';
+
+    fillHidden();
+
+    var radioValue = function (name) {
+      var r = form.querySelector('input[name="' + name + '"]:checked');
+      return r ? r.value : null;
+    };
+    var getVal = function (name) {
+      var els = form.elements[name];
+      if (!els) return null;
+      if (els.length !== undefined && els.type === undefined) return radioValue(name);   // RadioNodeList
+      /* A checkbox's .value is its value attribute whether or not it is ticked, so an unticked consent box would read as given. Like a form post, send nothing when it is off. */
+      if (els.type === 'checkbox') return els.checked ? els.value : '';
+      return els.value;
+    };
+    var answers = function () { return Core.answersFrom(Q, getVal); };
+
+    var el = function (html) { var d = document.createElement('div'); d.innerHTML = html; return d.firstChild; };
+    var errHtml = function (id, msg) {
+      return '<div class="err" role="alert" id="' + id + '">' + K.icon + '<span></span></div>';
+    };
+    var addErr = function (parent, id, msg) {
+      var node = el(errHtml(id, msg));
+      node.lastChild.textContent = msg;
+      parent.appendChild(node);
+    };
+
+    /* One field's error: the control is marked, a message follows it, and the
+       control points at the message. All of it goes again when the field changes. */
+    var clearField = function (control, id) {
+      var m = document.getElementById(id);
+      if (m && m.parentNode) m.parentNode.removeChild(m);
+      if (!control) return;
+      control.setAttribute('aria-invalid', 'false');
+      control.removeAttribute('aria-describedby');
+      if (control.classList) { control.classList.remove('is-bad'); control.classList.remove('has-error'); }
+    };
+    var clearQuestion = function (q) {
+      var root = form.querySelector('[data-q="' + q.id + '"]');
+      if (!root) return;
+      if (q.kind === 'choice') clearField(root.querySelector('.opts'), 'e-' + q.id);
+      else if (q.kind === 'details') q.fields.forEach(function (f) { clearField(document.getElementById('f-' + q.id + '-' + f.key), 'e-' + q.id + '-' + f.key); });
+      else clearField(document.getElementById('f-' + q.id), 'e-' + q.id);
+    };
+    var showQuestion = function (q, result) {
+      var root = form.querySelector('[data-q="' + q.id + '"]');
+      clearQuestion(q);
+      if (!root || !result) return;
+      if (q.kind === 'choice') {
+        var g = root.querySelector('.opts');
+        g.classList.add('has-error'); g.setAttribute('aria-invalid', 'true'); g.setAttribute('aria-describedby', 'e-' + q.id);
+        addErr(root, 'e-' + q.id, result);
+      } else if (q.kind === 'details') {
+        q.fields.forEach(function (f) {
+          if (!result[f.key]) return;
+          var input = document.getElementById('f-' + q.id + '-' + f.key);
+          input.classList.add('is-bad'); input.setAttribute('aria-invalid', 'true'); input.setAttribute('aria-describedby', 'e-' + q.id + '-' + f.key);
+          addErr(input.parentNode, 'e-' + q.id + '-' + f.key, result[f.key]);
+        });
+      } else {
+        var t = document.getElementById('f-' + q.id);
+        t.classList.add('is-bad'); t.setAttribute('aria-invalid', 'true'); t.setAttribute('aria-describedby', 'e-' + q.id);
+        addErr(root, 'e-' + q.id, result);
+      }
+    };
+    var focusFirstBad = function (q) {
+      var root = form.querySelector('[data-q="' + q.id + '"]');
+      var target = root && (root.querySelector('.is-bad') || root.querySelector('input[type=radio]') || root.querySelector('input'));
+      if (target) { try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); } }
+    };
+
+    /* ---------------------------------------------------------- the steps */
+
+    var setGeneral = function (on) {
+      var g = form.querySelector('.general');
+      if (g && g.parentNode) g.parentNode.removeChild(g);
+      if (!on) return;
+      var node = el('<div class="general" role="alert"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v6M12 16.5v.5"></path></svg><span></span></div>');
+      var span = node.lastChild;
+      span.appendChild(document.createTextNode(M.general));
+      form.querySelector('.submit-area').insertBefore(node, btn);
+    };
+    var setStatus = function (s) {
+      status = s;
+      var loading = s === 'loading', wasLoading = status === 'loading' && !loading;
+      btn.disabled = loading;
+      label.textContent = loading ? K.labels.sending : (step === total - 1 ? K.labels.submit : K.labels.next);
+      btn.setAttribute('aria-busy', loading ? 'true' : 'false');
+      var spin = btn.querySelector('.spin');
+      if (loading && !spin) btn.insertAdjacentHTML('beforeend', SPIN);
+      if (!loading && spin) spin.parentNode.removeChild(spin);
+      setGeneral(s === 'failed');
+      if (wasLoading) { try { btn.focus({ preventScroll: true }); } catch (e) {} }   // a disabled button drops focus to <body>
+    };
+    var goto = function (n, focus) {
+      step = n;
+      qEls.forEach(function (node, i) { if (i === n) node.classList.add('is-current'); else node.classList.remove('is-current'); });
+      var last = n === total - 1;
+      form.classList.toggle('at-last', last);
+      label.textContent = last ? K.labels.submit : K.labels.next;
+      back.hidden = n === 0;
+      bar.setAttribute('aria-valuenow', String(n + 1));
+      var sl = document.getElementById('step-label');
+      if (sl) sl.textContent = K.labels.step.replace('{n}', n + 1).replace('{total}', total);
+      fill.style.width = ((n + 1) / total * 100) + '%';
+      if (focus) {
+        try { qEls[n].focus({ preventScroll: true }); } catch (e) { qEls[n].focus(); }
+        var r = form.getBoundingClientRect();
+        if (r.top < 0) { try { form.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' }); } catch (e) { form.scrollIntoView(); } }
+      }
+    };
+
+    var check = function (i) {
+      var res = Core.validateQuestion(Q[i], answers(), M);
+      showQuestion(Q[i], res);
+      if (res) focusFirstBad(Q[i]);
+      return !res;
+    };
+
+    var submit = function () {
+      var all = Core.validateAll(Q, answers(), M);
+      if (!all.ok) {
+        Q.forEach(function (q) { showQuestion(q, all.errors[q.id] || null); });
+        for (var i = 0; i < Q.length; i++) if (Q[i].id === all.firstId) { goto(i, true); focusFirstBad(Q[i]); break; }
+        return;
+      }
+      var pairs = [];
+      Array.prototype.forEach.call(form.elements, function (c) {
+        if (!c.name || c.disabled || c.type === 'submit' || c.type === 'button') return;
+        if ((c.type === 'radio' || c.type === 'checkbox') && !c.checked) return;
+        pairs.push(encodeURIComponent(c.name) + '=' + encodeURIComponent(c.value));
+      });
+      setStatus('loading');
+      var ctl = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 20000);
+      fetch(K.applyPath, {
+        signal: ctl ? ctl.signal : undefined,
+        method: 'POST', credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', 'Accept': 'application/json' },
+        body: pairs.join('&')
+      }).then(function (res) {
+        clearTimeout(timer);
+        return res.json().then(function (data) { return { ok: res.ok, code: res.status, data: data }; }, function () { return { ok: false, code: res.status, data: null }; });
+      }).then(function (r) {
+        if (r.ok && r.data && r.data.next) { location.assign(r.data.next); return; }
+        if (r.code === 422 && r.data && r.data.errors) {
+          setStatus('idle');
+          Q.forEach(function (q) { showQuestion(q, r.data.errors[q.id] || null); });
+          for (var i = 0; i < Q.length; i++) if (r.data.errors[Q[i].id]) { goto(i, true); focusFirstBad(Q[i]); break; }
+          return;
+        }
+        setStatus('failed');
+      }, function () { clearTimeout(timer); setStatus('failed'); });
+    };
+
+    /* Back from the next page can restore this one from the browser's page cache with
+       the button frozen mid-send. Start it fresh. */
+    window.addEventListener('pageshow', function (e) { if (e.persisted && status === 'loading') setStatus('idle'); });
+
+    form.addEventListener('submit', function (e) {
+      if (status === 'loading') { e.preventDefault(); return; }
+      var last = step === total - 1;
+      if (last && !window.fetch) return;                    // old WebView: let the browser post it, the server handles that
+      e.preventDefault();
+      if (!last) { if (check(step)) goto(step + 1, true); return; }
+      if (!check(step)) return;
+      submit();
+    });
+    back.addEventListener('click', function () { if (step > 0) goto(step - 1, true); });
+
+    /* A field that changes is a field the visitor is fixing: its error goes, and so does a general failure. */
+    var onChange = function (e) {
+      var root = e.target.closest ? e.target.closest('[data-q]') : null;
+      if (status === 'failed') setStatus('idle');
+      if (!root) return;
+      for (var i = 0; i < Q.length; i++) if (Q[i].id === root.getAttribute('data-q')) {
+        var q = Q[i];
+        if (q.kind === 'details') {
+          var id = e.target.id.replace(/^f-/, '');
+          clearField(e.target, 'e-' + id);
+        } else clearQuestion(q);
+      }
+    };
+    form.addEventListener('input', onChange);
+    form.addEventListener('change', onChange);
+
+    goto(0, false);
+  } } catch (err) { revert(); try { console.error('[it-italia] form script failed, showing the form without it', err); } catch (x) {} }
+
+  /* ------------------------------------------- the link to the form, sticky */
+
+  var section = document.getElementById('form');
+  var heroCta = document.getElementById('hero-cta');
+  var sticky = document.getElementById('sticky');
+  var toForm = function (e) {
+    if (!section) return;
+    e.preventDefault();
+    try { section.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); } catch (x) { section.scrollIntoView(); }
+    var first = form && form.querySelector('.q.is-current');
+    if (first) { try { first.focus({ preventScroll: true }); } catch (x) {} }
+  };
+  Array.prototype.forEach.call(document.querySelectorAll('a[href="#form"]'), function (a) { a.addEventListener('click', toForm); });
+
+  if (sticky && section && heroCta && 'IntersectionObserver' in window) {
+    var narrow = false, heroGone = false, formIn = false;
+    var mq = null;
+    try { mq = window.matchMedia('(max-width: 767.98px)'); narrow = mq.matches; } catch (e) {}
+    var paint = function () {
+      var show = narrow && heroGone && !formIn && Common.banner.closed;
+      sticky.hidden = !show;
+      document.body.classList.toggle('has-sticky', show);
+      document.documentElement.classList.toggle('has-sticky', show);
+    };
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) { heroGone = !en.isIntersecting && en.boundingClientRect.top < 0; });
+      paint();
+    }).observe(heroCta);
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) { formIn = en.isIntersecting; });
+      paint();
+    }).observe(section);
+    if (mq) { var onMq = function (e) { narrow = e.matches; paint(); }; if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq); }
+    Common.banner.onClose(paint);
+    paint();
+  }
+})();
+</script>
+</body>
+</html>
