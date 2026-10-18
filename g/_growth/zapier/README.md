@@ -1,0 +1,57 @@
+# Zapier workflows for the /g/ growth funnels
+
+The two workflows that carry a lead from the form to ClickUp, Slack and Calendly. They are Zapier
+durable workflows written in code. The `.ts` files here are the source of what runs in Zapier
+(published there as `workflow.ts`), together with the tests they were checked with. Nothing in this
+folder is part of the website build.
+
+| | File | Zapier workflow | Trigger |
+|---|---|---|---|
+| Zap 1 | `zap1-lead-to-clickup-slack.ts` | "Leads v3: skjema til ClickUp og Slack", `01a150f8-009e-71cc-9696-fc8ec4119d57` | Webhooks by Zapier, Catch Hook |
+| Zap 2 | `zap2-calendly-booking.ts` | "Leads v3: Calendly-booking", `01a15111-adb3-7400-b62c-803edc7657d3` | Calendly, Invitee Created, whole organisation |
+
+The contract (payload keys, statuses, fields) is in `g/uk-it-growth/LAUNCH.md`, section 4. Which
+state the workflows are in (switched on or off) is also kept there, not here.
+
+## Changing one
+
+1. Edit the `.ts` file.
+2. Test it. The tests drive the real workflow code against fakes for ClickUp, Calendly and Slack:
+
+   ```
+   node g/_growth/zapier/build.mjs zap2-calendly-booking.ts
+   node g/_growth/zapier/zap2.test.mjs        # 164 checks
+   node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
+   node g/_growth/zapier/zap1.test.mjs        # 120 checks
+   ```
+
+   `truth.json` is a snapshot of the ClickUp field and option ids the tests check the mappings against.
+   Refresh it when a field or option in ClickUp changes.
+3. Put the file into the workflow as `workflow.ts` through a Zapier draft, run the draft once against
+   made-up data (a draft run is free and changes nothing in Zapier), then publish it. Publish with
+   the workflow switched off. Switching a workflow on is a separate step and needs a person's yes.
+4. If the payload keys change in `netlify/functions/lead/payload.mjs`, change Zap 1 in the same
+   step. `g/uk-it-growth/test/units.test.mjs` fails on the function side until the key list is
+   updated on purpose.
+
+## Add a campaign (health, law)
+
+One more entry in `CAMPAIGNS` in the workflow file: the ClickUp list id, the custom field ids, the
+option ids, and for Zap 2 the Calendly event type id. Both workflows read the campaign from the
+payload or the booking, so nothing else changes. A lead from a campaign that has no entry fails the
+run on purpose, so it shows in the run history and does not disappear.
+
+## Conventions
+
+- A lead or a booking with an e-mail address ending `@example.invalid` is a test: it gets the tag
+  `test` in ClickUp and never posts to Slack, unless the Zap 1 payload carries `slack_test: true`.
+- Test tasks are archived afterwards (status `ukvalifisert - archive`, archived), never deleted.
+- No secrets in these files. The Catch Hook URL is shown in Zap 1's trigger step in the Zapier
+  editor and is pasted into Netlify as `ZAPIER_LEAD_HOOK`. It is not written down anywhere else.
+- No names, e-mail addresses or phone numbers in a workflow's output or in Slack.
+
+## What the tests cannot show
+
+The exact shape of the data Zapier's Calendly trigger hands over. `parseBooking` in Zap 2 accepts
+nested, flattened and wrapped forms and fails with the names of the keys it saw if it can not read the
+booking; only a real booking on a switched-on workflow confirms which form it is.

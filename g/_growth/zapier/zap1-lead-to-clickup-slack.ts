@@ -1,0 +1,524 @@
+import { defineDurable } from "@zapier/zapier-durable";
+import { createZapierSdk } from "@zapier/zapier-sdk";
+import { z } from "zod";
+
+const sdk = createZapierSdk();
+
+/*
+ * Leads v3: skjema til ClickUp og Slack (Zap 1).
+ *
+ * Receives one lead from POST /api/lead (the Netlify function) through a Catch Hook, puts it in
+ * ClickUp and, for fit and review, tells #leads-uk. The decision about fit or not is made in the
+ * function and arrives here as `route`; nothing here decides it again.
+ * Contract: the project document "Løsning: eget skjema, Zapier, ClickUp og Slack" (16 Oct 2026),
+ * and g/uk-it-growth/LAUNCH.md in the repository. Change the payload there first.
+ *
+ * Add a campaign: one more entry in CAMPAIGNS (list id, field ids, option ids). Nothing else.
+ * Test leads (an e-mail ending in @example.invalid) are tagged "test" in ClickUp and never post
+ * to Slack, unless the payload carries slack_test: true.
+ */
+
+// ---------------------------------------------------------------------------------------------
+// Settings
+// ---------------------------------------------------------------------------------------------
+
+const CLICKUP_API = "https://api.clickup.com/api/v2";
+const CLICKUP = "clickup_main";
+const SLACK = "slack_main";
+const SLACK_CHANNEL = "C0CAA3726DS"; // #leads-uk
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+type Tier = "fit" | "review" | "other";
+type RouteRule = { status: string; priority: number | null; tier: Tier; slack: boolean; heading: string; tags: string[]; dueInDays: number };
+
+const ROUTES: Record<string, RouteRule> = {
+  fit: { status: "ny lead", priority: 2, tier: "fit", slack: true, heading: "FIT", tags: [], dueInDays: 0 },
+  review: { status: "ny lead", priority: 3, tier: "review", slack: true, heading: "REVIEW", tags: ["sjekk-størrelse"], dueInDays: 0 },
+  not_now: { status: "ukvalifisert - archive", priority: null, tier: "other", slack: false, heading: "NOT NOW", tags: ["ta-opp-om-3-mnd"], dueInDays: 90 },
+  not_a_fit: { status: "ukvalifisert - archive", priority: null, tier: "other", slack: false, heading: "NOT A FIT", tags: [], dueInDays: 0 },
+};
+
+type Campaign = {
+  label: string;
+  listId: string;
+  tag: string;
+  peopleWord: string;
+  field: Record<string, string>;
+  option: {
+    crmItemType: string;
+    salesStage: string;
+    tier: Record<Tier, string>;
+    specialism: Record<string, string>;
+    teamSize: Record<string, string>;
+    adSpend: Record<string, string>;
+    contractValue: Record<string, string>;
+  };
+};
+
+// Dropdowns in ClickUp are filled only when the visitor's answer fits inside one ClickUp option.
+// The ClickUp bands are not the form's bands, and a wrong bucket is worse than an empty one.
+// The exact answers are always in the task description.
+const CAMPAIGNS: Record<string, Campaign> = {
+  "uk-it-growth": {
+    label: "UK IT",
+    listId: "901522580321", // IT - UK - Commision
+    tag: "growth-2m",
+    peopleWord: "ansatte",
+    field: {
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
+      website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
+      adSpend: "13229225-75e5-4729-bd8d-eb69c20e80b2",
+      teamSize: "18957c8f-f573-4790-957c-11812dd3aa04",
+      contractValue: "189cd0e5-2c7d-4c43-a94b-9ad280a4ad53",
+      tier: "668b1a6a-4054-4b24-ac3c-55432d7c2b3e",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      phone: "a0c06e36-5028-4b86-af93-c57de3ad2418",
+      specialism: "ce2deb01-0b47-45c6-8bf5-dbdc67f9962d",
+      jobTitle: "cf254478-a92a-4805-921a-a89ba06c69a0",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+      tier: {
+        fit: "153aea7a-a523-466a-997a-92e6b07e4c1f", // Tier 1
+        review: "20a259b4-95a9-435f-86fa-88bf86d399cc", // Tier 2
+        other: "1d991141-c31f-4a47-96c9-d6e2c025b29a", // Tier 3
+      },
+      specialism: {
+        "IT strategy and digital transformation": "332d345f-0002-41e5-a3cc-b719e55bfbbb",
+        "Managed IT services": "cbb8af7b-befb-4b56-ae0e-e9018a52c022",
+        "Software development": "a5ca2f30-4bd7-4386-bace-86a239c71ff1",
+        "Data and AI": "3fae402c-d23a-4338-b521-9e6369cce72d",
+        "Cybersecurity": "48ac62c8-c7cb-48cb-8093-44018f5ad333",
+        "Other": "a75ef23e-81ec-45a2-b98f-6fd366bd90f8",
+      },
+      teamSize: {
+        "100 or more": "58ab0f8c-b644-4cac-a29f-69765732b3fa", // 50+
+      },
+      adSpend: {
+        "Under £1,000": "5482c305-7587-466a-bef4-ab15e6a70906", // Under £1k/mth
+        "£5,000 to under £15,000": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
+        "£15,000 or more": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
+        "I do not know": "feaf2b0d-079a-4ffa-a48b-67e79c280458", // Unknown
+      },
+      contractValue: {
+        "Under £10k": "4eec6f5e-b753-42c3-974e-ed62cd8347db", // Under £10k
+        "£10k to under £25k": "39c63d70-0e37-41e5-87d9-fd1aa537e2c9", // £10k-£30k
+        "£150k or more": "db0a1849-1833-46ae-ab83-a702144bb49f", // £150k+
+      },
+    },
+  },
+};
+
+// ---------------------------------------------------------------------------------------------
+// The payload from the function: fixed keys, always all of them (empty when they do not apply)
+// ---------------------------------------------------------------------------------------------
+
+const KEYS = [
+  "lead_id", "campaign", "route", "route_reason", "submitted_at",
+  "company_name", "company_website", "company_number",
+  "ch_status", "ch_accounts_type", "ch_incorporated", "ch_check",
+  "specialism", "practice_areas", "sra_number",
+  "turnover_band", "trading_years", "employees_or_fee_earners", "marketing_spend",
+  "first_year_value", "sales_cycle", "target_next_year", "decision_maker", "capacity",
+  "first_name", "last_name", "job_title", "email", "mobile",
+  "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
+  "fbclid", "page_slug", "referrer",
+] as const;
+
+type Lead = Record<(typeof KEYS)[number], string>;
+
+const Scalar = z.union([z.string(), z.number(), z.boolean()]).nullable().optional();
+const shape: Record<string, z.ZodTypeAny> = {};
+for (const key of KEYS) shape[key] = Scalar;
+const LeadSchema = z
+  .object({
+    ...shape,
+    lead_id: z.string().min(3),
+    campaign: z.string().min(1),
+    route: z.string().min(1),
+    slack_test: Scalar,
+  })
+  .loose();
+
+// The hook may hand the payload over as it is, as a JSON string, or inside a wrapper.
+function unwrap(raw: unknown): unknown {
+  let value: unknown = raw;
+  if (typeof value === "string") {
+    try {
+      value = JSON.parse(value);
+    } catch {
+      return value;
+    }
+  }
+  const seen = new Set<unknown>();
+  const find = (node: unknown, depth: number): unknown => {
+    if (!node || typeof node !== "object" || seen.has(node) || depth > 3) return null;
+    seen.add(node);
+    const rec = node as Record<string, unknown>;
+    if (typeof rec.lead_id === "string") return rec;
+    for (const k of Object.keys(rec)) {
+      const hit = find(rec[k], depth + 1);
+      if (hit) return hit;
+    }
+    return null;
+  };
+  return find(value, 0) ?? value;
+}
+
+function clean(v: unknown, max = 400): string {
+  const s = v === null || v === undefined ? "" : String(v);
+  let out = "";
+  for (const ch of s) {
+    const code = ch.codePointAt(0) ?? 0;
+    out += code < 32 || code === 127 ? " " : ch;
+  }
+  return out.trim().slice(0, max);
+}
+
+function toLead(raw: Record<string, unknown>): Lead {
+  const lead = {} as Record<string, string>;
+  for (const key of KEYS) lead[key] = clean(raw[key], key === "referrer" ? 600 : 400);
+  return lead as Lead;
+}
+
+function has(map: Record<string, string>, key: string): string {
+  return Object.prototype.hasOwnProperty.call(map, key) ? map[key] : "";
+}
+
+function truthy(v: unknown): boolean {
+  return v === true || v === "true" || v === "yes" || v === "1" || v === 1;
+}
+
+function personName(lead: Lead): string {
+  return [lead.first_name, lead.last_name].filter(Boolean).join(" ");
+}
+
+function validEmail(v: string): string {
+  return v.includes("@") && !v.includes(" ") && v.length <= 254 ? v : "";
+}
+
+function websiteUrl(v: string): string {
+  if (!v || v.includes(" ")) return "";
+  const url = v.startsWith("http://") || v.startsWith("https://") ? v : `https://${v}`;
+  return url.length <= 300 && url.includes(".") ? url : "";
+}
+
+function normalizePhone(v: string): string {
+  let digits = "";
+  for (const ch of v) if (ch >= "0" && ch <= "9") digits += ch;
+  if (digits.startsWith("440")) digits = `44${digits.slice(3)}`;
+  const inRange = (d: string) => d.length >= 8 && d.length <= 15;
+  if (v.trim().startsWith("+")) return inRange(digits) ? `+${digits}` : "";
+  if (digits.startsWith("00")) return inRange(digits.slice(2)) ? `+${digits.slice(2)}` : "";
+  if (digits.startsWith("0") && digits.length === 11) return `+44${digits.slice(1)}`;
+  return "";
+}
+
+// ---------------------------------------------------------------------------------------------
+// ClickUp
+// ---------------------------------------------------------------------------------------------
+
+type Reply = { ok: boolean; status: number; json: any; text: string };
+
+async function clickup(method: string, path: string, body?: unknown): Promise<Reply> {
+  const init: Record<string, unknown> = { connection: CLICKUP, method };
+  if (body !== undefined) {
+    init.headers = { "Content-Type": "application/json" };
+    init.body = JSON.stringify(body);
+  }
+  const res = await sdk.fetch(`${CLICKUP_API}${path}`, init as any);
+  const text = await res.text();
+  let json: any = null;
+  try {
+    json = JSON.parse(text);
+  } catch {
+    // not JSON
+  }
+  return { ok: res.ok, status: res.status, json, text: text.slice(0, 400) };
+}
+
+function taskLink(id: string, url: unknown): string {
+  const u = typeof url === "string" ? url : "";
+  return u.startsWith("https://app.clickup.com/") ? u : `https://app.clickup.com/t/${id}`;
+}
+
+// The task for this lead_id, if there is one. Checks the value on what comes back, so a search
+// that ignored the filter could never be mistaken for a match.
+async function findTask(c: Campaign, leadId: string): Promise<{ id: string; url: string } | null> {
+  const filter = encodeURIComponent(JSON.stringify([{ field_id: c.field.leadId, operator: "=", value: leadId }]));
+  const r = await clickup("GET", `/list/${c.listId}/task?custom_fields=${filter}&include_closed=true&page=0`);
+  if (!r.ok) throw new Error(`ClickUp search failed: HTTP ${r.status} ${r.text}`);
+  const tasks: any[] = r.json?.tasks ?? [];
+  for (const task of tasks) {
+    const value = (task.custom_fields ?? []).find((f: any) => f.id === c.field.leadId)?.value;
+    if (value === leadId) return { id: String(task.id), url: taskLink(String(task.id), task.url) };
+  }
+  return null;
+}
+
+function customFields(c: Campaign, lead: Lead, route: RouteRule): { id: string; value: string }[] {
+  const out: { id: string; value: string }[] = [];
+  const add = (id: string, value: string) => {
+    if (value) out.push({ id, value });
+  };
+  const specialism = lead.specialism.startsWith("Other") ? "Other" : lead.specialism;
+  add(c.field.leadId, lead.lead_id);
+  add(c.field.crmItemType, c.option.crmItemType);
+  add(c.field.salesStage, c.option.salesStage);
+  add(c.field.tier, c.option.tier[route.tier]);
+  add(c.field.contactName, personName(lead));
+  add(c.field.email, validEmail(lead.email));
+  add(c.field.jobTitle, lead.job_title);
+  add(c.field.website, websiteUrl(lead.company_website));
+  add(c.field.specialism, has(c.option.specialism, specialism));
+  add(c.field.teamSize, has(c.option.teamSize, lead.employees_or_fee_earners));
+  add(c.field.adSpend, has(c.option.adSpend, lead.marketing_spend));
+  add(c.field.contractValue, has(c.option.contractValue, lead.first_year_value));
+  return out;
+}
+
+function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): string {
+  const row = (label: string, value: string) => (value ? `- ${label}: ${value}` : "");
+  const block = (title: string, rows: string[]) => {
+    const body = rows.filter(Boolean);
+    return body.length ? [`**${title}**`, ...body].join("\n") : "";
+  };
+  const number = /^[A-Za-z0-9]{6,10}$/.test(lead.company_number)
+    ? `[${lead.company_number}](https://find-and-update.company-information.service.gov.uk/company/${lead.company_number})`
+    : lead.company_number;
+  const register = [
+    number,
+    lead.ch_status,
+    lead.ch_accounts_type && `regnskap: ${lead.ch_accounts_type}`,
+    lead.ch_incorporated && `stiftet ${lead.ch_incorporated}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const sections = [
+    `**${route.heading}** · ${c.label}${isTest ? " · TEST" : ""} · skjema levert ${lead.submitted_at}`,
+    block("Selskap", [
+      row("Navn", lead.company_name),
+      row("Nettside", lead.company_website),
+      row("Companies House", register),
+      row("Sjekk mot registeret", lead.ch_check),
+    ]),
+    block("Svar i skjemaet", [
+      row("Spesialisering", lead.specialism),
+      row("Fagområder", lead.practice_areas),
+      row("SRA-nummer", lead.sra_number),
+      row("Omsetning", lead.turnover_band),
+      row("Hvor lenge i drift", lead.trading_years),
+      row("Antall folk", lead.employees_or_fee_earners),
+      row("Markedsføring per måned", lead.marketing_spend),
+      row("Verdi første år", lead.first_year_value),
+      row("Salgssyklus", lead.sales_cycle),
+      row("Mål neste år", lead.target_next_year),
+      row("Beslutter", lead.decision_maker),
+      row("Kapasitet", lead.capacity),
+    ]),
+    block("Kontakt", [
+      row("Navn", personName(lead)),
+      row("Rolle", lead.job_title),
+      row("E-post", lead.email),
+      row("Mobil", lead.mobile),
+    ]),
+    block("Ruting", [row("Rute", lead.route), row("Årsaker", lead.route_reason)]),
+    block("Kilde", [
+      row("utm_source", lead.utm_source),
+      row("utm_medium", lead.utm_medium),
+      row("utm_campaign", lead.utm_campaign),
+      row("utm_content", lead.utm_content),
+      row("utm_term", lead.utm_term),
+      row("fbclid", lead.fbclid),
+      row("Side", lead.page_slug),
+      row("Referrer", lead.referrer),
+    ]),
+    `lead_id: ${lead.lead_id}`,
+  ];
+  return sections.filter(Boolean).join("\n\n");
+}
+
+// ---------------------------------------------------------------------------------------------
+// Slack: only what a person needs to decide. No phone, no e-mail, no free text.
+// ---------------------------------------------------------------------------------------------
+
+function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, isTest: boolean): string {
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const head = `${isTest ? "[TEST] " : ""}*${route.heading}* · ${c.label} · ${esc(lead.company_name || "uten navn")}`;
+  const people = lead.employees_or_fee_earners ? `${lead.employees_or_fee_earners} ${c.peopleWord}` : "";
+  const year = lead.ch_incorporated.slice(0, 4);
+  let register: string;
+  if (lead.ch_check === "ok" || lead.ch_check === "mismatch") {
+    register = `Companies House: ${lead.ch_accounts_type || "ukjent regnskapstype"}${year ? `, stiftet ${year}` : ""}`;
+  } else if (lead.ch_check === "not_found") {
+    register = "Companies House: ikke funnet";
+  } else if (lead.ch_check === "timeout") {
+    register = "Companies House: ikke sjekket (tidsavbrudd)";
+  } else {
+    register = "Companies House: ikke sjekket";
+  }
+  const line2 = [lead.turnover_band, people, register].filter(Boolean).join(" · ");
+  const line3 = [
+    lead.first_year_value && `Verdi første år: ${lead.first_year_value}`,
+    lead.sales_cycle && `Salgssyklus: ${lead.sales_cycle}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const line4 = [lead.capacity && `Kapasitet: ${lead.capacity}`, lead.decision_maker && `Beslutter: ${lead.decision_maker}`]
+    .filter(Boolean)
+    .join(" · ");
+  const source = [lead.utm_source, lead.utm_content].filter(Boolean).join(" / ") || "ukjent";
+  const lines = [head, esc(line2), esc(line3), esc(line4), `Kilde: ${esc(source)}`, `ClickUp: <${taskUrl}|åpne oppgaven>`];
+  if (lead.ch_check === "mismatch" || lead.ch_check === "timeout" || lead.ch_check === "not_found") {
+    lines.push("⚠ Størrelse ikke bekreftet, sjekk før møtet");
+  }
+  return lines.filter(Boolean).join("\n");
+}
+
+// ---------------------------------------------------------------------------------------------
+// The workflow
+// ---------------------------------------------------------------------------------------------
+
+const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og-slack", async (ctx, rawInput) => {
+  // Validate before anything is written. An unknown campaign or route fails the run on purpose,
+  // so it shows in the run history and the e-mail alert instead of vanishing.
+  const parsed = LeadSchema.parse(unwrap(rawInput));
+  const lead = toLead(parsed as Record<string, unknown>);
+  const campaign = Object.prototype.hasOwnProperty.call(CAMPAIGNS, lead.campaign) ? CAMPAIGNS[lead.campaign] : null;
+  if (!campaign) throw new Error(`Unknown campaign "${lead.campaign}". Add it to CAMPAIGNS.`);
+  const routeKey = lead.route.toLowerCase();
+  const route = Object.prototype.hasOwnProperty.call(ROUTES, routeKey) ? ROUTES[routeKey] : null;
+  if (!route) throw new Error(`Unknown route "${lead.route}".`);
+
+  const isTest = lead.email.toLowerCase().endsWith("@example.invalid");
+  const fields = customFields(campaign, lead, route);
+
+  // 1. The task. Looks again right before creating, so a retry never makes a second one.
+  const task = await ctx.step({
+    name: "create-clickup-task",
+    maxAttempts: 3,
+    retryDelaySeconds: 10,
+    run: async () => {
+      const existing = await findTask(campaign, lead.lead_id);
+      if (existing) return { ...existing, existed: true, fieldsDropped: "" };
+      const name = [lead.company_name, personName(lead)].filter(Boolean).join(" · ") || lead.lead_id;
+      const body: Record<string, unknown> = {
+        name,
+        markdown_description: describe(campaign, lead, route, isTest),
+        status: route.status,
+        tags: [campaign.tag, ...route.tags, ...(isTest ? ["test"] : [])],
+        custom_fields: fields,
+      };
+      if (route.priority !== null) body.priority = route.priority;
+      if (route.dueInDays > 0) {
+        body.due_date = Date.now() + route.dueInDays * DAY_MS;
+        body.due_date_time = false;
+      }
+      let r = await clickup("POST", `/list/${campaign.listId}/task`, body);
+      let fieldsDropped = "";
+      if (r.status === 400 && fields.length > 0) {
+        // A custom field ClickUp does not accept (a deleted option, say) must not cost us the lead.
+        fieldsDropped = r.text;
+        const { custom_fields: _dropped, ...withoutFields } = body;
+        r = await clickup("POST", `/list/${campaign.listId}/task`, withoutFields);
+      }
+      if (!r.ok) throw new Error(`ClickUp create failed: HTTP ${r.status} ${r.text}`);
+      const id = String(r.json?.id ?? "");
+      if (!id) throw new Error("ClickUp create returned no task id.");
+      return { id, url: taskLink(id, r.json?.url), existed: false, fieldsDropped };
+    },
+  });
+
+  // The same lead_id again (a second delivery): the task is there, nothing more to do.
+  if (task.existed) {
+    return { lead_id: lead.lead_id, campaign: lead.campaign, route: lead.route, deduped: true, taskId: task.id, taskUrl: task.url };
+  }
+
+  // 2. Slack, straight after the task exists. Fit and review only; test leads only on request.
+  const slackMessage = route.slack ? slackText(campaign, lead, route, task.url, isTest) : "";
+  let slack: Record<string, unknown> = { posted: false, reason: route.slack ? "test lead" : `route ${lead.route}` };
+  if (route.slack && isTest) slack.preview = slackMessage;
+  if (route.slack && (!isTest || truthy(parsed.slack_test))) {
+    slack = await ctx.step({
+      name: "post-to-slack",
+      maxAttempts: 3,
+      retryDelaySeconds: 10,
+      run: async () => {
+        const result = await sdk.runAction({
+          appKey: "SlackCLIAPI",
+          actionType: "write",
+          actionKey: "channel_message",
+          connection: SLACK,
+          inputs: { channel: SLACK_CHANNEL, text: slackMessage, as_bot: "yes", unfurl: "no", link_names: "no", add_edit_link: "no" },
+        });
+        const first: any = result.data?.[0] ?? {};
+        return { posted: true, ts: first.ts ?? null, channel: first.channel ?? null };
+      },
+    });
+  }
+
+  // 3. If ClickUp refused the custom fields, set them one at a time and say which did not take.
+  let salvage: Record<string, unknown> | null = null;
+  if (task.fieldsDropped) {
+    salvage = await ctx.step({
+      name: "set-custom-fields-one-by-one",
+      maxAttempts: 2,
+      retryDelaySeconds: 5,
+      run: async () => {
+        const failed: string[] = [];
+        for (const f of fields) {
+          const r = await clickup("POST", `/task/${task.id}/field/${f.id}`, { value: f.value });
+          if (!r.ok) failed.push(`${f.id} (HTTP ${r.status})`);
+        }
+        if (failed.length > 0) {
+          await clickup("POST", `/task/${task.id}/comment`, {
+            comment_text: `Disse feltene ble ikke satt automatisk: ${failed.join(", ")}. Svarene står i beskrivelsen.`,
+            notify_all: false,
+          });
+        }
+        return { set: fields.length - failed.length, failed };
+      },
+    });
+  }
+
+  // 4. The phone number, best effort: ClickUp is strict about the format, and the number is in the
+  //    description anyway.
+  const phone = normalizePhone(lead.mobile);
+  let phoneResult: Record<string, unknown> = { set: false, reason: lead.mobile ? "not a usable number" : "none given" };
+  if (phone) {
+    phoneResult = await ctx.step({
+      name: "set-clickup-phone",
+      maxAttempts: 2,
+      retryDelaySeconds: 5,
+      run: async () => {
+        try {
+          const r = await clickup("POST", `/task/${task.id}/field/${campaign.field.phone}`, { value: phone });
+          return { set: r.ok, status: r.status };
+        } catch (e) {
+          return { set: false, error: String(e).slice(0, 200) };
+        }
+      },
+    });
+  }
+
+  return {
+    lead_id: lead.lead_id,
+    campaign: lead.campaign,
+    route: lead.route,
+    test: isTest,
+    deduped: false,
+    taskId: task.id,
+    taskUrl: task.url,
+    customFieldsSet: fields.length,
+    fieldsDropped: Boolean(task.fieldsDropped),
+    salvage,
+    slack,
+    phone: phoneResult,
+  };
+});
+
+export default workflow;
