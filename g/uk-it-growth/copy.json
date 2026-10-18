@@ -1,0 +1,258 @@
+{
+  "_comment": "Page copy for /g/uk-it-growth, taken word for word from the IT board v56 (Claude Design). {THRESHOLD}, {OFFER} and {WORTH} are filled from config.json at build time. Do not edit a sentence to fit a layout; change the board first. The build refuses dashes, exclamation marks, American spellings and a commission rate (see scripts/build-g-growth.mjs).",
+  "meta": {
+    "title": "Elevate Marketing for UK IT services firms",
+    "description": "Sales conversations for UK IT services firms, from campaigns we run. A few questions to see whether we would take you on."
+  },
+  "topline": "For UK IT services firms with {THRESHOLD}+ turnover",
+  "cta": "See whether we would take you on",
+  "hero": {
+    "h1a": "We have filled the pipeline for IT consultancies before.",
+    "h1b": "Here is what it looked like.",
+    "ingress": [
+      {
+        "t": "Ignite Consulting, Be | Shaping the Future and Crux IT Consulting. ",
+        "cls": ""
+      },
+      {
+        "t": "424 qualified leads",
+        "cls": "em"
+      },
+      {
+        "t": " between them, from campaigns we ran. If you are growing and want more of the right conversations, this is the work we do.",
+        "cls": ""
+      }
+    ],
+    "micro": "A few questions. We only take on firms we think we can help."
+  },
+  "cases": {
+    "h2": "Three IT consultancies. Their numbers.",
+    "items": [
+      {
+        "name": "Ignite Consulting",
+        "sub": "Innovation and change consultancy",
+        "figs": [
+          {
+            "value": "97",
+            "label": "qualified leads"
+          },
+          {
+            "value": "40%",
+            "label": "close rate",
+            "emph": true
+          },
+          {
+            "value": "4",
+            "label": "months"
+          }
+        ]
+      },
+      {
+        "name": "Be | Shaping the Future",
+        "sub": "Management and technology consultancy",
+        "figs": [
+          {
+            "value": "210",
+            "label": "qualified leads"
+          },
+          {
+            "value": "37%",
+            "label": "close rate",
+            "emph": true
+          },
+          {
+            "value": "10",
+            "label": "months"
+          }
+        ]
+      },
+      {
+        "name": "Crux IT Consulting",
+        "sub": "IT services and eLearning consultancy",
+        "figs": [
+          {
+            "value": "117",
+            "label": "qualified leads"
+          },
+          {
+            "value": "65%",
+            "label": "close rate",
+            "emph": true
+          },
+          {
+            "value": "6",
+            "label": "months"
+          }
+        ]
+      }
+    ],
+    "note": "Close rate is the share of qualified leads each client reported as won. Figures from each client's own records. Named and published with each client's written permission."
+  },
+  "fit": {
+    "h2": "This is for firms that are growing, not firms that are stuck.",
+    "body": "The firms we work best with already win work through referrals and reputation. What they lack is a second channel that brings in the same kind of client, predictably, without the partners doing all the selling.",
+    "yesTitle": "This works if",
+    "yes": [
+      "You run a UK IT services firm with {THRESHOLD} or more in turnover and at least two years of trading",
+      "A new client is worth {WORTH} or more to you in the first year",
+      "You have a sales function, even if that is a founder, that can respond within two working days",
+      "You have capacity to take on new clients in the next three months"
+    ],
+    "noTitle": "This does not work if",
+    "no": [
+      "You are below {THRESHOLD} turnover or newer than two years",
+      "You sell products or software licences rather than services",
+      "You need leads to get through the next quarter",
+      "You want leads without anyone to follow them up"
+    ],
+    "note": "Company details are checked against Companies House after you apply, and we confirm turnover with you on the call."
+  },
+  "pay": {
+    "h2": "Paid when a deal closes. Our incentives are the same as yours.",
+    "body": "No retainer, no setup fee, no minimum term. We invoice a commission on deals that close from campaigns we run. The rate depends on what a client is worth to you, so we agree it before anything runs. It is not published, because it is not the same for two firms.",
+    "open": [
+      "A sale is a signed contract or purchase order with a new client that came from a lead our campaigns produced. Existing clients, and clients that came from elsewhere, do not count.",
+      "Your own CRM is the record. Each month you confirm which closed deals came from our campaigns, and we invoice only those.",
+      "We invoice monthly, for deals that closed that month. Payment terms are 14 days.",
+      "If nothing closes, we invoice nothing.",
+      "The advertising budget is separate. You pay it to the platforms directly, and we agree it with you before anything runs."
+    ]
+  },
+  "keep": {
+    "h2": "Your accounts. Your data. Your sales team.",
+    "items": [
+      {
+        "t": "The ad accounts are yours",
+        "p": "Campaigns run in ad accounts you own. You pay the platforms directly, with no markup from us."
+      },
+      {
+        "t": "The data is yours",
+        "p": "Leads, results and sales are tracked in your own CRM. If we stop working together, you keep all of it."
+      },
+      {
+        "t": "Your team takes the meetings",
+        "p": "We do not replace your sales team. We fill their calendar with conversations that fit."
+      }
+    ]
+  },
+  "measure": {
+    "h2": "What we optimise for",
+    "rows": [
+      {
+        "metric": "Impressions",
+        "status": "Reported, not a target"
+      },
+      {
+        "metric": "Clicks",
+        "status": "Reported, not a target"
+      },
+      {
+        "metric": "Leads",
+        "status": "Reported, not a target"
+      },
+      {
+        "metric": "Qualified meetings",
+        "status": "What we work towards",
+        "key": true
+      },
+      {
+        "metric": "Closed deals",
+        "status": "What we are paid on",
+        "key": true
+      }
+    ]
+  },
+  "meeting": {
+    "h2": "The first meeting: a {OFFER}",
+    "body": "We do not pitch. We sit down with your numbers and work out what it would take to reach next year's target.",
+    "steps": [
+      {
+        "t": "Before the call",
+        "p": "You tell us your turnover, your target for next year, and what a typical new client is worth."
+      },
+      {
+        "t": "On the call",
+        "p": "We confirm four numbers together: last year's turnover, next year's target, what a new client is worth in year one, and how many sales meetings turn into clients."
+      },
+      {
+        "t": "Within one working day",
+        "p": "You receive a one page sheet with the arithmetic: new clients per month needed, sales meetings per month that requires, and how that compares with your pipeline today."
+      }
+    ],
+    "closing": "You keep the sheet whether or not we work together. It contains your numbers only. No quote, no commission rate, no promise."
+  },
+  "faq": {
+    "h2": "Straight answers",
+    "items": [
+      {
+        "q": "Will this work at our size?",
+        "a": "The mechanism is the same: a clear offer, a clear buyer, and campaigns tracked to closed deals. What changes with size is the budget and the sales cycle, and we plan for both on the first call."
+      },
+      {
+        "q": "How is this different from an agency on a retainer?",
+        "a": "A retainer is paid whether or not anything closes. Our invoice depends on a deal closing, so we only earn when your sales team does."
+      },
+      {
+        "q": "Who owns the ad accounts?",
+        "a": "You do. We work inside them. If we stop, they stay with you."
+      },
+      {
+        "q": "Do you guarantee results?",
+        "a": "No. We can show you what we have done, the arithmetic and the method. We cannot promise a number of meetings or deals."
+      },
+      {
+        "q": "What if we want to stop?",
+        "a": "There is no minimum term. You can stop with 30 days' notice, and you keep the accounts and the data."
+      }
+    ]
+  },
+  "footer": {
+    "text": "Elevate Marketing is operated by EngeCo AS, Norwegian organisation no. 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norway.",
+    "privacy": "Privacy",
+    "terms": "Website terms"
+  },
+  "consent": {
+    "text": "We use a Meta cookie to measure whether our advertising works. It is not set until you choose. The page works the same either way.",
+    "privacy": "Privacy",
+    "accept": "Accept",
+    "decline": "Decline",
+    "label": "Cookie choice"
+  },
+  "form": {
+    "heading": "See whether we would take you on",
+    "under": "A few questions. We only take on firms we think we can help.",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "cta": "See whether we would take you on",
+    "retry": "Try again",
+    "sending": "Checking a few details. This takes a few seconds.",
+    "failed": "Something went wrong on our side. Your answers are still here. Please try again, or email",
+    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number. If you tell us you are at capacity, we will get back in touch once, in three months.",
+    "privacy": "Privacy"
+  },
+  "outcomes": {
+    "book": {
+      "h": "Thank you. Choose a time that suits you.",
+      "p": "Pick a slot for a {OFFER}. Your own numbers are all we need.",
+      "small": "No time that works? Reply to the confirmation email and we will find one."
+    },
+    "takk": {
+      "h": "You are booked in.",
+      "p": "We will send a confirmation and a short note on what to have to hand: last year's turnover, next year's target, and what a typical new client is worth."
+    },
+    "review": {
+      "h": "Thank you. We will be in touch within one working day.",
+      "p": "We want to check a few details before we suggest a time."
+    },
+    "not-now": {
+      "h": "Thank you. Come back when you have capacity.",
+      "p": "If you are at capacity now, we will ask again in three months."
+    },
+    "not-a-fit": {
+      "h": "Thank you. This is not the right fit at the moment.",
+      "p": "We work with UK IT services firms with {THRESHOLD} or more in turnover and at least two years of trading. If that changes, we would be glad to hear from you.",
+      "note": "If we have misread your answers, email {EMAIL} and we will look again."
+    }
+  }
+}

@@ -78,9 +78,15 @@
 
     while (queue.length) {
       var ev = queue.shift();
-      if (ev.std) window.fbq('track', ev.name, ev.params || {});
-      else window.fbq('trackCustom', ev.name, ev.params || {});
+      send(ev.std ? 'track' : 'trackCustom', ev.name, ev.params, ev.opts);
     }
+  }
+
+  /* A fourth argument to fbq carries the event id. It is passed only when given, so every
+     caller that never sets one sends exactly what it always did. */
+  function send(kind, name, params, opts) {
+    if (opts) window.fbq(kind, name, params || {}, opts);
+    else window.fbq(kind, name, params || {});
   }
 
   function choose(choice) {
@@ -122,17 +128,19 @@
   }
 
   window.ElevateConsent = {
-    /** Fire a conversion, or queue it until consent is given. */
-    track: function (name, params) {
+    /** Fire a conversion, or queue it until consent is given.
+     *  opts is optional: {eventID: '...'} lets Meta de-duplicate this event against the same
+     *  event sent from the server (Conversions API). */
+    track: function (name, params, opts) {
       if (read() === 'declined') return;
-      if (loaded && window.fbq) window.fbq('trackCustom', name, params || {});
-      else queue.push({ std: false, name: name, params: params });
+      if (loaded && window.fbq) send('trackCustom', name, params, opts);
+      else queue.push({ std: false, name: name, params: params, opts: opts });
     },
     /** Standard-event equivalent of track(). */
-    trackStandard: function (name, params) {
+    trackStandard: function (name, params, opts) {
       if (read() === 'declined') return;
-      if (loaded && window.fbq) window.fbq('track', name, params || {});
-      else queue.push({ std: true, name: name, params: params });
+      if (loaded && window.fbq) send('track', name, params, opts);
+      else queue.push({ std: true, name: name, params: params, opts: opts });
     },
     /** SPA route change. A full page load already fires PageView on consent. */
     pageView: function () {

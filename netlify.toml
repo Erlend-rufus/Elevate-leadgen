@@ -5,10 +5,10 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# The first function on this site: /uk-it-firms/apply, which receives
-# the application form. esbuild is named rather than left to the default so the
-# bundle is the same wherever it builds: the function imports plain CommonJS
-# modules from g/uk-it-larger-firms/, which a bundler has to follow.
+# Functions: /uk-it-firms/apply (the older IT funnel's application form), /api/lead (the growth
+# funnels' application form) and the daily lead check. esbuild is named rather than left to the
+# default so the bundle is the same wherever it builds: the functions import modules from
+# g/uk-it-larger-firms/ (CommonJS) and g/uk-it-growth/ (ES modules), which a bundler has to follow.
 [functions]
   node_bundler = "esbuild"
 
@@ -147,6 +147,18 @@
 
 [[headers]]
   for = "/uk-it-firms/not-a-fit*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# /g/uk-it-growth: the whole funnel is for paid traffic only, the landing page included, so the
+# header covers the bare address and everything under it. Each page also carries a robots meta.
+[[headers]]
+  for = "/g/uk-it-growth"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-it-growth/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
@@ -354,6 +366,51 @@
 [[redirects]]
   from = "/g/uk-private-clinics/not-now"
   to = "/g/uk-private-clinics/not-now/index.html"
+  status = 200
+
+# /api/lead: receives the application forms of the growth funnels (g/uk-it-growth and the ones
+# after it), decides the route and hands the lead on. Netlify matches a function that has its own
+# path (config.path in netlify/functions/lead/index.mjs) BEFORE it looks at redirects, so that
+# export is what serves it. This rule is the fallback for the day that export is removed: the
+# function would then answer at its default address, and without a rule here the request would
+# reach the SPA catch-all below and every submission would be answered with the homepage.
+# Read g/uk-it-growth/LAUNCH.md before changing this.
+[[redirects]]
+  from = "/api/lead"
+  to = "/.netlify/functions/lead"
+  status = 200
+
+# /g/uk-it-growth: the landing page and the five pages after the form. Like the clinics funnel above,
+# these are documentation more than routing: Netlify canonicalises an extensionless path to its
+# trailing-slash form before it reaches the rules, and real files win over the 404s below.
+[[redirects]]
+  from = "/g/uk-it-growth"
+  to = "/g/uk-it-growth/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-growth/book"
+  to = "/g/uk-it-growth/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-growth/takk"
+  to = "/g/uk-it-growth/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-growth/review"
+  to = "/g/uk-it-growth/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-growth/not-now"
+  to = "/g/uk-it-growth/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-it-growth/not-a-fit"
+  to = "/g/uk-it-growth/not-a-fit/index.html"
   status = 200
 
 # /uk-it-firms: the application endpoint and the funnel's pages. The apply rule must
