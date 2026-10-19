@@ -27,7 +27,7 @@ npm run test:g-growth
 | 3 | **Companies House API key** | Netlify, `COMPANIES_HOUSE_API_KEY` | Every lead is sent to `review`, never to `fit`. |
 | 4 | **Meta Conversions API token** | Netlify, `META_CAPI_TOKEN` | The browser pixel still works; the server copy of the event is skipped. |
 | 5 | **Alert e-mail service** (Resend is the default, see 2) | Netlify, `RESEND_API_KEY`, `ALERT_EMAIL_FROM` | Failures are only in the function log. Do not launch without it. |
-| 6 | **Zap 1 and Zap 2**, ClickUp field `lead_id`, Slack `#leads-uk` | Section 4 | **Built and tested against the real ClickUp list, saved switched off.** Switched on only after the acceptance run (section 10). The hook URL for row 2 is copied from Zap 1's trigger step in the Zapier editor. |
+| 6 | **Zap 1 and Zap 2**, ClickUp field `lead_id`, Slack `#leads-uk` | Section 4 | **Built and tested against the real ClickUp list, saved switched off.** Zap 1 has had one live run with a made-up lead (task in ClickUp, post in `#leads-uk`); Zap 2 has not yet been shown a real Calendly booking. Both are switched on for the acceptance run (section 10). The hook URL for row 2 exists once Zap 1 has been switched on; it is copied from Zap 1's trigger step in the Zapier editor. |
 | 7 | **Privacy notice and website terms** approved by the solicitor | `config.json` → `links` | The pages link to the existing `/lp/privacy/` and `/lp/terms/`. |
 | 8 | **A real phone test** (section 9) | | |
 
@@ -120,13 +120,17 @@ short README are in `g/_growth/zapier/`; what is published in Zapier is that sou
 | Zap 1 | Leads v3: skjema til ClickUp og Slack | `01a150f8-009e-71cc-9696-fc8ec4119d57` | Webhooks by Zapier, Catch Hook |
 | Zap 2 | Leads v3: Calendly-booking | `01a15111-adb3-7400-b62c-803edc7657d3` | Calendly, Invitee Created, whole organisation |
 
-Editor: `https://zapier.com/workflow/<id>`. Both are private to the Zapier account and were **saved
-switched off** (19 Oct 2026). They are switched on in the acceptance run (section 10), not before. While a
-workflow is off its trigger shows as `unclaimed`; after switching on it should show `active`.
+Editor: `https://zapier.com/workflow/<id>`. Both are private to the Zapier account. Both were built
+switched off (19 Oct 2026). Zap 1 was switched on briefly for its first live test the same day and is saved
+switched off again (see "How the two Zaps were tested"). A trigger that has never been switched on shows as
+`unclaimed`, a switched-on one as `active`, and one switched off again as `released`.
 
-**The hook URL.** Open Zap 1 in the Zapier editor, open the trigger step, copy the Catch Hook URL and paste
-it into Netlify as `ZAPIER_LEAD_HOOK`. Anyone who has it can post leads, so it is not written in this
-repository, in a document or in a chat.
+**The hook URL.** The Catch Hook URL exists only once Zap 1 has been switched on: an `unclaimed` trigger shows
+none. Switch Zap 1 on, open the trigger step in the Zapier editor, copy the Catch Hook URL and paste it into
+Netlify as `ZAPIER_LEAD_HOOK`. Checked once on 19 Oct 2026: switching Zap 1 off and on again gave the same
+URL, so a URL pasted into Netlify before launch should stay valid. A lead sent while Zap 1 is off does not
+become a task, so Zap 1 is switched on before the first real submission (section 10). Anyone who has the URL
+can post leads, so it is not written in this repository, in a document or in a chat.
 
 ### Zap 1 "Leads v3: skjema til ClickUp og Slack"
 
@@ -216,10 +220,19 @@ a test and gets the tag `test`.
   by lead id, found by e-mail, no task (a new one is made), the wait for Zap 1's task, an event that is not
   ours, and an event missing from `CAMPAIGNS`. The edge cases (cancellation, unreadable booking, winter time)
   are covered by the local checks. The test tasks carry the tag `test` and are archived, never deleted.
-- **Not shown yet, and needing the Zaps switched on:** the real Catch Hook payload, both triggers going
-  `active`, a real post in `#leads-uk`, and the shape of a real Calendly booking as the trigger hands it over
-  (the code accepts nested, flattened and wrapped forms, and fails with the key names if it can read none).
-  Section 10 covers them.
+- **Live, 19 Oct 2026, Zap 1 switched on for a few minutes.** One made-up lead (route `fit`, an address ending
+  `@example.invalid`, `slack_test` true) was fired through Zapier's own trigger with the JSON the function
+  sends. Result: one ClickUp task in "IT - UK - Commision" (status `ny lead`, priority high, tags `growth-2m`
+  and `test`, twelve fields set including `lead_id`), one Slack post in `#leads-uk` marked `[TEST]` with no
+  phone, e-mail or free text, and the trigger going `active`. The phone field refused the made-up number
+  07700 900123 (HTTP 400; that range is reserved for drama and is not a valid mobile number), which the Zap
+  tolerates because the number is also in the task description. ClickUp did accept +442079460123, a reserved
+  London drama number, when it was set from outside the Zap, so a valid real number should pass; the first
+  real phone test shows it.
+- **Not shown yet:** the real Catch Hook delivery from the Netlify function (the live run came through
+  Zapier's own trigger, not through the hook URL), and the shape of a real Calendly booking as Zap 2's
+  trigger hands it over (the code accepts nested, flattened and wrapped forms, and fails with the key names if
+  it can read none). Section 10 covers them.
 
 ### Not changed
 
