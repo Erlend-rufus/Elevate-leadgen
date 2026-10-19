@@ -9,7 +9,8 @@
  *  1. read the post (JSON from the page's script, or a plain form post without one)
  *  2. stop the obvious spam: a hidden field, an hourly limit per address
  *  3. validate with the same code the browser ran
- *  4. ask Companies House about the company, unless the answers already decide
+ *  4. ask Companies House about the company, unless the answers already decide (or, on a
+ *     deploy preview only, the check has been switched off: see registerSwitchedOff)
  *  5. decide the route: fit, review, not_now or not_a_fit
  *  6. STORE THE LEAD. Nothing below can lose it.
  *  7. send it on: Zapier (three tries, inside a time budget) and, for a qualified form from
@@ -24,7 +25,9 @@
  * Environment (Netlify, scope: Functions). Never in the repository or in a chat:
  *   ZAPIER_LEAD_HOOK         required. The Catch Hook URL of the lead Zap.
  *   COMPANIES_HOUSE_API_KEY  without it every lead goes to review, never to fit.
- *   META_CAPI_TOKEN          needed for the server side event (capi.mjs). META_PIXEL_ID defaults to the page's pixel;
+ *   COMPANIES_HOUSE_MODE     "off" skips the register, on a deploy preview only. Set it for the deploy-preview
+ *                            context and nowhere else; on every other address it is ignored (registerSwitchedOff).
+ *   META_CAPI_TOKEN         needed for the server side event (capi.mjs). META_PIXEL_ID defaults to the page's pixel;
  *                            META_TEST_EVENT_CODE is optional (events then show only under Test Events).
  *   RESEND_API_KEY, ALERT_EMAIL_FROM, ALERT_EMAIL_TO, SLACK_ALERT_WEBHOOK_URL   see alert.mjs
  *   LEAD_IP_SALT             optional. Salt for the hashed address in the rate limiter.
@@ -54,6 +57,22 @@ const SECURITY = {
   'X-Frame-Options': 'SAMEORIGIN',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
 };
+
+/* A preview can be tried end to end before a Companies House key exists: COMPANIES_HOUSE_MODE=off skips
+   the register. It is honoured only on an address that Netlify gives a deploy preview or a branch deploy
+   (a name with "--" in front of the site name) or on this computer, and never when Netlify says the context
+   is production. On getelevateleads.com and on the site's own netlify.app address the setting is ignored, so
+   a variable set in the wrong scope by mistake still cannot change what a real visitor is told. */
+const PREVIEW_HOST = /^[a-z0-9][a-z0-9-]*--[a-z0-9-]+\.netlify\.app$/i;
+const LOCAL_HOST = /^(localhost|127\.0\.0\.1|\[::1\])$/i;
+
+function registerSwitchedOff(e, req) {
+  if (String(e.COMPANIES_HOUSE_MODE || '').trim().toLowerCase() !== 'off') return false;
+  if (String(e.CONTEXT || '').trim().toLowerCase() === 'production') return false;
+  let host = '';
+  try { host = new URL(req.url).hostname; } catch (err) { return false; }
+  return PREVIEW_HOST.test(host) || LOCAL_HOST.test(host);
+}
 
 export function createHandler(deps = {}) {
   const campaigns = deps.campaigns || defaultCampaigns;
@@ -206,19 +225,25 @@ export function createHandler(deps = {}) {
     /* ---- 4. the register -------------------------------------------------- */
     let ch = { check: 'skipped', reasons: [] };
     if (routing.needsRegistry(values)) {
-      const remaining = deadline - nowFn().getTime();
-      const found = await lookupCompany({
-        name: camp.registryName(values), key: e.COMPANIES_HOUSE_API_KEY, fetch: doFetch,
-        timeoutMs: Math.max(1000, Math.min(4000, remaining - 3500)),
-      });
-      if (found.status === 'found') {
-        const a = routing.assessProfile(values, found.profile, nowFn());
-        ch = { check: a.check, reasons: a.reasons, profile: found.profile };
-      } else if (found.status === 'not_found') {
-        ch = { check: 'not_found', reasons: [] };
+      if (registerSwitchedOff(e, req)) {
+        // Recorded as "off", never as "ok": the lead says in its own record that nobody checked the register.
+        ch = { check: 'off', reasons: [] };
+        log({ code: 'ch_switched_off', lead_id: leadId });
       } else {
-        ch = { check: 'timeout', reasons: [], error: found.reason };
-        log({ code: 'ch_unavailable', lead_id: leadId, reason: found.reason });
+        const remaining = deadline - nowFn().getTime();
+        const found = await lookupCompany({
+          name: camp.registryName(values), key: e.COMPANIES_HOUSE_API_KEY, fetch: doFetch,
+          timeoutMs: Math.max(1000, Math.min(4000, remaining - 3500)),
+        });
+        if (found.status === 'found') {
+          const a = routing.assessProfile(values, found.profile, nowFn());
+          ch = { check: a.check, reasons: a.reasons, profile: found.profile };
+        } else if (found.status === 'not_found') {
+          ch = { check: 'not_found', reasons: [] };
+        } else {
+          ch = { check: 'timeout', reasons: [], error: found.reason };
+          log({ code: 'ch_unavailable', lead_id: leadId, reason: found.reason });
+        }
       }
     }
 
@@ -256,7 +281,11 @@ export function createHandler(deps = {}) {
     }
 
     /* ---- 7. send it on ------------------------------------------------------- */
-    const capiWanted = camp.qualifiedRoutes.includes(decision.route) && hidden.consent === 'accepted';
+    const qualified = camp.qualifiedRoutes.includes(decision.route) && hidden.consent === 'accepted';
+    /* With the register off, a "fit" has not been checked, so Meta is not told it is a qualified form. The one
+       exception is a Test Events code (META_TEST_EVENT_CODE): those events show only in Meta's test tool. */
+    const capiHeld = qualified && ch.check === 'off' && !e.META_TEST_EVENT_CODE;
+    const capiWanted = qualified && !capiHeld;
     const [delivered, capi] = await Promise.all([
       deliver(rec, { store: stored ? store : null, hook, e, deadline, skipSave: true }),
       capiWanted
@@ -268,7 +297,7 @@ export function createHandler(deps = {}) {
           email: values.email, firstName: values.first_name, lastName: values.last_name,
           ip, userAgent: req.headers.get('user-agent') || '', fbp: hidden.fbp, fbc: hidden.fbc, fbclid: hidden.fbclid,
         })
-        : Promise.resolve({ state: 'skipped', reason: 'no_consent_or_not_qualified' }),
+        : Promise.resolve({ state: 'skipped', reason: capiHeld ? 'register_off' : 'no_consent_or_not_qualified' }),
     ]);
     rec.capi = capi;
     if (capi.state === 'failed') log({ code: 'capi_failed', lead_id: leadId, reason: capi.reason });

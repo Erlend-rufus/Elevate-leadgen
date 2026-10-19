@@ -81,7 +81,13 @@ export function assessProfile(v, profile, now) {
 
 /**
  * The decision. "ch" is what the register said: {check, reasons, profile}, where check is
- * 'skipped' (not asked), 'ok', 'not_found', 'timeout' or 'mismatch'.
+ * 'skipped' (not asked), 'ok', 'not_found', 'timeout', 'mismatch' or 'off'.
+ *
+ * 'off' means the register was deliberately not asked, on a preview only (see
+ * registerSwitchedOff in netlify/functions/lead/index.mjs). It is never turned into 'ok': a
+ * lead that would have been a fit is still a fit, but carries the reason "register_off" so
+ * nobody reads it as checked.
+ *
  * Returns {route, reasons}.
  */
 export function decide(v, ch) {
@@ -102,9 +108,13 @@ export function decide(v, ch) {
   if (registry.check === 'not_found') review.push('ch_not_found');
   else if (registry.check === 'timeout') review.push('ch_timeout');
   else if (registry.check === 'mismatch') review.push.apply(review, registry.reasons);
-  if (review.length) return { route: 'review', reasons: review };
+  if (review.length) {
+    if (registry.check === 'off') review.push('register_off');
+    return { route: 'review', reasons: review };
+  }
 
   const fit = ['turnover_2m_plus', 'trading_2y_plus'];
   if (profile.accounts_type) fit.push('ch_' + profile.accounts_type);
+  if (registry.check === 'off') fit.push('register_off');
   return { route: 'fit', reasons: fit };
 }

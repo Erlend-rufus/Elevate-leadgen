@@ -617,6 +617,113 @@ test('DISCLOSED DEVIATION: £2m or more claimed against micro-entity accounts is
   }
 });
 
+/* ------------------------------------------------------- the register switched off (preview only) */
+
+const PREVIEW = 'https://deploy-preview-72--luxury-custard-0c4db9.netlify.app/api/lead';
+const OFF = { COMPANIES_HOUSE_MODE: 'off' };
+
+test('register off on a deploy preview: the register is not asked, a firm that qualifies is a fit, and the record says it was not checked', async () => {
+  const { r, j } = await go({ env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined }, OFF) }, GOOD, { url: PREVIEW });
+  assert.equal(j.route, 'fit');
+  assert.equal(r.of('ch').length, 0);
+  const z = r.of('zapier')[0].body;
+  assert.equal(z.ch_check, 'off', 'never reported as ok');
+  assert.equal(z.route_reason, 'turnover_2m_plus, trading_2y_plus, register_off');
+  assert.equal(z.company_number, '');
+  assert.deepEqual(r.blobs.lead('l_test123').ch, { check: 'off', reasons: [] });
+  assert.ok(r.logs.some((l) => l.code === 'ch_switched_off' && l.lead_id === 'l_test123'));
+  assert.equal(r.logs.some((l) => l.code === 'ch_unavailable'), false);
+  assert.equal(JSON.stringify(r.logs).includes('Northbridge'), false, 'the log carries no company name');
+});
+
+test('register off wins over a key that is present: the setting is explicit', async () => {
+  const { r, j } = await go({ env: OFF }, GOOD, { url: PREVIEW });
+  assert.equal(j.route, 'fit');
+  assert.equal(r.of('ch').length, 0);
+});
+
+test('register off is ignored on every address a real visitor can reach', async () => {
+  const live = [
+    'https://getelevateleads.com/api/lead',
+    'https://www.getelevateleads.com/api/lead',
+    'https://it.getelevateleads.com/api/lead',
+    'https://luxury-custard-0c4db9.netlify.app/api/lead',
+    'https://netlify.app/api/lead',
+    'https://evil.example/deploy-preview-1--x.netlify.app/api/lead',
+    'https://deploy-preview-1--x.netlify.app.evil.example/api/lead',
+    'https://x-deploy-preview-1--x.netlify.app.getelevateleads.com/api/lead',
+  ];
+  for (const url of live) {
+    const { r, j } = await go({ env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined }, OFF) }, GOOD, { url });
+    assert.equal(j.route, 'review', url);
+    assert.equal(r.of('zapier')[0].body.ch_check, 'timeout', url);
+    assert.equal(r.logs.some((l) => l.code === 'ch_switched_off'), false, url);
+  }
+  // with a key, the live address asks the register as before
+  const keyed = await go({ env: OFF });
+  assert.equal(keyed.j.route, 'fit');
+  assert.ok(keyed.r.of('ch').length > 0, 'the register was asked');
+  assert.equal(keyed.r.of('zapier')[0].body.ch_check, 'ok');
+});
+
+test('register off is ignored when Netlify says the context is production, whatever the address', async () => {
+  for (const CONTEXT of ['production', 'Production', ' production ']) {
+    const { r, j } = await go({ env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined, CONTEXT }, OFF) }, GOOD, { url: PREVIEW });
+    assert.equal(j.route, 'review', CONTEXT);
+    assert.equal(r.of('zapier')[0].body.ch_check, 'timeout', CONTEXT);
+  }
+  const preview = await go({ env: Object.assign({ CONTEXT: 'deploy-preview' }, OFF) }, GOOD, { url: PREVIEW });
+  assert.equal(preview.j.route, 'fit', 'a preview context does not get in the way');
+});
+
+test('only the value "off" switches the register off, in any case and with spaces round it', async () => {
+  for (const value of ['on', 'false', '0', 'no', '', 'offline', 'of']) {
+    const { j } = await go({ env: { COMPANIES_HOUSE_API_KEY: undefined, COMPANIES_HOUSE_MODE: value } }, GOOD, { url: PREVIEW });
+    assert.equal(j.route, 'review', JSON.stringify(value));
+  }
+  for (const value of ['off', 'OFF', ' Off ']) {
+    const { j } = await go({ env: { COMPANIES_HOUSE_MODE: value } }, GOOD, { url: PREVIEW });
+    assert.equal(j.route, 'fit', JSON.stringify(value));
+  }
+});
+
+test('register off works on a branch deploy and on this computer', async () => {
+  for (const url of [
+    'https://preview-uk-it-growth--luxury-custard-0c4db9.netlify.app/api/lead',
+    'http://localhost:8888/api/lead',
+    'http://127.0.0.1:8888/api/lead',
+  ]) {
+    const { r, j } = await go({ env: OFF }, GOOD, { url });
+    assert.equal(j.route, 'fit', url);
+    assert.equal(r.of('ch').length, 0, url);
+  }
+});
+
+test('register off changes nothing the answers already decide, and marks the review reasons it touches', async () => {
+  const small = await go({ env: OFF }, Object.assign({}, GOOD, { turnover_band: T[0] }), { url: PREVIEW });
+  assert.equal(small.j.route, 'not_a_fit');
+  assert.equal(small.r.of('zapier')[0].body.route_reason, 'turnover_below_2m');
+  const full = await go({ env: OFF }, Object.assign({}, GOOD, { capacity: C[0] }), { url: PREVIEW });
+  assert.equal(full.j.route, 'not_now');
+  assert.equal(full.r.of('zapier')[0].body.route_reason, 'capacity_none');
+  const notStated = await go({ env: OFF }, Object.assign({}, GOOD, { turnover_band: T[5] }), { url: PREVIEW });
+  assert.equal(notStated.j.route, 'review');
+  assert.equal(notStated.r.of('zapier')[0].body.route_reason, 'turnover_not_stated, register_off');
+  assert.equal(notStated.r.of('ch').length, 0);
+});
+
+test('with the register off Meta is not told the form is qualified, unless the events go to Test Events', async () => {
+  const held = await go({ env: OFF }, GOOD, { url: PREVIEW });
+  assert.equal(held.j.route, 'fit');
+  assert.equal(held.r.of('capi').length, 0);
+  assert.deepEqual(held.r.blobs.lead('l_test123').capi, { state: 'skipped', reason: 'register_off' });
+  const withCode = await go({ env: Object.assign({ META_TEST_EVENT_CODE: 'TEST123' }, OFF) }, GOOD, { url: PREVIEW });
+  assert.equal(withCode.r.of('capi').length, 1);
+  assert.equal(withCode.r.of('capi')[0].body.test_event_code, 'TEST123');
+  const declined = await go({ env: Object.assign({ META_TEST_EVENT_CODE: 'TEST123' }, OFF) }, Object.assign({}, GOOD, { consent: 'declined' }), { url: PREVIEW });
+  assert.equal(declined.r.of('capi').length, 0, 'a visitor who declined is never told to Meta');
+});
+
 /* ---------------------------------------------------------------------------------- Meta */
 
 test('Meta is told once, with the lead id as the event id and nothing readable about the person', async () => {

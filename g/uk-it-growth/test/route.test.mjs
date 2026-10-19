@@ -155,6 +155,20 @@ test('assessProfile: several problems are all reported', () => {
   assert.deepEqual(r.reasons, ['ch_not_active', 'ch_younger_than_claimed', 'ch_accounts_too_small']);
 });
 
+test('register off: a firm that would be a fit is a fit, marked as unchecked, and never as checked', () => {
+  const off = { check: 'off', reasons: [] };
+  assert.deepEqual(decide(v(), off), { route: 'fit', reasons: ['turnover_2m_plus', 'trading_2y_plus', 'register_off'] });
+  assert.deepEqual(decide(v({ turnover_band: T[5] }), off), { route: 'review', reasons: ['turnover_not_stated', 'register_off'] });
+  assert.deepEqual(decide(v({ first_year_value: W[1] }), off), { route: 'review', reasons: ['value_10k_to_25k', 'register_off'] });
+  // what the answers alone decide is untouched
+  assert.deepEqual(decide(v({ turnover_band: T[0] }), off), { route: 'not_a_fit', reasons: ['turnover_below_2m'] });
+  assert.deepEqual(decide(v({ capacity: C[0] }), off), { route: 'not_now', reasons: ['capacity_none'] });
+  // the marker appears only when the register was switched off
+  for (const ch of [OK, { check: 'skipped', reasons: [] }, { check: 'not_found', reasons: [] }, { check: 'timeout', reasons: [] }]) {
+    assert.equal(decide(v(), ch).reasons.includes('register_off'), false, ch.check);
+  }
+});
+
 test('the full table: one line per outcome the board promises', () => {
   const table = [
     // answers,                                   register,                                      route,        first reason

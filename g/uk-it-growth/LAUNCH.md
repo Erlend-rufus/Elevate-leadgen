@@ -24,10 +24,10 @@ npm run test:g-growth
 |---|---|---|---|
 | 1 | **Calendly event address** for the "30 minute pipeline review" | `config.json` → `funnel.calendlyUrl`, no query string | **Set** to the collective event "Elevate Marketing \| Commission I IT" (section 3). Its Calendly title and description still describe another offer: align them with the page, or choose another event, before launch. |
 | 2 | **Zapier Catch Hook URL** for Zap 1 | Netlify, `ZAPIER_LEAD_HOOK` | Endpoint answers 503. |
-| 3 | **Companies House API key** | Netlify, `COMPANIES_HOUSE_API_KEY` | Every lead is sent to `review`, never to `fit`. |
+| 3 | **Companies House API key** | Netlify, `COMPANIES_HOUSE_API_KEY` | Every lead is sent to `review`, never to `fit`. A deploy preview can run without it (`COMPANIES_HOUSE_MODE=off`, section 2), but launch can not. |
 | 4 | **Meta Conversions API token** | Netlify, `META_CAPI_TOKEN` | The browser pixel still works; the server copy of the event is skipped. |
 | 5 | **Alert e-mail service** (Resend is the default, see 2) | Netlify, `RESEND_API_KEY`, `ALERT_EMAIL_FROM` | Failures are only in the function log. Do not launch without it. |
-| 6 | **Zap 1 and Zap 2**, ClickUp field `lead_id`, Slack `#leads-uk` | Section 4 | **Built and tested against the real ClickUp list and one real Calendly booking, saved switched off.** Zap 1 has had one live run with a made-up lead (task in ClickUp, post in `#leads-uk`); Zap 2 has had one live run with a real booking on "Commission I IT" (task found by lead id, moved to `møte booket`, due date set, one comment). Both are switched on again for the acceptance run (section 10). The hook URL for row 2 exists once Zap 1 has been switched on; it is copied from Zap 1's trigger step in the Zapier editor. |
+| 6 | **Zap 1 and Zap 2**, ClickUp field `lead_id`, Slack `#leads-uk` | Section 4 | **Built and tested against the real ClickUp list and one real Calendly booking, saved switched off.** Zap 1 has had one live run with a made-up lead (task in ClickUp, post in `#leads-uk`); Zap 2 has had one live run with a real booking on "Commission I IT" (task found by lead id, moved to `møte booket`, due date set, one comment). Both have to be switched on again, by a person, for the acceptance run (section 10). The hook URL for row 2 exists once Zap 1 has been switched on; it is copied from Zap 1's trigger step in the Zapier editor. |
 | 7 | **Privacy notice and website terms** approved by the solicitor | `config.json` → `links` | The pages link to the existing `/lp/privacy/` and `/lp/terms/`. |
 | 8 | **A real phone test** (section 9) | | |
 
@@ -41,7 +41,8 @@ person who owns the account and pasted into Netlify.
 | Variable | | If missing |
 |---|---|---|
 | `ZAPIER_LEAD_HOOK` | **Required.** An `https://` Catch Hook URL. | 503, nothing stored. |
-| `COMPANIES_HOUSE_API_KEY` | The register lookup. | Every lead is `review`. |
+| `COMPANIES_HOUSE_API_KEY` | The register lookup. Needed before launch. | Every lead is `review`. |
+| `COMPANIES_HOUSE_MODE` | `off` skips the register so a **deploy preview** can be tried end to end before the key exists. Set it for the deploy-preview context only, never for production. The code ignores it on every address except a Netlify deploy preview, a branch deploy and localhost, and whenever Netlify's `CONTEXT` is `production`. Not a launch setting. | The register is asked. |
 | `META_CAPI_TOKEN` | Server side `QualifiedForm`. | Skipped, recorded as `not_configured`. |
 | `META_PIXEL_ID` | Optional. Defaults to the page's pixel (`config.json` → `funnel.pixelId`). Setting it to anything else breaks the match between the browser event and the server event. | Page pixel. |
 | `META_TEST_EVENT_CODE` | Optional. While set, events show only under Test Events in Events Manager. **Remove it for launch.** | Live events. |
@@ -299,11 +300,18 @@ The register is asked only when it can change the outcome. It is matched on the 
 (upper case, "limited" and "ltd" normalised), an active company is preferred, and a lookup that fails
 or takes over four seconds gives `review`, never `fit`.
 
+**Register off (previews only).** With `COMPANIES_HOUSE_MODE=off` on a preview the register is not asked. The
+check is recorded as `off`, never as `ok`. A lead that would have been a `fit` is still a `fit` and carries the
+reason `register_off`; a `review` caused by something else carries it too. What the answers decide alone is
+unchanged (not a fit, not now), and turnover not stated is still `review`. Meta is not told about such a lead
+unless `META_TEST_EVENT_CODE` is set. The point is to test the page, the booking and the Zaps; it is not a way to
+run real traffic, and the code refuses it on the live address.
+
 ---
 
 ## 7. What the endpoint does
 
-`POST /api/lead`, in this order. Each step is tested (`test/handler.test.mjs`, 80 tests).
+`POST /api/lead`, in this order. Each step is tested (`test/handler.test.mjs`, 84 tests).
 
 1. Only `POST` (405 otherwise), JSON or a plain form post, at most 64 KB, a known campaign.
 2. Tracking: `utm_*` and `fbclid` from the post, or from the `Referer` of the page that posted (a
@@ -317,7 +325,7 @@ or takes over four seconds gives `review`, never `fit`.
 7. The same lead id seen before: the **first decision stays** (a visitor who goes back and changes an
    answer after an outcome gets the same page; the answer pages carry the contact address), and a
    delivery that failed is tried again.
-8. Companies House lookup, then the decision (section 6).
+8. Companies House lookup (skipped on a preview with the register off), then the decision (section 6).
 9. **The lead is stored before anything is sent** (Netlify Blobs, store `leads`, kept 365 days).
 10. Zapier (three attempts, 8 seconds in all; a redirect counts as a failure) and, in parallel, the
     Meta event. A failure in either never changes the answer the visitor gets.
@@ -349,6 +357,12 @@ should be on for both Zaps.
 - Generated output is committed (`public/g/uk-it-growth/**`, `netlify/functions/lead/data.generated.mjs`).
   Editing it by hand is lost on the next build. Edit `copy.json`, `config.json`, `core.mjs`,
   `render-form.mjs`, `route.mjs`, `g/_growth/` or the generator.
+- **Previews (checked 19 Oct 2026).** Netlify builds a deploy preview for every pull request, at
+  `deploy-preview-<number>--luxury-custard-0c4db9.netlify.app`, and it answers with `X-Robots-Tag: noindex`.
+  There is no branch deploy for `feat/uk-it-growth`. A preview of a branch that still has `"live": false`
+  shows the pages but the form answers 503, so a preview that takes real posts needs its own branch with
+  `"live": true` that is never merged (section 10). Not checked: whether Netlify Blobs in a preview is a
+  store of its own or the site's shared one, so assume a preview lead lands in the shared store.
 - Text is the board's, word for word, in `copy.json`. The build refuses dashes, exclamation marks,
   American spellings, a commission rate and an unfilled `{TOKEN}`.
 
@@ -357,7 +371,7 @@ should be on for both Zaps.
 ## 9. Testing
 
 ```
-npm run test:g-growth                     # 194 tests, no network, a few seconds
+npm run test:g-growth                     # 203 tests, no network, a few seconds
 npm run test:g-it                         # the older IT funnel, unchanged
 
 npm install --no-save playwright-core axe-core        # once
@@ -392,6 +406,15 @@ Companies House, the alert e-mail, and Netlify's own routing. The acceptance run
 - [ ] `config.json` → `"live": true`; `npm run build` and `npm run test:g-growth` pass, and the build says
       nothing is outstanding.
 - [ ] Deploy to a **Netlify preview** first, with `META_TEST_EVENT_CODE` set. Production only on an explicit yes.
+      How, without touching production: a branch `preview/uk-it-growth` (the feature branch plus one commit that
+      sets `"live": true`, never merged) and a draft pull request from it, which gives the deploy preview.
+      In Netlify: `ZAPIER_LEAD_HOOK` in scope Functions for all contexts, and for the **deploy-preview context
+      only** `COMPANIES_HOUSE_MODE=off` (until the register key exists) and `META_TEST_EVENT_CODE`. On the preview
+      a `fit` shows `Sjekk mot registeret: off` and the reason `register_off`: that is the switch working. Close
+      the pull request when the run is done.
+- [ ] **The register is real before launch.** `COMPANIES_HOUSE_API_KEY` is set for production, and
+      `COMPANIES_HOUSE_MODE` exists, if at all, in the deploy-preview context only. A lead on the live address shows
+      `ok`, `mismatch` or `not_found`, never `off`.
 - [ ] **Switch Zap 1 and Zap 2 on** in the Zapier editor. They are saved switched off, and a lead sent to a
       switched-off hook does not become a task. Both triggers should then show `active`. Zap 2 now runs for every
       booking in the Calendly account and skips what is not ours.
@@ -418,6 +441,10 @@ Companies House, the alert e-mail, and Netlify's own routing. The acceptance run
 - **Replay returns the first decision.** Someone who corrects an answer after an outcome is not re-routed.
   They can write to the contact address on the answer page.
 - **Failed deliveries are retried once a day** (07:00 UTC), and the retry stops after two failures in a row.
+- **Register off is a test aid, not a mode for real traffic.** If it were used for real visitors, every firm that
+  claims £2m or more would get a calendar slot unchecked, and a firm that is not what it says would cost a call.
+  The code refuses it on the live address on purpose. Zap 1 shows such a lead as "ikke sjekket" and has no
+  warning line for it, because it can only occur on a preview.
 - **The register check is an exact match on the company name.** A trading name that differs from the
   registered name gives `review`, by design: a person looks, nobody is turned away on it.
 - **Free text is passed on as typed.** A value starting `=`, `+`, `-` or `@` is a formula to a

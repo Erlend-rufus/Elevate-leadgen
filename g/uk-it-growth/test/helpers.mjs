@@ -183,7 +183,7 @@ export function rig(over = {}) {
 }
 
 /** A POST like the page's script sends it (JSON) or like a browser sends a plain form. */
-export function post(fields, { asJson = true, accept, headers = {}, ip = '203.0.113.7', type } = {}) {
+export function post(fields, { asJson = true, accept, headers = {}, ip = '203.0.113.7', type, url = 'https://getelevateleads.com/api/lead' } = {}) {
   const f = Object.assign({}, fields);
   for (const k of Object.keys(f)) if (f[k] === undefined) delete f[k];
   const isJson = asJson !== false;
@@ -193,7 +193,7 @@ export function post(fields, { asJson = true, accept, headers = {}, ip = '203.0.
     'user-agent': 'node-test/1.0',
   }, headers);
   if (ip !== null) h['x-nf-client-connection-ip'] = ip;   // ip: null sends no address header at all
-  return new Request('https://getelevateleads.com/api/lead', {
+  return new Request(url, {
     method: 'POST',
     headers: h,
     body: isJson ? JSON.stringify(f) : new URLSearchParams(f).toString(),
