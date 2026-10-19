@@ -242,10 +242,33 @@ a test and gets the tag `test`.
   included, also lands in the second host's calendar until it is cancelled. A cancellation was not tested: the
   trigger fires for new bookings only, so a cancelled booking leaves its task where it is. Zap 2 was then
   switched off again and the test task archived.
-- **Not shown yet:** the real Catch Hook delivery from the Netlify function (the live run of Zap 1 came
-  through Zapier's own trigger, not through the hook URL), the lead id handed on by the embedded widget on
-  `/book` (the live run used a hand-made link), a booking that arrives without a lead id (only the local and
-  draft checks have run it) and a booking moved to a new time. Section 10 covers them.
+- **Live, 19 Oct 2026, from a real phone on the deploy preview of pull request #74 (both Zaps switched on for
+  about a quarter of an hour, then off again).** Two submissions of the real form with the register switched off
+  (section 8): the first with the banner accepted, a real e-mail address and a Norwegian mobile number, followed
+  by a booking from the page itself; the second with the banner declined, an address ending `@example.invalid`
+  and no booking. Result:
+  - The Netlify function delivered both leads to the Catch Hook URL, the first time that path ran. Both Zap 1
+    runs finished without an error, and each lead made one task in "IT - UK - Commision" (route `fit`, status
+    `ny lead`, priority high, reason `register_off`, "Sjekk mot registeret: off").
+  - Slack: one post in `#leads-uk` for the first lead, with no phone, e-mail or free text, "Companies House: ikke
+    sjekket" and "Kilde: ukjent" (the page was opened without UTM tags). None for the second, which is a test lead
+    without `slack_test`. The second lead's task carries the tag `test`.
+  - ClickUp accepted the real mobile number in the Phone field. It was a Norwegian +47 number; a British +44
+    number has so far only been shown with the reserved drama number.
+  - The embedded widget on `/book` filled in the visitor's name and e-mail address and handed the lead id on in
+    `utm_content`. Zap 2 found the task by it on the first lookup, moved it from `ny lead` to `møte booket`, set
+    the due date to the meeting's start and added one comment with the time in London and Oslo, about ten seconds
+    after the booking. The booking ended on `/takk`.
+  - Team Size, Ad Spend Budget and Contract Value stayed empty, as designed, because each of the form's bands
+    spans two ClickUp options. The exact answers are in the description.
+  - Both test tasks were archived. The booking has to be cancelled in Calendly by hand: it lands in both hosts'
+    calendars.
+- **Not shown yet:** live submissions of `review`, `not_now` and `not_a_fit` (the Zap's draft runs cover all four
+  routes), a booking that arrives without a lead id (only the local and draft checks have run it), a booking
+  moved to a new time, a cancelled booking (its task stays where it is), Zap 1 with a British mobile number,
+  the Meta pixel and the Conversions API (no token or test event code yet), the banner's Decline path in the
+  browser, the register with a real key, the alert e-mail, a failed delivery and a submission with JavaScript off.
+  Section 10 covers them.
 
 ### Not changed
 
@@ -363,6 +386,12 @@ should be on for both Zaps.
   shows the pages but the form answers 503, so a preview that takes real posts needs its own branch with
   `"live": true` that is never merged (section 10). Not checked: whether Netlify Blobs in a preview is a
   store of its own or the site's shared one, so assume a preview lead lands in the shared store.
+  Used on 19 Oct 2026: pull request #74 (a draft, base `main`, head `preview/uk-it-growth`) had its preview
+  about a minute after the push, and an empty commit rebuilt it in under twenty seconds. A function reads its
+  environment variables as they were when the deploy was built, so a variable added in Netlify reaches the
+  preview only after the next build. Until `ZAPIER_LEAD_HOOK` existed the preview answered 503 to a post; with it,
+  an empty post answers 422, which is the check that costs nothing. The preview has no password, so while
+  Zap 1 is on anyone who finds the address can post a lead.
 - Text is the board's, word for word, in `copy.json`. The build refuses dashes, exclamation marks,
   American spellings, a commission rate and an unfilled `{TOKEN}`.
 
