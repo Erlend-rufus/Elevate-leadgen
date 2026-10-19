@@ -24,7 +24,7 @@ npm run test:g-growth
 |---|---|---|---|
 | 1 | **Calendly event address** for the "30 minute pipeline review" | `config.json` → `funnel.calendlyUrl`, no query string | **Set** to the collective event "Elevate Marketing \| Commission I IT" (section 3). Its Calendly name and description still describe another offer. The owner approved new wording on 19 Oct 2026 (text in section 3); it is not entered yet, because the browser's Calendly login had expired and the assistant never types a password. |
 | 2 | **Zapier Catch Hook URL** for Zap 1 | Netlify, `ZAPIER_LEAD_HOOK` | Endpoint answers 503. |
-| 3 | **Companies House API key** | Netlify, `COMPANIES_HOUSE_API_KEY`, and `legal.registerCheck` in `config.json` | **Dropped for launch** (owner's decision, 19 Oct 2026). Every lead that would be a `fit` is a `review`, so nobody reaches `/book` by themselves (section 6). The pages say nothing about a register check while `legal.registerCheck` is `false`. A deploy preview can still run with the register off (`COMPANIES_HOUSE_MODE=off`, section 2); production never can. Getting the key later is one variable and one flag (section 13). |
+| 3 | **Companies House API key** | Netlify, `COMPANIES_HOUSE_API_KEY`, and `legal.registerCheck` in `config.json` | **Dropped for now** (owner's decision, 19 Oct 2026, changed the same evening). With `legal.registerCheck: false` no register lookup is made: a lead whose own answers qualify is a `fit`, reaches `/book` by itself, and is marked `unchecked` with the reason `register_not_used`. The calendar is therefore open to anyone who answers the form right (section 6). The pages say nothing about a register check while `legal.registerCheck` is `false`. A deploy preview can still run with the register off (`COMPANIES_HOUSE_MODE=off`, section 2); production never can. Getting the key later is one variable and one flag (section 13). |
 | 4 | **Meta Conversions API token** | Netlify, `META_CAPI_TOKEN` | The browser pixel still works; the server copy of the event is skipped. |
 | 5 | **An alert channel**, Slack or e-mail (either one is enough) | Netlify, `SLACK_ALERT_WEBHOOK_URL`, or `RESEND_API_KEY` with `ALERT_EMAIL_FROM` | Failures are only in the function log. Do not launch without one. Slack is the shorter road: an incoming webhook for one channel, no new processor in the privacy notice and no DNS record. E-mail through Resend needs an account, a verified sender domain and a line in the notice. |
 | 6 | **Zap 1 and Zap 2**, ClickUp field `lead_id`, Slack `#leads-uk` | Section 4 | **Built and tested against the real ClickUp list and one real Calendly booking, saved switched off.** Zap 1 has had one live run with a made-up lead (task in ClickUp, post in `#leads-uk`); Zap 2 has had one live run with a real booking on "Commission I IT" (task found by lead id, moved to `møte booket`, due date set, one comment). Both have to be switched on again, by a person, for the acceptance run (section 10). The hook URL for row 2 exists once Zap 1 has been switched on; it is copied from Zap 1's trigger step in the Zapier editor. |
@@ -41,7 +41,7 @@ person who owns the account and pasted into Netlify.
 | Variable | | If missing |
 |---|---|---|
 | `ZAPIER_LEAD_HOOK` | **Required.** An `https://` Catch Hook URL. | 503, nothing stored. |
-| `COMPANIES_HOUSE_API_KEY` | The register lookup. Not needed for launch (decision of 19 Oct 2026). Set it together with `legal.registerCheck: true` (section 13). | Every lead that would be a `fit` is a `review` (section 6). |
+| `COMPANIES_HOUSE_API_KEY` | The register lookup. Not needed for launch (decision of 19 Oct 2026). Set it together with `legal.registerCheck: true` (section 13). | With `legal.registerCheck: false`, nothing: no lookup is made and qualifying leads are `fit`, marked `unchecked`. With `registerCheck: true` and no key, every would-be `fit` is a `review`. |
 | `COMPANIES_HOUSE_MODE` | `off` skips the register so a **deploy preview** can be tried end to end before the key exists. Set it for the deploy-preview context only, never for production. The code ignores it on every address except a Netlify deploy preview, a branch deploy and localhost, and whenever Netlify's `CONTEXT` is `production`. Not a launch setting. | The register is asked. |
 | `META_CAPI_TOKEN` | Server side `QualifiedForm`. | Skipped, recorded as `not_configured`. |
 | `META_PIXEL_ID` | Optional. Defaults to the page's pixel (`config.json` → `funnel.pixelId`). Setting it to anything else breaks the match between the browser event and the server event. | Page pixel. |
@@ -369,7 +369,7 @@ run real traffic, and the code refuses it on the live address.
 7. The same lead id seen before: the **first decision stays** (a visitor who goes back and changes an
    answer after an outcome gets the same page; the answer pages carry the contact address), and a
    delivery that failed is tried again.
-8. Companies House lookup (skipped on a preview with the register off; with no key it makes no request and gives
+8. Companies House lookup (not made when `legal.registerCheck` is `false`: the lead is marked `unchecked` and stays a `fit`; skipped on a preview with the register off; with the check on and no key it makes no request and gives
    `review`, section 6), then the decision (section 6).
 9. **The lead is stored before anything is sent** (Netlify Blobs, store `leads`, kept 365 days).
 10. Zapier (three attempts, 8 seconds in all; a redirect counts as a failure) and, in parallel, the
@@ -491,9 +491,9 @@ stores nothing) but shows a form that fails, so set the variable first.
       answers 422 with a list of missing answers when production has the hook, and 503 when it does not: the check that costs
       nothing and sends nothing. (Without the `campaign` key the answer is 400, and without the `Accept` header it is the form page.)
 - [ ] **The register.** Decided 19 Oct 2026: no key at launch. Production has no `COMPANIES_HOUSE_API_KEY`, `legal.registerCheck` is
-      `false`, and `COMPANIES_HOUSE_MODE` is not set in production (the code ignores it there anyway). A lead on the live address that would
-      have been a `fit` shows `review`. To use the register: the key and `legal.registerCheck: true` together (section 13); a lead then
-      shows `ok`, `mismatch` or `not_found`, never `off`.
+      `false`, and `COMPANIES_HOUSE_MODE` is not set in production (the code ignores it there anyway). Changed the same evening: a lead on the live address whose own answers qualify is a `fit` with
+      check `unchecked` and reason `register_not_used`, and gets the calendar. To use the register: the key and `legal.registerCheck: true` together (section 13); a lead then
+      shows `ok`, `mismatch` or `not_found`, never `off` or `unchecked`.
 - [ ] **Switch Zap 1 and Zap 2 on** in the Zapier editor, after production has the hook. They are saved switched off, and a lead sent
       to a switched-off hook does not become a task. Both triggers should then show `active`. Zap 2 now runs for every
       booking in the Calendly account and skips what is not ours.
@@ -528,8 +528,8 @@ stores nothing) but shows a form that fails, so set the variable first.
 - **Register off is a test aid, not a mode for real traffic.** If it were used for real visitors, every firm that
   claims £2m or more would get a calendar slot unchecked, and a firm that is not what it says would cost a call.
   The code refuses it on the live address on purpose. Zap 1 shows such a lead as "ikke sjekket" and has no
-  warning line for it, because it can only occur on a preview. Having no key is not the same thing: nobody then gets
-  a calendar slot unchecked, every would-be `fit` gets a person instead (section 6).
+  warning line for it, because it can only occur on a preview. Having the check switched off in `config.json` is a different thing and is the live setting for now: a qualifying lead is a
+  `fit` with check `unchecked`, so a firm that is not what it says can book a call. The task shows it (`register_not_used`), look before the meeting.
 - **The register check is an exact match on the company name.** A trading name that differs from the
   registered name gives `review`, by design: a person looks, nobody is turned away on it.
 - **Free text is passed on as typed.** A value starting `=`, `+`, `-` or `@` is a formula to a
@@ -626,7 +626,7 @@ in the config, then build and deploy. If only one is done, the notice is wrong i
 "IT - UK - Commision" and, for `fit` and `review`, one post in `#leads-uk`. Alerts (a delivery that failed, a lead with no task, the hook
 missing, the register key and the notice disagreeing) go to the alert channel, never through Zapier.
 
-**With no register key (the launch setting) every would-be `fit` arrives as `REVIEW`.** The Slack post carries the line
+**With no register check (`legal.registerCheck: false`) a qualifying lead is a `FIT` marked `unchecked` and books by itself; the steps below apply to `REVIEW` leads (a client worth £10k to under £25k, turnover not stated).** Before each booked meeting, look the company up by hand as in step 2 (it takes two minutes). The text that follows is the older description for the case where the check is on and the key is missing, when every would-be `fit` arrives as `REVIEW`. The Slack post carries the line
 `⚠ Størrelse ikke bekreftet, sjekk før møtet`, the task has the tag `sjekk-størrelse` and the reason `ch_timeout` (section 6), and the visitor has
 been told that we will be in touch within one working day. A person keeps that promise, the same working day or the next:
 
@@ -640,7 +640,7 @@ been told that we will be in touch within one working day. A person keeps that p
 5. When the booking is made, Zap 2 moves the task to `møte booket`. Without a lead id in the link it matches on the e-mail address; a booking it
    cannot match makes a new task tagged `booket-uten-skjema`, which a person merges by hand.
 
-**Counting.** While there is no key, the share of leads that are `fit` and the bookings that came from a `fit` can not be measured. Count
+**Counting.** While there is no register check, `fit` means only that the visitor's own answers qualified, so the share of `fit` says nothing about real size. Count
 bookings as tasks that reached `møte booket`, and read the cost per booking from that. `QualifiedForm` in Meta counts `fit` and `review`
 together.
 

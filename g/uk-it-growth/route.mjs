@@ -83,6 +83,10 @@ export function assessProfile(v, profile, now) {
  * The decision. "ch" is what the register said: {check, reasons, profile}, where check is
  * 'skipped' (not asked), 'ok', 'not_found', 'timeout', 'mismatch' or 'off'.
  *
+ * 'unchecked' means the funnel makes no register check at all (legal.registerCheck is false in config.json): a firm
+ * whose own answers qualify is a fit and gets the calendar, with the reason "register_not_used" so nobody reads it as
+ * checked. Turn the check on and the same firms go through the register again.
+ *
  * 'off' means the register was deliberately not asked, on a preview only (see
  * registerSwitchedOff in netlify/functions/lead/index.mjs). It is never turned into 'ok': a
  * lead that would have been a fit is still a fit, but carries the reason "register_off" so
@@ -116,5 +120,6 @@ export function decide(v, ch) {
   const fit = ['turnover_2m_plus', 'trading_2y_plus'];
   if (profile.accounts_type) fit.push('ch_' + profile.accounts_type);
   if (registry.check === 'off') fit.push('register_off');
+  if (registry.check === 'unchecked') fit.push('register_not_used');
   return { route: 'fit', reasons: fit };
 }

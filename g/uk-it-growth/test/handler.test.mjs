@@ -534,12 +534,31 @@ test('the register is asked with the key as the user name and an empty password'
   assert.match(profile.url, /\/company\/01234567$/);
 });
 
-test('no key: every lead goes to review, never to fit', async () => {
-  const { r, j } = await go({ env: { COMPANIES_HOUSE_API_KEY: undefined } });
+test('register check switched on but no key: every lead goes to review, never to fit', async () => {
+  const { r, j } = await go({ registerCheck: true, env: { COMPANIES_HOUSE_API_KEY: undefined } });
   assert.equal(j.route, 'review');
   assert.equal(r.of('ch').length, 0);
   assert.deepEqual(r.of('zapier')[0].body.route_reason, 'ch_timeout');
   assert.ok(r.logs.some((l) => l.code === 'ch_unavailable' && l.reason === 'no_key'));
+});
+
+test('no register check (legal.registerCheck false): a firm whose answers qualify is a fit, marked unchecked, and Meta is told', async () => {
+  const { r, j } = await go({ env: { COMPANIES_HOUSE_API_KEY: undefined, META_CAPI_TOKEN: 'tok' } });
+  assert.equal(j.route, 'fit');
+  assert.equal(r.of('ch').length, 0, 'the register is not asked');
+  const z = r.of('zapier')[0].body;
+  assert.equal(z.ch_check, 'unchecked', 'never reported as ok');
+  assert.equal(z.route_reason, 'turnover_2m_plus, trading_2y_plus, register_not_used');
+  assert.deepEqual(r.blobs.lead('l_test123').ch, { check: 'unchecked', reasons: [] });
+  assert.equal(r.logs.some((l) => l.code === 'ch_unavailable'), false);
+});
+
+test('no register check: the self-reported rules still apply (review, not now, not a fit)', async () => {
+  const env = { COMPANIES_HOUSE_API_KEY: undefined };
+  assert.equal((await go({ env }, Object.assign({}, GOOD, { turnover_band: T[1] }))).j.route, 'not_a_fit');
+  assert.equal((await go({ env }, Object.assign({}, GOOD, { capacity: C[0] }))).j.route, 'not_now');
+  assert.equal((await go({ env }, Object.assign({}, GOOD, { first_year_value: W[1] }))).j.route, 'review');
+  assert.equal((await go({ env }, Object.assign({}, GOOD, { turnover_band: T[5] }))).j.route, 'review');
 });
 
 test('a company that is not in the register goes to review', async () => {
@@ -623,7 +642,7 @@ const PREVIEW = 'https://deploy-preview-72--luxury-custard-0c4db9.netlify.app/ap
 const OFF = { COMPANIES_HOUSE_MODE: 'off' };
 
 test('register off on a deploy preview: the register is not asked, a firm that qualifies is a fit, and the record says it was not checked', async () => {
-  const { r, j } = await go({ env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined }, OFF) }, GOOD, { url: PREVIEW });
+  const { r, j } = await go({ registerCheck: true, env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined }, OFF) }, GOOD, { url: PREVIEW });
   assert.equal(j.route, 'fit');
   assert.equal(r.of('ch').length, 0);
   const z = r.of('zapier')[0].body;
@@ -654,7 +673,7 @@ test('register off is ignored on every address a real visitor can reach', async 
     'https://x-deploy-preview-1--x.netlify.app.getelevateleads.com/api/lead',
   ];
   for (const url of live) {
-    const { r, j } = await go({ env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined }, OFF) }, GOOD, { url });
+    const { r, j } = await go({ registerCheck: true, env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined }, OFF) }, GOOD, { url });
     assert.equal(j.route, 'review', url);
     assert.equal(r.of('zapier')[0].body.ch_check, 'timeout', url);
     assert.equal(r.logs.some((l) => l.code === 'ch_switched_off'), false, url);
@@ -668,7 +687,7 @@ test('register off is ignored on every address a real visitor can reach', async 
 
 test('register off is ignored when Netlify says the context is production, whatever the address', async () => {
   for (const CONTEXT of ['production', 'Production', ' production ']) {
-    const { r, j } = await go({ env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined, CONTEXT }, OFF) }, GOOD, { url: PREVIEW });
+    const { r, j } = await go({ registerCheck: true, env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined, CONTEXT }, OFF) }, GOOD, { url: PREVIEW });
     assert.equal(j.route, 'review', CONTEXT);
     assert.equal(r.of('zapier')[0].body.ch_check, 'timeout', CONTEXT);
   }
@@ -678,7 +697,7 @@ test('register off is ignored when Netlify says the context is production, whate
 
 test('only the value "off" switches the register off, in any case and with spaces round it', async () => {
   for (const value of ['on', 'false', '0', 'no', '', 'offline', 'of']) {
-    const { j } = await go({ env: { COMPANIES_HOUSE_API_KEY: undefined, COMPANIES_HOUSE_MODE: value } }, GOOD, { url: PREVIEW });
+    const { j } = await go({ registerCheck: true, env: { COMPANIES_HOUSE_API_KEY: undefined, COMPANIES_HOUSE_MODE: value } }, GOOD, { url: PREVIEW });
     assert.equal(j.route, 'review', JSON.stringify(value));
   }
   for (const value of ['off', 'OFF', ' Off ']) {

@@ -189,3 +189,11 @@ test('the full table: one line per outcome the board promises', () => {
     assert.equal(r.reasons[0], reason, JSON.stringify(a));
   }
 });
+
+test('unchecked (no register check in this funnel): a qualifying firm is a fit with the reason register_not_used; the other rules are unchanged', () => {
+  const un = { check: 'unchecked', reasons: [] };
+  assert.deepEqual(decide(v(), un), { route: 'fit', reasons: ['turnover_2m_plus', 'trading_2y_plus', 'register_not_used'] });
+  assert.equal(decide(v({ turnover_band: T[5] }), un).route, 'review');
+  assert.equal(decide(v({ turnover_band: T[1] }), un).route, 'not_a_fit');
+  assert.equal(decide(v({ capacity: OPTIONS.capacity[0] }), un).route, 'not_now');
+});
