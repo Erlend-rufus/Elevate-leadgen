@@ -5,7 +5,7 @@
 //   npx playwright-core install chromium
 //   node g/uk-it-growth/e2e/run.mjs [group ...]
 //
-// Groups: landing form routes consent book nojs failures motion desktop committed kbd a11y text
+// Groups: landing form routes consent book nojs failures motion desktop committed kbd a11y text legal
 // Settings (all optional): E2E_SHOTS=<dir> writes screenshots; E2E_CHROMIUM=<path> uses that browser;
 // E2E_BOARD_TEXT=<textdump.json> compares the page text with the design board's text dump.
 import fs from 'node:fs';
@@ -194,7 +194,7 @@ async function form() {
   R.eq(await f.locator('[role=progressbar]').getAttribute('aria-valuenow'), '13', 'progress bar: 13');
   R.eq(await txt(btn), copy.form.cta, 'last button says what the board says');
   R.check(await f.locator('.lf-consent').isVisible(), 'consent sentence shows on the last question');
-  R.check(await f.locator('.lf-consent a[href="/lp/privacy/"]').count() === 1, 'and links to the privacy page');
+  R.check(await f.locator('.lf-consent a[href="/g/uk-it-growth/privacy/"]').count() === 1, 'and links to the privacy page');
   R.check(await f.locator('#f-mobile').isVisible() && (await f.locator('label[for=f-mobile]').textContent()).includes('optional'), 'mobile is marked optional');
 
   // the details step
@@ -779,15 +779,18 @@ async function desktop() {
 
 /* ============================================================================ 10. committed state */
 async function committed() {
-  R.section('10. The pages as committed (live is false, no calendar address yet)');
+  R.section('10. The pages as committed (live is false, the real calendar address is set)');
   const s2 = await startServer({ live: false });
   const ctx = await browser.newContext({ viewport: M, javaScriptEnabled: true, locale: 'en-GB' });
   await ctx.route('**/*', (rt) => (new URL(rt.request().url()).hostname === '127.0.0.1' ? rt.fallback() : rt.abort()));
   const page = await ctx.newPage();
   const b = bucket(); watch(page, b);
   await page.goto(s2.base + PATH + 'book/?lead_id=l_x');
-  R.check((await txt(page.locator('#cal'))).includes('The calendar is not connected yet'), 'book: shows the build note instead of a calendar');
-  R.eq(await page.locator('.calendly-inline-widget').count(), 0, 'book: no calendar widget');
+  // The event address has been in config.json since the first commit, so the committed booking page embeds the calendar and shows no build note.
+  R.check(!(await txt(page.locator('#cal'))).includes('not connected yet'), 'book: no build note, the calendar address is set');
+  R.eq(await page.locator('.calendly-inline-widget').count(), 1, 'book: the calendar widget is there');
+  const embedded = (await page.locator('.calendly-inline-widget').getAttribute('data-url')) || '';
+  R.check(embedded.startsWith(cfg.funnel.calendlyUrl + '?') && !embedded.includes('elevate-test'), 'book: and it points at the event in config.json, not at the test address', embedded);
   await page.goto(s2.base + PATH + QS);
   await page.locator('#form').scrollIntoViewIfNeeded();
   await fillForm(page, {}, { submit: false });
@@ -927,7 +930,7 @@ async function a11y() {
     }
     await r.ctx.close();
   }
-  const pages = [['book', PATH + 'book/?lead_id=l_x'], ['takk', PATH + 'takk/?lead_id=l_x'], ['review', PATH + 'review/?lead_id=l_x'], ['not-now', PATH + 'not-now/'], ['not-a-fit', PATH + 'not-a-fit/']];
+  const pages = [['book', PATH + 'book/?lead_id=l_x'], ['takk', PATH + 'takk/?lead_id=l_x'], ['review', PATH + 'review/?lead_id=l_x'], ['not-now', PATH + 'not-now/'], ['not-a-fit', PATH + 'not-a-fit/'], ['privacy', PATH + 'privacy/'], ['terms', PATH + 'terms/']];
   for (const vp of [M, D]) {
     for (const [name, u] of pages) {
       const r = await open({ vp, reduced: true }, srv.base + u);
@@ -939,7 +942,56 @@ async function a11y() {
 }
 const page0 = (r) => r.page;
 
-const groups = { landing, form, routes, consent, book, nojs, failures, motion, desktop, committed, kbd, a11y, text };
+/* ============================================================================ 14. legal */
+async function legal() {
+  R.section('14. The privacy notice and the website terms');
+  const rowDisplay = (page) => page.evaluate(() => getComputedStyle(document.querySelector('.lg-table tbody tr')).display);
+  const sideways = (page) => page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  for (const vp of [M, D]) {
+    for (const [name, h1, h2s] of [['privacy', 'Privacy notice', 9], ['terms', 'Website terms', 10]]) {
+      const r = await open({ vp, reduced: true }, srv.base + PATH + name + '/');
+      const { page } = r;
+      R.eq(await page.locator('h1').count(), 1, `${name} ${vp.width}: one h1`);
+      R.eq(await txt(page.locator('h1')), h1, `${name} ${vp.width}: the heading`);
+      R.eq(await page.locator('main h2').count(), h2s, `${name} ${vp.width}: ${h2s} numbered parts`);
+      R.check((await sideways(page)) <= 0, `${name} ${vp.width}: nothing scrolls sideways`, String(await sideways(page)));
+      if (name === 'privacy') {
+        R.eq(await page.locator('table.lg-table').count(), 5, 'privacy: five tables (the register rows are off)');
+        R.eq(await rowDisplay(page), vp.width < 600 ? 'block' : 'table-row', `privacy ${vp.width}: ${vp.width < 600 ? 'a row stacks on a phone' : 'a table on a desktop'}`);
+        R.check(await page.locator('#cookie-reset').isVisible(), `privacy ${vp.width}: the cookie button shows when a script runs`);
+        R.check(!/companies house/i.test(await txt(page.locator('main'))), `privacy ${vp.width}: no check against the register is described`);
+      } else {
+        R.eq(await page.locator('main a[href="/g/uk-it-growth/privacy/"]').count(), 1, 'terms: links to the privacy notice');
+        R.eq(await page.locator('#cookie-reset').count(), 0, 'terms: no cookie button');
+      }
+      R.eq(await page.locator('.ft-links a').allTextContents(), ['Privacy', 'Website terms'], `${name} ${vp.width}: the footer links`);
+      await r.ctx.close();
+    }
+  }
+  // Without a script the button is not offered: it could not do anything.
+  {
+    const r = await open({ js: false }, srv.base + PATH + 'privacy/');
+    R.check(!(await r.page.locator('#cookie-reset').isVisible()), 'privacy, no script: the cookie button stays hidden');
+    R.check((await r.page.locator('main h2').count()) === 9, 'privacy, no script: the whole notice is there');
+    await r.ctx.close();
+  }
+  // Changing the choice: accept in the bar, press the button, and the choice is gone and the bar asks again.
+  {
+    const r = await open({ vp: D, reduced: true }, srv.base + PATH + 'privacy/');
+    const { page } = r;
+    await scrollY(page, 420); await settle(page, 500);
+    await page.locator('#g-consent button[data-c=yes]').click();
+    await settle(page);
+    R.eq(await page.evaluate((k) => localStorage.getItem(k), KEY), 'accepted', 'accepted in the bar');
+    await Promise.all([page.waitForNavigation({ timeout: 8000 }), page.locator('#cookie-reset').click()]);
+    await settle(page, 400);
+    R.eq(await page.evaluate((k) => localStorage.getItem(k), KEY), null, 'the button clears the stored choice');
+    R.eq(await page.locator('#g-consent').count(), 1, 'and the cookie bar is there to ask again');
+    await r.ctx.close();
+  }
+}
+
+const groups = { landing, form, routes, consent, book, nojs, failures, motion, desktop, committed, kbd, a11y, text, legal };
 const skip = {
   committed: cfg.live ? 'config.json has "live": true, so the committed pages are no longer in the pre-launch state this group describes' : '',
   a11y: AXE ? '' : 'axe-core is not installed (npm install --no-save axe-core)',

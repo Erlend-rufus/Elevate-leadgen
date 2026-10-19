@@ -9,7 +9,7 @@ function and the tests; this is the first.
 **Status: built and tested, not live.** `config.json` has `"live": false`. Every page carries
 `noindex`, the endpoint answers every post with a 503 and stores nothing, and the booking page shows
 a note where the calendar goes. Nothing reaches production until a person sets `"live": true` and
-deploys (section 10). The build says what is outstanding:
+deploys (section 10, which also says where things stand). The build says what is outstanding:
 
 ```
 npm run build        # or: node scripts/build-g-growth.mjs
@@ -22,13 +22,13 @@ npm run test:g-growth
 
 | # | What | Where it goes | Until then |
 |---|---|---|---|
-| 1 | **Calendly event address** for the "30 minute pipeline review" | `config.json` → `funnel.calendlyUrl`, no query string | **Set** to the collective event "Elevate Marketing \| Commission I IT" (section 3). Its Calendly title and description still describe another offer: align them with the page, or choose another event, before launch. |
+| 1 | **Calendly event address** for the "30 minute pipeline review" | `config.json` → `funnel.calendlyUrl`, no query string | **Set** to the collective event "Elevate Marketing \| Commission I IT" (section 3). Its Calendly name and description still describe another offer. The owner approved new wording on 19 Oct 2026 (text in section 3); it is not entered yet, because the browser's Calendly login had expired and the assistant never types a password. |
 | 2 | **Zapier Catch Hook URL** for Zap 1 | Netlify, `ZAPIER_LEAD_HOOK` | Endpoint answers 503. |
-| 3 | **Companies House API key** | Netlify, `COMPANIES_HOUSE_API_KEY` | Every lead is sent to `review`, never to `fit`. A deploy preview can run without it (`COMPANIES_HOUSE_MODE=off`, section 2), but launch can not. |
+| 3 | **Companies House API key** | Netlify, `COMPANIES_HOUSE_API_KEY`, and `legal.registerCheck` in `config.json` | **Dropped for launch** (owner's decision, 19 Oct 2026). Every lead that would be a `fit` is a `review`, so nobody reaches `/book` by themselves (section 6). The pages say nothing about a register check while `legal.registerCheck` is `false`. A deploy preview can still run with the register off (`COMPANIES_HOUSE_MODE=off`, section 2); production never can. Getting the key later is one variable and one flag (section 13). |
 | 4 | **Meta Conversions API token** | Netlify, `META_CAPI_TOKEN` | The browser pixel still works; the server copy of the event is skipped. |
-| 5 | **Alert e-mail service** (Resend is the default, see 2) | Netlify, `RESEND_API_KEY`, `ALERT_EMAIL_FROM` | Failures are only in the function log. Do not launch without it. |
+| 5 | **An alert channel**, Slack or e-mail (either one is enough) | Netlify, `SLACK_ALERT_WEBHOOK_URL`, or `RESEND_API_KEY` with `ALERT_EMAIL_FROM` | Failures are only in the function log. Do not launch without one. Slack is the shorter road: an incoming webhook for one channel, no new processor in the privacy notice and no DNS record. E-mail through Resend needs an account, a verified sender domain and a line in the notice. |
 | 6 | **Zap 1 and Zap 2**, ClickUp field `lead_id`, Slack `#leads-uk` | Section 4 | **Built and tested against the real ClickUp list and one real Calendly booking, saved switched off.** Zap 1 has had one live run with a made-up lead (task in ClickUp, post in `#leads-uk`); Zap 2 has had one live run with a real booking on "Commission I IT" (task found by lead id, moved to `møte booket`, due date set, one comment). Both have to be switched on again, by a person, for the acceptance run (section 10). The hook URL for row 2 exists once Zap 1 has been switched on; it is copied from Zap 1's trigger step in the Zapier editor. |
-| 7 | **Privacy notice and website terms** approved by the solicitor | `config.json` → `links` | The pages link to the existing `/lp/privacy/` and `/lp/terms/`. |
+| 7 | **Privacy notice and website terms** approved by the solicitor | `legal.json`, `config.json` → `links` | **Built** as `/g/uk-it-growth/privacy/` and `/terms/` from the pack's drafts, and linked from every page (section 13). The owner reports that the solicitor approved on 19 Oct 2026. No written answer is in the repository or the pack, so a final wording that differs from the drafts has to be sent and copied into `legal.json`. |
 | 8 | **A real phone test** (section 9) | | |
 
 Secrets are never written in this repository, in a document or in a chat. They are created by the
@@ -41,20 +41,20 @@ person who owns the account and pasted into Netlify.
 | Variable | | If missing |
 |---|---|---|
 | `ZAPIER_LEAD_HOOK` | **Required.** An `https://` Catch Hook URL. | 503, nothing stored. |
-| `COMPANIES_HOUSE_API_KEY` | The register lookup. Needed before launch. | Every lead is `review`. |
+| `COMPANIES_HOUSE_API_KEY` | The register lookup. Not needed for launch (decision of 19 Oct 2026). Set it together with `legal.registerCheck: true` (section 13). | Every lead that would be a `fit` is a `review` (section 6). |
 | `COMPANIES_HOUSE_MODE` | `off` skips the register so a **deploy preview** can be tried end to end before the key exists. Set it for the deploy-preview context only, never for production. The code ignores it on every address except a Netlify deploy preview, a branch deploy and localhost, and whenever Netlify's `CONTEXT` is `production`. Not a launch setting. | The register is asked. |
 | `META_CAPI_TOKEN` | Server side `QualifiedForm`. | Skipped, recorded as `not_configured`. |
 | `META_PIXEL_ID` | Optional. Defaults to the page's pixel (`config.json` → `funnel.pixelId`). Setting it to anything else breaks the match between the browser event and the server event. | Page pixel. |
 | `META_TEST_EVENT_CODE` | Optional. While set, events show only under Test Events in Events Manager. **Remove it for launch.** | Live events. |
-| `RESEND_API_KEY`, `ALERT_EMAIL_FROM` | Alert e-mail. The sender must be on a domain verified in Resend. `ALERT_EMAIL_TO` defaults to `post@elevatemarketing.no`. | No e-mail alerts. |
-| `SLACK_ALERT_WEBHOOK_URL` | Optional second alert channel. Must start `https://hooks.slack.com/`. | No Slack alerts. |
+| `RESEND_API_KEY`, `ALERT_EMAIL_FROM` | Alert e-mail. The sender must be on a domain verified in Resend, and Resend has to be named in the privacy notice (it is not today). `ALERT_EMAIL_TO` defaults to `post@elevatemarketing.no`. | No e-mail alerts. |
+| `SLACK_ALERT_WEBHOOK_URL` | Alert channel, and the recommended one: Slack is already a named processor and nothing has to be verified. An incoming webhook for one channel; a channel of its own is easier to notice than `#leads-uk`. Must start `https://hooks.slack.com/`. | No Slack alerts. |
 | `CLICKUP_API_TOKEN` | Optional. Lets the daily check compare delivered leads with ClickUp tasks. | No comparison. |
 | `LEAD_IP_SALT` | Optional. Salt for the hashed address in the rate limiter. | A fixed default. |
 
-The alert e-mail goes through Resend and not through Zapier on purpose: the case it exists for is
-Zapier being down. Resend is a placeholder for whichever service is chosen; the service has to be
-listed as a processor in the privacy notice. Swapping it touches `netlify/functions/lead/alert.mjs`
-only. Alerts carry a lead id and the company name, never an e-mail address, phone number or free text.
+Alerts go straight from the function and not through Zapier, on purpose: the case they exist for is
+Zapier being down. Both channels (the Slack webhook and Resend e-mail) are in `netlify/functions/lead/alert.mjs`,
+either one alone is enough, and a service added there has to be named as a processor in the privacy notice.
+Alerts carry a lead id and the company name, never an e-mail address, phone number or free text.
 
 ---
 
@@ -64,10 +64,19 @@ only. Alerts carry a lead id and the company name, never an e-mail address, phon
 `769980c2-23c5-4a60-8f1e-462e5e4ea12e`, 30 minutes, instant booking, no custom questions, address
 `https://calendly.com/d/dv8z-vdp-5xt/elevate-marketing-commission-i-it` (already in `config.json`). It is the
 only IT specific 30 minute event, and as a collective event it can be taken by more than one host. Its
-Calendly title ("Growth Assessment for IT Consultancies") and description (about exploring commission-only
-lead generation) do not match the page's "30 minute pipeline review", and the visitor sees both. Change
-one of them so they agree before launch. If another event is chosen, change `calendlyUrl` and the event
-type id in Zap 2 (`CAMPAIGNS`) together. The other events in the account are not IT events: "Clinic intake
+Calendly description opens with "Growth Assessment for IT Consultancies" and talks about commission-only lead
+generation ("you pay nothing until a deal closes"), which does not match the page's "30 minute pipeline review",
+and the visitor sees both. **Approved by the owner on 19 Oct 2026, not entered yet:**
+
+- Event name: `Elevate Marketing | 30 minute pipeline review`
+- Description: `A 30 minute pipeline review for IT firms. Bring three numbers: last year's turnover, next year's target and what a typical new client is worth in the first year.`
+
+Nothing else on the event changes. Check that the event link still ends `/elevate-marketing-commission-i-it`
+before and after saving (it is in `config.json` and must not change), keep "Redirect to an external site" off,
+and Zap 2 is not affected, because it finds the event by its event type id. It was not done because the Calendly
+login in the browser session had expired and the assistant never types a password. A person who is signed in
+does it in Calendly → Event types → the event → Event details, or signs in and asks for it. If another event is
+chosen instead, change `calendlyUrl` and the event type id in Zap 2 (`CAMPAIGNS`) together. The other events in the account are not IT events: "Clinic intake
 call" is the health page's, "Pipeline-gjennomgang" is 20 minutes and Norwegian.
 
 1. Calendly → the event type → **Share** → **Add to website** → **Inline embed**. Copy the address,
@@ -242,10 +251,33 @@ a test and gets the tag `test`.
   included, also lands in the second host's calendar until it is cancelled. A cancellation was not tested: the
   trigger fires for new bookings only, so a cancelled booking leaves its task where it is. Zap 2 was then
   switched off again and the test task archived.
-- **Not shown yet:** the real Catch Hook delivery from the Netlify function (the live run of Zap 1 came
-  through Zapier's own trigger, not through the hook URL), the lead id handed on by the embedded widget on
-  `/book` (the live run used a hand-made link), a booking that arrives without a lead id (only the local and
-  draft checks have run it) and a booking moved to a new time. Section 10 covers them.
+- **Live, 19 Oct 2026, from a real phone on the deploy preview of pull request #74 (both Zaps switched on for
+  about a quarter of an hour, then off again).** Two submissions of the real form with the register switched off
+  (section 8): the first with the banner accepted, a real e-mail address and a Norwegian mobile number, followed
+  by a booking from the page itself; the second with the banner declined, an address ending `@example.invalid`
+  and no booking. Result:
+  - The Netlify function delivered both leads to the Catch Hook URL, the first time that path ran. Both Zap 1
+    runs finished without an error, and each lead made one task in "IT - UK - Commision" (route `fit`, status
+    `ny lead`, priority high, reason `register_off`, "Sjekk mot registeret: off").
+  - Slack: one post in `#leads-uk` for the first lead, with no phone, e-mail or free text, "Companies House: ikke
+    sjekket" and "Kilde: ukjent" (the page was opened without UTM tags). None for the second, which is a test lead
+    without `slack_test`. The second lead's task carries the tag `test`.
+  - ClickUp accepted the real mobile number in the Phone field. It was a Norwegian +47 number; a British +44
+    number has so far only been shown with the reserved drama number.
+  - The embedded widget on `/book` filled in the visitor's name and e-mail address and handed the lead id on in
+    `utm_content`. Zap 2 found the task by it on the first lookup, moved it from `ny lead` to `møte booket`, set
+    the due date to the meeting's start and added one comment with the time in London and Oslo, about ten seconds
+    after the booking. The booking ended on `/takk`.
+  - Team Size, Ad Spend Budget and Contract Value stayed empty, as designed, because each of the form's bands
+    spans two ClickUp options. The exact answers are in the description.
+  - Both test tasks were archived. The booking has to be cancelled in Calendly by hand: it lands in both hosts'
+    calendars.
+- **Not shown yet:** live submissions of `review`, `not_now` and `not_a_fit` (the Zap's draft runs cover all four
+  routes), a booking that arrives without a lead id (only the local and draft checks have run it), a booking
+  moved to a new time, a cancelled booking (its task stays where it is), Zap 1 with a British mobile number,
+  the Meta pixel and the Conversions API (no token or test event code yet), the banner's Decline path in the
+  browser, the register with a real key, the alert e-mail, a failed delivery and a submission with JavaScript off.
+  Section 10 covers them.
 
 ### Not changed
 
@@ -287,7 +319,7 @@ beats temporary. Edit `route.mjs`; every rule has a test (`test/route.test.mjs`)
 | `not_a_fit` | turnover under £2m, trading under two years, a typical client worth under £10k, or (turnover not stated) accounts filed as micro-entity or dormant |
 | `not_now` | "None, we are at capacity" for the next three months |
 | `review` | turnover not stated, a client worth £10k to under £25k, the company not found in the register, the register unavailable, or an answer the register contradicts |
-| `fit` | everything else |
+| `fit` | everything else. In production, not while there is no register key (below) |
 
 Page for each: `fit` → `/book`, `review` → `/review`, `not_now` → `/not-now`, `not_a_fit` → `/not-a-fit`.
 
@@ -299,6 +331,18 @@ costs more than a person looking. It is one line in `assessProfile`.
 The register is asked only when it can change the outcome. It is matched on the exact company name
 (upper case, "limited" and "ltd" normalised), an active company is preferred, and a lookup that fails
 or takes over four seconds gives `review`, never `fit`.
+
+**No register key (the launch setting from 19 Oct 2026).** The lookup answers `no_key` without making a request,
+the check is recorded as `timeout` with the error `no_key`, and a lead that would have been a `fit` is a `review`
+(reason `ch_timeout`). So in production a lead is `review`, `not_now` or `not_a_fit`, never `fit`: nobody is sent to
+`/book`, the page says "We will be in touch within one working day. We want to check a few details before we suggest
+a time", and a person sends the calendar link. That promise is the running cost of this setting: every lead that
+would have been a `fit` needs a reply the same or the next working day. `QualifiedForm` is still sent for `review`
+(browser and server, after Accept), so the ads can still optimise on it, and Slack posts `review` leads as it posts
+`fit` ones. A booking made from a link sent by hand carries no lead id; Zap 2 then finds the task by e-mail address.
+What can no longer be measured is the share of leads that are `fit` and the bookings that came from a `fit`, so a
+stop rule written in those terms has to count bookings by task status (`møte booket`) instead. The pages say
+nothing about a register check while `legal.registerCheck` is `false`. With the key, set both (section 13).
 
 **Register off (previews only).** With `COMPANIES_HOUSE_MODE=off` on a preview the register is not asked. The
 check is recorded as `off`, never as `ok`. A lead that would have been a `fit` is still a `fit` and carries the
@@ -325,7 +369,8 @@ run real traffic, and the code refuses it on the live address.
 7. The same lead id seen before: the **first decision stays** (a visitor who goes back and changes an
    answer after an outcome gets the same page; the answer pages carry the contact address), and a
    delivery that failed is tried again.
-8. Companies House lookup (skipped on a preview with the register off), then the decision (section 6).
+8. Companies House lookup (skipped on a preview with the register off; with no key it makes no request and gives
+   `review`, section 6), then the decision (section 6).
 9. **The lead is stored before anything is sent** (Netlify Blobs, store `leads`, kept 365 days).
 10. Zapier (three attempts, 8 seconds in all; a redirect counts as a failure) and, in parallel, the
     Meta event. A failure in either never changes the answer the visitor gets.
@@ -355,14 +400,21 @@ should be on for both Zaps.
   `?v=3` deliberately: the change to the script is additive, the file revalidates on every visit, and
   those pages were not touched.
 - Generated output is committed (`public/g/uk-it-growth/**`, `netlify/functions/lead/data.generated.mjs`).
-  Editing it by hand is lost on the next build. Edit `copy.json`, `config.json`, `core.mjs`,
-  `render-form.mjs`, `route.mjs`, `g/_growth/` or the generator.
+  Editing it by hand is lost on the next build. Edit `copy.json`, `config.json`, `legal.json`, `core.mjs`,
+  `render-form.mjs`, `route.mjs`, `g/_growth/` or the generator. The privacy and terms pages have entries in
+  `netlify.toml` next to the other pages of the funnel, ahead of the `/g` 404 rules.
 - **Previews (checked 19 Oct 2026).** Netlify builds a deploy preview for every pull request, at
   `deploy-preview-<number>--luxury-custard-0c4db9.netlify.app`, and it answers with `X-Robots-Tag: noindex`.
   There is no branch deploy for `feat/uk-it-growth`. A preview of a branch that still has `"live": false`
   shows the pages but the form answers 503, so a preview that takes real posts needs its own branch with
   `"live": true` that is never merged (section 10). Not checked: whether Netlify Blobs in a preview is a
   store of its own or the site's shared one, so assume a preview lead lands in the shared store.
+  Used on 19 Oct 2026: pull request #74 (a draft, base `main`, head `preview/uk-it-growth`) had its preview
+  about a minute after the push, and an empty commit rebuilt it in under twenty seconds. A function reads its
+  environment variables as they were when the deploy was built, so a variable added in Netlify reaches the
+  preview only after the next build. Until `ZAPIER_LEAD_HOOK` existed the preview answered 503 to a post; with it,
+  an empty post answers 422, which is the check that costs nothing. The preview has no password, so while
+  Zap 1 is on anyone who finds the address can post a lead.
 - Text is the board's, word for word, in `copy.json`. The build refuses dashes, exclamation marks,
   American spellings, a commission rate and an unfilled `{TOKEN}`.
 
@@ -371,7 +423,7 @@ should be on for both Zaps.
 ## 9. Testing
 
 ```
-npm run test:g-growth                     # 203 tests, no network, a few seconds
+npm run test:g-growth                     # 219 tests, no network, a few seconds
 npm run test:g-it                         # the older IT funnel, unchanged
 
 npm install --no-save playwright-core axe-core        # once
@@ -390,7 +442,7 @@ Meta, consent gating, log privacy, the daily check and the generator's output.
 The browser run builds a copy of the repository with `live: true` and a stand-in Calendly address, so it
 tests the state the pages will be in on launch day, plus the committed state. It covers the landing
 page, all thirteen questions with their messages, the four outcomes end to end, the cookie choice and
-the pixel, the booking page and the forward to `/takk`, no JavaScript (including a failed post and the
+the pixel, the booking page and the forward to `/takk`, the privacy and terms pages and their cookie button, no JavaScript (including a failed post and the
 Referer fallback), network failures, double presses, reduced motion, keyboard use and an automatic
 accessibility check (axe-core, WCAG 2.2 AA).
 
@@ -402,23 +454,42 @@ Companies House, the alert e-mail, and Netlify's own routing. The acceptance run
 
 ## 10. Before launch, in this order
 
-- [ ] 1 to 7 in section 1 done. Privacy and terms approved, or the launch accepts the existing pages.
-- [ ] `config.json` → `"live": true`; `npm run build` and `npm run test:g-growth` pass, and the build says
-      nothing is outstanding.
-- [ ] Deploy to a **Netlify preview** first, with `META_TEST_EVENT_CODE` set. Production only on an explicit yes.
-      How, without touching production: a branch `preview/uk-it-growth` (the feature branch plus one commit that
-      sets `"live": true`, never merged) and a draft pull request from it, which gives the deploy preview.
-      In Netlify: `ZAPIER_LEAD_HOOK` in scope Functions for all contexts, and for the **deploy-preview context
-      only** `COMPANIES_HOUSE_MODE=off` (until the register key exists) and `META_TEST_EVENT_CODE`. On the preview
-      a `fit` shows `Sjekk mot registeret: off` and the reason `register_off`: that is the switch working. Close
-      the pull request when the run is done.
-- [ ] **The register is real before launch.** `COMPANIES_HOUSE_API_KEY` is set for production, and
-      `COMPANIES_HOUSE_MODE` exists, if at all, in the deploy-preview context only. A lead on the live address shows
-      `ok`, `mismatch` or `not_found`, never `off`.
-- [ ] **Switch Zap 1 and Zap 2 on** in the Zapier editor. They are saved switched off, and a lead sent to a
-      switched-off hook does not become a task. Both triggers should then show `active`. Zap 2 now runs for every
+**Where this stands (19 Oct 2026, evening).** Built and tested on `feat/uk-it-growth` (219 unit tests, every browser group
+including accessibility), `"live"` is `false`, nothing is on production. The owner decided on 19 Oct: the solicitor has
+approved the notice and terms; the three IT firms named on the page have given written permission to be named; the Companies
+House key is dropped for now (section 6); the Calendly event gets new wording (section 3); and yes to the steps below. Still open:
+
+| Open | Why the assistant has not done it | Who |
+|---|---|---|
+| Calendly event name and description | The browser's Calendly login had expired, and passwords are never typed by the assistant | A person signed in to Calendly |
+| `ZAPIER_LEAD_HOOK` in the Production context | A secret URL, pasted by its owner. Today it is set for deploy previews only | Owner, in Netlify |
+| An alert channel | Needs an account and a secret. Recommended: a Slack incoming webhook, `SLACK_ALERT_WEBHOOK_URL` | Owner, in Slack and Netlify |
+| The phone test of every outcome (below) | Needs a real phone and the cookie banner | Owner, with the assistant reading Slack, ClickUp and Test events |
+| The Meta campaign and its spend | Created paused. The spend is approved in chat, once, with the numbers in front of the owner | Owner says yes |
+
+Do not point ads at the page before every row is done. A merge before the hook exists loses no data (the endpoint answers 503 and
+stores nothing) but shows a form that fails, so set the variable first.
+
+- [ ] **Settings in Netlify, Production context** (section 2): `ZAPIER_LEAD_HOOK` (Functions scope, secret) and an alert channel
+      (`SLACK_ALERT_WEBHOOK_URL`, or Resend). `COMPANIES_HOUSE_API_KEY` and `COMPANIES_HOUSE_MODE` stay unset; `META_CAPI_TOKEN` is
+      optional. A function reads its variables as they were when the deploy was built, so every change needs a new deploy.
+- [ ] Calendly: the new name and description are in (section 3) and the event link still ends `/elevate-marketing-commission-i-it`.
+- [x] A deploy preview run with the real hook (19 Oct 2026: pull request #74, a draft from `preview/uk-it-growth`, never merged;
+      sections 4 and 8). Repeat it only if the page or the function changes after this point.
+- [ ] **Go live.** On a branch made from `feat/uk-it-growth`, never from `preview/uk-it-growth` and never pull request #74:
+      `config.json` → `"live": true`; `npm run build`, `npm run test:g-growth` and `node g/uk-it-growth/e2e/run.mjs` pass and the build says
+      nothing is outstanding; a pull request into `main` whose deploy preview has been looked at; merge. The owner gave the explicit
+      yes to production on 19 Oct 2026; ask again if the plan has changed since.
+- [ ] **The register.** Decided 19 Oct 2026: no key at launch. Production has no `COMPANIES_HOUSE_API_KEY`, `legal.registerCheck` is
+      `false`, and `COMPANIES_HOUSE_MODE` is not set in production (the code ignores it there anyway). A lead on the live address that would
+      have been a `fit` shows `review`. To use the register: the key and `legal.registerCheck: true` together (section 13); a lead then
+      shows `ok`, `mismatch` or `not_found`, never `off`.
+- [ ] **Switch Zap 1 and Zap 2 on** in the Zapier editor, after production has the hook. They are saved switched off, and a lead sent
+      to a switched-off hook does not become a task. Both triggers should then show `active`. Zap 2 now runs for every
       booking in the Calendly account and skips what is not ours.
-- [ ] One submission of each outcome from a **real phone**, with the banner accepted, then declined:
+- [ ] One submission of each outcome from a **real phone**, with the banner accepted, then declined. With no register key a `fit`
+      does not occur in production (a lead that would be one shows `/review`), so run the `fit` and Zap 2 lines on the deploy preview,
+      where the register is off, and the rest on production:
   - `fit` → `/book`; the calendar shows, name and e-mail are filled in, a test booking lands on `/takk`.
   - ClickUp: one task per lead, in the right list and status, with `lead_id`; the same lead sent twice gives one task.
   - Slack: a message for `fit` and `review` only, with no phone, e-mail or free text. A real e-mail address
@@ -429,12 +500,15 @@ Companies House, the alert e-mail, and Netlify's own routing. The acceptance run
     a hand-made link (section 4), so this run is what shows that the widget on `/book` hands the lead id on.
     Opening `/book` directly and booking gives a new task tagged `booket-uten-skjema`. If the Zap 2 run fails,
     its message lists the keys it saw, which is the shape of the Calendly data.
-  - Meta Test events: `QualifiedForm` once per `fit` or `review`, never `Lead`, and nothing after Decline.
-  - A deliberately wrong `ZAPIER_LEAD_HOOK`: the lead is in storage and the alert e-mail arrives.
+  - Meta Test events: `QualifiedForm` once per `fit` or `review`, never `Lead`, and nothing after Decline. The server's copy needs
+    `META_CAPI_TOKEN`, and `META_TEST_EVENT_CODE` in Production for the test (a new deploy each way).
+  - A deliberately wrong `ZAPIER_LEAD_HOOK`, on the deploy preview with its own variable so that production's hook is never touched:
+    the lead is in storage and the alert arrives in the channel that was set up.
   - A submission with JavaScript off (or another browser with scripts blocked).
   - Afterwards archive the test tasks in ClickUp (status `ukvalifisert - archive`, archived), never delete.
 - [ ] Remove `META_TEST_EVENT_CODE`. Only then point the ads at the page. The Zaps stay on.
-- [ ] Ads and Meta campaign settings follow separately, and only when the board and this page are approved.
+- [ ] Ads and Meta campaign settings follow separately: the campaign is created paused, and it is switched on only after the owner has said
+      yes in chat to its budget, audience and dates.
 
 ## 11. Limits and decisions to confirm
 
@@ -444,7 +518,8 @@ Companies House, the alert e-mail, and Netlify's own routing. The acceptance run
 - **Register off is a test aid, not a mode for real traffic.** If it were used for real visitors, every firm that
   claims £2m or more would get a calendar slot unchecked, and a firm that is not what it says would cost a call.
   The code refuses it on the live address on purpose. Zap 1 shows such a lead as "ikke sjekket" and has no
-  warning line for it, because it can only occur on a preview.
+  warning line for it, because it can only occur on a preview. Having no key is not the same thing: nobody then gets
+  a calendar slot unchecked, every would-be `fit` gets a person instead (section 6).
 - **The register check is an exact match on the company name.** A trading name that differs from the
   registered name gives `review`, by design: a person looks, nobody is turned away on it.
 - **Free text is passed on as typed.** A value starting `=`, `+`, `-` or `@` is a formula to a
@@ -459,10 +534,12 @@ Companies House, the alert e-mail, and Netlify's own routing. The acceptance run
 - **A Zap 1 run that fails inside Zapier** (ClickUp down, say) is retried three times per step by Zapier and then
   shows as failed there. The function counts the lead as delivered once the hook answered, so the daily check
   (needs `CLICKUP_API_TOKEN`) is what notices a lead without a task. Switch on Zapier's error e-mail for both Zaps.
-- **Privacy.** The privacy notice has to name the processors in this flow (Netlify, Zapier, ClickUp, Slack,
-  Calendly, the SMS provider, the alert e-mail service, and Meta after Accept), the transfers to Norway and
-  the United States, and the retention (12 months for people who do not become customers). A solicitor
-  checks that; the drafts are written separately.
+- **Privacy.** The notice and terms are built (section 13): the processors in this flow, the transfers and the retention
+  (12 months after the last contact). Two things in them the system does not keep by itself. ClickUp tasks are not deleted by
+  anything here (the store is, at 365 days), so applications that did not become customers have to be purged by hand from the
+  list "IT - UK - Commision" once they are 12 months past the last contact; monthly is enough, until there is a Zap for it. And
+  a service added later (an SMS provider, an alert e-mail service) has to be named in Part 4 of the notice before it
+  receives a lead.
 
 ## 12. How it works
 
@@ -490,3 +567,43 @@ daily 07:00 UTC   netlify/functions/lead-reconcile   retention, redelivery, Clic
   page and once for the no-script error answer.
 - **Shared with the next funnels.** `g/_growth/` (style, scripts), `netlify/functions/lead/` and the tests take
   the campaign from `campaigns.mjs`. A new campaign is a folder under `g/`, an entry there and a new Zap path.
+- **The legal pages** are written in `legal.json` and rendered by `g/_growth/legal.mjs` (section 13).
+
+## 13. Privacy notice and website terms
+
+`/g/uk-it-growth/privacy/` and `/g/uk-it-growth/terms/`, linked from the footer and the cookie bar of every page. The words are in
+`legal.json` (headings, paragraphs, lists, tables and one button). `g/_growth/legal.mjs` renders them and
+`scripts/build-g-growth.mjs` puts them in the funnel's shell, so they are built, linted (no dashes, no exclamation marks, no
+rate near the word commission) and tested like the other pages: `test/legal.test.mjs`, and the `legal` and `a11y` groups of the
+browser run. The health and law funnels reuse the renderer and bring their own `legal.json`, or the same file.
+
+**Where the text comes from.** The pages are the drafts in the solicitor pack (Claude Doc "Solicitor pack (UK): commission, consent and
+three drafts", tabs Privacy and Terms), with each open bracket closed and nothing else added. The owner reports that the solicitor
+approved on 19 Oct 2026. No written answer is in the repository or in the pack, so if the final wording differs from the draft, it is
+copied into `legal.json`, the date at the top (`updated`) is changed and the pages are built again. No code changes.
+
+**What the closing rested on.** Rows 1 to 5 follow the code and the Zaps as documented in this file. The rest only the owner can confirm.
+
+| Statement | Where | Basis |
+|---|---|---|
+| Applications are deleted 12 months after the last contact, from the store and from ClickUp | Notice 6 | The store deletes at 365 days (`RETENTION_DAYS`, tested). **Nothing here deletes ClickUp tasks** (section 11). |
+| Meta gets a hashed e-mail, first and last name, the IP address and browser details, never a phone number, and only after Accept | Notice 3, 4, 9 | `capi.mjs` and its consent tests. |
+| Slack gets the company name and the decision, no e-mail, phone number or free text | Notice 4 | The Zap 1 Slack step (section 4). |
+| No analytics; our code writes no cookie; the cookie choice sits in `localStorage` and two items in the tab's `sessionStorage` | Notice 8 | `test/legal.test.mjs` fails if a page script writes a cookie or to `localStorage`. |
+| The scrambled IP address is kept up to a day | Notice 3, 6 | Hourly counters, swept by the daily check. |
+| Governing law is England and Wales | Terms 10 | The draft's choice. Owner: confirm that the solicitor kept it. |
+| No UK representative and no ICO fee are mentioned | Notice 1, 5 | None is appointed or paid (the pack's own fact, marked "Elevate to confirm"). Owner: confirm what the solicitor decided in question B3. |
+| Transfers rest on the UK to US data bridge, the EU to US framework, or standard clauses with the UK addendum | Notice 5 | The draft's wording. Owner: confirm that each provider's data processing terms are accepted in the account (Netlify, Zapier, ClickUp, Slack, Calendly). |
+| No VAT number | Terms 1 | Not given. Owner: if EngeCo AS is registered for MVA, add `NO 924 490 926 MVA` after the organisation number in the notice, the terms and the footer. |
+| E-mail and text providers are named by kind, not by name | Notice 4 | None was chosen when the draft was written. Name them when chosen. |
+| Meta measurement is described without saying how audiences are built | Notice 3, 9 | Owner: say whether audiences are built from pixel visitors or from form submitters. If they are, the notice has to say so. |
+
+Not in the pages, and still the owner's to fill in the customer agreement before the first signature: the period in which
+commission still applies after termination (12 months, in square brackets in the draft) and whether professional indemnity
+insurance is held.
+
+**The Companies House rows.** Rows and sentences about the register carry `"when": "register"` or `"unless": "register"` in `legal.json`
+and are shown or left out by `config.json` → `legal.registerCheck`. It is `false` while there is no key in production, and no page then
+mentions a check. With the key, **both are changed in one go**: `COMPANIES_HOUSE_API_KEY` in Netlify and `legal.registerCheck: true`
+in the config, then build and deploy. If only one is done, the notice is wrong in one direction or the other, so the daily check
+(`lead-reconcile`) reports a live funnel where the key and the flag disagree, once a day, until they agree.

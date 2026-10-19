@@ -150,9 +150,6 @@ export function rig(over = {}) {
     return fn(call);
   };
 
-  const base = realCampaigns[cfg.campaign];
-  const campaigns = { [cfg.campaign]: Object.assign({}, base, { cfg: Object.assign({}, base.cfg, { live: over.live !== false }) }) };
-
   const env = Object.assign({
     ZAPIER_LEAD_HOOK: HOOK,
     COMPANIES_HOUSE_API_KEY: 'ch-test-key',
@@ -163,6 +160,15 @@ export function rig(over = {}) {
     SLACK_ALERT_WEBHOOK_URL: 'https://hooks.slack.com/services/T0/B0/xyz',
   }, over.env || {});
   for (const k of Object.keys(env)) if (env[k] === undefined) delete env[k];
+
+  // The rig is a consistent deployment: the notice says the register is checked exactly when a key is set
+  // (the daily check reports the two disagreeing, and its tests set that up on purpose).
+  const base = realCampaigns[cfg.campaign];
+  const campaigns = {
+    [cfg.campaign]: Object.assign({}, base, {
+      cfg: Object.assign({}, base.cfg, { live: over.live !== false, legal: { registerCheck: Boolean(env.COMPANIES_HOUSE_API_KEY) } }),
+    }),
+  };
 
   let clock = NOW.getTime();
   const handler = createHandler({

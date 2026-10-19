@@ -20,13 +20,13 @@ export const { rig, GOOD, ok, chResponder, CH_PROFILE, core, cfg, OPTIONS } = he
 const VARS = Object.assign({}, helpers.cfg.variables, { EMAIL: helpers.cfg.contact.email });
 export const copy = JSON.parse(JSON.stringify(helpers.copy).replace(/\{([A-Z]+)\}/g, (m, k) => (k in VARS ? VARS[k] : m)));
 
-/** A stand-in. The real event address comes from Calendly (see LAUNCH.md); no request ever reaches it here. */
+/** A stand-in for the live copy, so these runs never depend on the real event address in config.json; no request ever reaches it. */
 export const CALENDLY = 'https://calendly.com/elevate-test/30-minute-pipeline-review';
 
 /**
  * A copy of the repository with "live": true and the stand-in Calendly address, built with the
  * repository's own generator. That is the state the pages will be in on launch day; the committed
- * output (live false, no calendar) is tested separately. Nothing in the real tree is touched.
+ * output (live false, the real calendar address) is tested separately. Nothing in the real tree is touched.
  */
 export function buildLiveCopy() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'g-growth-e2e-'));

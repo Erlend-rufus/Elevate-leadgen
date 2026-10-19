@@ -14,9 +14,13 @@
     "WORTH": "£25,000"
   },
   "links": {
-    "privacy": "/lp/privacy/",
-    "terms": "/lp/terms/",
-    "_comment": "The existing Elevate Marketing pages. They are replaced by new ones once the solicitor has approved the drafts; swap the two paths here then."
+    "privacy": "/g/uk-it-growth/privacy/",
+    "terms": "/g/uk-it-growth/terms/",
+    "_comment": "The pages built from legal.json. The older /lp/privacy/ and /lp/terms/ belong to the legacy /lp funnel and stay as they are."
+  },
+  "legal": {
+    "registerCheck": false,
+    "_registerCheck": "Whether the privacy notice and the terms say that the company is checked against Companies House. Set true in the same change that sets COMPANIES_HOUSE_API_KEY in production, then build; the notice must never describe a check that is not made. The words themselves are in legal.json, in the blocks and rows marked \"when\": \"register\"."
   },
   "contact": {
     "email": "post@elevatemarketing.no"
