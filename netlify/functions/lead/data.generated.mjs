@@ -5,7 +5,7 @@ export const growth = {
   "campaign": "uk-it-growth",
   "path": "/g/uk-it-growth",
   "origin": "https://getelevateleads.com",
-  "live": false,
+  "live": true,
   "variables": {
    "THRESHOLD": "£2m",
    "OFFER": "30 minute pipeline review",

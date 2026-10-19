@@ -6,10 +6,10 @@ board v56 (Claude Design) and the project document "Løsning: eget skjema, Zapie
 (16 Oct 2026). The health and law funnels are built the same way and reuse `g/_growth/`, the
 function and the tests; this is the first.
 
-**Status: built and tested, not live.** `config.json` has `"live": false`. Every page carries
-`noindex`, the endpoint answers every post with a 503 and stores nothing, and the booking page shows
-a note where the calendar goes. Nothing reaches production until a person sets `"live": true` and
-deploys (section 10, which also says where things stand). The build says what is outstanding:
+**Status: built and tested; the switch is `"live"` in `config.json`.** While it is `false` the endpoint answers every
+post with a 503 and stores nothing. Every page carries `noindex` either way, because this is an ad landing page and nobody is
+meant to find it in a search. The branch `go-live/uk-it-growth` sets `"live": true` and changes nothing else; it is merged only
+when the rows in section 10 are done, and section 10 also says where things stand. The build says what is outstanding:
 
 ```
 npm run build        # or: node scripts/build-g-growth.mjs
@@ -467,6 +467,13 @@ House key is dropped for now (section 6); the Calendly event gets new wording (s
 | The phone test of every outcome (below) | Needs a real phone and the cookie banner | Owner, with the assistant reading Slack, ClickUp and Test events |
 | The Meta campaign and its spend | Created paused. The spend is approved in chat, once, with the numbers in front of the owner | Owner says yes |
 
+**Prepared (19 Oct 2026, evening).** The branch `go-live/uk-it-growth` is `feat/uk-it-growth` with one change, `"live": true` (and
+`netlify/functions/lead/data.generated.mjs`, which follows from it; no page changes, because every page is `noindex` either way).
+On it `npm run build` is green, `npm run test:g-growth` passes (219), `npm run test:g-it` passes (45), both Zap checks pass and the
+browser run passes in full (383 checks, the group for the committed pre-launch state skipped on purpose). A pull request into `main`
+carries it, with a deploy preview. What is left of the "Go live" step below is the merge, and the merge waits for the Production
+variable and the alert channel.
+
 Do not point ads at the page before every row is done. A merge before the hook exists loses no data (the endpoint answers 503 and
 stores nothing) but shows a form that fails, so set the variable first.
 
@@ -479,7 +486,9 @@ stores nothing) but shows a form that fails, so set the variable first.
 - [ ] **Go live.** On a branch made from `feat/uk-it-growth`, never from `preview/uk-it-growth` and never pull request #74:
       `config.json` → `"live": true`; `npm run build`, `npm run test:g-growth` and `node g/uk-it-growth/e2e/run.mjs` pass and the build says
       nothing is outstanding; a pull request into `main` whose deploy preview has been looked at; merge. The owner gave the explicit
-      yes to production on 19 Oct 2026; ask again if the plan has changed since.
+      yes to production on 19 Oct 2026; ask again if the plan has changed since. After the merge and the deploy, an empty POST to
+      `https://getelevateleads.com/api/lead` answers 422 when production has the hook and 503 when it does not: the check that
+      costs nothing and sends nothing.
 - [ ] **The register.** Decided 19 Oct 2026: no key at launch. Production has no `COMPANIES_HOUSE_API_KEY`, `legal.registerCheck` is
       `false`, and `COMPANIES_HOUSE_MODE` is not set in production (the code ignores it there anyway). A lead on the live address that would
       have been a `fit` shows `review`. To use the register: the key and `legal.registerCheck: true` together (section 13); a lead then
@@ -607,3 +616,38 @@ and are shown or left out by `config.json` → `legal.registerCheck`. It is `fal
 mentions a check. With the key, **both are changed in one go**: `COMPANIES_HOUSE_API_KEY` in Netlify and `legal.registerCheck: true`
 in the config, then build and deploy. If only one is done, the notice is wrong in one direction or the other, so the daily check
 (`lead-reconcile`) reports a live funnel where the key and the flag disagree, once a day, until they agree.
+
+---
+
+## 14. Running it
+
+**What arrives, and where.** Every post is stored first (365 days), then sent to Zap 1, which makes one ClickUp task in
+"IT - UK - Commision" and, for `fit` and `review`, one post in `#leads-uk`. Alerts (a delivery that failed, a lead with no task, the hook
+missing, the register key and the notice disagreeing) go to the alert channel, never through Zapier.
+
+**With no register key (the launch setting) every would-be `fit` arrives as `REVIEW`.** The Slack post carries the line
+`⚠ Størrelse ikke bekreftet, sjekk før møtet`, the task has the tag `sjekk-størrelse` and the reason `ch_timeout` (section 6), and the visitor has
+been told that we will be in touch within one working day. A person keeps that promise, the same working day or the next:
+
+1. Open the task from the Slack post. The exact answers are in its description.
+2. Look the company up at Companies House by hand. The rules are those of `route.mjs`: the name matches, the company is active and at least
+   two years old, and the accounts are not micro-entity or dormant (a firm in a group can file small accounts; if in doubt, ask on the call).
+3. Write to the visitor from post@elevatemarketing.no with the booking link (the text is in the project document "Driftsrutine for IKT-leads").
+   Adding `?utm_content=<the task's lead_id>` to the link makes the booking find this very task, even if the visitor books with another
+   address. Set the status to `kontaktet`.
+4. If the lookup shows that the firm is not what it said, send the decline text from the same document and set `ukvalifisert - archive`.
+5. When the booking is made, Zap 2 moves the task to `møte booket`. Without a lead id in the link it matches on the e-mail address; a booking it
+   cannot match makes a new task tagged `booket-uten-skjema`, which a person merges by hand.
+
+**Counting.** While there is no key, the share of leads that are `fit` and the bookings that came from a `fit` can not be measured. Count
+bookings as tasks that reached `møte booket`, and read the cost per booking from that. `QualifiedForm` in Meta counts `fit` and `review`
+together.
+
+**Once a month.** In the list "IT - UK - Commision", delete by hand the applications that are more than 12 months past the last contact and did
+not become customers (section 11). Test tasks are archived when the test is done and are purged the same way.
+
+**When an alert arrives.** It names what failed and carries a lead id and a company name, never an address, a number or free text.
+`Still not delivered` and `not tried this run`: nothing is lost, the lead is in storage and the daily check sends it again at 07:00 UTC; open
+the Zap's run history and the hook first. `no ClickUp task`: the hook answered and Zap 1 did not finish; find the run in Zapier and run it
+again, or make the task by hand. `ZAPIER_LEAD_HOOK is not set`: the endpoint refuses every post until it is. The two messages about the register
+mean that the key and `legal.registerCheck` disagree (section 13).
