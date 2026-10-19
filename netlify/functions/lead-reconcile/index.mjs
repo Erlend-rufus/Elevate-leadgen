@@ -8,7 +8,10 @@
  *  2. Delivery: any lead from the last two days that Zapier never confirmed is sent again.
  *  3. ClickUp (only if CLICKUP_API_TOKEN is set): every lead Zapier confirmed more than an
  *     hour ago should have a task. A lead with none is reported.
- *  4. Anything wrong is sent as an alert (e-mail, and Slack if a webhook is set). A clean
+ *  4. The privacy notice and the settings agree about the register: the notice is built from
+ *     config.json (legal.registerCheck), the register is asked when COMPANIES_HOUSE_API_KEY is
+ *     set, and the two are changed in different places. A live funnel where they differ is reported.
+ *  5. Anything wrong is sent as an alert (e-mail, and Slack if a webhook is set). A clean
  *     day is not reported: it is in the function log.
  *
  * The same lead_id never makes two tasks (the Zap starts with a Find Task on lead_id), so
@@ -70,6 +73,20 @@ export function createReconciler(deps = {}) {
     const hook = e.ZAPIER_LEAD_HOOK || '';
     const hookOk = /^https:\/\/[^\s]+$/.test(hook);
     if (!hookOk) problems.push('ZAPIER_LEAD_HOOK is not set: stored leads cannot be delivered.');
+
+    // Notice and settings (item 4 in the header). Only for a funnel that is live; the text carries no lead data.
+    const registerKey = Boolean(e.COMPANIES_HOUSE_API_KEY);
+    for (const camp of Object.values(campaigns)) {
+      const c = camp && camp.cfg;
+      if (!c || !c.live || !c.legal || typeof c.legal.registerCheck !== 'boolean') continue;
+      if (registerKey && !c.legal.registerCheck) {
+        problems.push(`COMPANIES_HOUSE_API_KEY is set, so company names are checked at Companies House, but the privacy notice and terms of ${c.path} say nothing about a check. ` +
+          `Set "legal.registerCheck" to true in g/${c.slug}/config.json and build, or remove the key.`);
+      } else if (!registerKey && c.legal.registerCheck) {
+        problems.push(`The privacy notice and terms of ${c.path} say that the company name is checked at Companies House, but COMPANIES_HOUSE_API_KEY is not set, so no check is made. ` +
+          `Set the key, or set "legal.registerCheck" to false in g/${c.slug}/config.json and build.`);
+      }
+    }
 
     const days = [dayOf(new Date(now.getTime() - 24 * HOUR)), dayOf(now)];
     const leads = [];

@@ -95,6 +95,53 @@ test('no hook set: nothing can be delivered, and that is said once', async () =>
   assert.deepEqual(problems, ['ZAPIER_LEAD_HOOK is not set: stored leads cannot be delivered.']);
 });
 
+/** The rig's campaign with its "live" flag and its notice flag (legal.registerCheck) set as the test needs them. */
+const withLegal = (r, { live = true, registerCheck }) => ({
+  [cfg.campaign]: Object.assign({}, r.campaigns[cfg.campaign], {
+    cfg: Object.assign({}, r.campaigns[cfg.campaign].cfg, { live, legal: registerCheck === undefined ? undefined : { registerCheck } }),
+  }),
+});
+
+test('notice and settings: a key is set but the notice says nothing about the register, and that is reported', async () => {
+  const r = await seed();
+  const z = reconciler(r, { campaigns: withLegal(r, { registerCheck: false }) });   // the rig's env has the key
+  const { problems } = await z.run();
+  assert.equal(problems.length, 1);
+  assert.match(problems[0], /^COMPANIES_HOUSE_API_KEY is set, so company names are checked at Companies House, but the privacy notice and terms of \/g\/uk-it-growth say nothing about a check\./);
+  assert.match(problems[0], /Set "legal\.registerCheck" to true in g\/uk-it-growth\/config\.json and build, or remove the key\.$/);
+  const mail = z.of('resend')[0].body;
+  assert.equal(mail.subject, 'Lead check: 1 problem');
+  for (const secret of ['alex@', 'Morgan', '07700', 'Northbridge']) assert.equal(mail.text.includes(secret), false, secret);
+  assert.equal(z.of('slack').length, 1);
+});
+
+test('notice and settings: the notice says the register is checked but no key is set, and that is reported', async () => {
+  const r = await seed();
+  const z = reconciler(r, { env: { COMPANIES_HOUSE_API_KEY: undefined }, campaigns: withLegal(r, { registerCheck: true }) });
+  const { problems } = await z.run();
+  assert.equal(problems.length, 1);
+  assert.match(problems[0], /^The privacy notice and terms of \/g\/uk-it-growth say that the company name is checked at Companies House, but COMPANIES_HOUSE_API_KEY is not set, so no check is made\./);
+  assert.match(problems[0], /Set the key, or set "legal\.registerCheck" to false in g\/uk-it-growth\/config\.json and build\.$/);
+  assert.equal(z.of('resend').length, 1);
+});
+
+test('notice and settings agree in both states: nothing is reported', async () => {
+  const r = await seed();
+  const checked = reconciler(r);                                    // key set, and the rig's notice says it is checked
+  assert.deepEqual((await checked.run()).problems, []);
+  const notChecked = reconciler(r, { env: { COMPANIES_HOUSE_API_KEY: undefined }, campaigns: withLegal(r, { registerCheck: false }) });
+  assert.deepEqual((await notChecked.run()).problems, []);
+  assert.equal(checked.of('resend').length + checked.of('slack').length + notChecked.of('resend').length + notChecked.of('slack').length, 0, 'a clean day is not reported');
+});
+
+test('notice and settings: a funnel that is not live, or has no notice setting, is not compared', async () => {
+  const r = await seed();
+  const notLive = reconciler(r, { campaigns: withLegal(r, { live: false, registerCheck: false }) });
+  assert.deepEqual((await notLive.run()).problems, []);
+  const noSetting = reconciler(r, { campaigns: withLegal(r, { registerCheck: undefined }) });
+  assert.deepEqual((await noSetting.run()).problems, []);
+});
+
 test('yesterday\'s leads are checked as well as today\'s, and older ones are not', async () => {
   const r = await seed({ zapier: () => ok('', 500), ids: ['l_today'] });
   // one from yesterday, one from three days ago

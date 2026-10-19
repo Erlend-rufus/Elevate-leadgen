@@ -1,0 +1,171 @@
+{
+  "_comment": "The privacy notice and the website terms of the growth funnels, built into /g/uk-it-growth/privacy/ and /g/uk-it-growth/terms/ by scripts/build-g-growth.mjs. The text is the solicitor pack's draft (Claude Doc 'Solicitor pack (UK): commission, consent and three drafts'), with the open brackets closed as described in LAUNCH.md, section 13. Block types: h2, p, ul, table (head + rows), button. Links: [[label|/path]] or [[label|@privacy]] / [[label|@terms]]; {EMAIL} becomes the contact address as a link. A block, or a table row written as {\"when\": ..., \"cells\": [...]}, is kept only if its condition holds: \"register\" is config.json legal.registerCheck (true only while COMPANIES_HOUSE_API_KEY is set in production), \"unless\": \"register\" marks a block or row kept only while no check is made. The daily check (netlify/functions/lead-reconcile) reports the flag and the key disagreeing. Change the date in 'updated' whenever the words change. No dashes, no exclamation marks, no rate near the word commission: the build refuses them.",
+  "privacy": {
+    "title": "Privacy notice",
+    "updated": "Last updated: 19 October 2026",
+    "blocks": [
+      { "p": "This notice explains how Elevate Marketing uses personal data on its campaign pages for UK IT services firms, private healthcare providers and law firms, in the application and booking steps that follow them, and on its older enquiry page. The main website at getelevateleads.com has its own privacy policy." },
+
+      { "h2": "1. Who we are" },
+      { "p": "Elevate Marketing is a trading name of EngeCo AS, a Norwegian company (organisation no. 924 490 926) at Midtfjellet 66, 5363 Ågotnes, Norway. EngeCo AS decides how your details are used. In data protection law that makes us the controller. You can reach us at {EMAIL}." },
+
+      { "h2": "2. What we collect" },
+      { "table": {
+        "label": "What we collect, and when",
+        "head": ["When", "What we collect"],
+        "rows": [
+          ["You apply on one of our pages", "Your answers about your business (website, company name, area of work, turnover, how long you have traded, size, marketing spend, typical client value, sales cycle, an optional target, who decides, capacity), your first name, last name, job title and work email, and a mobile number if you give one."],
+          ["You book a call", "Your name, email address and the time you choose, held by Calendly and passed to us."],
+          ["You write or speak to us", "The content of your emails and texts, and our notes of calls."],
+          ["You visit a page", "Your IP address, device and browser details, the page you came from, and the campaign tags in the address you followed. If you choose Accept, also the identifiers set by the Meta pixel."],
+          { "when": "register", "cells": ["We check your company", "The public record at Companies House for the company name you give: number, status, date of incorporation and type of last accounts."] },
+          ["You use our older enquiry page", "The answers you give on a Typeform form: name, company, work email, website, business type and team size."]
+        ]
+      } },
+      { "p": "We do not ask for health information, or for information about your clients or patients. Please do not put any in a form or a message." },
+
+      { "h2": "3. Why we use your details, and on what basis" },
+      { "table": {
+        "label": "Why we use your details, and on what basis",
+        "head": ["What we do", "Our basis"],
+        "rows": [
+          ["Reply to your application, decide whether we can help, and arrange and hold a call", "Our legitimate interests in answering business enquiries. Where you apply as an individual, such as a sole trader, it is also a step at your request before a contract."],
+          ["Keep a record of applications, including those we cannot take on, so that we do not contact the wrong people again", "Our legitimate interests in keeping accurate records."],
+          ["Email you, and text you if you gave a mobile number, about your application and the call", "Our legitimate interests."],
+          ["Get back in touch once, three months later, if you told us you are at capacity", "Our legitimate interests. You can ask us not to, at any time."],
+          { "when": "register", "cells": ["Check the company you name against Companies House", "Our legitimate interests in confirming that an application comes from a real company."] },
+          ["Limit the number of applications from one address in an hour, to stop spam", "Our legitimate interests in keeping our systems secure. We keep a scrambled version of your IP address, not the address itself, for up to a day."],
+          ["Measure whether our advertising works, using the Meta pixel and a matching report sent from our server", "Your consent, when you choose Accept. If you choose Decline, or do not choose, we do neither."],
+          ["Keep accounting and contract records if you become a customer", "A legal obligation and our legitimate interests."]
+        ]
+      } },
+      { "when": "register", "p": "We use your answers to decide automatically which page you see next: a booking page, a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. If you think we got it wrong, email us and we will look again." },
+      { "unless": "register", "p": "We use your answers to decide automatically which page you see next: a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. If you think we got it wrong, email us and we will look again." },
+
+      { "h2": "4. Who receives your details" },
+      { "p": "We share your details only with the people and services that help us run this business. We do not sell them." },
+      { "table": {
+        "label": "Who receives your details",
+        "head": ["Who", "What they do for us", "What they receive"],
+        "rows": [
+          ["Netlify", "Hosts our pages, and runs and stores the application form", "Everything you enter, and technical details of your visit"],
+          { "when": "register", "cells": ["Companies House", "Keeps the public register of companies", "The company name you give, as a search"] },
+          ["Zapier", "Moves your application between our systems", "Your application"],
+          ["ClickUp", "Holds our record of applications, calls and customers", "Your application, and notes of our contact with you"],
+          ["Slack", "Internal notifications", "The company name and our decision. No email address, phone number or free text."],
+          ["Calendly", "Takes bookings", "Your name, email address, your choice of time and an application reference"],
+          ["Our email and text message providers", "Send our emails and texts", "Your email address or mobile number, and the message"],
+          ["Meta Platforms Ireland", "Measures our advertising, only if you chose Accept", "The identifiers set by the Meta pixel and your visits to our pages. From our server, also a scrambled version of your email address and name, your IP address and your browser details."],
+          ["Typeform", "Runs the form on our older enquiry page", "The answers you give there"],
+          ["Our advisers, accountants and public authorities", "Advice, accounts, tax and legal duties", "What they need for that purpose"]
+        ]
+      } },
+      { "p": "Most of these act on our instructions. Meta also decides for itself how it uses some of what it receives. Part 9 says more." },
+
+      { "h2": "5. Transfers abroad" },
+      { "p": "We work from Norway, which is in the European Economic Area. Several of the providers in Part 4 are in the United States. Where UK or EU rules require a safeguard for a transfer, we rely on the provider's certification under the UK to US data bridge or the EU to US Data Privacy Framework where it has one, and otherwise on standard contractual clauses with the UK addendum. You can ask us for a copy of the safeguard that applies." },
+
+      { "h2": "6. How long we keep your details" },
+      { "table": {
+        "label": "How long we keep your details",
+        "head": ["What", "How long"],
+        "rows": [
+          ["Applications and messages that do not lead to a customer relationship", "12 months after our last contact, then deleted from our store and from ClickUp"],
+          ["Customers' contact details and contract records", "For the length of the agreement, and afterwards for as long as the law requires us to keep accounting and contract records"],
+          ["The scrambled IP address used to limit applications", "Up to a day"],
+          ["The Meta click identifier, if you chose Accept", "With your application, and deleted with it. Meta keeps what it receives under its own policy."],
+          ["Your cookie choice", "In your browser until you clear it"],
+          ["Answers on the older Typeform page", "As for applications above"]
+        ]
+      } },
+
+      { "h2": "7. Your rights" },
+      { "p": "You can ask us at any time to:" },
+      { "ul": [
+        "show you the details we hold about you, and give you a copy",
+        "correct details that are wrong",
+        "delete your details, where we have no good reason to keep them",
+        "limit how we use your details while a question about them is being settled",
+        "give you your details in a form a computer can read, or send them to another business, where that right applies",
+        "stop using your details for marketing. We will always do this.",
+        "stop using your details where we rely on our own legitimate interests, unless we can show a strong reason to carry on",
+        "stop using details you let us use because you consented, for example the Meta measurement in Part 9",
+        "have a person look again at how your application was routed"
+      ] },
+      { "p": "To ask, write to {EMAIL}. We answer within one month. If a request is complicated, the law lets us take longer, and we will tell you why. We may need to check who you are first. We do not charge for this, except in the narrow cases the law allows." },
+      { "p": "If you think we have handled your details wrongly, please tell us first so that we can put it right. You can also complain to the regulator. In the UK that is the Information Commissioner's Office (ico.org.uk). In Norway, where we are based, it is Datatilsynet (datatilsynet.no)." },
+
+      { "h2": "8. Cookies and similar technologies" },
+      { "p": "We use very little, and we run no analytics on these pages. The cookie bar asks about one thing: measuring our advertising with Meta. Nothing for that is set until you choose Accept." },
+      { "table": {
+        "label": "Cookies and similar technologies",
+        "head": ["What", "What it does", "When", "How long"],
+        "rows": [
+          ["Your cookie choice, kept in your browser", "Remembers Accept or Decline, so that we do not ask again", "When you choose", "Until you clear your browser's site data"],
+          ["Meta pixel and its cookies", "Lets Meta measure whether our advertising works", "Only after you choose Accept", "Set and kept by Meta under its own policy"],
+          ["A marker kept in your browser tab", "Stops us sending the same measurement to Meta twice", "Only after you choose Accept", "Until you close the tab"],
+          ["Your name and email address, kept in your browser tab", "Fills in the booking form for you after you apply", "When you send the application", "Removed once the booking page has read it, or when you close the tab"],
+          ["Calendly, on the booking page", "Takes your booking", "When you open the booking page, whatever you chose in the cookie bar, because you asked to book", "Set and kept by Calendly under its own policy"]
+        ]
+      } },
+      { "p": "If you choose Decline, nothing is sent to Meta, and the page works the same. To change your choice, use the button below, or clear the site data for this page in your browser. The cookie bar then asks again." },
+      { "button": { "id": "cookie-reset", "text": "Change your cookie choice" } },
+
+      { "h2": "9. Meta and the measurement of our advertising" },
+      { "p": "If you choose Accept, two things happen. The Meta pixel on our pages tells Meta which pages you saw. And when your application is one we take forward, our server sends Meta a short message so that Meta can match it to the advertisement you clicked. That message holds scrambled (hashed) versions of your email address, first name and last name, your IP address, your browser details, and the identifiers Meta set when you clicked. We send no phone number. We use this only to see which advertisements lead to real applications, and to improve who sees our advertising." },
+      { "p": "If you choose Decline, none of this is sent, and we do not keep the advertising identifiers with your application." },
+      { "p": "What Meta does when it shows you our advertisement is covered by Meta's own privacy policy. Meta also decides for itself how it uses some of what it receives." }
+    ]
+  },
+
+  "terms": {
+    "title": "Website terms",
+    "updated": "Last updated: 19 October 2026",
+    "blocks": [
+      { "p": "These terms cover your use of this website. They are not the agreement for our services, which we make separately and in writing (Part 4). By using the site you accept these terms." },
+
+      { "h2": "1. Who runs this site" },
+      { "p": "This site is run by EngeCo AS, a Norwegian limited company, trading as Elevate Marketing. Organisation number 924 490 926. Address: Midtfjellet 66, 5363 Ågotnes, Norway. Email: {EMAIL}." },
+      { "p": "We help businesses find new customers through advertising. What we do for a customer, and how we are paid, is set out in a written agreement with that customer." },
+
+      { "h2": "2. What this site is for" },
+      { "p": "This site gives information about our services to people who run or manage businesses. It is not an offer that you can accept to make a contract, and it is not meant for consumers. If you are not acting for a business, please do not use the application form." },
+      { "p": "Nothing on this site is medical, legal, regulatory or financial advice. If your business is regulated, for example a clinic or a law firm, you stay responsible for following the rules that apply to you, and you should take your own advice on whether and how you may work with us." },
+
+      { "h2": "3. Applications and enquiries" },
+      { "when": "register", "p": "Sending an application, an enquiry or a booking does not make a contract, and it does not oblige either of us to anything. A booked call is a chance to see whether working together makes sense. We may decline an application or end a conversation at any time, and so may you. Please give accurate information. We check the company name you give against public records (Part 8)." },
+      { "unless": "register", "p": "Sending an application, an enquiry or a booking does not make a contract, and it does not oblige either of us to anything. A booked call is a chance to see whether working together makes sense. We may decline an application or end a conversation at any time, and so may you. Please give accurate information." },
+
+      { "h2": "4. Our services are agreed separately" },
+      { "p": "We provide services only under a written agreement with the customer. Where this site summarises how we work or how we are paid, it is a summary. If a summary and a signed agreement differ, the agreement applies." },
+
+      { "h2": "5. Results, accuracy and what we cannot promise" },
+      { "p": "This site describes how we work and, in places, results that customers have reached. Those results belong to those customers, in their own circumstances. Past results do not promise future ones, and we do not guarantee any number of enquiries, sales or return on spend. A customer is named, or a result is shown in a way that identifies the customer, only with that customer's written permission. Where we show a figure, we say where it comes from. We take care over what we publish, but we do not promise that it is complete or up to date." },
+
+      { "h2": "6. Using the site" },
+      { "p": "Please use the site lawfully and in good faith. Do not:" },
+      { "ul": [
+        "send details that are false, or that belong to someone else without their permission",
+        "use automated tools to submit forms or to copy the site",
+        "try to break, overload or get around the security of the site",
+        "use the site to send us marketing or other material that has nothing to do with it"
+      ] },
+      { "p": "We may block use that breaks these rules." },
+
+      { "h2": "7. Our content" },
+      { "p": "The text, design, images and other material on this site belong to us or are used with permission. You may read it, and print or share a copy, for your own business use. You may not copy, reuse or republish it for another purpose without our written permission. The names and marks of other businesses belong to them." },
+
+      { "h2": "8. Other people's services" },
+      { "when": "register", "p": "The site works with services run by others: Companies House (the public register we search for the company name you give), Calendly (bookings), Meta (measurement of our advertising, only if you accept it in the cookie bar) and Typeform (the older enquiry page). They have their own terms and privacy policies, and we are not responsible for their services. If we link to another site, that is for your convenience and does not mean that we endorse it." },
+      { "unless": "register", "p": "The site works with services run by others: Calendly (bookings), Meta (measurement of our advertising, only if you accept it in the cookie bar) and Typeform (the older enquiry page). They have their own terms and privacy policies, and we are not responsible for their services. If we link to another site, that is for your convenience and does not mean that we endorse it." },
+
+      { "h2": "9. Our responsibility to you" },
+      { "p": "Nothing in these terms limits liability that the law does not allow to be limited, including liability for death or personal injury caused by negligence, and for fraud. Beyond that, the information on this site is provided as it is. We do not promise that the site will always be available or free of errors." },
+
+      { "h2": "10. Privacy, changes, governing law and contact" },
+      { "p": "Our [[privacy notice|@privacy]] explains what we do with the details you send us. We may change these terms. The date at the top shows when they last changed, and a change applies from that date." },
+      { "p": "These terms, and any dispute about the site, are governed by the law of England and Wales, and the courts of England and Wales have jurisdiction." },
+      { "p": "To contact us, write to {EMAIL} or to the address in Part 1." }
+    ]
+  }
+}

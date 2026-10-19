@@ -11,6 +11,8 @@
  *   public/g/<slug>/review/index.html     we check a few details first
  *   public/g/<slug>/not-now/index.html    at capacity
  *   public/g/<slug>/not-a-fit/index.html  not the right fit
+ *   public/g/<slug>/privacy/index.html    privacy notice   (text in g/<slug>/legal.json)
+ *   public/g/<slug>/terms/index.html      website terms    (text in g/<slug>/legal.json)
  *   netlify/functions/lead/data.generated.mjs
  *       the config, the form copy and the page shell the lead function needs to answer a
  *       post that has no JavaScript behind it
@@ -29,6 +31,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { renderLegalBlocks } from '../g/_growth/legal.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const G = join(root, 'g');
@@ -428,6 +431,18 @@ var known = !!(q.lead_id && ID_RE.test(q.lead_id));
 function fire() { if (known) fireQualified('review', q.lead_id); }
 initBanner(fire);
 fire();`);
+  } else if (kind === 'privacy') {
+    // The notice says the cookie choice can be changed with a button. The choice is kept by
+    // /js/consent.js under this key; removing it and reloading makes the page ask again.
+    parts.push(`initBanner();
+var resetBtn = document.getElementById('cookie-reset');
+if (resetBtn) {
+  resetBtn.hidden = false;
+  resetBtn.addEventListener('click', function () {
+    try { localStorage.removeItem('elevate-cookie-consent'); } catch (e) { /* private mode */ }
+    window.location.reload();
+  });
+}`);
   } else {
     parts.push('initBanner();');
   }
@@ -467,12 +482,25 @@ async function build(slug) {
   checkStrings(walkStrings(copy, '', []));
   checkStrings(walkStrings(questionText(core), 'core', []));
 
+  // The privacy notice and the website terms. "register" is whether the notice may say that the company is
+  // checked against Companies House: true only while COMPANIES_HOUSE_API_KEY is set in production.
+  if (!existsSync(join(dir, 'legal.json'))) die(`g/${slug}/legal.json is missing`);
+  const legal = fill(readJson(join(dir, 'legal.json')), vars);
+  checkStrings(walkStrings(legal, 'legal', []));
+  for (const key of ['privacy', 'terms']) {
+    if (!legal[key] || !legal[key].title || !legal[key].updated || !Array.isArray(legal[key].blocks)) die(`legal.json needs "${key}" with title, updated and blocks`);
+  }
+  if (!cfg.legal || typeof cfg.legal.registerCheck !== 'boolean') die('config.json needs "legal": { "registerCheck": true | false }');
+  if (cfg.links.privacy !== `${cfg.path}/privacy/`) die(`links.privacy must be ${cfg.path}/privacy/ (the page built from legal.json)`);
+  if (cfg.links.terms !== `${cfg.path}/terms/`) die(`links.terms must be ${cfg.path}/terms/ (the page built from legal.json)`);
+  const legalFlags = { register: cfg.legal.registerCheck };
+
   // The form, rendered once for the landing page and kept for the server's no-script answer.
   const formHtml = renderForm({ copy, cfg, values: {}, errors: {}, hidden: {}, general: false });
 
   loadJs();
   const sections = loadCss();
-  for (const name of ['base', 'page', 'cards', 'form', 'banner', 'outcome']) {
+  for (const name of ['base', 'page', 'cards', 'form', 'banner', 'outcome', 'legal']) {
     if (!sections[name]) die(`g/_growth/style.css has no @section ${name}`);
   }
   const cssFor = (...names) => tidyCss(names.map((n) => sections[n]).join('\n'));
@@ -583,6 +611,39 @@ ${pageScript(cfgClient, kind, coreSrc)}
     return html;
   }
 
+  /* ---- the privacy notice and the website terms ---- */
+  function legalBody(doc) {
+    try { return renderLegalBlocks(doc, cfg, legalFlags); } catch (e) { return die(`legal.json (${doc.title}): ${e.message}`); }
+  }
+  function legalPage(key) {
+    const doc = legal[key];
+    return head(cfg, {
+      title: `${doc.title} | Elevate Marketing`, description: '', og: false,
+      css: cssFor('base', 'outcome', 'banner', 'legal'), scripts: {},
+    }) + `
+<body>
+<div class="o"><div class="o-in em-fluid">
+  <header class="hd"><div class="wrap">${picture('ink')}</div></header>
+  <main class="lg-main" id="main">
+    <div class="wrap">
+      <article class="lg-doc">
+        <h1 class="lg-h1">${esc(doc.title)}</h1>
+        <p class="lg-date">${esc(doc.updated)}</p>
+        ${legalBody(doc)}
+      </article>
+    </div>
+  </main>
+  ${footer(cfg, copy)}
+</div></div>
+${banner(cfg, copy)}
+<script>
+${pageScript(cfgClient, key === 'privacy' ? 'privacy' : 'plain', coreSrc)}
+</script>
+</body>
+</html>
+`;
+  }
+
   const pages = [
     ['index.html', landing],
     ['book/index.html', outcome('book', { kind: 'book', cal: true })],
@@ -590,6 +651,8 @@ ${pageScript(cfgClient, kind, coreSrc)}
     ['review/index.html', outcome('review', { kind: 'review' })],
     ['not-now/index.html', outcome('not-now', { kind: 'plain' })],
     ['not-a-fit/index.html', outcome('not-a-fit', { kind: 'plain' })],
+    ['privacy/index.html', legalPage('privacy')],
+    ['terms/index.html', legalPage('terms')],
   ];
   for (const [rel, html] of pages) checkOutput(rel, html);
   checkOutput('form-only (no-script answer)', shell.before + formHtml + shell.after);
@@ -597,7 +660,7 @@ ${pageScript(cfgClient, kind, coreSrc)}
   /* ---- write ---- */
   const outDir = join(OUT, slug);
   rmSync(outDir, { recursive: true, force: true });
-  for (const sub of ['book', 'takk', 'review', 'not-now', 'not-a-fit']) mkdirSync(join(outDir, sub), { recursive: true });
+  for (const sub of ['book', 'takk', 'review', 'not-now', 'not-a-fit', 'privacy', 'terms']) mkdirSync(join(outDir, sub), { recursive: true });
   for (const [rel, html] of pages) writeFileSync(join(outDir, rel), html);
 
   /* What the lead function needs: no page copy beyond the form's, no notes. */
@@ -608,7 +671,7 @@ ${pageScript(cfgClient, kind, coreSrc)}
     '// GENERATED by scripts/build-g-growth.mjs from g/' + slug + '/. Do not edit: the next build overwrites it.\n' +
     'export const growth = ' + JSON.stringify(strip(data), null, 1) + ';\n');
 
-  console.log(`  g-growth: /g/${slug} + /book /takk /review /not-now /not-a-fit  (${pages.map(([, h]) => Math.round(h.length / 1024) + ' KB').join(', ')})`);
+  console.log(`  g-growth: /g/${slug} + /book /takk /review /not-now /not-a-fit /privacy /terms  (${pages.map(([, h]) => Math.round(h.length / 1024) + ' KB').join(', ')})`);
   if (!cfg.live) {
     console.log(`    ⚠ "live" is false in g/${slug}/config.json: the pages are built, the lead endpoint answers 503 and stores nothing.`);
     if (!url) console.log('      funnel.calendlyUrl is empty: the booking page shows a notice instead of the calendar.');
