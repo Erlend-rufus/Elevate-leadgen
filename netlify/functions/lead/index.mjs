@@ -225,7 +225,11 @@ export function createHandler(deps = {}) {
     /* ---- 4. the register -------------------------------------------------- */
     let ch = { check: 'skipped', reasons: [] };
     if (routing.needsRegistry(values)) {
-      if (registerSwitchedOff(e, req)) {
+      if (!(cfg.legal && cfg.legal.registerCheck)) {
+        // The privacy notice does not promise a register check (legal.registerCheck is false), so none is made.
+        // Recorded as "unchecked": the lead still says in its own record that nobody looked the company up.
+        ch = { check: 'unchecked', reasons: [] };
+      } else if (registerSwitchedOff(e, req)) {
         // Recorded as "off", never as "ok": the lead says in its own record that nobody checked the register.
         ch = { check: 'off', reasons: [] };
         log({ code: 'ch_switched_off', lead_id: leadId });
