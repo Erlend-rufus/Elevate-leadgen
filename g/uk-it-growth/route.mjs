@@ -1,0 +1,120 @@
+/**
+ * Which outcome a lead gets. Pure functions, no network: the Companies House lookup is
+ * done elsewhere (netlify/functions/lead/companies-house.mjs) and handed in as a plain
+ * profile, so every rule here can be tested with a table.
+ *
+ * The routes, in the order they are tried. The first that applies wins, so a firm that is
+ * too small and also at capacity is "not a fit" (structural beats temporary):
+ *
+ *   not_a_fit   turnover under £2m, trading under two years, a typical client worth under
+ *               £10k, or (when turnover is not stated) accounts filed as micro-entity or
+ *               dormant.
+ *   not_now     no capacity for new clients in the next three months.
+ *   review      a person has to look before a time is offered: turnover not stated, a
+ *               client worth £10k to under £25k, the company not found in the register,
+ *               the register unavailable, or an answer the register contradicts.
+ *   fit         everything else.
+ *
+ * Deliberate reading, say so if it is wrong: a firm that claims £2m or more but files
+ * micro-entity or dormant accounts is "review", not "not a fit". The accounts are
+ * evidence against the claim, but a company can file late or be one of several in a
+ * group, and rejecting a firm on that alone costs a real lead. It is one line to change:
+ * search for ch_accounts_too_small below.
+ */
+import { OPTIONS } from './core.mjs';
+
+const T = OPTIONS.turnover;
+const TRADING = OPTIONS.trading;
+const WORTH = OPTIONS.worth;
+const CAPACITY = OPTIONS.capacity;
+
+const BELOW_THRESHOLD = new Set([T[0], T[1]]);
+const CLAIMS_THRESHOLD = new Set([T[2], T[3], T[4]]);
+const NOT_STATED = T[5];
+
+export const ROUTES = ['fit', 'review', 'not_now', 'not_a_fit'];
+
+/** The page each route is sent to, relative to the funnel's address. */
+export const PAGE_FOR = { fit: 'book', review: 'review', not_now: 'not-now', not_a_fit: 'not-a-fit' };
+
+const DAY = 86400000;
+const TWO_YEARS = 2 * 365.25 * DAY;
+
+/** Reasons a firm is "not a fit" from what it said about itself. */
+export function selfReport(v) {
+  const reasons = [];
+  if (BELOW_THRESHOLD.has(v.turnover_band)) reasons.push('turnover_below_2m');
+  if (v.trading_years === TRADING[0]) reasons.push('trading_under_2y');
+  if (v.first_year_value === WORTH[0]) reasons.push('value_under_10k');
+  return reasons;
+}
+
+/**
+ * Whether the register has to be asked. Not when the answers alone already say "not a
+ * fit", and not when the firm is simply at capacity, unless it did not state its turnover:
+ * then the register decides between "not a fit" and "review".
+ */
+export function needsRegistry(v) {
+  if (selfReport(v).length) return false;
+  if (v.capacity === CAPACITY[0] && v.turnover_band !== NOT_STATED) return false;
+  return true;
+}
+
+const none = (t) => !t || t === 'null';
+const isTiny = (t) => t === 'micro-entity' || t === 'dormant';
+
+/**
+ * What a matched company profile says about the answers.
+ * profile: {number, name, status, created: 'YYYY-MM-DD', accounts_type}
+ * Returns {check: 'ok' | 'mismatch', reasons: []}.
+ */
+export function assessProfile(v, profile, now) {
+  const reasons = [];
+  const created = profile.created ? Date.parse(profile.created) : NaN;
+  const age = Number.isFinite(created) ? (now.getTime() - created) : NaN;
+  if (profile.status && profile.status !== 'active') reasons.push('ch_not_active');
+  if (v.trading_years !== TRADING[0] && Number.isFinite(age) && age < TWO_YEARS) reasons.push('ch_younger_than_claimed');
+  if (CLAIMS_THRESHOLD.has(v.turnover_band) && isTiny(profile.accounts_type)) reasons.push('ch_accounts_too_small');
+  if (none(profile.accounts_type) && Number.isFinite(age) && age >= TWO_YEARS) reasons.push('ch_no_accounts');
+  return { check: reasons.length ? 'mismatch' : 'ok', reasons };
+}
+
+/**
+ * The decision. "ch" is what the register said: {check, reasons, profile}, where check is
+ * 'skipped' (not asked), 'ok', 'not_found', 'timeout', 'mismatch' or 'off'.
+ *
+ * 'off' means the register was deliberately not asked, on a preview only (see
+ * registerSwitchedOff in netlify/functions/lead/index.mjs). It is never turned into 'ok': a
+ * lead that would have been a fit is still a fit, but carries the reason "register_off" so
+ * nobody reads it as checked.
+ *
+ * Returns {route, reasons}.
+ */
+export function decide(v, ch) {
+  const registry = ch || { check: 'skipped', reasons: [] };
+  const profile = registry.profile || {};
+
+  const notAFit = selfReport(v);
+  if (notAFit.length) return { route: 'not_a_fit', reasons: notAFit };
+  if (v.turnover_band === NOT_STATED && registry.check !== 'skipped' && isTiny(profile.accounts_type)) {
+    return { route: 'not_a_fit', reasons: ['ch_micro_or_dormant'] };
+  }
+
+  if (v.capacity === CAPACITY[0]) return { route: 'not_now', reasons: ['capacity_none'] };
+
+  const review = [];
+  if (v.turnover_band === NOT_STATED) review.push('turnover_not_stated');
+  if (v.first_year_value === WORTH[1]) review.push('value_10k_to_25k');
+  if (registry.check === 'not_found') review.push('ch_not_found');
+  else if (registry.check === 'timeout') review.push('ch_timeout');
+  else if (registry.check === 'mismatch') review.push.apply(review, registry.reasons);
+  if (review.length) {
+    if (registry.check === 'off') review.push('register_off');
+    return { route: 'review', reasons: review };
+  }
+
+  const fit = ['turnover_2m_plus', 'trading_2y_plus'];
+  if (profile.accounts_type) fit.push('ch_' + profile.accounts_type);
+  if (registry.check === 'off') fit.push('register_off');
+  return { route: 'fit', reasons: fit };
+}

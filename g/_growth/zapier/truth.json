@@ -1,0 +1,46 @@
+{
+  "08cf9ecc-ff51-4296-9e03-c5250ebb7abf": {"name": "lead_id", "type": "short_text"},
+  "09d8fbaa-d659-4b44-9738-39fcf5c6f25b": {"name": "Nettside", "type": "url"},
+  "13229225-75e5-4729-bd8d-eb69c20e80b2": {"name": "Ad Spend Budget", "type": "drop_down", "options": {
+    "5482c305-7587-466a-bef4-ab15e6a70906": "Under £1k/mth",
+    "20422aec-d6dd-4c76-8c34-fc60a00e0ea6": "£1-2.5k/mth",
+    "5e0a44f3-c659-4002-b61b-5fe866e31278": "£2.5-5k/mth",
+    "7364943c-da47-4d59-bb44-e79faeeaac5a": "£5k+/mth",
+    "feaf2b0d-079a-4ffa-a48b-67e79c280458": "Unknown"}},
+  "18957c8f-f573-4790-957c-11812dd3aa04": {"name": "Team Size", "type": "drop_down", "options": {
+    "8f4ad1c2-0b09-408c-8f3c-fa0393fcae14": "Just me",
+    "39ec6e64-dba4-44db-a6fd-916950036cd1": "2-5",
+    "fae5a7ec-2592-4e1f-9242-275943f9ae69": "6-10",
+    "01c29f3e-ea9d-4cca-812f-6cb6c7347551": "11-25",
+    "d034b7b1-49a8-45e3-a67f-c85620712dc6": "26-50",
+    "58ab0f8c-b644-4cac-a29f-69765732b3fa": "50+"}},
+  "189cd0e5-2c7d-4c43-a94b-9ad280a4ad53": {"name": "Contract Value", "type": "drop_down", "options": {
+    "4eec6f5e-b753-42c3-974e-ed62cd8347db": "Under £10k",
+    "39c63d70-0e37-41e5-87d9-fd1aa537e2c9": "£10k-£30k",
+    "5d7d129b-f45a-4ae6-82c6-c6c8d7bba75b": "£30k-£75k",
+    "255937fc-9107-4a9b-9b7a-c4f395c58d38": "£75k-£150k",
+    "db0a1849-1833-46ae-ab83-a702144bb49f": "£150k+"}},
+  "668b1a6a-4054-4b24-ac3c-55432d7c2b3e": {"name": "Tier", "type": "drop_down", "options": {
+    "153aea7a-a523-466a-997a-92e6b07e4c1f": "Tier 1",
+    "20a259b4-95a9-435f-86fa-88bf86d399cc": "Tier 2",
+    "1d991141-c31f-4a47-96c9-d6e2c025b29a": "Tier 3"}},
+  "78c13487-0fee-46d2-893f-68b212b09e6b": {"name": "Email", "type": "email"},
+  "8289eaa9-7492-40eb-a35d-092c51bd01ac": {"name": "CRM Item Type", "type": "drop_down", "options": {
+    "0b565b82-9090-45fa-8bf9-67f2a7d2eca3": "Lead",
+    "03a2563c-74d3-4640-a0e6-9852c116e181": "Deal",
+    "ec46b052-b4f3-4d9f-8ef3-bbbd3805ed1f": "Account",
+    "e8f39329-129f-4b1e-aef5-5283f55d6d2f": "Contact"}},
+  "8fb666f4-c213-4f7a-a8ce-627e496a8313": {"name": "Contact Name", "type": "short_text"},
+  "a0c06e36-5028-4b86-af93-c57de3ad2418": {"name": "Phone", "type": "phone"},
+  "ce2deb01-0b47-45c6-8bf5-dbdc67f9962d": {"name": "IT Specialism", "type": "drop_down", "options": {
+    "cbb8af7b-befb-4b56-ae0e-e9018a52c022": "Managed IT services / MSP",
+    "48ac62c8-c7cb-48cb-8093-44018f5ad333": "Cybersecurity",
+    "88d48334-0d6e-4205-a887-ac8f10dd2f9d": "Cloud (AWS/Azure/GCP)",
+    "a5ca2f30-4bd7-4386-bace-86a239c71ff1": "Software development",
+    "332d345f-0002-41e5-a3cc-b719e55bfbbb": "IT strategy & digital transformation",
+    "3fae402c-d23a-4338-b521-9e6369cce72d": "Data & AI",
+    "a75ef23e-81ec-45a2-b98f-6fd366bd90f8": "Other"}},
+  "cf254478-a92a-4805-921a-a89ba06c69a0": {"name": "Job Title", "type": "short_text"},
+  "f4bfea58-b05c-4427-ba1c-b4aa61200583": {"name": "Sales Stage", "type": "drop_down", "options": {
+    "819060db-e6c9-43ab-a7f9-be1322061f3f": "Lead Qualification"}}
+}
