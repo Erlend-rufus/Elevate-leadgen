@@ -486,9 +486,10 @@ stores nothing) but shows a form that fails, so set the variable first.
 - [ ] **Go live.** On a branch made from `feat/uk-it-growth`, never from `preview/uk-it-growth` and never pull request #74:
       `config.json` → `"live": true`; `npm run build`, `npm run test:g-growth` and `node g/uk-it-growth/e2e/run.mjs` pass and the build says
       nothing is outstanding; a pull request into `main` whose deploy preview has been looked at; merge. The owner gave the explicit
-      yes to production on 19 Oct 2026; ask again if the plan has changed since. After the merge and the deploy, an empty POST to
-      `https://getelevateleads.com/api/lead` answers 422 when production has the hook and 503 when it does not: the check that
-      costs nothing and sends nothing.
+      yes to production on 19 Oct 2026; ask again if the plan has changed since. After the merge and the deploy, a POST to
+      `https://getelevateleads.com/api/lead` with the header `Accept: application/json` and the body `{"campaign":"uk-it-growth"}`
+      answers 422 with a list of missing answers when production has the hook, and 503 when it does not: the check that costs
+      nothing and sends nothing. (Without the `campaign` key the answer is 400, and without the `Accept` header it is the form page.)
 - [ ] **The register.** Decided 19 Oct 2026: no key at launch. Production has no `COMPANIES_HOUSE_API_KEY`, `legal.registerCheck` is
       `false`, and `COMPANIES_HOUSE_MODE` is not set in production (the code ignores it there anyway). A lead on the live address that would
       have been a `fit` shows `review`. To use the register: the key and `legal.registerCheck: true` together (section 13); a lead then
