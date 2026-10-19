@@ -27,7 +27,7 @@ npm run test:g-growth
 | 3 | **Companies House API key** | Netlify, `COMPANIES_HOUSE_API_KEY` | Every lead is sent to `review`, never to `fit`. |
 | 4 | **Meta Conversions API token** | Netlify, `META_CAPI_TOKEN` | The browser pixel still works; the server copy of the event is skipped. |
 | 5 | **Alert e-mail service** (Resend is the default, see 2) | Netlify, `RESEND_API_KEY`, `ALERT_EMAIL_FROM` | Failures are only in the function log. Do not launch without it. |
-| 6 | **Zap 1 and Zap 2**, ClickUp field `lead_id`, Slack `#leads-uk` | Section 4 | **Built and tested against the real ClickUp list, saved switched off.** Zap 1 has had one live run with a made-up lead (task in ClickUp, post in `#leads-uk`); Zap 2 has not yet been shown a real Calendly booking. Both are switched on for the acceptance run (section 10). The hook URL for row 2 exists once Zap 1 has been switched on; it is copied from Zap 1's trigger step in the Zapier editor. |
+| 6 | **Zap 1 and Zap 2**, ClickUp field `lead_id`, Slack `#leads-uk` | Section 4 | **Built and tested against the real ClickUp list and one real Calendly booking, saved switched off.** Zap 1 has had one live run with a made-up lead (task in ClickUp, post in `#leads-uk`); Zap 2 has had one live run with a real booking on "Commission I IT" (task found by lead id, moved to `møte booket`, due date set, one comment). Both are switched on again for the acceptance run (section 10). The hook URL for row 2 exists once Zap 1 has been switched on; it is copied from Zap 1's trigger step in the Zapier editor. |
 | 7 | **Privacy notice and website terms** approved by the solicitor | `config.json` → `links` | The pages link to the existing `/lp/privacy/` and `/lp/terms/`. |
 | 8 | **A real phone test** (section 9) | | |
 
@@ -121,8 +121,9 @@ short README are in `g/_growth/zapier/`; what is published in Zapier is that sou
 | Zap 2 | Leads v3: Calendly-booking | `01a15111-adb3-7400-b62c-803edc7657d3` | Calendly, Invitee Created, whole organisation |
 
 Editor: `https://zapier.com/workflow/<id>`. Both are private to the Zapier account. Both were built
-switched off (19 Oct 2026). Zap 1 was switched on briefly for its first live test the same day and is saved
-switched off again (see "How the two Zaps were tested"). A trigger that has never been switched on shows as
+switched off (19 Oct 2026). Both were switched on briefly for their first live tests the same day (Zap 1 with
+a made-up lead, Zap 2 with a real booking) and are saved switched off again (see "How the two Zaps were
+tested"). A trigger that has never been switched on shows as
 `unclaimed`, a switched-on one as `active`, and one switched off again as `released`.
 
 **The hook URL.** The Catch Hook URL exists only once Zap 1 has been switched on: an `unclaimed` trigger shows
@@ -229,10 +230,21 @@ a test and gets the tag `test`.
   tolerates because the number is also in the task description. ClickUp did accept +442079460123, a reserved
   London drama number, when it was set from outside the Zap, so a valid real number should pass; the first
   real phone test shows it.
-- **Not shown yet:** the real Catch Hook delivery from the Netlify function (the live run came through
-  Zapier's own trigger, not through the hook URL), and the shape of a real Calendly booking as Zap 2's
-  trigger hands it over (the code accepts nested, flattened and wrapped forms, and fails with the key names if
-  it can read none). Section 10 covers them.
+- **Live, 19 Oct 2026, Zap 2 switched on for a short while.** One real booking on "Commission I IT", made from
+  the booking link with `utm_content` set by hand to the made-up lead's id (so not through the embedded widget
+  on `/book`), by an invented invitee. The run finished in about fourteen seconds without a retry. It found the
+  task by lead id on the first lookup, moved it from `ny lead` to `møte booket`, set the due date to the
+  meeting's start (11:30 UTC, 13:30 in Oslo) and added one comment with 12:30 in London, 13:30 in Oslo and the
+  `Calendly-ref`. No second task was made. Calendly handed the invitee over as one flat object, with the lead id
+  at `tracking.utm_content` and the times inside `scheduled_event`, so `parseBooking` needed no change. The
+  event type reports `pooling_type` collective and the booking has two hosts, so every booking, test ones
+  included, also lands in the second host's calendar until it is cancelled. A cancellation was not tested: the
+  trigger fires for new bookings only, so a cancelled booking leaves its task where it is. Zap 2 was then
+  switched off again and the test task archived.
+- **Not shown yet:** the real Catch Hook delivery from the Netlify function (the live run of Zap 1 came
+  through Zapier's own trigger, not through the hook URL), the lead id handed on by the embedded widget on
+  `/book` (the live run used a hand-made link), a booking that arrives without a lead id (only the local and
+  draft checks have run it) and a booking moved to a new time. Section 10 covers them.
 
 ### Not changed
 
@@ -388,11 +400,12 @@ Companies House, the alert e-mail, and Netlify's own routing. The acceptance run
   - ClickUp: one task per lead, in the right list and status, with `lead_id`; the same lead sent twice gives one task.
   - Slack: a message for `fit` and `review` only, with no phone, e-mail or free text. A real e-mail address
     posts for real; an address ending `@example.invalid` is a test and posts only with `slack_test`.
-  - Zap 2, after a `fit`: book a time on "Commission I IT" (a booking e-mails the host, so cancel it in Calendly
-    afterwards). The form's task moves to `møte booket`, its due date is the meeting's start, and it has one
-    comment with the time in London and Oslo. Opening `/book` directly and booking gives a new task tagged
-    `booket-uten-skjema`. If the Zap 2 run fails, its message lists the keys it saw: that is the real shape
-    of the Calendly data, and the one place the code may need a small change.
+  - Zap 2, after a `fit`: book a time on "Commission I IT" from the page itself (a booking e-mails both hosts, so
+    cancel it in Calendly afterwards). The form's task moves to `møte booket`, its due date is the meeting's
+    start, and it has one comment with the time in London and Oslo. The same result was seen on 19 Oct 2026 from
+    a hand-made link (section 4), so this run is what shows that the widget on `/book` hands the lead id on.
+    Opening `/book` directly and booking gives a new task tagged `booket-uten-skjema`. If the Zap 2 run fails,
+    its message lists the keys it saw, which is the shape of the Calendly data.
   - Meta Test events: `QualifiedForm` once per `fit` or `review`, never `Lead`, and nothing after Decline.
   - A deliberately wrong `ZAPIER_LEAD_HOOK`: the lead is in storage and the alert e-mail arrives.
   - A submission with JavaScript off (or another browser with scripts blocked).
