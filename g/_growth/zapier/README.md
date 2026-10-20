@@ -22,7 +22,7 @@ state the workflows are in (switched on or off) is also kept there, not here.
    node g/_growth/zapier/build.mjs zap2-calendly-booking.ts
    node g/_growth/zapier/zap2.test.mjs        # 164 checks
    node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
-   node g/_growth/zapier/zap1.test.mjs        # 120 checks
+   node g/_growth/zapier/zap1.test.mjs        # 126 checks
    ```
 
    `truth.json` is a snapshot of the ClickUp field and option ids the tests check the mappings against.
