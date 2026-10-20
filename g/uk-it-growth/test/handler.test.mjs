@@ -94,6 +94,7 @@ test('what Zapier receives: fixed keys in a fixed order, nothing else', async ()
     company_name: 'Northbridge IT Limited', company_website: 'northbridge-it.co.uk', company_number: '01234567',
     ch_status: 'active', ch_accounts_type: 'full', ch_incorporated: '2012-03-01', ch_check: 'ok',
     specialism: 'Managed IT services', practice_areas: '', sra_number: '',
+    regulator_number: '', self_pay_share: '', specialties: '', first_consultation_value: '',
     turnover_band: T[2], trading_years: TR[2], employees_or_fee_earners: OPTIONS.people[2], marketing_spend: OPTIONS.spend[1],
     first_year_value: W[2], sales_cycle: OPTIONS.cycle[1], target_next_year: '', decision_maker: OPTIONS.decider[0], capacity: C[1],
     first_name: 'Alex', last_name: 'Morgan', job_title: 'Managing Director', email: 'alex@northbridge-it.co.uk', mobile: '07700 900123',

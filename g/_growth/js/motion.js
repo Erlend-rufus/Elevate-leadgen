@@ -48,7 +48,29 @@ function initMotion() {
     }, delay);
     setTimeout(finish, delay + dur + 600);   // a tab in the background pauses animation frames; the figure must still end right
   }
-  counters.filter(function (el) { return el.getAttribute('data-play') !== 'cases'; }).forEach(run);
+  counters.filter(function (el) { var pl = el.getAttribute('data-play'); return pl !== 'cases' && pl !== 'sec'; }).forEach(run);
+
+  /* figures that count when their own section arrives (the health and law boards) */
+  var secCounters = counters.filter(function (el) { return el.getAttribute('data-play') === 'sec'; });
+  if (secCounters.length) {
+    var groups = [];
+    secCounters.forEach(function (el) {
+      var host = el.closest ? el.closest('.sec, .band, .hero') : null;
+      if (!host) { run(el); return; }
+      var g = null;
+      for (var i = 0; i < groups.length; i++) if (groups[i].host === host) g = groups[i];
+      if (!g) { g = { host: host, els: [] }; groups.push(g); }
+      g.els.push(el);
+    });
+    var sio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        groups.forEach(function (g) { if (g.host === e.target) g.els.forEach(run); });
+        sio.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+    groups.forEach(function (g) { sio.observe(g.host); });
+  }
 
   var cases = document.getElementById('cases');
   var caseCounters = counters.filter(function (el) { return el.getAttribute('data-play') === 'cases'; });

@@ -296,6 +296,8 @@ html.anim .cn:not(.cn-on) > [aria-hidden]{visibility:hidden;animation:cn-failsaf
 .lf-card:hover{border-color:var(--ink)}
 .lf-ind{flex:none;display:grid;place-items:center;width:22px;height:22px;border:2px solid var(--field-border);border-radius:50%}
 .lf-ind::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink);opacity:0}
+.lf-card--multi .lf-ind{border-radius:4px}
+.lf-card--multi .lf-ind::after{border-radius:1px}
 .lf-card:has(input:checked){border-color:var(--ink);background:var(--paper);box-shadow:0 0 0 1px var(--ink)}
 .lf-card:has(input:checked) .lf-ind{border-color:var(--ink)}
 .lf-card:has(input:checked) .lf-ind::after{opacity:1}
@@ -369,11 +371,12 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
           <div class="hero-side">
             <p class="lead">Ignite Consulting, Be | Shaping the Future and Crux IT Consulting. <span class="em"><span class="cn" data-to="424" data-dec="0" data-pre="" data-suf="" data-dur="1400" data-delay="400" data-play="load"><span class="cn-sr">424</span><span aria-hidden="true">424</span></span> qualified leads</span> between them, from campaigns we ran. If you are growing and want more of the right conversations, this is the work we do.</p>
             <div class="cta">
-              <a class="btn btn--primary" href="#form">See whether we would take you on</a>
+              <div class="cta-btns"><a class="btn btn--primary" href="#form">See whether we would take you on</a></div>
               <p class="micro">A few questions. We only take on firms we think we can help.</p>
             </div>
           </div>
         </div>
+        
       </div>
     </section>
 
@@ -827,7 +830,14 @@ function initForm() {
   /* ---- reading the form ------------------------------------------------------------------ */
   function val(name) {
     var el = form.elements[name];
-    return el ? (el.value || '') : '';
+    if (!el) return '';
+    if (el.length && el[0] && el[0].type === 'checkbox') {   // a multi-choice question: its ticked options, in order
+      var picked = [];
+      for (var k = 0; k < el.length; k++) if (el[k].checked) picked.push(el[k].value);
+      return picked.join(', ');
+    }
+    if (el.type === 'checkbox') return el.checked ? el.value : '';
+    return el.value || '';
   }
   function setHidden(name, v) {
     var el = form.elements[name];
@@ -883,7 +893,7 @@ function initForm() {
   /* ---- moving between questions ---------------------------------------------------------- */
   function firstControl(i) {
     var s = STEPS[i];
-    if (s.kind === 'choice') return blocks[i].querySelector('legend.lf-q');
+    if (s.kind === 'choice' || s.kind === 'multi') return blocks[i].querySelector('legend.lf-q');
     return blocks[i].querySelector('input.lf-input');
   }
   function focusControl(el) {
@@ -935,7 +945,7 @@ function initForm() {
     });
   }
   form.addEventListener('change', function (e) {
-    if (e.target && e.target.type === 'radio') {
+    if (e.target && (e.target.type === 'radio' || e.target.type === 'checkbox')) {
       syncChoices();
       afterEdit(e.target);
     }
@@ -969,6 +979,7 @@ function initForm() {
     [].forEach.call(form.elements, function (el) {
       if (!el.name || el.type === 'submit' || el.type === 'button') return;
       if (el.type === 'radio') { if (el.checked) data[el.name] = el.value; return; }
+      if (el.type === 'checkbox') { data[el.name] = val(el.name); return; }
       data[el.name] = el.value;
     });
     return data;
@@ -1115,7 +1126,29 @@ function initMotion() {
     }, delay);
     setTimeout(finish, delay + dur + 600);   // a tab in the background pauses animation frames; the figure must still end right
   }
-  counters.filter(function (el) { return el.getAttribute('data-play') !== 'cases'; }).forEach(run);
+  counters.filter(function (el) { var pl = el.getAttribute('data-play'); return pl !== 'cases' && pl !== 'sec'; }).forEach(run);
+
+  /* figures that count when their own section arrives (the health and law boards) */
+  var secCounters = counters.filter(function (el) { return el.getAttribute('data-play') === 'sec'; });
+  if (secCounters.length) {
+    var groups = [];
+    secCounters.forEach(function (el) {
+      var host = el.closest ? el.closest('.sec, .band, .hero') : null;
+      if (!host) { run(el); return; }
+      var g = null;
+      for (var i = 0; i < groups.length; i++) if (groups[i].host === host) g = groups[i];
+      if (!g) { g = { host: host, els: [] }; groups.push(g); }
+      g.els.push(el);
+    });
+    var sio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        groups.forEach(function (g) { if (g.host === e.target) g.els.forEach(run); });
+        sio.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+    groups.forEach(function (g) { sio.observe(g.host); });
+  }
 
   var cases = document.getElementById('cases');
   var caseCounters = counters.filter(function (el) { return el.getAttribute('data-play') === 'cases'; });

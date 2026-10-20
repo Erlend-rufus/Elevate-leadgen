@@ -41,7 +41,14 @@ const SHARED = join(G, '_growth');
 const OUT = process.env.G_GROWTH_OUT || join(root, 'public', 'g');
 const FUNCTION_DATA = process.env.G_GROWTH_FUNCTION_DATA || join(root, 'netlify', 'functions', 'lead', 'data.generated.mjs');
 
-const FUNNELS = ['uk-it-growth'];
+const FUNNELS = ['uk-it-growth', 'uk-private-hospitals', 'uk-law-firms'];
+
+/* The order of the sections on a landing page. copy.json may carry its own "layout"; without one the
+   page is the IT board's. Every name here is a renderer in SECTIONS below. */
+const DEFAULT_LAYOUT = ['hero', 'cases', 'fit', 'pay', 'keep', 'measure', 'meeting', 'faq', 'form'];
+/* The sections of the IT board live in the "page" and "cards" css; the ones added for the health
+   and law boards live in "extra", included only on a page that uses one of them. */
+const EXTRA_SECTIONS = new Set(['strip', 'floors', 'pulse', 'beyond', 'search', 'records', 'how']);
 
 /* ------------------------------------------------------------------ helpers */
 
@@ -267,37 +274,210 @@ function banner(cfg, copy) {
 </div>`;
 }
 
-function landingMain(cfg, copy, formHtml) {
-  const c = copy;
-  const cta = (cls) => `<a class="btn btn--primary" href="#form">${esc(c.cta)}</a>`;
-  return `<main id="main">
-    <section class="hero" aria-labelledby="h-hero">
+function heroPanel(p) {
+  if (!p) return '';
+  const rows = p.rows.map((r) =>
+    `<li class="dp-row"><span class="dp-n">${esc(r.n)}</span><span class="dp-name">${esc(r.name)}</span>` +
+    `<span class="dp-val">${esc(r.value)}${r.sr ? `<span class="cn-sr"> ${esc(r.sr)}</span>` : ''}</span></li>`).join('');
+  const total = parseFigure(p.total.value);
+  const tv = total ? counter(total, { dur: 1400, delay: 400, play: 'load' }) : esc(p.total.value);
+  return `<div class="dp" data-theme="marine" role="group" aria-label="${esc(p.title)}">
+            <p class="dp-title">${esc(p.title)}</p>
+            <p class="dp-total"><span class="dp-big">${tv}</span><span class="dp-total-l">${esc(p.total.label)}</span></p>
+            <ol class="dp-rows">${rows}</ol>
+            <p class="dp-foot">${esc(p.foot)}</p>
+          </div>`;
+}
+
+/** A figure that counts when its own section reaches the screen. */
+function figure(value, i, play) {
+  const fig = parseFigure(value);
+  return fig ? counter(fig, { dur: 1100 + i * 150, delay: 150 + i * 120, play: play || 'sec' }) : esc(value);
+}
+
+const tiles = (items, cls) => `<ul class="${cls || 'tiles'}">${items.map((t, i) =>
+  `<li class="tile"><span class="tile-v">${figure(t.value, i)}</span><span class="tile-l">${esc(t.label)}</span></li>`).join('')}</ul>`;
+
+function floorBoard(b) {
+  const max = Math.max.apply(null, (b.bars || []).map((x) => x.n)) || 1;
+  const bars = (b.bars || []).map((x) =>
+    `<li class="fb-bar"><span class="fb-bar-l">${esc(x.label)}</span><span class="fb-bar-t" aria-hidden="true"><span class="fb-bar-f" style="width:${Math.round((x.n / max) * 100)}%"></span></span><span class="fb-bar-n">${esc(fmtNumber(x.n, 0))}</span></li>`).join('');
+  return `<div class="fb" data-theme="marine">
+              <p class="fb-title">${esc(b.title)}</p>
+              <p class="fb-big"><span class="fb-n">${figure(b.value, 0)}</span><span class="fb-l">${esc(b.label)}</span>${b.against ? `<span class="fb-a">${esc(b.against)}</span>` : ''}</p>
+              <dl class="fb-rows">${b.rows.map((r, i) => `<div class="fb-row"><dd>${figure(r.value, i + 1)}</dd><dt>${esc(r.label)}</dt></div>`).join('')}</dl>
+              ${bars ? `<ul class="fb-bars">${bars}</ul>` : ''}
+            </div>`;
+}
+
+/** The weekly line: 2026 against the same week of 2025, the uncounted weeks hatched. Inline SVG, no script. */
+function pulseChart(p) {
+  const W = 760, H = 300, L = 44, R = 16, T = 18, B = 44;
+  const weeks = p.weeks;
+  const n = weeks.length;
+  const vals = weeks.filter((w) => !w.gap).flatMap((w) => [w.a, w.b]);
+  const max = Math.ceil(Math.max.apply(null, vals) / 10) * 10;
+  const x = (i) => L + (i * (W - L - R)) / (n - 1);
+  const y = (v) => T + (H - T - B) * (1 - v / max);
+  const path = (key) => {
+    let d = '';
+    let pen = false;
+    weeks.forEach((w, i) => {
+      if (w.gap) { pen = false; return; }
+      d += `${pen ? 'L' : 'M'}${x(i).toFixed(1)} ${y(w[key]).toFixed(1)} `;
+      pen = true;
+    });
+    return d.trim();
+  };
+  const gapIdx = weeks.map((w, i) => (w.gap ? i : -1)).filter((i) => i >= 0);
+  const gap = gapIdx.length
+    ? `<rect class="pc-gap" x="${(x(gapIdx[0]) - (x(1) - x(0)) / 2).toFixed(1)}" y="${T}" width="${((x(gapIdx[gapIdx.length - 1]) - x(gapIdx[0])) + (x(1) - x(0))).toFixed(1)}" height="${H - T - B}" fill="url(#pc-hatch)"></rect>`
+    : '';
+  const ticks = [];
+  for (let v = 0; v <= max; v += 20) ticks.push(`<g class="pc-tick"><line x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"></line><text x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${v}</text></g>`);
+  const labels = weeks.map((w, i) => (i % 4 === 0 || i === n - 1) ? `<text class="pc-x" x="${x(i).toFixed(1)}" y="${H - B + 20}" text-anchor="middle">${esc(w.w)}</text>` : '').join('');
+  const dots = weeks.map((w, i) => (w.gap ? '' : `<circle class="pc-dot-a" cx="${x(i).toFixed(1)}" cy="${y(w.a).toFixed(1)}" r="2.5"></circle>`)).join('');
+  const rows = weeks.map((w) => w.gap
+    ? `<tr class="is-gap"><th scope="row">${esc(w.w)}</th><td>n/a</td><td>n/a</td><td class="pc-note">${esc(p.gapNote)}</td></tr>`
+    : `<tr><th scope="row">${esc(w.w)}</th><td>${w.a}</td><td>${w.b}</td><td class="pc-note">${esc(w.note || '')}</td></tr>`).join('');
+  return `<figure class="pc">
+            <figcaption class="pc-cap">${esc(p.chartTitle)}</figcaption>
+            <svg class="pc-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(p.chartTitle)}. The weekly numbers are in the table below.">
+              <defs><pattern id="pc-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" class="pc-hatch"></line></pattern></defs>
+              ${gap}
+              ${ticks.join('')}
+              <path class="pc-line-b" d="${path('b')}"></path>
+              <path class="pc-line-a" d="${path('a')}"></path>
+              ${dots}
+              ${labels}
+            </svg>
+            <ul class="pc-legend" aria-hidden="true"><li class="pc-k-a">${esc(p.legend.a)}</li><li class="pc-k-b">${esc(p.legend.b)}</li><li class="pc-k-gap">${esc(p.legend.gap)}</li><li class="pc-k-last">${esc(p.legend.last)}</li></ul>
+            <p class="note">${esc(p.readnote)}</p>
+            <details class="dd"><summary class="dd-s">${esc(p.tableButton)}</summary>
+              <div class="mt mt--data"><table><caption class="vh">${esc(p.chartTitle)}</caption><thead><tr>${p.columns.map((c) => `<th scope="col">${esc(c)}</th>`).join('')}<th scope="col"><span class="vh">Note</span></th></tr></thead><tbody>${rows}</tbody></table></div>
+            </details>
+          </figure>`;
+}
+
+function recordsTable(r) {
+  const groups = r.groups.map((g) =>
+    `<tr class="tg"><th scope="colgroup" colspan="${r.columns.length}">${esc(g.title)}${g.sub ? ` <span class="tg-sub">${esc(g.sub)}</span>` : ''}</th></tr>` +
+    g.rows.map((row) => `<tr${row.key ? ' class="is-key"' : ''}>${row.c.map((c, i) => i === 0 ? `<th scope="row">${esc(c)}</th>` : `<td>${esc(c)}</td>`).join('')}</tr>`).join('')).join('');
+  return `<details class="dd"><summary class="dd-s">${esc(r.button)}</summary>
+            <div class="mt mt--data mt--records"><table><caption class="mt-cap">${esc(r.tableTitle)}</caption><thead><tr>${r.columns.map((c) => `<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${groups}</tbody></table></div>
+            <ul class="notes">${r.notes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+          </details>`;
+}
+
+/* One renderer per section name. Each returns a <section>. "ctx" carries the pieces a section may need. */
+const SECTIONS = {
+  hero(c, ctx) {
+    const h = c.hero;
+    const cta2 = h.cta2 ? `<a class="btn btn--ghost" href="${esc(h.cta2.href)}">${esc(h.cta2.t)}</a>` : '';
+    return `<section class="hero" aria-labelledby="h-hero">
       <div class="wrap">
         <div class="hero-row">
-          <h1 class="h1" id="h-hero"><span>${esc(c.hero.h1a)}</span> <span>${esc(c.hero.h1b)}</span></h1>
+          <h1 class="h1" id="h-hero"><span>${esc(h.h1a)}</span> <span>${esc(h.h1b)}</span></h1>
           <div class="hero-side">
-            <p class="lead">${heroLead(c.hero.ingress)}</p>
+            <p class="lead">${heroLead(h.ingress)}</p>
             <div class="cta">
-              ${cta()}
-              <p class="micro">${esc(c.hero.micro)}</p>
+              <div class="cta-btns">${ctx.cta()}${cta2}</div>
+              <p class="micro">${esc(h.micro)}</p>
             </div>
           </div>
         </div>
+        ${heroPanel(h.panel)}
       </div>
-    </section>
-
-    <section class="sec" id="cases" aria-labelledby="h-cases">
+    </section>`;
+  },
+  cases(c, ctx) {
+    return `<section class="sec" id="cases" aria-labelledby="h-cases">
       <div class="wrap"><div class="sec-in">
         <h2 class="h2" id="h-cases">${esc(c.cases.h2)}</h2>
         <div class="cases">
           ${c.cases.items.map(caseCard).join('\n          ')}
         </div>
         <p class="note">${esc(c.cases.note)}</p>
-        <div class="cta-row">${cta()}</div>
+        <div class="cta-row">${ctx.cta()}</div>
       </div></div>
-    </section>
-
-    <section class="sec" aria-labelledby="h-fit">
+    </section>`;
+  },
+  strip(c) {
+    const s = c.strip;
+    return `<section class="sec" id="strip" aria-labelledby="h-strip">
+      <div class="wrap"><div class="sec-in">
+        <h2 class="h2 h2--small" id="h-strip">${esc(s.h2)}</h2>
+        ${tiles(s.items, 'tiles tiles--strip')}
+        <p class="note">${esc(s.tail)}</p>
+      </div></div>
+    </section>`;
+  },
+  floors(c) {
+    const f = c.floors;
+    const rooms = f.rooms.map((r, i) => `<article class="room" id="room-${i + 1}" aria-labelledby="h-room-${i + 1}">
+          <p class="plate">${esc(r.plate)}</p>
+          <div class="room-in">
+            <div class="room-text">
+              <h3 class="h3 h3--room" id="h-room-${i + 1}">${esc(r.h3)}</h3>
+              ${r.paras.map((x) => `<p class="room-p">${esc(x)}</p>`).join('')}
+            </div>
+            ${floorBoard(r.board)}
+          </div>
+        </article>`).join('');
+    return `<section class="sec" id="${esc(f.id || 'walk')}" aria-labelledby="h-floors">
+      <div class="wrap"><div class="sec-in">
+        <h2 class="h2" id="h-floors">${esc(f.h2)}</h2>
+        <div class="rooms">${rooms}</div>
+      </div></div>
+    </section>`;
+  },
+  pulse(c) {
+    const p = c.pulse;
+    return `<section class="sec" id="pulse" aria-labelledby="h-pulse">
+      <div class="wrap"><div class="sec-in">
+        <h2 class="h2" id="h-pulse">${esc(p.h2)}</h2>
+        ${p.paras.map((x) => `<p class="intro">${esc(x)}</p>`).join('')}
+        ${tiles(p.stats, 'tiles tiles--three')}
+        ${pulseChart(p)}
+      </div></div>
+    </section>`;
+  },
+  beyond(c) { return SECTIONS._tiles(c.beyond, 'beyond'); },
+  search(c) { return SECTIONS._tiles(c.search, 'search'); },
+  _tiles(t, id) {
+    const dark = t.theme === 'dark';
+    const inner = `<h2 class="h2" id="h-${id}">${esc(t.h2)}</h2>
+        <p class="intro">${esc(t.intro)}</p>
+        ${tiles(t.items)}
+        <p class="note">${esc(t.note)}</p>`;
+    return dark
+      ? `<section class="band band--tiles" data-theme="marine" id="${id}" aria-labelledby="h-${id}"><div class="wrap"><div class="band-in">${inner}</div></div></section>`
+      : `<section class="sec" id="${id}" aria-labelledby="h-${id}"><div class="wrap"><div class="sec-in">${inner}</div></div></section>`;
+  },
+  records(c, ctx) {
+    const r = c.records;
+    return `<section class="sec" id="records" aria-labelledby="h-records">
+      <div class="wrap"><div class="sec-in">
+        <h2 class="h2" id="h-records">${esc(r.h2)}</h2>
+        <ul class="trio trio--method">${r.method.map((m) => `<li><h3 class="h3">${esc(m.t)}</h3><p>${esc(m.p)}</p></li>`).join('')}</ul>
+        ${recordsTable(r)}
+        <div class="cta-row">${ctx.cta()}</div>
+      </div></div>
+    </section>`;
+  },
+  how(c, ctx) {
+    const h = c.how;
+    return `<section class="sec" id="how" aria-labelledby="h-how">
+      <div class="wrap"><div class="sec-in">
+        <h2 class="h2" id="h-how">${esc(h.h2)}</h2>
+        <p class="intro">${esc(h.intro)}</p>
+        <ul class="trio">${h.items.map((k) => `<li><h3 class="h3">${esc(k.t)}</h3><p>${esc(k.p)}</p></li>`).join('')}</ul>
+        <div class="cta-row">${ctx.cta()}</div>
+      </div></div>
+    </section>`;
+  },
+  fit(c) {
+    return `<section class="sec" aria-labelledby="h-fit">
       <div class="wrap"><div class="sec-in">
         <h2 class="h2" id="h-fit">${esc(c.fit.h2)}</h2>
         <p class="intro">${esc(c.fit.body)}</p>
@@ -307,9 +487,10 @@ function landingMain(cfg, copy, formHtml) {
         </div>
         <p class="note">${esc(c.fit.note)}</p>
       </div></div>
-    </section>
-
-    <section class="band" data-theme="marine" aria-labelledby="h-pay">
+    </section>`;
+  },
+  pay(c) {
+    return `<section class="band" data-theme="marine" aria-labelledby="h-pay">
       <div class="wrap">
         <div class="rail">
           <h2 class="h2" id="h-pay">${esc(c.pay.h2)}</h2>
@@ -319,16 +500,18 @@ function landingMain(cfg, copy, formHtml) {
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="sec" aria-labelledby="h-keep">
+    </section>`;
+  },
+  keep(c) {
+    return `<section class="sec" aria-labelledby="h-keep">
       <div class="wrap"><div class="sec-in">
         <h2 class="h2" id="h-keep">${esc(c.keep.h2)}</h2>
         <ul class="trio">${c.keep.items.map((k) => `<li><h3 class="h3">${esc(k.t)}</h3><p>${esc(k.p)}</p></li>`).join('')}</ul>
       </div></div>
-    </section>
-
-    <section class="sec" aria-labelledby="h-measure">
+    </section>`;
+  },
+  measure(c) {
+    return `<section class="sec" aria-labelledby="h-measure">
       <div class="wrap"><div class="sec-in">
         <div class="rail">
           <h2 class="h2" id="h-measure">${esc(c.measure.h2)}</h2>
@@ -336,33 +519,46 @@ function landingMain(cfg, copy, formHtml) {
             `<tr${r.key ? ' class="is-key"' : ''}><th scope="row">${esc(r.metric)}</th><td>${esc(r.status)}</td></tr>`).join('')}</tbody></table></div></div></div>
         </div>
       </div></div>
-    </section>
-
-    <section class="sec" aria-labelledby="h-meeting">
+    </section>`;
+  },
+  meeting(c) {
+    return `<section class="sec" aria-labelledby="h-meeting">
       <div class="wrap"><div class="sec-in">
         <h2 class="h2" id="h-meeting">${esc(c.meeting.h2)}</h2>
         <p class="intro">${esc(c.meeting.body)}</p>
         <ol class="steps">${c.meeting.steps.map((s) => `<li class="step"><h3 class="h3">${esc(s.t)}</h3><p>${esc(s.p)}</p></li>`).join('')}</ol>
         <p class="closing">${esc(c.meeting.closing)}</p>
       </div></div>
-    </section>
-
-    <section class="sec" aria-labelledby="h-faq">
+    </section>`;
+  },
+  faq(c, ctx) {
+    return `<section class="sec" aria-labelledby="h-faq">
       <div class="wrap"><div class="sec-in">
         <div class="rail">
           <h2 class="h2" id="h-faq">${esc(c.faq.h2)}</h2>
           <div class="rail-b">
             <dl class="faq">${c.faq.items.map((f) => `<div class="qa"><dt>${esc(f.q)}</dt><dd>${esc(f.a)}</dd></div>`).join('')}</dl>
-            <div class="cta-row">${cta()}</div>
+            <div class="cta-row">${ctx.cta()}</div>
           </div>
         </div>
       </div></div>
-    </section>
+    </section>`;
+  },
+  form(c, ctx) {
+    return `<section class="sec--form" id="form">
+      <div class="wrap">${ctx.formHtml}</div>
+    </section>`;
+  },
+};
 
-    <section class="sec--form" id="form">
-      <div class="wrap">${formHtml}</div>
-    </section>
-  </main>`;
+function landingMain(cfg, copy, formHtml, layout) {
+  const ctx = { formHtml, cta: () => `<a class="btn btn--primary" href="#form">${esc(copy.cta)}</a>` };
+  const parts = layout.map((name) => {
+    if (!SECTIONS[name] || name.startsWith('_')) die(`copy.json layout names "${name}", which is not a section the build knows`);
+    if (!copy[name] && name !== 'form') die(`copy.json layout names "${name}" but has no "${name}" block`);
+    return SECTIONS[name](copy, ctx);
+  });
+  return `<main id="main">\n    ${parts.join('\n\n    ')}\n  </main>`;
 }
 
 /* The head. The first script adds the classes the stylesheet keys on: js always, anim only when
@@ -505,6 +701,10 @@ async function build(slug) {
   }
   const cssFor = (...names) => tidyCss(names.map((n) => sections[n]).join('\n'));
 
+  const layout = Array.isArray(rawCopy.layout) ? rawCopy.layout : DEFAULT_LAYOUT;
+  const extra = layout.some((n) => EXTRA_SECTIONS.has(n)) ? ['extra'] : [];
+  if (extra.length && !sections.extra) die('g/_growth/style.css has no @section extra');
+
   const cfgClient = {
     slug: cfg.slug,
     campaign: cfg.campaign,
@@ -525,13 +725,13 @@ async function build(slug) {
   /* ---- the landing page ---- */
   const landing = head(cfg, {
     title: copy.meta.title, description: copy.meta.description, og: true,
-    css: cssFor('base', 'page', 'cards', 'form', 'banner'),
+    css: cssFor.apply(null, ['base', 'page', 'cards'].concat(extra, ['form', 'banner'])),
     scripts: { track: cfg.funnel.viewEvent },
   }) + `
 <body>
 <div class="pg"><div class="pg-in em-fluid">
   ${topbar(copy)}
-  ${landingMain(cfg, copy, formHtml)}
+  ${landingMain(cfg, copy, formHtml, layout)}
   ${footer(cfg, copy)}
 </div></div>
 ${banner(cfg, copy)}
@@ -663,13 +863,9 @@ ${pageScript(cfgClient, key === 'privacy' ? 'privacy' : 'plain', coreSrc)}
   for (const sub of ['book', 'takk', 'review', 'not-now', 'not-a-fit', 'privacy', 'terms']) mkdirSync(join(outDir, sub), { recursive: true });
   for (const [rel, html] of pages) writeFileSync(join(outDir, rel), html);
 
-  /* What the lead function needs: no page copy beyond the form's, no notes. */
-  const strip = (o) => mapStrings(o, (s) => s);
+  /* What the lead function needs: no page copy beyond the form's, no notes. Written once, for all funnels, below. */
   const dataCfg = JSON.parse(JSON.stringify(cfg, (k, v) => (k.startsWith('_') ? undefined : v)));
-  const data = { cfg: dataCfg, copy: { form: copy.form }, shell };
-  writeFileSync(FUNCTION_DATA,
-    '// GENERATED by scripts/build-g-growth.mjs from g/' + slug + '/. Do not edit: the next build overwrites it.\n' +
-    'export const growth = ' + JSON.stringify(strip(data), null, 1) + ';\n');
+  GENERATED[slug] = { cfg: dataCfg, copy: { form: copy.form }, shell };
 
   console.log(`  g-growth: /g/${slug} + /book /takk /review /not-now /not-a-fit /privacy /terms  (${pages.map(([, h]) => Math.round(h.length / 1024) + ' KB').join(', ')})`);
   if (!cfg.live) {
@@ -681,6 +877,12 @@ ${pageScript(cfgClient, key === 'privacy' ? 'privacy' : 'plain', coreSrc)}
   return 0;
 }
 
+const GENERATED = {};
 let held = 0;
 for (const slug of FUNNELS) held += await build(slug);
+writeFileSync(FUNCTION_DATA,
+  '// GENERATED by scripts/build-g-growth.mjs from g/<slug>/ for ' + FUNNELS.join(', ') + '. Do not edit: the next build overwrites it.\n' +
+  'export const funnels = ' + JSON.stringify(GENERATED, null, 1) + ';\n' +
+  '/** The first funnel, kept under its old name for the tests written against it. */\n' +
+  "export const growth = funnels['uk-it-growth'];\n");
 if (held) console.log('\n  ⚠ A growth funnel is not live yet (listed above). It is generated and noindex.');
