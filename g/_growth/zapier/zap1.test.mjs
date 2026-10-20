@@ -290,4 +290,16 @@ const eq = (a, b, label) => { assert.deepEqual(a, b, label); passed++; };
   }
   console.log('12 ok');
 }
+// ---------------------------------------------------------------- 13. health and law: known campaigns, no list yet
+{
+  for (const campaign of ['uk-private-hospitals', 'uk-law-firms']) {
+    const w = makeWorld();
+    let err = null;
+    try { await run(w, withLead({ lead_id: 'l_' + campaign.slice(3, 8) + '_1', campaign })); } catch (e) { err = e; }
+    eq(!!err, true, campaign + ' fails on purpose');
+    eq(String(err && err.message).includes('has no ClickUp list yet'), true, campaign + ' says why');
+    eq(w.tasks.length, 0, campaign + ' creates nothing');
+  }
+  console.log('13 ok');
+}
 console.log('\nALL PASSED: ' + passed + ' checks');

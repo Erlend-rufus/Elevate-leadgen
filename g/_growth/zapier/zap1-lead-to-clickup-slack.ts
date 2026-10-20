@@ -14,6 +14,10 @@ const sdk = createZapierSdk();
  * and g/uk-it-growth/LAUNCH.md in the repository. Change the payload there first.
  *
  * Add a campaign: one more entry in CAMPAIGNS (list id, field ids, option ids). Nothing else.
+ * The health and law entries (20 Oct 2026) are waiting for their ClickUp lists: duplicate "IT - UK -
+ * Commision" in ClickUp (so the statuses and the list fields come with it), then fill in listId and the
+ * list-level field and option ids. Until listId is set, a lead from that campaign fails the run on
+ * purpose and stays in the run history; the lead itself is safe in the function's store.
  * Test leads (an e-mail ending in @example.invalid) are tagged "test" in ClickUp and never post
  * to Slack, unless the payload carries slack_test: true.
  */
@@ -40,7 +44,7 @@ const ROUTES: Record<string, RouteRule> = {
 
 type Campaign = {
   label: string;
-  listId: string;
+  listId: string; // "" while the list does not exist yet: the run then fails on purpose
   tag: string;
   peopleWord: string;
   field: Record<string, string>;
@@ -111,6 +115,70 @@ const CAMPAIGNS: Record<string, Campaign> = {
       },
     },
   },
+  // Shared fields (Email, Contact Name, Phone, Job Title, Nettside, CRM Item Type, Sales Stage) have the
+  // same ids on every list in the CRM folder. The list-level ones (lead_id, Tier, Team Size, Ad Spend
+  // Budget, Contract Value, the specialism dropdown) get new ids when the IT list is duplicated: read
+  // them with the ClickUp API or the field settings and fill them in here, and in truth.json.
+  "uk-private-hospitals": {
+    label: "UK HEALTH",
+    listId: "", // HEALTH - UK - Commission: not created yet
+    tag: "growth-5m",
+    peopleWord: "ansatte",
+    field: {
+      leadId: "",
+      website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
+      adSpend: "",
+      teamSize: "",
+      contractValue: "",
+      tier: "",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      phone: "a0c06e36-5028-4b86-af93-c57de3ad2418",
+      specialism: "",
+      jobTitle: "cf254478-a92a-4805-921a-a89ba06c69a0",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+      tier: { fit: "", review: "", other: "" },
+      specialism: {},
+      teamSize: {},
+      adSpend: {},
+      contractValue: {},
+    },
+  },
+  "uk-law-firms": {
+    label: "UK LAW",
+    listId: "", // LAW - UK - Commission: not created yet
+    tag: "growth-law",
+    peopleWord: "fee earners",
+    field: {
+      leadId: "",
+      website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
+      adSpend: "",
+      teamSize: "",
+      contractValue: "",
+      tier: "",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      phone: "a0c06e36-5028-4b86-af93-c57de3ad2418",
+      specialism: "",
+      jobTitle: "cf254478-a92a-4805-921a-a89ba06c69a0",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+      tier: { fit: "", review: "", other: "" },
+      specialism: {},
+      teamSize: {},
+      adSpend: {},
+      contractValue: {},
+    },
+  },
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -122,6 +190,7 @@ const KEYS = [
   "company_name", "company_website", "company_number",
   "ch_status", "ch_accounts_type", "ch_incorporated", "ch_check",
   "specialism", "practice_areas", "sra_number",
+  "regulator_number", "self_pay_share", "specialties", "first_consultation_value",
   "turnover_band", "trading_years", "employees_or_fee_earners", "marketing_spend",
   "first_year_value", "sales_cycle", "target_next_year", "decision_maker", "capacity",
   "first_name", "last_name", "job_title", "email", "mobile",
@@ -263,7 +332,7 @@ async function findTask(c: Campaign, leadId: string): Promise<{ id: string; url:
 function customFields(c: Campaign, lead: Lead, route: RouteRule): { id: string; value: string }[] {
   const out: { id: string; value: string }[] = [];
   const add = (id: string, value: string) => {
-    if (value) out.push({ id, value });
+    if (id && value) out.push({ id, value });
   };
   const specialism = lead.specialism.startsWith("Other") ? "Other" : lead.specialism;
   add(c.field.leadId, lead.lead_id);
@@ -310,6 +379,10 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
       row("Spesialisering", lead.specialism),
       row("Fagområder", lead.practice_areas),
       row("SRA-nummer", lead.sra_number),
+      row("Registreringsnummer hos tilsynet", lead.regulator_number),
+      row("Spesialiteter", lead.specialties),
+      row("Andel selvbetalende", lead.self_pay_share),
+      row("Verdi av førstekonsultasjon", lead.first_consultation_value),
       row("Omsetning", lead.turnover_band),
       row("Hvor lenge i drift", lead.trading_years),
       row("Antall folk", lead.employees_or_fee_earners),
@@ -364,6 +437,10 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   const line2 = [lead.turnover_band, people, register].filter(Boolean).join(" · ");
   const line3 = [
     lead.first_year_value && `Verdi første år: ${lead.first_year_value}`,
+    lead.first_consultation_value && `Verdi førstekonsultasjon: ${lead.first_consultation_value}`,
+    lead.self_pay_share && `Selvbetalende: ${lead.self_pay_share}`,
+    lead.specialties && `Spesialiteter: ${lead.specialties}`,
+    lead.practice_areas && `Fagområder: ${lead.practice_areas}`,
     lead.sales_cycle && `Salgssyklus: ${lead.sales_cycle}`,
   ]
     .filter(Boolean)
@@ -376,6 +453,8 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   if (lead.ch_check === "mismatch" || lead.ch_check === "timeout" || lead.ch_check === "not_found") {
     lines.push("⚠ Størrelse ikke bekreftet, sjekk før møtet");
   }
+  if (lead.route_reason.includes("fertility")) lines.push("⚠ Fertilitet: HFEA-regulert, sjekk før annonser");
+  if (lead.route_reason.includes("personal_injury_ticked")) lines.push("⚠ Personskade er krysset av: avtalen må unnta personskadesaker");
   return lines.filter(Boolean).join("\n");
 }
 
@@ -390,6 +469,7 @@ const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og
   const lead = toLead(parsed as Record<string, unknown>);
   const campaign = Object.prototype.hasOwnProperty.call(CAMPAIGNS, lead.campaign) ? CAMPAIGNS[lead.campaign] : null;
   if (!campaign) throw new Error(`Unknown campaign "${lead.campaign}". Add it to CAMPAIGNS.`);
+  if (!campaign.listId) throw new Error(`Campaign "${lead.campaign}" has no ClickUp list yet. Duplicate IT - UK - Commision and fill in CAMPAIGNS.`);
   const routeKey = lead.route.toLowerCase();
   const route = Object.prototype.hasOwnProperty.call(ROUTES, routeKey) ? ROUTES[routeKey] : null;
   if (!route) throw new Error(`Unknown route "${lead.route}".`);

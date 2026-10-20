@@ -1,0 +1,64 @@
+{
+  "_comment": "Everything in this funnel that is a setting rather than copy. Copy is in copy.json (from the solicitors brief of 16 Oct 2026 and the work document of 18 Oct 2026). The form and its validation are in core.mjs, the routing rules in route.mjs. Read g/uk-law-firms/LAUNCH.md before changing anything here.",
+  "slug": "uk-law-firms",
+  "campaign": "uk-law-firms",
+  "path": "/g/uk-law-firms",
+  "_path": "The address the funnel is served at. The build checks it against the redirect and header rules in netlify.toml. Landing page and five outcome pages sit directly under it.",
+  "origin": "https://getelevateleads.com",
+  "_origin": "One host for the whole chain. sessionStorage (the consent choice, the fire-once guard) is per origin, so the ad URL, the form, the booking page and the Calendly forward must all use this one.",
+  "live": false,
+  "_live": "While false the build stays green with items missing and the lead function answers every submission with a 503 and stores nothing. Set true only when the build says nothing is outstanding. The build then refuses to finish while calendlyUrl is empty.",
+  "variables": {
+    "THRESHOLD": "£2m",
+    "OFFER": "30 minute instruction review",
+    "WORTH": "£2,000"
+  },
+  "links": {
+    "privacy": "/g/uk-law-firms/privacy/",
+    "terms": "/g/uk-law-firms/terms/",
+    "_comment": "The pages built from legal.json. The older /lp/privacy/ and /lp/terms/ belong to the legacy /lp funnel and stay as they are."
+  },
+  "legal": {
+    "registerCheck": false,
+    "_registerCheck": "Whether the privacy notice and the terms say that the company is checked against Companies House. Set true in the same change that sets COMPANIES_HOUSE_API_KEY in production, then build; the notice must never describe a check that is not made. The words themselves are in legal.json, in the blocks and rows marked \"when\": \"register\"."
+  },
+  "contact": {
+    "email": "post@elevatemarketing.no"
+  },
+  "funnel": {
+    "pixelId": "1466790598245604",
+    "applyPath": "/api/lead",
+    "viewEvent": "ViewContent",
+    "qualifiedEvent": "QualifiedForm",
+    "_qualifiedEvent": "A custom event, never the standard Lead. Fires on /book and /review only, with eventID = lead_id, and only after the visitor has accepted. The server sends the same event with the same id (Conversions API), so Meta counts it once.",
+    "calendlyUrl": "",
+    "_calendlyUrl": "The event URL with no query string, from Calendly: Share, Add to website, Inline embed. Empty is allowed only while live is false. The booking page adds name, email and utm parameters itself, with lead_id in utm_content. Calendly's own redirect after booking must stay off: the page forwards to /takk itself.",
+    "calendlyLeadParam": "utm_content",
+    "_calendlyLeadParam": "The tracking parameter that carries the lead id into Calendly, where the Calendly Zap reads it back (Invitee Created, tracking). Calendly passes on only utm_source, utm_medium, utm_campaign, utm_content and utm_term. It replaces the value of the same name, so the ad's own value stays on the application. Change it here and in the Zap together, never in one place.",
+    "bookingHeights": {
+      "narrow": 1150,
+      "medium": 1000,
+      "wide": 700
+    }
+  },
+  "hiddenFields": [
+    "campaign",
+    "page_slug",
+    "lead_id",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "utm_term",
+    "fbclid",
+    "referrer",
+    "consent",
+    "fbp",
+    "fbc"
+  ],
+  "honeypot": "contact_by_fax",
+  "clickup": {
+    "listId": "",
+    "_comment": "The ClickUp list the daily reconciliation compares against. Empty until the list exists (duplicate IT - UK - Commision in ClickUp, name it LAW - UK - Commission, and put its id here and in the two Zaps). Leads carry tag growth-law in it."
+  }
+}

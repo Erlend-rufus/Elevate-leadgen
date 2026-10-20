@@ -1,0 +1,346 @@
+{
+  "_comment": "Page copy for /g/uk-private-hospitals: the health board v7 (Claude Design, 18 Oct 2026) with the answers in the work document of 18 Oct 2026 and the owner's decisions of 20 Oct 2026 (commission, 13x without reception as the headline multiple, 22x in the note, procedures at about £4,700, SEO and AI work since February 2026, no register check). Figures: Google Ads and Google Analytics for C-Medical, 1 February to 16 October 2026 against the same days of 2025, £1 = NOK 12.5899 (Norges Bank, 16 Oct 2026). {THRESHOLD}, {OFFER} and {WORTH} are filled from config.json at build time. The build refuses dashes, exclamation marks, American spellings and a commission rate (see scripts/build-g-growth.mjs).",
+  "layout": ["hero", "strip", "floors", "pulse", "beyond", "search", "records", "fit", "pay", "keep", "measure", "meeting", "faq", "form"],
+  "meta": {
+    "title": "Elevate Marketing for UK private hospitals and clinic groups",
+    "description": "Bookings from Google Ads for UK private hospitals and clinic groups. A few questions to see whether we would take you on."
+  },
+  "topline": "For UK private hospitals and clinic groups with {THRESHOLD}+ turnover",
+  "cta": "See whether we would take you on",
+  "hero": {
+    "h1a": "Take the lift.",
+    "h1b": "One clinic group's 2026: 27.9% more bookings, each one 17.3% cheaper.",
+    "ingress": [
+      { "t": "We took over a Norwegian private clinic group's Google Ads on 25 January 2026 and rebuilt the account from 30 January: eleven broad campaigns became thirty-seven, one per door. These are the ", "cls": "" },
+      { "t": "216 counted days", "cls": "em" },
+      { "t": " since, set against the same days of 2025, floor by floor.", "cls": "" }
+    ],
+    "micro": "A few questions. We only take on groups we think we can help.",
+    "cta2": { "t": "Start the walk", "href": "#walk" },
+    "panel": {
+      "title": "Directory",
+      "total": { "value": "1,455", "label": "booked consultations, 216 counted days of 2026" },
+      "rows": [
+        { "n": "1", "name": "Reception", "value": "752", "sr": "booked consultations" },
+        { "n": "2", "name": "Women's health", "value": "302", "sr": "booked consultations" },
+        { "n": "3", "name": "Urology", "value": "112", "sr": "booked consultations" },
+        { "n": "4", "name": "Fertility", "value": "61", "sr": "booked consultations" },
+        { "n": "5", "name": "Monitoring", "value": "The pulse" },
+        { "n": "6", "name": "Beyond the booking", "value": "Calls, attendance, value" },
+        { "n": "7", "name": "Search and AI", "value": "The other doors" }
+      ],
+      "foot": "Google Ads, 1 February to 16 October 2026, without 42 days of unreliable booking counts, against the same days of 2025. Online bookings, counted in Google Analytics. Outpatients, 228 bookings, is in the table of totals."
+    }
+  },
+  "strip": {
+    "h2": "The whole account, year on year",
+    "items": [
+      { "value": "+27.9%", "label": "more booked consultations than on the same days of 2025 (1,455 against 1,138)" },
+      { "value": "-17.3%", "label": "cost per booked consultation (£73.97 against £89.45)" },
+      { "value": "13x", "label": "the ad spend returned in consultation and procedure revenue once procedures are counted, leaving out searches for the clinic group's own name (estimate, see Beyond the booking)" }
+    ],
+    "tail": "Spend was up 5.7%. Clicks were up 28.0% and each click cost 17.4% less. The fall in cost per booking was the same before and after the summer gap in the counts: 17.4% and 17.2%."
+  },
+  "floors": {
+    "id": "walk",
+    "h2": "Floor by floor.",
+    "rooms": [
+      {
+        "plate": "Floor 1 · Reception",
+        "h3": "Reception. The front door, busier and cheaper to keep open.",
+        "paras": [
+          "Reception is the campaigns for people who already type the clinic group's name. We rebuilt them on 30 January, switched off a broad Performance Max campaign that had spent about £21,800 the year before, and gave reception its own line so it never flatters the other floors.",
+          "752 booked consultations came through that door in 216 days, 46.6% more than on the same days of 2025, at £23.96 each."
+        ],
+        "board": {
+          "title": "Reception, 2026 against 2025",
+          "value": "752",
+          "label": "booked consultations, 216 counted days of 2026",
+          "against": "against 513 on the same days of 2025",
+          "rows": [
+            { "value": "+46.6%", "label": "booked consultations, year on year" },
+            { "value": "£23.96", "label": "per booked consultation, against £25.92 in 2025" },
+            { "value": "£18,015", "label": "ad spend, +35.5% against 2025" }
+          ],
+          "bars": [ { "label": "Booked consultations, 2025", "n": 513 }, { "label": "Booked consultations, 2026", "n": 752 } ]
+        }
+      },
+      {
+        "plate": "Floor 2 · Women's health",
+        "h3": "Women's health. 58% more bookings, each one cheaper.",
+        "paras": [
+          "Gynaecology is the largest ward after the front desk. In 2025 it was one campaign. We split it into doors with their own campaigns: general searches, endometriosis, prolapse, hysterectomy and searches for the clinic locations themselves.",
+          "General searches booked 132 consultations at £63.95 each. Across the ward, 302 bookings came in at £86.26, against 191 at £95.66 on the same days of 2025."
+        ],
+        "board": {
+          "title": "Women's health, 2026 against 2025",
+          "value": "302",
+          "label": "booked consultations, 216 counted days of 2026",
+          "against": "against 191 on the same days of 2025",
+          "rows": [
+            { "value": "+58.1%", "label": "booked consultations, year on year" },
+            { "value": "£86.26", "label": "per booked consultation, against £95.66 in 2025" },
+            { "value": "£26,049", "label": "ad spend, +42.6% against 2025" }
+          ],
+          "bars": [ { "label": "Booked consultations, 2025", "n": 191 }, { "label": "Booked consultations, 2026", "n": 302 } ]
+        }
+      },
+      {
+        "plate": "Floor 3 · Urology",
+        "h3": "Urology. 42% more bookings for 16% more spend.",
+        "paras": [
+          "One general urology campaign did most of the work: 111 of the 112 bookings, at £97.81 each.",
+          "Cost per booking fell 18.2% while the ward took 49.8% more clicks than a year earlier."
+        ],
+        "board": {
+          "title": "Urology, 2026 against 2025",
+          "value": "112",
+          "label": "booked consultations, 216 counted days of 2026",
+          "against": "against 79 on the same days of 2025",
+          "rows": [
+            { "value": "+41.8%", "label": "booked consultations, year on year" },
+            { "value": "£99.52", "label": "per booked consultation, against £121.65 in 2025" },
+            { "value": "£11,146", "label": "ad spend, +16.0% against 2025" }
+          ],
+          "bars": [ { "label": "Booked consultations, 2025", "n": 79 }, { "label": "Booked consultations, 2026", "n": 112 } ]
+        }
+      },
+      {
+        "plate": "Floor 4 · Fertility",
+        "h3": "Fertility. The dearest floor, and the one that moved most.",
+        "paras": [
+          "Fertility bookings are rare and valuable: an IVF cycle at the clinic group starts at about £3,650 and a three-cycle package at about £7,300. We replaced two broad campaigns with seven, one per treatment, cut the spend by 10.3% and more than doubled the bookings.",
+          "61 booked consultations against 25, at £384.31 each against £1,045.25."
+        ],
+        "board": {
+          "title": "Fertility, 2026 against 2025",
+          "value": "61",
+          "label": "booked consultations, 216 counted days of 2026",
+          "against": "against 25 on the same days of 2025",
+          "rows": [
+            { "value": "+144.0%", "label": "booked consultations, year on year" },
+            { "value": "£384.31", "label": "per booked consultation, against £1,045.25 in 2025" },
+            { "value": "£23,443", "label": "ad spend, -10.3% against 2025" }
+          ],
+          "bars": [ { "label": "Booked consultations, 2025", "n": 25 }, { "label": "Booked consultations, 2026", "n": 61 } ]
+        }
+      }
+    ]
+  },
+  "pulse": {
+    "h2": "The pulse. Week after week, more bookings than the year before.",
+    "paras": [
+      "Each week of 2026 against the same week of 2025, across the whole account. In 21 of the 31 comparable weeks, 2026 had more bookings, and two were level. The best week, from 5 October, booked 85 consultations against 33.",
+      "The hatched block is 13 July to 23 August, when a tracking fault on the clinic group's website broke the booking count while clicks and spend carried on. We left those 42 days out of both years rather than guess."
+    ],
+    "stats": [
+      { "value": "21", "label": "of 31 comparable weeks ahead of 2025" },
+      { "value": "85", "label": "bookings in the best week, from 5 October, against 33" },
+      { "value": "216", "label": "days counted" }
+    ],
+    "chartTitle": "Booked consultations per week across the whole account, 2026 against the same weeks of 2025",
+    "legend": { "a": "2026, bookings per week", "b": "The same week of 2025", "gap": "Unreliable counts, left out", "last": "The last week has five days" },
+    "readnote": "Weeks start on Mondays. The line starts in the week of 2 February, and the last week has five days in both years.",
+    "tableButton": "Show the weekly numbers",
+    "columns": ["Week starting", "2026", "Same week of 2025"],
+    "weeks": [
+      { "w": "2 Feb", "a": 53, "b": 35 }, { "w": "9 Feb", "a": 41, "b": 39 }, { "w": "16 Feb", "a": 8, "b": 31 }, { "w": "23 Feb", "a": 42, "b": 49 },
+      { "w": "2 Mar", "a": 52, "b": 39 }, { "w": "9 Mar", "a": 55, "b": 30 }, { "w": "16 Mar", "a": 27, "b": 42 }, { "w": "23 Mar", "a": 37, "b": 36 }, { "w": "30 Mar", "a": 28, "b": 44 },
+      { "w": "6 Apr", "a": 38, "b": 41 }, { "w": "13 Apr", "a": 34, "b": 27 }, { "w": "20 Apr", "a": 26, "b": 46 }, { "w": "27 Apr", "a": 30, "b": 36 },
+      { "w": "4 May", "a": 37, "b": 36 }, { "w": "11 May", "a": 51, "b": 31 }, { "w": "18 May", "a": 48, "b": 41 }, { "w": "25 May", "a": 70, "b": 39 },
+      { "w": "1 Jun", "a": 54, "b": 24 }, { "w": "8 Jun", "a": 54, "b": 25 }, { "w": "15 Jun", "a": 49, "b": 34 }, { "w": "22 Jun", "a": 43, "b": 43 }, { "w": "29 Jun", "a": 56, "b": 29 },
+      { "w": "6 Jul", "a": 39, "b": 25 },
+      { "w": "13 Jul", "gap": true }, { "w": "20 Jul", "gap": true }, { "w": "27 Jul", "gap": true }, { "w": "3 Aug", "gap": true }, { "w": "10 Aug", "gap": true }, { "w": "17 Aug", "gap": true },
+      { "w": "24 Aug", "a": 79, "b": 22 }, { "w": "31 Aug", "a": 48, "b": 45 }, { "w": "7 Sep", "a": 39, "b": 49 }, { "w": "14 Sep", "a": 66, "b": 42 }, { "w": "21 Sep", "a": 55, "b": 38 }, { "w": "28 Sep", "a": 47, "b": 47 },
+      { "w": "5 Oct", "a": 85, "b": 33 }, { "w": "12 Oct", "a": 54, "b": 39, "note": "5 days in both years" }
+    ],
+    "gapNote": "Unreliable counts, left out of both years"
+  },
+  "beyond": {
+    "theme": "dark",
+    "h2": "Beyond the booking: calls, attendance and what a first consultation is worth.",
+    "intro": "A booking is not the end of the story. The clinic group reports that 92% of online bookings and 90% of phone bookings are attended, that 46% of calls to the clinics become bookings, and that 35% to 60% of consultations lead to a procedure worth about £4,700 on average. Put those figures against the ad spend and the picture turns from cost into value.",
+    "items": [
+      { "value": "1,861", "label": "taps on the phone number from ads, 45% more than on the same days of 2025 (1,861 against 1,283)" },
+      { "value": "£80", "label": "of ad spend per attended first consultation across the whole account, against an average first consultation of £155" },
+      { "value": "1.9x", "label": "the ad spend returned by first consultations alone, before a single procedure (whole account)" },
+      { "value": "13x", "label": "the ad spend returned once procedures are counted, leaving out searches for the clinic group's own name, at the lower rate of 35% and about £4,700 a procedure (estimate)" }
+    ],
+    "note": "How this is built: 1,455 bookings at 92% attendance is 1,339 attended first consultations. At £155 each that is about £207,000 against £107,628 of ad spend, so first consultations alone return it 1.9 times. If 35% of those consultations lead to a procedure at about £4,700, the whole account returns the ad spend about 22 times over. More than half of the bookings come from people searching for the clinic group by name, and we do not take credit for those. Take them out, and the remaining 703 bookings, on their own £89,613 of spend, return it about 13 times. That is the figure we quote. At 60% it would be higher still. These are revenue figures, not profit, and they leave out what we charge. Phone bookings are in none of them: if 46% of the 1,861 calls booked and 90% attended, add roughly half again."
+  },
+  "search": {
+    "h2": "Search and AI assistants brought more too.",
+    "intro": "The same site, the same days, every channel counted in Google Analytics. From February 2026 we ran technical and content search optimisation on the clinic group's site, and the same for AI assistants: around 30 articles, about 150 page titles and descriptions, and rewrites across the site. We also built the group's new website, launched in August 2026. We offer the same work to UK groups.",
+    "items": [
+      { "value": "+67.9%", "label": "bookings from organic search (1,392 against 829)" },
+      { "value": "2.23%", "label": "of organic search sessions booked, up from 1.53%" },
+      { "value": "+130%", "label": "visits from AI assistants such as ChatGPT, Perplexity, Copilot and Gemini (1,115 against 484)" },
+      { "value": "20", "label": "bookings from AI assistants, against 7" }
+    ],
+    "note": "Organic search sessions were up 15.2%. AI assistant referrals are small and growing: 1,115 visits is under 1% of the site's sessions in the window. We report them because they are the fastest growing door, not the biggest."
+  },
+  "records": {
+    "h2": "The totals, in one table.",
+    "method": [
+      { "t": "What is counted.", "p": "Online bookings recorded in Google Analytics (booking_completed) from Google Ads traffic. Phone bookings are not in the count. Attendance is reported by the clinic group." },
+      { "t": "Which days.", "p": "1 February to 16 October 2026 against the same calendar days of 2025. The 42 days from 13 July to 23 August are left out of both years because the booking counts were unreliable while clicks and spend carried on." },
+      { "t": "Whose work.", "p": "Elevate Marketing ran the Google Ads account from 25 January 2026. The 2025 figures are the same account under its previous management." }
+    ],
+    "button": "Show the full table",
+    "tableTitle": "C-Medical, Google Ads, 2026 against the same days of 2025",
+    "columns": ["Floor or period", "Ad spend", "Booked consultations", "Cost per booked consultation"],
+    "groups": [
+      { "title": "2026, by floor", "sub": "216 counted days", "rows": [
+        { "c": ["1 Reception", "£18,015", "752", "£23.96"] },
+        { "c": ["2 Women's health", "£26,049", "302", "£86.26"] },
+        { "c": ["3 Urology", "£11,146", "112", "£99.52"] },
+        { "c": ["4 Fertility", "£23,443", "61", "£384.31"] },
+        { "c": ["Outpatients and other", "£28,975", "228", "£127.08"] },
+        { "c": ["Whole account", "£107,628", "1,455", "£73.97"], "key": true }
+      ] },
+      { "title": "Same days of 2025, by floor", "sub": "216 counted days", "rows": [
+        { "c": ["1 Reception", "£13,296", "513", "£25.92"] },
+        { "c": ["2 Women's health", "£18,271", "191", "£95.66"] },
+        { "c": ["3 Urology", "£9,610", "79", "£121.65"] },
+        { "c": ["4 Fertility", "£26,131", "25", "£1,045.25"] },
+        { "c": ["Outpatients and other, including a broad Performance Max campaign", "£34,482", "330", "£104.49"] },
+        { "c": ["Whole account", "£101,790", "1,138", "£89.45"], "key": true }
+      ] },
+      { "title": "Whole account, change", "sub": "", "rows": [
+        { "c": ["216 counted days", "+5.7%", "+27.9%", "-17.3%"], "key": true },
+        { "c": ["Before the gap, 1 February to 12 July", "-0.9%", "+19.9%", "-17.4%"] },
+        { "c": ["After the gap, 24 August to 16 October", "+22.7%", "+48.3%", "-17.2%"] },
+        { "c": ["All 258 days, the 42 uncounted days put back", "+8.0%", "+12.7%", "-4.1%"] },
+        { "c": ["Without reception", "+1.3%", "+12.5%", "-10.0%"] }
+      ] }
+    ],
+    "notes": [
+      "Booked consultations are bookings completed online, counted by Google Analytics (booking_completed) from visits that came through Google Ads. They are bookings, not attended appointments, and phone bookings are not in the count.",
+      "Reception is the campaigns aimed at people searching for the clinic group by name. Outpatients and other is every other campaign: orthopaedics, dermatology, nutrition, gastric surgery and smaller services. In 2025 it includes a broad Performance Max campaign (about £21,800) that could also show ads on searches for the clinic group's own name; it was switched off in 2026.",
+      "Counted days: 1 February to 16 October 2026, 258 days, less the 42 days from 13 July to 23 August when the booking counts were unreliable while clicks and spend carried on. The same calendar days of 2025 are used for the comparison. Before the gap is 1 February to 12 July and After the gap is 24 August to 16 October.",
+      "Ad spend is shown in whole pounds. Cost per booked consultation is ad spend divided by booked consultations, so it leaves out agency costs and every other cost. All changes are worked out before rounding.",
+      "Norwegian kroner converted to pounds at the rate published by Norges Bank on 16 October 2026, £1 = NOK 12.5899, one rate for the whole period. Percentage changes are the same in kroner.",
+      "Source: the Google Ads and Google Analytics accounts for C-Medical, retrieved 17 October 2026. Published with the clinic group's written permission."
+    ]
+  },
+  "fit": {
+    "h2": "Who this is for, and who it is not.",
+    "body": "The groups we work best with already fill most of their diaries through reputation and referral. What they lack is a steady second door: patients who pay for their own consultation and found the clinic because the right campaign was in front of them.",
+    "yesTitle": "This is for you if",
+    "yes": [
+      "You run a private hospital or clinic group in the UK with {THRESHOLD} or more in turnover and at least two years of trading",
+      "Patients pay for their own specialist consultations, in areas such as gynaecology, urology, orthopaedics, dermatology or diagnostics",
+      "An attended first consultation is worth {WORTH} or more to you, including the care that follows",
+      "Your consultants have room in their diaries for more first consultations",
+      "Your booking team can respond to a new request within one working day"
+    ],
+    "noTitle": "This is not for you if",
+    "no": [
+      "Nearly all of your consultations are paid by insurers or arrive by referral",
+      "Your consultations are mainly lower-value, such as physiotherapy or routine GP appointments",
+      "Your turnover is below {THRESHOLD}, or you have been trading for less than two years",
+      "Nobody has time to approve ads and pages"
+    ],
+    "note": "We check the details you give after you apply, and we confirm turnover and the self-pay share with you on the call."
+  },
+  "pay": {
+    "h2": "Paid when first consultations take place. Our incentives are the same as yours.",
+    "body": "No retainer. No setup fee. No minimum term. We invoice a commission on the first consultations that take place from campaigns we run, and on the procedures those patients go on to book within a year of that consultation. Not for clicks, not for enquiries, and not for patients who do not turn up. The rate depends on what a consultation is worth to you, so we agree it before anything runs. It is not published, because it is not the same for two groups.",
+    "open": [
+      "An attended first consultation is a new patient's first appointment with a clinician at one of your sites, and it took place. Follow-up appointments, existing patients, and appointments that were cancelled or missed do not count.",
+      "A procedure counts when that patient books it within a year of the first consultation and it takes place.",
+      "You confirm each month how many first consultations took place and which procedures followed, as counts and amounts from your booking system. We do not need patient names, contact details or clinical information.",
+      "We invoice monthly, after you confirm the figures. Payment terms are 14 days.",
+      "A consultation that is cancelled or missed is not invoiced. If it is rebooked and then takes place, it is invoiced once.",
+      "The advertising budget is separate. You pay it to Google and Meta directly, and we agree it with you before anything runs."
+    ]
+  },
+  "keep": {
+    "h2": "Nothing runs without your sign-off.",
+    "items": [
+      { "t": "You approve every ad", "p": "A named clinician or your head of compliance signs off every ad and every page before it goes live. Every ad text and asset is approved by you before it runs, including any that Google or Meta propose. We do not advertise prescription-only medicines, or consultations that promote them." },
+      { "t": "We do not need patient details", "p": "We do not need patient names, contact details or clinical information. A count of the first consultations that took place, and of the procedures that followed, is enough." },
+      { "t": "Your accounts, your data", "p": "Campaigns run in ad accounts you own. You pay Google and Meta directly, with no markup from us. If we stop, you keep the accounts and the data." }
+    ]
+  },
+  "measure": {
+    "h2": "What we optimise for",
+    "rows": [
+      { "metric": "Impressions", "status": "Reported, not a target" },
+      { "metric": "Clicks", "status": "Reported, not a target" },
+      { "metric": "Enquiries", "status": "Reported, not a target" },
+      { "metric": "Booked consultations", "status": "What we work towards", "key": true },
+      { "metric": "Attended first consultations and the procedures that follow", "status": "What we are paid on", "key": true }
+    ]
+  },
+  "meeting": {
+    "h2": "The first meeting: a {OFFER}",
+    "body": "We do not pitch. We sit down with your numbers and work out which specialty has the most headroom.",
+    "steps": [
+      { "t": "Before the call", "p": "You tell us your turnover, your main specialties, what an attended first consultation is worth, and roughly what you spend on marketing now." },
+      { "t": "On the call", "p": "We look at which specialty has the most headroom and what it would take to book more consultations there. We ask what you want to reach." },
+      { "t": "Within one working day", "p": "You receive a one-page sheet: how many attended first consultations a month it takes to reach that target, and how many bookings that means." }
+    ],
+    "closing": "You keep the sheet whether or not we work together. It contains your numbers only. No quote, no commission rate, no promise."
+  },
+  "faq": {
+    "h2": "Straight answers",
+    "items": [
+      { "q": "Your example is a Norwegian clinic group. Does it carry over to a UK hospital?", "a": "Not directly. The health system and the advertising rules differ in the UK, so the cost per booked consultation will differ too. What carries over is the method: one campaign per door, bookings counted in your analytics rather than in the ad platform, and a weekly comparison against the year before." },
+      { "q": "Why do you show reception separately?", "a": "Reception is people searching for the clinic group by name. They already know it, so counting them with the rest would flatter any agency. We show them on their own line, and we quote the whole account and the account without reception side by side." },
+      { "q": "Is this a referral arrangement?", "a": "No. We advertise your services. You decide which patients to see, and we do not choose or recommend a clinician. What we charge is set out in a written agreement that you can show your regulator." },
+      { "q": "Can you promise a number of bookings?", "a": "No. Before we have seen your accounts, any number would be a guess. We can show you how we count and what a real account looked like, and we agree a starting target with you in writing." },
+      { "q": "What do you need from us?", "a": "Access to your ad accounts, a monthly count of the first consultations that came from the campaigns and took place and of the procedures that followed (no patient details), sign-off from a named clinician or your head of compliance on every ad, and a booking team that answers within one working day." },
+      { "q": "What if we want to stop?", "a": "There is no minimum term. You can stop with 30 days' notice, and you keep the accounts and the data." }
+    ]
+  },
+  "footer": {
+    "text": "Elevate Marketing is operated by EngeCo AS, Norwegian organisation no. 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norway.",
+    "privacy": "Privacy",
+    "terms": "Website terms"
+  },
+  "consent": {
+    "text": "We use a Meta cookie to measure whether our advertising works. It is not set until you choose. The page works the same either way.",
+    "privacy": "Privacy",
+    "accept": "Accept",
+    "decline": "Decline",
+    "label": "Cookie choice"
+  },
+  "form": {
+    "heading": "See whether we would take you on",
+    "under": "A few questions. We only take on groups we think we can help.",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "cta": "See whether we would take you on",
+    "retry": "Try again",
+    "sending": "Checking a few details. This takes a few seconds.",
+    "failed": "Something went wrong on our side. Your answers are still here. Please try again, or email",
+    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number. If you tell us you are at capacity, we will get back in touch once, in three months.",
+    "privacy": "Privacy"
+  },
+  "outcomes": {
+    "book": {
+      "h": "Thank you. Choose a time that suits you.",
+      "p": "Pick a slot for a {OFFER}. Your own numbers are all we need.",
+      "small": "No time that works? Reply to the confirmation email and we will find one."
+    },
+    "takk": {
+      "h": "You are booked in.",
+      "p": "We will send a confirmation and a short note on what to have to hand: last year's turnover, your main specialties, and what an attended first consultation is worth."
+    },
+    "review": {
+      "h": "Thank you. We will be in touch within one working day.",
+      "p": "We want to check a few details before we suggest a time."
+    },
+    "not-now": {
+      "h": "Thank you. Come back when you have capacity.",
+      "p": "If you are at capacity now, we will ask again in three months."
+    },
+    "not-a-fit": {
+      "h": "Thank you. This is not the right fit at the moment.",
+      "p": "We work with private hospitals and clinic groups in the UK with {THRESHOLD} or more in turnover and at least two years of trading, where patients pay for their own specialist consultations and an attended first consultation is worth {WORTH} or more to the business. If that changes, we would be glad to hear from you.",
+      "note": "If we have misread your answers, email {EMAIL} and we will look again."
+    }
+  }
+}

@@ -74,6 +74,43 @@ const CAMPAIGNS: Record<string, Campaign> = {
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
   },
+  // Health and law (20 Oct 2026): waiting for their ClickUp lists (duplicate IT - UK - Commision) and
+  // their Calendly event types. With listId empty the campaign is skipped when a booking is matched by
+  // event type, and a lead id from one of these forms finds no list to search.
+  "uk-private-hospitals": {
+    label: "UK HEALTH",
+    listId: "", // HEALTH - UK - Commission: not created yet
+    tag: "growth-5m",
+    eventTypes: [], // the health event type id, once the event exists
+    field: {
+      leadId: "",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+    },
+  },
+  "uk-law-firms": {
+    label: "UK LAW",
+    listId: "", // LAW - UK - Commission: not created yet
+    tag: "growth-law",
+    eventTypes: [], // the law event type id, once the event exists
+    field: {
+      leadId: "",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+    },
+  },
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -396,7 +433,7 @@ const workflow = defineDurable<Record<string, unknown>, unknown>("leads-v3-calen
   // Which campaign is this? By the event that was booked, and an event that is not ours is skipped.
   // With one of our lead ids on an event that is not in CAMPAIGNS (or when the event cannot be
   // read), the lead id decides: the task is linked if it exists, and never created or guessed.
-  const entries = Object.entries(CAMPAIGNS);
+  const entries = Object.entries(CAMPAIGNS).filter(([, c]) => c.listId); // a campaign without a list yet cannot be searched
   const byEvent = entries.filter(([, c]) => b.eventTypeId && c.eventTypes.includes(b.eventTypeId));
   const candidates = byEvent.length > 0 ? byEvent : b.leadId ? entries : [];
   if (candidates.length === 0) {

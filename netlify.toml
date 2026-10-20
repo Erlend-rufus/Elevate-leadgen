@@ -162,6 +162,28 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
+# /g/uk-private-hospitals: same as /g/uk-it-growth, paid traffic only.
+[[headers]]
+  for = "/g/uk-private-hospitals"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-private-hospitals/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# /g/uk-law-firms: same as /g/uk-it-growth, paid traffic only.
+[[headers]]
+  for = "/g/uk-law-firms"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-law-firms/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # Self-hosted fonts and logos shared by every /g campaign. The filenames carry
 # a version (fraunces-v1.woff2), so a replaced file arrives under a new name
 # and this can safely be immutable; bump the name, never the file, or the old
@@ -422,6 +444,90 @@
   from = "/g/uk-it-growth/terms"
   to = "/g/uk-it-growth/terms/index.html"
   status = 200
+
+# /g/uk-private-hospitals: the same eight pages as /g/uk-it-growth, built by scripts/build-g-growth.mjs.
+[[redirects]]
+  from = "/g/uk-private-hospitals"
+  to = "/g/uk-private-hospitals/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-hospitals/book"
+  to = "/g/uk-private-hospitals/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-hospitals/takk"
+  to = "/g/uk-private-hospitals/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-hospitals/review"
+  to = "/g/uk-private-hospitals/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-hospitals/not-now"
+  to = "/g/uk-private-hospitals/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-hospitals/not-a-fit"
+  to = "/g/uk-private-hospitals/not-a-fit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-hospitals/privacy"
+  to = "/g/uk-private-hospitals/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-private-hospitals/terms"
+  to = "/g/uk-private-hospitals/terms/index.html"
+  status = 200
+
+
+# /g/uk-law-firms: the same eight pages as /g/uk-it-growth, built by scripts/build-g-growth.mjs.
+[[redirects]]
+  from = "/g/uk-law-firms"
+  to = "/g/uk-law-firms/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-firms/book"
+  to = "/g/uk-law-firms/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-firms/takk"
+  to = "/g/uk-law-firms/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-firms/review"
+  to = "/g/uk-law-firms/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-firms/not-now"
+  to = "/g/uk-law-firms/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-firms/not-a-fit"
+  to = "/g/uk-law-firms/not-a-fit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-firms/privacy"
+  to = "/g/uk-law-firms/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-firms/terms"
+  to = "/g/uk-law-firms/terms/index.html"
+  status = 200
+
 
 # /uk-it-firms: the application endpoint and the funnel's pages. The apply rule must
 # come BEFORE the /uk-it-firms/* 404 further down and before the SPA catch-all: there is

@@ -3,12 +3,15 @@
  * campaign is sent empty, never left out, so a Zap mapping does not break when a campaign
  * lacks a question. The contract is written down in the project document "Løsning: eget
  * skjema, Zapier, ClickUp og Slack" (16 Oct 2026), section 3. Change it there first.
+ * Four keys were added on 20 Oct 2026 for the health funnel (regulator_number, self_pay_share,
+ * specialties, first_consultation_value); they are empty for the other campaigns.
  */
 export const PAYLOAD_KEYS = [
   'lead_id', 'campaign', 'route', 'route_reason', 'submitted_at',
   'company_name', 'company_website', 'company_number',
   'ch_status', 'ch_accounts_type', 'ch_incorporated', 'ch_check',
   'specialism', 'practice_areas', 'sra_number',
+  'regulator_number', 'self_pay_share', 'specialties', 'first_consultation_value',
   'turnover_band', 'trading_years', 'employees_or_fee_earners', 'marketing_spend',
   'first_year_value', 'sales_cycle', 'target_next_year', 'decision_maker', 'capacity',
   'first_name', 'last_name', 'job_title', 'email', 'mobile',
@@ -42,6 +45,10 @@ export function buildPayload({ leadId, campaign, route, reasons, submittedAt, va
     specialism,
     practice_areas: s(v.practice_areas),
     sra_number: s(v.sra_number),
+    regulator_number: s(v.regulator_number),
+    self_pay_share: s(v.self_pay_share),
+    specialties: s(v.specialties),
+    first_consultation_value: s(v.first_consultation_value),
     turnover_band: s(v.turnover_band),
     trading_years: s(v.trading_years),
     employees_or_fee_earners: s(v.employees_or_fee_earners),

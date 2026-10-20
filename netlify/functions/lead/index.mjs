@@ -127,7 +127,8 @@ export function createHandler(deps = {}) {
         get = (n) => (typeof o[n] === 'string' || typeof o[n] === 'number' ? o[n] : null);
       } else if (/application\/x-www-form-urlencoded/i.test(type)) {
         const p = new URLSearchParams(text);
-        get = (n) => p.get(n);
+        // A multi-choice question posts one value per ticked box; joined here the way the page's script joins them.
+        get = (n) => { const all = p.getAll(n); return all.length > 1 ? all.join(', ') : p.get(n); };
       } else {
         return json(415, { ok: false, error: 'unsupported_type' });
       }

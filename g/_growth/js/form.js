@@ -62,7 +62,14 @@ function initForm() {
   /* ---- reading the form ------------------------------------------------------------------ */
   function val(name) {
     var el = form.elements[name];
-    return el ? (el.value || '') : '';
+    if (!el) return '';
+    if (el.length && el[0] && el[0].type === 'checkbox') {   // a multi-choice question: its ticked options, in order
+      var picked = [];
+      for (var k = 0; k < el.length; k++) if (el[k].checked) picked.push(el[k].value);
+      return picked.join(', ');
+    }
+    if (el.type === 'checkbox') return el.checked ? el.value : '';
+    return el.value || '';
   }
   function setHidden(name, v) {
     var el = form.elements[name];
@@ -118,7 +125,7 @@ function initForm() {
   /* ---- moving between questions ---------------------------------------------------------- */
   function firstControl(i) {
     var s = STEPS[i];
-    if (s.kind === 'choice') return blocks[i].querySelector('legend.lf-q');
+    if (s.kind === 'choice' || s.kind === 'multi') return blocks[i].querySelector('legend.lf-q');
     return blocks[i].querySelector('input.lf-input');
   }
   function focusControl(el) {
@@ -170,7 +177,7 @@ function initForm() {
     });
   }
   form.addEventListener('change', function (e) {
-    if (e.target && e.target.type === 'radio') {
+    if (e.target && (e.target.type === 'radio' || e.target.type === 'checkbox')) {
       syncChoices();
       afterEdit(e.target);
     }
@@ -204,6 +211,7 @@ function initForm() {
     [].forEach.call(form.elements, function (el) {
       if (!el.name || el.type === 'submit' || el.type === 'button') return;
       if (el.type === 'radio') { if (el.checked) data[el.name] = el.value; return; }
+      if (el.type === 'checkbox') { data[el.name] = val(el.name); return; }
       data[el.name] = el.value;
     });
     return data;
