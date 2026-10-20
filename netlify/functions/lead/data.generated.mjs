@@ -81,7 +81,7 @@ export const funnels = {
    "campaign": "uk-private-hospitals",
    "path": "/g/uk-private-hospitals",
    "origin": "https://getelevateleads.com",
-   "live": false,
+   "live": true,
    "variables": {
     "THRESHOLD": "£5m",
     "OFFER": "30-minute bookings review",
@@ -156,7 +156,7 @@ export const funnels = {
    "campaign": "uk-law-firms",
    "path": "/g/uk-law-firms",
    "origin": "https://getelevateleads.com",
-   "live": false,
+   "live": true,
    "variables": {
     "THRESHOLD": "£2m",
     "OFFER": "30 minute instruction review",

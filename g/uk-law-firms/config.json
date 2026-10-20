@@ -6,7 +6,7 @@
   "_path": "The address the funnel is served at. The build checks it against the redirect and header rules in netlify.toml. Landing page and five outcome pages sit directly under it.",
   "origin": "https://getelevateleads.com",
   "_origin": "One host for the whole chain. sessionStorage (the consent choice, the fire-once guard) is per origin, so the ad URL, the form, the booking page and the Calendly forward must all use this one.",
-  "live": false,
+  "live": true,
   "_live": "While false the build stays green with items missing and the lead function answers every submission with a 503 and stores nothing. Set true only when the build says nothing is outstanding. The build then refuses to finish while calendlyUrl is empty.",
   "variables": {
     "THRESHOLD": "£2m",
