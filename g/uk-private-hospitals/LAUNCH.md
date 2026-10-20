@@ -4,8 +4,9 @@ UK private hospitals and clinic groups with £5m+ turnover ("HELSE"). Built 20 O
 `/g/uk-it-growth` (read `g/uk-it-growth/LAUNCH.md` first: the endpoint, storage, delivery, alerts, Meta and
 the daily check are the same code). This file only says what is different and what is outstanding.
 
-**Status: built and tested, `"live": false`.** The pages are served (noindex), the endpoint answers every post
-for this campaign with a 503 and stores nothing.
+**Status 20 Oct 2026: wired up, `"live": false` until the go-live step (section 2, point 4).** ClickUp list,
+Calendly event and both Zap workflows are in place and tested. The pages are served (noindex), the endpoint
+answers every post for this campaign with a 503 and stores nothing until `live` is switched.
 
 ```
 npm run build          # or: node scripts/build-g-growth.mjs
@@ -23,20 +24,22 @@ npm run test:g-growth  # g/uk-private-hospitals/test/funnel.test.mjs is in it
 | Payment | commission on closed deals | commission on attended first consultations and on the procedures those patients book within a year (owner's decision 20 Oct 2026, De Peyer model). The rate is never on the page. |
 | Case | three IT consultancies | C-Medical, 1 Feb to 16 Oct 2026 against the same days of 2025, with written permission (owner, 20 Oct). Headline multiple 13x without reception; 22x whole account in the note. |
 | Register | off (`legal.registerCheck` false) | the same: no Companies House or CQC lookup is promised or made. Check before each meeting. |
-| ClickUp list | `IT - UK - Commision` | **not created yet**, see section 2 |
-| Calendly | `elevate-marketing-commission-i-it` | **empty**, see section 2 |
+| ClickUp list | `IT - UK - Commision` (901522580321) | `HEALTH - UK - Commission` (1201270000003578), a duplicate with the same field ids |
+| Calendly | `elevate-marketing-commission-i-it` | `https://calendly.com/d/d346-6dd-2w6/elevate-marketing-health-30-minute-bookings-review`, event type `516ab30e-089f-49dc-a8e6-0e1071a71a1d` |
 
 ## 2. What only a person can supply (in this order)
 
-1. **ClickUp list.** Duplicate `IT - UK - Commision` in ClickUp (Duplicate list, with statuses and custom fields),
+Points 1 to 3 are done (20 Oct 2026); they are kept as the record of what was set up and why.
+
+1. **ClickUp list (done: 1201270000003578).** Duplicate `IT - UK - Commision` in ClickUp (Duplicate list, with statuses and custom fields),
    name it `HEALTH - UK - Commission`, and put its id in `config.json` → `clickup.listId`. The API can not set the
    statuses, which is why it is a duplicate and not a new list. The existing `HELSE - UK - Commision`
    (901526426774) keeps the Typeform flow and the default statuses; it is not used here.
-2. **Zap 1 and Zap 2.** Read the new list's field ids (`lead_id`, `Tier`, `Team Size`, `Ad Spend Budget`,
+2. **Zap 1 and Zap 2 (done, published and switched on 20 Oct 2026).** Read the new list's field ids (`lead_id`, `Tier`, `Team Size`, `Ad Spend Budget`,
    `Contract Value`, the specialism dropdown) and fill in `uk-private-hospitals` in `CAMPAIGNS` in both
    `g/_growth/zapier/*.ts`, run the tests, publish both workflows (switched on, since they already carry IT
    leads). Until `listId` is set, a health lead fails the run on purpose and is kept in the function's store.
-3. **Calendly.** A new 30 minute event for health (owner, 20 Oct: "Clinic intake call" is not reused; a new
+3. **Calendly (done).** A new 30 minute event for health (owner, 20 Oct: "Clinic intake call" is not reused; a new
    event for each funnel). Name "Elevate Marketing | 30 minute bookings review", description "A 30 minute
    bookings review for private hospitals and clinic groups. Bring three numbers: last year's turnover, your
    main specialties and what an attended first consultation is worth." Redirect after booking off. Put the

@@ -6,11 +6,16 @@ const mod = await import('./out/zap2-calendly-booking.mjs');
 const wf = mod.default;
 
 // ---------------------------------------------------------------- fakes
-const LIST = '901522580321';
-const KNOWN_TAGS = new Set(['growth-2m', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import']);
+const LIST = '901522580321'; // IT - UK - Commision
+const HEALTH_LIST = '1201270000003578'; // HEALTH - UK - Commission
+const LAW_LIST = '1201270000003579'; // LAW - UK - Commission
+const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST]);
+const KNOWN_TAGS = new Set(['growth-2m', 'growth-5m', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import']);
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow', 'møte gjennomført']);
 const F = { leadId: '08cf9ecc-ff51-4296-9e03-c5250ebb7abf', email: '78c13487-0fee-46d2-893f-68b212b09e6b', contact: '8fb666f4-c213-4f7a-a8ce-627e496a8313', crm: '8289eaa9-7492-40eb-a35d-092c51bd01ac', stage: 'f4bfea58-b05c-4427-ba1c-b4aa61200583' };
 const IT_TYPE = '769980c2-23c5-4a60-8f1e-462e5e4ea12e';
+const HEALTH_TYPE = '516ab30e-089f-49dc-a8e6-0e1071a71a1d';
+const LAW_TYPE = '1a655d87-d08d-4b52-a8fa-2120472d584d';
 const OTHER_TYPE = 'a71fef8d-91f6-44cd-abbf-03feb49574f4';
 const EV = '11111111-2222-3333-4444-555555555555';
 const INV = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee';
@@ -20,7 +25,7 @@ function makeWorld(opts = {}) {
   const reply = (status, json) => ({ ok: status >= 200 && status < 300, status, text: async () => (typeof json === 'string' ? json : JSON.stringify(json)) });
   w.addTask = (o) => {
     const id = 'T' + w.nextId++;
-    const t = { id, name: o.name || 'Existing', description: '', status: o.status || 'ny lead', tags: o.tags || [], due_date: null, due_date_time: null,
+    const t = { id, list: o.list || LIST, name: o.name || 'Existing', description: '', status: o.status || 'ny lead', tags: o.tags || [], due_date: null, due_date_time: null,
       custom_fields: [], comments: [], date_created: String(o.created ?? Date.now()) };
     if (o.leadId) t.custom_fields.push({ id: F.leadId, value: o.leadId });
     if (o.email) t.custom_fields.push({ id: F.email, value: o.email });
@@ -48,17 +53,17 @@ function makeWorld(opts = {}) {
     }
     let m = path.match(/^\/list\/(\d+)\/task$/);
     if (m && method === 'GET') {
-      assert.equal(m[1], LIST);
+      assert.ok(LISTS.has(m[1]), 'search on a known list: ' + m[1]);
       assert.equal(u.searchParams.get('include_closed'), 'true');
       const cf = JSON.parse(u.searchParams.get('custom_fields') || '[]');
       if (w.opts.emailSearch400 && cf.some((f) => f.field_id === F.email)) return reply(400, { err: 'operator not supported', ECODE: 'X' });
-      let tasks = w.tasks;
+      let tasks = w.tasks.filter((t) => t.list === m[1]);
       for (const f of cf) tasks = tasks.filter((t) => (t.custom_fields.find((c) => c.id === f.field_id) || {}).value === f.value);
       return reply(200, { tasks: tasks.map((t) => ({ id: t.id, url: 'https://app.clickup.com/t/' + t.id, status: { status: t.status }, date_created: t.date_created,
         custom_fields: t.custom_fields.map((c) => ({ id: c.id, value: c.value })) })), last_page: true });
     }
     if (m && method === 'POST') {
-      assert.equal(m[1], LIST);
+      assert.ok(LISTS.has(m[1]), 'create on a known list: ' + m[1]);
       const errs = [];
       if (!KNOWN_STATUS.has(body.status)) errs.push('status');
       for (const t of body.tags || []) if (!KNOWN_TAGS.has(t)) errs.push('tag ' + t);
@@ -70,7 +75,7 @@ function makeWorld(opts = {}) {
       }
       if (w.opts.rejectFields && body.custom_fields) errs.push('forced');
       if (errs.length) return reply(400, { err: 'bad: ' + errs.join(','), ECODE: 'BAD' });
-      const t = w.addTask({ name: body.name, status: body.status, tags: body.tags });
+      const t = w.addTask({ name: body.name, status: body.status, tags: body.tags, list: m[1] });
       t.description = body.markdown_description; t.due_date = body.due_date ?? null; t.due_date_time = body.due_date_time ?? null;
       t.custom_fields = (body.custom_fields || []).map((c) => ({ ...c }));
       t.created_body = body;
@@ -426,5 +431,46 @@ for (const [label, input] of [['flattened', flattened(nested())], ['envelope', e
   rec(w); rec(w2);
   for (const t of allTexts) { ok(!/[–—]/.test(t), 'no en or em dash in: ' + t.slice(0, 50)); ok(!t.includes('!'), 'no exclamation mark'); }
   console.log('16 ok');
+}
+// ---------------------------------------------------------------- 17. health and law bookings: own event, own list, own tag
+for (const [label, type, list, tag] of [['health', HEALTH_TYPE, HEALTH_LIST, 'growth-5m'], ['law', LAW_TYPE, LAW_LIST, 'growth-law']]) {
+  const bookedOn = (extra = {}) => nested({ ...extra, scheduled_event: { name: 'Elevate Marketing | ' + label, event_type: `https://api.calendly.com/event_types/${type}` } });
+  // the lead's task is in its own list: linked by lead id, status moved, due date set
+  const w = makeWorld();
+  const t = w.addTask({ leadId: 'l_test_book_0001', status: 'ny lead', list });
+  const { out } = await run(w, bookedOn());
+  eq(out.outcome, 'linked', label + ': linked'); eq(out.how, 'lead_id', label + ': by lead id'); eq(t.status, 'møte booket', label + ': moved'); eq(t.due_date, startMs, label + ': due date');
+  eq(out.eventNotInCampaigns, false, label + ': event is in CAMPAIGNS');
+  ok(w.calls.every((c) => !c.path.startsWith('/list/') || c.path.startsWith('/list/' + list + '/')), label + ': only its own list was searched');
+  // no lead id, no task: the booking gets a task of its own in the right list with the right tag
+  const w2 = makeWorld();
+  const { out: o2 } = await run(w2, bookedOn({ tracking: { utm_content: 'd_0123456789abcdef0123' } }));
+  eq(o2.outcome, 'created_without_form', label + ': created'); eq(w2.tasks.length, 1, label + ': one task'); eq(w2.tasks[0].list, list, label + ': in its own list');
+  eq(w2.tasks[0].tags, [tag, 'booket-uten-skjema', 'test'], label + ': tags'); eq(w2.tasks[0].status, 'møte booket', label + ': booked');
+  eq(w2.tasks[0].custom_fields.find((c) => c.id === F.leadId).value, 'd_0123456789abcdef0123', label + ': d_ id kept');
+  eq(w2.tasks[0].custom_fields.find((c) => c.id === F.crm).value, '0b565b82-9090-45fa-8bf9-67f2a7d2eca3', label + ': crm type Lead');
+  await run(w2, bookedOn({ tracking: { utm_content: 'd_0123456789abcdef0123' } }));
+  eq(w2.tasks.length, 1, label + ': second delivery does not duplicate');
+  // no lead id: matched by e-mail in its own list, and never on a task in another list
+  const w3 = makeWorld();
+  const other = w3.addTask({ leadId: 'l_it_task', email: 'booker@example.invalid', status: 'ny lead', list: list === HEALTH_LIST ? LAW_LIST : HEALTH_LIST });
+  const it = w3.addTask({ leadId: 'l_it_task2', email: 'booker@example.invalid', status: 'ny lead', list: LIST });
+  const mine = w3.addTask({ leadId: 'l_mine', email: 'booker@example.invalid', status: 'ny lead', list });
+  await run(w3, bookedOn({ tracking: { utm_content: null } }));
+  eq([other.status, it.status, mine.status], ['ny lead', 'ny lead', 'møte booket'], label + ': e-mail match stays inside its list');
+  // an IT booking never touches these lists
+  const w4 = makeWorld();
+  const hl = w4.addTask({ leadId: 'l_x', email: 'booker@example.invalid', status: 'ny lead', list });
+  await run(w4, nested({ tracking: { utm_content: null } }));
+  eq(hl.status, 'ny lead', label + ': an IT booking leaves this list alone'); eq(w4.tasks.filter((x) => x.list === LIST).length, 1, label + ': IT booking made its own IT task');
+  console.log('17 ' + label + ' ok');
+}
+// a lead id on an event that is not ours is searched in every list
+{
+  const w = makeWorld();
+  const t = w.addTask({ leadId: 'l_test_book_0001', status: 'ny lead', list: LAW_LIST });
+  const { out } = await run(w, nested({ scheduled_event: { event_type: `https://api.calendly.com/event_types/${OTHER_TYPE}` } }));
+  eq(out.outcome, 'linked', 'other event, lead id in the law list: linked'); eq(t.status, 'møte booket', 'moved'); eq(out.eventNotInCampaigns, true, 'flagged');
+  console.log('17 other ok');
 }
 console.log(`\nALL OK: ${passed} checks`);

@@ -74,16 +74,16 @@ const CAMPAIGNS: Record<string, Campaign> = {
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
   },
-  // Health and law (20 Oct 2026): waiting for their ClickUp lists (duplicate IT - UK - Commision) and
-  // their Calendly event types. With listId empty the campaign is skipped when a booking is matched by
-  // event type, and a lead id from one of these forms finds no list to search.
+  // Health and law (20 Oct 2026): their own ClickUp lists (duplicates of the IT list, same field ids) and
+  // their own Calendly collective events. With listId empty a campaign is skipped when a booking is matched
+  // by event type, and a lead id from one of these forms finds no list to search.
   "uk-private-hospitals": {
     label: "UK HEALTH",
-    listId: "", // HEALTH - UK - Commission: not created yet
+    listId: "1201270000003578", // HEALTH - UK - Commission
     tag: "growth-5m",
-    eventTypes: [], // the health event type id, once the event exists
+    eventTypes: ["516ab30e-089f-49dc-a8e6-0e1071a71a1d"], // Elevate Marketing | Health | 30 minute bookings review
     field: {
-      leadId: "",
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
       email: "78c13487-0fee-46d2-893f-68b212b09e6b",
       contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
       crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
@@ -96,11 +96,11 @@ const CAMPAIGNS: Record<string, Campaign> = {
   },
   "uk-law-firms": {
     label: "UK LAW",
-    listId: "", // LAW - UK - Commission: not created yet
+    listId: "1201270000003579", // LAW - UK - Commission
     tag: "growth-law",
-    eventTypes: [], // the law event type id, once the event exists
+    eventTypes: ["1a655d87-d08d-4b52-a8fa-2120472d584d"], // Elevate Marketing | Law | 30 minute instruction review
     field: {
-      leadId: "",
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
       email: "78c13487-0fee-46d2-893f-68b212b09e6b",
       contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
       crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",

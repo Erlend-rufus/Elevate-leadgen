@@ -31,7 +31,7 @@
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
     "_qualifiedEvent": "A custom event, never the standard Lead. Fires on /book and /review only, with eventID = lead_id, and only after the visitor has accepted. The server sends the same event with the same id (Conversions API), so Meta counts it once.",
-    "calendlyUrl": "",
+    "calendlyUrl": "https://calendly.com/d/d346-6dd-2w6/elevate-marketing-health-30-minute-bookings-review",
     "_calendlyUrl": "The event URL with no query string, from Calendly: Share, Add to website, Inline embed. Empty is allowed only while live is false. The booking page adds name, email and utm parameters itself, with lead_id in utm_content. Calendly's own redirect after booking must stay off: the page forwards to /takk itself.",
     "calendlyLeadParam": "utm_content",
     "_calendlyLeadParam": "The tracking parameter that carries the lead id into Calendly, where the Calendly Zap reads it back (Invitee Created, tracking). Calendly passes on only utm_source, utm_medium, utm_campaign, utm_content and utm_term. It replaces the value of the same name, so the ad's own value stays on the application. Change it here and in the Zap together, never in one place.",
@@ -58,7 +58,7 @@
   ],
   "honeypot": "contact_by_fax",
   "clickup": {
-    "listId": "",
-    "_comment": "The ClickUp list the daily reconciliation compares against. Empty until the list exists (duplicate IT - UK - Commision in ClickUp so it gets the same statuses and fields, name it HEALTH - UK - Commission, and put its id here and in the two Zaps). Leads carry tag growth-5m in it."
+    "listId": "1201270000003578",
+    "_comment": "The ClickUp list the daily reconciliation compares against: HEALTH - UK - Commission. Leads carry tag growth-5m in it. The custom field lead_id on that list holds the key."
   }
 }

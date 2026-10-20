@@ -102,7 +102,7 @@ export const funnels = {
     "applyPath": "/api/lead",
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
-    "calendlyUrl": "",
+    "calendlyUrl": "https://calendly.com/d/d346-6dd-2w6/elevate-marketing-health-30-minute-bookings-review",
     "calendlyLeadParam": "utm_content",
     "bookingHeights": {
      "narrow": 1150,
@@ -127,7 +127,7 @@ export const funnels = {
    ],
    "honeypot": "contact_by_fax",
    "clickup": {
-    "listId": ""
+    "listId": "1201270000003578"
    }
   },
   "copy": {
@@ -177,7 +177,7 @@ export const funnels = {
     "applyPath": "/api/lead",
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
-    "calendlyUrl": "",
+    "calendlyUrl": "https://calendly.com/d/d35z-ds9-7mb/elevate-marketing-law-30-minute-instruction-review",
     "calendlyLeadParam": "utm_content",
     "bookingHeights": {
      "narrow": 1150,
@@ -202,7 +202,7 @@ export const funnels = {
    ],
    "honeypot": "contact_by_fax",
    "clickup": {
-    "listId": ""
+    "listId": "1201270000003579"
    }
   },
   "copy": {
