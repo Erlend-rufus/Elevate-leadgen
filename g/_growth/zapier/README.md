@@ -20,9 +20,9 @@ state the workflows are in (switched on or off) is also kept there, not here.
 
    ```
    node g/_growth/zapier/build.mjs zap2-calendly-booking.ts
-   node g/_growth/zapier/zap2.test.mjs        # 164 checks
+   node g/_growth/zapier/zap2.test.mjs        # 201 checks
    node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
-   node g/_growth/zapier/zap1.test.mjs        # 126 checks
+   node g/_growth/zapier/zap1.test.mjs        # 163 checks
    ```
 
    `truth.json` is a snapshot of the ClickUp field and option ids the tests check the mappings against.
@@ -40,6 +40,12 @@ One more entry in `CAMPAIGNS` in the workflow file: the ClickUp list id, the cus
 option ids, and for Zap 2 the Calendly event type id. Both workflows read the campaign from the
 payload or the booking, so nothing else changes. A lead from a campaign that has no entry fails the
 run on purpose, so it shows in the run history and does not disappear.
+
+Health (`uk-private-hospitals`) and law (`uk-law-firms`) were added on 20 Oct 2026. Each has its own
+ClickUp list, made by duplicating `IT - UK - Commision`, so all three lists share the same field and
+option ids. A dropdown is set only when the form's band fits inside one ClickUp band, which leaves IT
+Specialism, Team Size and Contract Value empty for health and law. Both workflows were published after
+draft runs against all three lists (create, link on `l_` and `d_` ids, move from `ny lead`).
 
 ## Conventions
 

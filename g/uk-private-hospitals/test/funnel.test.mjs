@@ -143,7 +143,7 @@ test('health endpoint: a failed no-script post comes back as the health form wit
   assert.match(t, /Please enter a valid work email/);
 });
 
-test('health pages: built, noindex, checkboxes for the specialties, the booking page waits for Calendly', () => {
+test('health pages: built, noindex, checkboxes for the specialties, the booking page embeds Calendly once it is configured', () => {
   const dir = join(ROOT, 'public', 'g', 'uk-private-hospitals');
   for (const p of ['index.html', 'book/index.html', 'takk/index.html', 'review/index.html', 'not-now/index.html', 'not-a-fit/index.html', 'privacy/index.html', 'terms/index.html']) {
     assert.ok(existsSync(join(dir, p)), p + ' is built');
@@ -155,5 +155,10 @@ test('health pages: built, noindex, checkboxes for the specialties, the booking 
   assert.ok(!/Companies House/.test(visible(html)), 'the page promises no register check while legal.registerCheck is false');
   assert.ok(!/C-Medical/.test(visible(html).replace(/C-Medical, Google Ads, 2026 against the same days of 2025|accounts for C-Medical/g, '')), 'the name appears only in the table title and the source line');
   const book = readFileSync(join(dir, 'book/index.html'), 'utf8');
-  assert.match(book, /The calendar is not connected yet/);
+  const cfg = JSON.parse(readFileSync(join(ROOT, 'g', 'uk-private-hospitals', 'config.json'), 'utf8'));
+  if (!cfg.funnel.calendlyUrl) assert.match(book, /The calendar is not connected yet/);
+  else {
+    assert.equal(/not connected yet/.test(book), false);
+    assert.ok(book.includes(cfg.funnel.calendlyUrl), 'the booking page embeds the configured event');
+  }
 });

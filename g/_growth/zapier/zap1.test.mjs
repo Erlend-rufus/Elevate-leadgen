@@ -6,8 +6,11 @@ const mod = await import('./out/zap1-lead-to-clickup-slack.mjs');
 const wf = mod.default;
 
 // ---------------------------------------------------------------- fakes
-const LIST = '901522580321';
-const KNOWN_TAGS = new Set(['growth-2m', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import']);
+const LIST = '901522580321'; // IT - UK - Commision
+const HEALTH_LIST = '1201270000003578'; // HEALTH - UK - Commission
+const LAW_LIST = '1201270000003579'; // LAW - UK - Commission
+const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST]);
+const KNOWN_TAGS = new Set(['growth-2m', 'growth-5m', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import']);
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow']);
 
 function makeWorld(opts = {}) {
@@ -30,16 +33,16 @@ function makeWorld(opts = {}) {
     // GET /list/:id/task
     let m = path.match(/^\/list\/(\d+)\/task$/);
     if (m && method === 'GET') {
-      assert.equal(m[1], LIST);
+      assert.ok(LISTS.has(m[1]), 'search on a known list: ' + m[1]);
       const cf = JSON.parse(u.searchParams.get('custom_fields') || '[]');
       assert.equal(u.searchParams.get('include_closed'), 'true');
-      let tasks = w.tasks;
-      if (w.opts.ignoreFilter) tasks = w.tasks; // a search that ignores the filter
+      let tasks = w.tasks.filter((t) => t.list === m[1]);
+      if (w.opts.ignoreFilter) tasks = w.tasks.filter((t) => t.list === m[1]); // a search that ignores the filter
       else for (const f of cf) tasks = tasks.filter((t) => (t.custom_fields.find((c) => c.id === f.field_id) || {}).value === f.value);
       return reply(200, { tasks: tasks.map(fullTask), last_page: true });
     }
     if (m && method === 'POST') {
-      assert.equal(m[1], LIST);
+      assert.ok(LISTS.has(m[1]), 'create on a known list: ' + m[1]);
       if (w.opts.rejectFields && body.custom_fields) return reply(400, { err: 'Custom field value invalid', ECODE: 'FIELD_X' });
       const errs = [];
       if (!KNOWN_STATUS.has(body.status)) errs.push('status');
@@ -52,7 +55,7 @@ function makeWorld(opts = {}) {
       }
       if (errs.length) return reply(400, { err: 'bad: ' + errs.join(','), ECODE: 'BAD' });
       const id = 'T' + w.nextId++;
-      const t = { id, name: body.name, description: body.markdown_description, status: body.status, priority: body.priority ?? null,
+      const t = { id, list: m[1], name: body.name, description: body.markdown_description, status: body.status, priority: body.priority ?? null,
         tags: body.tags || [], due_date: body.due_date ?? null, custom_fields: (body.custom_fields || []).map((c) => ({ ...c })), comments: [] };
       w.tasks.push(t);
       return reply(200, { id, url: 'https://app.clickup.com/t/' + id, name: t.name });
@@ -253,7 +256,7 @@ const eq = (a, b, label) => { assert.deepEqual(a, b, label); passed++; };
 }
 // ---------------------------------------------------------------- 9. invalid input fails the run, writes nothing
 {
-  for (const bad of [withLead({ campaign: 'uk-law-firms' }), withLead({ campaign: 'constructor' }), withLead({ campaign: '__proto__' }), withLead({ route: 'maybe' }), withLead({ route: 'constructor' }), { hello: 'world' }, withLead({ lead_id: '' }), 'not json']) {
+  for (const bad of [withLead({ campaign: 'uk-no-such-funnel' }), withLead({ campaign: 'constructor' }), withLead({ campaign: '__proto__' }), withLead({ route: 'maybe' }), withLead({ route: 'constructor' }), { hello: 'world' }, withLead({ lead_id: '' }), 'not json']) {
     const w = makeWorld();
     let threw = false;
     try { await run(w, bad); } catch { threw = true; }
@@ -290,16 +293,69 @@ const eq = (a, b, label) => { assert.deepEqual(a, b, label); passed++; };
   }
   console.log('12 ok');
 }
-// ---------------------------------------------------------------- 13. health and law: known campaigns, no list yet
+// ---------------------------------------------------------------- 13. health and law: own list, own tag, only what fits one ClickUp band
+const SPEND_UNDER_1K = '5482c305-7587-466a-bef4-ab15e6a70906';
 {
-  for (const campaign of ['uk-private-hospitals', 'uk-law-firms']) {
-    const w = makeWorld();
-    let err = null;
-    try { await run(w, withLead({ lead_id: 'l_' + campaign.slice(3, 8) + '_1', campaign })); } catch (e) { err = e; }
-    eq(!!err, true, campaign + ' fails on purpose');
-    eq(String(err && err.message).includes('has no ClickUp list yet'), true, campaign + ' says why');
-    eq(w.tasks.length, 0, campaign + ' creates nothing');
+  const health = { campaign: 'uk-private-hospitals', page_slug: 'uk-private-hospitals', company_name: 'TEST Harbour Clinics Ltd', specialism: '', practice_areas: '', sra_number: '',
+    regulator_number: 'TEST-1234', self_pay_share: '60% or more', specialties: 'Orthopaedics, Cardiology', first_consultation_value: '£300 to under £600',
+    turnover_band: '£5m to under £10m', employees_or_fee_earners: '', marketing_spend: '£5,000 to under £20,000', first_year_value: '', target_next_year: '£12m' };
+  const w = makeWorld();
+  const { out } = await run(w, withLead({ ...health, lead_id: 'l_health_0001', email: 'health@example.invalid' }));
+  const t = w.tasks[0];
+  eq(w.tasks.length, 1, 'health: one task'); eq(t.list, HEALTH_LIST, 'health: in the HEALTH list'); eq(t.tags, ['growth-5m', 'test'], 'health: tags');
+  eq(t.status, 'ny lead', 'health: status'); eq(optName(t, F.tier), 'Tier 1', 'health: tier'); eq(optName(t, F.leadId), 'l_health_0001', 'health: lead_id field');
+  eq(optName(t, F.spend), '£5k+/mth', 'health: spend inside one band'); eq(optName(t, F.spec), undefined, 'health: IT specialism dropdown left alone');
+  eq(optName(t, F.team), undefined, 'health: no team size'); eq(optName(t, F.value), undefined, 'health: no contract value');
+  ok(t.description.includes('UK HEALTH'), 'health: label in description'); ok(t.description.includes('Orthopaedics, Cardiology'), 'health: specialties in description');
+  ok(t.description.includes('£300 to under £600'), 'health: consultation value in description');
+  eq(out.slack.posted, false, 'health: test lead stays out of Slack');
+  // a real health lead posts with the health label and uses "ansatte"
+  const w2 = makeWorld();
+  await run(w2, withLead({ ...health, lead_id: 'l_health_0002', email: 'real@clinic-group.co.uk' }));
+  eq(w2.slack.length, 1, 'health: real lead posts'); ok(w2.slack[0].includes('UK HEALTH'), 'health: Slack label'); ok(!w2.slack[0].includes('[TEST]'), 'health: no TEST on a real lead');
+  eq(w2.tasks[0].tags, ['growth-5m'], 'health: real lead tag');
+  // the "I do not know" answer maps to Unknown, the highest band to £5k+
+  for (const [answer, expected] of [['I do not know', 'Unknown'], ['£50,000 or more', '£5k+/mth'], ['£20,000 to under £50,000', '£5k+/mth']]) {
+    const wx = makeWorld();
+    await run(wx, withLead({ ...health, lead_id: 'l_health_' + answer.length, marketing_spend: answer }));
+    eq(optName(wx.tasks[0], F.spend), expected, 'health spend: ' + answer);
   }
-  console.log('13 ok');
+  // two campaigns, same lead id format: a lead lives in its own list only
+  const wd = makeWorld();
+  await run(wd, withLead({ ...health, lead_id: 'l_dupe_0001' }));
+  const { out: again } = await run(wd, withLead({ ...health, lead_id: 'l_dupe_0001' }));
+  eq(again.deduped, true, 'health: second delivery deduped'); eq(wd.tasks.length, 1, 'health: still one task');
+  console.log('13 health ok');
+}
+{
+  const law = { campaign: 'uk-law-firms', page_slug: 'uk-law-firms', company_name: 'TEST Harbour Law LLP', specialism: '', practice_areas: 'Private client, Family', sra_number: '999999',
+    turnover_band: '£2m to under £5m', employees_or_fee_earners: '15 to 29', marketing_spend: '£1,000 to under £5,000', first_year_value: '£5,000 to under £15,000', target_next_year: '£4m' };
+  const w = makeWorld();
+  await run(w, withLead({ ...law, lead_id: 'l_law_0001', email: 'law@example.invalid' }));
+  const t = w.tasks[0];
+  eq(w.tasks.length, 1, 'law: one task'); eq(t.list, LAW_LIST, 'law: in the LAW list'); eq(t.tags, ['growth-law', 'test'], 'law: tags');
+  eq(optName(t, F.tier), 'Tier 1', 'law: tier'); eq(optName(t, F.leadId), 'l_law_0001', 'law: lead_id field');
+  eq(optName(t, F.spend), undefined, 'law: £1,000 to under £5,000 straddles two ClickUp bands: not set');
+  eq(optName(t, F.spec), undefined, 'law: IT specialism dropdown left alone'); eq(optName(t, F.team), undefined, 'law: team size not set'); eq(optName(t, F.value), undefined, 'law: contract value not set');
+  ok(t.description.includes('Private client, Family'), 'law: practice areas in description'); ok(t.description.includes('999999'), 'law: SRA number in description');
+  ok(t.description.includes('15 to 29'), 'law: fee earners in description');
+  for (const [answer, expected] of [['Under £1,000', 'Under £1k/mth'], ['£5,000 to under £15,000', '£5k+/mth'], ['£15,000 or more', '£5k+/mth'], ['I do not know', 'Unknown']]) {
+    const wx = makeWorld();
+    await run(wx, withLead({ ...law, lead_id: 'l_law_' + answer.length, marketing_spend: answer }));
+    eq(optName(wx.tasks[0], F.spend), expected, 'law spend: ' + answer);
+  }
+  const w2 = makeWorld();
+  await run(w2, withLead({ ...law, lead_id: 'l_law_0002', email: 'real@harbour-law.co.uk' }));
+  eq(w2.slack.length, 1, 'law: real lead posts'); ok(w2.slack[0].includes('UK LAW'), 'law: Slack label'); ok(w2.slack[0].includes('fee earners'), 'law: fee earners wording');
+  console.log('13 law ok');
+}
+// ---------------------------------------------------------------- 14. a lead goes only to the list of its own campaign
+{
+  const w = makeWorld();
+  await run(w, withLead({ lead_id: 'l_it_0001' }));
+  await run(w, withLead({ lead_id: 'l_it_0001', campaign: 'uk-private-hospitals' }));
+  await run(w, withLead({ lead_id: 'l_it_0001', campaign: 'uk-law-firms' }));
+  eq(w.tasks.map((x) => x.list).sort(), [LIST, HEALTH_LIST, LAW_LIST].sort(), 'same lead id in three campaigns: one task in each list, none deduped across lists');
+  console.log('14 ok');
 }
 console.log('\nALL PASSED: ' + passed + ' checks');

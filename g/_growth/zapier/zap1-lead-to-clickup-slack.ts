@@ -14,10 +14,10 @@ const sdk = createZapierSdk();
  * and g/uk-it-growth/LAUNCH.md in the repository. Change the payload there first.
  *
  * Add a campaign: one more entry in CAMPAIGNS (list id, field ids, option ids). Nothing else.
- * The health and law entries (20 Oct 2026) are waiting for their ClickUp lists: duplicate "IT - UK -
- * Commision" in ClickUp (so the statuses and the list fields come with it), then fill in listId and the
- * list-level field and option ids. Until listId is set, a lead from that campaign fails the run on
- * purpose and stays in the run history; the lead itself is safe in the function's store.
+ * The health and law entries (20 Oct 2026) point at their own ClickUp lists, made by duplicating "IT - UK -
+ * Commision" (statuses and fields came with it). Duplicating does not change the field and option ids:
+ * all three lists read the same ones, so the mappings below are shared. A campaign with an empty listId
+ * fails the run on purpose and stays in the run history; the lead itself is safe in the function's store.
  * Test leads (an e-mail ending in @example.invalid) are tagged "test" in ClickUp and never post
  * to Slack, unless the payload carries slack_test: true.
  */
@@ -115,22 +115,23 @@ const CAMPAIGNS: Record<string, Campaign> = {
       },
     },
   },
-  // Shared fields (Email, Contact Name, Phone, Job Title, Nettside, CRM Item Type, Sales Stage) have the
-  // same ids on every list in the CRM folder. The list-level ones (lead_id, Tier, Team Size, Ad Spend
-  // Budget, Contract Value, the specialism dropdown) get new ids when the IT list is duplicated: read
-  // them with the ClickUp API or the field settings and fill them in here, and in truth.json.
+  // The duplicated lists carry the same field ids as the IT list (read back from ClickUp on 20 Oct 2026),
+  // so truth.json covers them too. Only what fits inside one ClickUp band is set: a wrong bucket is worse
+  // than an empty one. Health and law leave the "IT Specialism" dropdown alone (its options are IT
+  // services), team size (no band of the form fits inside one band of ClickUp's) and contract value (the
+  // exact answers are in the task description). The health form has no head count question.
   "uk-private-hospitals": {
     label: "UK HEALTH",
-    listId: "", // HEALTH - UK - Commission: not created yet
+    listId: "1201270000003578", // HEALTH - UK - Commission
     tag: "growth-5m",
     peopleWord: "ansatte",
     field: {
-      leadId: "",
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
       website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
-      adSpend: "",
+      adSpend: "13229225-75e5-4729-bd8d-eb69c20e80b2",
       teamSize: "",
       contractValue: "",
-      tier: "",
+      tier: "668b1a6a-4054-4b24-ac3c-55432d7c2b3e",
       email: "78c13487-0fee-46d2-893f-68b212b09e6b",
       crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
       contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
@@ -142,25 +143,34 @@ const CAMPAIGNS: Record<string, Campaign> = {
     option: {
       crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
-      tier: { fit: "", review: "", other: "" },
+      tier: {
+        fit: "153aea7a-a523-466a-997a-92e6b07e4c1f", // Tier 1
+        review: "20a259b4-95a9-435f-86fa-88bf86d399cc", // Tier 2
+        other: "1d991141-c31f-4a47-96c9-d6e2c025b29a", // Tier 3
+      },
       specialism: {},
       teamSize: {},
-      adSpend: {},
+      adSpend: {
+        "£5,000 to under £20,000": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
+        "£20,000 to under £50,000": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
+        "£50,000 or more": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
+        "I do not know": "feaf2b0d-079a-4ffa-a48b-67e79c280458", // Unknown
+      },
       contractValue: {},
     },
   },
   "uk-law-firms": {
     label: "UK LAW",
-    listId: "", // LAW - UK - Commission: not created yet
+    listId: "1201270000003579", // LAW - UK - Commission
     tag: "growth-law",
     peopleWord: "fee earners",
     field: {
-      leadId: "",
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
       website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
-      adSpend: "",
+      adSpend: "13229225-75e5-4729-bd8d-eb69c20e80b2",
       teamSize: "",
       contractValue: "",
-      tier: "",
+      tier: "668b1a6a-4054-4b24-ac3c-55432d7c2b3e",
       email: "78c13487-0fee-46d2-893f-68b212b09e6b",
       crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
       contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
@@ -172,10 +182,19 @@ const CAMPAIGNS: Record<string, Campaign> = {
     option: {
       crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
-      tier: { fit: "", review: "", other: "" },
+      tier: {
+        fit: "153aea7a-a523-466a-997a-92e6b07e4c1f", // Tier 1
+        review: "20a259b4-95a9-435f-86fa-88bf86d399cc", // Tier 2
+        other: "1d991141-c31f-4a47-96c9-d6e2c025b29a", // Tier 3
+      },
       specialism: {},
       teamSize: {},
-      adSpend: {},
+      adSpend: {
+        "Under £1,000": "5482c305-7587-466a-bef4-ab15e6a70906", // Under £1k/mth
+        "£5,000 to under £15,000": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
+        "£15,000 or more": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
+        "I do not know": "feaf2b0d-079a-4ffa-a48b-67e79c280458", // Unknown
+      },
       contractValue: {},
     },
   },
