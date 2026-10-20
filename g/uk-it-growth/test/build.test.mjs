@@ -218,9 +218,9 @@ test('the standard Lead event is never used', () => {
 
 /* ------------------------------------------------------------------- the landing page */
 
-test('the landing page carries the whole form: thirteen questions, posting to the endpoint, with no script needed', () => {
+test('the landing page carries the whole form: fourteen questions, posting to the endpoint, with no script needed', () => {
   const h = built['index.html'];
-  assert.equal((h.match(/class="lf-block"/g) || []).length, 13);
+  assert.equal((h.match(/class="lf-block"/g) || []).length, 14);
   assert.match(h, /<form class="lf-panel" id="lf-form" method="post" action="\/api\/lead" novalidate>/);
   for (const name of cfg.hiddenFields) assert.ok(h.includes(`<input type="hidden" name="${name}"`), name);
   assert.match(h, /<div class="lf-trap" aria-hidden="true"><label>Fax <input type="text" name="contact_by_fax" tabindex="-1" autocomplete="off" value=""><\/label><\/div>/);

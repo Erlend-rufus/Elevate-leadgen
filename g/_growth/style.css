@@ -319,6 +319,7 @@ html.anim .cn:not(.cn-on) > [aria-hidden]{visibility:hidden;animation:cn-failsaf
 .lf-help{margin:0;font-size:16px;line-height:1.5;color:var(--muted)}
 .lf-field .lf-help{margin:0 0 var(--space-8)}
 .lf-input{display:block;width:100%;min-height:var(--control-min);padding:14px 18px;border:var(--stroke-field) solid var(--field-border);border-radius:var(--radius-card);background:var(--white);color:var(--ink);font-family:var(--font-body);font-weight:400;font-size:18px;line-height:1.3;outline:none}
+textarea.lf-input--long{min-height:132px;resize:vertical}
 .lf-input::placeholder{color:var(--muted);opacity:1}
 .lf-input:focus{border-color:var(--ink);box-shadow:0 0 0 3px var(--ink)}
 .lf-input[aria-invalid="true"]{border-color:var(--error)}

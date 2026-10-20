@@ -23,6 +23,7 @@ const GOOD = {
   marketing_spend: O.spend[1],
   decision_maker: O.decider[1],
   capacity: O.capacity[1],
+  meeting_goal: 'A straight answer on whether this can work for us.',
   first_name: 'Tom',
   last_name: 'Reid',
   job_title: 'Managing Partner',
@@ -47,14 +48,14 @@ const go = async (over, fields, opts) => {
   return { r, res, body: res.headers.get('content-type').includes('json') ? await bodyOf(res) : await res.text() };
 };
 
-test('law form: twelve steps, practice areas is the multi-choice, bands written "to under", mobile optional', () => {
-  assert.equal(core.STEPS.length, 12);
+test('law form: thirteen steps, practice areas is the multi-choice, bands written "to under", mobile optional', () => {
+  assert.equal(core.STEPS.length, 13);
   const multi = core.STEPS.filter((s) => s.kind === 'multi');
   assert.equal(multi.length, 1);
   assert.equal(multi[0].field, 'practice_areas');
   assert.deepEqual(O.turnover.slice(0, 5), ['Under £1m', '£1m to under £2m', '£2m to under £5m', '£5m to under £10m', '£10m or more']);
   assert.deepEqual(O.worth, ['Under £2,000', '£2,000 to under £5,000', '£5,000 to under £15,000', '£15,000 or more']);
-  const mobile = core.STEPS[11].fields.find((f) => f.field === 'mobile');
+  const mobile = core.STEPS[12].fields.find((f) => f.field === 'mobile');
   assert.equal(mobile.optional, true);
   assert.equal(core.validate(GOOD).ok, true);
 });

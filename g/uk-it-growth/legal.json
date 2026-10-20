@@ -14,7 +14,7 @@
         "label": "What we collect, and when",
         "head": ["When", "What we collect"],
         "rows": [
-          ["You apply on one of our pages", "Your answers about your business (website, company name, area of work, turnover, how long you have traded, size, marketing spend, typical client value, sales cycle, an optional target, who decides, capacity), your first name, last name, job title and work email, and a mobile number if you give one."],
+          ["You apply on one of our pages", "Your answers about your business (website, company name, area of work, turnover, how long you have traded, size, marketing spend, typical client value, sales cycle, an optional target, who decides, capacity, what you want to get out of the meeting), your first name, last name, job title and work email, and a mobile number if you give one."],
           ["You book a call", "Your name, email address and the time you choose, held by Calendly and passed to us."],
           ["You write or speak to us", "The content of your emails and texts, and our notes of calls."],
           ["You visit a page", "Your IP address, device and browser details, the page you came from, and the campaign tags in the address you followed. If you choose Accept, also the identifiers set by the Meta pixel."],
@@ -52,7 +52,7 @@
           { "when": "register", "cells": ["Companies House", "Keeps the public register of companies", "The company name you give, as a search"] },
           ["Zapier", "Moves your application between our systems", "Your application"],
           ["ClickUp", "Holds our record of applications, calls and customers", "Your application, and notes of our contact with you"],
-          ["Slack", "Internal notifications", "The company name and our decision. No email address, phone number or free text."],
+          ["Slack", "Internal notifications", "The company name, our decision and what you told us you want from the meeting. No email address or phone number."],
           ["Calendly", "Takes bookings", "Your name, email address, your choice of time and an application reference"],
           ["Our email and text message providers", "Send our emails and texts", "Your email address or mobile number, and the message"],
           ["Meta Platforms Ireland", "Measures our advertising, only if you chose Accept", "The identifiers set by the Meta pixel and your visits to our pages. From our server, also a scrambled version of your email address and name, your IP address and your browser details."],

@@ -42,14 +42,15 @@ export const MSG = {
   required: 'Please complete this field',
   choice: 'Please choose one option',
   email: 'Please enter a valid work email',
+  goal: 'Please tell us what you want from the meeting.',
 };
 
 export const URL_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i;
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
- * The thirteen steps. "field" is the name of the input and the payload key.
- * kind: url | text | choice | group. A group is one step with several inputs.
+ * The fourteen steps. "field" is the name of the input and the payload key.
+ * kind: url | text | long | choice | group. A long is a textarea, free text. A group is one step with several inputs.
  */
 export const STEPS = [
   { id: 'website', kind: 'url', field: 'company_website', q: 'Company website', max: 300 },
@@ -73,6 +74,10 @@ export const STEPS = [
   },
   { id: 'decider', kind: 'choice', field: 'decision_maker', q: 'Who would decide whether to work with us?', options: 'decider' },
   { id: 'capacity', kind: 'choice', field: 'capacity', q: 'How many new clients could you take on in the next three months?', options: 'capacity' },
+  {
+    id: 'goal', kind: 'long', field: 'meeting_goal', q: 'What do you want to get out of this meeting?',
+    help: 'One or two lines is enough.', min: 2, max: 600,
+  },
   {
     id: 'details', kind: 'group', q: 'Your details',
     fields: [
@@ -108,6 +113,9 @@ export function stepErrors(step, get) {
     if (!u || !URL_RE.test(u)) out[step.field] = MSG.url;
   } else if (step.kind === 'text') {
     if (!step.optional && !tidy(get(step.field), step.max)) out[step.field] = MSG.required;
+  } else if (step.kind === 'long') {
+    // Free text with no gate behind it: it only has to be there, and not so long that nobody will read it.
+    if (tidy(get(step.field), step.max).length < (step.min || 1)) out[step.field] = MSG.goal;
   } else if (step.kind === 'choice') {
     var c = tidy(get(step.field), 200);
     if (!c || OPTIONS[step.options].indexOf(c) < 0) out[step.field] = MSG.choice;
@@ -122,7 +130,7 @@ export function stepErrors(step, get) {
 }
 
 /**
- * All thirteen steps against a set of answers. "input" is a plain object of strings.
+ * All fourteen steps against a set of answers. "input" is a plain object of strings.
  * Returns {ok, errors, values}: errors by field name, and values cleaned for every
  * field (an empty string where nothing was answered, "Other" text only when "Other"
  * was chosen).

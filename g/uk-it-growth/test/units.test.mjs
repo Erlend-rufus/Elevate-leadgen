@@ -257,7 +257,7 @@ test('payload: browser identifiers and the consent state never go to Zapier', ()
 });
 
 test('payload: the key list is the contract with the Zap, and changing it is deliberate', () => {
-  assert.equal(PAYLOAD_KEYS.length, 41); // 37 at launch, plus the four health keys added 20 Oct 2026
+  assert.equal(PAYLOAD_KEYS.length, 42); // 37 at launch, four health keys added 20 Oct 2026, meeting_goal 21 Oct 2026
   assert.deepEqual(PAYLOAD_KEYS.slice(0, 5), ['lead_id', 'campaign', 'route', 'route_reason', 'submitted_at']);
   assert.equal(new Set(PAYLOAD_KEYS).size, PAYLOAD_KEYS.length, 'no key twice');
 });

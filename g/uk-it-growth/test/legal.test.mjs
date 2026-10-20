@@ -81,8 +81,9 @@ test('every system that receives a lead is named in Part 4 of the notice', () =>
   for (const name of ['Netlify', 'Zapier', 'ClickUp', 'Slack', 'Calendly', 'Meta Platforms Ireland', 'Typeform']) {
     assert.ok(part4.includes(name), name);
   }
-  // and the notice says what Slack gets: no contact details (the payload builder sends the company name and the decision)
-  assert.ok(part4.includes('No email address, phone number or free text.'));
+  // and the notice says what Slack gets: the company name, the decision and the free text, never contact details
+  assert.ok(part4.includes('what you told us you want from the meeting. No email address or phone number.'));
+  assert.ok(text(built['privacy/index.html']).includes('what you want to get out of the meeting'), 'Part 2 lists the free text');
 });
 
 test('the cookie table matches what the pages do: one choice in localStorage by the consent script, tab storage by the page, no cookie written by us', () => {

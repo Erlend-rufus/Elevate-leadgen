@@ -5,19 +5,19 @@ import { core, GOOD, OPTIONS, copy, cfg, renderForm } from './helpers.mjs';
 const { validate, tidy, STEPS, FIELDS, MSG } = core;
 const answers = (over = {}) => Object.assign({}, GOOD, over);
 
-test('the thirteen questions are the board\'s, in the board\'s order', () => {
+test('the fourteen questions are the board\'s, in the board\'s order, with the free text last before the details', () => {
   assert.deepEqual(STEPS.map((s) => s.id), [
     'website', 'company', 'area', 'turnover', 'trading', 'people', 'spend', 'worth',
-    'cycle', 'target', 'decider', 'capacity', 'details',
+    'cycle', 'target', 'decider', 'capacity', 'goal', 'details',
   ]);
-  assert.equal(STEPS.length, 13);
+  assert.equal(STEPS.length, 14);
 });
 
 test('every input name on the form, in order, with the free text of "Other" after its question', () => {
   assert.deepEqual(FIELDS, [
     'company_website', 'company_name', 'specialism', 'specialism_other', 'turnover_band', 'trading_years',
     'employees_or_fee_earners', 'marketing_spend', 'first_year_value', 'sales_cycle', 'target_next_year',
-    'decision_maker', 'capacity', 'first_name', 'last_name', 'job_title', 'email', 'mobile',
+    'decision_maker', 'capacity', 'meeting_goal', 'first_name', 'last_name', 'job_title', 'email', 'mobile',
   ]);
 });
 
@@ -73,12 +73,13 @@ test('the free text of "Other" is kept only when Other is the chosen option', ()
   assert.equal(validate(answers({ specialism: 'Other', specialism_other: '' })).ok, true, 'Other with no text is still an answer');
 });
 
-test('the messages are the board\'s, word for word', () => {
+test('the messages are the board\'s, word for word, plus the one for the free text added 21 Oct 2026', () => {
   assert.deepEqual(MSG, {
     url: 'Please enter a valid website',
     required: 'Please complete this field',
     choice: 'Please choose one option',
     email: 'Please enter a valid work email',
+    goal: 'Please tell us what you want from the meeting.',
   });
   assert.equal(validate(answers({ company_name: '   ' })).errors.company_name, MSG.required);
   assert.equal(validate(answers({ first_name: '' })).errors.first_name, MSG.required);
@@ -125,9 +126,9 @@ test('validate() never throws on a missing or odd input', () => {
   assert.equal(validate(null).ok, false);
 });
 
-test('the form renders all thirteen questions, the hidden fields and the honeypot', () => {
+test('the form renders all fourteen questions, the hidden fields and the honeypot', () => {
   const html = renderForm({ copy, cfg });
-  assert.equal((html.match(/class="lf-block"/g) || []).length, 13);
+  assert.equal((html.match(/class="lf-block"/g) || []).length, 14);
   for (const name of cfg.hiddenFields) assert.ok(html.includes(`<input type="hidden" name="${name}"`), name);
   assert.ok(html.includes(`name="${cfg.honeypot}"`));
   assert.ok(html.includes(`action="${cfg.funnel.applyPath}"`));
@@ -149,4 +150,17 @@ test('the rendered form writes answers and errors back, escaped', () => {
   assert.ok(html.includes(`<span>${MSG.url}</span>`));
   assert.ok(html.includes('value="l_abc"'));
   assert.ok(new RegExp(`name="turnover_band" value="${OPTIONS.turnover[3]}" checked`).test(html), 'the chosen option stays chosen');
+});
+
+test('the free text: required, two characters or more, cut at 600, control characters and line breaks made into spaces', () => {
+  assert.deepEqual(validate(answers({ meeting_goal: '' })).errors, { meeting_goal: MSG.goal });
+  assert.deepEqual(validate(answers({ meeting_goal: ' a ' })).errors, { meeting_goal: MSG.goal });
+  assert.equal(validate(answers({ meeting_goal: 'ok' })).ok, true);
+  assert.equal(validate(answers({ meeting_goal: 'z'.repeat(1000) })).values.meeting_goal.length, 600);
+  assert.equal(validate(answers({ meeting_goal: 'one\r\ntwo\u0007three' })).values.meeting_goal, 'one two three');
+  const html = renderForm({ copy, cfg, values: { meeting_goal: '<b>&' } });
+  assert.ok(html.includes('<textarea class="lf-input lf-input--long" id="f-meeting_goal" name="meeting_goal"'), 'rendered as a textarea');
+  assert.ok(html.includes('>&lt;b&gt;&amp;</textarea>'), 'what was typed is escaped when written back');
+  assert.ok(html.includes('What do you want to get out of this meeting?'));
+  assert.ok(html.includes('One or two lines is enough.'));
 });

@@ -162,8 +162,8 @@ export async function answerStep(page, i, a) {
   const form = page.locator('#lf-form');
   const block = form.locator(`.lf-block[data-step="${s.id}"]`);
   await block.waitFor({ state: 'visible' });
-  if (s.kind === 'url' || s.kind === 'text') {
-    await block.locator('input.lf-input').fill(a[s.field] || '');
+  if (s.kind === 'url' || s.kind === 'text' || s.kind === 'long') {
+    await block.locator('.lf-input').fill(a[s.field] || '');
   } else if (s.kind === 'choice') {
     const opt = a[s.field];
     await block.locator('label.lf-card').filter({ has: page.locator(`input[value="${opt}"]`) }).click();
@@ -190,7 +190,7 @@ export async function fillAll(page, over = {}) {
   const a = Object.assign({}, GOOD, over);
   const form = page.locator('#lf-form');
   for (const s of core.STEPS) {
-    if (s.kind === 'url' || s.kind === 'text') await form.locator(`#f-${s.field}`).fill(a[s.field] || '');
+    if (s.kind === 'url' || s.kind === 'text' || s.kind === 'long') await form.locator(`#f-${s.field}`).fill(a[s.field] || '');
     else if (s.kind === 'choice') {
       await form.locator('label.lf-card').filter({ has: page.locator(`input[name="${s.field}"][value="${a[s.field]}"]`) }).click();
       if (s.other && a[s.field] === s.other.value) await form.locator(`[name="${s.other.field}"]`).fill(a[s.other.field] || 'Something else');
