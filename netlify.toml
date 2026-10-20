@@ -365,6 +365,18 @@
 # that do the work are the two 404s below. Verified on the deploy preview for
 # PR #67: /g/ and /g/<typo> both answer 404 rather than falling through to the
 # SPA shell.
+# 20 Oct 2026: the old clinics page quoted a per-booking price that the health
+# funnel replaced (owner's yes the same day). Only the landing page moves; the
+# booking, booked, not-a-fit and not-now pages below stay, because people who
+# applied earlier may still hold links to them. "force" is needed because the
+# static file exists and would otherwise win over the rule. Must stay above the
+# 200 rule that follows.
+[[redirects]]
+  from = "/g/uk-private-clinics"
+  to = "/g/uk-private-hospitals/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/g/uk-private-clinics"
   to = "/g/uk-private-clinics/index.html"

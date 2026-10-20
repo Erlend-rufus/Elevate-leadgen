@@ -4,9 +4,10 @@ UK private hospitals and clinic groups with £5m+ turnover ("HELSE"). Built 20 O
 `/g/uk-it-growth` (read `g/uk-it-growth/LAUNCH.md` first: the endpoint, storage, delivery, alerts, Meta and
 the daily check are the same code). This file only says what is different and what is outstanding.
 
-**Status 20 Oct 2026: wired up, `"live": false` until the go-live step (section 2, point 4).** ClickUp list,
-Calendly event and both Zap workflows are in place and tested. The pages are served (noindex), the endpoint
-answers every post for this campaign with a 503 and stores nothing until `live` is switched.
+**Status 20 Oct 2026: `"live": true`.** ClickUp list, Calendly event and both Zap workflows are in place and
+tested. The pages are served (noindex by design, on every growth page), and the endpoint stores leads and hands them
+to Zapier. Still to do before the ads go on: the phone test (Accept, then Decline), one test booking, and the
+owner's yes (section 2, points 4 and 5).
 
 ```
 npm run build          # or: node scripts/build-g-growth.mjs
@@ -45,12 +46,12 @@ Points 1 to 3 are done (20 Oct 2026); they are kept as the record of what was se
    main specialties and what an attended first consultation is worth." Redirect after booking off. Put the
    inline-embed address (no query string) in `config.json` → `funnel.calendlyUrl` and the event type id in
    Zap 2's `eventTypes`. The confirmation e-mail should carry the "what to have to hand" line, as /takk promises.
-4. **Go live.** `"live": true` in `config.json`, build, merge. Then one submission of each outcome from a real
+4. **Go live (`live: true` set 20 Oct 2026; the phone test and the test booking remain).** `"live": true` in `config.json`, build, merge. Then one submission of each outcome from a real
    phone (Accept first, then Decline), one test booking, Zap 2 moves the task to `møte booket`; archive the
    test tasks.
 5. **Ads.** The Meta campaign `LEADS / UK / HEALTH` (see the project document of 20 Oct 2026) is created
    paused and is switched on only after step 4 and the owner's yes. Budget kr 1 000 a day (kr 30 000 a month).
-6. **Old page.** `/g/uk-private-clinics/` says £85 per booking and is not consistent with this page. When this
+6. **Old page (301 added in netlify.toml 20 Oct 2026, landing page only; its booking and outcome pages stay).** `/g/uk-private-clinics/` says £85 per booking and is not consistent with this page. When this
    funnel is live, redirect it here (netlify.toml, 301) and retire the old deck and ads (owner's yes given
    20 Oct 2026 for the correction).
 
