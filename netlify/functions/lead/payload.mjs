@@ -4,7 +4,8 @@
  * lacks a question. The contract is written down in the project document "Løsning: eget
  * skjema, Zapier, ClickUp og Slack" (16 Oct 2026), section 3. Change it there first.
  * Four keys were added on 20 Oct 2026 for the health funnel (regulator_number, self_pay_share,
- * specialties, first_consultation_value); they are empty for the other campaigns.
+ * specialties, first_consultation_value); they are empty for the other campaigns. One key, meeting_goal
+ * (the visitor's own words on what they want from the meeting), was added on 21 Oct 2026 for all three.
  */
 export const PAYLOAD_KEYS = [
   'lead_id', 'campaign', 'route', 'route_reason', 'submitted_at',
@@ -14,6 +15,7 @@ export const PAYLOAD_KEYS = [
   'regulator_number', 'self_pay_share', 'specialties', 'first_consultation_value',
   'turnover_band', 'trading_years', 'employees_or_fee_earners', 'marketing_spend',
   'first_year_value', 'sales_cycle', 'target_next_year', 'decision_maker', 'capacity',
+  'meeting_goal',
   'first_name', 'last_name', 'job_title', 'email', 'mobile',
   'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
   'fbclid', 'page_slug', 'referrer',
@@ -58,6 +60,7 @@ export function buildPayload({ leadId, campaign, route, reasons, submittedAt, va
     target_next_year: s(v.target_next_year),
     decision_maker: s(v.decision_maker),
     capacity: s(v.capacity),
+    meeting_goal: s(v.meeting_goal),
     first_name: s(v.first_name),
     last_name: s(v.last_name),
     job_title: s(v.job_title),

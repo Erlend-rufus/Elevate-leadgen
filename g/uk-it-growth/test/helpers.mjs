@@ -42,6 +42,7 @@ export const GOOD = {
   target_next_year: '',
   decision_maker: OPTIONS.decider[0],
   capacity: OPTIONS.capacity[1],
+  meeting_goal: 'A straight answer on whether this can work for a firm our size.',
   first_name: 'Alex',
   last_name: 'Morgan',
   job_title: 'Managing Director',

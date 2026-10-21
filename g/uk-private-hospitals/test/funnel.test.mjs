@@ -23,6 +23,7 @@ const GOOD = {
   marketing_spend: O.spend[1],
   decision_maker: O.decider[0],
   capacity: O.capacity[1],
+  meeting_goal: 'A straight answer on whether this can work for us.',
   first_name: 'Priya',
   last_name: 'Shah',
   job_title: 'Chief Executive',
@@ -48,8 +49,8 @@ const go = async (over, fields, opts) => {
   return { r, res, body: res.headers.get('content-type').includes('json') ? await bodyOf(res) : await res.text() };
 };
 
-test('health form: twelve steps, one of them a multi-choice, every field name a payload key', () => {
-  assert.equal(core.STEPS.length, 12);
+test('health form: thirteen steps, one of them a multi-choice, every field name a payload key', () => {
+  assert.equal(core.STEPS.length, 13);
   const multi = core.STEPS.filter((s) => s.kind === 'multi');
   assert.equal(multi.length, 1);
   assert.equal(multi[0].field, 'specialties');

@@ -126,7 +126,7 @@ function initForm() {
   function firstControl(i) {
     var s = STEPS[i];
     if (s.kind === 'choice' || s.kind === 'multi') return blocks[i].querySelector('legend.lf-q');
-    return blocks[i].querySelector('input.lf-input');
+    return blocks[i].querySelector('.lf-input');
   }
   function focusControl(el) {
     if (!el) return;

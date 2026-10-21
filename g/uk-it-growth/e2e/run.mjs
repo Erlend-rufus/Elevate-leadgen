@@ -128,7 +128,7 @@ async function landing() {
 
 /* ============================================================================ 2. form */
 async function form() {
-  R.section('2. The thirteen questions, one at a time, with the board messages');
+  R.section('2. The fourteen questions, one at a time, with the board messages');
   const r = await open();
   const { page, b } = r;
   const f = page.locator('#lf-form');
@@ -138,7 +138,7 @@ async function form() {
   await page.locator('#form').scrollIntoViewIfNeeded();
   R.check(await f.evaluate((el) => el.classList.contains('is-steps')), 'form is in step mode');
   R.eq(await open1().count(), 1, 'one question on screen');
-  R.eq(await txt(count), '1 / 13', 'counter starts at 1 / 13');
+  R.eq(await txt(count), '1 / 14', 'counter starts at 1 / 14');
   R.check(await f.locator('.lf-back').isHidden(), 'no Back button on the first question');
   R.eq(await txt(btn), copy.form.next, 'button says Next');
   R.eq(await f.locator('[role=progressbar]').getAttribute('aria-valuenow'), '1', 'progress bar: 1');
@@ -149,13 +149,13 @@ async function form() {
   R.eq(await txt(open1().locator('.lf-err')), core.MSG.url, 'empty website: board message');
   R.eq(await open1().locator('#f-company_website').getAttribute('aria-invalid'), 'true', 'input marked invalid');
   R.eq(await page.evaluate(() => document.activeElement.id), 'f-company_website', 'focus goes to the input');
-  R.eq(await txt(count), '1 / 13', 'still on question 1');
+  R.eq(await txt(count), '1 / 14', 'still on question 1');
   await open1().locator('#f-company_website').fill('not a website');
   R.eq(await open1().locator('.lf-err').count(), 1, 'a wrong address keeps the message');
   await open1().locator('#f-company_website').fill('northbridge-it.co.uk');
   R.eq(await open1().locator('.lf-err').count(), 0, 'the message goes as soon as the answer is right');
   await page.keyboard.press('Enter');
-  R.eq(await txt(count), '2 / 13', 'Enter moves on');
+  R.eq(await txt(count), '2 / 14', 'Enter moves on');
   R.eq(await page.evaluate(() => document.activeElement.id), 'f-company_name', 'focus follows to the next input');
   R.check(await f.locator('.lf-back').isVisible(), 'Back appears on question 2');
 
@@ -164,7 +164,7 @@ async function form() {
   R.eq(await txt(open1().locator('.lf-err')), core.MSG.required, 'empty company name: board message');
   await open1().locator('#f-company_name').fill('Northbridge IT Limited');
   await btn.click();
-  R.eq(await txt(count), '3 / 13', 'on to question 3');
+  R.eq(await txt(count), '3 / 14', 'on to question 3');
 
   // 3 area, with "Other"
   R.eq(await txt(open1().locator('legend')), core.STEPS[2].q, 'question 3 is the board question');
@@ -182,7 +182,7 @@ async function form() {
 
   // back keeps answers
   await f.locator('.lf-back').click();
-  R.eq(await txt(count), '2 / 13', 'Back goes to question 2');
+  R.eq(await txt(count), '2 / 14', 'Back goes to question 2');
   R.eq(await open1().locator('#f-company_name').inputValue(), 'Northbridge IT Limited', 'the answer is still there');
   await btn.click();
   R.check(await open1().locator('label.lf-card.is-checked').count() === 1, 'and the choice on question 3 is kept');
@@ -190,8 +190,8 @@ async function form() {
   // through to the last
   await btn.click();
   await fillFrom(page, 3, {}, { submit: false });
-  R.eq(await txt(count), '13 / 13', 'thirteen questions');
-  R.eq(await f.locator('[role=progressbar]').getAttribute('aria-valuenow'), '13', 'progress bar: 13');
+  R.eq(await txt(count), '14 / 14', 'fourteen questions');
+  R.eq(await f.locator('[role=progressbar]').getAttribute('aria-valuenow'), '14', 'progress bar: 14');
   R.eq(await txt(btn), copy.form.cta, 'last button says what the board says');
   R.check(await f.locator('.lf-consent').isVisible(), 'consent sentence shows on the last question');
   R.check(await f.locator('.lf-consent a[href="/g/uk-it-growth/privacy/"]').count() === 1, 'and links to the privacy page');
@@ -532,7 +532,7 @@ async function nojs() {
   for (const vp of [M, D]) {
     const r = await open({ js: false, vp });
     const { page } = r;
-    R.eq(await page.locator('#lf-form .lf-block:visible').count(), 13, `${vp.width}: all thirteen questions are on the page`);
+    R.eq(await page.locator('#lf-form .lf-block:visible').count(), 14, `${vp.width}: all fourteen questions are on the page`);
     R.check(await page.locator('#lf-form .lf-actions .btn').isVisible(), `${vp.width}: the submit button is there`);
     R.check(await page.locator('#lf-form .lf-consent').isVisible(), `${vp.width}: the consent sentence is there`);
     R.check(await page.evaluate(() => !document.documentElement.classList.contains('js')), `${vp.width}: no js class`);
@@ -586,7 +586,7 @@ async function nojs() {
     await page.waitForLoadState('load');
     R.eq(srv.state.lastApi.status, 422, 'invalid: the server answers 422');
     R.eq(new URL(page.url()).pathname, '/api/lead', 'invalid: the answer is shown at the post address');
-    R.eq(await page.locator('#lf-form .lf-block:visible').count(), 13, 'invalid: the whole form is back');
+    R.eq(await page.locator('#lf-form .lf-block:visible').count(), 14, 'invalid: the whole form is back');
     const errs = (await page.locator('.lf-err span').allTextContents()).map(norm);
     R.eq(errs, [core.MSG.url, core.MSG.email], 'invalid: the two board messages, in form order');
     R.eq(await page.locator('#f-company_name').inputValue(), GOOD.company_name, 'invalid: other answers are kept');
@@ -623,7 +623,7 @@ async function failures() {
     R.eq(await txt(btn), copy.form.retry, 'network down: the button says what the board says');
     R.check((await txt(page.locator('.lf-gerr'))).includes(norm(copy.form.failed)), 'network down: the board message is shown');
     R.eq(await page.locator('.lf-gerr a').getAttribute('href'), 'mailto:' + cfg.contact.email, 'network down: with a way to write to us');
-    R.eq(await txt(page.locator('#lf-count')), '13 / 13', 'network down: the visitor stays on the last question');
+    R.eq(await txt(page.locator('#lf-count')), '14 / 14', 'network down: the visitor stays on the last question');
     R.eq(await page.locator('#f-email').inputValue(), GOOD.email, 'network down: answers are kept');
     R.check(await btn.isEnabled(), 'network down: the button is usable again');
     await shot(page, 'form-390-failed');
@@ -672,14 +672,14 @@ async function failures() {
     await fillForm(page, {}, { submit: false });
     await page.route('**/api/lead', (rt) => rt.fulfill({ status: 422, contentType: 'application/json', body: JSON.stringify({ ok: false, errors: { email: core.MSG.email, company_website: core.MSG.url } }) }));
     await page.locator('#lf-form .lf-actions .btn').click();
-    await page.waitForFunction(() => document.getElementById('lf-count').textContent.trim() === '1 / 13', null, { timeout: 5000 });
+    await page.waitForFunction(() => document.getElementById('lf-count').textContent.trim() === '1 / 14', null, { timeout: 5000 });
     R.eq(await txt(page.locator('.lf-block:not([hidden]) .lf-err')), core.MSG.url, '422: the first wrong question is shown, with its message');
     R.eq(await page.evaluate(() => document.activeElement.id), 'f-company_website', '422: and has focus');
     await page.unroute('**/api/lead');
     await page.locator('#f-company_website').fill('northbridge-it.co.uk');
     const btn = page.locator('#lf-form .lf-actions .btn');
-    for (let i = 0; i < 12; i++) await btn.click();
-    R.eq(await txt(page.locator('#lf-count')), '13 / 13', '422: the visitor can walk on to the last question');
+    for (let i = 0; i < 13; i++) await btn.click();
+    R.eq(await txt(page.locator('#lf-count')), '14 / 14', '422: the visitor can walk on to the last question');
     await btn.click();
     await waitBy(page, /\/book\//);
     R.ok('422: and send again');
@@ -858,7 +858,7 @@ async function kbd() {
   R.eq(await page.locator('input[name=specialism]:checked').getAttribute('value'), OPTIONS.area[1], 'arrow keys move between options and choose');
   await page.keyboard.press('Enter');
   const c1 = await txt(page.locator('#lf-count'));
-  R.eq(c1, '4 / 13', 'Enter on an option moves on (implicit submit)');
+  R.eq(c1, '4 / 14', 'Enter on an option moves on (implicit submit)');
   await page.keyboard.press('Shift+Tab');
   a = await act();
   R.check(a.cls.includes('lf-back') || a.tag === 'LEGEND', 'Shift+Tab from the first option reaches Back or the question', JSON.stringify(a));

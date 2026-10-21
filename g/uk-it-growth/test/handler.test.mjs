@@ -97,6 +97,7 @@ test('what Zapier receives: fixed keys in a fixed order, nothing else', async ()
     regulator_number: '', self_pay_share: '', specialties: '', first_consultation_value: '',
     turnover_band: T[2], trading_years: TR[2], employees_or_fee_earners: OPTIONS.people[2], marketing_spend: OPTIONS.spend[1],
     first_year_value: W[2], sales_cycle: OPTIONS.cycle[1], target_next_year: '', decision_maker: OPTIONS.decider[0], capacity: C[1],
+    meeting_goal: 'A straight answer on whether this can work for a firm our size.',
     first_name: 'Alex', last_name: 'Morgan', job_title: 'Managing Director', email: 'alex@northbridge-it.co.uk', mobile: '07700 900123',
     utm_source: 'meta', utm_medium: 'paid', utm_campaign: 'itq4', utm_content: 'ad7', utm_term: 'managed',
     fbclid: 'FB1', page_slug: 'uk-it-growth', referrer: 'https://l.facebook.com/',
@@ -106,6 +107,28 @@ test('what Zapier receives: fixed keys in a fixed order, nothing else', async ()
 test('"Other" as the area is sent with the visitor\'s own words', async () => {
   const { r } = await go({}, Object.assign({}, GOOD, { specialism: 'Other', specialism_other: 'Quantum networking' }));
   assert.equal(r.of('zapier')[0].body.specialism, 'Other: Quantum networking');
+});
+
+test('the free text about the meeting is required, kept to 600 characters, stored and sent on, and never logged', async () => {
+  const missing = await go({}, Object.assign({}, GOOD, { meeting_goal: '' }));
+  assert.equal(missing.res.status, 422);
+  assert.deepEqual(missing.j.errors, { meeting_goal: 'Please tell us what you want from the meeting.' });
+  assert.equal(missing.r.blobs.leads().length, 0);
+  const oneLetter = await go({}, Object.assign({}, GOOD, { meeting_goal: ' x ' }));
+  assert.equal(oneLetter.res.status, 422);
+  assert.deepEqual(oneLetter.j.errors, { meeting_goal: 'Please tell us what you want from the meeting.' });
+  const long = 'y'.repeat(700);
+  const cut = await go({}, Object.assign({}, GOOD, { meeting_goal: long }));
+  assert.equal(cut.res.status, 200, 'over the limit is cut at 600, not refused');
+  assert.equal(cut.r.of('zapier')[0].body.meeting_goal.length, 600);
+  const typed = ' A straight answer,\nand <b>no</b> pitch. ';
+  const good = await go({}, Object.assign({}, GOOD, { meeting_goal: typed }));
+  assert.equal(good.res.status, 200);
+  assert.equal(good.r.blobs.lead('l_test123').values.meeting_goal, 'A straight answer, and <b>no</b> pitch.');
+  assert.equal(good.r.of('zapier')[0].body.meeting_goal, 'A straight answer, and <b>no</b> pitch.');
+  assert.equal(JSON.stringify(good.r.logs).includes('straight answer'), false, 'free text never reaches the log');
+  const capi = good.r.of('capi');
+  assert.equal(JSON.stringify(capi.map((c) => c.body)).includes('straight answer'), false, 'free text never reaches Meta');
 });
 
 test('the lead is in storage, with its delivery and its Meta outcome, before anything else is trusted', async () => {
@@ -448,7 +471,7 @@ test('the alert names the lead and the company and nothing a person typed beyond
   assert.match(mail.body.text, /will be delivered again by the daily reconciliation/);
   const slack = r.of('slack')[0].body.text;
   for (const text of [mail.body.subject + mail.body.text, slack]) {
-    for (const secret of ['alex@', 'Morgan', 'Alex', '07700', 'Managing Director']) assert.equal(text.includes(secret), false, secret);
+    for (const secret of ['alex@', 'Morgan', 'Alex', '07700', 'Managing Director', 'firm our size']) assert.equal(text.includes(secret), false, secret);
   }
 });
 
@@ -916,7 +939,7 @@ test('the log carries ids, routes and reason codes and no personal data, in any 
   ];
   for (const { r } of runs) {
     const text = JSON.stringify(r.logs);
-    for (const secret of ['alex@', 'Morgan', 'Alex', '07700', 'Managing Director', 'Northbridge', 'northbridge-it.co.uk', '203.0.113.7', 'FB1']) {
+    for (const secret of ['alex@', 'Morgan', 'Alex', '07700', 'Managing Director', 'Northbridge', 'northbridge-it.co.uk', '203.0.113.7', 'FB1', 'firm our size']) {
       assert.equal(text.includes(secret), false, secret + ' in ' + text);
     }
   }

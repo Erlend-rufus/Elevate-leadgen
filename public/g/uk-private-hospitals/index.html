@@ -368,6 +368,7 @@ html.anim .cn:not(.cn-on) > [aria-hidden]{visibility:hidden;animation:cn-failsaf
 .lf-help{margin:0;font-size:16px;line-height:1.5;color:var(--muted)}
 .lf-field .lf-help{margin:0 0 var(--space-8)}
 .lf-input{display:block;width:100%;min-height:var(--control-min);padding:14px 18px;border:var(--stroke-field) solid var(--field-border);border-radius:var(--radius-card);background:var(--white);color:var(--ink);font-family:var(--font-body);font-weight:400;font-size:18px;line-height:1.3;outline:none}
+textarea.lf-input--long{min-height:132px;resize:vertical}
 .lf-input::placeholder{color:var(--muted);opacity:1}
 .lf-input:focus{border-color:var(--ink);box-shadow:0 0 0 3px var(--ink)}
 .lf-input[aria-invalid="true"]{border-color:var(--error)}
@@ -670,6 +671,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 <div class="lf-block" data-step="spend"><fieldset class="lf-set"><legend class="lf-q">What do you spend on marketing in a typical month?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="marketing_spend" value="Under £5,000"><span class="lf-ind" aria-hidden="true"></span><span>Under £5,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£5,000 to under £20,000"><span class="lf-ind" aria-hidden="true"></span><span>£5,000 to under £20,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£20,000 to under £50,000"><span class="lf-ind" aria-hidden="true"></span><span>£20,000 to under £50,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£50,000 or more"><span class="lf-ind" aria-hidden="true"></span><span>£50,000 or more</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="I do not know"><span class="lf-ind" aria-hidden="true"></span><span>I do not know</span></label></div></fieldset></div>
 <div class="lf-block" data-step="decider"><fieldset class="lf-set"><legend class="lf-q">Who would decide whether to work with us?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="decision_maker" value="Me"><span class="lf-ind" aria-hidden="true"></span><span>Me</span></label><label class="lf-card"><input type="radio" name="decision_maker" value="Me, with the leadership team"><span class="lf-ind" aria-hidden="true"></span><span>Me, with the leadership team</span></label><label class="lf-card"><input type="radio" name="decision_maker" value="Someone else, I would bring them in"><span class="lf-ind" aria-hidden="true"></span><span>Someone else, I would bring them in</span></label></div></fieldset></div>
 <div class="lf-block" data-step="capacity"><fieldset class="lf-set"><legend class="lf-q">How many more consultations could you take on next month?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="capacity" value="None, we are at capacity"><span class="lf-ind" aria-hidden="true"></span><span>None, we are at capacity</span></label><label class="lf-card"><input type="radio" name="capacity" value="A few"><span class="lf-ind" aria-hidden="true"></span><span>A few</span></label><label class="lf-card"><input type="radio" name="capacity" value="Many"><span class="lf-ind" aria-hidden="true"></span><span>Many</span></label></div></fieldset></div>
+<div class="lf-block" data-step="goal"><label class="lf-q" for="f-meeting_goal">What do you want to get out of this meeting?</label><p class="lf-help" id="h-meeting_goal">One or two lines is enough.</p><textarea class="lf-input lf-input--long" id="f-meeting_goal" name="meeting_goal" rows="4" maxlength="600" autocomplete="off" aria-invalid="false" aria-required="true" aria-describedby="h-meeting_goal"></textarea></div>
 <div class="lf-block" data-step="details"><fieldset class="lf-set"><legend class="lf-q">Your details</legend><div class="lf-fields"><div class="lf-field"><label class="lf-label" for="f-first_name">First name</label><input class="lf-input" id="f-first_name" name="first_name" type="text" value="" autocomplete="given-name" inputmode="text" aria-invalid="false" aria-required="true"></div><div class="lf-field"><label class="lf-label" for="f-last_name">Last name</label><input class="lf-input" id="f-last_name" name="last_name" type="text" value="" autocomplete="family-name" inputmode="text" aria-invalid="false" aria-required="true"></div><div class="lf-field lf-field--wide"><label class="lf-label" for="f-job_title">Job title</label><input class="lf-input" id="f-job_title" name="job_title" type="text" value="" autocomplete="organization-title" inputmode="text" aria-invalid="false" aria-required="true"></div><div class="lf-field lf-field--wide"><label class="lf-label" for="f-email">Work email</label><input class="lf-input" id="f-email" name="email" type="email" value="" autocomplete="email" inputmode="email" aria-invalid="false" aria-required="true"></div><div class="lf-field lf-field--wide"><label class="lf-label" for="f-mobile">Mobile (optional)</label><p class="lf-help" id="h-mobile">Only used to arrange or confirm a time.</p><input class="lf-input" id="f-mobile" name="mobile" type="tel" value="" autocomplete="tel" inputmode="tel" aria-invalid="false" aria-describedby="h-mobile"></div></div></fieldset></div>
       
       <div class="lf-actions"><button class="btn btn--primary" type="submit">Submit</button></div>
@@ -843,6 +845,7 @@ const MSG = {
   choice: 'Please choose one option',
   multi: 'Please choose at least one option',
   email: 'Please enter a valid work email',
+  goal: 'Please tell us what you want from the meeting.',
 };
 
 const URL_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i;
@@ -870,6 +873,10 @@ const STEPS = [
   { id: 'spend', kind: 'choice', field: 'marketing_spend', q: 'What do you spend on marketing in a typical month?', options: 'spend' },
   { id: 'decider', kind: 'choice', field: 'decision_maker', q: 'Who would decide whether to work with us?', options: 'decider' },
   { id: 'capacity', kind: 'choice', field: 'capacity', q: 'How many more consultations could you take on next month?', options: 'capacity' },
+  {
+    id: 'goal', kind: 'long', field: 'meeting_goal', q: 'What do you want to get out of this meeting?',
+    help: 'One or two lines is enough.', min: 2, max: 600,
+  },
   {
     id: 'details', kind: 'group', q: 'Your details',
     fields: [
@@ -917,6 +924,9 @@ function stepErrors(step, get) {
     if (!u || !URL_RE.test(u)) out[step.field] = MSG.url;
   } else if (step.kind === 'text') {
     if (!step.optional && !tidy(get(step.field), step.max)) out[step.field] = MSG.required;
+  } else if (step.kind === 'long') {
+    // Free text with no gate behind it: it only has to be there, and not so long that nobody will read it.
+    if (tidy(get(step.field), step.max).length < (step.min || 1)) out[step.field] = MSG.goal;
   } else if (step.kind === 'choice') {
     var c = tidy(get(step.field), 200);
     if (!c || OPTIONS[step.options].indexOf(c) < 0) out[step.field] = MSG.choice;
@@ -1090,7 +1100,7 @@ function initForm() {
   function firstControl(i) {
     var s = STEPS[i];
     if (s.kind === 'choice' || s.kind === 'multi') return blocks[i].querySelector('legend.lf-q');
-    return blocks[i].querySelector('input.lf-input');
+    return blocks[i].querySelector('.lf-input');
   }
   function focusControl(el) {
     if (!el) return;

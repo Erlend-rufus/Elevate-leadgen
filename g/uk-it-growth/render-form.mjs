@@ -1,6 +1,6 @@
 /**
  * The application form as HTML. Used twice, so the two cannot drift:
- *   - at build time, to write the form into the landing page (all thirteen questions,
+ *   - at build time, to write the form into the landing page (every question,
  *     readable and submittable with JavaScript off), and
  *   - on the server, to put the same page back with the visitor's answers and the errors
  *     when a post without JavaScript fails validation.
@@ -37,6 +37,18 @@ function renderInput(step, f, values, errors) {
 }
 
 function renderBlock(step, values, errors) {
+  if (step.kind === 'long') {
+    // A textarea, not an input: the one free-text answer on the form. Same classes, so the
+    // styling and the step script treat it like any other typed field.
+    const name = step.field;
+    const err = errors[name] || '';
+    const help = step.help ? `<p class="lf-help" id="h-${name}">${esc(step.help)}</p>` : '';
+    const ta = `<textarea class="lf-input lf-input--long" id="f-${name}" name="${name}" rows="4" maxlength="${step.max}" ` +
+      `autocomplete="off" aria-invalid="${err ? 'true' : 'false'}" aria-required="true"` +
+      `${describedBy([step.help ? `h-${name}` : '', err ? `e-${name}` : ''])}>${esc(values[name] || '')}</textarea>`;
+    return `<div class="lf-block" data-step="${step.id}">` +
+      `<label class="lf-q" for="f-${name}">${esc(step.q)}</label>` + help + ta + (err ? errorP(name, err) : '') + '</div>';
+  }
   if (step.kind === 'url' || step.kind === 'text') {
     const f = { field: step.field, help: step.help, optional: step.optional, ac: step.ac };
     const r = renderInput(step, f, values, errors);
