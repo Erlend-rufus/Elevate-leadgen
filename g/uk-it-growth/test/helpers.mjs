@@ -183,7 +183,8 @@ export function rig(over = {}) {
     store: over.store || (() => createStore({ blobs })),
   });
   return {
-    handler, calls, logs, blobs, env, campaigns,
+    handler, calls, logs, blobs, env, campaigns, fetch,
+    now: () => new Date(clock),
     of: (kind) => calls.filter((c) => c.kind === kind),
     tick: (ms) => { clock += ms; },
   };

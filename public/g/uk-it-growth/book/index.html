@@ -156,6 +156,15 @@ a.btn,.pg a.btn{color:var(--on-action)}
 .o-note{margin:0;max-width:640px;font-size:var(--fs-body);line-height:1.55;color:var(--text-muted);text-wrap:pretty}
 .o-note a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
 .o-note a:hover{color:var(--text-muted)}
+.o-ask{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-16);max-width:640px;margin-top:var(--space-20);padding-top:var(--space-32);border-top:var(--stroke-hairline) solid var(--hairline)}
+.o-ask[hidden]{display:none}
+.o-ask-h{margin:0;font-size:var(--fs-lead);line-height:1.25;letter-spacing:-.01em;color:var(--text);text-wrap:balance}
+.o-ask-p{margin:0;font-size:var(--fs-body);line-height:1.55;color:var(--text-body);text-wrap:pretty}
+.o-ask .o-small{margin:0}
+.o-ask .o-small a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.o-ask-msg:empty{display:none}
+.o-ask-msg{font-size:var(--fs-body);color:var(--text)}
+.o-ask-msg:focus{outline:none}
 @container o (min-width:1024px){
 .o--book .o-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);grid-template-rows:auto 1fr;grid-template-areas:"head cal" "body cal";column-gap:var(--column-gap);row-gap:var(--space-20);align-items:start}
 .o--book .o-h1{grid-area:head}
@@ -218,7 +227,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 <script>
 (function(){
 'use strict';
-var CFG = {"slug":"uk-it-growth","campaign":"uk-it-growth","path":"/g/uk-it-growth","applyPath":"/api/lead","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"https://calendly.com/d/dv8z-vdp-5xt/elevate-marketing-commission-i-it","calendlyLeadParam":"utm_content","takkPath":"/g/uk-it-growth/takk/","prefillKey":"elevate:g:uk-it-growth:prefill","text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email"}};
+var CFG = {"slug":"uk-it-growth","campaign":"uk-it-growth","path":"/g/uk-it-growth","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"https://calendly.com/d/dv8z-vdp-5xt/elevate-marketing-commission-i-it","calendlyLeadParam":"utm_content","takkPath":"/g/uk-it-growth/takk/","prefillKey":"elevate:g:uk-it-growth:prefill","text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email","askDone":"Thank you. We will email you from post@elevatemarketing.no within two working days.","askError":"That did not go through. Email post@elevatemarketing.no and ask for a quote, and we will send one."}};
 /* Shared by every page of a growth funnel. The build wraps the pieces of a page in one
    function and writes CFG above them; nothing here reads the page's own copy. */
 

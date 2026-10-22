@@ -154,6 +154,15 @@ a.btn,.pg a.btn{color:var(--on-action)}
 .o-note{margin:0;max-width:640px;font-size:var(--fs-body);line-height:1.55;color:var(--text-muted);text-wrap:pretty}
 .o-note a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
 .o-note a:hover{color:var(--text-muted)}
+.o-ask{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-16);max-width:640px;margin-top:var(--space-20);padding-top:var(--space-32);border-top:var(--stroke-hairline) solid var(--hairline)}
+.o-ask[hidden]{display:none}
+.o-ask-h{margin:0;font-size:var(--fs-lead);line-height:1.25;letter-spacing:-.01em;color:var(--text);text-wrap:balance}
+.o-ask-p{margin:0;font-size:var(--fs-body);line-height:1.55;color:var(--text-body);text-wrap:pretty}
+.o-ask .o-small{margin:0}
+.o-ask .o-small a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.o-ask-msg:empty{display:none}
+.o-ask-msg{font-size:var(--fs-body);color:var(--text)}
+.o-ask-msg:focus{outline:none}
 @container o (min-width:1024px){
 .o--book .o-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);grid-template-rows:auto 1fr;grid-template-areas:"head cal" "body cal";column-gap:var(--column-gap);row-gap:var(--space-20);align-items:start}
 .o--book .o-h1{grid-area:head}
@@ -214,7 +223,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
     <div class="wrap">
       <article class="lg-doc">
         <h1 class="lg-h1">Privacy notice</h1>
-        <p class="lg-date">Last updated: 19 October 2026</p>
+        <p class="lg-date">Last updated: 22 October 2026</p>
         <p>This notice explains how Elevate Marketing uses personal data on its campaign pages for UK IT services firms, private healthcare providers and law firms, in the application and booking steps that follow them, and on its older enquiry page. The main website at getelevateleads.com has its own privacy policy.</p>
         <h2>1. Who we are</h2>
         <p>Elevate Marketing is a trading name of EngeCo AS, a Norwegian company (organisation no. 924 490 926) at Midtfjellet 66, 5363 Ågotnes, Norway. EngeCo AS decides how your details are used. In data protection law that makes us the controller. You can reach us at <a href="mailto:post@elevatemarketing.no">post@elevatemarketing.no</a>.</p>
@@ -223,6 +232,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
         <thead><tr><th scope="col">When</th><th scope="col">What we collect</th></tr></thead>
         <tbody>
           <tr><th scope="row">You apply on one of our pages</th><td data-label="What we collect">Your answers about your business (website, company name, area of work, turnover, how long you have traded, size, marketing spend, typical client value, sales cycle, an optional target, who decides, capacity, what you want to get out of the meeting), your first name, last name, job title and work email, and a mobile number if you give one.</td></tr>
+          <tr><th scope="row">You press the quote button on the page that says we cannot help</th><td data-label="What we collect">A note that you pressed it, and when, kept with your application. Nothing else is asked.</td></tr>
           <tr><th scope="row">You book a call</th><td data-label="What we collect">Your name, email address and the time you choose, held by Calendly and passed to us.</td></tr>
           <tr><th scope="row">You write or speak to us</th><td data-label="What we collect">The content of your emails and texts, and our notes of calls.</td></tr>
           <tr><th scope="row">You visit a page</th><td data-label="What we collect">Your IP address, device and browser details, the page you came from, and the campaign tags in the address you followed. If you choose Accept, also the identifiers set by the Meta pixel.</td></tr>
@@ -236,12 +246,14 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
           <tr><th scope="row">Reply to your application, decide whether we can help, and arrange and hold a call</th><td data-label="Our basis">Our legitimate interests in answering business enquiries. Where you apply as an individual, such as a sole trader, it is also a step at your request before a contract.</td></tr>
           <tr><th scope="row">Keep a record of applications, including those we cannot take on, so that we do not contact the wrong people again</th><td data-label="Our basis">Our legitimate interests in keeping accurate records.</td></tr>
           <tr><th scope="row">Email you, and text you if you gave a mobile number, about your application and the call</th><td data-label="Our basis">Our legitimate interests.</td></tr>
+          <tr><th scope="row">Have a person at Elevate Marketing read the applications we cannot take on, to see whether a new website or a monthly marketing retainer could suit the firm</th><td data-label="Our basis">Our legitimate interests in finding out whether another service of ours could help. This is an internal read only: we do not email or text you about it unless you press the quote button.</td></tr>
+          <tr><th scope="row">Email you once with a fixed-price quote for a website or a monthly retainer, if you press the quote button on the page that says we cannot help</th><td data-label="Our basis">Your request, made by pressing the button. If you do not press it, we do not contact you about this.</td></tr>
           <tr><th scope="row">Get back in touch once, three months later, if you told us you are at capacity</th><td data-label="Our basis">Our legitimate interests. You can ask us not to, at any time.</td></tr>
           <tr><th scope="row">Limit the number of applications from one address in an hour, to stop spam</th><td data-label="Our basis">Our legitimate interests in keeping our systems secure. We keep a scrambled version of your IP address, not the address itself, for up to a day.</td></tr>
           <tr><th scope="row">Measure whether our advertising works, using the Meta pixel and a matching report sent from our server</th><td data-label="Our basis">Your consent, when you choose Accept. If you choose Decline, or do not choose, we do neither.</td></tr>
           <tr><th scope="row">Keep accounting and contract records if you become a customer</th><td data-label="Our basis">A legal obligation and our legitimate interests.</td></tr>
         </tbody></table>
-        <p>We use your answers to decide automatically which page you see next: a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. If you think we got it wrong, email us and we will look again.</p>
+        <p>We use your answers to decide automatically which page you see next: a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. A person may also read the applications on the last of these pages, to see whether another service of ours could help, but we contact you about that only if you press the button on that page. If you think we got it wrong, email us and we will look again.</p>
         <h2>4. Who receives your details</h2>
         <p>We share your details only with the people and services that help us run this business. We do not sell them.</p>
         <table class="lg-table"><caption class="vh">Who receives your details</caption>
@@ -315,7 +327,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 <script>
 (function(){
 'use strict';
-var CFG = {"slug":"uk-it-growth","campaign":"uk-it-growth","path":"/g/uk-it-growth","applyPath":"/api/lead","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"https://calendly.com/d/dv8z-vdp-5xt/elevate-marketing-commission-i-it","calendlyLeadParam":"utm_content","takkPath":"/g/uk-it-growth/takk/","prefillKey":"elevate:g:uk-it-growth:prefill","text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email"}};
+var CFG = {"slug":"uk-it-growth","campaign":"uk-it-growth","path":"/g/uk-it-growth","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"https://calendly.com/d/dv8z-vdp-5xt/elevate-marketing-commission-i-it","calendlyLeadParam":"utm_content","takkPath":"/g/uk-it-growth/takk/","prefillKey":"elevate:g:uk-it-growth:prefill","text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email","askDone":"Thank you. We will email you from post@elevatemarketing.no within two working days.","askError":"That did not go through. Email post@elevatemarketing.no and ask for a quote, and we will send one."}};
 /* Shared by every page of a growth funnel. The build wraps the pieces of a page in one
    function and writes CFG above them; nothing here reads the page's own copy. */
 

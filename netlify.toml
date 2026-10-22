@@ -414,6 +414,13 @@
   to = "/.netlify/functions/lead"
   status = 200
 
+# /api/lead-interest: the quote request button on the "not the right fit" pages (netlify/functions/lead-interest).
+# Same arrangement as /api/lead above: config.path in the function serves it, this rule is the fallback.
+[[redirects]]
+  from = "/api/lead-interest"
+  to = "/.netlify/functions/lead-interest"
+  status = 200
+
 # /g/uk-it-growth: the landing page, the five pages after the form, and the privacy notice and website terms. Like the clinics funnel above,
 # these are documentation more than routing: Netlify canonicalises an extensionless path to its
 # trailing-slash form before it reaches the rules, and real files win over the 404s below.

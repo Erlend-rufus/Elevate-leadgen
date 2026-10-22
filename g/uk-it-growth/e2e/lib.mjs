@@ -8,6 +8,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
+import { createInterestHandler } from '../../../netlify/functions/lead/interest.mjs';
+import { createStore } from '../../../netlify/functions/lead/store.mjs';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 /** Screenshots are written here when E2E_SHOTS is set. Otherwise none are taken. */
@@ -58,6 +60,11 @@ export async function startServer({ publicDir = path.join(ROOT, 'public'), live 
       zapier: (c) => state.zapier(c),
       capi: (c) => state.capi(c),
     } });
+    // The quote button's endpoint, on the same storage and fakes as the lead function.
+    state.interest = createInterestHandler({
+      campaigns: state.rig.campaigns, env: () => state.rig.env, fetch: state.rig.fetch, now: state.rig.now,
+      sleep: async () => {}, log: (o) => state.rig.logs.push(o), store: () => createStore({ blobs: state.rig.blobs }),
+    });
     return state.rig;
   }
   newRig();
@@ -65,7 +72,7 @@ export async function startServer({ publicDir = path.join(ROOT, 'public'), live 
   const server = http.createServer(async (req, res) => {
     try {
       const u = new URL(req.url, 'http://x');
-      if (u.pathname === '/api/lead') {
+      if (u.pathname === '/api/lead' || u.pathname === '/api/lead-interest') {
         const chunks = [];
         for await (const c of req) chunks.push(c);
         const body = Buffer.concat(chunks);
@@ -73,7 +80,7 @@ export async function startServer({ publicDir = path.join(ROOT, 'public'), live 
         for (const [k, v] of Object.entries(req.headers)) headers[k] = Array.isArray(v) ? v.join(', ') : v;
         headers['x-nf-client-connection-ip'] = '203.0.113.' + (1 + (state.ipCounter++ % 250));
         const r = new Request('http://localhost' + req.url, { method: req.method, headers, body: req.method === 'GET' || req.method === 'HEAD' ? undefined : body });
-        const out = await state.rig.handler(r);
+        const out = u.pathname === '/api/lead-interest' ? await state.interest(r) : await state.rig.handler(r);
         const h = {};
         out.headers.forEach((v, k) => { h[k] = v; });
         state.lastApi = { status: out.status, location: out.headers.get('location') || '' };

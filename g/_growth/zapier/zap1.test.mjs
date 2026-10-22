@@ -10,7 +10,8 @@ const LIST = '901522580321'; // IT - UK - Commision
 const HEALTH_LIST = '1201270000003578'; // HEALTH - UK - Commission
 const LAW_LIST = '1201270000003579'; // LAW - UK - Commission
 const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST]);
-const KNOWN_TAGS = new Set(['growth-2m', 'growth-5m', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import']);
+const KNOWN_TAGS = new Set(['growth-2m', 'growth-5m', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import', 'vurder-nettside']);
+const SONDRE = 106690144;
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow']);
 
 function makeWorld(opts = {}) {
@@ -56,7 +57,7 @@ function makeWorld(opts = {}) {
       if (errs.length) return reply(400, { err: 'bad: ' + errs.join(','), ECODE: 'BAD' });
       const id = 'T' + w.nextId++;
       const t = { id, list: m[1], name: body.name, description: body.markdown_description, status: body.status, priority: body.priority ?? null,
-        tags: body.tags || [], due_date: body.due_date ?? null, custom_fields: (body.custom_fields || []).map((c) => ({ ...c })), comments: [] };
+        assignees: body.assignees || [], tags: body.tags || [], due_date: body.due_date ?? null, custom_fields: (body.custom_fields || []).map((c) => ({ ...c })), comments: [], commentFlags: [] };
       w.tasks.push(t);
       return reply(200, { id, url: 'https://app.clickup.com/t/' + id, name: t.name });
     }
@@ -77,11 +78,29 @@ function makeWorld(opts = {}) {
     if (m && method === 'POST') {
       const t = w.tasks.find((x) => x.id === m[1]);
       t.comments.push(body.comment_text);
+      t.commentFlags.push({ notify_all: body.notify_all });
       return reply(200, { id: 1 });
+    }
+    // POST /task/:id/tag/:name  (the name is in the path; a tag the space does not have is refused until it is made)
+    m = path.match(/^\/task\/([^/]+)\/tag\/([^/]+)$/);
+    if (m && method === 'POST') {
+      const t = w.tasks.find((x) => x.id === m[1]);
+      if (!t) return reply(404, { err: 'no task' });
+      const name = decodeURIComponent(m[2]);
+      if (!KNOWN_TAGS.has(name)) return reply(404, { err: 'Tag does not exist', ECODE: 'TAG_001' });
+      if (!t.tags.includes(name)) t.tags.push(name);
+      return reply(200, {});
+    }
+    m = path.match(/^\/list\/(\d+)$/);
+    if (m && method === 'GET') return reply(200, { id: m[1], space: { id: 'S1' } });
+    m = path.match(/^\/space\/([^/]+)\/tag$/);
+    if (m && method === 'POST') {
+      KNOWN_TAGS.add(body.tag.name);
+      return reply(200, {});
     }
     throw new Error('unexpected ClickUp call ' + method + ' ' + path);
   };
-  const fullTask = (t) => ({ id: t.id, url: 'https://app.clickup.com/t/' + t.id, custom_fields: t.custom_fields.map((c) => ({ id: c.id, name: truth[c.id].name, value: c.value })) });
+  const fullTask = (t) => ({ id: t.id, url: 'https://app.clickup.com/t/' + t.id, tags: t.tags.map((name) => ({ name })), custom_fields: t.custom_fields.map((c) => ({ id: c.id, name: truth[c.id].name, value: c.value })) });
   w.runAction = async (args) => {
     assert.equal(args.appKey, 'SlackCLIAPI');
     assert.equal(args.actionType, 'write');
@@ -214,9 +233,10 @@ const eq = (a, b, label) => { assert.deepEqual(a, b, label); passed++; };
   ok(a.due_date >= before + 89 * 86400000 && a.due_date <= Date.now() + 91 * 86400000, 'due in 90 days');
   eq(optName(a, F.spend), 'Under £1k/mth', 'under 1k'); eq(optName(a, F.value), 'Under £10k', 'under 10k'); eq(optName(a, F.tier), 'Tier 3', 'tier 3'); eq(optName(a, F.spec), 'Cybersecurity', 'cyber');
   eq(optName(a, F.team), undefined, 'Under 10 straddles');
-  eq(b.status, 'ukvalifisert - archive', 'not_a_fit status'); eq(b.tags, ['growth-2m', 'test'], 'not_a_fit tags'); eq(b.due_date, null, 'no due date');
+  eq(b.status, 'ukvalifisert - archive', 'not_a_fit status'); eq(b.tags, ['growth-2m', 'vurder-nettside', 'test'], 'not_a_fit tags'); eq(b.due_date, null, 'no due date');
   eq(optName(b, F.spec), 'Software development', 'sw dev');
-  eq(w.slack.length, 0, 'never Slack for not_now / not_a_fit, even with slack_test');
+  eq(w.slack.length, 1, 'not_now never posts; not_a_fit posts one compact line when slack_test is on');
+  eq(b.assignees, [], 'a test lead is never assigned');
   console.log('5 ok');
 }
 // ---------------------------------------------------------------- 6. same lead twice -> one task, no second Slack
@@ -357,5 +377,138 @@ const SPEND_UNDER_1K = '5482c305-7587-466a-bef4-ab15e6a70906';
   await run(w, withLead({ lead_id: 'l_it_0001', campaign: 'uk-law-firms' }));
   eq(w.tasks.map((x) => x.list).sort(), [LIST, HEALTH_LIST, LAW_LIST].sort(), 'same lead id in three campaigns: one task in each list, none deduped across lists');
   console.log('14 ok');
+}
+// ---------------------------------------------------------------- 15. not a fit: tag, Sondre, one compact post without a ping
+const naf = { lead_id: 'l_naf_0001', route: 'not_a_fit', route_reason: 'turnover_below_2m', turnover_band: 'Under £1m', employees_or_fee_earners: '10 to 24', email: 'owner@small-it.co.uk', company_name: 'Small IT Ltd', ch_check: 'skipped', ch_status: '', ch_accounts_type: '', ch_incorporated: '', company_number: '' };
+{
+  const w = makeWorld();
+  const { out } = await run(w, withLead(naf));
+  const t = w.tasks[0];
+  eq(w.tasks.length, 1, 'naf: one task'); eq(t.status, 'ukvalifisert - archive', 'naf: stays in the archive status, not in "ny lead"');
+  eq(t.tags, ['growth-2m', 'vurder-nettside'], 'naf: tagged for review'); eq(t.assignees, [SONDRE], 'naf: assigned to Sondre');
+  eq(optName(t, F.tier), 'Tier 3', 'naf: tier 3');
+  eq(w.slack.length, 1, 'naf: one Slack post'); eq(out.slack.posted, true, 'naf: posted');
+  const msg = w.slack[0];
+  console.log('--- Slack (not a fit) ---\n' + msg + '\n---');
+  eq(msg.split('\n').length, 3, 'naf: three lines');
+  ok(msg.startsWith('*IKKE TREFF* · UK IT · Small IT Ltd\n'), 'naf: head');
+  ok(msg.includes('Under £1m · 10 to 24 ansatte · Grunn: omsetning under £2m'), 'naf: line 2 with the reason in words');
+  ok(msg.includes('Sondre vurderer nettside eller retainer · ClickUp: <https://app.clickup.com/t/T1|åpne oppgaven>'), 'naf: line 3');
+  ok(!msg.includes('<@'), 'naf: no ping');
+  ok(!msg.includes('owner@') && !msg.includes('small-it.co.uk'), 'naf: no e-mail address in Slack');
+  // an unknown reason code is shown as it is, and several are joined
+  const w2 = makeWorld();
+  await run(w2, withLead({ ...naf, lead_id: 'l_naf_0002', route_reason: 'trading_under_2y,something_new' }));
+  ok(w2.slack[0].includes('Grunn: under to år i drift, something_new'), 'naf: reasons joined, unknown code kept');
+  // a test lead is not assigned and does not post, unless slack_test
+  const w3 = makeWorld();
+  await run(w3, withLead({ ...naf, lead_id: 'l_naf_0003', email: 'x@example.invalid' }));
+  eq(w3.tasks[0].assignees, [], 'naf: test lead not assigned'); eq(w3.slack.length, 0, 'naf: test lead silent'); eq(w3.tasks[0].tags, ['growth-2m', 'vurder-nettside', 'test'], 'naf: test tag');
+  // health and law: their own tags and labels
+  const w4 = makeWorld();
+  await run(w4, withLead({ ...naf, lead_id: 'l_naf_0004', campaign: 'uk-private-hospitals', route_reason: 'self_pay_under_10pc' }));
+  eq(w4.tasks[0].tags, ['growth-5m', 'vurder-nettside'], 'naf health: tags'); eq(w4.tasks[0].assignees, [SONDRE], 'naf health: assigned');
+  ok(w4.slack[0].includes('UK HEALTH') && w4.slack[0].includes('Grunn: under 10 % selvbetalende'), 'naf health: label and reason');
+  console.log('15 ok');
+}
+// ---------------------------------------------------------------- 16. the quote button: tag, comment that notifies, post that pings
+const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest_at: '2026-10-22T12:00:00.000Z', ...o });
+{
+  const w = makeWorld();
+  await run(w, withLead(naf)); // the application first
+  w.slack.length = 0;
+  const { out, log } = await run(w, press());
+  const t = w.tasks[0];
+  eq(w.tasks.length, 1, 'interest: no second task'); eq(out.taskCreated, false, 'interest: the existing task is used');
+  eq(t.tags, ['growth-2m', 'vurder-nettside', 'ønsker-nettsidetilbud'], 'interest: tagged (the tag did not exist yet, so it was made in the space first)');
+  eq(out.tagged, true, 'interest: tag result'); eq(t.comments.length, 1, 'interest: one comment');
+  ok(t.comments[0].includes('owner@small-it.co.uk') && t.comments[0].includes('innen to virkedager'), 'interest: comment says whom to e-mail and by when');
+  eq(t.commentFlags[0].notify_all, true, 'interest: the comment notifies the assignee');
+  eq(w.slack.length, 1, 'interest: one Slack post');
+  const msg = w.slack[0];
+  console.log('--- Slack (interest) ---\n' + msg + '\n---');
+  ok(msg.startsWith('*ØNSKER NETTSIDETILBUD* · UK IT · Small IT Ltd\n'), 'interest: head');
+  ok(msg.includes('<@U0AR2CM4NTZ> sender ett tilbud på e-post innen to virkedager'), 'interest: pings Sondre');
+  ok(!msg.includes('owner@') && !msg.includes('small-it.co.uk'), 'interest: no e-mail in Slack');
+  eq(out.deduped, false, 'interest: not deduped'); ok(log.some((l) => l.name === 'tag-website-interest'), 'interest: tag step ran');
+  // the same press delivered again does nothing
+  const callsBefore = w.calls.length; const slackBefore = w.slack.length;
+  const { out: again } = await run(w, press());
+  eq(again.deduped, true, 'interest: second delivery deduped'); eq(w.slack.length, slackBefore, 'interest: no second post'); eq(w.tasks[0].comments.length, 1, 'interest: no second comment');
+  ok(w.calls.slice(callsBefore).every((c) => c.method === 'GET'), 'interest: second delivery only reads');
+  console.log('16 ok');
+}
+{
+  // the application never reached ClickUp: the press makes the task, as a not-a-fit lead, and then does the rest
+  const w = makeWorld();
+  const { out } = await run(w, press({ lead_id: 'l_naf_0010' }));
+  eq(w.tasks.length, 1, 'interest-only: one task made'); eq(out.taskCreated, true, 'interest-only: created');
+  eq(w.tasks[0].status, 'ukvalifisert - archive', 'interest-only: archive status'); eq(w.tasks[0].assignees, [SONDRE], 'interest-only: assigned');
+  ok(w.tasks[0].tags.includes('ønsker-nettsidetilbud') && w.tasks[0].tags.includes('vurder-nettside'), 'interest-only: both tags');
+  eq(w.slack.length, 1, 'interest-only: one post (the application post is not repeated)'); ok(w.slack[0].includes('ØNSKER NETTSIDETILBUD'), 'interest-only: it is the interest post');
+  // a test lead: no ping, no notification, no assignee, silent unless slack_test
+  const w2 = makeWorld();
+  await run(w2, press({ lead_id: 'l_naf_0011', email: 'x@example.invalid' }));
+  eq(w2.slack.length, 0, 'interest test: silent'); eq(w2.tasks[0].assignees, [], 'interest test: not assigned'); eq(w2.tasks[0].commentFlags[0].notify_all, false, 'interest test: comment does not notify');
+  const w3 = makeWorld();
+  await run(w3, press({ lead_id: 'l_naf_0012', email: 'x@example.invalid', slack_test: true }));
+  eq(w3.slack.length, 1, 'interest test: posts with slack_test'); ok(w3.slack[0].startsWith('[TEST] *ØNSKER NETTSIDETILBUD*') && !w3.slack[0].includes('<@'), 'interest test: marked TEST and no ping');
+  // an unknown tag is made in the space and the add is tried again
+  const w4 = makeWorld();
+  KNOWN_TAGS.delete('ønsker-nettsidetilbud');
+  const { out: o4 } = await run(w4, press({ lead_id: 'l_naf_0013' }));
+  eq(o4.tagged, true, 'interest: unknown tag made, then added'); ok(w4.calls.some((c) => c.method === 'POST' && c.path === '/space/S1/tag'), 'interest: the tag was made in the space');
+  // a tag that cannot be added does not stop the comment or the post, and is reported
+  const w5 = makeWorld();
+  KNOWN_TAGS.delete('ønsker-nettsidetilbud');
+  w5.failNext.push({ match: (m, p) => m === 'POST' && p.endsWith('/tag/' + encodeURIComponent('ønsker-nettsidetilbud')), status: 500 });
+  const { out: o5 } = await run(w5, press({ lead_id: 'l_naf_0014' }));
+  eq(o5.tagged, true, 'interest: a 500 on the first add is retried'); eq(w5.slack.length, 1, 'interest: post still made');
+  console.log('16b ok');
+}
+{
+  // only a not_a_fit lead can ask; anything else fails on purpose and writes nothing
+  for (const route of ['fit', 'review', 'not_now']) {
+    const w = makeWorld();
+    let threw = false;
+    try { await run(w, press({ lead_id: 'l_bad_' + route, route })); } catch { threw = true; }
+    ok(threw, 'interest for ' + route + ' fails'); eq(w.tasks.length, 0, 'interest for ' + route + ': nothing written');
+  }
+  // a normal lead without an event key is unchanged: the same lead_id as a press is still "deduped" by the first path
+  const w = makeWorld();
+  await run(w, withLead({ ...naf, lead_id: 'l_naf_0020' }));
+  const { out } = await run(w, withLead({ ...naf, lead_id: 'l_naf_0020' }));
+  eq(out.deduped, true, 'a second delivery of the application is still deduped'); eq(w.slack.length, 1, 'and posts once');
+  console.log('16c ok');
+}
+// ---------------------------------------------------------------- 17. meeting_goal (21 Oct 2026): in the description as a quote, in Slack cut to 320 characters
+{
+  const goal = 'We want a straight answer on whether\nthis can work for us. <b>Fast</b> & cheap?';
+  const w = makeWorld();
+  await run(w, withLead({ lead_id: 'l_goal_0001', email: 'goal@acme-it.co.uk', meeting_goal: goal }));
+  const d = w.tasks[0].description;
+  ok(d.includes('**What do you want to get out of this meeting?**\n> We want a straight answer on whether this can work for us. <b>Fast</b> & cheap?'), 'goal: quoted in the description (line breaks are already flattened by clean())');
+  ok(d.indexOf('**What do you want') > d.indexOf('Kapasitet') && d.indexOf('**What do you want') < d.indexOf('**Kontakt**'), 'goal: between the answers and the contact block');
+  const msg = w.slack[0];
+  ok(msg.includes('Vil ha ut av møtet: _We want a straight answer on whether this can work for us. &lt;b&gt;Fast&lt;/b&gt; &amp; cheap?_'), 'goal: flattened and escaped in Slack');
+  ok(msg.indexOf('Vil ha ut av møtet') > msg.indexOf('Beslutter:') && msg.indexOf('Vil ha ut av møtet') < msg.indexOf('Kilde:'), 'goal: after the facts, before the source');
+  // long answers: 320 characters in Slack, the whole text in ClickUp (up to 600)
+  const long = 'x'.repeat(590);
+  const w2 = makeWorld();
+  await run(w2, withLead({ lead_id: 'l_goal_0002', email: 'goal2@acme-it.co.uk', meeting_goal: long }));
+  ok(w2.tasks[0].description.includes('> ' + long), 'goal: the whole answer in the description');
+  const line = w2.slack[0].split('\n').find((l) => l.startsWith('Vil ha ut av møtet'));
+  eq(line, 'Vil ha ut av møtet: _' + 'x'.repeat(319) + '…_', 'goal: cut to 320 characters with an ellipsis');
+  // no answer: no heading, no line
+  const w3 = makeWorld();
+  await run(w3, withLead({ lead_id: 'l_goal_0003', email: 'goal3@acme-it.co.uk' }));
+  ok(!w3.tasks[0].description.includes('What do you want to get out of this meeting?'), 'goal: no heading without an answer');
+  ok(!w3.slack[0].includes('Vil ha ut av møtet'), 'goal: no Slack line without an answer');
+  // the compact not-a-fit post does not carry the free text
+  const w4 = makeWorld();
+  await run(w4, withLead({ ...naf, lead_id: 'l_goal_0004', meeting_goal: 'Private words' }));
+  ok(!w4.slack[0].includes('Private words'), 'goal: not in the compact not-a-fit post');
+  ok(w4.tasks[0].description.includes('> Private words'), 'goal: but in the task');
+  console.log('17 ok');
 }
 console.log('\nALL PASSED: ' + passed + ' checks');

@@ -203,7 +203,8 @@ test('the browser\'s settings are what the config says, and carry no secret', ()
     assert.equal(c.takkPath, '/g/uk-it-growth/takk/');
     assert.equal(c.calendlyLeadParam, cfg.funnel.calendlyLeadParam);
     assert.equal(c.prefillKey, 'elevate:g:uk-it-growth:prefill');
-    assert.deepEqual(Object.keys(c).sort(), ['applyPath', 'calendlyLeadParam', 'calendlyUrl', 'campaign', 'email', 'path', 'prefillKey', 'qualifiedEvent', 'slug', 'takkPath', 'text']);
+    assert.equal(c.interestPath, '/api/lead-interest');
+    assert.deepEqual(Object.keys(c).sort(), ['applyPath', 'calendlyLeadParam', 'calendlyUrl', 'campaign', 'email', 'interestPath', 'path', 'prefillKey', 'qualifiedEvent', 'slug', 'takkPath', 'text']);
     assert.equal(/token|secret|key|password/i.test(m[1].replace('prefillKey', '')), false, 'nothing that looks like a secret');
   }
 });
@@ -270,6 +271,34 @@ test('the other outcome pages say what the board says, with the threshold and th
   assert.ok(t('review/index.html').length > 200);
   assert.match(built['not-now/index.html'], /<a href="mailto:post@elevatemarketing\.no">post@elevatemarketing\.no<\/a>/);
   for (const p of ALL.slice(1)) assert.ok(!/<form/.test(built[p]), p + ' has no form');
+});
+
+test('the not-a-fit page offers a website quote by one button, hidden until a lead id is in the address, and no other page does', () => {
+  const h = built['not-a-fit/index.html'];
+  assert.match(h, /<section class="o-ask" id="ask" aria-labelledby="ask-h" hidden>/, 'hidden in the markup');
+  assert.equal((h.match(/id="ask-btn"/g) || []).length, 1);
+  assert.match(h, /<button class="btn" type="button" id="ask-btn">Yes, send me a quote<\/button>/);
+  assert.match(h, /<p class="o-small o-ask-msg" id="ask-msg" role="status" aria-live="polite" tabindex="-1"><\/p>/);
+  assert.ok(h.includes(`<a href="/g/${cfg.slug}/privacy/">How we use your details</a>`), 'a link to the privacy notice sits beside the button');
+  assert.match(h, /<noscript><p class="o-note">To ask for a quote on a new website, email <a href="mailto:post@elevatemarketing\.no">/);
+  assert.ok(h.includes('initAsk'), 'the script that shows and posts');
+  assert.ok(!/<form/.test(h), 'a button, not a form');
+  const t = text('not-a-fit/index.html');
+  assert.ok(t.includes('We email you about this only if you press it.'));
+  assert.equal(/\{[A-Z_]+\}/.test(h), false, 'no placeholder left');
+  for (const p of ALL.filter((x) => x !== 'not-a-fit/index.html')) {
+    assert.equal(built[p].includes('id="ask-btn"'), false, p + ' has no quote button');
+    assert.equal(built[p].includes('initAsk()'), false, p + ' does not call initAsk');
+  }
+});
+
+test('the script on the not-a-fit page posts the campaign and the lead id as JSON, and never the visitor\'s answers', () => {
+  const h = built['not-a-fit/index.html'];
+  const code = scripts(h).find((s) => s.includes('function initAsk'));
+  assert.ok(code, 'initAsk is inlined');
+  assert.match(code, /CFG\.interestPath/);
+  assert.match(code, /JSON\.stringify\(\{ ?campaign: CFG\.campaign, lead_id: [a-zA-Z_.]+ ?\}\)/);
+  assert.equal(/localStorage|sessionStorage|document\.cookie/.test(code.slice(code.indexOf('function initAsk'))), false, 'initAsk reads and writes nothing in the browser');
 });
 
 test('each page has its own title', () => {

@@ -2,7 +2,7 @@
   "_comment": "The privacy notice and the website terms of the growth funnels, built into /g/uk-it-growth/privacy/ and /g/uk-it-growth/terms/ by scripts/build-g-growth.mjs. The text is the solicitor pack's draft (Claude Doc 'Solicitor pack (UK): commission, consent and three drafts'), with the open brackets closed as described in LAUNCH.md, section 13. Block types: h2, p, ul, table (head + rows), button. Links: [[label|/path]] or [[label|@privacy]] / [[label|@terms]]; {EMAIL} becomes the contact address as a link. A block, or a table row written as {\"when\": ..., \"cells\": [...]}, is kept only if its condition holds: \"register\" is config.json legal.registerCheck (true only while COMPANIES_HOUSE_API_KEY is set in production), \"unless\": \"register\" marks a block or row kept only while no check is made. The daily check (netlify/functions/lead-reconcile) reports the flag and the key disagreeing. Change the date in 'updated' whenever the words change. No dashes, no exclamation marks, no rate near the word commission: the build refuses them.",
   "privacy": {
     "title": "Privacy notice",
-    "updated": "Last updated: 19 October 2026",
+    "updated": "Last updated: 22 October 2026",
     "blocks": [
       { "p": "This notice explains how Elevate Marketing uses personal data on its campaign pages for UK IT services firms, private healthcare providers and law firms, in the application and booking steps that follow them, and on its older enquiry page. The main website at getelevateleads.com has its own privacy policy." },
 
@@ -15,6 +15,7 @@
         "head": ["When", "What we collect"],
         "rows": [
           ["You apply on one of our pages", "Your answers about your business (website, company name, area of work, turnover, how long you have traded, size, marketing spend, typical client value, sales cycle, an optional target, who decides, capacity, what you want to get out of the meeting), your first name, last name, job title and work email, and a mobile number if you give one."],
+          ["You press the quote button on the page that says we cannot help", "A note that you pressed it, and when, kept with your application. Nothing else is asked."],
           ["You book a call", "Your name, email address and the time you choose, held by Calendly and passed to us."],
           ["You write or speak to us", "The content of your emails and texts, and our notes of calls."],
           ["You visit a page", "Your IP address, device and browser details, the page you came from, and the campaign tags in the address you followed. If you choose Accept, also the identifiers set by the Meta pixel."],
@@ -32,6 +33,8 @@
           ["Reply to your application, decide whether we can help, and arrange and hold a call", "Our legitimate interests in answering business enquiries. Where you apply as an individual, such as a sole trader, it is also a step at your request before a contract."],
           ["Keep a record of applications, including those we cannot take on, so that we do not contact the wrong people again", "Our legitimate interests in keeping accurate records."],
           ["Email you, and text you if you gave a mobile number, about your application and the call", "Our legitimate interests."],
+          ["Have a person at Elevate Marketing read the applications we cannot take on, to see whether a new website or a monthly marketing retainer could suit the firm", "Our legitimate interests in finding out whether another service of ours could help. This is an internal read only: we do not email or text you about it unless you press the quote button."],
+          ["Email you once with a fixed-price quote for a website or a monthly retainer, if you press the quote button on the page that says we cannot help", "Your request, made by pressing the button. If you do not press it, we do not contact you about this."],
           ["Get back in touch once, three months later, if you told us you are at capacity", "Our legitimate interests. You can ask us not to, at any time."],
           { "when": "register", "cells": ["Check the company you name against Companies House", "Our legitimate interests in confirming that an application comes from a real company."] },
           ["Limit the number of applications from one address in an hour, to stop spam", "Our legitimate interests in keeping our systems secure. We keep a scrambled version of your IP address, not the address itself, for up to a day."],
@@ -39,8 +42,8 @@
           ["Keep accounting and contract records if you become a customer", "A legal obligation and our legitimate interests."]
         ]
       } },
-      { "when": "register", "p": "We use your answers to decide automatically which page you see next: a booking page, a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. If you think we got it wrong, email us and we will look again." },
-      { "unless": "register", "p": "We use your answers to decide automatically which page you see next: a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. If you think we got it wrong, email us and we will look again." },
+      { "when": "register", "p": "We use your answers to decide automatically which page you see next: a booking page, a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. A person may also read the applications on the last of these pages, to see whether another service of ours could help, but we contact you about that only if you press the button on that page. If you think we got it wrong, email us and we will look again." },
+      { "unless": "register", "p": "We use your answers to decide automatically which page you see next: a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. A person may also read the applications on the last of these pages, to see whether another service of ours could help, but we contact you about that only if you press the button on that page. If you think we got it wrong, email us and we will look again." },
 
       { "h2": "4. Who receives your details" },
       { "p": "We share your details only with the people and services that help us run this business. We do not sell them." },
