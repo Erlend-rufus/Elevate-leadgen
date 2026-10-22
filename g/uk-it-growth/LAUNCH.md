@@ -120,6 +120,12 @@ utm_source, utm_medium, utm_campaign, utm_content, utm_term, fbclid, page_slug, 
 Never sent: the browser's Meta identifiers, the consent state, the IP address. `fbclid` is empty unless
 the visitor accepted the cookie choice. `route` is `fit`, `review`, `not_now` or `not_a_fit`.
 
+**A second kind of message, from 22 Oct 2026: the quote request.** A lead that was routed `not_a_fit` sees a button on its
+answer page ("Yes, send me a quote", for a fixed-price website or a monthly retainer). Pressing it calls `POST /api/lead-interest`
+(section 7), which sends the same hook the same lead again with two more keys: `event: "website_interest"` and `interest_at`
+(ISO time of the press). The application messages have no `event` key. Zap 1 reads it first: with the event it takes the quote
+branch below, without it nothing is different from before. Nobody is contacted about a website unless this event arrives.
+
 ### How the two Zaps are built
 
 Both are Zapier durable workflows written in code, not click-built Zaps. The source, the tests and a
@@ -173,7 +179,27 @@ Status by route:
 | `fit` | `ny lead`, priority high |
 | `review` | `ny lead`, priority normal, tag `sjekk-størrelse` |
 | `not_now` | `ukvalifisert - archive`, tag `ta-opp-om-3-mnd`, due in 90 days |
-| `not_a_fit` | `ukvalifisert - archive` |
+| `not_a_fit` | `ukvalifisert - archive` (not `ny lead`: the pipeline review and the lead sweep read that status), tag `vurder-nettside`, assigned to Sondre (ClickUp id 106690144), one compact post in `#leads-uk` |
+
+**Not a fit is read by a person (22 Oct 2026).** Sondre looks at every `not_a_fit` task and decides whether a fixed-price website
+or a retainer could suit the firm. That is an internal read: the visitor hears nothing unless they press the quote button. Create
+one saved view in ClickUp, once, filtered on the tag `vurder-nettside` with closed tasks shown (a status cannot be added through
+the API, and the tasks sit in a closed status, so the default list view hides them). A test lead is never assigned and never
+notifies, whatever `slack_test` says.
+
+The compact post (no ping, no e-mail, no free text):
+
+```
+IKKE TREFF · UK IT · {company_name}
+{turnover_band} · {employees_or_fee_earners} ansatte · Grunn: {reason in words}
+Sondre vurderer nettside eller retainer · ClickUp: åpne oppgaven (link)
+```
+
+**The quote branch (`event: website_interest`).** The task is found by `lead_id` (or made, as a `not_a_fit` task, if the application
+never reached ClickUp, because the press carries the whole lead). It is tagged `ønsker-nettsidetilbud` (made in the list's space if it
+does not exist), gets a comment that notifies Sondre ("send one quote by e-mail within two working days"), and `#leads-uk` gets
+`ØNSKER NETTSIDETILBUD · UK IT · {company_name}` with a ping on Sondre (Slack user `U0AR2CM4NTZ`). The tag is the memory: the same
+press delivered twice does nothing the second time. Only a `not_a_fit` lead can ask; any other route fails the run on purpose.
 
 Slack message. It is built in Norwegian because the team reads it, and carries no phone, e-mail or free text:
 
@@ -387,6 +413,15 @@ run real traffic, and the code refuses it on the live address.
     stored nor delivered, the visitor gets an honest error and keeps their answers.
 
 The log carries a lead id, a route and a reason code, never a name, an address or free text.
+
+**The quote button, `POST /api/lead-interest`** (`netlify/functions/lead/interest.mjs`, 8 tests in `test/interest.test.mjs`). JSON only,
+`{campaign, lead_id}`, at most 2 KB. The funnel must be live and the hook set. It answers `404 not_available` unless the lead is stored,
+belongs to that campaign and was routed `not_a_fit`, so nobody can ask on behalf of a lead that qualified, or of an id that does not exist.
+Rate limit 12 an hour per hashed address, counted apart from the form. The press is stored on the lead (`interest`: kind, time, notice
+version `not-a-fit-quote-v1`, delivery state) **before** Zapier is called; the visitor is told it is received even if Zapier fails, and
+an alert e-mail names the company and says to tag the task `ønsker-nettsidetilbud` by hand and tell Sondre. A second press tries
+delivery again only if the first failed. **The daily check does not cover these events** (it reads applications by `received_at`): the
+alert is the net. The log carries a lead id and a code.
 
 **Daily check, 07:00 UTC** (`netlify/functions/lead-reconcile`; 08:00 Norwegian winter time, 09:00 in
 summer): deletes leads past retention, sends again any lead from yesterday or today that Zapier never
@@ -607,7 +642,8 @@ copied into `legal.json`, the date at the top (`updated`) is changed and the pag
 |---|---|---|
 | Applications are deleted 12 months after the last contact, from the store and from ClickUp | Notice 6 | The store deletes at 365 days (`RETENTION_DAYS`, tested). **Nothing here deletes ClickUp tasks** (section 11). |
 | Meta gets a hashed e-mail, first and last name, the IP address and browser details, never a phone number, and only after Accept | Notice 3, 4, 9 | `capi.mjs` and its consent tests. |
-| Slack gets the company name and the decision, no e-mail, phone number or free text | Notice 4 | The Zap 1 Slack step (section 4). |
+| Slack gets the company name and the decision, no e-mail, phone number or free text | Notice 4 | The Zap 1 Slack step (section 4). The post for a lead that is not a fit adds the reason in words (for example "omsetning under £2m"), which is the decision's basis. |
+| A person at Elevate reads the applications we cannot take on, to see if a website or retainer could suit the firm; the visitor is e-mailed about it once, and only after pressing the button | Notice 2, 3 | Section 4 (the quote branch) and section 7. Wording written 22 Oct 2026 by Claude after the owner's instruction, with the owner's report that the solicitor accepted the opt-in design. **The solicitor has not seen this exact text: have them read the two new rows in Notice 3 and the one in Notice 2.** Widening to e-mail a reviewed lead who did not press the button needs the solicitor's explicit OK first (it is direct marketing). |
 | No analytics; our code writes no cookie; the cookie choice sits in `localStorage` and two items in the tab's `sessionStorage` | Notice 8 | `test/legal.test.mjs` fails if a page script writes a cookie or to `localStorage`. |
 | The scrambled IP address is kept up to a day | Notice 3, 6 | Hourly counters, swept by the daily check. |
 | Governing law is England and Wales | Terms 10 | The draft's choice. Owner: confirm that the solicitor kept it. |

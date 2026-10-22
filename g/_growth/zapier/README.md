@@ -22,7 +22,7 @@ state the workflows are in (switched on or off) is also kept there, not here.
    node g/_growth/zapier/build.mjs zap2-calendly-booking.ts
    node g/_growth/zapier/zap2.test.mjs        # 201 checks
    node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
-   node g/_growth/zapier/zap1.test.mjs        # 163 checks
+   node g/_growth/zapier/zap1.test.mjs        # 235 checks
    ```
 
    `truth.json` is a snapshot of the ClickUp field and option ids the tests check the mappings against.
@@ -51,6 +51,8 @@ draft runs against all three lists (create, link on `l_` and `d_` ids, move from
 
 - A lead or a booking with an e-mail address ending `@example.invalid` is a test: it gets the tag
   `test` in ClickUp and never posts to Slack, unless the Zap 1 payload carries `slack_test: true`.
+  A test lead is never assigned to Sondre, its comment does not notify and its Slack post does not ping,
+  whatever `slack_test` says (22 Oct 2026, `not_a_fit` and the quote branch).
 - Test tasks are archived afterwards (status `ukvalifisert - archive`, archived), never deleted.
 - No secrets in these files. The Catch Hook URL is shown in Zap 1's trigger step in the Zapier
   editor and is pasted into Netlify as `ZAPIER_LEAD_HOOK`. It is not written down anywhere else.

@@ -154,6 +154,15 @@ a.btn,.pg a.btn{color:var(--on-action)}
 .o-note{margin:0;max-width:640px;font-size:var(--fs-body);line-height:1.55;color:var(--text-muted);text-wrap:pretty}
 .o-note a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
 .o-note a:hover{color:var(--text-muted)}
+.o-ask{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-16);max-width:640px;margin-top:var(--space-20);padding-top:var(--space-32);border-top:var(--stroke-hairline) solid var(--hairline)}
+.o-ask[hidden]{display:none}
+.o-ask-h{margin:0;font-size:var(--fs-lead);line-height:1.25;letter-spacing:-.01em;color:var(--text);text-wrap:balance}
+.o-ask-p{margin:0;font-size:var(--fs-body);line-height:1.55;color:var(--text-body);text-wrap:pretty}
+.o-ask .o-small{margin:0}
+.o-ask .o-small a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.o-ask-msg:empty{display:none}
+.o-ask-msg{font-size:var(--fs-body);color:var(--text)}
+.o-ask-msg:focus{outline:none}
 @container o (min-width:1024px){
 .o--book .o-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);grid-template-rows:auto 1fr;grid-template-areas:"head cal" "body cal";column-gap:var(--column-gap);row-gap:var(--space-20);align-items:start}
 .o--book .o-h1{grid-area:head}
@@ -189,6 +198,14 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
         <h1 class="o-h1"><span class="o-soft">Thank you.</span> This is not the right fit at the moment.</h1>
         <p class="o-p">We work with firms in England and Wales with £2m or more in turnover and at least two years of trading, outside personal injury. If that changes, we would be glad to hear from you.</p>
         <p class="o-note">If we have misread your answers, email <a href="mailto:post@elevatemarketing.no">post@elevatemarketing.no</a> and we will look again.</p>
+        <section class="o-ask" id="ask" aria-labelledby="ask-h" hidden>
+          <h2 class="o-ask-h" id="ask-h">Looking for a new website instead?</h2>
+          <p class="o-ask-p">If you would like a fixed-price quote for a new website, or a monthly retainer for your marketing, press the button and we will email you once, within two working days. We email you about this only if you press it.</p>
+          <button class="btn" type="button" id="ask-btn">Yes, send me a quote</button>
+          <p class="o-small o-ask-msg" id="ask-msg" role="status" aria-live="polite" tabindex="-1"></p>
+          <p class="o-small"><a href="/g/uk-law-firms/privacy/">How we use your details</a></p>
+        </section>
+        <noscript><p class="o-note">To ask for a quote on a new website, email <a href="mailto:post@elevatemarketing.no">post@elevatemarketing.no</a>.</p></noscript>
       </div>
     </div>
   </main>
@@ -211,7 +228,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 <script>
 (function(){
 'use strict';
-var CFG = {"slug":"uk-law-firms","campaign":"uk-law-firms","path":"/g/uk-law-firms","applyPath":"/api/lead","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"https://calendly.com/d/d35z-ds9-7mb/elevate-marketing-law-30-minute-instruction-review","calendlyLeadParam":"utm_content","takkPath":"/g/uk-law-firms/takk/","prefillKey":"elevate:g:uk-law-firms:prefill","text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email"}};
+var CFG = {"slug":"uk-law-firms","campaign":"uk-law-firms","path":"/g/uk-law-firms","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"https://calendly.com/d/d35z-ds9-7mb/elevate-marketing-law-30-minute-instruction-review","calendlyLeadParam":"utm_content","takkPath":"/g/uk-law-firms/takk/","prefillKey":"elevate:g:uk-law-firms:prefill","text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email","askDone":"Thank you. We will email you from post@elevatemarketing.no within two working days.","askError":"That did not go through. Email post@elevatemarketing.no and ask for a quote, and we will send one."}};
 /* Shared by every page of a growth funnel. The build wraps the pieces of a page in one
    function and writes CFG above them; nothing here reads the page's own copy. */
 
@@ -322,6 +339,55 @@ function fireQualified(route, leadId) {
   storeSet(key, '1');
 }
 
+/* The "ask for a quote" button on the not-a-fit page. It is shown only when the address carries a lead id,
+   which the answer to the form adds; a visitor who arrives without one sees the page without the button
+   (the e-mail address in the copy is the other way in). The request is an opt-in: nothing is sent until
+   the button is pressed, and one press is one request. */
+function initAsk() {
+  var box = document.getElementById('ask');
+  var btn = document.getElementById('ask-btn');
+  var msg = document.getElementById('ask-msg');
+  if (!box || !btn || !msg) return;
+  var q = readQuery();
+  if (!(q.lead_id && ID_RE.test(q.lead_id))) return;
+  box.hidden = false;
+  var busy = false;
+  function done() {
+    btn.hidden = true;
+    msg.textContent = CFG.text.askDone;
+    msg.focus();
+  }
+  function fail() {
+    busy = false;
+    btn.disabled = false;
+    msg.textContent = CFG.text.askError;
+  }
+  btn.addEventListener('click', function () {
+    if (busy) return;
+    busy = true;
+    btn.disabled = true;
+    msg.textContent = '';
+    var ctl = typeof AbortController === 'function' ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 15000);
+    fetch(CFG.interestPath, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ campaign: CFG.campaign, lead_id: q.lead_id }),
+      credentials: 'same-origin',
+      signal: ctl ? ctl.signal : undefined
+    }).then(function (res) {
+      return res.json().then(function (j) { return { status: res.status, body: j }; }, function () { return { status: res.status, body: null }; });
+    }).then(function (r) {
+      clearTimeout(timer);
+      if (r.status === 200 && r.body && r.body.ok) done(); else fail();
+    }, function () {
+      clearTimeout(timer);
+      fail();
+    });
+  });
+}
+
+initAsk();
 initBanner();
 })();
 </script>

@@ -20,6 +20,23 @@ const sdk = createZapierSdk();
  * fails the run on purpose and stays in the run history; the lead itself is safe in the function's store.
  * Test leads (an e-mail ending in @example.invalid) are tagged "test" in ClickUp and never post
  * to Slack, unless the payload carries slack_test: true.
+ *
+ * 21 Oct 2026: the form gained a required free text question, "What do you want to get out of this
+ * meeting?", which arrives as `meeting_goal`. It goes into the task description and, by Erlend's
+ * decision, into the Slack message as well (the privacy notice was changed to say so). Phone, e-mail
+ * and everything else that identifies a person still stay out of Slack.
+ * (This part was in the published workflow but missing from this file until 22 Oct 2026; the file was
+ * brought back in line with what runs.)
+ *
+ * Added 22 Oct 2026, "not a fit" is no longer a dead end:
+ *   - A not_a_fit lead gets the tag "vurder-nettside" and is assigned to Sondre, who reads it and decides whether
+ *     a fixed-price website or a monthly retainer could suit the firm. It stays in "ukvalifisert - archive" (the
+ *     pipeline routines read "ny lead"). #leads-uk gets one compact "IKKE TREFF" post, with no ping.
+ *     Nobody is contacted because of this: the visitor is only e-mailed after pressing the button on the page.
+ *   - That press arrives here as the same lead again with event: "website_interest" (and interest_at). The task is
+ *     found, or made if the application never got to ClickUp, tagged "ønsker-nettsidetilbud", given a comment that
+ *     notifies Sondre, and #leads-uk gets a post that pings him. A second delivery of the same press is ignored.
+ *   - A test lead is never assigned, never notifies and never pings, whatever slack_test says.
  */
 
 // ---------------------------------------------------------------------------------------------
@@ -31,15 +48,32 @@ const CLICKUP = "clickup_main";
 const SLACK = "slack_main";
 const SLACK_CHANNEL = "C0CAA3726DS"; // #leads-uk
 const DAY_MS = 24 * 60 * 60 * 1000;
+const SLACK_GOAL_MAX = 320;
+
+// Who reads the leads that are not a fit. ClickUp member id, Slack user id and the name used in text.
+const REVIEWER = { clickupId: 106690144, slackId: "U0AR2CM4NTZ", name: "Sondre" };
+const REVIEW_TAG = "vurder-nettside";
+const INTEREST_TAG = "ønsker-nettsidetilbud";
+const INTEREST_EVENT = "website_interest";
 
 type Tier = "fit" | "review" | "other";
-type RouteRule = { status: string; priority: number | null; tier: Tier; slack: boolean; heading: string; tags: string[]; dueInDays: number };
+type RouteRule = {
+  status: string;
+  priority: number | null;
+  tier: Tier;
+  slack: boolean;
+  heading: string;
+  tags: string[];
+  dueInDays: number;
+  compact?: boolean; // a short Slack post, no ping
+  reviewer?: boolean; // assigned to REVIEWER (never on a test lead)
+};
 
 const ROUTES: Record<string, RouteRule> = {
   fit: { status: "ny lead", priority: 2, tier: "fit", slack: true, heading: "FIT", tags: [], dueInDays: 0 },
   review: { status: "ny lead", priority: 3, tier: "review", slack: true, heading: "REVIEW", tags: ["sjekk-størrelse"], dueInDays: 0 },
   not_now: { status: "ukvalifisert - archive", priority: null, tier: "other", slack: false, heading: "NOT NOW", tags: ["ta-opp-om-3-mnd"], dueInDays: 90 },
-  not_a_fit: { status: "ukvalifisert - archive", priority: null, tier: "other", slack: false, heading: "NOT A FIT", tags: [], dueInDays: 0 },
+  not_a_fit: { status: "ukvalifisert - archive", priority: null, tier: "other", slack: true, heading: "IKKE TREFF", tags: [REVIEW_TAG], dueInDays: 0, compact: true, reviewer: true },
 };
 
 type Campaign = {
@@ -212,6 +246,7 @@ const KEYS = [
   "regulator_number", "self_pay_share", "specialties", "first_consultation_value",
   "turnover_band", "trading_years", "employees_or_fee_earners", "marketing_spend",
   "first_year_value", "sales_cycle", "target_next_year", "decision_maker", "capacity",
+  "meeting_goal",
   "first_name", "last_name", "job_title", "email", "mobile",
   "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
   "fbclid", "page_slug", "referrer",
@@ -229,6 +264,8 @@ const LeadSchema = z
     campaign: z.string().min(1),
     route: z.string().min(1),
     slack_test: Scalar,
+    event: Scalar,
+    interest_at: Scalar,
   })
   .loose();
 
@@ -269,7 +306,7 @@ function clean(v: unknown, max = 400): string {
 
 function toLead(raw: Record<string, unknown>): Lead {
   const lead = {} as Record<string, string>;
-  for (const key of KEYS) lead[key] = clean(raw[key], key === "referrer" ? 600 : 400);
+  for (const key of KEYS) lead[key] = clean(raw[key], key === "referrer" || key === "meeting_goal" ? 600 : 400);
   return lead as Lead;
 }
 
@@ -336,14 +373,17 @@ function taskLink(id: string, url: unknown): string {
 
 // The task for this lead_id, if there is one. Checks the value on what comes back, so a search
 // that ignored the filter could never be mistaken for a match.
-async function findTask(c: Campaign, leadId: string): Promise<{ id: string; url: string } | null> {
+async function findTask(c: Campaign, leadId: string): Promise<{ id: string; url: string; tags: string[] } | null> {
   const filter = encodeURIComponent(JSON.stringify([{ field_id: c.field.leadId, operator: "=", value: leadId }]));
   const r = await clickup("GET", `/list/${c.listId}/task?custom_fields=${filter}&include_closed=true&page=0`);
   if (!r.ok) throw new Error(`ClickUp search failed: HTTP ${r.status} ${r.text}`);
   const tasks: any[] = r.json?.tasks ?? [];
   for (const task of tasks) {
     const value = (task.custom_fields ?? []).find((f: any) => f.id === c.field.leadId)?.value;
-    if (value === leadId) return { id: String(task.id), url: taskLink(String(task.id), task.url) };
+    if (value === leadId) {
+      const tags = (task.tags ?? []).map((tag: any) => String(tag?.name ?? "").toLowerCase());
+      return { id: String(task.id), url: taskLink(String(task.id), task.url), tags };
+    }
   }
   return null;
 }
@@ -367,6 +407,15 @@ function customFields(c: Campaign, lead: Lead, route: RouteRule): { id: string; 
   add(c.field.adSpend, has(c.option.adSpend, lead.marketing_spend));
   add(c.field.contractValue, has(c.option.contractValue, lead.first_year_value));
   return out;
+}
+
+// The free text answer is the visitor's own words. It is shown as a quote so that nothing in it
+// can be read as markdown structure, and so the routines that read the description find it under
+// a heading of its own.
+function goalBlock(lead: Lead): string {
+  if (!lead.meeting_goal) return "";
+  const quoted = lead.meeting_goal.split("\n").map((l) => `> ${l}`).join("\n");
+  return ["**What do you want to get out of this meeting?**", quoted].join("\n");
 }
 
 function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): string {
@@ -412,6 +461,7 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
       row("Beslutter", lead.decision_maker),
       row("Kapasitet", lead.capacity),
     ]),
+    goalBlock(lead),
     block("Kontakt", [
       row("Navn", personName(lead)),
       row("Rolle", lead.job_title),
@@ -435,7 +485,8 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
 }
 
 // ---------------------------------------------------------------------------------------------
-// Slack: only what a person needs to decide. No phone, no e-mail, no free text.
+// Slack: what a person needs to decide, plus the visitor's own words about the meeting.
+// No phone, no e-mail.
 // ---------------------------------------------------------------------------------------------
 
 function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, isTest: boolean): string {
@@ -467,8 +518,14 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   const line4 = [lead.capacity && `Kapasitet: ${lead.capacity}`, lead.decision_maker && `Beslutter: ${lead.decision_maker}`]
     .filter(Boolean)
     .join(" · ");
+  let goal = "";
+  if (lead.meeting_goal) {
+    const flat = lead.meeting_goal.replace(/\s+/g, " ").trim();
+    const cut = flat.length > SLACK_GOAL_MAX ? `${flat.slice(0, SLACK_GOAL_MAX - 1).trimEnd()}…` : flat;
+    goal = `Vil ha ut av møtet: _${esc(cut)}_`;
+  }
   const source = [lead.utm_source, lead.utm_content].filter(Boolean).join(" / ") || "ukjent";
-  const lines = [head, esc(line2), esc(line3), esc(line4), `Kilde: ${esc(source)}`, `ClickUp: <${taskUrl}|åpne oppgaven>`];
+  const lines = [head, esc(line2), esc(line3), esc(line4), goal, `Kilde: ${esc(source)}`, `ClickUp: <${taskUrl}|åpne oppgaven>`];
   if (lead.ch_check === "mismatch" || lead.ch_check === "timeout" || lead.ch_check === "not_found") {
     lines.push("⚠ Størrelse ikke bekreftet, sjekk før møtet");
   }
@@ -477,9 +534,195 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   return lines.filter(Boolean).join("\n");
 }
 
+// What the function's reason codes mean, for the one-line "not a fit" post. An unknown code is shown as it is.
+const REASON_TEXT: Record<string, string> = {
+  turnover_below_2m: "omsetning under £2m",
+  turnover_below_5m: "omsetning under £5m",
+  trading_under_2y: "under to år i drift",
+  value_under_10k: "kundeverdi under £10k",
+  value_under_500: "førstekonsultasjon under £500",
+  self_pay_under_10pc: "under 10 % selvbetalende",
+  personal_injury_only: "bare personskade",
+  ch_micro_or_dormant: "mikro eller sovende regnskap",
+};
+
+const slackEscape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+// Not a fit: short, no ping. The assignment in ClickUp is what tells Sondre.
+function slackCompact(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, isTest: boolean): string {
+  const people = lead.employees_or_fee_earners ? `${lead.employees_or_fee_earners} ${c.peopleWord}` : "";
+  const why = lead.route_reason
+    .split(",")
+    .map((code) => code.trim())
+    .filter(Boolean)
+    .map((code) => (Object.prototype.hasOwnProperty.call(REASON_TEXT, code) ? REASON_TEXT[code] : code))
+    .join(", ");
+  const head = `${isTest ? "[TEST] " : ""}*${route.heading}* · ${c.label} · ${slackEscape(lead.company_name || "uten navn")}`;
+  const line2 = [lead.turnover_band, people, why && `Grunn: ${why}`].filter(Boolean).join(" · ");
+  return [head, slackEscape(line2), `${REVIEWER.name} vurderer nettside eller retainer · ClickUp: <${taskUrl}|åpne oppgaven>`]
+    .filter(Boolean)
+    .join("\n");
+}
+
+// The visitor pressed "Yes, send me a quote". This one does ping Sondre (not on a test lead).
+function slackInterest(c: Campaign, lead: Lead, taskUrl: string, isTest: boolean): string {
+  const who = isTest ? REVIEWER.name : `<@${REVIEWER.slackId}>`;
+  const head = `${isTest ? "[TEST] " : ""}*ØNSKER NETTSIDETILBUD* · ${c.label} · ${slackEscape(lead.company_name || "uten navn")}`;
+  return [head, `${who} sender ett tilbud på e-post innen to virkedager · ClickUp: <${taskUrl}|åpne oppgaven>`].join("\n");
+}
+
+function interestComment(lead: Lead): string {
+  return [
+    "Ønsker tilbud på ny nettside eller månedlig retainer. Trykket på knappen på siden «ikke treff».",
+    `Send ett tilbud på e-post${validEmail(lead.email) ? ` til ${validEmail(lead.email)}` : ""} innen to virkedager.`,
+  ].join("\n");
+}
+
 // ---------------------------------------------------------------------------------------------
 // The workflow
 // ---------------------------------------------------------------------------------------------
+
+type TaskRef = { id: string; url: string; existed: boolean; fieldsDropped: string };
+
+// Looks again right before creating, so a retry never makes a second task.
+async function createTask(
+  campaign: Campaign,
+  lead: Lead,
+  route: RouteRule,
+  fields: { id: string; value: string }[],
+  isTest: boolean,
+): Promise<TaskRef> {
+  const existing = await findTask(campaign, lead.lead_id);
+  if (existing) return { id: existing.id, url: existing.url, existed: true, fieldsDropped: "" };
+  const name = [lead.company_name, personName(lead)].filter(Boolean).join(" · ") || lead.lead_id;
+  const body: Record<string, unknown> = {
+    name,
+    markdown_description: describe(campaign, lead, route, isTest),
+    status: route.status,
+    tags: [campaign.tag, ...route.tags, ...(isTest ? ["test"] : [])],
+    custom_fields: fields,
+  };
+  if (route.priority !== null) body.priority = route.priority;
+  if (route.reviewer && !isTest) body.assignees = [REVIEWER.clickupId];
+  if (route.dueInDays > 0) {
+    body.due_date = Date.now() + route.dueInDays * DAY_MS;
+    body.due_date_time = false;
+  }
+  let r = await clickup("POST", `/list/${campaign.listId}/task`, body);
+  let fieldsDropped = "";
+  if (r.status === 400 && fields.length > 0) {
+    // A custom field ClickUp does not accept (a deleted option, say) must not cost us the lead.
+    fieldsDropped = r.text;
+    const { custom_fields: _dropped, ...withoutFields } = body;
+    r = await clickup("POST", `/list/${campaign.listId}/task`, withoutFields);
+  }
+  if (!r.ok) throw new Error(`ClickUp create failed: HTTP ${r.status} ${r.text}`);
+  const id = String(r.json?.id ?? "");
+  if (!id) throw new Error("ClickUp create returned no task id.");
+  return { id, url: taskLink(id, r.json?.url), existed: false, fieldsDropped };
+}
+
+// Adds a tag to a task that exists. A tag ClickUp does not know yet is made in the list's space and the add is tried once more.
+async function addTag(campaign: Campaign, taskId: string, tag: string): Promise<{ tagged: boolean; status: number }> {
+  const path = `/task/${taskId}/tag/${encodeURIComponent(tag)}`;
+  let r = await clickup("POST", path);
+  if (r.status >= 500) throw new Error(`ClickUp tag failed: HTTP ${r.status} ${r.text}`); // the step tries again
+  if (!r.ok && r.status >= 400) {
+    try {
+      const list = await clickup("GET", `/list/${campaign.listId}`);
+      const spaceId = String(list.json?.space?.id ?? "");
+      if (spaceId) {
+        await clickup("POST", `/space/${spaceId}/tag`, { tag: { name: tag, tag_fg: "#ffffff", tag_bg: "#2e7d32" } });
+        r = await clickup("POST", path);
+      }
+    } catch {
+      // the first answer stands
+    }
+  }
+  return { tagged: r.ok, status: r.status };
+}
+
+// The quote button. The task is found, or made when the application never reached ClickUp, then tagged, commented and announced.
+// The same press delivered twice does nothing the second time (the tag is the memory).
+async function interest(
+  ctx: any,
+  campaign: Campaign,
+  lead: Lead,
+  route: RouteRule,
+  fields: { id: string; value: string }[],
+  isTest: boolean,
+  slackTest: boolean,
+): Promise<Record<string, unknown>> {
+  const found = await ctx.step({
+    name: "find-or-create-clickup-task",
+    maxAttempts: 3,
+    retryDelaySeconds: 10,
+    run: async () => {
+      const existing = await findTask(campaign, lead.lead_id);
+      if (existing) return { id: existing.id, url: existing.url, created: false, already: existing.tags.includes(INTEREST_TAG), fieldsDropped: "" };
+      const made = await createTask(campaign, lead, route, fields, isTest);
+      return { id: made.id, url: made.url, created: true, already: false, fieldsDropped: made.fieldsDropped };
+    },
+  });
+  if (found.already) {
+    return { lead_id: lead.lead_id, campaign: lead.campaign, event: INTEREST_EVENT, deduped: true, taskId: found.id, taskUrl: found.url };
+  }
+
+  const tag = await ctx.step({
+    name: "tag-website-interest",
+    maxAttempts: 3,
+    retryDelaySeconds: 10,
+    run: async () => addTag(campaign, found.id, INTEREST_TAG),
+  });
+
+  const comment = await ctx.step({
+    name: "comment-website-interest",
+    maxAttempts: 3,
+    retryDelaySeconds: 10,
+    run: async () => {
+      const r = await clickup("POST", `/task/${found.id}/comment`, { comment_text: interestComment(lead), notify_all: !isTest });
+      if (!r.ok) throw new Error(`ClickUp comment failed: HTTP ${r.status} ${r.text}`);
+      return { commented: true };
+    },
+  });
+
+  const message = slackInterest(campaign, lead, found.url, isTest);
+  let slack: Record<string, unknown> = { posted: false, reason: "test lead" };
+  if (isTest) slack.preview = message;
+  if (!isTest || slackTest) {
+    slack = await ctx.step({
+      name: "post-website-interest-to-slack",
+      maxAttempts: 3,
+      retryDelaySeconds: 10,
+      run: async () => {
+        const result = await sdk.runAction({
+          appKey: "SlackCLIAPI",
+          actionType: "write",
+          actionKey: "channel_message",
+          connection: SLACK,
+          inputs: { channel: SLACK_CHANNEL, text: message, as_bot: "yes", unfurl: "no", link_names: "no", add_edit_link: "no" },
+        });
+        const first: any = result.data?.[0] ?? {};
+        return { posted: true, ts: first.ts ?? null, channel: first.channel ?? null };
+      },
+    });
+  }
+
+  return {
+    lead_id: lead.lead_id,
+    campaign: lead.campaign,
+    event: INTEREST_EVENT,
+    test: isTest,
+    deduped: false,
+    taskId: found.id,
+    taskUrl: found.url,
+    taskCreated: found.created,
+    tagged: tag.tagged,
+    tagStatus: tag.status,
+    commented: comment.commented,
+    slack,
+  };
+}
 
 const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og-slack", async (ctx, rawInput) => {
   // Validate before anything is written. An unknown campaign or route fails the run on purpose,
@@ -496,40 +739,18 @@ const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og
   const isTest = lead.email.toLowerCase().endsWith("@example.invalid");
   const fields = customFields(campaign, lead, route);
 
+  // The visitor pressed the quote button on the "not a fit" page: a different branch, below.
+  if (clean(parsed.event, 40) === INTEREST_EVENT) {
+    if (routeKey !== "not_a_fit") throw new Error(`${INTEREST_EVENT} for a lead routed "${lead.route}". Only not_a_fit leads can ask for a quote.`);
+    return await interest(ctx, campaign, lead, route, fields, isTest, truthy(parsed.slack_test));
+  }
+
   // 1. The task. Looks again right before creating, so a retry never makes a second one.
   const task = await ctx.step({
     name: "create-clickup-task",
     maxAttempts: 3,
     retryDelaySeconds: 10,
-    run: async () => {
-      const existing = await findTask(campaign, lead.lead_id);
-      if (existing) return { ...existing, existed: true, fieldsDropped: "" };
-      const name = [lead.company_name, personName(lead)].filter(Boolean).join(" · ") || lead.lead_id;
-      const body: Record<string, unknown> = {
-        name,
-        markdown_description: describe(campaign, lead, route, isTest),
-        status: route.status,
-        tags: [campaign.tag, ...route.tags, ...(isTest ? ["test"] : [])],
-        custom_fields: fields,
-      };
-      if (route.priority !== null) body.priority = route.priority;
-      if (route.dueInDays > 0) {
-        body.due_date = Date.now() + route.dueInDays * DAY_MS;
-        body.due_date_time = false;
-      }
-      let r = await clickup("POST", `/list/${campaign.listId}/task`, body);
-      let fieldsDropped = "";
-      if (r.status === 400 && fields.length > 0) {
-        // A custom field ClickUp does not accept (a deleted option, say) must not cost us the lead.
-        fieldsDropped = r.text;
-        const { custom_fields: _dropped, ...withoutFields } = body;
-        r = await clickup("POST", `/list/${campaign.listId}/task`, withoutFields);
-      }
-      if (!r.ok) throw new Error(`ClickUp create failed: HTTP ${r.status} ${r.text}`);
-      const id = String(r.json?.id ?? "");
-      if (!id) throw new Error("ClickUp create returned no task id.");
-      return { id, url: taskLink(id, r.json?.url), existed: false, fieldsDropped };
-    },
+    run: async () => createTask(campaign, lead, route, fields, isTest),
   });
 
   // The same lead_id again (a second delivery): the task is there, nothing more to do.
@@ -538,7 +759,11 @@ const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og
   }
 
   // 2. Slack, straight after the task exists. Fit and review only; test leads only on request.
-  const slackMessage = route.slack ? slackText(campaign, lead, route, task.url, isTest) : "";
+  const slackMessage = route.slack
+    ? route.compact
+      ? slackCompact(campaign, lead, route, task.url, isTest)
+      : slackText(campaign, lead, route, task.url, isTest)
+    : "";
   let slack: Record<string, unknown> = { posted: false, reason: route.slack ? "test lead" : `route ${lead.route}` };
   if (route.slack && isTest) slack.preview = slackMessage;
   if (route.slack && (!isTest || truthy(parsed.slack_test))) {

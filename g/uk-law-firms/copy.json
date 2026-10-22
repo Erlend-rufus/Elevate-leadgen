@@ -141,7 +141,16 @@
     "not-a-fit": {
       "h": "Thank you. This is not the right fit at the moment.",
       "p": "We work with firms in England and Wales with {THRESHOLD} or more in turnover and at least two years of trading, outside personal injury. If that changes, we would be glad to hear from you.",
-      "note": "If we have misread your answers, email {EMAIL} and we will look again."
+      "note": "If we have misread your answers, email {EMAIL} and we will look again.",
+      "interest": {
+        "h": "Looking for a new website instead?",
+        "p": "If you would like a fixed-price quote for a new website, or a monthly retainer for your marketing, press the button and we will email you once, within two working days. We email you about this only if you press it.",
+        "button": "Yes, send me a quote",
+        "done": "Thank you. We will email you from {EMAIL} within two working days.",
+        "error": "That did not go through. Email {EMAIL} and ask for a quote, and we will send one.",
+        "noscript": "To ask for a quote on a new website, email {EMAIL}.",
+        "privacy": "How we use your details"
+      }
     }
   }
 }

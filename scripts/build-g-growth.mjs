@@ -599,7 +599,7 @@ ${consent}
 
 const JS = {};
 function loadJs() {
-  for (const f of ['base', 'form', 'motion', 'book']) JS[f] = readFileSync(join(SHARED, 'js', `${f}.js`), 'utf8');
+  for (const f of ['base', 'form', 'motion', 'book', 'notafit']) JS[f] = readFileSync(join(SHARED, 'js', `${f}.js`), 'utf8');
 }
 
 /** core.mjs has no imports, so removing the word "export" is all it takes to run it in a page. */
@@ -627,6 +627,8 @@ var known = !!(q.lead_id && ID_RE.test(q.lead_id));
 function fire() { if (known) fireQualified('review', q.lead_id); }
 initBanner(fire);
 fire();`);
+  } else if (kind === 'notafit') {
+    parts.push(JS.notafit, 'initAsk();\ninitBanner();');
   } else if (kind === 'privacy') {
     // The notice says the cookie choice can be changed with a button. The choice is kept by
     // /js/consent.js under this key; removing it and reloading makes the page ask again.
@@ -710,6 +712,7 @@ async function build(slug) {
     campaign: cfg.campaign,
     path: cfg.path,
     applyPath: cfg.funnel.applyPath,
+    interestPath: '/api/lead-interest',
     qualifiedEvent: cfg.funnel.qualifiedEvent,
     email: cfg.contact.email,
     calendlyUrl: url,
@@ -719,6 +722,8 @@ async function build(slug) {
     text: {
       back: copy.form.back, next: copy.form.next, cta: copy.form.cta, retry: copy.form.retry,
       sending: copy.form.sending, failed: copy.form.failed,
+      askDone: ((copy.outcomes['not-a-fit'] || {}).interest || {}).done || '',
+      askError: ((copy.outcomes['not-a-fit'] || {}).interest || {}).error || '',
     },
   };
 
@@ -777,6 +782,16 @@ ${pageScript(cfgClient, 'landing', coreSrc)}
     const note = o.note
       ? `<p class="o-note">${esc(o.note).replace(esc(cfg.contact.email), `<a href="mailto:${esc(cfg.contact.email)}">${esc(cfg.contact.email)}</a>`)}</p>`
       : '';
+    const mail = (text) => esc(text).replace(esc(cfg.contact.email), `<a href="mailto:${esc(cfg.contact.email)}">${esc(cfg.contact.email)}</a>`);
+    const ask = o.interest ? `
+        <section class="o-ask" id="ask" aria-labelledby="ask-h" hidden>
+          <h2 class="o-ask-h" id="ask-h">${esc(o.interest.h)}</h2>
+          <p class="o-ask-p">${esc(o.interest.p)}</p>
+          <button class="btn" type="button" id="ask-btn">${esc(o.interest.button)}</button>
+          <p class="o-small o-ask-msg" id="ask-msg" role="status" aria-live="polite" tabindex="-1"></p>
+          <p class="o-small"><a href="${esc(cfg.links.privacy)}">${esc(o.interest.privacy)}</a></p>
+        </section>
+        <noscript><p class="o-note">${mail(o.interest.noscript)}</p></noscript>` : '';
     const calendar = cal ? `
         <div class="o-cal-wrap">
           <div class="o-cal" id="cal">${url ? '' : `<p class="o-note">The calendar is not connected yet. Set funnel.calendlyUrl in g/${esc(slug)}/config.json.</p>`}</div>
@@ -795,7 +810,7 @@ ${pageScript(cfgClient, 'landing', coreSrc)}
       <div class="o-grid">
         <h1 class="o-h1">${h1}</h1>
         <p class="o-p">${esc(o.p)}</p>
-        ${note}${calendar}
+        ${note}${ask}${calendar}
       </div>
     </div>
   </main>
@@ -850,7 +865,7 @@ ${pageScript(cfgClient, key === 'privacy' ? 'privacy' : 'plain', coreSrc)}
     ['takk/index.html', outcome('takk', { kind: 'takk' })],
     ['review/index.html', outcome('review', { kind: 'review' })],
     ['not-now/index.html', outcome('not-now', { kind: 'plain' })],
-    ['not-a-fit/index.html', outcome('not-a-fit', { kind: 'plain' })],
+    ['not-a-fit/index.html', outcome('not-a-fit', { kind: 'notafit' })],
     ['privacy/index.html', legalPage('privacy')],
     ['terms/index.html', legalPage('terms')],
   ];

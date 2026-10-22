@@ -5,7 +5,7 @@
 //   npx playwright-core install chromium
 //   node g/uk-it-growth/e2e/run.mjs [group ...]
 //
-// Groups: landing form routes consent book nojs failures motion desktop committed kbd a11y text legal
+// Groups: landing form routes consent book nojs failures motion desktop committed kbd a11y text legal ask
 // Settings (all optional): E2E_SHOTS=<dir> writes screenshots; E2E_CHROMIUM=<path> uses that browser;
 // E2E_BOARD_TEXT=<textdump.json> compares the page text with the design board's text dump.
 import fs from 'node:fs';
@@ -991,7 +991,96 @@ async function legal() {
   }
 }
 
-const groups = { landing, form, routes, consent, book, nojs, failures, motion, desktop, committed, kbd, a11y, text, legal };
+/* ============================================================================ 15. ask: the quote button on the not-a-fit page */
+async function ask() {
+  R.section('15. The quote button on the not-a-fit page (390 x 844)');
+  const NAF = srv.base + PATH + 'not-a-fit/';
+  const doneText = norm(copy.outcomes['not-a-fit'].interest.done);
+  const errorText = norm(copy.outcomes['not-a-fit'].interest.error);
+  const track = (page) => { const seen = []; page.on('request', (rq) => seen.push(rq.url())); return seen; };
+
+  // 1. No lead id in the address: the section stays hidden and nothing is sent.
+  {
+    const r = await open({}, null);
+    const seen = track(r.page);
+    await r.page.goto(NAF, { waitUntil: 'load' });
+    R.check(await r.page.locator('#ask').isHidden(), 'no lead id: the quote section is hidden');
+    R.check(await r.page.locator('#ask-btn').isHidden(), 'no lead id: the button is hidden');
+    R.eq(seen.filter((u) => u.includes('/api/')).length, 0, 'no lead id: no call to any /api/ address');
+    R.eq(cleanErrors(r.b), [], 'no lead id: no console errors');
+    await r.ctx.close();
+  }
+
+  // 2. A malformed lead id: still hidden.
+  {
+    const r = await open({}, null);
+    await r.page.goto(NAF + '?lead_id=%3Cscript%3E', { waitUntil: 'load' });
+    R.check(await r.page.locator('#ask').isHidden(), 'a malformed lead id: the section stays hidden');
+    await r.ctx.close();
+  }
+
+  // 3. The whole way: answer the form so it is not a fit, land on the page, press the button.
+  {
+    const r = await open();
+    const { page, b } = r;
+    const seen = track(page);
+    await page.locator('#form').scrollIntoViewIfNeeded();
+    await fillForm(page, ANSWERS.not_a_fit, { submit: false });
+    const leadId = await hidden(page, 'lead_id');
+    await page.locator('#lf-form .lf-actions .btn').click();
+    await waitBy(page, new RegExp(`${PATH}not-a-fit/`));
+    R.eq(q(page.url()).lead_id, leadId, 'the address carries the lead id');
+    R.check(await page.locator('#ask').isVisible(), 'with a lead id: the quote section shows');
+    R.eq(await txt(page.locator('#ask-btn')), norm(copy.outcomes['not-a-fit'].interest.button), 'the button has the board text');
+    R.check(await page.locator('#ask a[href$="/privacy/"]').isVisible(), 'the privacy link sits in the section');
+    R.eq(rigNow().of('zapier').length, 1, 'before the press: one delivery to Zapier (the application), none for the quote');
+    R.eq(seen.filter((u) => u.includes('/api/lead-interest')).length, 0, 'before the press: nothing sent to the quote address');
+    R.check(!rigNow().blobs.lead(leadId).interest, 'before the press: nothing stored about a quote');
+
+    await page.locator('#ask-btn').click();
+    await page.waitForFunction((want) => document.getElementById('ask-msg').textContent.replace(/\s+/g, ' ').trim() === want, doneText, { timeout: 8000 })
+      .then(() => R.ok('the thank-you text appears'), () => R.fail('the thank-you text appears'));
+    R.check(await page.locator('#ask-btn').isHidden(), 'the button is gone after the press');
+    R.check(await page.evaluate(() => document.activeElement && document.activeElement.id === 'ask-msg'), 'focus moves to the message');
+    const zap = rigNow().of('zapier');
+    R.eq(zap.length, 2, 'one more delivery to Zapier');
+    R.eq([zap[1].body.event, zap[1].body.lead_id, zap[1].body.route], ['website_interest', leadId, 'not_a_fit'], 'the delivery is the quote event for this lead');
+    const posted = seen.filter((u) => u.includes('/api/lead-interest'));
+    R.eq(posted.length, 1, 'exactly one request to the quote address');
+    const stored = rigNow().blobs.lead(leadId);
+    R.eq(stored.interest && stored.interest.delivery.state, 'ok', 'stored with a delivered state');
+    R.eq(stored.route, 'not_a_fit', 'the route is unchanged');
+    R.eq(rigNow().of('capi').length, 0, 'nothing to Meta');
+    R.check((await overflow(page)) <= 0, 'no horizontal scroll at 390 px');
+    R.eq(cleanErrors(b), [], 'no console errors', JSON.stringify(cleanErrors(b)));
+    await shot(page, 'not-a-fit-ask-done-390');
+    await r.ctx.close();
+  }
+
+  // 4. A lead id the function does not know: the visitor is told it did not go through, and can press again.
+  {
+    const r = await open({}, null);
+    await r.page.goto(NAF + '?lead_id=l_00000000000000000000', { waitUntil: 'load' });
+    R.check(await r.page.locator('#ask-btn').isVisible(), 'an unknown lead id: the button shows (the page cannot know)');
+    await r.page.locator('#ask-btn').click();
+    await r.page.waitForFunction((want) => document.getElementById('ask-msg').textContent.replace(/\s+/g, ' ').trim() === want, errorText, { timeout: 8000 })
+      .then(() => R.ok('the error text appears'), () => R.fail('the error text appears'));
+    R.check(await r.page.locator('#ask-btn').isEnabled() && await r.page.locator('#ask-btn').isVisible(), 'the button is back, so the visitor can try again');
+    R.eq(rigNow().of('zapier').length, 0, 'nothing reaches Zapier for an unknown lead');
+    await r.ctx.close();
+  }
+
+  // 5. Without script the section stays hidden, and the note with the e-mail address is what is left.
+  {
+    const r = await open({ js: false }, null);
+    await r.page.goto(NAF + '?lead_id=l_00000000000000000000', { waitUntil: 'load' });
+    R.check(await r.page.locator('#ask').isHidden(), 'no script: the section is hidden');
+    R.check((await txt(r.page.locator('main'))).includes('To ask for a quote on a new website, email'), 'no script: the e-mail note is on the page');
+    await r.ctx.close();
+  }
+}
+
+const groups = { landing, form, routes, consent, book, nojs, failures, motion, desktop, committed, kbd, a11y, text, legal, ask };
 const skip = {
   committed: cfg.live ? 'config.json has "live": true, so the committed pages are no longer in the pre-launch state this group describes' : '',
   a11y: AXE ? '' : 'axe-core is not installed (npm install --no-save axe-core)',
