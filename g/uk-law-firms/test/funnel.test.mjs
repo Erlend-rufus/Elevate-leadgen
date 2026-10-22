@@ -79,6 +79,49 @@ test('law routing: the table from the brief with the work document answers', () 
   assert.equal(d({}, { check: 'not_found', reasons: [] }).route, 'review', 'a partnership that is not at Companies House is review');
 });
 
+test('law routing, 22 Oct 2026: a plainly large firm is not held back by withheld turnover or a low first-year value', () => {
+  const v = core.validate(GOOD).values;
+  const un = { check: 'unchecked', reasons: [] };
+  const d = (patch, ch = un) => route.decide(Object.assign({}, v, patch), ch);
+  const P = O.people, S = O.spend, T = O.turnover, W = O.worth;
+  const withheld = { turnover_band: T[5], employees_or_fee_earners: P[3], marketing_spend: S[2] };
+
+  // Turnover withheld: inferred only when 30+ people AND £5,000+ a month.
+  assert.deepEqual(d(withheld).reasons, ['turnover_inferred', 'trading_2y_plus', 'register_not_used']);
+  assert.equal(d(withheld).route, 'fit');
+  assert.equal(d(Object.assign({}, withheld, { marketing_spend: S[3] })).route, 'fit');
+  for (const over of [{ employees_or_fee_earners: P[2] }, { marketing_spend: S[1] }, { marketing_spend: S[4] }]) {
+    assert.deepEqual(d(Object.assign({}, withheld, over)).reasons, ['turnover_not_stated'], JSON.stringify(over));
+    assert.equal(d(Object.assign({}, withheld, over)).route, 'review');
+  }
+  assert.equal(route.turnoverInferred(Object.assign({}, v, withheld)), true);
+  assert.equal(route.turnoverInferred(v), false, 'a stated turnover is never marked as inferred');
+
+  // Under £2,000 a client: review for a small firm, a flag only for a firm with 30+ people or £5,000+ a month.
+  assert.deepEqual(d({ first_year_value: W[0] }).reasons, ['value_under_2k'], 'the default firm (15 to 29 people, £1,000 to under £5,000) is still reviewed');
+  for (const over of [{ employees_or_fee_earners: P[3] }, { marketing_spend: S[2] }, { marketing_spend: S[3] }]) {
+    const r = d(Object.assign({ first_year_value: W[0] }, over));
+    assert.equal(r.route, 'fit', JSON.stringify(over));
+    assert.deepEqual(r.reasons, ['turnover_2m_plus', 'trading_2y_plus', 'register_not_used', 'value_under_2k_volume_firm']);
+  }
+  assert.equal(d({ first_year_value: W[0], marketing_spend: S[4] }).route, 'review', '"I do not know" is not £5,000 or more');
+
+  // The Ackroyd shape: turnover withheld, 30+ people, £5,000+ a month, under £2,000 a client.
+  const both = d(Object.assign({ first_year_value: W[0] }, withheld));
+  assert.equal(both.route, 'fit');
+  assert.deepEqual(both.reasons, ['turnover_inferred', 'trading_2y_plus', 'register_not_used', 'value_under_2k_volume_firm']);
+
+  // What does not move: structural refusals, capacity, and the flags that were already there.
+  assert.equal(d(Object.assign({ turnover_band: T[1] }, { employees_or_fee_earners: P[3], marketing_spend: S[3] })).route, 'not_a_fit');
+  assert.equal(d({ trading_years: O.trading[0], employees_or_fee_earners: P[3], marketing_spend: S[3] }).route, 'not_a_fit');
+  assert.equal(d({ practice_areas: 'Personal injury', employees_or_fee_earners: P[3], marketing_spend: S[3] }).route, 'not_a_fit', 'personal injury alone is still not a fit, however large');
+  assert.deepEqual(d(Object.assign({ capacity: O.capacity[0] }, withheld)), { route: 'not_now', reasons: ['capacity_none', 'turnover_inferred'] });
+  assert.deepEqual(d(Object.assign({ practice_areas: 'Personal injury, Family', first_year_value: W[0] }, withheld)).reasons,
+    ['turnover_inferred', 'trading_2y_plus', 'register_not_used', 'personal_injury_ticked', 'value_under_2k_volume_firm']);
+  assert.equal(d(withheld, { check: 'not_found', reasons: [] }).route, 'review', 'a register that cannot find the firm still sends it to review');
+  assert.deepEqual(d(withheld, { check: 'not_found', reasons: [] }).reasons, ['turnover_inferred', 'ch_not_found']);
+});
+
 test('law endpoint: a fit with no register check books and Zapier gets the practice areas and the SRA number', async () => {
   const { r, res, body } = await go({ env: { COMPANIES_HOUSE_API_KEY: undefined } }, GOOD);
   assert.equal(res.status, 200);
