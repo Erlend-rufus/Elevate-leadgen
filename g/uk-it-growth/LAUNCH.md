@@ -418,10 +418,20 @@ The log carries a lead id, a route and a reason code, never a name, an address o
 `{campaign, lead_id}`, at most 2 KB. The funnel must be live and the hook set. It answers `404 not_available` unless the lead is stored,
 belongs to that campaign and was routed `not_a_fit`, so nobody can ask on behalf of a lead that qualified, or of an id that does not exist.
 Rate limit 12 an hour per hashed address, counted apart from the form. The press is stored on the lead (`interest`: kind, time, notice
-version `not-a-fit-quote-v1`, delivery state) **before** Zapier is called; the visitor is told it is received even if Zapier fails, and
+version `not-a-fit-quote-v2`, delivery state) **before** Zapier is called; the visitor is told it is received even if Zapier fails, and
 an alert e-mail names the company and says to tag the task `ønsker-nettsidetilbud` by hand and tell Sondre. A second press tries
 delivery again only if the first failed. **The daily check does not cover these events** (it reads applications by `received_at`): the
 alert is the net. The log carries a lead id and a code.
+
+**Sondre may e-mail a reviewed not-a-fit lead once, without a button press (22 Oct 2026, the solicitor agreed).** The privacy notices
+(Notice 3, a new row "Email you once with an offer ...", and the automated-decision paragraph) and the not-a-fit page say so; the
+notice version stored with a press is now `not-a-fit-quote-v2`. Nothing in the code sends this e-mail: Sondre writes it from his own
+mailbox, so the rules live in the working note for him, not here. The rules that match the wording: one e-mail only; a named work address
+at the firm's own domain, for a limited company, LLP or PLC (a sole trader or an ordinary partnership, or a webmail address, is
+treated as an individual subscriber and gets nothing unless the person pressed the button); no text and no call; the e-mail names
+Elevate Marketing and EngeCo AS, says how to say no, and links the privacy notice; a "no" is recorded with the tag `ikke-kontakt` and
+that lead is never mailed again; applications received before the new wording went live (the deploy of the commit that adds this
+paragraph) are not eligible. Change the wording and these rules together.
 
 **Daily check, 07:00 UTC** (`netlify/functions/lead-reconcile`; 08:00 Norwegian winter time, 09:00 in
 summer): deletes leads past retention, sends again any lead from yesterday or today that Zapier never

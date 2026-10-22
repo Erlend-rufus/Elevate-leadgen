@@ -144,7 +144,7 @@
       "note": "If we have misread your answers, email {EMAIL} and we will look again.",
       "interest": {
         "h": "Looking for a new website instead?",
-        "p": "If you would like a fixed-price quote for a new website, or a monthly retainer for your marketing, press the button and we will email you once, within two working days. We email you about this only if you press it.",
+        "p": "If you would like a fixed-price quote for a new website, or a monthly retainer for your marketing, press the button and we will email you once, within two working days. A person at Elevate Marketing also reads every application, and may email you once about this if we think it could suit your firm. Every email says how to say no.",
         "button": "Yes, send me a quote",
         "done": "Thank you. We will email you from {EMAIL} within two working days.",
         "error": "That did not go through. Email {EMAIL} and ask for a quote, and we will send one.",
