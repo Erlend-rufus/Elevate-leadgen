@@ -78,6 +78,50 @@ test('DISCLOSED DEVIATION: claims £2m or more but files micro-entity or dormant
   for (const t of [T[2], T[3], T[4]]) assert.deepEqual(decide(v({ turnover_band: t }), ch), { route: 'review', reasons: ['ch_accounts_too_small'] }, t);
 });
 
+/* Changed 22 Oct 2026: turnover withheld, but 50+ people AND £5,000+ a month on marketing: routed as £2m to under £5m. */
+const P = OPTIONS.people, S = OPTIONS.spend;
+const big = (over = {}) => v(Object.assign({ turnover_band: T[5], employees_or_fee_earners: P[3], marketing_spend: S[2] }, over));
+
+test('turnover inferred: withheld turnover, 50+ people and £5,000+ a month is a fit, with its own reason', () => {
+  for (const [p, s] of [[P[3], S[2]], [P[3], S[3]], [P[4], S[2]], [P[4], S[3]]]) {
+    assert.deepEqual(decide(big({ employees_or_fee_earners: p, marketing_spend: s }), OK), { route: 'fit', reasons: ['turnover_inferred', 'trading_2y_plus', 'ch_full'] }, p + ' / ' + s);
+  }
+  assert.equal(route.turnoverInferred(big()), true);
+});
+
+test('turnover inferred: needs both. Headcount alone, spend alone, or a stated turnover is not inferred', () => {
+  for (const over of [{ employees_or_fee_earners: P[2] }, { marketing_spend: S[1] }, { marketing_spend: S[4] }, { employees_or_fee_earners: P[0], marketing_spend: S[3] }]) {
+    assert.deepEqual(decide(big(over), OK), { route: 'review', reasons: ['turnover_not_stated'] }, JSON.stringify(over));
+    assert.equal(route.turnoverInferred(big(over)), false);
+  }
+  assert.equal(route.turnoverInferred(big({ turnover_band: T[2] })), false, 'a stated turnover is never marked as inferred');
+  assert.deepEqual(decide(big({ turnover_band: T[2] }), OK).reasons, ['turnover_2m_plus', 'trading_2y_plus', 'ch_full']);
+});
+
+test('turnover inferred: the other rules still apply, in the same order', () => {
+  assert.deepEqual(decide(big({ trading_years: TR[0] }), OK), { route: 'not_a_fit', reasons: ['trading_under_2y'] });
+  assert.deepEqual(decide(big({ first_year_value: W[0] }), OK), { route: 'not_a_fit', reasons: ['value_under_10k'] });
+  assert.deepEqual(decide(big({ first_year_value: W[1] }), OK), { route: 'review', reasons: ['turnover_inferred', 'value_10k_to_25k'] });
+  assert.deepEqual(decide(big({ capacity: C[0] }), OK), { route: 'not_now', reasons: ['capacity_none', 'turnover_inferred'] });
+  assert.deepEqual(decide(big(), { check: 'not_found', reasons: [] }), { route: 'review', reasons: ['turnover_inferred', 'ch_not_found'] });
+});
+
+test('turnover inferred: micro-entity or dormant accounts are evidence against the inference, so review, not not-a-fit', () => {
+  const profile = { number: '1', status: 'active', created: '2012-03-01', accounts_type: 'micro-entity' };
+  const ch = assessProfile(big(), profile, NOW);
+  assert.deepEqual(ch.reasons, ['ch_accounts_too_small']);
+  assert.deepEqual(decide(big(), Object.assign({ profile }, ch)), { route: 'review', reasons: ['turnover_inferred', 'ch_accounts_too_small'] });
+});
+
+test('turnover inferred: the register is asked as for a stated £2m+ firm, and the answer the visitor gave is never changed', () => {
+  assert.equal(needsRegistry(big()), true);
+  assert.equal(needsRegistry(big({ capacity: C[0] })), false, 'at capacity and inferred: no register call, as for a stated turnover');
+  assert.equal(needsRegistry(v({ turnover_band: T[5], capacity: C[0] })), true, 'not inferred and at capacity: the register still decides');
+  const values = big();
+  decide(values, OK); assessProfile(values, OK.profile, NOW); needsRegistry(values);
+  assert.equal(values.turnover_band, T[5], 'the stored answer stays "I would rather not say"');
+});
+
 test('the register can only add reasons for a person to look; it never turns a self-reported no into a yes', () => {
   for (const ch of [OK, { check: 'not_found', reasons: [] }, { check: 'timeout', reasons: [] }, { check: 'skipped', reasons: [] }]) {
     assert.equal(decide(v({ turnover_band: T[1] }), ch).route, 'not_a_fit');

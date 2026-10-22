@@ -323,6 +323,15 @@ beats temporary. Edit `route.mjs`; every rule has a test (`test/route.test.mjs`)
 
 Page for each: `fit` → `/book`, `review` → `/review`, `not_now` → `/not-now`, `not_a_fit` → `/not-a-fit`.
 
+**Changed 22 Oct 2026 (IT and law, not health).** A firm that picks "I would rather not say" for turnover is
+routed as £2m to under £5m, reason `turnover_inferred`, when headcount and marketing budget both point well
+above the threshold: IT 50 or more people AND £5,000 or more a month; law 30 or more people AND £5,000 or more
+a month. One of the two alone is not enough and the lead stays `review`. The answer the visitor gave is never
+changed, only the way the rules read it. Law only: a first-year value under £2,000 no longer sends a firm to
+`review` when it has 30 or more people OR spends £5,000 or more a month (volume work); the reason
+`value_under_2k_volume_firm` is kept so the task shows it. Rules are in `route.mjs` of each funnel, tests in
+`test/route.test.mjs` and `g/uk-law-firms/test/funnel.test.mjs`.
+
 **One reading to confirm.** A firm that says £2m or more but files micro-entity or dormant accounts is
 sent to `review`, not `not_a_fit` (reason `ch_accounts_too_small`). The accounts are evidence against
 the claim, but a company can file late or sit in a group, and turning a real lead away on that alone

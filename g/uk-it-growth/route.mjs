@@ -15,6 +15,12 @@
  *               the register unavailable, or an answer the register contradicts.
  *   fit         everything else.
  *
+ * Changed 22 Oct 2026: a firm that says "I would rather not say" about turnover is still routed as
+ * a firm of £2m to under £5m when its headcount (50 or more) and its monthly marketing budget
+ * (£5,000 or more) both point well above the threshold. The reason "turnover_inferred" replaces
+ * "turnover_2m_plus" so nobody reads it as stated. What the visitor wrote is never altered: the
+ * lift is made here, inside the rules, and the payload keeps "I would rather not say".
+ *
  * Deliberate reading, say so if it is wrong: a firm that claims £2m or more but files
  * micro-entity or dormant accounts is "review", not "not a fit". The accounts are
  * evidence against the claim, but a company can file late or be one of several in a
@@ -27,12 +33,28 @@ const T = OPTIONS.turnover;
 const TRADING = OPTIONS.trading;
 const WORTH = OPTIONS.worth;
 const CAPACITY = OPTIONS.capacity;
+const PEOPLE = OPTIONS.people;
+const SPEND = OPTIONS.spend;
 
 const BELOW_THRESHOLD = new Set([T[0], T[1]]);
 const CLAIMS_THRESHOLD = new Set([T[2], T[3], T[4]]);
 const NOT_STATED = T[5];
 
 export const ROUTES = ['fit', 'review', 'not_now', 'not_a_fit'];
+
+/** 50 or more people, and £5,000 or more a month on marketing: both have to hold. */
+const LARGE_HEADCOUNT = new Set([PEOPLE[3], PEOPLE[4]]);
+const SPENDS_5K = new Set([SPEND[2], SPEND[3]]);
+
+/** Whether turnover was withheld but the other answers put the firm well above £2m. */
+export function turnoverInferred(v) {
+  return v.turnover_band === NOT_STATED && LARGE_HEADCOUNT.has(v.employees_or_fee_earners) && SPENDS_5K.has(v.marketing_spend);
+}
+
+/** The answers as the rules read them: a withheld turnover that is inferred counts as the £2m to under £5m band. */
+function lift(v) {
+  return turnoverInferred(v) ? Object.assign({}, v, { turnover_band: T[2] }) : v;
+}
 
 /** The page each route is sent to, relative to the funnel's address. */
 export const PAGE_FOR = { fit: 'book', review: 'review', not_now: 'not-now', not_a_fit: 'not-a-fit' };
@@ -55,6 +77,7 @@ export function selfReport(v) {
  * then the register decides between "not a fit" and "review".
  */
 export function needsRegistry(v) {
+  v = lift(v);
   if (selfReport(v).length) return false;
   if (v.capacity === CAPACITY[0] && v.turnover_band !== NOT_STATED) return false;
   return true;
@@ -69,6 +92,7 @@ const isTiny = (t) => t === 'micro-entity' || t === 'dormant';
  * Returns {check: 'ok' | 'mismatch', reasons: []}.
  */
 export function assessProfile(v, profile, now) {
+  v = lift(v);
   const reasons = [];
   const created = profile.created ? Date.parse(profile.created) : NaN;
   const age = Number.isFinite(created) ? (now.getTime() - created) : NaN;
@@ -97,6 +121,8 @@ export function assessProfile(v, profile, now) {
 export function decide(v, ch) {
   const registry = ch || { check: 'skipped', reasons: [] };
   const profile = registry.profile || {};
+  const inferred = turnoverInferred(v) ? ['turnover_inferred'] : [];
+  v = lift(v);
 
   const notAFit = selfReport(v);
   if (notAFit.length) return { route: 'not_a_fit', reasons: notAFit };
@@ -104,7 +130,7 @@ export function decide(v, ch) {
     return { route: 'not_a_fit', reasons: ['ch_micro_or_dormant'] };
   }
 
-  if (v.capacity === CAPACITY[0]) return { route: 'not_now', reasons: ['capacity_none'] };
+  if (v.capacity === CAPACITY[0]) return { route: 'not_now', reasons: ['capacity_none'].concat(inferred) };
 
   const review = [];
   if (v.turnover_band === NOT_STATED) review.push('turnover_not_stated');
@@ -114,10 +140,10 @@ export function decide(v, ch) {
   else if (registry.check === 'mismatch') review.push.apply(review, registry.reasons);
   if (review.length) {
     if (registry.check === 'off') review.push('register_off');
-    return { route: 'review', reasons: review };
+    return { route: 'review', reasons: inferred.concat(review) };
   }
 
-  const fit = ['turnover_2m_plus', 'trading_2y_plus'];
+  const fit = [inferred.length ? 'turnover_inferred' : 'turnover_2m_plus', 'trading_2y_plus'];
   if (profile.accounts_type) fit.push('ch_' + profile.accounts_type);
   if (registry.check === 'off') fit.push('register_off');
   if (registry.check === 'unchecked') fit.push('register_not_used');

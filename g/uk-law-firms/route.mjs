@@ -13,6 +13,14 @@
  *               register answer that is missing, late or contradicts the form.
  *   fit         everything else.
  *
+ * Changed 22 Oct 2026, two loosenings for firms that are plainly large (the Ackroyd case):
+ *   - A firm that says "I would rather not say" about turnover is routed as £2m to under £5m when it has
+ *     30 or more people AND spends £5,000 or more a month on marketing. The reason "turnover_inferred"
+ *     replaces "turnover_2m_plus". What the visitor wrote is not altered; the lift is made in here.
+ *   - A first-year value under £2,000 is no longer a reason for review for a firm with 30 or more people
+ *     OR £5,000 or more a month on marketing: conveyancing, wills and probate are volume work and a low
+ *     value per matter is normal there. The reason "value_under_2k_volume_firm" is kept as a flag.
+ *
  * A firm that ticks personal injury together with other areas is routed on the other areas; the
  * reason "personal_injury_ticked" is kept so the agreement can leave those matters out.
  */
@@ -22,6 +30,8 @@ const T = OPTIONS.turnover;
 const TRADING = OPTIONS.trading;
 const WORTH = OPTIONS.worth;
 const CAPACITY = OPTIONS.capacity;
+const PEOPLE = OPTIONS.people;
+const SPEND = OPTIONS.spend;
 
 const BELOW_THRESHOLD = new Set([T[0], T[1]]);
 const CLAIMS_THRESHOLD = new Set([T[2], T[3], T[4]]);
@@ -30,6 +40,23 @@ const PI = 'Personal injury';
 
 export const ROUTES = ['fit', 'review', 'not_now', 'not_a_fit'];
 export const PAGE_FOR = { fit: 'book', review: 'review', not_now: 'not-now', not_a_fit: 'not-a-fit' };
+
+/** 30 or more people; and £5,000 or more a month on marketing. */
+const LARGE_HEADCOUNT = (v) => v.employees_or_fee_earners === PEOPLE[3];
+const SPENDS_5K = (v) => v.marketing_spend === SPEND[2] || v.marketing_spend === SPEND[3];
+
+/** Whether turnover was withheld but headcount and marketing budget (both) put the firm well above £2m. */
+export function turnoverInferred(v) {
+  return v.turnover_band === NOT_STATED && LARGE_HEADCOUNT(v) && SPENDS_5K(v);
+}
+
+/** The answers as the rules read them: a withheld turnover that is inferred counts as the £2m to under £5m band. */
+function lift(v) {
+  return turnoverInferred(v) ? Object.assign({}, v, { turnover_band: T[2] }) : v;
+}
+
+/** A low value per matter is normal for a firm that is big or spends £5,000 or more a month on marketing (either). */
+const volumeFirm = (v) => LARGE_HEADCOUNT(v) || SPENDS_5K(v);
 
 const DAY = 86400000;
 const TWO_YEARS = 2 * 365.25 * DAY;
@@ -46,6 +73,7 @@ export function selfReport(v) {
 }
 
 export function needsRegistry(v) {
+  v = lift(v);
   if (selfReport(v).length) return false;
   if (v.capacity === CAPACITY[0] && v.turnover_band !== NOT_STATED) return false;
   return true;
@@ -55,6 +83,7 @@ const none = (t) => !t || t === 'null';
 const isTiny = (t) => t === 'micro-entity' || t === 'dormant';
 
 export function assessProfile(v, profile, now) {
+  v = lift(v);
   const reasons = [];
   const created = profile.created ? Date.parse(profile.created) : NaN;
   const age = Number.isFinite(created) ? (now.getTime() - created) : NaN;
@@ -70,6 +99,8 @@ export function decide(v, ch) {
   const profile = registry.profile || {};
   const areas = ticked(v.practice_areas);
   const flags = areas.includes(PI) && !areas.every((a) => a === PI) ? ['personal_injury_ticked'] : [];
+  const inferred = turnoverInferred(v) ? ['turnover_inferred'] : [];
+  v = lift(v);
 
   const notAFit = selfReport(v);
   if (notAFit.length) return { route: 'not_a_fit', reasons: notAFit };
@@ -77,20 +108,23 @@ export function decide(v, ch) {
     return { route: 'not_a_fit', reasons: ['ch_micro_or_dormant'].concat(flags) };
   }
 
-  if (v.capacity === CAPACITY[0]) return { route: 'not_now', reasons: ['capacity_none'].concat(flags) };
+  if (v.capacity === CAPACITY[0]) return { route: 'not_now', reasons: ['capacity_none'].concat(inferred, flags) };
 
   const review = [];
   if (v.turnover_band === NOT_STATED) review.push('turnover_not_stated');
-  if (v.first_year_value === WORTH[0]) review.push('value_under_2k');
+  if (v.first_year_value === WORTH[0]) {
+    if (volumeFirm(v)) flags.push('value_under_2k_volume_firm');
+    else review.push('value_under_2k');
+  }
   if (registry.check === 'not_found') review.push('ch_not_found');
   else if (registry.check === 'timeout') review.push('ch_timeout');
   else if (registry.check === 'mismatch') review.push.apply(review, registry.reasons);
   if (review.length) {
     if (registry.check === 'off') review.push('register_off');
-    return { route: 'review', reasons: review.concat(flags) };
+    return { route: 'review', reasons: inferred.concat(review, flags) };
   }
 
-  const fit = ['turnover_2m_plus', 'trading_2y_plus'];
+  const fit = [inferred.length ? 'turnover_inferred' : 'turnover_2m_plus', 'trading_2y_plus'];
   if (profile.accounts_type) fit.push('ch_' + profile.accounts_type);
   if (registry.check === 'off') fit.push('register_off');
   if (registry.check === 'unchecked') fit.push('register_not_used');
