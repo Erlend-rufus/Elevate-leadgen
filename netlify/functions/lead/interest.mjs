@@ -31,7 +31,7 @@ const BUDGET_MS = 8000;
 const RATE_LIMIT_PER_HOUR = 12;
 const LEAD_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 /** Which wording the visitor saw. Bump it when the words on the page change, so the record says which they agreed to. */
-export const NOTICE = 'not-a-fit-quote-v1';
+export const NOTICE = 'not-a-fit-quote-v2';
 
 const SECURITY = {
   'Cache-Control': 'no-store',

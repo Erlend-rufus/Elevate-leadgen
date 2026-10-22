@@ -284,7 +284,7 @@ test('the not-a-fit page offers a website quote by one button, hidden until a le
   assert.ok(h.includes('initAsk'), 'the script that shows and posts');
   assert.ok(!/<form/.test(h), 'a button, not a form');
   const t = text('not-a-fit/index.html');
-  assert.ok(t.includes('We email you about this only if you press it.'));
+  assert.ok(t.includes('may email you once about this if we think it could suit your firm. Every email says how to say no.'));
   assert.equal(/\{[A-Z_]+\}/.test(h), false, 'no placeholder left');
   for (const p of ALL.filter((x) => x !== 'not-a-fit/index.html')) {
     assert.equal(built[p].includes('id="ask-btn"'), false, p + ' has no quote button');

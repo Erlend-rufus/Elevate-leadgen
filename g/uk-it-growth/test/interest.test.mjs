@@ -2,7 +2,9 @@
 // Run with: npm run test:g-growth
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { rig, post, bodyOf, GOOD, OPTIONS, ok, HOOK } from './helpers.mjs';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { rig, post, bodyOf, GOOD, OPTIONS, ok, HOOK, ROOT, visible } from './helpers.mjs';
 import { createInterestHandler, NOTICE } from '../../../netlify/functions/lead/interest.mjs';
 import { createStore } from '../../../netlify/functions/lead/store.mjs';
 
@@ -155,6 +157,21 @@ test('an address that presses too often is limited, apart from the application f
   let last;
   for (let i = 0; i < 14; i++) last = await w.press({ campaign: 'uk-it-growth', lead_id: 'l_doesnotexist' });
   assert.equal(last.status, 429);
+});
+
+test('on all three funnels the privacy notice and the not-a-fit page say a person may email once about a website, and nothing still promises "only if you press"', () => {
+  for (const slug of ['uk-it-growth', 'uk-private-hospitals', 'uk-law-firms']) {
+    const page = (p) => visible(readFileSync(join(ROOT, 'public', 'g', slug, p, 'index.html'), 'utf8'));
+    const privacy = page('privacy');
+    assert.ok(privacy.includes('Email you once with an offer for a new website or a monthly marketing retainer, if a person at Elevate Marketing reads your application and thinks it could suit the firm'), slug);
+    assert.ok(privacy.includes('We send it to a work email address only, once, and the email says how to say no.'), slug);
+    assert.ok(privacy.includes('We do not text or call you about this.'), slug);
+    assert.ok(!privacy.includes('we do not email or text you about it unless you press'), slug + ': old promise gone');
+    assert.ok(!privacy.includes('If you do not press it, we do not contact you about this'), slug + ': old promise gone');
+    assert.ok(!/we contact you about that only if you press/.test(privacy), slug + ': old promise gone');
+    assert.ok(privacy.includes('We may email you once about that, and we always do if you press the button on that page.'), slug);
+    assert.ok(page('not-a-fit').includes('may email you once about this if we think it could suit your firm. Every email says how to say no.'), slug);
+  }
 });
 
 test('the log names the lead and a code, never a name or an address', async () => {
