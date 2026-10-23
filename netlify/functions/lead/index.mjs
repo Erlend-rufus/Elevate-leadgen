@@ -312,7 +312,13 @@ export function createHandler(deps = {}) {
 
     /* ---- 8. answer ------------------------------------------------------------ */
     if (!delivered.ok && !stored) return refuse(503, 'lost_lead_refused');
-    log({ code: 'accepted', lead_id: leadId, route: decision.route, delivery: rec.delivery.state, ms: nowFn().getTime() - startMs });
+    /* capi and consent are here so a missing server event can be told apart from one that was never due: consent is
+       reduced to two words on purpose, so nothing the browser typed ends up in the log. */
+    log({
+      code: 'accepted', lead_id: leadId, route: decision.route, delivery: rec.delivery.state,
+      capi: rec.capi.state, capi_reason: rec.capi.reason || '', consent: hidden.consent === 'accepted' ? 'accepted' : 'not_accepted',
+      ms: nowFn().getTime() - startMs,
+    });
     return answer(decision.route);
   }
 

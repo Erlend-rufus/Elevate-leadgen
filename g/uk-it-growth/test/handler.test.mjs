@@ -948,4 +948,12 @@ test('the log carries ids, routes and reason codes and no personal data, in any 
   assert.equal(accepted.route, 'fit');
   assert.equal(accepted.delivery, 'ok');
   assert.equal(typeof accepted.ms, 'number');
+  // The server event is visible in the log: sent or not, and why not, next to the consent it depended on.
+  assert.equal(accepted.consent, 'accepted');
+  assert.equal(typeof accepted.capi, 'string');
+  assert.equal(typeof accepted.capi_reason, 'string');
+  const declined = (await go({}, Object.assign({}, GOOD, { consent: 'declined' }))).r.logs.find((l) => l.code === 'accepted');
+  assert.equal(declined.consent, 'not_accepted');
+  assert.equal(declined.capi, 'skipped');
+  assert.equal(declined.capi_reason, 'no_consent_or_not_qualified');
 });
