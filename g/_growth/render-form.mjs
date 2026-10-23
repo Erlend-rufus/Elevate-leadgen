@@ -38,7 +38,7 @@ function renderInput(step, f, values, errors) {
   err };
 }
 
-function renderBlock(OPTIONS, step, values, errors) {
+function renderBlock(OPTIONS, step, values, errors, otherLabel) {
   if (step.kind === 'long') {
     // A textarea, not an input: the one free-text answer on the form. Same classes, so the
     // styling and the step script treat it like any other typed field.
@@ -70,7 +70,7 @@ function renderBlock(OPTIONS, step, values, errors) {
       `<span class="lf-ind" aria-hidden="true"></span><span>${esc(label)}</span></label>`).join('');
     const other = step.other
       ? `<input class="lf-input" id="o-${step.id}" name="${step.other.field}" type="text" value="${esc(values[step.other.field] || '')}" ` +
-        `placeholder="${esc(step.other.placeholder)}" aria-label="Other" maxlength="${step.other.max}" data-other-for="${esc(step.other.value)}">`
+        `placeholder="${esc(step.other.placeholder)}" aria-label="${esc(otherLabel || 'Other')}" maxlength="${step.other.max}" data-other-for="${esc(step.other.value)}">`
       : '';
     return `<div class="lf-block" data-step="${step.id}">` +
       `<fieldset class="lf-set"${describedBy([step.help ? `h-${name}` : '', err ? `e-${name}` : ''])}>` +
@@ -100,7 +100,7 @@ export function makeRenderForm({ STEPS, OPTIONS }) {
     const v = name === 'campaign' ? cfg.campaign : name === 'page_slug' ? cfg.slug : (hidden[name] || '');
     return `<input type="hidden" name="${name}" value="${esc(v)}">`;
   }).join('');
-  const blocks = STEPS.map((s) => renderBlock(OPTIONS, s, values, errors)).join('\n');
+  const blocks = STEPS.map((s) => renderBlock(OPTIONS, s, values, errors, F.other)).join('\n');
   const gerr = general
     ? `<p class="lf-gerr" role="alert">${ERR_ICON}<span>${esc(F.failed)} ` +
       `<a class="lf-ulink" href="mailto:${esc(cfg.contact.email)}">${esc(cfg.contact.email)}</a></span></p>`

@@ -1,0 +1,83 @@
+{
+  "_comment": "Italy, IT and ICT firms. Everything in this funnel that is a setting rather than copy. Copy is in copy.json (an Italian draft from the UK IT board v56). The form and its validation are in core.mjs, the routing rules in route.mjs. Read g/it-ict-growth/LAUNCH.md before changing anything here or setting live to true.",
+  "slug": "it-ict-growth",
+  "campaign": "it-ict-growth",
+  "path": "/g/it-ict-growth",
+  "_path": "The address the funnel is served at. The build checks it against the redirect and header rules in netlify.toml. Landing page and five outcome pages sit directly under it.",
+  "origin": "https://getelevateleads.com",
+  "_origin": "One host for the whole chain, the same as the UK funnels (decision 23 Oct 2026: the domain stays getelevateleads.com, the one connected to git and Netlify). sessionStorage (the consent choice, the fire-once guard) is per origin, so the ad URL, the form, the booking page and the Calendly forward must all use this one.",
+  "live": false,
+  "_live": "While false the build stays green with items missing and the lead function answers every submission with a 503 and stores nothing. Set true only when LAUNCH.md section 1 is done. The build then refuses to finish while calendlyUrl is empty or the pixel is still the UK one.",
+  "locale": {
+    "lang": "it-IT",
+    "numbers": "it-IT",
+    "rules": "it",
+    "ui": {
+      "legalNav": "Note legali",
+      "calendarMissing": "Il calendario non è ancora collegato. Impostare funnel.calendlyUrl in g/it-ict-growth/config.json.",
+      "calendarOwnPage": "Aprire il calendario in una pagina a parte",
+      "other": "Altro"
+    }
+  },
+  "_locale": "lang is the html lang attribute, numbers the locale the counters format with, rules picks the language of the build's own checks (scripts/build-g-growth.mjs: 'en' is the UK set, 'it' the Italian one), ui the few words the build itself writes into a page.",
+  "variables": {
+    "THRESHOLD": "2 milioni di euro",
+    "OFFER": "analisi della pipeline di 30 minuti",
+    "WORTH": "25.000 euro"
+  },
+  "links": {
+    "privacy": "/g/it-ict-growth/privacy/",
+    "terms": "/g/it-ict-growth/terms/",
+    "_comment": "The pages built from legal.json."
+  },
+  "legal": {
+    "registerCheck": false,
+    "registerSupported": false,
+    "_registerCheck": "Whether the privacy notice and the terms say that the company is checked against a public register. Italy has no such lookup built: keep false. If one is added (Registro Imprese through a provider), set true in the same change and add the provider to the notice."
+  },
+  "contact": {
+    "email": "au@growwithelevate.eu"
+  },
+  "reviewer": {
+    "name": "Aurora"
+  },
+  "funnel": {
+    "pixelId": "1466790598245604",
+    "_pixelId": "PLACEHOLDER: the UK pixel, so that the cookie bar and the page work in review. The build refuses live: true while this is the UK pixel. Make an Italian pixel (or choose on purpose to share the UK one and change the check), then set it here. Also check that META_PIXEL_ID is not set in Netlify: it overrides this value in the server-side event.",
+    "capiTokenEnv": "META_CAPI_TOKEN_IT",
+    "_capiTokenEnv": "The NAME of the Netlify variable that holds this funnel's own Meta Conversions API token (never the token). A Meta token belongs to one pixel, so Italy cannot use META_CAPI_TOKEN (the UK pixel's). With this set, the server event always goes to pixelId and the shared META_PIXEL_ID override is ignored. The build refuses live: true without it.",
+    "applyPath": "/api/lead",
+    "viewEvent": "ViewContent",
+    "qualifiedEvent": "QualifiedForm",
+    "_qualifiedEvent": "A custom event, never the standard Lead. Fires on /book and /review only, with eventID = lead_id, and only after the visitor has accepted. The server sends the same event with the same id (Conversions API), so Meta counts it once.",
+    "calendlyUrl": "",
+    "_calendlyUrl": "The event URL with no query string, from Calendly: Share, Add to website, Inline embed. Empty is allowed only while live is false. Aurora's Calendly event does not exist yet: a person must create it (collective or single event, 30 minutes, 'Elevate Marketing | Commission | IT Italia'), with Calendly's own redirect left off.",
+    "calendlyLeadParam": "utm_content",
+    "_calendlyLeadParam": "The tracking parameter that carries the lead id into Calendly, where the Calendly Zap reads it back (Invitee Created, tracking). Change it here and in the Zap together, never in one place.",
+    "bookingHeights": {
+      "narrow": 1150,
+      "medium": 1000,
+      "wide": 700
+    }
+  },
+  "hiddenFields": [
+    "campaign",
+    "page_slug",
+    "lead_id",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "utm_term",
+    "fbclid",
+    "referrer",
+    "consent",
+    "fbp",
+    "fbc"
+  ],
+  "honeypot": "contact_by_fax",
+  "clickup": {
+    "listId": "",
+    "_comment": "The ClickUp list the daily reconciliation compares against. EMPTY until the list exists: a person duplicates 'IT - UK - Commision' in the CRM folder (the statuses and fields come with it) and the id is put here and in Zap 1 and Zap 2. With it empty the daily check skips ClickUp for this funnel."
+  }
+}

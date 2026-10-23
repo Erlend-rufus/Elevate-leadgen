@@ -23,7 +23,14 @@ state the workflows are in (switched on or off) is also kept there, not here.
    node g/_growth/zapier/zap2.test.mjs        # 201 checks
    node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
    node g/_growth/zapier/zap1.test.mjs        # 235 checks
+   node g/_growth/zapier/zap1-it.test.mjs     # 198 checks, Italy (after zap1's build)
+   node g/_growth/zapier/zap2-it.test.mjs     # 93 checks, Italy (after zap2's build)
    ```
+
+   The two `-it` tests build a copy of the source with test values put into the Italy entry (the shipped entry has no
+   list, channel or ids yet) and import that copy from `out/`. They also check that the UK output is unchanged in the
+   same build. A strict type check also passes with `tsc --strict --noEmit` against stub declarations for the two
+   Zapier packages (esbuild strips types without checking them, Zapier compiles the file for real).
 
    `truth.json` is a snapshot of the ClickUp field and option ids the tests check the mappings against.
    Refresh it when a field or option in ClickUp changes.
@@ -46,6 +53,16 @@ ClickUp list, made by duplicating `IT - UK - Commision`, so all three lists shar
 option ids. A dropdown is set only when the form's band fits inside one ClickUp band, which leaves IT
 Specialism, Team Size and Contract Value empty for health and law. Both workflows were published after
 draft runs against all three lists (create, link on `l_` and `d_` ids, move from `ny lead`).
+
+Italy (`it-ict-growth`, 23 Oct 2026) was added the same way and is the first entry that differs from the UK in
+more than ids. What an entry can say beyond the ids (all optional, the UK entries say none of it and behave as
+before): `lang: "en"` (ClickUp description, comments and Slack in English, through `tr()` and the `EN` table; the
+labels and Norwegian texts stay the source), `reviewer` (who reads the not-a-fit leads; ClickUp id 0 or no Slack id
+means nobody is assigned or pinged), `slackChannel` (empty fails the run on purpose), `register: false` (no company
+register rows or Slack line), `phonePrefix`, `otherSpecialism`, `reasonText` (zap 1), `zones` (zap 2, the time zones
+the meeting time is written in). **The Italy entries are in the source but are not published in Zapier**: the list,
+the channel, Aurora's ids and the Calendly event type do not exist yet, and the shared workflows carry live UK leads.
+Publish when `g/it-ict-growth/LAUNCH.md` section 4 says so, after a draft run against a UK test lead.
 
 ## Conventions
 

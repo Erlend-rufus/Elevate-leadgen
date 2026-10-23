@@ -1,0 +1,273 @@
+{
+  "_comment": "Page copy for /g/it-ict-growth (Italy, IT and ICT firms). An Italian draft of the UK IT board v56 (g/uk-it-growth/copy.json), sentence for sentence, with one change that is not a translation: the cases are the three UK consultancies and the page says so. A native speaker has to read it before launch (LAUNCH.md). {THRESHOLD}, {OFFER}, {WORTH} and {EMAIL} are filled from config.json at build time. The build refuses dashes, exclamation marks, a telephone number and a commission rate or amount (see scripts/build-g-growth.mjs, the Italian set of rules).",
+  "review": {
+    "by": "",
+    "on": "",
+    "_note": "Name of the native Italian speaker who read this page and the date. Empty until then; the build refuses live: true with it empty."
+  },
+  "meta": {
+    "title": "Elevate Marketing per aziende IT e ICT in Italia",
+    "description": "Conversazioni commerciali per aziende IT e ICT italiane, da campagne che gestiamo noi. Poche domande per capire se possiamo lavorare insieme."
+  },
+  "topline": "Per aziende IT e ICT italiane con fatturato da {THRESHOLD} in su",
+  "cta": "Verificate se possiamo lavorare insieme",
+  "hero": {
+    "h1a": "Nel Regno Unito abbiamo già riempito la pipeline di società di consulenza IT.",
+    "h1b": "Ecco com’è andata.",
+    "ingress": [
+      {
+        "t": "Tre società britanniche: Ignite Consulting, Be | Shaping the Future e Crux IT Consulting. ",
+        "cls": ""
+      },
+      {
+        "t": "424 lead qualificati",
+        "cls": "em"
+      },
+      {
+        "t": " in totale, da campagne che abbiamo gestito noi. Ora portiamo lo stesso metodo in Italia: se la vostra azienda sta crescendo e volete più conversazioni giuste, è il lavoro che facciamo.",
+        "cls": ""
+      }
+    ],
+    "micro": "Poche domande. Accogliamo solo aziende che pensiamo di poter aiutare."
+  },
+  "cases": {
+    "h2": "Tre società di consulenza IT britanniche. I loro numeri.",
+    "items": [
+      {
+        "name": "Ignite Consulting",
+        "sub": "Consulenza su innovazione e cambiamento (Regno Unito)",
+        "figs": [
+          {
+            "value": "97",
+            "label": "lead qualificati"
+          },
+          {
+            "value": "40%",
+            "label": "tasso di chiusura",
+            "emph": true
+          },
+          {
+            "value": "4",
+            "label": "mesi"
+          }
+        ]
+      },
+      {
+        "name": "Be | Shaping the Future",
+        "sub": "Consulenza di management e tecnologia (Regno Unito)",
+        "figs": [
+          {
+            "value": "210",
+            "label": "lead qualificati"
+          },
+          {
+            "value": "37%",
+            "label": "tasso di chiusura",
+            "emph": true
+          },
+          {
+            "value": "10",
+            "label": "mesi"
+          }
+        ]
+      },
+      {
+        "name": "Crux IT Consulting",
+        "sub": "Servizi IT e consulenza eLearning (Regno Unito)",
+        "figs": [
+          {
+            "value": "117",
+            "label": "lead qualificati"
+          },
+          {
+            "value": "65%",
+            "label": "tasso di chiusura",
+            "emph": true
+          },
+          {
+            "value": "6",
+            "label": "mesi"
+          }
+        ]
+      }
+    ],
+    "note": "Sono tre aziende britanniche, non italiane: questi risultati non sono stati ottenuti in Italia. Il tasso di chiusura è la quota di lead qualificati che ogni cliente ha dichiarato come vinta. Cifre tratte dai registri di ciascun cliente. Nomi e dati pubblicati con il permesso scritto di ciascun cliente."
+  },
+  "fit": {
+    "h2": "È per aziende che crescono, non per aziende in difficoltà.",
+    "body": "Le aziende con cui lavoriamo meglio ottengono già lavoro con il passaparola e la reputazione. Quello che manca loro è un secondo canale che porti lo stesso tipo di cliente, in modo prevedibile, senza che i soci debbano fare tutta la vendita.",
+    "yesTitle": "Funziona se",
+    "yes": [
+      "Gestite un’azienda IT o ICT italiana con fatturato di {THRESHOLD} o più e almeno due anni di attività",
+      "Un nuovo cliente vale per voi {WORTH} o più nel primo anno",
+      "Avete una funzione commerciale, anche solo il fondatore, in grado di rispondere entro due giorni lavorativi",
+      "Avete capacità per nuovi clienti nei prossimi tre mesi"
+    ],
+    "noTitle": "Non funziona se",
+    "no": [
+      "Il fatturato è inferiore a {THRESHOLD} o l’azienda ha meno di due anni",
+      "Vendete prodotti o licenze software invece di servizi",
+      "Vi servono lead per arrivare alla fine del trimestre",
+      "Volete lead senza nessuno che li segua"
+    ],
+    "note": "Verifichiamo i dati che ci date dopo la candidatura e confermiamo il fatturato con voi durante la chiamata."
+  },
+  "pay": {
+    "h2": "Si paga quando un contratto si chiude. I nostri incentivi sono i vostri.",
+    "body": "Nessun canone fisso, nessun costo di avvio, nessuna durata minima. Fatturiamo una commissione sui contratti che si chiudono grazie alle campagne che gestiamo. La percentuale dipende da quanto vale un cliente per voi, quindi la concordiamo prima che parta qualsiasi cosa. Non la pubblichiamo, perché non è uguale per due aziende.",
+    "open": [
+      "Una vendita è un contratto firmato o un ordine d’acquisto con un nuovo cliente arrivato da un lead prodotto dalle nostre campagne. I clienti esistenti e quelli arrivati da altre fonti non contano.",
+      "Il vostro CRM è il registro. Ogni mese confermate quali contratti chiusi vengono dalle nostre campagne, e fatturiamo solo quelli.",
+      "Fatturiamo ogni mese, per i contratti chiusi in quel mese. Il pagamento è a 14 giorni.",
+      "Se non si chiude nulla, non fatturiamo nulla.",
+      "Il budget pubblicitario è separato. Lo pagate direttamente alle piattaforme e lo concordiamo con voi prima che parta qualsiasi cosa."
+    ]
+  },
+  "keep": {
+    "h2": "I vostri account. I vostri dati. Il vostro team commerciale.",
+    "items": [
+      {
+        "t": "Gli account pubblicitari sono vostri",
+        "p": "Le campagne girano in account pubblicitari di vostra proprietà. Pagate direttamente le piattaforme, senza ricarichi da parte nostra."
+      },
+      {
+        "t": "I dati sono vostri",
+        "p": "Lead, risultati e vendite sono tracciati nel vostro CRM. Se smettiamo di lavorare insieme, tenete tutto."
+      },
+      {
+        "t": "Il vostro team fa gli incontri",
+        "p": "Non sostituiamo il vostro team commerciale. Riempiamo la sua agenda di conversazioni adatte."
+      }
+    ]
+  },
+  "measure": {
+    "h2": "Cosa ottimizziamo",
+    "rows": [
+      {
+        "metric": "Impressioni",
+        "status": "Misurate, non sono un obiettivo"
+      },
+      {
+        "metric": "Clic",
+        "status": "Misurati, non sono un obiettivo"
+      },
+      {
+        "metric": "Lead",
+        "status": "Misurati, non sono un obiettivo"
+      },
+      {
+        "metric": "Incontri qualificati",
+        "status": "Ciò verso cui lavoriamo",
+        "key": true
+      },
+      {
+        "metric": "Contratti chiusi",
+        "status": "Ciò su cui siamo pagati",
+        "key": true
+      }
+    ]
+  },
+  "meeting": {
+    "h2": "Il primo incontro: {OFFER}",
+    "body": "Non facciamo presentazioni commerciali. Ci sediamo con i vostri numeri e capiamo cosa servirebbe per raggiungere l’obiettivo dell’anno prossimo.",
+    "steps": [
+      {
+        "t": "Prima della chiamata",
+        "p": "Ci dite il fatturato, l’obiettivo per l’anno prossimo e quanto vale un nuovo cliente tipico."
+      },
+      {
+        "t": "Durante la chiamata",
+        "p": "Confermiamo insieme quattro numeri: il fatturato dell’anno scorso, l’obiettivo del prossimo, quanto vale un nuovo cliente nel primo anno e quanti incontri commerciali diventano clienti."
+      },
+      {
+        "t": "Entro un giorno lavorativo",
+        "p": "Ricevete un foglio di una pagina con i calcoli: quanti nuovi clienti al mese servono, quanti incontri commerciali al mese comporta e come si confronta con la vostra pipeline di oggi."
+      }
+    ],
+    "closing": "Il foglio resta vostro, che lavoriamo insieme o no. Contiene solo i vostri numeri. Nessun preventivo, nessuna percentuale di commissione, nessuna promessa."
+  },
+  "faq": {
+    "h2": "Risposte dirette",
+    "items": [
+      {
+        "q": "Funzionerà con le nostre dimensioni?",
+        "a": "Il meccanismo è lo stesso: un’offerta chiara, un acquirente chiaro e campagne tracciate fino ai contratti chiusi. Con le dimensioni cambiano il budget e il ciclo di vendita, e li pianifichiamo entrambi nella prima chiamata."
+      },
+      {
+        "q": "In che cosa è diverso da un’agenzia a canone mensile?",
+        "a": "Un canone si paga che si chiuda qualcosa o no. La nostra fattura dipende dalla chiusura di un contratto, quindi guadagniamo solo quando guadagna il vostro team commerciale."
+      },
+      {
+        "q": "Di chi sono gli account pubblicitari?",
+        "a": "Vostri. Noi lavoriamo al loro interno. Se ci fermiamo, restano a voi."
+      },
+      {
+        "q": "Garantite dei risultati?",
+        "a": "No. Possiamo mostrarvi cosa abbiamo fatto, i calcoli e il metodo. Non possiamo promettere un numero di incontri o di contratti."
+      },
+      {
+        "q": "E se volessimo smettere?",
+        "a": "Non c’è una durata minima. Potete interrompere con 30 giorni di preavviso e tenete account e dati."
+      }
+    ]
+  },
+  "footer": {
+    "text": "Elevate Marketing è gestito da EngeCo AS, società norvegese, numero di organizzazione 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norvegia.",
+    "privacy": "Informativa privacy",
+    "terms": "Termini del sito"
+  },
+  "consent": {
+    "text": "Usiamo un cookie di Meta per misurare se la nostra pubblicità funziona. Non viene impostato finché non scegliete. La pagina funziona allo stesso modo in entrambi i casi.",
+    "privacy": "Informativa privacy",
+    "accept": "Accetta",
+    "decline": "Rifiuta",
+    "label": "Scelta sui cookie"
+  },
+  "form": {
+    "heading": "Verificate se possiamo lavorare insieme",
+    "under": "Poche domande. Accogliamo solo aziende che pensiamo di poter aiutare.",
+    "back": "Indietro",
+    "next": "Avanti",
+    "submit": "Invia",
+    "cta": "Verificate se possiamo lavorare insieme",
+    "retry": "Riprovare",
+    "sending": "Controlliamo alcuni dettagli. Ci vogliono pochi secondi.",
+    "failed": "Qualcosa è andato storto da parte nostra. Le risposte sono ancora qui. Riprovare, oppure scrivere a",
+    "consent": "Usiamo i vostri dati per rispondere a questa candidatura, fissare una chiamata e conservarne traccia. Vi contattiamo per email, e con un SMS se ci date un numero di cellulare. Se ci dite di non avere capacità, vi ricontatteremo una sola volta, tra tre mesi.",
+    "privacy": "Informativa privacy",
+    "other": "Altro"
+  },
+  "outcomes": {
+    "book": {
+      "h": "Grazie. Scegliete un orario adatto a voi.",
+      "p": "Scegliete uno slot per l’{OFFER}. Bastano i vostri numeri.",
+      "small": "Nessun orario va bene? Rispondete all’email di conferma e ne troveremo uno."
+    },
+    "takk": {
+      "h": "L’appuntamento è confermato.",
+      "p": "Vi invieremo una conferma e una breve nota su cosa tenere a portata di mano: il fatturato dell’anno scorso, l’obiettivo per il prossimo e quanto vale un cliente tipico."
+    },
+    "review": {
+      "h": "Grazie. Vi risponderemo entro un giorno lavorativo.",
+      "p": "Vogliamo controllare alcuni dettagli prima di proporvi un orario."
+    },
+    "not-now": {
+      "h": "Grazie. Tornate quando avrete capacità.",
+      "p": "Se ora siete al limite, vi chiederemo di nuovo tra tre mesi."
+    },
+    "not-a-fit": {
+      "h": "Grazie. Al momento non siamo la scelta giusta per voi.",
+      "p": "Lavoriamo con aziende IT e ICT italiane con fatturato di {THRESHOLD} o più e almeno due anni di attività. Se la situazione cambia, ci farebbe piacere sentirvi.",
+      "note": "Se abbiamo frainteso le vostre risposte, scrivete a {EMAIL} e riesamineremo la candidatura.",
+      "interest": {
+        "h": "Cercate invece un nuovo sito web?",
+        "p": "Se volete un preventivo a prezzo fisso per un nuovo sito web, o un canone mensile per il vostro marketing, premete il pulsante e vi scriveremo una sola volta per email, entro due giorni lavorativi. L’email spiega come non ricevere altro.",
+        "button": "Sì, inviatemi un preventivo",
+        "done": "Grazie. Vi scriveremo da {EMAIL} entro due giorni lavorativi.",
+        "error": "Non è andata a buon fine. Scrivete a {EMAIL} chiedendo un preventivo e ve lo invieremo.",
+        "noscript": "Per chiedere un preventivo per un nuovo sito web, scrivete a {EMAIL}.",
+        "privacy": "Come usiamo i vostri dati"
+      }
+    }
+  }
+}

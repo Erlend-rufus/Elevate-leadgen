@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Informativa privacy | Elevate Marketing</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#F7F5F0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/g/_assets/fonts/geist-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/g/_assets/fonts/fraunces-v1.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Fraunces;src:url(/g/_assets/fonts/fraunces-v1.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:Geist;src:url(/g/_assets/fonts/geist-v1.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@property --fs-h1      { syntax: '<length>'; inherits: true; initial-value: 34px; }
+@property --fs-h1-page { syntax: '<length>'; inherits: true; initial-value: 30px; }
+@property --fs-h2      { syntax: '<length>'; inherits: true; initial-value: 26px; }
+@property --fs-form-q  { syntax: '<length>'; inherits: true; initial-value: 22px; }
+@property --fs-client  { syntax: '<length>'; inherits: true; initial-value: 21px; }
+@property --fs-faq     { syntax: '<length>'; inherits: true; initial-value: 19px; }
+@property --fs-lead    { syntax: '<length>'; inherits: true; initial-value: 18px; }
+@property --fs-body    { syntax: '<length>'; inherits: true; initial-value: 18px; }
+@property --gutter     { syntax: '<length>'; inherits: true; initial-value: 24px; }
+@property --section-y  { syntax: '<length>'; inherits: true; initial-value: 56px; }
+@property --hero-top   { syntax: '<length>'; inherits: true; initial-value: 48px; }
+@property --hero-bottom{ syntax: '<length>'; inherits: true; initial-value: 64px; }
+@property --column-gap { syntax: '<length>'; inherits: true; initial-value: 40px; }
+@property --logo-header{ syntax: '<length>'; inherits: true; initial-value: 48px; }
+@property --logo-footer{ syntax: '<length>'; inherits: true; initial-value: 40px; }
+@property --header-pad { syntax: '<length>'; inherits: true; initial-value: 18px; }
+@property --footer-pad { syntax: '<length>'; inherits: true; initial-value: 48px; }
+@property --card-pad   { syntax: '<length>'; inherits: true; initial-value: 22px; }
+@property --step-col   { syntax: '<length>'; inherits: true; initial-value: 32px; }
+:root,.em-fluid{
+--fs-h1:       clamp(34px, 4.6vw, 64px);
+--fs-h1-page:  clamp(30px, 3.8vw, 52px);
+--fs-h2:       clamp(26px, 2.9vw, 40px);
+--fs-form-q:   clamp(22px, 2.1vw, 28px);
+--fs-client:   clamp(21px, 1.8vw, 25px);
+--fs-faq:      clamp(19px, 1.6vw, 22px);
+--fs-lead:     clamp(18px, 1.45vw, 20px);
+--fs-body:     clamp(18px, 1.3vw, 19px);
+--gutter:      clamp(24px, 5vw, 64px);
+--section-y:   clamp(56px, 7vw, 96px);
+--hero-top:    clamp(48px, 6vw, 88px);
+--hero-bottom: clamp(64px, 8vw, 120px);
+--column-gap:  clamp(40px, 6vw, 96px);
+--logo-header: clamp(48px, 3.8vw, 56px);
+--logo-footer: clamp(40px, 3.2vw, 46px);
+--header-pad:  clamp(18px, 2vw, 28px);
+--footer-pad:  clamp(48px, 6vw, 72px);
+--card-pad:    clamp(22px, 3.6vw, 40px);
+--step-col:    clamp(32px, 4vw, 56px);
+}
+@supports (width:1cqw){
+:root,.em-fluid{
+--fs-h1:       clamp(34px, 4.6cqw, 64px);
+--fs-h1-page:  clamp(30px, 3.8cqw, 52px);
+--fs-h2:       clamp(26px, 2.9cqw, 40px);
+--fs-form-q:   clamp(22px, 2.1cqw, 28px);
+--fs-client:   clamp(21px, 1.8cqw, 25px);
+--fs-faq:      clamp(19px, 1.6cqw, 22px);
+--fs-lead:     clamp(18px, 1.45cqw, 20px);
+--fs-body:     clamp(18px, 1.3cqw, 19px);
+--gutter:      clamp(24px, 5cqw, 64px);
+--section-y:   clamp(56px, 7cqw, 96px);
+--hero-top:    clamp(48px, 6cqw, 88px);
+--hero-bottom: clamp(64px, 8cqw, 120px);
+--column-gap:  clamp(40px, 6cqw, 96px);
+--logo-header: clamp(48px, 3.8cqw, 56px);
+--logo-footer: clamp(40px, 3.2cqw, 46px);
+--header-pad:  clamp(18px, 2cqw, 28px);
+--footer-pad:  clamp(48px, 6cqw, 72px);
+--card-pad:    clamp(22px, 3.6cqw, 40px);
+--step-col:    clamp(32px, 4cqw, 56px);
+}
+}
+:root{
+color-scheme: light;
+--paper:#F7F5F0; --paper-dark:#EFEDE7; --white:#FFFFFF;
+--hairline:#CFCBC0; --hairline-soft:#E3E0D8; --field-border:#8B909C;
+--ink:#10141C; --ink-hover:#2A3140; --muted:#4A5162; --navy:#0A1628; --error:#B3261E;
+--surface:var(--paper); --surface-alt:var(--paper-dark); --surface-inverse:var(--navy);
+--text:var(--ink); --text-body:var(--ink); --text-muted:var(--muted);
+--line:var(--hairline); --line-section:var(--ink);
+--action:var(--ink); --action-hover:var(--ink-hover); --on-action:#FFFFFF; --focus:var(--ink);
+--font-display:Fraunces,"Iowan Old Style",Georgia,serif;
+--font-body:Geist,"Geist Sans",system-ui,sans-serif;
+--radius-button:2px; --radius-card:4px;
+--stroke-hairline:1px; --stroke-field:1.5px; --stroke-progress:3px; --stroke-focus:3px; --focus-offset:3px;
+--shadow-banner:0 8px 24px -8px rgba(16,20,28,.25);
+--container:1200px; --touch-min:44px; --control-min:56px;
+--space-8:8px; --space-12:12px; --space-14:14px; --space-16:16px;
+--space-20:20px; --space-24:24px; --space-28:28px; --space-32:32px;
+--space-40:40px; --space-48:48px; --space-56:56px; --space-64:64px;
+--space-72:72px; --space-96:96px;
+}
+[data-theme="marine"]{
+--surface:var(--navy); --surface-alt:var(--navy); --surface-inverse:var(--paper);
+--text:#FFFFFF; --text-body:rgba(255,255,255,.86); --text-muted:rgba(255,255,255,.7);
+--line:rgba(255,255,255,.24); --line-section:rgba(255,255,255,.24);
+--action:#FFFFFF; --action-hover:rgba(255,255,255,.86); --on-action:var(--ink); --focus:#FFFFFF;
+background:var(--surface); color:var(--text-body);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-variation-settings:"opsz" 14}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--surface);color:var(--text-body);font-family:var(--font-body);font-weight:400;font-size:var(--fs-body);line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4{margin:0;font-family:var(--font-display);font-weight:400;color:var(--text)}
+::selection{background:var(--ink);color:var(--white)}
+[hidden]{display:none!important}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+img{max-width:100%}
+.lg{display:block;width:auto;max-width:none;height:var(--logo-header)}
+.ft .lg{height:var(--logo-footer)}
+.pg{container-type:inline-size;container-name:pg;position:relative;background:var(--surface)}
+.pg-in{font-family:var(--font-body);font-weight:400;font-size:var(--fs-body);line-height:1.55;color:var(--text-body);-webkit-font-smoothing:antialiased}
+.wrap{width:100%;max-width:calc(var(--container) + 2 * var(--gutter));margin-inline:auto;padding-inline:var(--gutter)}
+.btn{display:inline-flex;align-items:center;justify-content:center;width:100%;max-width:440px;min-height:var(--control-min);padding:14px 20px;border:0;border-radius:var(--radius-button);background:var(--action);color:var(--on-action);font-family:var(--font-body);font-weight:500;font-size:17px;line-height:1.25;text-decoration:none;text-align:center;text-wrap:balance;cursor:pointer}
+a.btn,.pg a.btn{color:var(--on-action)}
+.btn:hover{background:var(--action-hover)}
+.btn[disabled]{opacity:.75;cursor:default}
+.btn:focus-visible,.pg a:focus-visible{outline:var(--stroke-focus) solid var(--focus);outline-offset:var(--focus-offset)}
+.hd{background:var(--surface);border-bottom:1px solid var(--line)}
+.hd .wrap{display:flex;align-items:center;padding-block:var(--header-pad)}
+.ft{padding-block:var(--footer-pad)}
+.ft .wrap{display:flex;flex-direction:column;gap:var(--space-28)}
+.ft-top{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:var(--space-28) 64px}
+.ft-text{margin:0;flex:1 1 320px;max-width:560px;font-size:17px;line-height:1.5;color:var(--text-body)}
+.ft-text a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.ft-text a:hover{color:var(--text-muted)}
+.ft-links{display:flex;gap:var(--space-28);font-size:17px}
+.ft-links a{display:inline-flex;align-items:center;min-height:var(--touch-min);color:var(--text)}
+.ft-links a:hover{color:var(--text-muted)}
+.ft a:focus-visible{outline:var(--stroke-focus) solid var(--focus);outline-offset:var(--focus-offset)}
+.o{container-type:inline-size;container-name:o;display:flex;flex-direction:column;min-height:100vh;min-height:100svh;background:var(--surface)}
+.o-in{--cal-h:1150px;flex:1 0 auto;display:flex;flex-direction:column;color:var(--text-body);font-family:var(--font-body);font-weight:400;font-size:var(--fs-body);line-height:1.55;-webkit-font-smoothing:antialiased}
+@container o (min-width:481px){.o-in{--cal-h:1000px}}
+@container o (min-width:769px){.o-in{--cal-h:700px}}
+.o a:focus-visible{outline:var(--stroke-focus) solid var(--focus);outline-offset:var(--focus-offset)}
+.o-main{flex:1 0 auto;padding-block:var(--hero-top) var(--section-y)}
+.o-grid{display:flex;flex-direction:column;gap:var(--space-20);max-width:820px;animation:o-in .32s cubic-bezier(.2,.7,.2,1) both}
+.o--book .o-grid{max-width:none}
+.o-h1{margin:0;font-family:var(--font-display);font-weight:400;font-size:var(--fs-h1-page);line-height:1.12;letter-spacing:-.02em;color:var(--text);text-wrap:balance}
+.o-soft{display:block}
+.o-p{margin:0;max-width:640px;font-size:var(--fs-lead);line-height:1.55;color:var(--text-body);text-wrap:pretty}
+.o-cal-wrap{margin-top:var(--space-20)}
+.o-cal{height:var(--cal-h);overflow:hidden;background:var(--white);border:1px solid var(--hairline);border-radius:var(--radius-card)}
+.o-cal .calendly-inline-widget{width:100%;min-width:320px;height:100%}
+.o-cal iframe{display:block;width:100%;height:100%;border:0}
+.o-small{margin:var(--space-16) 0 0;max-width:46em;font-size:15px;line-height:1.5;color:var(--text-muted);text-wrap:pretty}
+.o-note{margin:0;max-width:640px;font-size:var(--fs-body);line-height:1.55;color:var(--text-muted);text-wrap:pretty}
+.o-note a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.o-note a:hover{color:var(--text-muted)}
+.o-ask{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-16);max-width:640px;margin-top:var(--space-20);padding-top:var(--space-32);border-top:var(--stroke-hairline) solid var(--hairline)}
+.o-ask[hidden]{display:none}
+.o-ask-h{margin:0;font-size:var(--fs-lead);line-height:1.25;letter-spacing:-.01em;color:var(--text);text-wrap:balance}
+.o-ask-p{margin:0;font-size:var(--fs-body);line-height:1.55;color:var(--text-body);text-wrap:pretty}
+.o-ask .o-small{margin:0}
+.o-ask .o-small a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.o-ask-msg:empty{display:none}
+.o-ask-msg{font-size:var(--fs-body);color:var(--text)}
+.o-ask-msg:focus{outline:none}
+@container o (min-width:1024px){
+.o--book .o-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);grid-template-rows:auto 1fr;grid-template-areas:"head cal" "body cal";column-gap:var(--column-gap);row-gap:var(--space-20);align-items:start}
+.o--book .o-h1{grid-area:head}
+.o--book .o-p{grid-area:body}
+.o--book .o-cal-wrap{grid-area:cal;margin-top:0}
+}
+@keyframes o-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.o-grid{animation:none}}
+.cb{position:fixed;left:0;right:0;bottom:0;z-index:50;box-sizing:border-box;width:100%;padding:var(--space-16) var(--gutter);padding-bottom:max(var(--space-16),env(safe-area-inset-bottom));font-family:var(--font-body);font-weight:400;pointer-events:none;animation:cb-in .24s cubic-bezier(.2,.7,.2,1) both}
+.cb *{box-sizing:border-box}
+.cb-in{pointer-events:auto;display:flex;flex-direction:column;gap:var(--space-16);width:100%;max-width:620px;padding:var(--space-20);background:var(--white);color:var(--ink);border:1px solid var(--field-border);border-radius:var(--radius-card);box-shadow:var(--shadow-banner)}
+.cb-t{margin:0;font-size:16px;line-height:1.5;color:var(--ink)}
+.cb-t a{color:var(--ink);text-underline-offset:3px}
+.cb-t a:focus-visible{outline:var(--stroke-focus) solid var(--focus);outline-offset:var(--focus-offset)}
+.cb-btns{display:flex;gap:var(--space-12)}
+.cb-btn{flex:1 1 0;min-width:0;min-height:52px;padding:12px 28px;border:var(--stroke-field) solid var(--ink);border-radius:var(--radius-button);background:var(--white);color:var(--ink);font-family:var(--font-body);font-weight:600;font-size:17px;line-height:1.2;cursor:pointer}
+.cb-btn:hover{background:var(--ink);color:var(--white)}
+.cb-btn:focus-visible{outline:var(--stroke-focus) solid var(--focus);outline-offset:var(--focus-offset)}
+html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
+@keyframes cb-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.cb{animation:none}}
+@media print{.cb{display:none}}
+.lg-main{flex:1 0 auto;padding-block:var(--hero-top) var(--section-y)}
+.lg-doc{display:flex;flex-direction:column;gap:var(--space-16);max-width:760px}
+.lg-h1{margin:0;font-family:var(--font-display);font-weight:400;font-size:var(--fs-h1-page);line-height:1.12;letter-spacing:-.02em;color:var(--text);text-wrap:balance}
+.lg-date{margin:0;font-size:15px;line-height:1.5;color:var(--text-muted)}
+.lg-doc h2{margin:var(--space-24) 0 0;font-size:var(--fs-form-q);line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
+.lg-doc p{margin:0;font-size:var(--fs-body);line-height:1.6;color:var(--text-body);text-wrap:pretty}
+.lg-doc ul{margin:0;padding:0 0 0 1.25em;list-style:disc;display:flex;flex-direction:column;gap:var(--space-8);font-size:var(--fs-body);line-height:1.55;color:var(--text-body)}
+.lg-doc a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.lg-doc a:hover{color:var(--text-muted)}
+.lg-table{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--hairline);font-size:16px;line-height:1.5;color:var(--text-body)}
+.lg-table th,.lg-table td{padding:12px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--hairline-soft)}
+.lg-table thead th{font-weight:600;color:var(--text);background:var(--paper-dark)}
+.lg-table tbody th{width:30%;font-weight:500;color:var(--text)}
+.lg-table tbody tr:last-child th,.lg-table tbody tr:last-child td{border-bottom:0}
+.lg-btn{appearance:none;cursor:pointer;min-height:var(--touch-min);padding:10px 20px;border:var(--stroke-field) solid var(--ink);border-radius:var(--radius-button);background:var(--white);color:var(--ink);font-family:var(--font-body);font-weight:600;font-size:17px;line-height:1.2}
+.lg-btn:hover{background:var(--ink);color:var(--white)}
+.lg-btn:focus-visible{outline:var(--stroke-focus) solid var(--focus);outline-offset:var(--focus-offset)}
+@container o (max-width:700px){
+.lg-table,.lg-table tbody,.lg-table tr,.lg-table th,.lg-table td{display:block;width:auto}
+.lg-table thead{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.lg-table tbody tr{padding:8px 0;border-bottom:1px solid var(--hairline)}
+.lg-table tbody tr:last-child{border-bottom:0}
+.lg-table th,.lg-table td{padding:6px 16px;border-bottom:0}
+.lg-table tbody th{width:auto;padding-top:10px}
+.lg-table td[data-label]::before{content:attr(data-label);display:block;font-size:14px;font-weight:600;color:var(--text-muted)}
+}
+@media print{.lg-btn{display:none}}
+</style>
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
+<script src="/js/consent.js?v=4" data-pixel="1466790598245604" data-banner="off"></script>
+</head>
+<body>
+<div class="o"><div class="o-in em-fluid">
+  <header class="hd"><div class="wrap"><picture><source srcset="/g/_assets/logo-ink.webp" type="image/webp"><img class="lg" src="/g/_assets/logo-ink.png" width="418" height="168" alt="Elevate Marketing"></picture></div></header>
+  <main class="lg-main" id="main">
+    <div class="wrap">
+      <article class="lg-doc">
+        <h1 class="lg-h1">Informativa privacy</h1>
+        <p class="lg-date">Ultimo aggiornamento: 23 ottobre 2026</p>
+        <p>Questa informativa spiega come Elevate Marketing usa i dati personali sulle sue pagine di campagna per aziende IT e ICT italiane, nei passaggi di candidatura e di prenotazione che le seguono. Il sito principale getelevateleads.com ha una propria informativa.</p>
+        <h2>1. Chi siamo</h2>
+        <p>Elevate Marketing è il nome commerciale di EngeCo AS, una società norvegese (numero di organizzazione 924 490 926) con sede in Midtfjellet 66, 5363 Ågotnes, Norvegia. EngeCo AS decide come vengono usati i vostri dati: nel linguaggio del GDPR è il titolare del trattamento. Ci potete raggiungere all’indirizzo <a href="mailto:au@growwithelevate.eu">au@growwithelevate.eu</a>. Non abbiamo un responsabile della protezione dei dati: la persona che gestisce quell’indirizzo risponde alle richieste.</p>
+        <h2>2. Quali dati raccogliamo</h2>
+        <table class="lg-table"><caption class="vh">Quali dati raccogliamo, e quando</caption>
+        <thead><tr><th scope="col">Quando</th><th scope="col">Cosa raccogliamo</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Inviate una candidatura su una delle nostre pagine</th><td data-label="Cosa raccogliamo">Le risposte sulla vostra azienda (sito web, nome dell’azienda, area di lavoro, fatturato, anni di attività, dimensione, spesa di marketing, valore di un cliente tipico, durata del ciclo di vendita, un obiettivo facoltativo, chi decide, capacità, cosa volete ottenere dall’incontro), nome, cognome, ruolo ed email aziendale, e un numero di cellulare se lo indicate.</td></tr>
+          <tr><th scope="row">Premete il pulsante del preventivo sulla pagina che dice che non possiamo aiutarvi</th><td data-label="Cosa raccogliamo">Un’annotazione che l’avete premuto, e quando, conservata con la candidatura. Non viene chiesto nient’altro.</td></tr>
+          <tr><th scope="row">Prenotate una chiamata</th><td data-label="Cosa raccogliamo">Il vostro nome, l’indirizzo email e l’orario scelto, conservati da Calendly e trasmessi a noi.</td></tr>
+          <tr><th scope="row">Ci scrivete o ci parlate</th><td data-label="Cosa raccogliamo">Il contenuto delle email e dei messaggi, e le nostre note delle chiamate.</td></tr>
+          <tr><th scope="row">Visitate una pagina</th><td data-label="Cosa raccogliamo">Il vostro indirizzo IP, i dati del dispositivo e del browser, la pagina da cui arrivate e i parametri di campagna dell’indirizzo che avete seguito. Se scegliete Accetta, anche gli identificatori impostati dal pixel di Meta.</td></tr>
+        </tbody></table>
+        <p>Non chiediamo dati sulla salute, né informazioni sui vostri clienti. Vi preghiamo di non inserirne in un modulo o in un messaggio.</p>
+        <h2>3. Perché usiamo i vostri dati, e su quale base</h2>
+        <table class="lg-table"><caption class="vh">Perché usiamo i vostri dati, e su quale base</caption>
+        <thead><tr><th scope="col">Cosa facciamo</th><th scope="col">La nostra base giuridica</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Rispondere alla candidatura, decidere se possiamo aiutarvi, fissare e tenere una chiamata</th><td data-label="La nostra base giuridica">Il nostro legittimo interesse a rispondere alle richieste di altre imprese (articolo 6, paragrafo 1, lettera f, GDPR). Se vi candidate come persona fisica, per esempio come libero professionista, è anche un passo compiuto su vostra richiesta prima di un contratto.</td></tr>
+          <tr><th scope="row">Conservare traccia delle candidature, comprese quelle che non possiamo accogliere, per non contattare di nuovo le persone sbagliate</th><td data-label="La nostra base giuridica">Il nostro legittimo interesse a tenere registri esatti.</td></tr>
+          <tr><th scope="row">Scrivervi per email, e mandarvi un SMS se avete indicato un cellulare, sulla candidatura e sulla chiamata</th><td data-label="La nostra base giuridica">Il nostro legittimo interesse. Sono messaggi sulla vostra richiesta, non pubblicità.</td></tr>
+          <tr><th scope="row">Scrivervi una sola volta con un preventivo a prezzo fisso per un sito web o con un canone mensile di marketing, se premete il pulsante del preventivo sulla pagina che dice che non possiamo aiutarvi</th><td data-label="La nostra base giuridica">La vostra richiesta, fatta premendo il pulsante.</td></tr>
+          <tr><th scope="row">Ricontattarvi una sola volta, tre mesi dopo, se ci avete detto di non avere capacità</th><td data-label="La nostra base giuridica">Il nostro legittimo interesse. Potete chiederci in qualsiasi momento di non farlo.</td></tr>
+          <tr><th scope="row">Limitare il numero di candidature da uno stesso indirizzo in un’ora, per fermare lo spam</th><td data-label="La nostra base giuridica">Il nostro legittimo interesse alla sicurezza dei sistemi. Conserviamo una versione cifrata del vostro indirizzo IP, non l’indirizzo stesso, per al massimo un giorno.</td></tr>
+          <tr><th scope="row">Misurare se la nostra pubblicità funziona, con il pixel di Meta e un rapporto corrispondente inviato dal nostro server</th><td data-label="La nostra base giuridica">Il vostro consenso, quando scegliete Accetta. Se scegliete Rifiuta, o non scegliete, non facciamo né l’una né l’altra cosa.</td></tr>
+          <tr><th scope="row">Conservare le scritture contabili e i documenti contrattuali se diventate clienti</th><td data-label="La nostra base giuridica">Un obbligo di legge e il nostro legittimo interesse.</td></tr>
+        </tbody></table>
+        <p>Usiamo le vostre risposte per decidere in modo automatico quale pagina vedete dopo: una pagina di prenotazione, una pagina che dice che esamineremo la candidatura, una pagina che dice che vi chiederemo di nuovo più avanti, o una pagina che dice che al momento non possiamo aiutarvi. Una persona controlla ogni candidatura inviata in esame. Se pensate che la decisione sia sbagliata, scrivetici e la riesamineremo: avete il diritto di ottenere l’intervento di una persona, di esprimere la vostra opinione e di contestare la decisione.</p>
+        <h2>4. Chi riceve i vostri dati</h2>
+        <p>Condividiamo i vostri dati solo con le persone e i servizi che ci aiutano a gestire questa attività. Non li vendiamo.</p>
+        <table class="lg-table"><caption class="vh">Chi riceve i vostri dati</caption>
+        <thead><tr><th scope="col">Chi</th><th scope="col">Cosa fa per noi</th><th scope="col">Cosa riceve</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Netlify</th><td data-label="Cosa fa per noi">Ospita le nostre pagine, ed esegue e conserva il modulo di candidatura</td><td data-label="Cosa riceve">Tutto ciò che inserite e i dati tecnici della visita</td></tr>
+          <tr><th scope="row">Zapier</th><td data-label="Cosa fa per noi">Sposta la candidatura tra i nostri sistemi</td><td data-label="Cosa riceve">La candidatura</td></tr>
+          <tr><th scope="row">ClickUp</th><td data-label="Cosa fa per noi">Contiene il nostro registro di candidature, chiamate e clienti</td><td data-label="Cosa riceve">La candidatura e le note dei nostri contatti con voi</td></tr>
+          <tr><th scope="row">Slack</th><td data-label="Cosa fa per noi">Notifiche interne</td><td data-label="Cosa riceve">Il nome dell’azienda, la nostra decisione e ciò che avete detto di volere dall’incontro. Nessun indirizzo email né numero di telefono.</td></tr>
+          <tr><th scope="row">Calendly</th><td data-label="Cosa fa per noi">Gestisce le prenotazioni</td><td data-label="Cosa riceve">Il vostro nome, l’indirizzo email, l’orario scelto e un riferimento della candidatura</td></tr>
+          <tr><th scope="row">I nostri fornitori di email e SMS</th><td data-label="Cosa fa per noi">Inviano le nostre email e i nostri messaggi</td><td data-label="Cosa riceve">Il vostro indirizzo email o numero di cellulare, e il messaggio</td></tr>
+          <tr><th scope="row">Meta Platforms Ireland</th><td data-label="Cosa fa per noi">Misura la nostra pubblicità, solo se avete scelto Accetta</td><td data-label="Cosa riceve">Gli identificatori impostati dal pixel di Meta e le vostre visite alle nostre pagine. Dal nostro server, anche una versione cifrata del vostro indirizzo email e del vostro nome, il vostro indirizzo IP e i dati del browser.</td></tr>
+          <tr><th scope="row">I nostri consulenti, commercialisti e le autorità pubbliche</th><td data-label="Cosa fa per noi">Consulenza, contabilità, imposte e obblighi di legge</td><td data-label="Cosa riceve">Quanto serve a quello scopo</td></tr>
+        </tbody></table>
+        <p>Quasi tutti agiscono secondo le nostre istruzioni. Meta decide anche per conto proprio come usare una parte di ciò che riceve. La Parte 9 spiega di più.</p>
+        <h2>5. Trasferimenti all’estero</h2>
+        <p>Lavoriamo dalla Norvegia, che fa parte dello Spazio economico europeo. Diversi fornitori della Parte 4 si trovano negli Stati Uniti. Quando le norme europee richiedono una garanzia per un trasferimento, ci affidiamo alla certificazione del fornitore nel quadro UE-USA per la protezione dei dati (EU-US Data Privacy Framework), se ne ha una, e altrimenti alle clausole contrattuali tipo. Potete chiederci una copia della garanzia applicabile.</p>
+        <h2>6. Per quanto tempo conserviamo i vostri dati</h2>
+        <table class="lg-table"><caption class="vh">Per quanto tempo conserviamo i vostri dati</caption>
+        <thead><tr><th scope="col">Cosa</th><th scope="col">Per quanto tempo</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Candidature e messaggi che non portano a un rapporto con un cliente</th><td data-label="Per quanto tempo">12 mesi dopo l’ultimo contatto, poi cancellati dal nostro archivio e da ClickUp</td></tr>
+          <tr><th scope="row">Dati di contatto dei clienti e documenti contrattuali</th><td data-label="Per quanto tempo">Per la durata del contratto, e dopo per il tempo in cui la legge ci obbliga a conservare scritture contabili e documenti contrattuali</td></tr>
+          <tr><th scope="row">L’indirizzo IP cifrato usato per limitare le candidature</th><td data-label="Per quanto tempo">Al massimo un giorno</td></tr>
+          <tr><th scope="row">L’identificatore dei clic di Meta, se avete scelto Accetta</th><td data-label="Per quanto tempo">Con la candidatura, e cancellato insieme a essa. Meta conserva ciò che riceve secondo la propria informativa.</td></tr>
+          <tr><th scope="row">La vostra scelta sui cookie</th><td data-label="Per quanto tempo">Nel browser, finché non lo svuotate</td></tr>
+        </tbody></table>
+        <h2>7. I vostri diritti</h2>
+        <p>In qualsiasi momento potete chiederci di:</p>
+        <ul><li>mostrarvi i dati che conserviamo su di voi e darvene una copia</li><li>correggere i dati sbagliati</li><li>cancellare i vostri dati, quando non abbiamo un buon motivo per conservarli</li><li>limitare il modo in cui usiamo i vostri dati mentre si chiarisce una questione che li riguarda</li><li>darvi i vostri dati in un formato leggibile da un computer, o inviarli a un’altra impresa, dove questo diritto si applica</li><li>smettere di usare i vostri dati per il marketing. Lo faremo sempre.</li><li>smettere di usare i vostri dati quando ci basiamo sul nostro legittimo interesse, salvo che possiamo dimostrare un motivo fondato per continuare</li><li>smettere di usare i dati che ci avete lasciato usare con il vostro consenso, per esempio la misurazione di Meta nella Parte 9</li><li>far riesaminare da una persona come è stata indirizzata la vostra candidatura</li></ul>
+        <p>Per chiedere, scrivete a <a href="mailto:au@growwithelevate.eu">au@growwithelevate.eu</a>. Rispondiamo entro un mese. Se la richiesta è complessa, la legge ci permette di impiegare più tempo, e vi spiegheremo perché. Potremmo dover prima verificare chi siete. Non addebitiamo nulla, salvo nei casi limitati che la legge consente.</p>
+        <p>Se pensate che abbiamo trattato male i vostri dati, vi preghiamo di dircelo prima, così possiamo rimediare. Potete anche presentare un reclamo all’autorità di controllo. In Italia è il Garante per la protezione dei dati personali (garanteprivacy.it). In Norvegia, dove abbiamo sede, è il Datatilsynet (datatilsynet.no).</p>
+        <h2>8. Cookie e tecnologie simili</h2>
+        <p>Ne usiamo pochissimi, e su queste pagine non facciamo analisi del traffico. La barra dei cookie chiede una cosa sola: misurare la nostra pubblicità con Meta. Per questo non viene impostato nulla finché non scegliete Accetta.</p>
+        <table class="lg-table"><caption class="vh">Cookie e tecnologie simili</caption>
+        <thead><tr><th scope="col">Cosa</th><th scope="col">Cosa fa</th><th scope="col">Quando</th><th scope="col">Per quanto tempo</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">La vostra scelta sui cookie, conservata nel browser</th><td data-label="Cosa fa">Ricorda Accetta o Rifiuta, così non lo chiediamo di nuovo</td><td data-label="Quando">Quando scegliete</td><td data-label="Per quanto tempo">Finché non svuotate i dati del sito nel browser</td></tr>
+          <tr><th scope="row">Il pixel di Meta e i suoi cookie</th><td data-label="Cosa fa">Permette a Meta di misurare se la nostra pubblicità funziona</td><td data-label="Quando">Solo dopo che scegliete Accetta</td><td data-label="Per quanto tempo">Impostati e conservati da Meta secondo la propria informativa</td></tr>
+          <tr><th scope="row">Un indicatore conservato nella scheda del browser</th><td data-label="Cosa fa">Evita di inviare due volte a Meta la stessa misurazione</td><td data-label="Quando">Solo dopo che scegliete Accetta</td><td data-label="Per quanto tempo">Finché non chiudete la scheda</td></tr>
+          <tr><th scope="row">Il vostro nome e indirizzo email, conservati nella scheda del browser</th><td data-label="Cosa fa">Compila per voi il modulo di prenotazione dopo la candidatura</td><td data-label="Quando">Quando inviate la candidatura</td><td data-label="Per quanto tempo">Rimossi quando la pagina di prenotazione li ha letti, o quando chiudete la scheda</td></tr>
+          <tr><th scope="row">Calendly, sulla pagina di prenotazione</th><td data-label="Cosa fa">Gestisce la prenotazione</td><td data-label="Quando">Quando aprite la pagina di prenotazione, qualunque cosa abbiate scelto nella barra dei cookie, perché avete chiesto di prenotare</td><td data-label="Per quanto tempo">Impostati e conservati da Calendly secondo la propria informativa</td></tr>
+        </tbody></table>
+        <p>Se scegliete Rifiuta, a Meta non viene inviato nulla e la pagina funziona allo stesso modo. Per cambiare la vostra scelta usate il pulsante qui sotto, oppure svuotate i dati del sito per questa pagina nel browser. La barra dei cookie ve lo chiederà di nuovo.</p>
+        <p><button class="lg-btn" type="button" id="cookie-reset" hidden>Cambia la scelta sui cookie</button></p>
+        <h2>9. Meta e la misurazione della nostra pubblicità</h2>
+        <p>Se scegliete Accetta, succedono due cose. Il pixel di Meta sulle nostre pagine dice a Meta quali pagine avete visto. E quando la vostra candidatura è una di quelle che portiamo avanti, il nostro server invia a Meta un breve messaggio, perché Meta possa collegarlo all’annuncio su cui avete fatto clic. Il messaggio contiene versioni cifrate (hash) del vostro indirizzo email, nome e cognome, il vostro indirizzo IP, i dati del browser e gli identificatori impostati da Meta quando avete fatto clic. Non inviamo alcun numero di telefono. Lo usiamo solo per vedere quali annunci portano a candidature reali e per migliorare a chi mostriamo la nostra pubblicità.</p>
+        <p>Se scegliete Rifiuta, nulla di tutto questo viene inviato, e non conserviamo con la candidatura gli identificatori pubblicitari.</p>
+        <p>Ciò che Meta fa quando vi mostra il nostro annuncio è coperto dall’informativa di Meta. Meta decide anche per conto proprio come usare una parte di ciò che riceve.</p>
+      </article>
+    </div>
+  </main>
+  <footer class="ft" data-theme="marine">
+    <div class="wrap">
+      <div class="ft-top">
+        <picture><source srcset="/g/_assets/logo-white.webp" type="image/webp"><img class="lg" src="/g/_assets/logo-white.png" width="418" height="168" alt="Elevate Marketing" loading="lazy"></picture>
+        <p class="ft-text">Elevate Marketing è gestito da EngeCo AS, società norvegese, numero di organizzazione 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norvegia. <a href="mailto:au@growwithelevate.eu">au@growwithelevate.eu</a></p>
+      </div>
+      <nav class="ft-links" aria-label="Note legali"><a href="/g/it-ict-growth/privacy/">Informativa privacy</a><a href="/g/it-ict-growth/terms/">Termini del sito</a></nav>
+    </div>
+  </footer>
+</div></div>
+<div class="cb" id="g-consent" role="region" aria-label="Scelta sui cookie" hidden>
+  <div class="cb-in">
+    <p class="cb-t">Usiamo un cookie di Meta per misurare se la nostra pubblicità funziona. Non viene impostato finché non scegliete. La pagina funziona allo stesso modo in entrambi i casi. <a href="/g/it-ict-growth/privacy/">Informativa privacy</a></p>
+    <div class="cb-btns"><button class="cb-btn" type="button" data-c="yes">Accetta</button><button class="cb-btn" type="button" data-c="no">Rifiuta</button></div>
+  </div>
+</div>
+<script>
+(function(){
+'use strict';
+var CFG = {"slug":"it-ict-growth","campaign":"it-ict-growth","path":"/g/it-ict-growth","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"au@growwithelevate.eu","calendlyUrl":"","calendlyLeadParam":"utm_content","takkPath":"/g/it-ict-growth/takk/","prefillKey":"elevate:g:it-ict-growth:prefill","text":{"back":"Indietro","next":"Avanti","cta":"Verificate se possiamo lavorare insieme","retry":"Riprovare","sending":"Controlliamo alcuni dettagli. Ci vogliono pochi secondi.","failed":"Qualcosa è andato storto da parte nostra. Le risposte sono ancora qui. Riprovare, oppure scrivere a","askDone":"Grazie. Vi scriveremo da au@growwithelevate.eu entro due giorni lavorativi.","askError":"Non è andata a buon fine. Scrivete a au@growwithelevate.eu chiedendo un preventivo e ve lo invieremo."}};
+/* Shared by every page of a growth funnel. The build wraps the pieces of a page in one
+   function and writes CFG above them; nothing here reads the page's own copy. */
+
+var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+var ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
+var Consent = window.ElevateConsent || null;
+var docEl = document.documentElement;
+
+/* A page in a frame would show the rest of the funnel nested, with the address bar on
+   another site. Put it back at the top with its query string. */
+if (window.top !== window.self) { try { window.top.location.replace(location.href); } catch (e) {} }
+
+/** 'accepted', 'declined' or '' (not chosen yet). Not chosen is not the same as declined. */
+function consentState() {
+  try { return Consent ? (Consent.status() || '') : ''; } catch (e) { return ''; }
+}
+
+function readQuery() {
+  var out = {};
+  try {
+    var q = new URLSearchParams(location.search);
+    ['lead_id', 'fbclid'].concat(UTM_KEYS).forEach(function (k) {
+      var v = q.get(k);
+      if (v) out[k] = v;
+    });
+  } catch (e) { /* no query, nothing to carry */ }
+  return out;
+}
+
+function newId(prefix) {
+  var body = '';
+  try {
+    if (window.crypto && crypto.randomUUID) body = crypto.randomUUID().replace(/-/g, '').slice(0, 20);
+    else if (window.crypto && crypto.getRandomValues) {
+      var a = new Uint8Array(10);
+      crypto.getRandomValues(a);
+      body = Array.prototype.map.call(a, function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+    }
+  } catch (e) { body = ''; }
+  if (!body) body = Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
+  return (prefix || 'l_') + body;
+}
+
+function qs(o) {
+  var p = new URLSearchParams();
+  Object.keys(o).forEach(function (k) { if (o[k] !== '' && o[k] !== null && o[k] !== undefined) p.set(k, o[k]); });
+  return p.toString();
+}
+
+function readCookie(name) {
+  try {
+    var m = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : '';
+  } catch (e) { return ''; }
+}
+
+function storeGet(key) { try { return sessionStorage.getItem(key); } catch (e) { return null; } }
+function storeSet(key, v) { try { sessionStorage.setItem(key, v); } catch (e) { /* private mode */ } }
+function storeDel(key) { try { sessionStorage.removeItem(key); } catch (e) { /* private mode */ } }
+
+/* The cookie question. Page owned: /js/consent.js decides whether the pixel loads and keeps the
+   choice; this only asks, in the page's own clothes. It comes on screen once the visitor has
+   scrolled 200 px, or at once on a page too short to scroll that far. There is no timer. */
+function initBanner(afterChoice) {
+  var bar = document.getElementById('g-consent');
+  if (!bar) return;
+  if (!Consent || consentState()) { bar.parentNode.removeChild(bar); return; }
+  var shown = false;
+  function measure() {
+    try { docEl.style.setProperty('--cb-h', bar.getBoundingClientRect().height + 'px'); } catch (e) {}
+  }
+  function show() {
+    if (shown) return;
+    shown = true;
+    bar.hidden = false;
+    docEl.classList.add('has-cb');
+    measure();
+  }
+  function check() {
+    var y = window.pageYOffset || docEl.scrollTop || 0;
+    if (y >= 200 || docEl.scrollHeight - window.innerHeight < 200) {
+      show();
+      window.removeEventListener('scroll', check);
+    }
+  }
+  window.addEventListener('scroll', check, { passive: true });
+  window.addEventListener('load', check);
+  window.addEventListener('resize', function () { if (shown) measure(); });
+  bar.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('button[data-c]') : null;
+    if (!b) return;
+    if (b.getAttribute('data-c') === 'yes') Consent.accept(); else Consent.decline();
+    window.removeEventListener('scroll', check);
+    if (bar.parentNode) bar.parentNode.removeChild(bar);
+    docEl.classList.remove('has-cb');
+    if (typeof afterChoice === 'function') afterChoice();
+  });
+  check();
+}
+
+/* The qualified-form event. Fires once per lead and only after Accept, with the lead id as the
+   event id, so Meta counts it once when the server sends the same event (Conversions API). */
+function fireQualified(route, leadId) {
+  if (!Consent || !leadId || consentState() !== 'accepted') return;
+  var key = 'elevate:g:' + CFG.slug + ':' + CFG.qualifiedEvent + ':' + leadId;
+  if (storeGet(key) === '1') return;
+  Consent.track(CFG.qualifiedEvent, { route: route, campaign: CFG.campaign }, { eventID: leadId });
+  storeSet(key, '1');
+}
+
+initBanner();
+var resetBtn = document.getElementById('cookie-reset');
+if (resetBtn) {
+  resetBtn.hidden = false;
+  resetBtn.addEventListener('click', function () {
+    try { localStorage.removeItem('elevate-cookie-consent'); } catch (e) { /* private mode */ }
+    window.location.reload();
+  });
+}
+})();
+</script>
+</body>
+</html>

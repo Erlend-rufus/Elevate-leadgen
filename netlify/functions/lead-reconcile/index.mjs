@@ -78,7 +78,8 @@ export function createReconciler(deps = {}) {
     const registerKey = Boolean(e.COMPANIES_HOUSE_API_KEY);
     for (const camp of Object.values(campaigns)) {
       const c = camp && camp.cfg;
-      if (!c || !c.live || !c.legal || typeof c.legal.registerCheck !== 'boolean') continue;
+      // registerSupported: false marks a funnel that has no company register lookup at all (Italy), so the key says nothing about it.
+      if (!c || !c.live || !c.legal || typeof c.legal.registerCheck !== 'boolean' || c.legal.registerSupported === false) continue;
       if (registerKey && !c.legal.registerCheck) {
         problems.push(`COMPANIES_HOUSE_API_KEY is set, so company names are checked at Companies House, but the privacy notice and terms of ${c.path} say nothing about a check. ` +
           `Set "legal.registerCheck" to true in g/${c.slug}/config.json and build, or remove the key.`);

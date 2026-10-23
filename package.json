@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test:g-it": "node --test \"g/uk-it-larger-firms/test/*.test.mjs\"",
-    "test:g-growth": "node scripts/build-g-growth.mjs && node --test \"g/uk-it-growth/test/*.test.mjs\" \"g/uk-private-hospitals/test/*.test.mjs\" \"g/uk-law-firms/test/*.test.mjs\"",
+    "test:g-growth": "node scripts/build-g-growth.mjs && node --test \"g/uk-it-growth/test/*.test.mjs\" \"g/uk-private-hospitals/test/*.test.mjs\" \"g/uk-law-firms/test/*.test.mjs\" \"g/it-ict-growth/test/*.test.mjs\"",
     "preview": "vite preview"
   },
   "dependencies": {

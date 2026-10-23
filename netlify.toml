@@ -184,6 +184,17 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
+# /g/it-ict-growth: Italy, IT and ICT firms. Same as /g/uk-it-growth, paid traffic only.
+[[headers]]
+  for = "/g/it-ict-growth"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/it-ict-growth/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # Self-hosted fonts and logos shared by every /g campaign. The filenames carry
 # a version (fraunces-v1.woff2), so a replaced file arrives under a new name
 # and this can safely be immutable; bump the name, never the file, or the old
@@ -545,6 +556,47 @@
 [[redirects]]
   from = "/g/uk-law-firms/terms"
   to = "/g/uk-law-firms/terms/index.html"
+  status = 200
+
+# /g/it-ict-growth: the same eight pages as /g/uk-it-growth, built by scripts/build-g-growth.mjs.
+[[redirects]]
+  from = "/g/it-ict-growth"
+  to = "/g/it-ict-growth/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/it-ict-growth/book"
+  to = "/g/it-ict-growth/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/it-ict-growth/takk"
+  to = "/g/it-ict-growth/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/it-ict-growth/review"
+  to = "/g/it-ict-growth/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/it-ict-growth/not-now"
+  to = "/g/it-ict-growth/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/it-ict-growth/not-a-fit"
+  to = "/g/it-ict-growth/not-a-fit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/it-ict-growth/privacy"
+  to = "/g/it-ict-growth/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/it-ict-growth/terms"
+  to = "/g/it-ict-growth/terms/index.html"
   status = 200
 
 

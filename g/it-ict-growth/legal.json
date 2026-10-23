@@ -1,0 +1,169 @@
+{
+  "_comment": "The privacy notice (informativa privacy) and the website terms of /g/it-ict-growth, built into /g/it-ict-growth/privacy/ and /g/it-ict-growth/terms/ by scripts/build-g-growth.mjs. DRAFT, written by Claude in Italian from the UK notice (g/uk-it-growth/legal.json) and adapted to GDPR as applied in Italy. It has NOT been read by an Italian lawyer. It is Part B of the jurist document (Claude Doc 'Italia: documento per il giurista') and the funnel must not go live until the review block below is filled in: the build refuses live: true with it empty. Block types: h2, p, ul, table (head + rows), button. Links: [[label|/path]] or [[label|@privacy]] / [[label|@terms]]; {EMAIL} becomes the contact address as a link. Change the date in 'updated' whenever the words change. No dashes, no exclamation marks, no rate near the word commissione: the build refuses them.",
+  "review": {
+    "by": "",
+    "on": "",
+    "_note": "Name of the Italian lawyer who approved this text and the date. Empty until then."
+  },
+  "privacy": {
+    "title": "Informativa privacy",
+    "updated": "Ultimo aggiornamento: 23 ottobre 2026",
+    "blocks": [
+      { "p": "Questa informativa spiega come Elevate Marketing usa i dati personali sulle sue pagine di campagna per aziende IT e ICT italiane, nei passaggi di candidatura e di prenotazione che le seguono. Il sito principale getelevateleads.com ha una propria informativa." },
+
+      { "h2": "1. Chi siamo" },
+      { "p": "Elevate Marketing è il nome commerciale di EngeCo AS, una società norvegese (numero di organizzazione 924 490 926) con sede in Midtfjellet 66, 5363 Ågotnes, Norvegia. EngeCo AS decide come vengono usati i vostri dati: nel linguaggio del GDPR è il titolare del trattamento. Ci potete raggiungere all’indirizzo {EMAIL}. Non abbiamo un responsabile della protezione dei dati: la persona che gestisce quell’indirizzo risponde alle richieste." },
+
+      { "h2": "2. Quali dati raccogliamo" },
+      { "table": {
+        "label": "Quali dati raccogliamo, e quando",
+        "head": ["Quando", "Cosa raccogliamo"],
+        "rows": [
+          ["Inviate una candidatura su una delle nostre pagine", "Le risposte sulla vostra azienda (sito web, nome dell’azienda, area di lavoro, fatturato, anni di attività, dimensione, spesa di marketing, valore di un cliente tipico, durata del ciclo di vendita, un obiettivo facoltativo, chi decide, capacità, cosa volete ottenere dall’incontro), nome, cognome, ruolo ed email aziendale, e un numero di cellulare se lo indicate."],
+          ["Premete il pulsante del preventivo sulla pagina che dice che non possiamo aiutarvi", "Un’annotazione che l’avete premuto, e quando, conservata con la candidatura. Non viene chiesto nient’altro."],
+          ["Prenotate una chiamata", "Il vostro nome, l’indirizzo email e l’orario scelto, conservati da Calendly e trasmessi a noi."],
+          ["Ci scrivete o ci parlate", "Il contenuto delle email e dei messaggi, e le nostre note delle chiamate."],
+          ["Visitate una pagina", "Il vostro indirizzo IP, i dati del dispositivo e del browser, la pagina da cui arrivate e i parametri di campagna dell’indirizzo che avete seguito. Se scegliete Accetta, anche gli identificatori impostati dal pixel di Meta."]
+        ]
+      } },
+      { "p": "Non chiediamo dati sulla salute, né informazioni sui vostri clienti. Vi preghiamo di non inserirne in un modulo o in un messaggio." },
+
+      { "h2": "3. Perché usiamo i vostri dati, e su quale base" },
+      { "table": {
+        "label": "Perché usiamo i vostri dati, e su quale base",
+        "head": ["Cosa facciamo", "La nostra base giuridica"],
+        "rows": [
+          ["Rispondere alla candidatura, decidere se possiamo aiutarvi, fissare e tenere una chiamata", "Il nostro legittimo interesse a rispondere alle richieste di altre imprese (articolo 6, paragrafo 1, lettera f, GDPR). Se vi candidate come persona fisica, per esempio come libero professionista, è anche un passo compiuto su vostra richiesta prima di un contratto."],
+          ["Conservare traccia delle candidature, comprese quelle che non possiamo accogliere, per non contattare di nuovo le persone sbagliate", "Il nostro legittimo interesse a tenere registri esatti."],
+          ["Scrivervi per email, e mandarvi un SMS se avete indicato un cellulare, sulla candidatura e sulla chiamata", "Il nostro legittimo interesse. Sono messaggi sulla vostra richiesta, non pubblicità."],
+          ["Scrivervi una sola volta con un preventivo a prezzo fisso per un sito web o con un canone mensile di marketing, se premete il pulsante del preventivo sulla pagina che dice che non possiamo aiutarvi", "La vostra richiesta, fatta premendo il pulsante."],
+          ["Ricontattarvi una sola volta, tre mesi dopo, se ci avete detto di non avere capacità", "Il nostro legittimo interesse. Potete chiederci in qualsiasi momento di non farlo."],
+          ["Limitare il numero di candidature da uno stesso indirizzo in un’ora, per fermare lo spam", "Il nostro legittimo interesse alla sicurezza dei sistemi. Conserviamo una versione cifrata del vostro indirizzo IP, non l’indirizzo stesso, per al massimo un giorno."],
+          ["Misurare se la nostra pubblicità funziona, con il pixel di Meta e un rapporto corrispondente inviato dal nostro server", "Il vostro consenso, quando scegliete Accetta. Se scegliete Rifiuta, o non scegliete, non facciamo né l’una né l’altra cosa."],
+          ["Conservare le scritture contabili e i documenti contrattuali se diventate clienti", "Un obbligo di legge e il nostro legittimo interesse."]
+        ]
+      } },
+      { "p": "Usiamo le vostre risposte per decidere in modo automatico quale pagina vedete dopo: una pagina di prenotazione, una pagina che dice che esamineremo la candidatura, una pagina che dice che vi chiederemo di nuovo più avanti, o una pagina che dice che al momento non possiamo aiutarvi. Una persona controlla ogni candidatura inviata in esame. Se pensate che la decisione sia sbagliata, scrivetici e la riesamineremo: avete il diritto di ottenere l’intervento di una persona, di esprimere la vostra opinione e di contestare la decisione." },
+
+      { "h2": "4. Chi riceve i vostri dati" },
+      { "p": "Condividiamo i vostri dati solo con le persone e i servizi che ci aiutano a gestire questa attività. Non li vendiamo." },
+      { "table": {
+        "label": "Chi riceve i vostri dati",
+        "head": ["Chi", "Cosa fa per noi", "Cosa riceve"],
+        "rows": [
+          ["Netlify", "Ospita le nostre pagine, ed esegue e conserva il modulo di candidatura", "Tutto ciò che inserite e i dati tecnici della visita"],
+          ["Zapier", "Sposta la candidatura tra i nostri sistemi", "La candidatura"],
+          ["ClickUp", "Contiene il nostro registro di candidature, chiamate e clienti", "La candidatura e le note dei nostri contatti con voi"],
+          ["Slack", "Notifiche interne", "Il nome dell’azienda, la nostra decisione e ciò che avete detto di volere dall’incontro. Nessun indirizzo email né numero di telefono."],
+          ["Calendly", "Gestisce le prenotazioni", "Il vostro nome, l’indirizzo email, l’orario scelto e un riferimento della candidatura"],
+          ["I nostri fornitori di email e SMS", "Inviano le nostre email e i nostri messaggi", "Il vostro indirizzo email o numero di cellulare, e il messaggio"],
+          ["Meta Platforms Ireland", "Misura la nostra pubblicità, solo se avete scelto Accetta", "Gli identificatori impostati dal pixel di Meta e le vostre visite alle nostre pagine. Dal nostro server, anche una versione cifrata del vostro indirizzo email e del vostro nome, il vostro indirizzo IP e i dati del browser."],
+          ["I nostri consulenti, commercialisti e le autorità pubbliche", "Consulenza, contabilità, imposte e obblighi di legge", "Quanto serve a quello scopo"]
+        ]
+      } },
+      { "p": "Quasi tutti agiscono secondo le nostre istruzioni. Meta decide anche per conto proprio come usare una parte di ciò che riceve. La Parte 9 spiega di più." },
+
+      { "h2": "5. Trasferimenti all’estero" },
+      { "p": "Lavoriamo dalla Norvegia, che fa parte dello Spazio economico europeo. Diversi fornitori della Parte 4 si trovano negli Stati Uniti. Quando le norme europee richiedono una garanzia per un trasferimento, ci affidiamo alla certificazione del fornitore nel quadro UE-USA per la protezione dei dati (EU-US Data Privacy Framework), se ne ha una, e altrimenti alle clausole contrattuali tipo. Potete chiederci una copia della garanzia applicabile." },
+
+      { "h2": "6. Per quanto tempo conserviamo i vostri dati" },
+      { "table": {
+        "label": "Per quanto tempo conserviamo i vostri dati",
+        "head": ["Cosa", "Per quanto tempo"],
+        "rows": [
+          ["Candidature e messaggi che non portano a un rapporto con un cliente", "12 mesi dopo l’ultimo contatto, poi cancellati dal nostro archivio e da ClickUp"],
+          ["Dati di contatto dei clienti e documenti contrattuali", "Per la durata del contratto, e dopo per il tempo in cui la legge ci obbliga a conservare scritture contabili e documenti contrattuali"],
+          ["L’indirizzo IP cifrato usato per limitare le candidature", "Al massimo un giorno"],
+          ["L’identificatore dei clic di Meta, se avete scelto Accetta", "Con la candidatura, e cancellato insieme a essa. Meta conserva ciò che riceve secondo la propria informativa."],
+          ["La vostra scelta sui cookie", "Nel browser, finché non lo svuotate"]
+        ]
+      } },
+
+      { "h2": "7. I vostri diritti" },
+      { "p": "In qualsiasi momento potete chiederci di:" },
+      { "ul": [
+        "mostrarvi i dati che conserviamo su di voi e darvene una copia",
+        "correggere i dati sbagliati",
+        "cancellare i vostri dati, quando non abbiamo un buon motivo per conservarli",
+        "limitare il modo in cui usiamo i vostri dati mentre si chiarisce una questione che li riguarda",
+        "darvi i vostri dati in un formato leggibile da un computer, o inviarli a un’altra impresa, dove questo diritto si applica",
+        "smettere di usare i vostri dati per il marketing. Lo faremo sempre.",
+        "smettere di usare i vostri dati quando ci basiamo sul nostro legittimo interesse, salvo che possiamo dimostrare un motivo fondato per continuare",
+        "smettere di usare i dati che ci avete lasciato usare con il vostro consenso, per esempio la misurazione di Meta nella Parte 9",
+        "far riesaminare da una persona come è stata indirizzata la vostra candidatura"
+      ] },
+      { "p": "Per chiedere, scrivete a {EMAIL}. Rispondiamo entro un mese. Se la richiesta è complessa, la legge ci permette di impiegare più tempo, e vi spiegheremo perché. Potremmo dover prima verificare chi siete. Non addebitiamo nulla, salvo nei casi limitati che la legge consente." },
+      { "p": "Se pensate che abbiamo trattato male i vostri dati, vi preghiamo di dircelo prima, così possiamo rimediare. Potete anche presentare un reclamo all’autorità di controllo. In Italia è il Garante per la protezione dei dati personali (garanteprivacy.it). In Norvegia, dove abbiamo sede, è il Datatilsynet (datatilsynet.no)." },
+
+      { "h2": "8. Cookie e tecnologie simili" },
+      { "p": "Ne usiamo pochissimi, e su queste pagine non facciamo analisi del traffico. La barra dei cookie chiede una cosa sola: misurare la nostra pubblicità con Meta. Per questo non viene impostato nulla finché non scegliete Accetta." },
+      { "table": {
+        "label": "Cookie e tecnologie simili",
+        "head": ["Cosa", "Cosa fa", "Quando", "Per quanto tempo"],
+        "rows": [
+          ["La vostra scelta sui cookie, conservata nel browser", "Ricorda Accetta o Rifiuta, così non lo chiediamo di nuovo", "Quando scegliete", "Finché non svuotate i dati del sito nel browser"],
+          ["Il pixel di Meta e i suoi cookie", "Permette a Meta di misurare se la nostra pubblicità funziona", "Solo dopo che scegliete Accetta", "Impostati e conservati da Meta secondo la propria informativa"],
+          ["Un indicatore conservato nella scheda del browser", "Evita di inviare due volte a Meta la stessa misurazione", "Solo dopo che scegliete Accetta", "Finché non chiudete la scheda"],
+          ["Il vostro nome e indirizzo email, conservati nella scheda del browser", "Compila per voi il modulo di prenotazione dopo la candidatura", "Quando inviate la candidatura", "Rimossi quando la pagina di prenotazione li ha letti, o quando chiudete la scheda"],
+          ["Calendly, sulla pagina di prenotazione", "Gestisce la prenotazione", "Quando aprite la pagina di prenotazione, qualunque cosa abbiate scelto nella barra dei cookie, perché avete chiesto di prenotare", "Impostati e conservati da Calendly secondo la propria informativa"]
+        ]
+      } },
+      { "p": "Se scegliete Rifiuta, a Meta non viene inviato nulla e la pagina funziona allo stesso modo. Per cambiare la vostra scelta usate il pulsante qui sotto, oppure svuotate i dati del sito per questa pagina nel browser. La barra dei cookie ve lo chiederà di nuovo." },
+      { "button": { "id": "cookie-reset", "text": "Cambia la scelta sui cookie" } },
+
+      { "h2": "9. Meta e la misurazione della nostra pubblicità" },
+      { "p": "Se scegliete Accetta, succedono due cose. Il pixel di Meta sulle nostre pagine dice a Meta quali pagine avete visto. E quando la vostra candidatura è una di quelle che portiamo avanti, il nostro server invia a Meta un breve messaggio, perché Meta possa collegarlo all’annuncio su cui avete fatto clic. Il messaggio contiene versioni cifrate (hash) del vostro indirizzo email, nome e cognome, il vostro indirizzo IP, i dati del browser e gli identificatori impostati da Meta quando avete fatto clic. Non inviamo alcun numero di telefono. Lo usiamo solo per vedere quali annunci portano a candidature reali e per migliorare a chi mostriamo la nostra pubblicità." },
+      { "p": "Se scegliete Rifiuta, nulla di tutto questo viene inviato, e non conserviamo con la candidatura gli identificatori pubblicitari." },
+      { "p": "Ciò che Meta fa quando vi mostra il nostro annuncio è coperto dall’informativa di Meta. Meta decide anche per conto proprio come usare una parte di ciò che riceve." }
+    ]
+  },
+
+  "terms": {
+    "title": "Termini del sito",
+    "updated": "Ultimo aggiornamento: 23 ottobre 2026",
+    "blocks": [
+      { "p": "Questi termini riguardano l’uso di questo sito. Non sono il contratto per i nostri servizi, che concludiamo separatamente e per iscritto (Parte 4). Usando il sito accettate questi termini." },
+
+      { "h2": "1. Chi gestisce questo sito" },
+      { "p": "Questo sito è gestito da EngeCo AS, una società a responsabilità limitata norvegese, che opera come Elevate Marketing. Numero di organizzazione 924 490 926. Indirizzo: Midtfjellet 66, 5363 Ågotnes, Norvegia. Email: {EMAIL}." },
+      { "p": "Aiutiamo le imprese a trovare nuovi clienti con la pubblicità. Cosa facciamo per un cliente, e come siamo pagati, è scritto in un contratto con quel cliente." },
+
+      { "h2": "2. A cosa serve questo sito" },
+      { "p": "Questo sito dà informazioni sui nostri servizi a chi dirige o gestisce un’impresa. Non è un’offerta che si possa accettare per concludere un contratto, e non è pensato per i consumatori. Se non agite per conto di un’impresa, vi preghiamo di non usare il modulo di candidatura." },
+      { "p": "Nulla su questo sito è consulenza legale, normativa o finanziaria. Se la vostra attività è regolamentata, restate responsabili del rispetto delle regole che vi riguardano e dovreste chiedere un vostro parere su se e come potete lavorare con noi." },
+
+      { "h2": "3. Candidature e richieste" },
+      { "p": "Inviare una candidatura, una richiesta o una prenotazione non crea un contratto e non obbliga nessuno dei due a nulla. Una chiamata prenotata è un’occasione per vedere se lavorare insieme ha senso. Possiamo rifiutare una candidatura o chiudere una conversazione in qualsiasi momento, e così potete fare voi. Vi preghiamo di fornire informazioni esatte." },
+
+      { "h2": "4. I nostri servizi si concordano a parte" },
+      { "p": "Forniamo servizi solo con un contratto scritto con il cliente. Dove questo sito riassume come lavoriamo o come siamo pagati, è un riassunto. Se un riassunto e un contratto firmato differiscono, vale il contratto." },
+
+      { "h2": "5. Risultati, esattezza e ciò che non possiamo promettere" },
+      { "p": "Questo sito descrive come lavoriamo e, in alcuni punti, risultati raggiunti da clienti. Quei risultati appartengono a quei clienti, nelle loro circostanze. I risultati passati non promettono quelli futuri, e non garantiamo alcun numero di richieste, vendite o ritorno sulla spesa. I risultati mostrati su queste pagine sono stati ottenuti da aziende britanniche e non in Italia, e lo diciamo dove li mostriamo. Un cliente è indicato per nome, o un risultato è mostrato in modo da identificarlo, solo con il permesso scritto di quel cliente. Dove mostriamo una cifra, diciamo da dove viene. Curiamo ciò che pubblichiamo, ma non promettiamo che sia completo o aggiornato." },
+
+      { "h2": "6. Come usare il sito" },
+      { "p": "Vi preghiamo di usare il sito in modo lecito e in buona fede. Non dovete:" },
+      { "ul": [
+        "inviare dati falsi, o che appartengono a un’altra persona senza il suo permesso",
+        "usare strumenti automatici per inviare moduli o per copiare il sito",
+        "cercare di danneggiare, sovraccaricare o aggirare la sicurezza del sito",
+        "usare il sito per inviarci pubblicità o altro materiale che non c’entra con esso"
+      ] },
+      { "p": "Possiamo bloccare un uso che viola queste regole." },
+
+      { "h2": "7. I nostri contenuti" },
+      { "p": "Testi, grafica, immagini e altro materiale di questo sito appartengono a noi o sono usati con permesso. Potete leggerli, stamparne e condividerne una copia per il vostro uso aziendale. Non potete copiarli, riutilizzarli o ripubblicarli per un altro scopo senza il nostro permesso scritto. I nomi e i marchi di altre imprese appartengono a loro." },
+
+      { "h2": "8. I servizi di altri" },
+      { "p": "Il sito funziona con servizi gestiti da altri: Calendly (prenotazioni) e Meta (misurazione della nostra pubblicità, solo se la accettate nella barra dei cookie). Hanno propri termini e informative sulla privacy, e non siamo responsabili dei loro servizi. Se rimandiamo a un altro sito, è per comodità e non significa che lo approviamo." },
+
+      { "h2": "9. La nostra responsabilità verso di voi" },
+      { "p": "Nulla in questi termini limita una responsabilità che la legge non permette di limitare, compresa la responsabilità per dolo o colpa grave e per i danni alla persona. Oltre a questo, le informazioni di questo sito sono fornite così come sono. Non promettiamo che il sito sia sempre disponibile o privo di errori." },
+
+      { "h2": "10. Privacy, modifiche, legge applicabile e contatti" },
+      { "p": "La nostra [[informativa privacy|@privacy]] spiega cosa facciamo dei dati che ci inviate. Possiamo modificare questi termini. La data in alto mostra quando sono cambiati per l’ultima volta, e una modifica vale da quella data." },
+      { "p": "Questi termini, e qualsiasi controversia sul sito, sono regolati dalla legge norvegese, e il foro competente è il tribunale di Bergen (Bergen tingrett), salvo le norme imperative che prevedano altro." },
+      { "p": "Per contattarci, scrivete a {EMAIL} o all’indirizzo nella Parte 1." }
+    ]
+  }
+}
