@@ -152,7 +152,7 @@ export function createInterestHandler(deps = {}) {
         text: `lead_id: ${rec.lead_id}\ncampaign: ${rec.campaign}\ncompany: ${rec.values.company_name}\n` +
           `error: ${r.error} after ${r.attempts} attempts\n\n` +
           'The visitor asked for a quote on a website and was told it was received. The request is stored on the lead ' +
-          '(interest) but is NOT in ClickUp or Slack. Tag the task "ønsker-nettsidetilbud" by hand and tell Sondre.',
+          `(interest) but is NOT in ClickUp or Slack. Tag the task "ønsker-nettsidetilbud" by hand and tell ${(camp.cfg.reviewer && camp.cfg.reviewer.name) || 'Sondre'}.`,
       }), null);
     }
 

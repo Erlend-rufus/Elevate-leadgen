@@ -16,12 +16,16 @@ import { renderForm as healthRenderForm } from '../../../g/uk-private-hospitals/
 import * as lawCore from '../../../g/uk-law-firms/core.mjs';
 import * as lawRoute from '../../../g/uk-law-firms/route.mjs';
 import { renderForm as lawRenderForm } from '../../../g/uk-law-firms/render-form.mjs';
+import * as itaCore from '../../../g/it-ict-growth/core.mjs';
+import * as itaRoute from '../../../g/it-ict-growth/route.mjs';
+import { renderForm as itaRenderForm } from '../../../g/it-ict-growth/render-form.mjs';
 import { funnels } from './data.generated.mjs';
 
 const CODE = {
   'uk-it-growth': { core: itCore, route: itRoute, renderForm: itRenderForm },
   'uk-private-hospitals': { core: healthCore, route: healthRoute, renderForm: healthRenderForm },
   'uk-law-firms': { core: lawCore, route: lawRoute, renderForm: lawRenderForm },
+  'it-ict-growth': { core: itaCore, route: itaRoute, renderForm: itaRenderForm },
 };
 
 export const campaigns = {};

@@ -30,7 +30,8 @@ const s = (v) => (v === null || v === undefined ? '' : String(v));
 export function buildPayload({ leadId, campaign, route, reasons, submittedAt, values, ch, tracking }) {
   const v = values || {};
   const profile = (ch && ch.profile) || {};
-  const specialism = v.specialism === 'Other' && v.specialism_other ? `Other: ${v.specialism_other}` : s(v.specialism);
+  // "Other" on the English forms, "Altro" on the Italian one: the visitor's own words follow the label.
+  const specialism = (v.specialism === 'Other' || v.specialism === 'Altro') && v.specialism_other ? `${v.specialism}: ${v.specialism_other}` : s(v.specialism);
   const out = {
     lead_id: leadId,
     campaign,

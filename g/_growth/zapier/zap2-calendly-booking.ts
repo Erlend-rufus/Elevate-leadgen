@@ -23,6 +23,10 @@ const sdk = createZapierSdk();
  * A lead id that came from the form (l_...) but has no task yet is waited for (the form's Zap
  * may still be running) before a new task is made. Test bookings (an e-mail ending in
  * @example.invalid) get the tag "test".
+ *
+ * Added 23 Oct 2026, Italy (it-ict-growth): a campaign entry can say lang "en" (the ClickUp description and comment
+ * are then written in English; every Norwegian text goes through tr()) and zones (the time zones the meeting time
+ * is written in: Rome for Italy, London and Oslo for the UK, which is the default and unchanged).
  */
 
 // ---------------------------------------------------------------------------------------------
@@ -47,11 +51,15 @@ const LEAD_ID = /^[ld]_[A-Za-z0-9_]{3,40}$/;
 const MOVABLE = new Set(["ny lead", "kontaktet", "møte booket", "møte booket - noshow", "ukvalifisert - archive"]);
 const ARCHIVE = "ukvalifisert - archive";
 
+type Zone = { tz: string; label: string };
+
 type Campaign = {
   label: string;
   listId: string;
   tag: string;
   eventTypes: string[]; // Calendly event type ids (the uuid at the end of the event type URI)
+  lang?: "no" | "en"; // default "no", the language of the UK workflow
+  zones?: Zone[]; // the zones the meeting time is written in; default London, then Oslo
   field: { leadId: string; email: string; contactName: string; crmItemType: string; salesStage: string };
   option: { crmItemType: string; salesStage: string };
 };
@@ -111,7 +119,72 @@ const CAMPAIGNS: Record<string, Campaign> = {
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
   },
+  // Italy, IT and ICT firms (23 Oct 2026). NOT LIVE: the ClickUp list does not exist yet (a person duplicates
+  // "IT - UK - Commision", so the field ids are the IT list's) and neither does the Calendly event. With listId
+  // empty this campaign is left out of every search, so nothing here can touch the UK lists. The event must be made in
+  // the same Calendly organisation as the UK events, because the trigger listens to that organisation only.
+  "it-ict-growth": {
+    label: "IT ITALY",
+    listId: "", // IT - ITALY - Commission, to be made
+    tag: "growth-it",
+    eventTypes: [], // the event type id of "Elevate Marketing | Commission | IT Italia", when it exists
+    lang: "en",
+    zones: [{ tz: "Europe/Rome", label: "Rome" }],
+    field: {
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+    },
+  },
 };
+
+// The Norwegian text of the workflow is the source; a campaign with lang "en" reads it through this table
+// (a missing entry falls back to the Norwegian text, and a test checks that none is missing).
+const EN: Record<string, string> = {
+  "BOOKET UTEN SKJEMA": "BOOKED WITHOUT FORM",
+  "Personen booket møtet i Calendly, men skjemaet med id {formId} var ikke kommet inn i ClickUp da bookingen kom. Sjekk om det finnes en egen oppgave for samme e-post.":
+    "The person booked the meeting in Calendly, but the form with id {formId} had not reached ClickUp when the booking arrived. Check whether there is a separate task for the same e-mail.",
+  "Personen booket møtet i Calendly uten å fylle ut skjemaet.": "The person booked the meeting in Calendly without filling in the form.",
+  "Vi har ingen svar å vise, så be om tallene i møtet: omsetning, antall folk, hva en ny kunde er verdt og hvor lang salgssyklusen er.":
+    "We have no answers to show, so ask for the numbers in the meeting: turnover, number of people, what a new client is worth and how long the sales cycle is.",
+  "Møte": "Meeting",
+  "Tid": "Time",
+  "Flyttet fra en tidligere tid": "Moved from an earlier time",
+  "ja": "yes",
+  "Kontakt": "Contact",
+  "Navn": "Name",
+  "E-post": "E-mail",
+  "Mobil": "Mobile",
+  "Tidssone": "Time zone",
+  "Kilde": "Source",
+  "booket uten skjema": "booked without form",
+  "Møte booket i Calendly": "Meeting booked in Calendly",
+  "Flyttet fra en tidligere tid.": "Moved from an earlier time.",
+  "Koblet på e-postadressen, ikke på lead_id. Sjekk at det er riktig oppgave.": "Linked on the e-mail address, not on lead_id. Check that it is the right task.",
+  "ukjent": "unknown",
+  "Status flyttet fra «{from}» til «{to}».": "Status moved from «{from}» to «{to}».",
+  "Status er fortsatt «møte booket».": "Status is still «møte booket».",
+  "Oppgaven sto allerede i «møte booket». Sjekk om dette er en ny booking eller en dobbel.": "The task was already in «møte booket». Check whether this is a new booking or a duplicate.",
+  "Status ikke endret ({status}), fordi oppgaven er lenger frem i løpet.": "Status not changed ({status}), because the task is further along.",
+  "⚠ Skjemaet rutet dette som ikke aktuelt. Sjekk før møtet.": "⚠ The form routed this as not applicable. Check before the meeting.",
+};
+
+function tr(c: Campaign, no: string, vars?: Record<string, string>): string {
+  let text = c.lang === "en" && Object.prototype.hasOwnProperty.call(EN, no) ? EN[no] : no;
+  if (vars) for (const [k, v] of Object.entries(vars)) text = text.split(`{${k}}`).join(v);
+  return text;
+}
+
+const DEFAULT_ZONES: Zone[] = [
+  { tz: "Europe/London", label: "London" },
+  { tz: "Europe/Oslo", label: "Oslo" },
+];
 
 // ---------------------------------------------------------------------------------------------
 // Reading the booking. The trigger may hand the invitee over nested, flattened with "__", or
@@ -256,8 +329,9 @@ function parseBooking(raw: unknown): Booking {
 // ---------------------------------------------------------------------------------------------
 
 const WEEKDAYS = ["søn", "man", "tir", "ons", "tor", "fre", "lør"];
+const WEEKDAYS_EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-function local(ms: number, timeZone: string): { text: string; hm: string } {
+function local(ms: number, timeZone: string, lang: "no" | "en" = "no"): { text: string; hm: string } {
   try {
     const parts = new Intl.DateTimeFormat("en-GB", {
       timeZone,
@@ -271,20 +345,21 @@ function local(ms: number, timeZone: string): { text: string; hm: string } {
     const p: Record<string, string> = {};
     for (const part of parts) p[part.type] = part.value;
     const day = Math.floor(Date.UTC(Number(p.year), Number(p.month) - 1, Number(p.day)) / DAY_MS);
-    const weekday = WEEKDAYS[(((day + 4) % 7) + 7) % 7];
+    const weekday = (lang === "en" ? WEEKDAYS_EN : WEEKDAYS)[(((day + 4) % 7) + 7) % 7];
     const hm = `${p.hour}:${p.minute}`;
-    return { text: `${weekday} ${p.day}.${p.month}.${p.year} kl. ${hm}`, hm };
+    return { text: `${weekday} ${p.day}.${p.month}.${p.year} ${lang === "en" ? "at" : "kl."} ${hm}`, hm };
   } catch {
     return { text: `${new Intl.DateTimeFormat("en-GB").format(ms)} UTC`, hm: "" };
   }
 }
 
-function when(startMs: number, endMs: number): string {
-  const london = local(startMs, "Europe/London");
-  const oslo = local(startMs, "Europe/Oslo");
+function when(c: Campaign, startMs: number, endMs: number): string {
+  const [main, other] = c.zones ?? DEFAULT_ZONES;
+  const first = local(startMs, main.tz, c.lang ?? "no");
+  const second = other ? local(startMs, other.tz, c.lang ?? "no") : null;
   const minutes = endMs > startMs ? Math.round((endMs - startMs) / 60000) : 0;
-  const both = oslo.hm && oslo.hm !== london.hm ? ` (London) / ${oslo.hm} (Oslo)` : " (London)";
-  return `${london.text}${both}${minutes ? `, ${minutes} min` : ""}`;
+  const both = second && second.hm && second.hm !== first.hm ? ` (${main.label}) / ${second.hm} (${other.label})` : ` (${main.label})`;
+  return `${first.text}${both}${minutes ? `, ${minutes} min` : ""}`;
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -350,18 +425,19 @@ async function findByEmail(c: Campaign, email: string): Promise<{ found: Found |
 }
 
 function newTaskDescription(c: Campaign, b: Booking, leadId: string, formId: string, startMs: number, endMs: number, isTest: boolean): string {
-  const row = (label: string, value: string) => (value ? `- ${label}: ${value}` : "");
+  const t = (no: string) => tr(c, no);
+  const row = (label: string, value: string) => (value ? `- ${t(label)}: ${value}` : "");
   const block = (title: string, rows: string[]) => {
     const body = rows.filter(Boolean);
-    return body.length ? [`**${title}**`, ...body].join("\n") : "";
+    return body.length ? [`**${t(title)}**`, ...body].join("\n") : "";
   };
   const why = formId
-    ? `Personen booket møtet i Calendly, men skjemaet med id ${formId} var ikke kommet inn i ClickUp da bookingen kom. Sjekk om det finnes en egen oppgave for samme e-post.`
-    : "Personen booket møtet i Calendly uten å fylle ut skjemaet.";
+    ? tr(c, "Personen booket møtet i Calendly, men skjemaet med id {formId} var ikke kommet inn i ClickUp da bookingen kom. Sjekk om det finnes en egen oppgave for samme e-post.", { formId })
+    : t("Personen booket møtet i Calendly uten å fylle ut skjemaet.");
   return [
-    `**BOOKET UTEN SKJEMA** · ${c.label}${isTest ? " · TEST" : ""}`,
-    `${why} Vi har ingen svar å vise, så be om tallene i møtet: omsetning, antall folk, hva en ny kunde er verdt og hvor lang salgssyklusen er.`,
-    block("Møte", [row("Tid", when(startMs, endMs)), row("Type", b.eventName), row("Flyttet fra en tidligere tid", b.rescheduled ? "ja" : "")]),
+    `**${t("BOOKET UTEN SKJEMA")}** · ${c.label}${isTest ? " · TEST" : ""}`,
+    `${why} ${t("Vi har ingen svar å vise, så be om tallene i møtet: omsetning, antall folk, hva en ny kunde er verdt og hvor lang salgssyklusen er.")}`,
+    block("Møte", [row("Tid", when(c, startMs, endMs)), row("Type", b.eventName), row("Flyttet fra en tidligere tid", b.rescheduled ? t("ja") : "")]),
     block("Kontakt", [row("Navn", b.name), row("E-post", b.email), row("Mobil", b.mobile), row("Tidssone", b.timezone)]),
     block("Kilde", [
       row("utm_source", b.utm.utm_source ?? ""),
@@ -375,16 +451,18 @@ function newTaskDescription(c: Campaign, b: Booking, leadId: string, formId: str
     .join("\n\n");
 }
 
-function commentText(b: Booking, found: Found, how: string, startMs: number, endMs: number, moved: boolean): string {
-  const lines = [`Møte booket i Calendly: ${when(startMs, endMs)}`];
+function commentText(c: Campaign, b: Booking, found: Found, how: string, startMs: number, endMs: number, moved: boolean): string {
+  const t = (no: string) => tr(c, no);
+  const status = found.status || t("ukjent");
+  const lines = [`${t("Møte booket i Calendly")}: ${when(c, startMs, endMs)}`];
   if (b.eventName) lines.push(`Type: ${b.eventName}`);
-  if (b.rescheduled) lines.push("Flyttet fra en tidligere tid.");
-  if (how === "email") lines.push("Koblet på e-postadressen, ikke på lead_id. Sjekk at det er riktig oppgave.");
-  if (moved) lines.push(`Status flyttet fra «${found.status || "ukjent"}» til «${BOOKED}».`);
+  if (b.rescheduled) lines.push(t("Flyttet fra en tidligere tid."));
+  if (how === "email") lines.push(t("Koblet på e-postadressen, ikke på lead_id. Sjekk at det er riktig oppgave."));
+  if (moved) lines.push(tr(c, "Status flyttet fra «{from}» til «{to}».", { from: status, to: BOOKED }));
   else if (found.status === BOOKED) {
-    lines.push(b.rescheduled ? "Status er fortsatt «møte booket»." : "Oppgaven sto allerede i «møte booket». Sjekk om dette er en ny booking eller en dobbel.");
-  } else lines.push(`Status ikke endret (${found.status || "ukjent"}), fordi oppgaven er lenger frem i løpet.`);
-  if (found.status === ARCHIVE) lines.push("⚠ Skjemaet rutet dette som ikke aktuelt. Sjekk før møtet.");
+    lines.push(b.rescheduled ? t("Status er fortsatt «møte booket».") : t("Oppgaven sto allerede i «møte booket». Sjekk om dette er en ny booking eller en dobbel."));
+  } else lines.push(tr(c, "Status ikke endret ({status}), fordi oppgaven er lenger frem i løpet.", { status }));
+  if (found.status === ARCHIVE) lines.push(t("⚠ Skjemaet rutet dette som ikke aktuelt. Sjekk før møtet."));
   lines.push(`Calendly-ref: ${b.inviteeKey.slice(0, 8)}`);
   return lines.join("\n");
 }
@@ -530,7 +608,7 @@ const workflow = defineDurable<Record<string, unknown>, unknown>("leads-v3-calen
         if (b.name) fields.push({ id: campaign.field.contactName, value: b.name });
         if (b.email.includes("@") && !b.email.includes(" ")) fields.push({ id: campaign.field.email, value: b.email });
         const body: Record<string, unknown> = {
-          name: `${b.name || b.email} · booket uten skjema`,
+          name: `${b.name || b.email} · ${tr(campaign, "booket uten skjema")}`,
           markdown_description: newTaskDescription(campaign, b, leadId, formId, startMs, endMs, isTest),
           status: BOOKED,
           tags: [campaign.tag, "booket-uten-skjema", ...(isTest ? ["test"] : [])],
@@ -591,7 +669,7 @@ const workflow = defineDurable<Record<string, unknown>, unknown>("leads-v3-calen
       const already = (existing.json?.comments ?? []).some((cm: any) => String(cm.comment_text ?? "").includes(ref));
       if (already) return { commented: false, reason: "already commented" };
       const r = await clickup("POST", `/task/${found!.id}/comment`, {
-        comment_text: commentText(b, found!, how, startMs, endMs, move),
+        comment_text: commentText(campaign, b, found!, how, startMs, endMs, move),
         notify_all: false,
       });
       if (!r.ok) throw new Error(`ClickUp comment failed: HTTP ${r.status} ${r.text}`);

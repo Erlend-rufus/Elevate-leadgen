@@ -41,7 +41,26 @@ const SHARED = join(G, '_growth');
 const OUT = process.env.G_GROWTH_OUT || join(root, 'public', 'g');
 const FUNCTION_DATA = process.env.G_GROWTH_FUNCTION_DATA || join(root, 'netlify', 'functions', 'lead', 'data.generated.mjs');
 
-const FUNNELS = ['uk-it-growth', 'uk-private-hospitals', 'uk-law-firms'];
+const FUNNELS = ['uk-it-growth', 'uk-private-hospitals', 'uk-law-firms', 'it-ict-growth'];
+
+/* What a funnel says about its own language. The UK funnels have no "locale" in config.json and get this, so their
+   output is exactly what it was before Italy: lang en-GB, UK number format, the English rule set. A funnel may
+   override any of it (g/it-ict-growth/config.json does). "rules" picks the build's own checks below: the UK set
+   refuses American spellings, which in Italian would catch "organizzazione" and "specializzato". */
+const DEFAULT_LOCALE = {
+  lang: 'en-GB',
+  numbers: 'en-GB',
+  rules: 'en',
+  ui: {
+    legalNav: 'Legal',
+    calendarMissing: null, // built from the slug when null
+    calendarOwnPage: 'Open the calendar in its own page',
+    other: 'Other',
+  },
+};
+/* The UK pixel. A funnel for another country must not go live on it by mistake (see the checks in build()). */
+const UK_PIXEL_ID = '1466790598245604';
+let LOCALE = DEFAULT_LOCALE;
 
 /* The order of the sections on a landing page. copy.json may carry its own "layout"; without one the
    page is the IT board's. Every name here is a renderer in SECTIONS below. */
@@ -109,33 +128,45 @@ function fill(copy, vars) {
 
 /* --------------------------------------------------------------- the rules */
 
-const BANNED = [
+/* What no funnel may say, in any language. */
+const BANNED_ALL = [
+  [/!/, 'an exclamation mark'],
+  [/—|–/, 'an em-dash or en-dash'],
+  [/tel:|\+39|\+44|\+47/, 'a telephone number (this brand publishes none)'],
+  [/\{[A-Z_]{3,}\}/, 'a {TOKEN} that was not filled in'],
+  [/\bundefined\b|\[object /, 'a value that was never set'],
+];
+/* The UK rules: hype words, and American spellings (the pages are en-GB). */
+const BANNED_EN = [
   [/skyrocket/i, 'the word "skyrocket"'],
   [/game.changer/i, 'the phrase "game-changer"'],
   [/supercharge/i, 'the word "supercharge"'],
   [/\bunlock\w*/i, 'the word "unlock"'],
-  [/!/, 'an exclamation mark'],
-  [/—|–/, 'an em-dash or en-dash'],
   [/\b(optimiz|analyz|organiz|specializ|recogniz)\w*/i, 'an American -ize spelling'],
   [/\bcolor\b|\bcenter\b|\bfavorite\b/i, 'an American spelling'],
-  [/tel:|\+44|\+47/, 'a telephone number (this brand publishes none)'],
-  [/\{[A-Z_]{3,}\}/, 'a {TOKEN} that was not filled in'],
-  [/\bundefined\b|\[object /, 'a value that was never set'],
 ];
-
+/* The Italian rules: hype and promises the brand does not make. No spelling rule: the English ones would
+   fire on ordinary Italian ("organizzazione"). */
+const BANNED_IT = [
+  [/skyrocket|game.changer|supercharge/i, 'an English hype word'],
+  [/alle stelle|rivoluzionar\w*|esplosiv\w*|imperdibil\w*|straordinari\w* risultati/i, 'a hype word'],
+  [/risultati garantiti|garantiamo (i |dei |il |un )?(risultat|ritorn|vendit|contratt)/i, 'a promise of results'],
+];
+const BANNED_BY_RULES = { en: BANNED_ALL.concat(BANNED_EN), it: BANNED_ALL.concat(BANNED_IT) };
 /** A commission is never printed with a rate or an amount on a page anyone can forward. */
 function checkTerms(path, text) {
-  const m = /(commission|kommisjon|\bfees?\b)/i.exec(text);
+  const m = /(commission|commissione|commissioni|provvigion\w*|kommisjon|\bfees?\b)/i.exec(text);
   if (!m) return;
   const around = text.slice(Math.max(0, m.index - 100), m.index + 100);
-  if (/%|£\s?\d|\bkr\s?\d|\d\s?(percent|per cent)/i.test(around)) {
+  if (/%|[£€]\s?\d|\d\s?[£€]|\bkr\s?\d|\d\s?(percent|per cent|per cento|euro)\b/i.test(around)) {
     die(`${path} puts a rate or an amount within 100 characters of "${m[0]}":\n    ...${around.trim()}...`);
   }
 }
 
 function checkStrings(strings, { terms = true } = {}) {
+  const banned = BANNED_BY_RULES[LOCALE.rules];
   for (const [path, text] of strings) {
-    for (const [re, what] of BANNED) {
+    for (const [re, what] of banned) {
       if (re.test(text)) die(`${path} contains ${what}:\n    ...${text.slice(0, 140)}...`);
     }
     if (terms) checkTerms(path, text);
@@ -193,7 +224,7 @@ const picture = (tone, { lazy } = {}) =>
   `<picture><source srcset="/g/_assets/logo-${tone}.webp" type="image/webp">` +
   `<img class="lg" src="/g/_assets/logo-${tone}.png" width="418" height="168" alt="Elevate Marketing"${lazy ? ' loading="lazy"' : ''}></picture>`;
 
-const fmtNumber = (n, dec) => n.toLocaleString('en-GB', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+const fmtNumber = (n, dec) => n.toLocaleString(LOCALE.numbers, { minimumFractionDigits: dec, maximumFractionDigits: dec });
 
 /** "97", "40%", "£2m", "1,250" count up; anything else is plain text. */
 function parseFigure(v) {
@@ -259,7 +290,7 @@ function footer(cfg, copy) {
         ${picture('white', { lazy: true })}
         <p class="ft-text">${esc(F.text)} <a href="mailto:${esc(cfg.contact.email)}">${esc(cfg.contact.email)}</a></p>
       </div>
-      <nav class="ft-links" aria-label="Legal"><a href="${esc(cfg.links.privacy)}">${esc(F.privacy)}</a><a href="${esc(cfg.links.terms)}">${esc(F.terms)}</a></nav>
+      <nav class="ft-links" aria-label="${esc(LOCALE.ui.legalNav)}"><a href="${esc(cfg.links.privacy)}">${esc(F.privacy)}</a><a href="${esc(cfg.links.terms)}">${esc(F.terms)}</a></nav>
     </div>
   </footer>`;
 }
@@ -572,7 +603,7 @@ function head(cfg, { title, description, css, og, scripts, preconnect }) {
     ? `<script src="/js/consent.js?v=4" data-pixel="${esc(cfg.funnel.pixelId)}" data-banner="off"${scripts.track ? ` data-track="${esc(scripts.track)}"` : ''}></script>`
     : '';
   return `<!DOCTYPE html>
-<html lang="en-GB">
+<html lang="${esc(LOCALE.lang)}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -659,12 +690,29 @@ async function build(slug) {
   const core = await import(pathToFileURL(join(dir, 'core.mjs')).href);
   const { renderForm } = await import(pathToFileURL(join(dir, 'render-form.mjs')).href);
 
+  LOCALE = {
+    lang: (cfg.locale && cfg.locale.lang) || DEFAULT_LOCALE.lang,
+    numbers: (cfg.locale && cfg.locale.numbers) || DEFAULT_LOCALE.numbers,
+    rules: (cfg.locale && cfg.locale.rules) || DEFAULT_LOCALE.rules,
+    ui: Object.assign({}, DEFAULT_LOCALE.ui, (cfg.locale && cfg.locale.ui) || {}),
+  };
+  if (!BANNED_BY_RULES[LOCALE.rules]) die(`config.json locale.rules "${LOCALE.rules}" must be one of ${Object.keys(BANNED_BY_RULES).join(', ')}`);
+
   if (cfg.slug !== slug || cfg.campaign !== slug) die(`config.json slug and campaign must both be "${slug}"`);
   if (!/^\/g\/[a-z0-9-]+$/.test(cfg.path) || cfg.path !== `/g/${slug}`) die(`config.json path must be /g/${slug}`);
   if (!/^https:\/\/[a-z0-9.-]+$/.test(cfg.origin)) die(`origin "${cfg.origin}" must be an https host with no path`);
   if (typeof cfg.live !== 'boolean') die('"live" must be true or false');
   const url = cfg.funnel.calendlyUrl;
   if (cfg.live && !url) die('funnel.calendlyUrl is empty while "live" is true');
+  if (cfg.live && !slug.startsWith('uk-') && cfg.funnel.pixelId === UK_PIXEL_ID) {
+    die('funnel.pixelId is still the UK pixel while "live" is true. Make a pixel for this country and set it, or change this check on purpose.');
+  }
+  if (cfg.funnel.capiTokenEnv !== undefined && !/^META_CAPI_TOKEN_[A-Z0-9_]{1,30}$/.test(cfg.funnel.capiTokenEnv)) {
+    die(`funnel.capiTokenEnv "${cfg.funnel.capiTokenEnv}" must be the name of a Netlify variable like META_CAPI_TOKEN_IT (never the token itself)`);
+  }
+  if (cfg.live && !slug.startsWith('uk-') && !cfg.funnel.capiTokenEnv) {
+    die('funnel.capiTokenEnv is empty while "live" is true for a non-UK funnel. A Meta token belongs to one pixel: name the variable that holds this funnel\'s own token (META_CAPI_TOKEN_<COUNTRY>).');
+  }
   if (url && !/^https:\/\/calendly\.com\/[^?#\s]+$/.test(url)) die(`funnel.calendlyUrl "${url}" must be a calendly.com address with no query string: the page adds its own`);
   if (!/^[A-Za-z][A-Za-z0-9_]{2,44}$/.test(cfg.funnel.qualifiedEvent) ||
       /^(Lead|Purchase|Schedule|CompleteRegistration|Contact|SubmitApplication|ViewContent)$/.test(cfg.funnel.qualifiedEvent)) {
@@ -692,6 +740,14 @@ async function build(slug) {
   if (cfg.links.privacy !== `${cfg.path}/privacy/`) die(`links.privacy must be ${cfg.path}/privacy/ (the page built from legal.json)`);
   if (cfg.links.terms !== `${cfg.path}/terms/`) die(`links.terms must be ${cfg.path}/terms/ (the page built from legal.json)`);
   const legalFlags = { register: cfg.legal.registerCheck };
+
+  // A funnel in another language does not go live on a draft: a lawyer has read the notice, and a native speaker the page.
+  if (cfg.live && LOCALE.rules !== 'en') {
+    const rv = legal.review || {};
+    if (!rv.by || !rv.on) die(`legal.json "review" is empty while "live" is true: the privacy notice and the terms need a named reviewer and a date`);
+    const cr = rawCopy.review || {};
+    if (!cr.by || !cr.on) die(`copy.json "review" is empty while "live" is true: a native speaker has to read the page and be named, with a date`);
+  }
 
   // The form, rendered once for the landing page and kept for the server's no-script answer.
   const formHtml = renderForm({ copy, cfg, values: {}, errors: {}, hidden: {}, general: false });
@@ -794,8 +850,8 @@ ${pageScript(cfgClient, 'landing', coreSrc)}
         <noscript><p class="o-note">${mail(o.interest.noscript)}</p></noscript>` : '';
     const calendar = cal ? `
         <div class="o-cal-wrap">
-          <div class="o-cal" id="cal">${url ? '' : `<p class="o-note">The calendar is not connected yet. Set funnel.calendlyUrl in g/${esc(slug)}/config.json.</p>`}</div>
-          ${url ? `<noscript><p class="o-small"><a href="${esc(url)}">Open the calendar in its own page</a></p></noscript>\n          ` : ''}<p class="o-small">${esc(o.small)}</p>
+          <div class="o-cal" id="cal">${url ? '' : `<p class="o-note">${esc(LOCALE.ui.calendarMissing || `The calendar is not connected yet. Set funnel.calendlyUrl in g/${slug}/config.json.`)}</p>`}</div>
+          ${url ? `<noscript><p class="o-small"><a href="${esc(url)}">${esc(LOCALE.ui.calendarOwnPage)}</a></p></noscript>\n          ` : ''}<p class="o-small">${esc(o.small)}</p>
         </div>` : '';
     const html = head(cfg, {
       title, description: '', og: false,

@@ -37,6 +37,18 @@ const sdk = createZapierSdk();
  *     found, or made if the application never got to ClickUp, tagged "ønsker-nettsidetilbud", given a comment that
  *     notifies Sondre, and #leads-uk gets a post that pings him. A second delivery of the same press is ignored.
  *   - A test lead is never assigned, never notifies and never pings, whatever slack_test says.
+ *
+ * Added 23 Oct 2026, Italy (it-ict-growth). The campaign entry carries what differs per country, and every
+ * entry that does not say anything keeps the UK behaviour exactly:
+ *   - lang: "en" writes the ClickUp description, the comments and the Slack posts in English (the UK ones are
+ *     Norwegian, for the Norwegian team). Every Norwegian text below goes through tr(), which looks it up in EN.
+ *   - reviewer: who reads the not-a-fit leads (Aurora for Italy). ClickUp id 0 or no Slack id means that nobody is
+ *     assigned and nobody is pinged until she is invited to ClickUp and Slack and the ids are filled in.
+ *   - slackChannel: the channel of the country. Empty fails the run on purpose, like an empty listId.
+ *   - register: false for a country without a company register lookup (no register rows, no register line).
+ *   - phonePrefix "39": a national Italian number becomes +39.
+ *   - otherSpecialism: the form's own word for "Other" ("Altro").
+ *   - reasonText: the reason codes in the language and the currency of the country.
  */
 
 // ---------------------------------------------------------------------------------------------
@@ -51,10 +63,80 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const SLACK_GOAL_MAX = 320;
 
 // Who reads the leads that are not a fit. ClickUp member id, Slack user id and the name used in text.
-const REVIEWER = { clickupId: 106690144, slackId: "U0AR2CM4NTZ", name: "Sondre" };
+type Reviewer = { clickupId: number; slackId: string; name: string };
+const REVIEWER: Reviewer = { clickupId: 106690144, slackId: "U0AR2CM4NTZ", name: "Sondre" };
 const REVIEW_TAG = "vurder-nettside";
 const INTEREST_TAG = "ønsker-nettsidetilbud";
 const INTEREST_EVENT = "website_interest";
+
+// The Norwegian text of the workflow is the source. A campaign with lang "en" reads it through this table; an
+// entry that is missing falls back to the Norwegian text (a test checks that none is missing for what an
+// English campaign prints). {name}-style tokens are filled in by tr() in either language.
+const EN: Record<string, string> = {
+  // headings and labels of the ClickUp description
+  "skjema levert": "form submitted",
+  "Selskap": "Company",
+  "Navn": "Name",
+  "Nettside": "Website",
+  "Sjekk mot registeret": "Register check",
+  "Svar i skjemaet": "Form answers",
+  "Spesialisering": "Specialism",
+  "Fagområder": "Practice areas",
+  "SRA-nummer": "SRA number",
+  "Registreringsnummer hos tilsynet": "Regulator registration number",
+  "Spesialiteter": "Specialties",
+  "Andel selvbetalende": "Self-pay share",
+  "Verdi av førstekonsultasjon": "First consultation value",
+  "Omsetning": "Turnover",
+  "Hvor lenge i drift": "Years trading",
+  "Antall folk": "People",
+  "Markedsføring per måned": "Marketing spend per month",
+  "Verdi første år": "First-year value",
+  "Salgssyklus": "Sales cycle",
+  "Mål neste år": "Target next year",
+  "Beslutter": "Decision maker",
+  "Kapasitet": "Capacity",
+  "Kontakt": "Contact",
+  "Rolle": "Role",
+  "E-post": "E-mail",
+  "Mobil": "Mobile",
+  "Ruting": "Routing",
+  "Rute": "Route",
+  "Årsaker": "Reasons",
+  "Kilde": "Source",
+  "Side": "Page",
+  // route headings
+  "IKKE TREFF": "NOT A FIT",
+  // Slack
+  "uten navn": "no name",
+  "Selvbetalende": "Self-pay",
+  "Verdi førstekonsultasjon": "First consultation value",
+  "Vil ha ut av møtet": "Wants from the meeting",
+  "ukjent": "unknown",
+  "åpne oppgaven": "open the task",
+  "⚠ Størrelse ikke bekreftet, sjekk før møtet": "⚠ Size not confirmed, check before the meeting",
+  "⚠ Fertilitet: HFEA-regulert, sjekk før annonser": "⚠ Fertility: HFEA regulated, check before ads",
+  "⚠ Personskade er krysset av: avtalen må unnta personskadesaker": "⚠ Personal injury is ticked: the agreement must exclude personal injury cases",
+  "Grunn": "Reason",
+  "{name} vurderer nettside eller retainer": "{name} reviews website or retainer",
+  "ØNSKER NETTSIDETILBUD": "WANTS WEBSITE QUOTE",
+  "{who} sender ett tilbud på e-post innen to virkedager": "{who} sends one quote by e-mail within two working days",
+  // ClickUp comments
+  "Ønsker tilbud på ny nettside eller månedlig retainer. Trykket på knappen på siden «ikke treff».":
+    "Wants a quote for a new website or a monthly retainer. Pressed the button on the “not a fit” page.",
+  "Send ett tilbud på e-post{to} innen to virkedager.": "Send one quote by e-mail{to} within two working days.",
+  " til {email}": " to {email}",
+  "Disse feltene ble ikke satt automatisk: {failed}. Svarene står i beskrivelsen.": "These fields were not set automatically: {failed}. The answers are in the description.",
+};
+
+function tr(c: Campaign, no: string, vars?: Record<string, string>): string {
+  let text = c.lang === "en" && Object.prototype.hasOwnProperty.call(EN, no) ? EN[no] : no;
+  if (vars) for (const [k, v] of Object.entries(vars)) text = text.split(`{${k}}`).join(v);
+  return text;
+}
+
+const reviewerOf = (c: Campaign): Reviewer => c.reviewer ?? REVIEWER;
+const channelOf = (c: Campaign): string => (c.slackChannel === undefined ? SLACK_CHANNEL : c.slackChannel);
 
 type Tier = "fit" | "review" | "other";
 type RouteRule = {
@@ -81,6 +163,13 @@ type Campaign = {
   listId: string; // "" while the list does not exist yet: the run then fails on purpose
   tag: string;
   peopleWord: string;
+  lang?: "no" | "en"; // default "no", the language of the UK workflow
+  reviewer?: Reviewer; // default REVIEWER (Sondre)
+  slackChannel?: string; // default SLACK_CHANNEL (#leads-uk); "" fails the run on purpose
+  register?: boolean; // default true; false: no company register rows and no register line in Slack
+  phonePrefix?: string; // default "44"; "39" for Italy
+  otherSpecialism?: string; // default "Other"; the form's own word, "Altro" in Italy
+  reasonText?: Record<string, string>; // default REASON_TEXT
   field: Record<string, string>;
   option: {
     crmItemType: string;
@@ -232,6 +321,70 @@ const CAMPAIGNS: Record<string, Campaign> = {
       contractValue: {},
     },
   },
+  // Italy, IT and ICT firms (23 Oct 2026). NOT LIVE: the ClickUp list does not exist yet (a person duplicates
+  // "IT - UK - Commision"; the fields and options come with it, so the ids below are the IT list's), there is no
+  // Slack channel yet, and Aurora is not in ClickUp or Slack yet. With listId or slackChannel empty a run fails on
+  // purpose and shows in the run history; the lead itself is safe in the function's store. The function answers 503
+  // while the funnel's config says live: false, so no lead reaches this entry before launch.
+  // The ClickUp dropdowns are in pounds. Euro bands do not fit inside a pound band without a wrong bucket, so
+  // ad spend and contract value are left empty (the exact answers are in the description). Specialism has no
+  // currency and is set, team size only for "100 o più" (inside "50+"), "Non lo so" is "Unknown".
+  "it-ict-growth": {
+    label: "IT ITALY",
+    listId: "", // IT - ITALY - Commission, to be made
+    tag: "growth-it",
+    peopleWord: "employees",
+    lang: "en",
+    reviewer: { clickupId: 0, slackId: "", name: "Aurora" }, // ids when she has been invited
+    slackChannel: "", // #leads-it, to be made
+    register: false,
+    phonePrefix: "39",
+    otherSpecialism: "Altro",
+    reasonText: {
+      turnover_below_2m: "turnover under €2m",
+      trading_under_2y: "under two years trading",
+      value_under_10k: "client value under €10k",
+    },
+    field: {
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
+      website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
+      adSpend: "13229225-75e5-4729-bd8d-eb69c20e80b2",
+      teamSize: "18957c8f-f573-4790-957c-11812dd3aa04",
+      contractValue: "189cd0e5-2c7d-4c43-a94b-9ad280a4ad53",
+      tier: "668b1a6a-4054-4b24-ac3c-55432d7c2b3e",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      phone: "a0c06e36-5028-4b86-af93-c57de3ad2418",
+      specialism: "ce2deb01-0b47-45c6-8bf5-dbdc67f9962d",
+      jobTitle: "cf254478-a92a-4805-921a-a89ba06c69a0",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+      tier: {
+        fit: "153aea7a-a523-466a-997a-92e6b07e4c1f", // Tier 1
+        review: "20a259b4-95a9-435f-86fa-88bf86d399cc", // Tier 2
+        other: "1d991141-c31f-4a47-96c9-d6e2c025b29a", // Tier 3
+      },
+      specialism: {
+        "Strategia IT e trasformazione digitale": "332d345f-0002-41e5-a3cc-b719e55bfbbb",
+        "Servizi IT gestiti (MSP)": "cbb8af7b-befb-4b56-ae0e-e9018a52c022",
+        "Sviluppo software": "a5ca2f30-4bd7-4386-bace-86a239c71ff1",
+        "Dati e intelligenza artificiale": "3fae402c-d23a-4338-b521-9e6369cce72d",
+        "Cybersecurity": "48ac62c8-c7cb-48cb-8093-44018f5ad333",
+        "Altro": "a75ef23e-81ec-45a2-b98f-6fd366bd90f8",
+      },
+      teamSize: {
+        "100 o più": "58ab0f8c-b644-4cac-a29f-69765732b3fa", // 50+
+      },
+      adSpend: {
+        "Non lo so": "feaf2b0d-079a-4ffa-a48b-67e79c280458", // Unknown
+      },
+      contractValue: {},
+    },
+  },
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -332,14 +485,19 @@ function websiteUrl(v: string): string {
   return url.length <= 300 && url.includes(".") ? url : "";
 }
 
-function normalizePhone(v: string): string {
+function normalizePhone(v: string, country = "44"): string {
   let digits = "";
   for (const ch of v) if (ch >= "0" && ch <= "9") digits += ch;
-  if (digits.startsWith("440")) digits = `44${digits.slice(3)}`;
+  if (country === "44" && digits.startsWith("440")) digits = `44${digits.slice(3)}`;
   const inRange = (d: string) => d.length >= 8 && d.length <= 15;
   if (v.trim().startsWith("+")) return inRange(digits) ? `+${digits}` : "";
   if (digits.startsWith("00")) return inRange(digits.slice(2)) ? `+${digits.slice(2)}` : "";
-  if (digits.startsWith("0") && digits.length === 11) return `+44${digits.slice(1)}`;
+  if (country === "44" && digits.startsWith("0") && digits.length === 11) return `+44${digits.slice(1)}`;
+  // Italy keeps the leading 0 of a landline when it is dialled from abroad; a mobile starts with 3 and has 9 or 10 digits.
+  if (country === "39") {
+    if (digits.startsWith("3") && digits.length >= 9 && digits.length <= 10) return `+39${digits}`;
+    if (digits.startsWith("0") && digits.length >= 6 && digits.length <= 11) return `+39${digits}`;
+  }
   return "";
 }
 
@@ -393,7 +551,8 @@ function customFields(c: Campaign, lead: Lead, route: RouteRule): { id: string; 
   const add = (id: string, value: string) => {
     if (id && value) out.push({ id, value });
   };
-  const specialism = lead.specialism.startsWith("Other") ? "Other" : lead.specialism;
+  const otherWord = c.otherSpecialism ?? "Other";
+  const specialism = lead.specialism.startsWith(otherWord) ? otherWord : lead.specialism;
   add(c.field.leadId, lead.lead_id);
   add(c.field.crmItemType, c.option.crmItemType);
   add(c.field.salesStage, c.option.salesStage);
@@ -419,11 +578,13 @@ function goalBlock(lead: Lead): string {
 }
 
 function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): string {
-  const row = (label: string, value: string) => (value ? `- ${label}: ${value}` : "");
+  const t = (no: string) => tr(c, no);
+  const row = (label: string, value: string) => (value ? `- ${t(label)}: ${value}` : "");
   const block = (title: string, rows: string[]) => {
     const body = rows.filter(Boolean);
-    return body.length ? [`**${title}**`, ...body].join("\n") : "";
+    return body.length ? [`**${t(title)}**`, ...body].join("\n") : "";
   };
+  const withRegister = c.register !== false;
   const number = /^[A-Za-z0-9]{6,10}$/.test(lead.company_number)
     ? `[${lead.company_number}](https://find-and-update.company-information.service.gov.uk/company/${lead.company_number})`
     : lead.company_number;
@@ -436,12 +597,12 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
     .filter(Boolean)
     .join(" · ");
   const sections = [
-    `**${route.heading}** · ${c.label}${isTest ? " · TEST" : ""} · skjema levert ${lead.submitted_at}`,
+    `**${t(route.heading)}** · ${c.label}${isTest ? " · TEST" : ""} · ${t("skjema levert")} ${lead.submitted_at}`,
     block("Selskap", [
       row("Navn", lead.company_name),
       row("Nettside", lead.company_website),
-      row("Companies House", register),
-      row("Sjekk mot registeret", lead.ch_check),
+      withRegister ? row("Companies House", register) : "",
+      withRegister ? row("Sjekk mot registeret", lead.ch_check) : "",
     ]),
     block("Svar i skjemaet", [
       row("Spesialisering", lead.specialism),
@@ -491,11 +652,14 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
 
 function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, isTest: boolean): string {
   const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  const head = `${isTest ? "[TEST] " : ""}*${route.heading}* · ${c.label} · ${esc(lead.company_name || "uten navn")}`;
+  const t = (no: string) => tr(c, no);
+  const head = `${isTest ? "[TEST] " : ""}*${t(route.heading)}* · ${c.label} · ${esc(lead.company_name || t("uten navn"))}`;
   const people = lead.employees_or_fee_earners ? `${lead.employees_or_fee_earners} ${c.peopleWord}` : "";
   const year = lead.ch_incorporated.slice(0, 4);
-  let register: string;
-  if (lead.ch_check === "ok" || lead.ch_check === "mismatch") {
+  let register = "";
+  if (c.register === false) {
+    // a country without a register lookup says nothing about one
+  } else if (lead.ch_check === "ok" || lead.ch_check === "mismatch") {
     register = `Companies House: ${lead.ch_accounts_type || "ukjent regnskapstype"}${year ? `, stiftet ${year}` : ""}`;
   } else if (lead.ch_check === "not_found") {
     register = "Companies House: ikke funnet";
@@ -506,31 +670,31 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   }
   const line2 = [lead.turnover_band, people, register].filter(Boolean).join(" · ");
   const line3 = [
-    lead.first_year_value && `Verdi første år: ${lead.first_year_value}`,
-    lead.first_consultation_value && `Verdi førstekonsultasjon: ${lead.first_consultation_value}`,
-    lead.self_pay_share && `Selvbetalende: ${lead.self_pay_share}`,
-    lead.specialties && `Spesialiteter: ${lead.specialties}`,
-    lead.practice_areas && `Fagområder: ${lead.practice_areas}`,
-    lead.sales_cycle && `Salgssyklus: ${lead.sales_cycle}`,
+    lead.first_year_value && `${t("Verdi første år")}: ${lead.first_year_value}`,
+    lead.first_consultation_value && `${t("Verdi førstekonsultasjon")}: ${lead.first_consultation_value}`,
+    lead.self_pay_share && `${t("Selvbetalende")}: ${lead.self_pay_share}`,
+    lead.specialties && `${t("Spesialiteter")}: ${lead.specialties}`,
+    lead.practice_areas && `${t("Fagområder")}: ${lead.practice_areas}`,
+    lead.sales_cycle && `${t("Salgssyklus")}: ${lead.sales_cycle}`,
   ]
     .filter(Boolean)
     .join(" · ");
-  const line4 = [lead.capacity && `Kapasitet: ${lead.capacity}`, lead.decision_maker && `Beslutter: ${lead.decision_maker}`]
+  const line4 = [lead.capacity && `${t("Kapasitet")}: ${lead.capacity}`, lead.decision_maker && `${t("Beslutter")}: ${lead.decision_maker}`]
     .filter(Boolean)
     .join(" · ");
   let goal = "";
   if (lead.meeting_goal) {
     const flat = lead.meeting_goal.replace(/\s+/g, " ").trim();
     const cut = flat.length > SLACK_GOAL_MAX ? `${flat.slice(0, SLACK_GOAL_MAX - 1).trimEnd()}…` : flat;
-    goal = `Vil ha ut av møtet: _${esc(cut)}_`;
+    goal = `${t("Vil ha ut av møtet")}: _${esc(cut)}_`;
   }
-  const source = [lead.utm_source, lead.utm_content].filter(Boolean).join(" / ") || "ukjent";
-  const lines = [head, esc(line2), esc(line3), esc(line4), goal, `Kilde: ${esc(source)}`, `ClickUp: <${taskUrl}|åpne oppgaven>`];
-  if (lead.ch_check === "mismatch" || lead.ch_check === "timeout" || lead.ch_check === "not_found") {
-    lines.push("⚠ Størrelse ikke bekreftet, sjekk før møtet");
+  const source = [lead.utm_source, lead.utm_content].filter(Boolean).join(" / ") || t("ukjent");
+  const lines = [head, esc(line2), esc(line3), esc(line4), goal, `${t("Kilde")}: ${esc(source)}`, `ClickUp: <${taskUrl}|${t("åpne oppgaven")}>`];
+  if (c.register !== false && (lead.ch_check === "mismatch" || lead.ch_check === "timeout" || lead.ch_check === "not_found")) {
+    lines.push(t("⚠ Størrelse ikke bekreftet, sjekk før møtet"));
   }
-  if (lead.route_reason.includes("fertility")) lines.push("⚠ Fertilitet: HFEA-regulert, sjekk før annonser");
-  if (lead.route_reason.includes("personal_injury_ticked")) lines.push("⚠ Personskade er krysset av: avtalen må unnta personskadesaker");
+  if (lead.route_reason.includes("fertility")) lines.push(t("⚠ Fertilitet: HFEA-regulert, sjekk før annonser"));
+  if (lead.route_reason.includes("personal_injury_ticked")) lines.push(t("⚠ Personskade er krysset av: avtalen må unnta personskadesaker"));
   return lines.filter(Boolean).join("\n");
 }
 
@@ -550,31 +714,34 @@ const slackEscape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;"
 
 // Not a fit: short, no ping. The assignment in ClickUp is what tells Sondre.
 function slackCompact(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, isTest: boolean): string {
+  const reasons = c.reasonText ?? REASON_TEXT;
   const people = lead.employees_or_fee_earners ? `${lead.employees_or_fee_earners} ${c.peopleWord}` : "";
   const why = lead.route_reason
     .split(",")
     .map((code) => code.trim())
     .filter(Boolean)
-    .map((code) => (Object.prototype.hasOwnProperty.call(REASON_TEXT, code) ? REASON_TEXT[code] : code))
+    .map((code) => (Object.prototype.hasOwnProperty.call(reasons, code) ? reasons[code] : code))
     .join(", ");
-  const head = `${isTest ? "[TEST] " : ""}*${route.heading}* · ${c.label} · ${slackEscape(lead.company_name || "uten navn")}`;
-  const line2 = [lead.turnover_band, people, why && `Grunn: ${why}`].filter(Boolean).join(" · ");
-  return [head, slackEscape(line2), `${REVIEWER.name} vurderer nettside eller retainer · ClickUp: <${taskUrl}|åpne oppgaven>`]
+  const head = `${isTest ? "[TEST] " : ""}*${tr(c, route.heading)}* · ${c.label} · ${slackEscape(lead.company_name || tr(c, "uten navn"))}`;
+  const line2 = [lead.turnover_band, people, why && `${tr(c, "Grunn")}: ${why}`].filter(Boolean).join(" · ");
+  return [head, slackEscape(line2), `${tr(c, "{name} vurderer nettside eller retainer", { name: reviewerOf(c).name })} · ClickUp: <${taskUrl}|${tr(c, "åpne oppgaven")}>`]
     .filter(Boolean)
     .join("\n");
 }
 
 // The visitor pressed "Yes, send me a quote". This one does ping Sondre (not on a test lead).
 function slackInterest(c: Campaign, lead: Lead, taskUrl: string, isTest: boolean): string {
-  const who = isTest ? REVIEWER.name : `<@${REVIEWER.slackId}>`;
-  const head = `${isTest ? "[TEST] " : ""}*ØNSKER NETTSIDETILBUD* · ${c.label} · ${slackEscape(lead.company_name || "uten navn")}`;
-  return [head, `${who} sender ett tilbud på e-post innen to virkedager · ClickUp: <${taskUrl}|åpne oppgaven>`].join("\n");
+  const rev = reviewerOf(c);
+  const who = isTest || !rev.slackId ? rev.name : `<@${rev.slackId}>`;
+  const head = `${isTest ? "[TEST] " : ""}*${tr(c, "ØNSKER NETTSIDETILBUD")}* · ${c.label} · ${slackEscape(lead.company_name || tr(c, "uten navn"))}`;
+  return [head, `${tr(c, "{who} sender ett tilbud på e-post innen to virkedager", { who })} · ClickUp: <${taskUrl}|${tr(c, "åpne oppgaven")}>`].join("\n");
 }
 
-function interestComment(lead: Lead): string {
+function interestComment(c: Campaign, lead: Lead): string {
+  const to = validEmail(lead.email) ? tr(c, " til {email}", { email: validEmail(lead.email) }) : "";
   return [
-    "Ønsker tilbud på ny nettside eller månedlig retainer. Trykket på knappen på siden «ikke treff».",
-    `Send ett tilbud på e-post${validEmail(lead.email) ? ` til ${validEmail(lead.email)}` : ""} innen to virkedager.`,
+    tr(c, "Ønsker tilbud på ny nettside eller månedlig retainer. Trykket på knappen på siden «ikke treff»."),
+    tr(c, "Send ett tilbud på e-post{to} innen to virkedager.", { to }),
   ].join("\n");
 }
 
@@ -603,7 +770,7 @@ async function createTask(
     custom_fields: fields,
   };
   if (route.priority !== null) body.priority = route.priority;
-  if (route.reviewer && !isTest) body.assignees = [REVIEWER.clickupId];
+  if (route.reviewer && !isTest && reviewerOf(campaign).clickupId) body.assignees = [reviewerOf(campaign).clickupId];
   if (route.dueInDays > 0) {
     body.due_date = Date.now() + route.dueInDays * DAY_MS;
     body.due_date_time = false;
@@ -680,7 +847,7 @@ async function interest(
     maxAttempts: 3,
     retryDelaySeconds: 10,
     run: async () => {
-      const r = await clickup("POST", `/task/${found.id}/comment`, { comment_text: interestComment(lead), notify_all: !isTest });
+      const r = await clickup("POST", `/task/${found.id}/comment`, { comment_text: interestComment(campaign, lead), notify_all: !isTest });
       if (!r.ok) throw new Error(`ClickUp comment failed: HTTP ${r.status} ${r.text}`);
       return { commented: true };
     },
@@ -700,7 +867,7 @@ async function interest(
           actionType: "write",
           actionKey: "channel_message",
           connection: SLACK,
-          inputs: { channel: SLACK_CHANNEL, text: message, as_bot: "yes", unfurl: "no", link_names: "no", add_edit_link: "no" },
+          inputs: { channel: channelOf(campaign), text: message, as_bot: "yes", unfurl: "no", link_names: "no", add_edit_link: "no" },
         });
         const first: any = result.data?.[0] ?? {};
         return { posted: true, ts: first.ts ?? null, channel: first.channel ?? null };
@@ -732,6 +899,7 @@ const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og
   const campaign = Object.prototype.hasOwnProperty.call(CAMPAIGNS, lead.campaign) ? CAMPAIGNS[lead.campaign] : null;
   if (!campaign) throw new Error(`Unknown campaign "${lead.campaign}". Add it to CAMPAIGNS.`);
   if (!campaign.listId) throw new Error(`Campaign "${lead.campaign}" has no ClickUp list yet. Duplicate IT - UK - Commision and fill in CAMPAIGNS.`);
+  if (!channelOf(campaign)) throw new Error(`Campaign "${lead.campaign}" has no Slack channel yet. Make the channel and fill in slackChannel in CAMPAIGNS.`);
   const routeKey = lead.route.toLowerCase();
   const route = Object.prototype.hasOwnProperty.call(ROUTES, routeKey) ? ROUTES[routeKey] : null;
   if (!route) throw new Error(`Unknown route "${lead.route}".`);
@@ -777,7 +945,7 @@ const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og
           actionType: "write",
           actionKey: "channel_message",
           connection: SLACK,
-          inputs: { channel: SLACK_CHANNEL, text: slackMessage, as_bot: "yes", unfurl: "no", link_names: "no", add_edit_link: "no" },
+          inputs: { channel: channelOf(campaign), text: slackMessage, as_bot: "yes", unfurl: "no", link_names: "no", add_edit_link: "no" },
         });
         const first: any = result.data?.[0] ?? {};
         return { posted: true, ts: first.ts ?? null, channel: first.channel ?? null };
@@ -800,7 +968,7 @@ const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og
         }
         if (failed.length > 0) {
           await clickup("POST", `/task/${task.id}/comment`, {
-            comment_text: `Disse feltene ble ikke satt automatisk: ${failed.join(", ")}. Svarene står i beskrivelsen.`,
+            comment_text: tr(campaign, "Disse feltene ble ikke satt automatisk: {failed}. Svarene står i beskrivelsen.", { failed: failed.join(", ") }),
             notify_all: false,
           });
         }
@@ -811,7 +979,7 @@ const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og
 
   // 4. The phone number, best effort: ClickUp is strict about the format, and the number is in the
   //    description anyway.
-  const phone = normalizePhone(lead.mobile);
+  const phone = normalizePhone(lead.mobile, campaign.phonePrefix ?? "44");
   let phoneResult: Record<string, unknown> = { set: false, reason: lead.mobile ? "not a usable number" : "none given" };
   if (phone) {
     phoneResult = await ctx.step({
