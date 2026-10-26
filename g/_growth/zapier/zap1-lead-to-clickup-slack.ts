@@ -58,7 +58,10 @@ const sdk = createZapierSdk();
  *   - The spend bands changed. Law gained "£1,000 to under £2,000", which fits inside ClickUp's "£1-2.5k/mth".
  *     Health's lowest band now ends at £3,000, so "£5,000 to under £20,000" is no longer an answer.
  *   - REASON_TEXT knows the not-a-fit codes the new rules give (spend_under_1k, spend_under_3k,
- *     turnover_below_1m, budget_2k_no).
+ *     turnover_below_1m, budget_2k_no). Flags (fertility, personal_injury_ticked) are no longer shown as the reason
+ *     for a refusal in the one-line post.
+ *   - The fit and review posts show the marketing spend: it now decides whether a smaller firm is a fit.
+ *   - IT team size "50 to 99" fits inside ClickUp's "50+" and is set.
  */
 
 // ---------------------------------------------------------------------------------------------
@@ -233,6 +236,7 @@ const CAMPAIGNS: Record<string, Campaign> = {
         "Other": "a75ef23e-81ec-45a2-b98f-6fd366bd90f8",
       },
       teamSize: {
+        "50 to 99": "58ab0f8c-b644-4cac-a29f-69765732b3fa", // 50+
         "100 or more": "58ab0f8c-b644-4cac-a29f-69765732b3fa", // 50+
       },
       adSpend: {
@@ -680,6 +684,7 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   }
   const line2 = [lead.turnover_band, people, register].filter(Boolean).join(" · ");
   const line3 = [
+    lead.marketing_spend && `${t("Markedsføring per måned")}: ${lead.marketing_spend}`,
     lead.first_year_value && `${t("Verdi første år")}: ${lead.first_year_value}`,
     lead.first_consultation_value && `${t("Verdi førstekonsultasjon")}: ${lead.first_consultation_value}`,
     lead.self_pay_share && `${t("Selvbetalende")}: ${lead.self_pay_share}`,
@@ -724,6 +729,9 @@ const REASON_TEXT: Record<string, string> = {
   ch_micro_or_dormant: "mikro eller sovende regnskap",
 };
 
+// Codes that mark a lead rather than refuse it. They stay in the description and the full post, never in "Grunn".
+const FLAGS = new Set(["fertility", "personal_injury_ticked", "value_under_2k_volume_firm"]);
+
 const slackEscape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 // Not a fit: short, no ping. The assignment in ClickUp is what tells Sondre.
@@ -733,7 +741,7 @@ function slackCompact(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string
   const why = lead.route_reason
     .split(",")
     .map((code) => code.trim())
-    .filter(Boolean)
+    .filter((code) => code && !FLAGS.has(code))
     .map((code) => (Object.prototype.hasOwnProperty.call(reasons, code) ? reasons[code] : code))
     .join(", ");
   const head = `${isTest ? "[TEST] " : ""}*${tr(c, route.heading)}* · ${c.label} · ${slackEscape(lead.company_name || tr(c, "uten navn"))}`;

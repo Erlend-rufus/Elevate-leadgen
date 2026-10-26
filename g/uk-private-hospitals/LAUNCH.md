@@ -19,8 +19,8 @@ npm run test:g-growth  # g/uk-private-hospitals/test/funnel.test.mjs is in it
 | | IT | Health |
 |---|---|---|
 | Threshold | £2m | £2m since 26 Oct 2026 (`{THRESHOLD}`, was £5m), self-paying patients. `{WORTH}` (£500) is no longer on the page |
-| Form | 13 steps | 12 steps; "Which specialties would you like to grow?" is a multi-choice (tick any), sent as `specialties` joined with ", " |
-| Payload keys | 37 | the same plus `regulator_number`, `self_pay_share`, `specialties`, `first_consultation_value` (empty for the other campaigns) |
+| Form | 14 steps (13 when built, plus the meeting question) | 13 steps; "Which specialties would you like to grow?" is a multi-choice (tick any), sent as `specialties` joined with ", " |
+| Payload keys | 42 (37 when built, then the meeting question and the health and law keys) | the same plus `regulator_number`, `self_pay_share`, `specialties`, `first_consultation_value` (empty for the other campaigns) |
 | Routing (`route.mjs`) | | **Since 26 Oct 2026 (workshop):** not a fit: under £2m with under £3,000 a month on marketing (the lowest band now ends at £3,000), self-pay under 10%. Trading, the value of a first consultation and capacity no longer route (never `not_now`). review: turnover not stated, under £2m with "I do not know" on marketing, self-pay 10% to under 30% or unknown, only "Other" ticked. Fertility ticked is flagged (`fertility` in the reasons), not routed. |
 | Payment | commission on closed deals | commission on attended first consultations and on the procedures those patients book within a year (owner's decision 20 Oct 2026, De Peyer model). The rate is never on the page. |
 | Case | three IT consultancies | C-Medical, 1 Feb to 16 Oct 2026 against the same days of 2025, with written permission (owner, 20 Oct). Headline multiple 13x without reception; 22x whole account in the note. |

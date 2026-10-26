@@ -93,7 +93,7 @@
     "body": "The firms we work best with already win work through referrals and reputation. What they lack is a second channel that brings in the same kind of client, predictably, without the partners doing all the selling.",
     "yesTitle": "This works if",
     "yes": [
-      "You run a UK IT services firm with {THRESHOLD} or more in turnover and at least two years of trading",
+      "You run a UK IT services firm with {THRESHOLD} or more in turnover and at least two years of trading, or with £1m or more and a marketing budget of £1,000 a month",
       "A new client is worth {WORTH} or more to you in the first year",
       "You have a sales function, even if that is a founder, that can respond within two working days",
       "You have capacity to take on new clients in the next three months"
@@ -251,7 +251,7 @@
     },
     "not-a-fit": {
       "h": "Thank you. This is not the right fit at the moment.",
-      "p": "We work with UK IT services firms that turn over £1m or more. Below {THRESHOLD}, or with less than two years of trading, we ask for a marketing budget of £1,000 or more a month. If that changes, we would be glad to hear from you.",
+      "p": "We work with UK IT services firms that turn over £1m or more, where a new client is worth £10k or more in the first year. Below {THRESHOLD}, or with less than two years of trading, we ask for a marketing budget of £1,000 or more a month. If that changes, we would be glad to hear from you.",
       "note": "If we have misread your answers, email {EMAIL} and we will look again.",
       "interest": {
         "h": "Looking for a new website instead?",

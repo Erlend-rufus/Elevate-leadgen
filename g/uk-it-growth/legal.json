@@ -2,7 +2,7 @@
   "_comment": "The privacy notice and the website terms of the growth funnels, built into /g/uk-it-growth/privacy/ and /g/uk-it-growth/terms/ by scripts/build-g-growth.mjs. The text is the solicitor pack's draft (Claude Doc 'Solicitor pack (UK): commission, consent and three drafts'), with the open brackets closed as described in LAUNCH.md, section 13. Block types: h2, p, ul, table (head + rows), button. Links: [[label|/path]] or [[label|@privacy]] / [[label|@terms]]; {EMAIL} becomes the contact address as a link. A block, or a table row written as {\"when\": ..., \"cells\": [...]}, is kept only if its condition holds: \"register\" is config.json legal.registerCheck (true only while COMPANIES_HOUSE_API_KEY is set in production), \"unless\": \"register\" marks a block or row kept only while no check is made. The daily check (netlify/functions/lead-reconcile) reports the flag and the key disagreeing. Change the date in 'updated' whenever the words change. No dashes, no exclamation marks, no rate near the word commission: the build refuses them.",
   "privacy": {
     "title": "Privacy notice",
-    "updated": "Last updated: 22 October 2026",
+    "updated": "Last updated: 26 October 2026",
     "blocks": [
       { "p": "This notice explains how Elevate Marketing uses personal data on its campaign pages for UK IT services firms, private healthcare providers and law firms, in the application and booking steps that follow them, and on its older enquiry page. The main website at getelevateleads.com has its own privacy policy." },
 
@@ -44,7 +44,7 @@
         ]
       } },
       { "when": "register", "p": "We use your answers to decide automatically which page you see next: a booking page, a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. A person may also read the applications on the last of these pages, to see whether another service of ours could help. We may email you once about that, and we always do if you press the button on that page. If you think we got it wrong, email us and we will look again." },
-      { "unless": "register", "p": "We use your answers to decide automatically which page you see next: a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. A person may also read the applications on the last of these pages, to see whether another service of ours could help. We may email you once about that, and we always do if you press the button on that page. If you think we got it wrong, email us and we will look again." },
+      { "unless": "register", "p": "We use your answers to decide automatically which page you see next: a booking page, a page saying that we will review your application, a page saying that we will ask again later, or a page saying that we cannot help at the moment. A person checks every application sent for review. A person may also read the applications on the last of these pages, to see whether another service of ours could help. We may email you once about that, and we always do if you press the button on that page. If you think we got it wrong, email us and we will look again." },
 
       { "h2": "4. Who receives your details" },
       { "p": "We share your details only with the people and services that help us run this business. We do not sell them." },
@@ -56,7 +56,7 @@
           { "when": "register", "cells": ["Companies House", "Keeps the public register of companies", "The company name you give, as a search"] },
           ["Zapier", "Moves your application between our systems", "Your application"],
           ["ClickUp", "Holds our record of applications, calls and customers", "Your application, and notes of our contact with you"],
-          ["Slack", "Internal notifications", "The company name, our decision and what you told us you want from the meeting. No email address or phone number."],
+          ["Slack", "Internal notifications", "The company name, your answers about the business, our decision and what you told us you want from the meeting. No email address or phone number."],
           ["Calendly", "Takes bookings", "Your name, email address, your choice of time and an application reference"],
           ["Our email and text message providers", "Send our emails and texts", "Your email address or mobile number, and the message"],
           ["Meta Platforms Ireland", "Measures our advertising, only if you chose Accept", "The identifiers set by the Meta pixel and your visits to our pages. From our server, also a scrambled version of your email address and name, your IP address and your browser details."],

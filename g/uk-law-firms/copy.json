@@ -31,7 +31,7 @@
     "body": "The firms we work best with already win work through reputation and referral. What they lack is a second channel they control: enquiries that arrive because the right page was in front of the right person, in a practice area they want to grow.",
     "yesTitle": "This works if",
     "yes": [
-      "You are a firm in England and Wales with {THRESHOLD} or more in turnover",
+      "You are a firm in England and Wales with £1m or more in turnover, or a smaller firm that can put £2,000 a month into advertising",
       "You act for private clients or businesses in areas such as family, conveyancing, wills and probate, employment, commercial or immigration",
       "A new client is worth {WORTH} or more to you in the first year",
       "Someone at the firm can respond to a new enquiry within one working day"
@@ -117,7 +117,7 @@
     "retry": "Try again",
     "sending": "Checking a few details. This takes a few seconds.",
     "failed": "Something went wrong on our side. Your answers are still here. Please try again, or email",
-    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number. If you tell us you are at capacity, we will get back in touch once, in three months.",
+    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number.",
     "privacy": "Privacy"
   },
   "outcomes": {

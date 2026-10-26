@@ -380,7 +380,7 @@ const SPEND_UNDER_1K = '5482c305-7587-466a-bef4-ab15e6a70906';
   console.log('14 ok');
 }
 // ---------------------------------------------------------------- 15. not a fit: tag, Sondre, one compact post without a ping
-const naf = { lead_id: 'l_naf_0001', route: 'not_a_fit', route_reason: 'turnover_below_2m', turnover_band: 'Under £1m', employees_or_fee_earners: '10 to 24', email: 'owner@small-it.co.uk', company_name: 'Small IT Ltd', ch_check: 'skipped', ch_status: '', ch_accounts_type: '', ch_incorporated: '', company_number: '' };
+const naf = { lead_id: 'l_naf_0001', route: 'not_a_fit', route_reason: 'turnover_below_1m', turnover_band: 'Under £1m', employees_or_fee_earners: '10 to 24', email: 'owner@small-it.co.uk', company_name: 'Small IT Ltd', ch_check: 'skipped', ch_status: '', ch_accounts_type: '', ch_incorporated: '', company_number: '' };
 {
   const w = makeWorld();
   const { out } = await run(w, withLead(naf));
@@ -393,7 +393,7 @@ const naf = { lead_id: 'l_naf_0001', route: 'not_a_fit', route_reason: 'turnover
   console.log('--- Slack (not a fit) ---\n' + msg + '\n---');
   eq(msg.split('\n').length, 3, 'naf: three lines');
   ok(msg.startsWith('*IKKE TREFF* · UK IT · Small IT Ltd\n'), 'naf: head');
-  ok(msg.includes('Under £1m · 10 to 24 ansatte · Grunn: omsetning under £2m'), 'naf: line 2 with the reason in words');
+  ok(msg.includes('Under £1m · 10 to 24 ansatte · Grunn: omsetning under £1m'), 'naf: line 2 with the reason in words');
   ok(msg.includes('Sondre vurderer nettside eller retainer · ClickUp: <https://app.clickup.com/t/T1|åpne oppgaven>'), 'naf: line 3');
   ok(!msg.includes('<@'), 'naf: no ping');
   ok(!msg.includes('owner@') && !msg.includes('small-it.co.uk'), 'naf: no e-mail address in Slack');
@@ -420,6 +420,18 @@ const naf = { lead_id: 'l_naf_0001', route: 'not_a_fit', route_reason: 'turnover
     await run(w5, withLead({ ...naf, lead_id: 'l_naf_' + reason.length, campaign, route_reason: reason }));
     ok(w5.slack[0].includes(words), 'naf: ' + reason + ' in words');
   }
+  // a flag marks a lead, it is not a reason for refusing it
+  const w6 = makeWorld();
+  await run(w6, withLead({ ...naf, lead_id: 'l_naf_0006', campaign: 'uk-private-hospitals', route_reason: 'turnover_below_2m,spend_under_3k,fertility' }));
+  ok(w6.slack[0].includes('Grunn: omsetning under £2m, markedsføring under £3 000 i måneden\n'), 'naf: the fertility flag is not shown as a reason');
+  // the full post shows the marketing spend, which now decides whether a smaller firm is a fit
+  const w7 = makeWorld();
+  await run(w7, withLead({ ...naf, lead_id: 'l_fit_spend_0001', route: 'fit', route_reason: 'turnover_1m_2m_spend_1k,trading_2y_plus,register_not_used', turnover_band: '£1m to under £2m', marketing_spend: '£1,000 to under £5,000' }));
+  ok(w7.slack[0].includes('Markedsføring per måned: £1,000 to under £5,000'), 'fit: marketing spend in the post');
+  // IT team size 50 to 99 fits inside ClickUp's 50+
+  const w8 = makeWorld();
+  await run(w8, withLead({ ...naf, lead_id: 'l_team_0001', route: 'fit', employees_or_fee_earners: '50 to 99' }));
+  eq(optName(w8.tasks[0], F.team), '50+', 'IT: 50 to 99 sets 50+');
   console.log('15 ok');
 }
 // ---------------------------------------------------------------- 16. the quote button: tag, comment that notifies, post that pings

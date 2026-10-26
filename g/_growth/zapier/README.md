@@ -64,6 +64,18 @@ the meeting time is written in). **The Italy entries are in the source but are n
 the channel, Aurora's ids and the Calendly event type do not exist yet, and the shared workflows carry live UK leads.
 Publish when `g/it-ict-growth/LAUNCH.md` section 4 says so, after a draft run against a UK test lead.
 
+**What runs is in `published/`.** Since the Italy entries went into the source (23 Oct 2026), the file in Zapier is no longer
+the source file byte for byte. `published/` holds the exact `workflow.ts` of each workflow: the last version before Italy
+(`132129b` for Zap 1, `8d7c322` for Zap 2) with the UK changes made since. Change both files in the same step: the source
+here, and the copy in `published/`, which is what goes into the Zapier draft. Test the copy by building it in place of the
+source (`cp published/zap1-lead-to-clickup-slack.ts zap1-x.ts && node build.mjs zap1-x.ts`, then copy `out/zap1-x.mjs` over
+`out/zap1-lead-to-clickup-slack.mjs` and run `zap1.test.mjs`; remove `zap1-x.*` afterwards). When Italy goes live, publish
+the source and delete `published/`.
+
+26 Oct 2026: health tag `growth-health` (was `growth-5m`), the new spend bands, words for the new reason codes, the
+marketing spend in the fit and review posts, flags left out of the not-a-fit reason, IT team size 50 to 99. Drafts of both
+workflows were test-run against the real ClickUp lists (three test tasks, archived afterwards).
+
 ## Conventions
 
 - A lead or a booking with an e-mail address ending `@example.invalid` is a test: it gets the tag

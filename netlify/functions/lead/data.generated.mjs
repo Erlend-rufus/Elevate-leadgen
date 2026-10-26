@@ -141,7 +141,7 @@ export const funnels = {
     "retry": "Try again",
     "sending": "Checking a few details. This takes a few seconds.",
     "failed": "Something went wrong on our side. Your answers are still here. Please try again, or email",
-    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number. If you tell us you are at capacity, we will get back in touch once, in three months.",
+    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number.",
     "privacy": "Privacy"
    }
   },
@@ -216,7 +216,7 @@ export const funnels = {
     "retry": "Try again",
     "sending": "Checking a few details. This takes a few seconds.",
     "failed": "Something went wrong on our side. Your answers are still here. Please try again, or email",
-    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number. If you tell us you are at capacity, we will get back in touch once, in three months.",
+    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number.",
     "privacy": "Privacy"
    }
   },

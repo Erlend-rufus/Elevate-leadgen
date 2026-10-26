@@ -24,7 +24,7 @@ test('not a fit: turnover under £1m, whatever the marketing budget', () => {
   for (const s of SP) {
     const r = decide(v({ turnover_band: T[0], marketing_spend: s }), { check: 'skipped', reasons: [] });
     assert.equal(r.route, 'not_a_fit', s);
-    assert.equal(r.reasons[0], 'turnover_below_2m', s);
+    assert.equal(r.reasons[0], 'turnover_below_1m', s);
   }
 });
 
@@ -52,7 +52,7 @@ test('26 Oct 2026: both lifted rules at once, and the rules the budget never lif
   assert.deepEqual(decide(v({ turnover_band: T[1], first_year_value: W[1] }), OK), { route: 'review', reasons: ['value_10k_to_25k'] });
   assert.deepEqual(decide(v({ turnover_band: T[1], marketing_spend: SP[4], capacity: C[0] }), OK), { route: 'not_now', reasons: ['capacity_none'] }, 'not now still comes before review');
   assert.deepEqual(decide(v({ turnover_band: T[0], trading_years: TR[0], marketing_spend: SP[0] }), OK),
-    { route: 'not_a_fit', reasons: ['turnover_below_2m', 'trading_under_2y', 'spend_under_1k'] });
+    { route: 'not_a_fit', reasons: ['turnover_below_1m', 'trading_under_2y', 'spend_under_1k'] });
 });
 
 test('not a fit: a typical client worth under £10k', () => {
@@ -61,7 +61,7 @@ test('not a fit: a typical client worth under £10k', () => {
 
 test('every self-reported reason is listed, not just the first', () => {
   const r = decide(v({ turnover_band: T[0], trading_years: TR[0], first_year_value: W[0], marketing_spend: SP[0] }), OK);
-  assert.deepEqual(r.reasons, ['turnover_below_2m', 'trading_under_2y', 'value_under_10k', 'spend_under_1k']);
+  assert.deepEqual(r.reasons, ['turnover_below_1m', 'trading_under_2y', 'value_under_10k', 'spend_under_1k']);
 });
 
 test('structural beats temporary: too small AND at capacity is not a fit, not "not now"', () => {
@@ -230,7 +230,7 @@ test('register off: a firm that would be a fit is a fit, marked as unchecked, an
   assert.deepEqual(decide(v({ turnover_band: T[5] }), off), { route: 'review', reasons: ['turnover_not_stated', 'register_off'] });
   assert.deepEqual(decide(v({ first_year_value: W[1] }), off), { route: 'review', reasons: ['value_10k_to_25k', 'register_off'] });
   // what the answers alone decide is untouched
-  assert.deepEqual(decide(v({ turnover_band: T[0] }), off), { route: 'not_a_fit', reasons: ['turnover_below_2m'] });
+  assert.deepEqual(decide(v({ turnover_band: T[0] }), off), { route: 'not_a_fit', reasons: ['turnover_below_1m'] });
   assert.deepEqual(decide(v({ capacity: C[0] }), off), { route: 'not_now', reasons: ['capacity_none'] });
   // the marker appears only when the register was switched off
   for (const ch of [OK, { check: 'skipped', reasons: [] }, { check: 'not_found', reasons: [] }, { check: 'timeout', reasons: [] }]) {
@@ -242,7 +242,7 @@ test('the full table: one line per outcome the board promises', () => {
   const table = [
     // answers,                                   register,                                      route,        first reason
     [{},                                          OK,                                            'fit',        'turnover_2m_plus'],
-    [{ turnover_band: T[0] },                     OK,                                            'not_a_fit',  'turnover_below_2m'],
+    [{ turnover_band: T[0] },                     OK,                                            'not_a_fit',  'turnover_below_1m'],
     [{ trading_years: TR[0], marketing_spend: SP[0] }, OK,                                       'not_a_fit',  'trading_under_2y'],
     [{ turnover_band: T[1], marketing_spend: SP[0] }, OK,                                        'not_a_fit',  'turnover_below_2m'],
     [{ turnover_band: T[1] },                     OK,                                            'fit',        'turnover_1m_2m_spend_1k'],
