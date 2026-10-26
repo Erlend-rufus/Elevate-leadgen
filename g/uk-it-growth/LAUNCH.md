@@ -1,6 +1,6 @@
 # Launch notes · /g/uk-it-growth
 
-UK IT services firms with £2m+ turnover ("IKT"). One landing page, a thirteen question form that
+UK IT services firms with £2m+ turnover ("IKT"). One landing page, a fourteen question form that
 checks itself, five answer pages, one endpoint (`/api/lead`) and one daily check. Built from the IT
 board v56 (Claude Design) and the project document "Løsning: eget skjema, Zapier, ClickUp og Slack"
 (16 Oct 2026). The health and law funnels are built the same way and reuse `g/_growth/`, the
@@ -129,7 +129,8 @@ branch below, without it nothing is different from before. Nobody is contacted a
 ### How the two Zaps are built
 
 Both are Zapier durable workflows written in code, not click-built Zaps. The source, the tests and a
-short README are in `g/_growth/zapier/`; what is published in Zapier is that source, byte for byte.
+short README are in `g/_growth/zapier/`. What is published in Zapier is `g/_growth/zapier/published/`, byte for byte: the
+source carries the Italy entries, which are not published yet (see the README there).
 
 | | Zapier workflow | Id | Trigger |
 |---|---|---|---|
@@ -182,7 +183,8 @@ Status by route:
 | `not_a_fit` | `ukvalifisert - archive` (not `ny lead`: the pipeline review and the lead sweep read that status), tag `vurder-nettside`, assigned to Sondre (ClickUp id 106690144), one compact post in `#leads-uk` |
 
 **Not a fit is read by a person (22 Oct 2026).** Sondre looks at every `not_a_fit` task and decides whether a fixed-price website
-or a retainer could suit the firm. That is an internal read: the visitor hears nothing unless they press the quote button. Create
+or a retainer could suit the firm. If he thinks it could, he may email the firm once with an offer, by hand (work address, with an
+opt-out, no texts or calls; the notice says so since 22 Oct 2026, PR #84). A press on the quote button always gets one. Create
 one saved view in ClickUp, once, filtered on the tag `vurder-nettside` with closed tasks shown (a status cannot be added through
 the API, and the tasks sit in a closed status, so the default list view hides them). A test lead is never assigned and never
 notifies, whatever `slack_test` says.
@@ -360,7 +362,7 @@ routed as £2m to under £5m, reason `turnover_inferred`, when headcount and mar
 above the threshold: IT 50 or more people AND £5,000 or more a month; law 30 or more people AND £5,000 or more
 a month. One of the two alone is not enough and the lead stays `review`. The answer the visitor gave is never
 changed, only the way the rules read it. Law only: a first-year value under £2,000 no longer sends a firm to
-`review` when it has 30 or more people OR spends £5,000 or more a month (volume work); the reason
+`review` when it has 30 or more people OR spends £5,000 or more a month (volume work; £2,000 or more since 26 Oct 2026); the reason
 `value_under_2k_volume_firm` is kept so the task shows it. Rules are in `route.mjs` of each funnel, tests in
 `test/route.test.mjs` and `g/uk-law-firms/test/funnel.test.mjs`.
 
@@ -501,7 +503,7 @@ Meta, consent gating, log privacy, the daily check and the generator's output.
 
 The browser run builds a copy of the repository with `live: true` and a stand-in Calendly address, so it
 tests the state the pages will be in on launch day, plus the committed state. It covers the landing
-page, all thirteen questions with their messages, the four outcomes end to end, the cookie choice and
+page, all fourteen questions with their messages, the four outcomes end to end, the cookie choice and
 the pixel, the booking page and the forward to `/takk`, the privacy and terms pages and their cookie button, no JavaScript (including a failed post and the
 Referer fallback), network failures, double presses, reduced motion, keyboard use and an automatic
 accessibility check (axe-core, WCAG 2.2 AA).
@@ -620,7 +622,7 @@ config.json  copy.json  core.mjs  route.mjs  render-form.mjs   one place each
                                                                                   └─▶ netlify/functions/lead/data.generated.mjs
 
 browser ──▶ landing page (readable and submittable with no script)
-              │  with JS: thirteen steps, the same form, the same checks
+              │  with JS: fourteen steps, the same form, the same checks
               ▼
         POST /api/lead   netlify/functions/lead/index.mjs
               │  validates with core.mjs   (the file the browser runs)
@@ -687,7 +689,7 @@ in the config, then build and deploy. If only one is done, the notice is wrong i
 "IT - UK - Commision" and, for `fit` and `review`, one post in `#leads-uk`. Alerts (a delivery that failed, a lead with no task, the hook
 missing, the register key and the notice disagreeing) go to the alert channel, never through Zapier.
 
-**With no register check (`legal.registerCheck: false`) a qualifying lead is a `FIT` marked `unchecked` and books by itself; the steps below apply to `REVIEW` leads (a client worth £10k to under £25k, turnover not stated).** Before each booked meeting, look the company up by hand as in step 2 (it takes two minutes). The text that follows is the older description for the case where the check is on and the key is missing, when every would-be `fit` arrives as `REVIEW`. The Slack post carries the line
+**With no register check (`legal.registerCheck: false`) a qualifying lead is a `FIT` marked `unchecked` and books by itself; the steps below apply to `REVIEW` leads (a client worth £10k to under £25k, turnover not stated, and since 26 Oct 2026 £1m to under £2m or under two years of trading with "I do not know" for marketing spend).** Before each booked meeting, look the company up by hand as in step 2 (it takes two minutes). The text that follows is the older description for the case where the check is on and the key is missing, when every would-be `fit` arrives as `REVIEW`. The Slack post carries the line
 `⚠ Størrelse ikke bekreftet, sjekk før møtet`, the task has the tag `sjekk-størrelse` and the reason `ch_timeout` (section 6), and the visitor has
 been told that we will be in touch within one working day. A person keeps that promise, the same working day or the next:
 

@@ -60,7 +60,7 @@ export const STEPS = [
     id: 'budget', kind: 'choice', field: 'low_turnover_budget', options: 'budget',
     when: { field: 'turnover_band', values: ['Under £1m'] },
     q: 'Your turnover is below the level we usually work with. Could the firm put at least £2,000 a month into advertising?',
-    help: 'The budget is paid directly to the ad platforms, not to us. We are paid only through commission on new clients you sign.',
+    help: 'The budget is paid directly to the ad platforms, not to us. We are paid only through commission, when a new client instructs you.',
     whenNote: 'Only answer this if the firm turns over less than £1m.',
   },
   { id: 'trading', kind: 'choice', field: 'trading_years', q: 'How long has the firm been trading?', options: 'trading' },

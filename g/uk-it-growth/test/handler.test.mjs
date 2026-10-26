@@ -169,7 +169,7 @@ test('not a fit: sent to its page, the register is not asked, Meta is not told',
   assert.equal(r.of('ch').length, 0);
   assert.equal(r.of('capi').length, 0);
   assert.equal(r.of('zapier')[0].body.route, 'not_a_fit', 'still delivered: the Zap decides what a team sees');
-  assert.equal(r.of('zapier')[0].body.route_reason, 'turnover_below_2m');
+  assert.equal(r.of('zapier')[0].body.route_reason, 'turnover_below_1m');
 });
 
 test('not now: sent to its page, the register is not asked, Meta is not told', async () => {
@@ -749,7 +749,7 @@ test('register off works on a branch deploy and on this computer', async () => {
 test('register off changes nothing the answers already decide, and marks the review reasons it touches', async () => {
   const small = await go({ env: OFF }, Object.assign({}, GOOD, { turnover_band: T[0] }), { url: PREVIEW });
   assert.equal(small.j.route, 'not_a_fit');
-  assert.equal(small.r.of('zapier')[0].body.route_reason, 'turnover_below_2m');
+  assert.equal(small.r.of('zapier')[0].body.route_reason, 'turnover_below_1m');
   const full = await go({ env: OFF }, Object.assign({}, GOOD, { capacity: C[0] }), { url: PREVIEW });
   assert.equal(full.j.route, 'not_now');
   assert.equal(full.r.of('zapier')[0].body.route_reason, 'capacity_none');

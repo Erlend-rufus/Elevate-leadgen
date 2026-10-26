@@ -82,7 +82,9 @@ const liftable = (v) => v.turnover_band === T_1M_2M || v.trading_years === UNDER
 export function selfReport(v) {
   const reasons = [];
   const lowSpend = !SPEND_1K_PLUS.has(v.marketing_spend) && v.marketing_spend !== SPEND_UNKNOWN;
-  if (v.turnover_band === UNDER_1M || (v.turnover_band === T_1M_2M && lowSpend)) reasons.push('turnover_below_2m');
+  // Under £1m is its own reason (26 Oct 2026), so ClickUp and Slack do not say "under £2m" for a £600k firm.
+  if (v.turnover_band === UNDER_1M) reasons.push('turnover_below_1m');
+  else if (v.turnover_band === T_1M_2M && lowSpend) reasons.push('turnover_below_2m');
   if (v.trading_years === UNDER_2Y && lowSpend) reasons.push('trading_under_2y');
   if (v.first_year_value === WORTH[0]) reasons.push('value_under_10k');
   // The budget decided at least one of the reasons above: say so, once.

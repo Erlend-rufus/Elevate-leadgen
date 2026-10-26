@@ -73,7 +73,8 @@ test('with the check switched on, the notice and the terms say so, in every plac
   assert.equal((on('privacy').match(/Companies House/g) || []).length >= 3, true);
   assert.ok(on('terms').includes('We check the company name you give against public records'));
   assert.ok(on('privacy').includes('a booking page, a page saying that we will review'));
-  assert.equal(off('privacy').includes('a booking page'), false);
+  // a qualifying lead books by itself when the register is off too (since #76), so both notices name the booking page
+  assert.ok(off('privacy').includes('a booking page, a page saying that we will review'));
 });
 
 test('every system that receives a lead is named in Part 4 of the notice', () => {

@@ -59,6 +59,6 @@
   "honeypot": "contact_by_fax",
   "clickup": {
     "listId": "1201270000003578",
-    "_comment": "The ClickUp list the daily reconciliation compares against: HEALTH - UK - Commission. Leads carry tag growth-5m in it. The custom field lead_id on that list holds the key."
+    "_comment": "The ClickUp list the daily reconciliation compares against: HEALTH - UK - Commission. Leads carry tag growth-health in it (growth-5m until 26 Oct 2026; older tasks were retagged). The custom field lead_id on that list holds the key."
   }
 }

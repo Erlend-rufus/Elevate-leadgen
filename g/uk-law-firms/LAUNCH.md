@@ -1,6 +1,6 @@
 # Launch notes · /g/uk-law-firms
 
-Law firms in England and Wales with £2m+ turnover ("ADVOKAT"). Built 20 Oct 2026 on the framework of
+Law firms in England and Wales with £2m+ turnover in the headline, £1m+ by the rules since 26 Oct 2026 ("ADVOKAT"). Built 20 Oct 2026 on the framework of
 `/g/uk-it-growth` (read `g/uk-it-growth/LAUNCH.md` first: the endpoint, storage, delivery, alerts, Meta and
 the daily check are the same code). This file only says what is different and what is outstanding.
 
@@ -18,8 +18,8 @@ npm run test:g-growth  # g/uk-law-firms/test/funnel.test.mjs is in it
 
 | | IT | Law |
 |---|---|---|
-| Threshold | £2m | £2m (`{THRESHOLD}`), a new client worth £2,000+ in the first year (`{WORTH}`), outside personal injury |
-| Form | 13 steps | 12 steps; "Which practice areas would you like to grow?" is a multi-choice, sent as `practice_areas` joined with ", ". Bands written "to under" (L36). SRA number optional. |
+| Threshold | £2m | £2m in the headline (`{THRESHOLD}`); by the rules (26 Oct 2026) £1m or more, or under £1m with £2,000 a month for advertising. A new client worth £2,000+ in the first year (`{WORTH}`), outside personal injury |
+| Form | 14 steps (13 when built, plus the meeting question) | 14 steps, one of them asked only under £1m (the advertising budget, 26 Oct 2026); "Which practice areas would you like to grow?" is a multi-choice, sent as `practice_areas` joined with ", ". Bands written "to under" (L36). SRA number optional. |
 | Routing (`route.mjs`) | | **Since 26 Oct 2026 (workshop):** not a fit: turnover under £1m without £2,000 a month for advertising (asked in a step of its own, `low_turnover_budget`, only after "Under £1m"; kept with the lead, not a payload key), only "Personal injury" ticked. £1m to under £2m is a fit. Trading under two years and capacity no longer route (never `not_now`). review: turnover not stated (F7), a client worth under £2,000 (L5) unless 30+ fee earners or £2,000+ a month on marketing (the marketing question gained a band at £2,000). Browser check of the budget step: `e2e/budget-question.mjs`. Personal injury ticked with other areas is routed on the other areas and flagged (`personal_injury_ticked`): the agreement must leave those matters out. |
 | Payment | commission on closed deals | version A: commission on new instructions from campaigns we run (L16 to L22). Never a rate on the page. |
 | Case | three IT consultancies | **none**: the hero is the L6 fallback ("We run client acquisition for law firms. Here is how it works."), no firm is named, no figures. Cards come back when a firm has given figures and written permission for UK use (AF1 to AF6). |

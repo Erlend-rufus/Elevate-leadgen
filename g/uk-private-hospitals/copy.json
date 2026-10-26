@@ -228,7 +228,7 @@
     "body": "The groups we work best with already fill most of their diaries through reputation and referral. What they lack is a steady second door: patients who pay for their own consultation and found the clinic because the right campaign was in front of them.",
     "yesTitle": "This is for you if",
     "yes": [
-      "You run a private hospital or clinic group in the UK with {THRESHOLD} or more in turnover",
+      "You run a private hospital or clinic group in the UK with {THRESHOLD} or more in turnover, or a marketing budget of £3,000 or more a month",
       "Patients pay for their own specialist consultations, in areas such as gynaecology, urology, orthopaedics, dermatology or diagnostics",
       "Your consultants have room in their diaries for more first consultations",
       "Your booking team can respond to a new request within one working day"
@@ -315,7 +315,7 @@
     "retry": "Try again",
     "sending": "Checking a few details. This takes a few seconds.",
     "failed": "Something went wrong on our side. Your answers are still here. Please try again, or email",
-    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number. If you tell us you are at capacity, we will get back in touch once, in three months.",
+    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number.",
     "privacy": "Privacy"
   },
   "outcomes": {

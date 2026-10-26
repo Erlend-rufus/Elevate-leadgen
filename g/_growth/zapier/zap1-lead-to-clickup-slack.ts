@@ -32,7 +32,8 @@ const sdk = createZapierSdk();
  *   - A not_a_fit lead gets the tag "vurder-nettside" and is assigned to Sondre, who reads it and decides whether
  *     a fixed-price website or a monthly retainer could suit the firm. It stays in "ukvalifisert - archive" (the
  *     pipeline routines read "ny lead"). #leads-uk gets one compact "IKKE TREFF" post, with no ping.
- *     Nobody is contacted because of this: the visitor is only e-mailed after pressing the button on the page.
+ *     The workflow itself contacts nobody. Sondre may e-mail a firm he has read once, by hand (the privacy notice
+ *     says so since 22 Oct 2026, PR #84), and always does when the visitor presses the button on the page.
  *   - That press arrives here as the same lead again with event: "website_interest" (and interest_at). The task is
  *     found, or made if the application never got to ClickUp, tagged "ønsker-nettsidetilbud", given a comment that
  *     notifies Sondre, and #leads-uk gets a post that pings him. A second delivery of the same press is ignored.
@@ -49,6 +50,18 @@ const sdk = createZapierSdk();
  *   - phonePrefix "39": a national Italian number becomes +39.
  *   - otherSpecialism: the form's own word for "Other" ("Altro").
  *   - reasonText: the reason codes in the language and the currency of the country.
+ *
+ * Changed 26 Oct 2026, after the workshop rules (PR #87):
+ *   - Health leads are tagged "growth-health" (was "growth-5m"). The health threshold is £2m now, and a tag named
+ *     after a threshold goes stale each time the rules move. Law has "growth-law", Italy "growth-it"; IT keeps
+ *     "growth-2m", which the IT list has used since the start to tell funnel leads from older ones.
+ *   - The spend bands changed. Law gained "£1,000 to under £2,000", which fits inside ClickUp's "£1-2.5k/mth".
+ *     Health's lowest band now ends at £3,000, so "£5,000 to under £20,000" is no longer an answer.
+ *   - REASON_TEXT knows the not-a-fit codes the new rules give (spend_under_1k, spend_under_3k,
+ *     turnover_below_1m, budget_2k_no). Flags (fertility, personal_injury_ticked) are no longer shown as the reason
+ *     for a refusal in the one-line post.
+ *   - The fit and review posts show the marketing spend: it now decides whether a smaller firm is a fit.
+ *   - IT team size "50 to 99" fits inside ClickUp's "50+" and is set.
  */
 
 // ---------------------------------------------------------------------------------------------
@@ -223,6 +236,7 @@ const CAMPAIGNS: Record<string, Campaign> = {
         "Other": "a75ef23e-81ec-45a2-b98f-6fd366bd90f8",
       },
       teamSize: {
+        "50 to 99": "58ab0f8c-b644-4cac-a29f-69765732b3fa", // 50+
         "100 or more": "58ab0f8c-b644-4cac-a29f-69765732b3fa", // 50+
       },
       adSpend: {
@@ -246,7 +260,7 @@ const CAMPAIGNS: Record<string, Campaign> = {
   "uk-private-hospitals": {
     label: "UK HEALTH",
     listId: "1201270000003578", // HEALTH - UK - Commission
-    tag: "growth-5m",
+    tag: "growth-health",
     peopleWord: "ansatte",
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
@@ -274,7 +288,6 @@ const CAMPAIGNS: Record<string, Campaign> = {
       specialism: {},
       teamSize: {},
       adSpend: {
-        "£5,000 to under £20,000": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
         "£20,000 to under £50,000": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
         "£50,000 or more": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
         "I do not know": "feaf2b0d-079a-4ffa-a48b-67e79c280458", // Unknown
@@ -314,6 +327,7 @@ const CAMPAIGNS: Record<string, Campaign> = {
       teamSize: {},
       adSpend: {
         "Under £1,000": "5482c305-7587-466a-bef4-ab15e6a70906", // Under £1k/mth
+        "£1,000 to under £2,000": "20422aec-d6dd-4c76-8c34-fc60a00e0ea6", // £1-2.5k/mth
         "£5,000 to under £15,000": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
         "£15,000 or more": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
         "I do not know": "feaf2b0d-079a-4ffa-a48b-67e79c280458", // Unknown
@@ -670,6 +684,7 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   }
   const line2 = [lead.turnover_band, people, register].filter(Boolean).join(" · ");
   const line3 = [
+    lead.marketing_spend && `${t("Markedsføring per måned")}: ${lead.marketing_spend}`,
     lead.first_year_value && `${t("Verdi første år")}: ${lead.first_year_value}`,
     lead.first_consultation_value && `${t("Verdi førstekonsultasjon")}: ${lead.first_consultation_value}`,
     lead.self_pay_share && `${t("Selvbetalende")}: ${lead.self_pay_share}`,
@@ -707,8 +722,15 @@ const REASON_TEXT: Record<string, string> = {
   value_under_500: "førstekonsultasjon under £500",
   self_pay_under_10pc: "under 10 % selvbetalende",
   personal_injury_only: "bare personskade",
+  turnover_below_1m: "omsetning under £1m",
+  spend_under_1k: "markedsføring under £1 000 i måneden",
+  spend_under_3k: "markedsføring under £3 000 i måneden",
+  budget_2k_no: "kan ikke sette av £2 000 i måneden til annonser",
   ch_micro_or_dormant: "mikro eller sovende regnskap",
 };
+
+// Codes that mark a lead rather than refuse it. They stay in the description and the full post, never in "Grunn".
+const FLAGS = new Set(["fertility", "personal_injury_ticked", "value_under_2k_volume_firm"]);
 
 const slackEscape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -719,7 +741,7 @@ function slackCompact(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string
   const why = lead.route_reason
     .split(",")
     .map((code) => code.trim())
-    .filter(Boolean)
+    .filter((code) => code && !FLAGS.has(code))
     .map((code) => (Object.prototype.hasOwnProperty.call(reasons, code) ? reasons[code] : code))
     .join(", ");
   const head = `${isTest ? "[TEST] " : ""}*${tr(c, route.heading)}* · ${c.label} · ${slackEscape(lead.company_name || tr(c, "uten navn"))}`;
