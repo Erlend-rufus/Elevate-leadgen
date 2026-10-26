@@ -75,6 +75,9 @@ the source and delete `published/`.
 26 Oct 2026: health tag `growth-health` (was `growth-5m`), the new spend bands, words for the new reason codes, the
 marketing spend in the fit and review posts, flags left out of the not-a-fit reason, IT team size 50 to 99. Drafts of both
 workflows were test-run against the real ClickUp lists (three test tasks, archived afterwards).
+Published 26 Oct 2026 at 16:41 UTC with Erlend's go-ahead: Zap 1 version `01a17916-b4d5-78e6-a84f-8170b7afe520`, Zap 2
+version `01a17916-bf88-7565-8896-5a0da61d5704`, both still switched on. The published source was read back and is
+identical to `published/` (sha256 `768ef06b...` and `0e63a054...`). The three health tasks that had `growth-5m` were retagged.
 
 ## Conventions
 
