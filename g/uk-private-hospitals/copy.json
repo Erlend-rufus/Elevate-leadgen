@@ -1,5 +1,5 @@
 {
-  "_comment": "Page copy for /g/uk-private-hospitals: the health board v7 (Claude Design, 18 Oct 2026) with the answers in the work document of 18 Oct 2026 and the owner's decisions of 20 Oct 2026 (commission, 13x without reception as the headline multiple, 22x in the note, procedures at about £4,700, SEO and AI work since February 2026, no register check). Figures: Google Ads and Google Analytics for C-Medical, 1 February to 16 October 2026 against the same days of 2025, £1 = NOK 12.5899 (Norges Bank, 16 Oct 2026). {THRESHOLD}, {OFFER} and {WORTH} are filled from config.json at build time. The build refuses dashes, exclamation marks, American spellings and a commission rate (see scripts/build-g-growth.mjs).",
+  "_comment": "Page copy for /g/uk-private-hospitals: the health board v7 (Claude Design, 18 Oct 2026) with the answers in the work document of 18 Oct 2026 and the owner's decisions of 20 Oct 2026 (commission, 13x without reception as the headline multiple, 22x in the note, procedures at about £4,700, SEO and AI work since February 2026, no register check). Figures: Google Ads and Google Analytics for C-Medical, 1 February to 16 October 2026 against the same days of 2025, £1 = NOK 12.5899 (Norges Bank, 16 Oct 2026). {THRESHOLD}, {OFFER} and {WORTH} are filled from config.json at build time. The build refuses dashes, exclamation marks, American spellings and a commission rate (see scripts/build-g-growth.mjs). Changed 26 Oct 2026 by the owner (workshop with Sondre, the new lead rules): THRESHOLD is £2m (config.json); fit.yes drops the two years of trading and the line on what a first consultation is worth; fit.no[2] and outcomes.not-a-fit.p say that a group under £2m qualifies with £3,000 or more a month on marketing.",
   "layout": ["hero", "strip", "floors", "pulse", "beyond", "search", "records", "fit", "pay", "keep", "measure", "meeting", "faq", "form"],
   "meta": {
     "title": "Elevate Marketing for UK private hospitals and clinic groups",
@@ -228,9 +228,8 @@
     "body": "The groups we work best with already fill most of their diaries through reputation and referral. What they lack is a steady second door: patients who pay for their own consultation and found the clinic because the right campaign was in front of them.",
     "yesTitle": "This is for you if",
     "yes": [
-      "You run a private hospital or clinic group in the UK with {THRESHOLD} or more in turnover and at least two years of trading",
+      "You run a private hospital or clinic group in the UK with {THRESHOLD} or more in turnover",
       "Patients pay for their own specialist consultations, in areas such as gynaecology, urology, orthopaedics, dermatology or diagnostics",
-      "An attended first consultation is worth {WORTH} or more to you, including the care that follows",
       "Your consultants have room in their diaries for more first consultations",
       "Your booking team can respond to a new request within one working day"
     ],
@@ -238,7 +237,7 @@
     "no": [
       "Nearly all of your consultations are paid by insurers or arrive by referral",
       "Your consultations are mainly lower-value, such as physiotherapy or routine GP appointments",
-      "Your turnover is below {THRESHOLD}, or you have been trading for less than two years",
+      "Your turnover is below {THRESHOLD} and you spend under £3,000 a month on marketing",
       "Nobody has time to approve ads and pages"
     ],
     "note": "We check the details you give after you apply, and we confirm turnover and the self-pay share with you on the call."
@@ -339,7 +338,7 @@
     },
     "not-a-fit": {
       "h": "Thank you. This is not the right fit at the moment.",
-      "p": "We work with private hospitals and clinic groups in the UK with {THRESHOLD} or more in turnover and at least two years of trading, where patients pay for their own specialist consultations and an attended first consultation is worth {WORTH} or more to the business. If that changes, we would be glad to hear from you.",
+      "p": "We work with private hospitals and clinic groups in the UK where patients pay for their own specialist consultations, with {THRESHOLD} or more in turnover or a marketing budget of £3,000 or more a month. If that changes, we would be glad to hear from you.",
       "note": "If we have misread your answers, email {EMAIL} and we will look again.",
       "interest": {
         "h": "Looking for a new website instead?",

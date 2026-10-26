@@ -75,7 +75,7 @@ const EXTRA_SECTIONS = new Set(['strip', 'floors', 'pulse', 'beyond', 'search', 
 function questionText(core) {
   const words = { options: core.OPTIONS, messages: core.MSG, questions: [] };
   for (const s of core.STEPS) {
-    words.questions.push({ q: s.q, help: s.help, other: s.other ? s.other.placeholder : undefined });
+    words.questions.push({ q: s.q, help: s.help, when: s.whenNote, other: s.other ? s.other.placeholder : undefined });
     for (const f of s.fields || []) words.questions.push({ label: f.label, help: f.help });
   }
   return words;

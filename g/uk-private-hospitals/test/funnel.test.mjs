@@ -72,29 +72,41 @@ test('health form: a valid submission passes, the multi-choice keeps only real o
   assert.equal(dup.values.specialties, 'Urology');
 });
 
-test('health routing: the table from the brief, first match wins', () => {
+test('health routing: the table from the brief, as changed by the workshop of 26 Oct 2026, first match wins', () => {
   const v = core.validate(GOOD).values;
   const un = { check: 'unchecked', reasons: [] };
   const d = (patch, ch = un) => route.decide(Object.assign({}, v, patch), ch);
-  assert.equal(d({}).route, 'fit');
-  assert.deepEqual(d({}).reasons, ['turnover_5m_plus', 'trading_2y_plus', 'self_pay_30pc_plus', 'register_not_used']);
-  assert.equal(d({ turnover_band: O.turnover[0] }).route, 'not_a_fit');
-  assert.equal(d({ turnover_band: O.turnover[1] }).route, 'not_a_fit');
-  assert.equal(d({ trading_years: O.trading[0] }).route, 'not_a_fit');
+  const T = O.turnover, S = O.spend;
+  assert.deepEqual(S, ['Under £3,000', '£3,000 to under £20,000', '£20,000 to under £50,000', '£50,000 or more', 'I do not know']);
+  assert.deepEqual(d({}), { route: 'fit', reasons: ['turnover_2m_plus', 'trading_2y_plus', 'self_pay_30pc_plus', 'register_not_used'] });
+  // £2m is the threshold now.
+  assert.equal(d({ turnover_band: T[1] }).route, 'fit', '£2m to under £5m is a fit');
+  assert.equal(d({ turnover_band: T[1] }).reasons[0], 'turnover_2m_plus');
+  // Under £2m: the marketing budget decides.
+  for (const s of [S[1], S[2], S[3]]) {
+    assert.deepEqual(d({ turnover_band: T[0], marketing_spend: s }).reasons.slice(0, 1), ['turnover_under_2m_spend_3k'], s);
+    assert.equal(d({ turnover_band: T[0], marketing_spend: s }).route, 'fit', s);
+  }
+  assert.deepEqual(d({ turnover_band: T[0], marketing_spend: S[4] }), { route: 'review', reasons: ['turnover_under_2m_spend_unknown'] });
+  assert.deepEqual(d({ turnover_band: T[0], marketing_spend: S[0] }), { route: 'not_a_fit', reasons: ['turnover_below_2m', 'spend_under_3k'] });
+  // Removed: trading, the value of a first consultation, capacity.
+  assert.deepEqual(d({ trading_years: O.trading[0] }).reasons, ['turnover_2m_plus', 'trading_under_2y_ok', 'self_pay_30pc_plus', 'register_not_used']);
+  assert.equal(d({ first_consultation_value: O.worth[0] }).route, 'fit');
+  assert.equal(d({ first_consultation_value: O.worth[4] }).route, 'fit');
+  assert.equal(d({ capacity: O.capacity[0] }).route, 'fit');
+  assert.equal(d({ capacity: O.capacity[0], turnover_band: T[0], marketing_spend: S[0] }).route, 'not_a_fit');
+  // What stays.
   assert.equal(d({ self_pay_share: O.selfpay[0] }).route, 'not_a_fit');
-  assert.equal(d({ first_consultation_value: O.worth[0] }).route, 'not_a_fit');
-  assert.equal(d({ capacity: O.capacity[0] }).route, 'not_now');
-  assert.equal(d({ capacity: O.capacity[0], turnover_band: O.turnover[0] }).route, 'not_a_fit', 'structural beats temporary');
-  assert.equal(d({ turnover_band: O.turnover[5] }).route, 'review');
+  assert.equal(d({ turnover_band: T[5] }).route, 'review');
   assert.equal(d({ self_pay_share: O.selfpay[1] }).route, 'review');
   assert.equal(d({ self_pay_share: O.selfpay[4] }).route, 'review');
-  assert.equal(d({ first_consultation_value: O.worth[4] }).route, 'review');
   assert.equal(d({ specialties: 'Other' }).route, 'review');
   assert.equal(d({ specialties: 'Other, Urology' }).route, 'fit');
   assert.ok(d({ specialties: 'Fertility' }).reasons.includes('fertility'), 'fertility is flagged');
   assert.equal(d({}, { check: 'timeout', reasons: [] }).route, 'review');
   assert.equal(d({}, { check: 'mismatch', reasons: ['ch_accounts_too_small'], profile: { accounts_type: 'micro-entity' } }).route, 'review');
-  assert.equal(d({ turnover_band: O.turnover[5] }, { check: 'mismatch', reasons: [], profile: { accounts_type: 'dormant' } }).route, 'not_a_fit');
+  assert.equal(d({ turnover_band: T[5] }, { check: 'mismatch', reasons: [], profile: { accounts_type: 'dormant' } }).route, 'not_a_fit');
+  assert.equal(route.needsRegistry(Object.assign({}, v, { capacity: O.capacity[0] })), true, 'capacity settles nothing now');
 });
 
 test('health endpoint: a fit with no register check books, Zapier gets the four health keys, Meta is told', async () => {
@@ -108,7 +120,7 @@ test('health endpoint: a fit with no register check books, Zapier gets the four 
   assert.equal(z.self_pay_share, O.selfpay[3]);
   assert.equal(z.first_consultation_value, O.worth[1]);
   assert.equal(z.regulator_number, '1-123456789');
-  assert.equal(z.route_reason, 'turnover_5m_plus, trading_2y_plus, self_pay_30pc_plus, register_not_used');
+  assert.equal(z.route_reason, 'turnover_2m_plus, trading_2y_plus, self_pay_30pc_plus, register_not_used');
   assert.equal(r.of('ch').length, 0, 'the register is not asked');
   assert.equal(r.of('capi').length, 1, 'QualifiedForm is sent');
 });

@@ -342,12 +342,18 @@ beats temporary. Edit `route.mjs`; every rule has a test (`test/route.test.mjs`)
 
 | Route | When |
 |---|---|
-| `not_a_fit` | turnover under £2m, trading under two years, a typical client worth under £10k, or (turnover not stated) accounts filed as micro-entity or dormant |
+| `not_a_fit` | turnover under £1m; £1m to under £2m, or trading under two years, with under £1,000 a month on marketing; a typical client worth under £10k; or (turnover not stated) accounts filed as micro-entity or dormant |
 | `not_now` | "None, we are at capacity" for the next three months |
-| `review` | turnover not stated, a client worth £10k to under £25k, the company not found in the register, the register unavailable, or an answer the register contradicts |
+| `review` | turnover not stated, a client worth £10k to under £25k, £1m to under £2m or under two years with "I do not know" on marketing spend, the company not found in the register, the register unavailable, or an answer the register contradicts |
 | `fit` | everything else. In production, not while there is no register key (below) |
 
 Page for each: `fit` → `/book`, `review` → `/review`, `not_now` → `/not-now`, `not_a_fit` → `/not-a-fit`.
+
+**Changed 26 Oct 2026 (workshop Erlend and Sondre, document "Leadregler per landingsside").** IT: £1m to under £2m and
+under two years of trading pass with £1,000 or more a month on marketing (reasons `turnover_1m_2m_spend_1k`,
+`trading_under_2y_spend_1k`), go to review with "I do not know", and stay not a fit under £1,000 (extra reason
+`spend_under_1k`). Law and health: see their LAUNCH.md. The shared form script now skips a step that has `when` in
+core.mjs (law's budget question); the IT form has no such step and behaves as before.
 
 **Changed 22 Oct 2026 (IT and law, not health).** A firm that picks "I would rather not say" for turnover is
 routed as £2m to under £5m, reason `turnover_inferred`, when headcount and marketing budget both point well

@@ -1,5 +1,5 @@
 {
-  "_comment": "Page copy for /g/uk-law-firms: the solicitors brief of 16 Oct 2026 (section 4) with the answers in the work document of 18 Oct 2026 (L1 to L36, F1 to F15) and the owner's decisions of 20 Oct 2026: no case cards until the four firms' figures and permissions are in (L6 fallback wording), payment version A (commission on new instructions), no register check. {THRESHOLD}, {OFFER} and {WORTH} are filled from config.json at build time. The build refuses dashes, exclamation marks, American spellings and a commission rate (see scripts/build-g-growth.mjs).",
+  "_comment": "Page copy for /g/uk-law-firms: the solicitors brief of 16 Oct 2026 (section 4) with the answers in the work document of 18 Oct 2026 (L1 to L36, F1 to F15) and the owner's decisions of 20 Oct 2026: no case cards until the four firms' figures and permissions are in (L6 fallback wording), payment version A (commission on new instructions), no register check. {THRESHOLD}, {OFFER} and {WORTH} are filled from config.json at build time. The build refuses dashes, exclamation marks, American spellings and a commission rate (see scripts/build-g-growth.mjs). Changed 26 Oct 2026 by the owner (workshop with Sondre, the new lead rules): fit.yes[0], fit.no[2] and outcomes.not-a-fit.p drop the two years of trading, and say that firms from £1m, or smaller firms with £2,000 a month for advertising, qualify.",
   "layout": ["hero", "how", "fit", "pay", "keep", "measure", "meeting", "faq", "form"],
   "meta": {
     "title": "Elevate Marketing for UK law firms",
@@ -31,7 +31,7 @@
     "body": "The firms we work best with already win work through reputation and referral. What they lack is a second channel they control: enquiries that arrive because the right page was in front of the right person, in a practice area they want to grow.",
     "yesTitle": "This works if",
     "yes": [
-      "You are a firm in England and Wales with {THRESHOLD} or more in turnover and at least two years of trading",
+      "You are a firm in England and Wales with {THRESHOLD} or more in turnover",
       "You act for private clients or businesses in areas such as family, conveyancing, wills and probate, employment, commercial or immigration",
       "A new client is worth {WORTH} or more to you in the first year",
       "Someone at the firm can respond to a new enquiry within one working day"
@@ -40,7 +40,7 @@
     "no": [
       "Your work is mainly personal injury",
       "Your work is mainly legal aid",
-      "You are below {THRESHOLD} turnover or newer than two years",
+      "You turn over less than £1m and cannot put £2,000 a month into advertising",
       "Nobody has time to approve marketing material"
     ],
     "note": "We check the details you give after you apply, and we confirm turnover with you on the call."
@@ -140,7 +140,7 @@
     },
     "not-a-fit": {
       "h": "Thank you. This is not the right fit at the moment.",
-      "p": "We work with firms in England and Wales with {THRESHOLD} or more in turnover and at least two years of trading, outside personal injury. If that changes, we would be glad to hear from you.",
+      "p": "We work with firms in England and Wales outside personal injury that turn over £1m or more, and with smaller firms that can put £2,000 a month into advertising. If that changes, we would be glad to hear from you.",
       "note": "If we have misread your answers, email {EMAIL} and we will look again.",
       "interest": {
         "h": "Looking for a new website instead?",

@@ -330,6 +330,7 @@ textarea.lf-input--long{min-height:132px;resize:vertical}
 .lf-panel.is-sending .lf-block{opacity:.5;pointer-events:none}
 .lf-trap{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 .lf-panel.is-steps .lf-block + .lf-block{padding-top:0;border-top:0}
+.lf-panel.is-steps .lf-when{display:none}
 @container lf (min-width:880px){
 .lf-wrap{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:var(--column-gap);align-items:start}
 }
@@ -400,7 +401,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
         <p class="intro">The firms we work best with already win work through referrals and reputation. What they lack is a second channel that brings in the same kind of client, predictably, without the partners doing all the selling.</p>
         <div class="cols">
           <div class="col"><h3 class="col-h">This works if</h3><ul class="lines"><li>You run a UK IT services firm with £2m or more in turnover and at least two years of trading</li><li>A new client is worth £25,000 or more to you in the first year</li><li>You have a sales function, even if that is a founder, that can respond within two working days</li><li>You have capacity to take on new clients in the next three months</li></ul></div>
-          <div class="col col--no"><h3 class="col-h">This does not work if</h3><ul class="lines"><li>You are below £2m turnover or newer than two years</li><li>You sell products or software licences rather than services</li><li>You need leads to get through the next quarter</li><li>You want leads without anyone to follow them up</li></ul></div>
+          <div class="col col--no"><h3 class="col-h">This does not work if</h3><ul class="lines"><li>You turn over less than £1m, or you are below £2m or newer than two years and spend under £1,000 a month on marketing</li><li>You sell products or software licences rather than services</li><li>You need leads to get through the next quarter</li><li>You want leads without anyone to follow them up</li></ul></div>
         </div>
         <p class="note">We check the details you give after you apply, and we confirm turnover with you on the call.</p>
       </div></div>
@@ -792,7 +793,7 @@ function initForm() {
   var STEPS = CORE.STEPS;
   var blocks = STEPS.map(function (s) { return form.querySelector('.lf-block[data-step="' + s.id + '"]'); });
   if (blocks.some(function (b) { return !b; })) return;   // markup and definition disagree: stay with the plain form
-  var total = blocks.length;
+  var total = blocks.length;                              // every step on the page; a step with "when" may be skipped
   var cur = 0;
   var phase = 'idle';                                     // idle | sending | failed
   var leadId = '';
@@ -857,6 +858,21 @@ function initForm() {
     if (step.kind === 'group') return step.fields.map(function (f) { return f.field; });
     return step.other ? [step.field, step.other.field] : [step.field];
   }
+  /* A step with "when" is asked only when the earlier answer it names is one of its values
+     (core.mjs says the same to the server). Every other step is always asked. */
+  function applies(i) {
+    var w = STEPS[i].when;
+    return !w || w.values.indexOf(val(w.field)) >= 0;
+  }
+  function nextStep(i) { for (var j = i + 1; j < total; j++) if (applies(j)) return j; return -1; }
+  function prevStep(i) { for (var j = i - 1; j >= 0; j--) if (applies(j)) return j; return -1; }
+  function lastStep() { for (var j = total - 1; j >= 0; j--) if (applies(j)) return j; return total - 1; }
+  /** Where the visitor is, counted over the steps they are asked: [position, how many]. */
+  function place() {
+    var n = 0, at = 0;
+    for (var j = 0; j < total; j++) if (applies(j)) { n++; if (j <= cur) at = n; }
+    return [at || 1, n || total];
+  }
 
   /* ---- errors ---------------------------------------------------------------------------- */
   function addDescribed(el, id) {
@@ -917,12 +933,14 @@ function initForm() {
   }
   function render() {
     blocks.forEach(function (b, k) { b.hidden = k !== cur; });
-    count.textContent = (cur + 1) + ' / ' + total;
-    bar.setAttribute('aria-valuenow', String(cur + 1));
+    var p = place();
+    count.textContent = p[0] + ' / ' + p[1];
+    bar.setAttribute('aria-valuemax', String(p[1]));
+    bar.setAttribute('aria-valuenow', String(p[0]));
     bar.setAttribute('aria-valuetext', count.textContent);
-    fill.style.width = Math.round(((cur + 1) / total) * 100) + '%';
-    var last = cur === total - 1;
-    back.hidden = cur === 0;
+    fill.style.width = Math.round((p[0] / p[1]) * 100) + '%';
+    var last = nextStep(cur) < 0;
+    back.hidden = prevStep(cur) < 0;
     back.disabled = phase === 'sending';
     if (consentP) consentP.hidden = !last;
     btn.textContent = phase === 'failed' ? T.retry : (last ? T.cta : T.next);
@@ -954,10 +972,14 @@ function initForm() {
       if (box) box.hidden = val(s.field) !== s.other.value;
     });
   }
+  /* The answers that decide whether a later step is asked: a change to one of them redraws the counter. */
+  var decides = {};
+  STEPS.forEach(function (s) { if (s.when) decides[s.when.field] = true; });
   form.addEventListener('change', function (e) {
     if (e.target && (e.target.type === 'radio' || e.target.type === 'checkbox')) {
       syncChoices();
       afterEdit(e.target);
+      if (decides[e.target.name] && phase !== 'sending') render();
     }
   });
   form.addEventListener('input', function (e) { afterEdit(e.target); });
@@ -1006,7 +1028,7 @@ function initForm() {
   }
   function fail() {
     phase = 'failed';
-    go(total - 1, false);
+    go(lastStep(), false);
     try { btn.focus({ preventScroll: true }); } catch (e) {}
   }
   function mapServerErrors(errs) {
@@ -1064,13 +1086,16 @@ function initForm() {
       focusControl(blocks[cur].querySelector('[aria-invalid="true"]') || firstControl(cur));
       return;
     }
-    if (cur < total - 1) { go(cur + 1, true); return; }
+    var next = nextStep(cur);
+    if (next >= 0) { go(next, true); return; }
     send();
   });
   back.addEventListener('click', function () {
     if (phase === 'sending') return;
+    var prev = prevStep(cur);
+    if (prev < 0) return;
     phase = 'idle';
-    go(cur - 1, true);
+    go(prev, true);
   });
   /* The browser's back button can restore this page as it was, mid-send. Put the form back. */
   window.addEventListener('pageshow', function (e) {

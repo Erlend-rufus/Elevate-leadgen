@@ -19,7 +19,8 @@ export const OPTIONS = {
   selfpay: ['Under 10%', '10% to under 30%', '30% to under 60%', '60% or more', 'I do not know'],
   specialties: ['Gynaecology', 'Urology', 'Orthopaedics', 'Dermatology', 'Diagnostics and imaging', 'Fertility', 'Other'],
   worth: ['Under £500', '£500 to under £1,500', '£1,500 to under £5,000', '£5,000 or more', 'I do not know'],
-  spend: ['Under £5,000', '£5,000 to under £20,000', '£20,000 to under £50,000', '£50,000 or more', 'I do not know'],
+  // 26 Oct 2026: the lowest band ends at £3,000, the line that lets a group under £2m through (route.mjs).
+  spend: ['Under £3,000', '£3,000 to under £20,000', '£20,000 to under £50,000', '£50,000 or more', 'I do not know'],
   decider: ['Me', 'Me, with the leadership team', 'Someone else, I would bring them in'],
   capacity: ['None, we are at capacity', 'A few', 'Many'],
 };
@@ -38,7 +39,7 @@ export const URL_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i;
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
- * The twelve steps. "field" is the name of the input and the payload key.
+ * The thirteen steps. "field" is the name of the input and the payload key.
  * kind: url | text | choice | multi | group. A group is one step with several inputs.
  */
 export const STEPS = [
@@ -130,7 +131,7 @@ export function stepErrors(step, get) {
 }
 
 /**
- * All twelve steps against a set of answers. "input" is a plain object of strings.
+ * All thirteen steps against a set of answers. "input" is a plain object of strings.
  * Returns {ok, errors, values}: errors by field name, values cleaned for every field (an
  * empty string where nothing was answered; a multi-choice as its options joined with ", ").
  */

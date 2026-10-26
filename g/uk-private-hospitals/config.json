@@ -9,7 +9,7 @@
   "live": true,
   "_live": "While false the build stays green with items missing and the lead function answers every submission with a 503 and stores nothing. Set true only when the build says nothing is outstanding. The build then refuses to finish while calendlyUrl is empty.",
   "variables": {
-    "THRESHOLD": "£5m",
+    "THRESHOLD": "£2m",
     "OFFER": "30-minute bookings review",
     "WORTH": "£500"
   },

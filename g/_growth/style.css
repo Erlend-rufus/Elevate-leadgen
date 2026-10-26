@@ -369,6 +369,7 @@ textarea.lf-input--long{min-height:132px;resize:vertical}
 .lf-trap{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 /* With the script, the form is one question at a time. Without it, every question is on the page and none of this applies. */
 .lf-panel.is-steps .lf-block + .lf-block{padding-top:0;border-top:0}
+.lf-panel.is-steps .lf-when{display:none}
 @container lf (min-width:880px){
   .lf-wrap{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:var(--column-gap);align-items:start}
 }

@@ -9,6 +9,14 @@
  * Field names are the keys of the payload sent to Zapier (netlify/functions/lead/payload.mjs).
  * One question, "practice_areas", lets the visitor tick several options (kind: multi); its value
  * is the ticked options joined with ", ".
+ *
+ * 26 Oct 2026 (workshop Erlend and Sondre): one question is asked only when an earlier answer calls
+ * for it (a step with "when"). "low_turnover_budget" follows a turnover of "Under £1m": a firm that can
+ * put £2,000 a month into advertising goes on, one that cannot is not a fit (route.mjs). The step is
+ * skipped by the page's script and not required by the server when the condition does not hold; with
+ * the script off every question is on the page and "whenNote" says when to answer it. Its answer is
+ * kept with the lead and shows in the reasons; it is not a payload key (payload.mjs).
+ * The marketing bands gained a line at £2,000.
  */
 
 export const SLUG = 'uk-law-firms';
@@ -20,7 +28,8 @@ export const OPTIONS = {
   people: ['Under 5', '5 to 14', '15 to 29', '30 or more'],
   areas: ['Family', 'Conveyancing', 'Wills and probate', 'Employment', 'Commercial', 'Immigration', 'Personal injury', 'Other'],
   worth: ['Under £2,000', '£2,000 to under £5,000', '£5,000 to under £15,000', '£15,000 or more'],
-  spend: ['Under £1,000', '£1,000 to under £5,000', '£5,000 to under £15,000', '£15,000 or more', 'I do not know'],
+  spend: ['Under £1,000', '£1,000 to under £2,000', '£2,000 to under £5,000', '£5,000 to under £15,000', '£15,000 or more', 'I do not know'],
+  budget: ['Yes, we can put £2,000 a month into advertising', 'No, not at the moment'],
   decider: ['Me', 'Me, with the other partners', 'Someone else, I would bring them in'],
   capacity: ['None, we are at capacity', 'A few', 'Many'],
 };
@@ -39,7 +48,7 @@ export const URL_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i;
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
- * The twelve steps. "field" is the name of the input and the payload key.
+ * The fourteen steps (one asked only after a turnover under £1m). "field" is the name of the input and, except for low_turnover_budget, the payload key.
  * kind: url | text | choice | multi | group. A group is one step with several inputs.
  */
 export const STEPS = [
@@ -47,6 +56,13 @@ export const STEPS = [
   { id: 'company', kind: 'text', field: 'company_name', q: 'Firm name', ac: 'organization', max: 200 },
   { id: 'sra', kind: 'text', field: 'sra_number', q: 'SRA number', optional: true, help: 'Optional. It helps us prepare.', max: 40 },
   { id: 'turnover', kind: 'choice', field: 'turnover_band', q: "Roughly what was the firm's turnover in the last financial year?", options: 'turnover' },
+  {
+    id: 'budget', kind: 'choice', field: 'low_turnover_budget', options: 'budget',
+    when: { field: 'turnover_band', values: ['Under £1m'] },
+    q: 'Your turnover is below the level we usually work with. Could the firm put at least £2,000 a month into advertising?',
+    help: 'The budget is paid directly to the ad platforms, not to us. We are paid only through commission on new clients you sign.',
+    whenNote: 'Only answer this if the firm turns over less than £1m.',
+  },
   { id: 'trading', kind: 'choice', field: 'trading_years', q: 'How long has the firm been trading?', options: 'trading' },
   { id: 'people', kind: 'choice', field: 'employees_or_fee_earners', q: 'How many fee earners does the firm have?', options: 'people' },
   { id: 'areas', kind: 'multi', field: 'practice_areas', q: 'Which practice areas would you like to grow?', help: 'Tick as many as apply.', options: 'areas' },
@@ -100,9 +116,16 @@ export function splitMulti(step, raw) {
   return out;
 }
 
+/** Whether a step is asked: always, unless it has "when" and the earlier answer it names is not one of its values. */
+export function applies(step, get) {
+  if (!step.when) return true;
+  return step.when.values.indexOf(tidy(get(step.when.field), 200)) >= 0;
+}
+
 /** The error for one step's answers, or {} when it is fine. "get" reads a value by field name. */
 export function stepErrors(step, get) {
   var out = {};
+  if (!applies(step, get)) return out;
   if (step.kind === 'url') {
     var u = tidy(get(step.field), step.max);
     if (!u || !URL_RE.test(u)) out[step.field] = MSG.url;
@@ -128,9 +151,10 @@ export function stepErrors(step, get) {
 }
 
 /**
- * All twelve steps against a set of answers. "input" is a plain object of strings.
+ * All fourteen steps against a set of answers. "input" is a plain object of strings.
  * Returns {ok, errors, values}: errors by field name, values cleaned for every field (an
- * empty string where nothing was answered; a multi-choice as its options joined with ", ").
+ * empty string where nothing was answered, or where the step was not asked; a multi-choice as
+ * its options joined with ", ").
  */
 export function validate(input) {
   var get = function (name) { return input ? input[name] : ''; };
@@ -138,7 +162,9 @@ export function validate(input) {
   var values = {};
   STEPS.forEach(function (s) {
     Object.assign(errors, stepErrors(s, get));
-    if (s.kind === 'group') {
+    if (!applies(s, get)) {
+      values[s.field] = '';
+    } else if (s.kind === 'group') {
       s.fields.forEach(function (f) { values[f.field] = tidy(get(f.field), f.max); });
     } else if (s.kind === 'multi') {
       var m = splitMulti(s, get(s.field));

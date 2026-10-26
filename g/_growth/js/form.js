@@ -14,7 +14,7 @@ function initForm() {
   var STEPS = CORE.STEPS;
   var blocks = STEPS.map(function (s) { return form.querySelector('.lf-block[data-step="' + s.id + '"]'); });
   if (blocks.some(function (b) { return !b; })) return;   // markup and definition disagree: stay with the plain form
-  var total = blocks.length;
+  var total = blocks.length;                              // every step on the page; a step with "when" may be skipped
   var cur = 0;
   var phase = 'idle';                                     // idle | sending | failed
   var leadId = '';
@@ -79,6 +79,21 @@ function initForm() {
     if (step.kind === 'group') return step.fields.map(function (f) { return f.field; });
     return step.other ? [step.field, step.other.field] : [step.field];
   }
+  /* A step with "when" is asked only when the earlier answer it names is one of its values
+     (core.mjs says the same to the server). Every other step is always asked. */
+  function applies(i) {
+    var w = STEPS[i].when;
+    return !w || w.values.indexOf(val(w.field)) >= 0;
+  }
+  function nextStep(i) { for (var j = i + 1; j < total; j++) if (applies(j)) return j; return -1; }
+  function prevStep(i) { for (var j = i - 1; j >= 0; j--) if (applies(j)) return j; return -1; }
+  function lastStep() { for (var j = total - 1; j >= 0; j--) if (applies(j)) return j; return total - 1; }
+  /** Where the visitor is, counted over the steps they are asked: [position, how many]. */
+  function place() {
+    var n = 0, at = 0;
+    for (var j = 0; j < total; j++) if (applies(j)) { n++; if (j <= cur) at = n; }
+    return [at || 1, n || total];
+  }
 
   /* ---- errors ---------------------------------------------------------------------------- */
   function addDescribed(el, id) {
@@ -139,12 +154,14 @@ function initForm() {
   }
   function render() {
     blocks.forEach(function (b, k) { b.hidden = k !== cur; });
-    count.textContent = (cur + 1) + ' / ' + total;
-    bar.setAttribute('aria-valuenow', String(cur + 1));
+    var p = place();
+    count.textContent = p[0] + ' / ' + p[1];
+    bar.setAttribute('aria-valuemax', String(p[1]));
+    bar.setAttribute('aria-valuenow', String(p[0]));
     bar.setAttribute('aria-valuetext', count.textContent);
-    fill.style.width = Math.round(((cur + 1) / total) * 100) + '%';
-    var last = cur === total - 1;
-    back.hidden = cur === 0;
+    fill.style.width = Math.round((p[0] / p[1]) * 100) + '%';
+    var last = nextStep(cur) < 0;
+    back.hidden = prevStep(cur) < 0;
     back.disabled = phase === 'sending';
     if (consentP) consentP.hidden = !last;
     btn.textContent = phase === 'failed' ? T.retry : (last ? T.cta : T.next);
@@ -176,10 +193,14 @@ function initForm() {
       if (box) box.hidden = val(s.field) !== s.other.value;
     });
   }
+  /* The answers that decide whether a later step is asked: a change to one of them redraws the counter. */
+  var decides = {};
+  STEPS.forEach(function (s) { if (s.when) decides[s.when.field] = true; });
   form.addEventListener('change', function (e) {
     if (e.target && (e.target.type === 'radio' || e.target.type === 'checkbox')) {
       syncChoices();
       afterEdit(e.target);
+      if (decides[e.target.name] && phase !== 'sending') render();
     }
   });
   form.addEventListener('input', function (e) { afterEdit(e.target); });
@@ -228,7 +249,7 @@ function initForm() {
   }
   function fail() {
     phase = 'failed';
-    go(total - 1, false);
+    go(lastStep(), false);
     try { btn.focus({ preventScroll: true }); } catch (e) {}
   }
   function mapServerErrors(errs) {
@@ -286,13 +307,16 @@ function initForm() {
       focusControl(blocks[cur].querySelector('[aria-invalid="true"]') || firstControl(cur));
       return;
     }
-    if (cur < total - 1) { go(cur + 1, true); return; }
+    var next = nextStep(cur);
+    if (next >= 0) { go(next, true); return; }
     send();
   });
   back.addEventListener('click', function () {
     if (phase === 'sending') return;
+    var prev = prevStep(cur);
+    if (prev < 0) return;
     phase = 'idle';
-    go(cur - 1, true);
+    go(prev, true);
   });
   /* The browser's back button can restore this page as it was, mid-send. Put the form back. */
   window.addEventListener('pageshow', function (e) {
