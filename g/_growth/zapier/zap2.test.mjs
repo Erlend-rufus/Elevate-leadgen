@@ -10,7 +10,7 @@ const LIST = '901522580321'; // IT - UK - Commision
 const HEALTH_LIST = '1201270000003578'; // HEALTH - UK - Commission
 const LAW_LIST = '1201270000003579'; // LAW - UK - Commission
 const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST]);
-const KNOWN_TAGS = new Set(['growth-2m', 'growth-5m', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import']);
+const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import']);
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow', 'møte gjennomført']);
 const F = { leadId: '08cf9ecc-ff51-4296-9e03-c5250ebb7abf', email: '78c13487-0fee-46d2-893f-68b212b09e6b', contact: '8fb666f4-c213-4f7a-a8ce-627e496a8313', crm: '8289eaa9-7492-40eb-a35d-092c51bd01ac', stage: 'f4bfea58-b05c-4427-ba1c-b4aa61200583' };
 const IT_TYPE = '769980c2-23c5-4a60-8f1e-462e5e4ea12e';
@@ -433,7 +433,7 @@ for (const [label, input] of [['flattened', flattened(nested())], ['envelope', e
   console.log('16 ok');
 }
 // ---------------------------------------------------------------- 17. health and law bookings: own event, own list, own tag
-for (const [label, type, list, tag] of [['health', HEALTH_TYPE, HEALTH_LIST, 'growth-5m'], ['law', LAW_TYPE, LAW_LIST, 'growth-law']]) {
+for (const [label, type, list, tag] of [['health', HEALTH_TYPE, HEALTH_LIST, 'growth-health'], ['law', LAW_TYPE, LAW_LIST, 'growth-law']]) {
   const bookedOn = (extra = {}) => nested({ ...extra, scheduled_event: { name: 'Elevate Marketing | ' + label, event_type: `https://api.calendly.com/event_types/${type}` } });
   // the lead's task is in its own list: linked by lead id, status moved, due date set
   const w = makeWorld();

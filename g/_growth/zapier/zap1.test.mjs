@@ -10,7 +10,7 @@ const LIST = '901522580321'; // IT - UK - Commision
 const HEALTH_LIST = '1201270000003578'; // HEALTH - UK - Commission
 const LAW_LIST = '1201270000003579'; // LAW - UK - Commission
 const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST]);
-const KNOWN_TAGS = new Set(['growth-2m', 'growth-5m', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import', 'vurder-nettside']);
+const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import', 'vurder-nettside']);
 const SONDRE = 106690144;
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow']);
 
@@ -318,11 +318,11 @@ const SPEND_UNDER_1K = '5482c305-7587-466a-bef4-ab15e6a70906';
 {
   const health = { campaign: 'uk-private-hospitals', page_slug: 'uk-private-hospitals', company_name: 'TEST Harbour Clinics Ltd', specialism: '', practice_areas: '', sra_number: '',
     regulator_number: 'TEST-1234', self_pay_share: '60% or more', specialties: 'Orthopaedics, Cardiology', first_consultation_value: '£300 to under £600',
-    turnover_band: '£5m to under £10m', employees_or_fee_earners: '', marketing_spend: '£5,000 to under £20,000', first_year_value: '', target_next_year: '£12m' };
+    turnover_band: '£5m to under £10m', employees_or_fee_earners: '', marketing_spend: '£20,000 to under £50,000', first_year_value: '', target_next_year: '£12m' };
   const w = makeWorld();
   const { out } = await run(w, withLead({ ...health, lead_id: 'l_health_0001', email: 'health@example.invalid' }));
   const t = w.tasks[0];
-  eq(w.tasks.length, 1, 'health: one task'); eq(t.list, HEALTH_LIST, 'health: in the HEALTH list'); eq(t.tags, ['growth-5m', 'test'], 'health: tags');
+  eq(w.tasks.length, 1, 'health: one task'); eq(t.list, HEALTH_LIST, 'health: in the HEALTH list'); eq(t.tags, ['growth-health', 'test'], 'health: tags');
   eq(t.status, 'ny lead', 'health: status'); eq(optName(t, F.tier), 'Tier 1', 'health: tier'); eq(optName(t, F.leadId), 'l_health_0001', 'health: lead_id field');
   eq(optName(t, F.spend), '£5k+/mth', 'health: spend inside one band'); eq(optName(t, F.spec), undefined, 'health: IT specialism dropdown left alone');
   eq(optName(t, F.team), undefined, 'health: no team size'); eq(optName(t, F.value), undefined, 'health: no contract value');
@@ -333,9 +333,10 @@ const SPEND_UNDER_1K = '5482c305-7587-466a-bef4-ab15e6a70906';
   const w2 = makeWorld();
   await run(w2, withLead({ ...health, lead_id: 'l_health_0002', email: 'real@clinic-group.co.uk' }));
   eq(w2.slack.length, 1, 'health: real lead posts'); ok(w2.slack[0].includes('UK HEALTH'), 'health: Slack label'); ok(!w2.slack[0].includes('[TEST]'), 'health: no TEST on a real lead');
-  eq(w2.tasks[0].tags, ['growth-5m'], 'health: real lead tag');
-  // the "I do not know" answer maps to Unknown, the highest band to £5k+
-  for (const [answer, expected] of [['I do not know', 'Unknown'], ['£50,000 or more', '£5k+/mth'], ['£20,000 to under £50,000', '£5k+/mth']]) {
+  eq(w2.tasks[0].tags, ['growth-health'], 'health: real lead tag');
+  // the "I do not know" answer maps to Unknown, the two highest bands to £5k+; the two lowest (26 Oct 2026: the
+  // line is £3,000) straddle ClickUp's bands and stay empty
+  for (const [answer, expected] of [['I do not know', 'Unknown'], ['£50,000 or more', '£5k+/mth'], ['£20,000 to under £50,000', '£5k+/mth'], ['Under £3,000', undefined], ['£3,000 to under £20,000', undefined]]) {
     const wx = makeWorld();
     await run(wx, withLead({ ...health, lead_id: 'l_health_' + answer.length, marketing_spend: answer }));
     eq(optName(wx.tasks[0], F.spend), expected, 'health spend: ' + answer);
@@ -349,17 +350,17 @@ const SPEND_UNDER_1K = '5482c305-7587-466a-bef4-ab15e6a70906';
 }
 {
   const law = { campaign: 'uk-law-firms', page_slug: 'uk-law-firms', company_name: 'TEST Harbour Law LLP', specialism: '', practice_areas: 'Private client, Family', sra_number: '999999',
-    turnover_band: '£2m to under £5m', employees_or_fee_earners: '15 to 29', marketing_spend: '£1,000 to under £5,000', first_year_value: '£5,000 to under £15,000', target_next_year: '£4m' };
+    turnover_band: '£2m to under £5m', employees_or_fee_earners: '15 to 29', marketing_spend: '£2,000 to under £5,000', first_year_value: '£5,000 to under £15,000', target_next_year: '£4m' };
   const w = makeWorld();
   await run(w, withLead({ ...law, lead_id: 'l_law_0001', email: 'law@example.invalid' }));
   const t = w.tasks[0];
   eq(w.tasks.length, 1, 'law: one task'); eq(t.list, LAW_LIST, 'law: in the LAW list'); eq(t.tags, ['growth-law', 'test'], 'law: tags');
   eq(optName(t, F.tier), 'Tier 1', 'law: tier'); eq(optName(t, F.leadId), 'l_law_0001', 'law: lead_id field');
-  eq(optName(t, F.spend), undefined, 'law: £1,000 to under £5,000 straddles two ClickUp bands: not set');
+  eq(optName(t, F.spend), undefined, 'law: £2,000 to under £5,000 straddles two ClickUp bands: not set');
   eq(optName(t, F.spec), undefined, 'law: IT specialism dropdown left alone'); eq(optName(t, F.team), undefined, 'law: team size not set'); eq(optName(t, F.value), undefined, 'law: contract value not set');
   ok(t.description.includes('Private client, Family'), 'law: practice areas in description'); ok(t.description.includes('999999'), 'law: SRA number in description');
   ok(t.description.includes('15 to 29'), 'law: fee earners in description');
-  for (const [answer, expected] of [['Under £1,000', 'Under £1k/mth'], ['£5,000 to under £15,000', '£5k+/mth'], ['£15,000 or more', '£5k+/mth'], ['I do not know', 'Unknown']]) {
+  for (const [answer, expected] of [['Under £1,000', 'Under £1k/mth'], ['£1,000 to under £2,000', '£1-2.5k/mth'], ['£5,000 to under £15,000', '£5k+/mth'], ['£15,000 or more', '£5k+/mth'], ['I do not know', 'Unknown']]) {
     const wx = makeWorld();
     await run(wx, withLead({ ...law, lead_id: 'l_law_' + answer.length, marketing_spend: answer }));
     eq(optName(wx.tasks[0], F.spend), expected, 'law spend: ' + answer);
@@ -407,8 +408,18 @@ const naf = { lead_id: 'l_naf_0001', route: 'not_a_fit', route_reason: 'turnover
   // health and law: their own tags and labels
   const w4 = makeWorld();
   await run(w4, withLead({ ...naf, lead_id: 'l_naf_0004', campaign: 'uk-private-hospitals', route_reason: 'self_pay_under_10pc' }));
-  eq(w4.tasks[0].tags, ['growth-5m', 'vurder-nettside'], 'naf health: tags'); eq(w4.tasks[0].assignees, [SONDRE], 'naf health: assigned');
+  eq(w4.tasks[0].tags, ['growth-health', 'vurder-nettside'], 'naf health: tags'); eq(w4.tasks[0].assignees, [SONDRE], 'naf health: assigned');
   ok(w4.slack[0].includes('UK HEALTH') && w4.slack[0].includes('Grunn: under 10 % selvbetalende'), 'naf health: label and reason');
+  // the codes the 26 Oct 2026 rules give, in words
+  for (const [campaign, reason, words] of [
+    ['uk-law-firms', 'turnover_below_1m,budget_2k_no', 'Grunn: omsetning under £1m, kan ikke sette av £2 000 i måneden til annonser'],
+    ['uk-private-hospitals', 'turnover_below_2m,spend_under_3k', 'Grunn: omsetning under £2m, markedsføring under £3 000 i måneden'],
+    ['uk-it-growth', 'turnover_below_2m,spend_under_1k', 'Grunn: omsetning under £2m, markedsføring under £1 000 i måneden'],
+  ]) {
+    const w5 = makeWorld();
+    await run(w5, withLead({ ...naf, lead_id: 'l_naf_' + reason.length, campaign, route_reason: reason }));
+    ok(w5.slack[0].includes(words), 'naf: ' + reason + ' in words');
+  }
   console.log('15 ok');
 }
 // ---------------------------------------------------------------- 16. the quote button: tag, comment that notifies, post that pings

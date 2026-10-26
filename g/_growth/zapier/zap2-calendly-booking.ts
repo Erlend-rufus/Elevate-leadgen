@@ -88,7 +88,7 @@ const CAMPAIGNS: Record<string, Campaign> = {
   "uk-private-hospitals": {
     label: "UK HEALTH",
     listId: "1201270000003578", // HEALTH - UK - Commission
-    tag: "growth-5m",
+    tag: "growth-health", // was "growth-5m" until 26 Oct 2026; see Zap 1
     eventTypes: ["516ab30e-089f-49dc-a8e6-0e1071a71a1d"], // Elevate Marketing | Health | 30 minute bookings review
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
