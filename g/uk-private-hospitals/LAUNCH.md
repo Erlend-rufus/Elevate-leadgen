@@ -1,6 +1,6 @@
 # Launch notes · /g/uk-private-hospitals
 
-UK private hospitals and clinic groups with £5m+ turnover ("HELSE"). Built 20 Oct 2026 on the framework of
+UK private hospitals and clinic groups with £2m+ turnover (£5m until 26 Oct 2026) ("HELSE"). Built 20 Oct 2026 on the framework of
 `/g/uk-it-growth` (read `g/uk-it-growth/LAUNCH.md` first: the endpoint, storage, delivery, alerts, Meta and
 the daily check are the same code). This file only says what is different and what is outstanding.
 
@@ -18,10 +18,10 @@ npm run test:g-growth  # g/uk-private-hospitals/test/funnel.test.mjs is in it
 
 | | IT | Health |
 |---|---|---|
-| Threshold | £2m | £5m (`{THRESHOLD}`), self-paying patients, an attended first consultation worth £500+ (`{WORTH}`) |
+| Threshold | £2m | £2m since 26 Oct 2026 (`{THRESHOLD}`, was £5m), self-paying patients. `{WORTH}` (£500) is no longer on the page |
 | Form | 13 steps | 12 steps; "Which specialties would you like to grow?" is a multi-choice (tick any), sent as `specialties` joined with ", " |
 | Payload keys | 37 | the same plus `regulator_number`, `self_pay_share`, `specialties`, `first_consultation_value` (empty for the other campaigns) |
-| Routing (`route.mjs`) | | not a fit: turnover under £5m, trading under two years, self-pay under 10%, consultation worth under £500. not now: no capacity. review: turnover not stated, self-pay 10% to under 30% or unknown, consultation value unknown, only "Other" ticked. Fertility ticked is flagged (`fertility` in the reasons), not routed. |
+| Routing (`route.mjs`) | | **Since 26 Oct 2026 (workshop):** not a fit: under £2m with under £3,000 a month on marketing (the lowest band now ends at £3,000), self-pay under 10%. Trading, the value of a first consultation and capacity no longer route (never `not_now`). review: turnover not stated, under £2m with "I do not know" on marketing, self-pay 10% to under 30% or unknown, only "Other" ticked. Fertility ticked is flagged (`fertility` in the reasons), not routed. |
 | Payment | commission on closed deals | commission on attended first consultations and on the procedures those patients book within a year (owner's decision 20 Oct 2026, De Peyer model). The rate is never on the page. |
 | Case | three IT consultancies | C-Medical, 1 Feb to 16 Oct 2026 against the same days of 2025, with written permission (owner, 20 Oct). Headline multiple 13x without reception; 22x whole account in the note. |
 | Register | off (`legal.registerCheck` false) | the same: no Companies House or CQC lookup is promised or made. Check before each meeting. |

@@ -415,6 +415,7 @@ textarea.lf-input--long{min-height:132px;resize:vertical}
 .lf-panel.is-sending .lf-block{opacity:.5;pointer-events:none}
 .lf-trap{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 .lf-panel.is-steps .lf-block + .lf-block{padding-top:0;border-top:0}
+.lf-panel.is-steps .lf-when{display:none}
 @container lf (min-width:880px){
 .lf-wrap{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:var(--column-gap);align-items:start}
 }
@@ -480,8 +481,8 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
         <h2 class="h2" id="h-fit">For firms that are growing, not firms that are stuck.</h2>
         <p class="intro">The firms we work best with already win work through reputation and referral. What they lack is a second channel they control: enquiries that arrive because the right page was in front of the right person, in a practice area they want to grow.</p>
         <div class="cols">
-          <div class="col"><h3 class="col-h">This works if</h3><ul class="lines"><li>You are a firm in England and Wales with £2m or more in turnover and at least two years of trading</li><li>You act for private clients or businesses in areas such as family, conveyancing, wills and probate, employment, commercial or immigration</li><li>A new client is worth £2,000 or more to you in the first year</li><li>Someone at the firm can respond to a new enquiry within one working day</li></ul></div>
-          <div class="col col--no"><h3 class="col-h">This does not work if</h3><ul class="lines"><li>Your work is mainly personal injury</li><li>Your work is mainly legal aid</li><li>You are below £2m turnover or newer than two years</li><li>Nobody has time to approve marketing material</li></ul></div>
+          <div class="col"><h3 class="col-h">This works if</h3><ul class="lines"><li>You are a firm in England and Wales with £2m or more in turnover</li><li>You act for private clients or businesses in areas such as family, conveyancing, wills and probate, employment, commercial or immigration</li><li>A new client is worth £2,000 or more to you in the first year</li><li>Someone at the firm can respond to a new enquiry within one working day</li></ul></div>
+          <div class="col col--no"><h3 class="col-h">This does not work if</h3><ul class="lines"><li>Your work is mainly personal injury</li><li>Your work is mainly legal aid</li><li>You turn over less than £1m and cannot put £2,000 a month into advertising</li><li>Nobody has time to approve marketing material</li></ul></div>
         </div>
         <p class="note">We check the details you give after you apply, and we confirm turnover with you on the call.</p>
       </div></div>
@@ -550,11 +551,12 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 <div class="lf-block" data-step="company"><label class="lf-q" for="f-company_name">Firm name</label><input class="lf-input" id="f-company_name" name="company_name" type="text" value="" autocomplete="organization" inputmode="text" aria-invalid="false" aria-required="true"></div>
 <div class="lf-block" data-step="sra"><label class="lf-q" for="f-sra_number">SRA number</label><p class="lf-help" id="h-sra_number">Optional. It helps us prepare.</p><input class="lf-input" id="f-sra_number" name="sra_number" type="text" value="" autocomplete="off" inputmode="text" aria-invalid="false" aria-describedby="h-sra_number"></div>
 <div class="lf-block" data-step="turnover"><fieldset class="lf-set"><legend class="lf-q">Roughly what was the firm&#39;s turnover in the last financial year?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="turnover_band" value="Under £1m"><span class="lf-ind" aria-hidden="true"></span><span>Under £1m</span></label><label class="lf-card"><input type="radio" name="turnover_band" value="£1m to under £2m"><span class="lf-ind" aria-hidden="true"></span><span>£1m to under £2m</span></label><label class="lf-card"><input type="radio" name="turnover_band" value="£2m to under £5m"><span class="lf-ind" aria-hidden="true"></span><span>£2m to under £5m</span></label><label class="lf-card"><input type="radio" name="turnover_band" value="£5m to under £10m"><span class="lf-ind" aria-hidden="true"></span><span>£5m to under £10m</span></label><label class="lf-card"><input type="radio" name="turnover_band" value="£10m or more"><span class="lf-ind" aria-hidden="true"></span><span>£10m or more</span></label><label class="lf-card"><input type="radio" name="turnover_band" value="I would rather not say"><span class="lf-ind" aria-hidden="true"></span><span>I would rather not say</span></label></div></fieldset></div>
+<div class="lf-block" data-step="budget"><fieldset class="lf-set" aria-describedby="h-low_turnover_budget"><legend class="lf-q">Your turnover is below the level we usually work with. Could the firm put at least £2,000 a month into advertising?</legend><p class="lf-help lf-when">Only answer this if the firm turns over less than £1m.</p><p class="lf-help" id="h-low_turnover_budget">The budget is paid directly to the ad platforms, not to us. We are paid only through commission on new clients you sign.</p><div class="lf-cards"><label class="lf-card"><input type="radio" name="low_turnover_budget" value="Yes, we can put £2,000 a month into advertising"><span class="lf-ind" aria-hidden="true"></span><span>Yes, we can put £2,000 a month into advertising</span></label><label class="lf-card"><input type="radio" name="low_turnover_budget" value="No, not at the moment"><span class="lf-ind" aria-hidden="true"></span><span>No, not at the moment</span></label></div></fieldset></div>
 <div class="lf-block" data-step="trading"><fieldset class="lf-set"><legend class="lf-q">How long has the firm been trading?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="trading_years" value="Under two years"><span class="lf-ind" aria-hidden="true"></span><span>Under two years</span></label><label class="lf-card"><input type="radio" name="trading_years" value="Two to five years"><span class="lf-ind" aria-hidden="true"></span><span>Two to five years</span></label><label class="lf-card"><input type="radio" name="trading_years" value="More than five years"><span class="lf-ind" aria-hidden="true"></span><span>More than five years</span></label></div></fieldset></div>
 <div class="lf-block" data-step="people"><fieldset class="lf-set"><legend class="lf-q">How many fee earners does the firm have?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="employees_or_fee_earners" value="Under 5"><span class="lf-ind" aria-hidden="true"></span><span>Under 5</span></label><label class="lf-card"><input type="radio" name="employees_or_fee_earners" value="5 to 14"><span class="lf-ind" aria-hidden="true"></span><span>5 to 14</span></label><label class="lf-card"><input type="radio" name="employees_or_fee_earners" value="15 to 29"><span class="lf-ind" aria-hidden="true"></span><span>15 to 29</span></label><label class="lf-card"><input type="radio" name="employees_or_fee_earners" value="30 or more"><span class="lf-ind" aria-hidden="true"></span><span>30 or more</span></label></div></fieldset></div>
 <div class="lf-block" data-step="areas"><fieldset class="lf-set" aria-describedby="h-practice_areas"><legend class="lf-q">Which practice areas would you like to grow?</legend><p class="lf-help" id="h-practice_areas">Tick as many as apply.</p><div class="lf-cards"><label class="lf-card lf-card--multi"><input type="checkbox" name="practice_areas" value="Family"><span class="lf-ind" aria-hidden="true"></span><span>Family</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="practice_areas" value="Conveyancing"><span class="lf-ind" aria-hidden="true"></span><span>Conveyancing</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="practice_areas" value="Wills and probate"><span class="lf-ind" aria-hidden="true"></span><span>Wills and probate</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="practice_areas" value="Employment"><span class="lf-ind" aria-hidden="true"></span><span>Employment</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="practice_areas" value="Commercial"><span class="lf-ind" aria-hidden="true"></span><span>Commercial</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="practice_areas" value="Immigration"><span class="lf-ind" aria-hidden="true"></span><span>Immigration</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="practice_areas" value="Personal injury"><span class="lf-ind" aria-hidden="true"></span><span>Personal injury</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="practice_areas" value="Other"><span class="lf-ind" aria-hidden="true"></span><span>Other</span></label></div></fieldset></div>
 <div class="lf-block" data-step="worth"><fieldset class="lf-set" aria-describedby="h-first_year_value"><legend class="lf-q">What is a typical new client worth to the firm in the first year?</legend><p class="lf-help" id="h-first_year_value">Include the first instruction and any further work in that year.</p><div class="lf-cards"><label class="lf-card"><input type="radio" name="first_year_value" value="Under £2,000"><span class="lf-ind" aria-hidden="true"></span><span>Under £2,000</span></label><label class="lf-card"><input type="radio" name="first_year_value" value="£2,000 to under £5,000"><span class="lf-ind" aria-hidden="true"></span><span>£2,000 to under £5,000</span></label><label class="lf-card"><input type="radio" name="first_year_value" value="£5,000 to under £15,000"><span class="lf-ind" aria-hidden="true"></span><span>£5,000 to under £15,000</span></label><label class="lf-card"><input type="radio" name="first_year_value" value="£15,000 or more"><span class="lf-ind" aria-hidden="true"></span><span>£15,000 or more</span></label></div></fieldset></div>
-<div class="lf-block" data-step="spend"><fieldset class="lf-set"><legend class="lf-q">What does the firm spend on marketing in a typical month?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="marketing_spend" value="Under £1,000"><span class="lf-ind" aria-hidden="true"></span><span>Under £1,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£1,000 to under £5,000"><span class="lf-ind" aria-hidden="true"></span><span>£1,000 to under £5,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£5,000 to under £15,000"><span class="lf-ind" aria-hidden="true"></span><span>£5,000 to under £15,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£15,000 or more"><span class="lf-ind" aria-hidden="true"></span><span>£15,000 or more</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="I do not know"><span class="lf-ind" aria-hidden="true"></span><span>I do not know</span></label></div></fieldset></div>
+<div class="lf-block" data-step="spend"><fieldset class="lf-set"><legend class="lf-q">What does the firm spend on marketing in a typical month?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="marketing_spend" value="Under £1,000"><span class="lf-ind" aria-hidden="true"></span><span>Under £1,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£1,000 to under £2,000"><span class="lf-ind" aria-hidden="true"></span><span>£1,000 to under £2,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£2,000 to under £5,000"><span class="lf-ind" aria-hidden="true"></span><span>£2,000 to under £5,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£5,000 to under £15,000"><span class="lf-ind" aria-hidden="true"></span><span>£5,000 to under £15,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£15,000 or more"><span class="lf-ind" aria-hidden="true"></span><span>£15,000 or more</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="I do not know"><span class="lf-ind" aria-hidden="true"></span><span>I do not know</span></label></div></fieldset></div>
 <div class="lf-block" data-step="decider"><fieldset class="lf-set"><legend class="lf-q">Who would decide whether to work with us?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="decision_maker" value="Me"><span class="lf-ind" aria-hidden="true"></span><span>Me</span></label><label class="lf-card"><input type="radio" name="decision_maker" value="Me, with the other partners"><span class="lf-ind" aria-hidden="true"></span><span>Me, with the other partners</span></label><label class="lf-card"><input type="radio" name="decision_maker" value="Someone else, I would bring them in"><span class="lf-ind" aria-hidden="true"></span><span>Someone else, I would bring them in</span></label></div></fieldset></div>
 <div class="lf-block" data-step="capacity"><fieldset class="lf-set"><legend class="lf-q">How many new instructions could the firm take on next month?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="capacity" value="None, we are at capacity"><span class="lf-ind" aria-hidden="true"></span><span>None, we are at capacity</span></label><label class="lf-card"><input type="radio" name="capacity" value="A few"><span class="lf-ind" aria-hidden="true"></span><span>A few</span></label><label class="lf-card"><input type="radio" name="capacity" value="Many"><span class="lf-ind" aria-hidden="true"></span><span>Many</span></label></div></fieldset></div>
 <div class="lf-block" data-step="goal"><label class="lf-q" for="f-meeting_goal">What do you want to get out of this meeting?</label><p class="lf-help" id="h-meeting_goal">One or two lines is enough.</p><textarea class="lf-input lf-input--long" id="f-meeting_goal" name="meeting_goal" rows="4" maxlength="600" autocomplete="off" aria-invalid="false" aria-required="true" aria-describedby="h-meeting_goal"></textarea></div>
@@ -709,6 +711,14 @@ var CORE = (function(){
  * Field names are the keys of the payload sent to Zapier (netlify/functions/lead/payload.mjs).
  * One question, "practice_areas", lets the visitor tick several options (kind: multi); its value
  * is the ticked options joined with ", ".
+ *
+ * 26 Oct 2026 (workshop Erlend and Sondre): one question is asked only when an earlier answer calls
+ * for it (a step with "when"). "low_turnover_budget" follows a turnover of "Under £1m": a firm that can
+ * put £2,000 a month into advertising goes on, one that cannot is not a fit (route.mjs). The step is
+ * skipped by the page's script and not required by the server when the condition does not hold; with
+ * the script off every question is on the page and "whenNote" says when to answer it. Its answer is
+ * kept with the lead and shows in the reasons; it is not a payload key (payload.mjs).
+ * The marketing bands gained a line at £2,000.
  */
 
 const SLUG = 'uk-law-firms';
@@ -720,7 +730,8 @@ const OPTIONS = {
   people: ['Under 5', '5 to 14', '15 to 29', '30 or more'],
   areas: ['Family', 'Conveyancing', 'Wills and probate', 'Employment', 'Commercial', 'Immigration', 'Personal injury', 'Other'],
   worth: ['Under £2,000', '£2,000 to under £5,000', '£5,000 to under £15,000', '£15,000 or more'],
-  spend: ['Under £1,000', '£1,000 to under £5,000', '£5,000 to under £15,000', '£15,000 or more', 'I do not know'],
+  spend: ['Under £1,000', '£1,000 to under £2,000', '£2,000 to under £5,000', '£5,000 to under £15,000', '£15,000 or more', 'I do not know'],
+  budget: ['Yes, we can put £2,000 a month into advertising', 'No, not at the moment'],
   decider: ['Me', 'Me, with the other partners', 'Someone else, I would bring them in'],
   capacity: ['None, we are at capacity', 'A few', 'Many'],
 };
@@ -739,7 +750,7 @@ const URL_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
- * The twelve steps. "field" is the name of the input and the payload key.
+ * The fourteen steps (one asked only after a turnover under £1m). "field" is the name of the input and, except for low_turnover_budget, the payload key.
  * kind: url | text | choice | multi | group. A group is one step with several inputs.
  */
 const STEPS = [
@@ -747,6 +758,13 @@ const STEPS = [
   { id: 'company', kind: 'text', field: 'company_name', q: 'Firm name', ac: 'organization', max: 200 },
   { id: 'sra', kind: 'text', field: 'sra_number', q: 'SRA number', optional: true, help: 'Optional. It helps us prepare.', max: 40 },
   { id: 'turnover', kind: 'choice', field: 'turnover_band', q: "Roughly what was the firm's turnover in the last financial year?", options: 'turnover' },
+  {
+    id: 'budget', kind: 'choice', field: 'low_turnover_budget', options: 'budget',
+    when: { field: 'turnover_band', values: ['Under £1m'] },
+    q: 'Your turnover is below the level we usually work with. Could the firm put at least £2,000 a month into advertising?',
+    help: 'The budget is paid directly to the ad platforms, not to us. We are paid only through commission on new clients you sign.',
+    whenNote: 'Only answer this if the firm turns over less than £1m.',
+  },
   { id: 'trading', kind: 'choice', field: 'trading_years', q: 'How long has the firm been trading?', options: 'trading' },
   { id: 'people', kind: 'choice', field: 'employees_or_fee_earners', q: 'How many fee earners does the firm have?', options: 'people' },
   { id: 'areas', kind: 'multi', field: 'practice_areas', q: 'Which practice areas would you like to grow?', help: 'Tick as many as apply.', options: 'areas' },
@@ -800,9 +818,16 @@ function splitMulti(step, raw) {
   return out;
 }
 
+/** Whether a step is asked: always, unless it has "when" and the earlier answer it names is not one of its values. */
+function applies(step, get) {
+  if (!step.when) return true;
+  return step.when.values.indexOf(tidy(get(step.when.field), 200)) >= 0;
+}
+
 /** The error for one step's answers, or {} when it is fine. "get" reads a value by field name. */
 function stepErrors(step, get) {
   var out = {};
+  if (!applies(step, get)) return out;
   if (step.kind === 'url') {
     var u = tidy(get(step.field), step.max);
     if (!u || !URL_RE.test(u)) out[step.field] = MSG.url;
@@ -828,9 +853,10 @@ function stepErrors(step, get) {
 }
 
 /**
- * All twelve steps against a set of answers. "input" is a plain object of strings.
+ * All fourteen steps against a set of answers. "input" is a plain object of strings.
  * Returns {ok, errors, values}: errors by field name, values cleaned for every field (an
- * empty string where nothing was answered; a multi-choice as its options joined with ", ").
+ * empty string where nothing was answered, or where the step was not asked; a multi-choice as
+ * its options joined with ", ").
  */
 function validate(input) {
   var get = function (name) { return input ? input[name] : ''; };
@@ -838,7 +864,9 @@ function validate(input) {
   var values = {};
   STEPS.forEach(function (s) {
     Object.assign(errors, stepErrors(s, get));
-    if (s.kind === 'group') {
+    if (!applies(s, get)) {
+      values[s.field] = '';
+    } else if (s.kind === 'group') {
       s.fields.forEach(function (f) { values[f.field] = tidy(get(f.field), f.max); });
     } else if (s.kind === 'multi') {
       var m = splitMulti(s, get(s.field));
@@ -872,7 +900,7 @@ function initForm() {
   var STEPS = CORE.STEPS;
   var blocks = STEPS.map(function (s) { return form.querySelector('.lf-block[data-step="' + s.id + '"]'); });
   if (blocks.some(function (b) { return !b; })) return;   // markup and definition disagree: stay with the plain form
-  var total = blocks.length;
+  var total = blocks.length;                              // every step on the page; a step with "when" may be skipped
   var cur = 0;
   var phase = 'idle';                                     // idle | sending | failed
   var leadId = '';
@@ -937,6 +965,21 @@ function initForm() {
     if (step.kind === 'group') return step.fields.map(function (f) { return f.field; });
     return step.other ? [step.field, step.other.field] : [step.field];
   }
+  /* A step with "when" is asked only when the earlier answer it names is one of its values
+     (core.mjs says the same to the server). Every other step is always asked. */
+  function applies(i) {
+    var w = STEPS[i].when;
+    return !w || w.values.indexOf(val(w.field)) >= 0;
+  }
+  function nextStep(i) { for (var j = i + 1; j < total; j++) if (applies(j)) return j; return -1; }
+  function prevStep(i) { for (var j = i - 1; j >= 0; j--) if (applies(j)) return j; return -1; }
+  function lastStep() { for (var j = total - 1; j >= 0; j--) if (applies(j)) return j; return total - 1; }
+  /** Where the visitor is, counted over the steps they are asked: [position, how many]. */
+  function place() {
+    var n = 0, at = 0;
+    for (var j = 0; j < total; j++) if (applies(j)) { n++; if (j <= cur) at = n; }
+    return [at || 1, n || total];
+  }
 
   /* ---- errors ---------------------------------------------------------------------------- */
   function addDescribed(el, id) {
@@ -997,12 +1040,14 @@ function initForm() {
   }
   function render() {
     blocks.forEach(function (b, k) { b.hidden = k !== cur; });
-    count.textContent = (cur + 1) + ' / ' + total;
-    bar.setAttribute('aria-valuenow', String(cur + 1));
+    var p = place();
+    count.textContent = p[0] + ' / ' + p[1];
+    bar.setAttribute('aria-valuemax', String(p[1]));
+    bar.setAttribute('aria-valuenow', String(p[0]));
     bar.setAttribute('aria-valuetext', count.textContent);
-    fill.style.width = Math.round(((cur + 1) / total) * 100) + '%';
-    var last = cur === total - 1;
-    back.hidden = cur === 0;
+    fill.style.width = Math.round((p[0] / p[1]) * 100) + '%';
+    var last = nextStep(cur) < 0;
+    back.hidden = prevStep(cur) < 0;
     back.disabled = phase === 'sending';
     if (consentP) consentP.hidden = !last;
     btn.textContent = phase === 'failed' ? T.retry : (last ? T.cta : T.next);
@@ -1034,10 +1079,14 @@ function initForm() {
       if (box) box.hidden = val(s.field) !== s.other.value;
     });
   }
+  /* The answers that decide whether a later step is asked: a change to one of them redraws the counter. */
+  var decides = {};
+  STEPS.forEach(function (s) { if (s.when) decides[s.when.field] = true; });
   form.addEventListener('change', function (e) {
     if (e.target && (e.target.type === 'radio' || e.target.type === 'checkbox')) {
       syncChoices();
       afterEdit(e.target);
+      if (decides[e.target.name] && phase !== 'sending') render();
     }
   });
   form.addEventListener('input', function (e) { afterEdit(e.target); });
@@ -1086,7 +1135,7 @@ function initForm() {
   }
   function fail() {
     phase = 'failed';
-    go(total - 1, false);
+    go(lastStep(), false);
     try { btn.focus({ preventScroll: true }); } catch (e) {}
   }
   function mapServerErrors(errs) {
@@ -1144,13 +1193,16 @@ function initForm() {
       focusControl(blocks[cur].querySelector('[aria-invalid="true"]') || firstControl(cur));
       return;
     }
-    if (cur < total - 1) { go(cur + 1, true); return; }
+    var next = nextStep(cur);
+    if (next >= 0) { go(next, true); return; }
     send();
   });
   back.addEventListener('click', function () {
     if (phase === 'sending') return;
+    var prev = prevStep(cur);
+    if (prev < 0) return;
     phase = 'idle';
-    go(cur - 1, true);
+    go(prev, true);
   });
   /* The browser's back button can restore this page as it was, mid-send. Put the form back. */
   window.addEventListener('pageshow', function (e) {

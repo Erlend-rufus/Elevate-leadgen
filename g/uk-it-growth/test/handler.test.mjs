@@ -197,7 +197,8 @@ test('at capacity with turnover unstated, the register decides between not-now a
 });
 
 test('a self-reported no is never turned into a yes by the register', async () => {
-  const { j } = await go({}, Object.assign({}, GOOD, { trading_years: TR[0] }));
+  // Under two years with under £1,000 a month on marketing (26 Oct 2026: £1,000 or more lets it through).
+  const { j } = await go({}, Object.assign({}, GOOD, { trading_years: TR[0], marketing_spend: OPTIONS.spend[0] }));
   assert.equal(j.route, 'not_a_fit');
 });
 
@@ -579,7 +580,10 @@ test('no register check (legal.registerCheck false): a firm whose answers qualif
 
 test('no register check: the self-reported rules still apply (review, not now, not a fit)', async () => {
   const env = { COMPANIES_HOUSE_API_KEY: undefined };
-  assert.equal((await go({ env }, Object.assign({}, GOOD, { turnover_band: T[1] }))).j.route, 'not_a_fit');
+  assert.equal((await go({ env }, Object.assign({}, GOOD, { turnover_band: T[0] }))).j.route, 'not_a_fit');
+  assert.equal((await go({ env }, Object.assign({}, GOOD, { turnover_band: T[1], marketing_spend: OPTIONS.spend[0] }))).j.route, 'not_a_fit');
+  assert.equal((await go({ env }, Object.assign({}, GOOD, { turnover_band: T[1] }))).j.route, 'fit', '26 Oct 2026: £1m to under £2m with £1,000+ a month');
+  assert.equal((await go({ env }, Object.assign({}, GOOD, { turnover_band: T[1], marketing_spend: OPTIONS.spend[4] }))).j.route, 'review');
   assert.equal((await go({ env }, Object.assign({}, GOOD, { capacity: C[0] }))).j.route, 'not_now');
   assert.equal((await go({ env }, Object.assign({}, GOOD, { first_year_value: W[1] }))).j.route, 'review');
   assert.equal((await go({ env }, Object.assign({}, GOOD, { turnover_band: T[5] }))).j.route, 'review');

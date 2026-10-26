@@ -415,6 +415,7 @@ textarea.lf-input--long{min-height:132px;resize:vertical}
 .lf-panel.is-sending .lf-block{opacity:.5;pointer-events:none}
 .lf-trap{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 .lf-panel.is-steps .lf-block + .lf-block{padding-top:0;border-top:0}
+.lf-panel.is-steps .lf-when{display:none}
 @container lf (min-width:880px){
 .lf-wrap{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:var(--column-gap);align-items:start}
 }
@@ -447,7 +448,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 </head>
 <body>
 <div class="pg"><div class="pg-in em-fluid">
-  <header class="pg-hd"><div class="topbar"><div class="wrap"><p class="tb-line">For UK private hospitals and clinic groups with £5m+ turnover</p></div></div>
+  <header class="pg-hd"><div class="topbar"><div class="wrap"><p class="tb-line">For UK private hospitals and clinic groups with £2m+ turnover</p></div></div>
   <div class="hd"><div class="wrap"><picture><source srcset="/g/_assets/logo-ink.webp" type="image/webp"><img class="lg" src="/g/_assets/logo-ink.png" width="418" height="168" alt="Elevate Marketing"></picture></div></div></header>
   <main id="main">
     <section class="hero" aria-labelledby="h-hero">
@@ -594,8 +595,8 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
         <h2 class="h2" id="h-fit">Who this is for, and who it is not.</h2>
         <p class="intro">The groups we work best with already fill most of their diaries through reputation and referral. What they lack is a steady second door: patients who pay for their own consultation and found the clinic because the right campaign was in front of them.</p>
         <div class="cols">
-          <div class="col"><h3 class="col-h">This is for you if</h3><ul class="lines"><li>You run a private hospital or clinic group in the UK with £5m or more in turnover and at least two years of trading</li><li>Patients pay for their own specialist consultations, in areas such as gynaecology, urology, orthopaedics, dermatology or diagnostics</li><li>An attended first consultation is worth £500 or more to you, including the care that follows</li><li>Your consultants have room in their diaries for more first consultations</li><li>Your booking team can respond to a new request within one working day</li></ul></div>
-          <div class="col col--no"><h3 class="col-h">This is not for you if</h3><ul class="lines"><li>Nearly all of your consultations are paid by insurers or arrive by referral</li><li>Your consultations are mainly lower-value, such as physiotherapy or routine GP appointments</li><li>Your turnover is below £5m, or you have been trading for less than two years</li><li>Nobody has time to approve ads and pages</li></ul></div>
+          <div class="col"><h3 class="col-h">This is for you if</h3><ul class="lines"><li>You run a private hospital or clinic group in the UK with £2m or more in turnover</li><li>Patients pay for their own specialist consultations, in areas such as gynaecology, urology, orthopaedics, dermatology or diagnostics</li><li>Your consultants have room in their diaries for more first consultations</li><li>Your booking team can respond to a new request within one working day</li></ul></div>
+          <div class="col col--no"><h3 class="col-h">This is not for you if</h3><ul class="lines"><li>Nearly all of your consultations are paid by insurers or arrive by referral</li><li>Your consultations are mainly lower-value, such as physiotherapy or routine GP appointments</li><li>Your turnover is below £2m and you spend under £3,000 a month on marketing</li><li>Nobody has time to approve ads and pages</li></ul></div>
         </div>
         <p class="note">We check the details you give after you apply, and we confirm turnover and the self-pay share with you on the call.</p>
       </div></div>
@@ -668,7 +669,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 <div class="lf-block" data-step="selfpay"><fieldset class="lf-set"><legend class="lf-q">What share of your consultations do patients pay for themselves?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="self_pay_share" value="Under 10%"><span class="lf-ind" aria-hidden="true"></span><span>Under 10%</span></label><label class="lf-card"><input type="radio" name="self_pay_share" value="10% to under 30%"><span class="lf-ind" aria-hidden="true"></span><span>10% to under 30%</span></label><label class="lf-card"><input type="radio" name="self_pay_share" value="30% to under 60%"><span class="lf-ind" aria-hidden="true"></span><span>30% to under 60%</span></label><label class="lf-card"><input type="radio" name="self_pay_share" value="60% or more"><span class="lf-ind" aria-hidden="true"></span><span>60% or more</span></label><label class="lf-card"><input type="radio" name="self_pay_share" value="I do not know"><span class="lf-ind" aria-hidden="true"></span><span>I do not know</span></label></div></fieldset></div>
 <div class="lf-block" data-step="specialties"><fieldset class="lf-set" aria-describedby="h-specialties"><legend class="lf-q">Which specialties would you like to grow?</legend><p class="lf-help" id="h-specialties">Tick as many as apply.</p><div class="lf-cards"><label class="lf-card lf-card--multi"><input type="checkbox" name="specialties" value="Gynaecology"><span class="lf-ind" aria-hidden="true"></span><span>Gynaecology</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="specialties" value="Urology"><span class="lf-ind" aria-hidden="true"></span><span>Urology</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="specialties" value="Orthopaedics"><span class="lf-ind" aria-hidden="true"></span><span>Orthopaedics</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="specialties" value="Dermatology"><span class="lf-ind" aria-hidden="true"></span><span>Dermatology</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="specialties" value="Diagnostics and imaging"><span class="lf-ind" aria-hidden="true"></span><span>Diagnostics and imaging</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="specialties" value="Fertility"><span class="lf-ind" aria-hidden="true"></span><span>Fertility</span></label><label class="lf-card lf-card--multi"><input type="checkbox" name="specialties" value="Other"><span class="lf-ind" aria-hidden="true"></span><span>Other</span></label></div></fieldset></div>
 <div class="lf-block" data-step="worth"><fieldset class="lf-set"><legend class="lf-q">What is an attended first consultation worth to you, including the care that follows?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="first_consultation_value" value="Under £500"><span class="lf-ind" aria-hidden="true"></span><span>Under £500</span></label><label class="lf-card"><input type="radio" name="first_consultation_value" value="£500 to under £1,500"><span class="lf-ind" aria-hidden="true"></span><span>£500 to under £1,500</span></label><label class="lf-card"><input type="radio" name="first_consultation_value" value="£1,500 to under £5,000"><span class="lf-ind" aria-hidden="true"></span><span>£1,500 to under £5,000</span></label><label class="lf-card"><input type="radio" name="first_consultation_value" value="£5,000 or more"><span class="lf-ind" aria-hidden="true"></span><span>£5,000 or more</span></label><label class="lf-card"><input type="radio" name="first_consultation_value" value="I do not know"><span class="lf-ind" aria-hidden="true"></span><span>I do not know</span></label></div></fieldset></div>
-<div class="lf-block" data-step="spend"><fieldset class="lf-set"><legend class="lf-q">What do you spend on marketing in a typical month?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="marketing_spend" value="Under £5,000"><span class="lf-ind" aria-hidden="true"></span><span>Under £5,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£5,000 to under £20,000"><span class="lf-ind" aria-hidden="true"></span><span>£5,000 to under £20,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£20,000 to under £50,000"><span class="lf-ind" aria-hidden="true"></span><span>£20,000 to under £50,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£50,000 or more"><span class="lf-ind" aria-hidden="true"></span><span>£50,000 or more</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="I do not know"><span class="lf-ind" aria-hidden="true"></span><span>I do not know</span></label></div></fieldset></div>
+<div class="lf-block" data-step="spend"><fieldset class="lf-set"><legend class="lf-q">What do you spend on marketing in a typical month?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="marketing_spend" value="Under £3,000"><span class="lf-ind" aria-hidden="true"></span><span>Under £3,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£3,000 to under £20,000"><span class="lf-ind" aria-hidden="true"></span><span>£3,000 to under £20,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£20,000 to under £50,000"><span class="lf-ind" aria-hidden="true"></span><span>£20,000 to under £50,000</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="£50,000 or more"><span class="lf-ind" aria-hidden="true"></span><span>£50,000 or more</span></label><label class="lf-card"><input type="radio" name="marketing_spend" value="I do not know"><span class="lf-ind" aria-hidden="true"></span><span>I do not know</span></label></div></fieldset></div>
 <div class="lf-block" data-step="decider"><fieldset class="lf-set"><legend class="lf-q">Who would decide whether to work with us?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="decision_maker" value="Me"><span class="lf-ind" aria-hidden="true"></span><span>Me</span></label><label class="lf-card"><input type="radio" name="decision_maker" value="Me, with the leadership team"><span class="lf-ind" aria-hidden="true"></span><span>Me, with the leadership team</span></label><label class="lf-card"><input type="radio" name="decision_maker" value="Someone else, I would bring them in"><span class="lf-ind" aria-hidden="true"></span><span>Someone else, I would bring them in</span></label></div></fieldset></div>
 <div class="lf-block" data-step="capacity"><fieldset class="lf-set"><legend class="lf-q">How many more consultations could you take on next month?</legend><div class="lf-cards"><label class="lf-card"><input type="radio" name="capacity" value="None, we are at capacity"><span class="lf-ind" aria-hidden="true"></span><span>None, we are at capacity</span></label><label class="lf-card"><input type="radio" name="capacity" value="A few"><span class="lf-ind" aria-hidden="true"></span><span>A few</span></label><label class="lf-card"><input type="radio" name="capacity" value="Many"><span class="lf-ind" aria-hidden="true"></span><span>Many</span></label></div></fieldset></div>
 <div class="lf-block" data-step="goal"><label class="lf-q" for="f-meeting_goal">What do you want to get out of this meeting?</label><p class="lf-help" id="h-meeting_goal">One or two lines is enough.</p><textarea class="lf-input lf-input--long" id="f-meeting_goal" name="meeting_goal" rows="4" maxlength="600" autocomplete="off" aria-invalid="false" aria-required="true" aria-describedby="h-meeting_goal"></textarea></div>
@@ -833,7 +834,8 @@ const OPTIONS = {
   selfpay: ['Under 10%', '10% to under 30%', '30% to under 60%', '60% or more', 'I do not know'],
   specialties: ['Gynaecology', 'Urology', 'Orthopaedics', 'Dermatology', 'Diagnostics and imaging', 'Fertility', 'Other'],
   worth: ['Under £500', '£500 to under £1,500', '£1,500 to under £5,000', '£5,000 or more', 'I do not know'],
-  spend: ['Under £5,000', '£5,000 to under £20,000', '£20,000 to under £50,000', '£50,000 or more', 'I do not know'],
+  // 26 Oct 2026: the lowest band ends at £3,000, the line that lets a group under £2m through (route.mjs).
+  spend: ['Under £3,000', '£3,000 to under £20,000', '£20,000 to under £50,000', '£50,000 or more', 'I do not know'],
   decider: ['Me', 'Me, with the leadership team', 'Someone else, I would bring them in'],
   capacity: ['None, we are at capacity', 'A few', 'Many'],
 };
@@ -852,7 +854,7 @@ const URL_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
- * The twelve steps. "field" is the name of the input and the payload key.
+ * The thirteen steps. "field" is the name of the input and the payload key.
  * kind: url | text | choice | multi | group. A group is one step with several inputs.
  */
 const STEPS = [
@@ -944,7 +946,7 @@ function stepErrors(step, get) {
 }
 
 /**
- * All twelve steps against a set of answers. "input" is a plain object of strings.
+ * All thirteen steps against a set of answers. "input" is a plain object of strings.
  * Returns {ok, errors, values}: errors by field name, values cleaned for every field (an
  * empty string where nothing was answered; a multi-choice as its options joined with ", ").
  */
@@ -988,7 +990,7 @@ function initForm() {
   var STEPS = CORE.STEPS;
   var blocks = STEPS.map(function (s) { return form.querySelector('.lf-block[data-step="' + s.id + '"]'); });
   if (blocks.some(function (b) { return !b; })) return;   // markup and definition disagree: stay with the plain form
-  var total = blocks.length;
+  var total = blocks.length;                              // every step on the page; a step with "when" may be skipped
   var cur = 0;
   var phase = 'idle';                                     // idle | sending | failed
   var leadId = '';
@@ -1053,6 +1055,21 @@ function initForm() {
     if (step.kind === 'group') return step.fields.map(function (f) { return f.field; });
     return step.other ? [step.field, step.other.field] : [step.field];
   }
+  /* A step with "when" is asked only when the earlier answer it names is one of its values
+     (core.mjs says the same to the server). Every other step is always asked. */
+  function applies(i) {
+    var w = STEPS[i].when;
+    return !w || w.values.indexOf(val(w.field)) >= 0;
+  }
+  function nextStep(i) { for (var j = i + 1; j < total; j++) if (applies(j)) return j; return -1; }
+  function prevStep(i) { for (var j = i - 1; j >= 0; j--) if (applies(j)) return j; return -1; }
+  function lastStep() { for (var j = total - 1; j >= 0; j--) if (applies(j)) return j; return total - 1; }
+  /** Where the visitor is, counted over the steps they are asked: [position, how many]. */
+  function place() {
+    var n = 0, at = 0;
+    for (var j = 0; j < total; j++) if (applies(j)) { n++; if (j <= cur) at = n; }
+    return [at || 1, n || total];
+  }
 
   /* ---- errors ---------------------------------------------------------------------------- */
   function addDescribed(el, id) {
@@ -1113,12 +1130,14 @@ function initForm() {
   }
   function render() {
     blocks.forEach(function (b, k) { b.hidden = k !== cur; });
-    count.textContent = (cur + 1) + ' / ' + total;
-    bar.setAttribute('aria-valuenow', String(cur + 1));
+    var p = place();
+    count.textContent = p[0] + ' / ' + p[1];
+    bar.setAttribute('aria-valuemax', String(p[1]));
+    bar.setAttribute('aria-valuenow', String(p[0]));
     bar.setAttribute('aria-valuetext', count.textContent);
-    fill.style.width = Math.round(((cur + 1) / total) * 100) + '%';
-    var last = cur === total - 1;
-    back.hidden = cur === 0;
+    fill.style.width = Math.round((p[0] / p[1]) * 100) + '%';
+    var last = nextStep(cur) < 0;
+    back.hidden = prevStep(cur) < 0;
     back.disabled = phase === 'sending';
     if (consentP) consentP.hidden = !last;
     btn.textContent = phase === 'failed' ? T.retry : (last ? T.cta : T.next);
@@ -1150,10 +1169,14 @@ function initForm() {
       if (box) box.hidden = val(s.field) !== s.other.value;
     });
   }
+  /* The answers that decide whether a later step is asked: a change to one of them redraws the counter. */
+  var decides = {};
+  STEPS.forEach(function (s) { if (s.when) decides[s.when.field] = true; });
   form.addEventListener('change', function (e) {
     if (e.target && (e.target.type === 'radio' || e.target.type === 'checkbox')) {
       syncChoices();
       afterEdit(e.target);
+      if (decides[e.target.name] && phase !== 'sending') render();
     }
   });
   form.addEventListener('input', function (e) { afterEdit(e.target); });
@@ -1202,7 +1225,7 @@ function initForm() {
   }
   function fail() {
     phase = 'failed';
-    go(total - 1, false);
+    go(lastStep(), false);
     try { btn.focus({ preventScroll: true }); } catch (e) {}
   }
   function mapServerErrors(errs) {
@@ -1260,13 +1283,16 @@ function initForm() {
       focusControl(blocks[cur].querySelector('[aria-invalid="true"]') || firstControl(cur));
       return;
     }
-    if (cur < total - 1) { go(cur + 1, true); return; }
+    var next = nextStep(cur);
+    if (next >= 0) { go(next, true); return; }
     send();
   });
   back.addEventListener('click', function () {
     if (phase === 'sending') return;
+    var prev = prevStep(cur);
+    if (prev < 0) return;
     phase = 'idle';
-    go(cur - 1, true);
+    go(prev, true);
   });
   /* The browser's back button can restore this page as it was, mid-send. Put the form back. */
   window.addEventListener('pageshow', function (e) {

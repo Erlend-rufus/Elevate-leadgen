@@ -63,7 +63,10 @@ function renderBlock(OPTIONS, step, values, errors, otherLabel) {
     const name = step.field;
     const err = errors[name] || '';
     const cur = values[name] || '';
-    const help = step.help ? `<p class="lf-help" id="h-${name}">${esc(step.help)}</p>` : '';
+    // A step asked only after a certain earlier answer ("when"): without the script every question is on the page,
+    // so it says when to answer it. The step script skips the question instead, and the style hides this line.
+    const whenNote = step.whenNote ? `<p class="lf-help lf-when">${esc(step.whenNote)}</p>` : '';
+    const help = whenNote + (step.help ? `<p class="lf-help" id="h-${name}">${esc(step.help)}</p>` : '');
     const picked = multi ? cur.split(',').map((x) => x.trim()) : [cur];
     const cards = OPTIONS[step.options].map((label) =>
       `<label class="lf-card${multi ? ' lf-card--multi' : ''}"><input type="${multi ? 'checkbox' : 'radio'}" name="${name}" value="${esc(label)}"${picked.includes(label) ? ' checked' : ''}>` +

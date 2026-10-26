@@ -1,5 +1,5 @@
 {
-  "_comment": "Page copy for /g/uk-it-growth, taken word for word from the IT board v56 (Claude Design). {THRESHOLD}, {OFFER} and {WORTH} are filled from config.json at build time. Do not edit a sentence to fit a layout; change the board first. The build refuses dashes, exclamation marks, American spellings and a commission rate (see scripts/build-g-growth.mjs).",
+  "_comment": "Page copy for /g/uk-it-growth, taken word for word from the IT board v56 (Claude Design). {THRESHOLD}, {OFFER} and {WORTH} are filled from config.json at build time. Do not edit a sentence to fit a layout; change the board first. The build refuses dashes, exclamation marks, American spellings and a commission rate (see scripts/build-g-growth.mjs). Changed 26 Oct 2026 by the owner (workshop with Sondre, the new lead rules): fit.no[0] and outcomes.not-a-fit.p now say that firms from £1m, or younger than two years, qualify with £1,000 or more a month on marketing. The board is not updated yet.",
   "meta": {
     "title": "Elevate Marketing for UK IT services firms",
     "description": "Sales conversations for UK IT services firms, from campaigns we run. A few questions to see whether we would take you on."
@@ -100,7 +100,7 @@
     ],
     "noTitle": "This does not work if",
     "no": [
-      "You are below {THRESHOLD} turnover or newer than two years",
+      "You turn over less than £1m, or you are below {THRESHOLD} or newer than two years and spend under £1,000 a month on marketing",
       "You sell products or software licences rather than services",
       "You need leads to get through the next quarter",
       "You want leads without anyone to follow them up"
@@ -251,7 +251,7 @@
     },
     "not-a-fit": {
       "h": "Thank you. This is not the right fit at the moment.",
-      "p": "We work with UK IT services firms with {THRESHOLD} or more in turnover and at least two years of trading. If that changes, we would be glad to hear from you.",
+      "p": "We work with UK IT services firms that turn over £1m or more. Below {THRESHOLD}, or with less than two years of trading, we ask for a marketing budget of £1,000 or more a month. If that changes, we would be glad to hear from you.",
       "note": "If we have misread your answers, email {EMAIL} and we will look again.",
       "interest": {
         "h": "Looking for a new website instead?",
