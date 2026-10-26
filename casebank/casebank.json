@@ -1,0 +1,197 @@
+{
+  "_comment": "Single source for /cases/ and the anonymous case pages under /case/<slug>/. Built by scripts/build-casebank.mjs. Published cases need consent_confirmed. Anonymous cases must never carry a client name anywhere on the page: the build checks the names listed in forbiddenNames. Never publish a commission rate.",
+  "forbiddenNames": ["C-Medical", "CMedical", "Campbell", "Nova Law", "Aspiria", "Avant", "Avoki", "Judicia", "Cedra", "RSM"],
+  "forbiddenFigures": ["£53", "£85", "£51"],
+  "page": {
+    "title": "Client results | Elevate Marketing",
+    "description": "Cases from IT services, consultancy, healthcare and legal: the numbers, the period and what each case does not prove.",
+    "eyebrow": "Client results",
+    "h1": "What we have done for firms like yours",
+    "lede": "Every case shows the numbers, the period and what the case does not prove. Some clients are named with their permission; others are described by sector because they asked us not to name them.",
+    "filters": { "sector": "Sector", "niche": "Niche", "market": "Market", "all": "All", "clear": "Show all cases" },
+    "count": { "one": "case", "many": "cases" },
+    "empty": "No published case in this niche yet. Book a call and we will tell you honestly whether we have done similar work.",
+    "emptyCta": "Book a call",
+    "readCase": "Read the case",
+    "footnote": "Figures are from each client's own records or their advertising accounts. Norwegian amounts are converted at the Norges Bank rate of 12.5899 NOK per GBP (16 October 2026)."
+  },
+  "ctaBySector": {
+    "it-services": "/g/uk-it-growth/",
+    "consultancy": "/g/uk-it-growth/",
+    "healthcare": "/g/uk-private-hospitals/",
+    "legal": "/g/uk-law-firms/",
+    "default": "/book"
+  },
+  "casePage": {
+    "back": "All cases",
+    "whatWeDid": "What we did",
+    "doesNotShow": "What this case does not show",
+    "source": "Source",
+    "ctaTitle": "Thirty minutes about your numbers",
+    "ctaBody": "Tell us what a client is worth to you and what you have already tried. If paid acquisition would not pay for itself in your business, we will say so.",
+    "ctaButton": "See whether we would take you on"
+  },
+  "cases": [
+    {
+      "slug": "ignite",
+      "published": true,
+      "consent_confirmed": true,
+      "named": true,
+      "display_name": "Ignite Consulting",
+      "sector": "IT services",
+      "niches": ["Innovation and change", "Public sector"],
+      "market": "UK",
+      "channels": ["Google", "Meta"],
+      "period": "January to April 2026",
+      "headline": "Right-sized public sector projects within four weeks",
+      "metrics": [
+        { "value": "97", "label": "qualified leads" },
+        { "value": "40%", "label": "of qualified leads won" },
+        { "value": "£35,000", "label": "average project" }
+      ],
+      "page": "/case/ignite.html"
+    },
+    {
+      "slug": "be-shaping",
+      "published": true,
+      "consent_confirmed": true,
+      "named": true,
+      "display_name": "Be | Shaping the Future UK",
+      "sector": "Consultancy",
+      "niches": ["Financial services", "Management and technology"],
+      "market": "UK",
+      "channels": ["Google", "Meta"],
+      "period": "March to December 2025",
+      "headline": "Run alongside an incumbent agency, and compared",
+      "metrics": [
+        { "value": "210", "label": "qualified leads" },
+        { "value": "37%", "label": "of qualified leads won" },
+        { "value": "£42,000", "label": "average project" }
+      ],
+      "page": "/case/be-shaping.html"
+    },
+    {
+      "slug": "cruxit",
+      "published": true,
+      "consent_confirmed": true,
+      "named": true,
+      "display_name": "Crux IT Consulting",
+      "sector": "IT services",
+      "niches": ["eLearning and LMS", "Salesforce", "App development"],
+      "market": "UK",
+      "market_label": "UK and India",
+      "channels": ["Google", "Meta"],
+      "period": "July to December 2025",
+      "headline": "A broad service list presented as a strength",
+      "metrics": [
+        { "value": "117", "label": "qualified leads" },
+        { "value": "65%", "label": "of qualified leads won" },
+        { "value": "£72,000", "label": "average project" }
+      ],
+      "page": "/case/cruxit.html"
+    },
+    {
+      "slug": "what-a-client-costs",
+      "published": true,
+      "consent_confirmed": true,
+      "named": false,
+      "display_name": "A Norwegian managed service provider, 22 people",
+      "sector": "IT services",
+      "niches": ["MSP", "Managed services", "Cyber security", "Microsoft 365 and cloud", "IT consultancy"],
+      "market": "Norway",
+      "channels": ["Google"],
+      "period": "September 2024 to July 2025",
+      "headline": "From four to 25 quote requests a month",
+      "metrics": [
+        { "value": "4 to 25", "label": "quote requests a month" },
+        { "value": "£320 to £39", "label": "cost per quote request" },
+        { "value": "214", "label": "quote requests for £8,700 of media" }
+      ],
+      "page": "/case/what-a-client-costs"
+    },
+    {
+      "slug": "specialist-clinic-group",
+      "published": true,
+      "consent_confirmed": true,
+      "named": false,
+      "generate_page": true,
+      "display_name": "A Norwegian private specialist clinic group",
+      "sector": "Healthcare",
+      "niches": ["Private clinics", "Gynaecology", "Urology", "Fertility"],
+      "market": "Norway",
+      "channels": ["Google"],
+      "period": "1 February to 16 October 2026, against the same days in 2025",
+      "period_short": "February to October 2026",
+      "headline": "28% more bookings at 17% lower cost per booking",
+      "metrics": [
+        { "value": "+27.9%", "label": "online bookings" },
+        { "value": "-17.3%", "label": "cost per booking (£89 to £74)" },
+        { "value": "11 to 37", "label": "campaigns, one per treatment area" }
+      ],
+      "situation": "Eleven broad campaigns, with Performance Max taking a large share of spend and partly capturing searches for the clinic's own name.",
+      "what_we_did": [
+        "Took over the account on 25 January 2026.",
+        "Rebuilt it into one campaign per treatment area.",
+        "Switched off Performance Max and fixed tracking so only completed online bookings count."
+      ],
+      "what_it_does_not_show": "Attendance: these are online bookings, and phone bookings come on top. That we caused all of it: cost per booking had already fallen in autumn 2025. Over half of bookings come from searches for the clinic's name, which we do not take credit for. Bookings for the outpatient clinic fell 31% after Performance Max was switched off.",
+      "source": "The clinic group's Google Ads and Google Analytics accounts, 1 February to 16 October 2026 against the same days in 2025. 42 days with a tracking fault in July and August are left out of both years.",
+      "page": "/case/specialist-clinic-group"
+    },
+    {
+      "slug": "family-law-firm-norway",
+      "published": true,
+      "consent_confirmed": true,
+      "named": false,
+      "generate_page": true,
+      "display_name": "A Norwegian family and inheritance law firm",
+      "sector": "Legal",
+      "niches": ["Family law", "Inheritance", "Private clients"],
+      "market": "Norway",
+      "channels": ["Google"],
+      "period": "January 2024 to October 2026",
+      "headline": "Cost per enquiry contact down from NOK 642 to NOK 162",
+      "metrics": [
+        { "value": "NOK 642 to 162", "label": "ad cost per phone or email contact, 2024 to 2026" },
+        { "value": "About 60%", "label": "of enquiries become clients (the firm's figure)" },
+        { "value": "1 client", "label": "covers about eight months of ad spend" }
+      ],
+      "situation": "Before 2024 the account counted page views as conversions, so nobody could see what the advertising produced.",
+      "what_we_did": [
+        "Rebuilt measurement around phone and email contacts.",
+        "Ran search campaigns by practice area and city.",
+        "Cut monthly spend from about NOK 20,000 to about NOK 9,500 while cost per contact kept falling."
+      ],
+      "what_it_does_not_show": "How many clients the ads produced: a contact click is not an enquiry, and the firm's own volume includes referrals and searches for its name. UK prices.",
+      "source": "The firm's Google Ads account, January 2024 to 17 October 2026. Close rate and average fee as reported by the firm.",
+      "page": "/case/family-law-firm-norway"
+    },
+    {
+      "slug": "business-law-firm-norway",
+      "published": true,
+      "consent_confirmed": true,
+      "named": false,
+      "generate_page": true,
+      "display_name": "A Norwegian business law firm",
+      "sector": "Legal",
+      "niches": ["Business law", "Commercial clients"],
+      "market": "Norway",
+      "channels": ["Google"],
+      "period": "October 2023 to May 2025",
+      "headline": "About 59 new instructions from form enquiries alone",
+      "metrics": [
+        { "value": "91", "label": "form enquiries from search" },
+        { "value": "65%", "label": "of ad enquiries became instructions (the firm's figure)" },
+        { "value": "About £233", "label": "in ad spend per new instruction" }
+      ],
+      "situation": "Business law clients searching for a firm, with no measurement of what search advertising produced.",
+      "what_we_did": [
+        "Built search campaigns around business law.",
+        "Measured form submissions and phone clicks separately."
+      ],
+      "what_it_does_not_show": "Phone clicks (275) are not counted, because a click is not a call. Volume fell in the last six months of the period. UK prices.",
+      "source": "The firm's Google Ads account, October 2023 to May 2025. Close rate as reported by the firm. 91 form enquiries at 65% is about 59 instructions; NOK 172,900 of ad spend over 59 is about NOK 2,930, or £233.",
+      "page": "/case/business-law-firm-norway"
+    }
+  ]
+}
