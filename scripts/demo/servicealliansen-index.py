@@ -110,7 +110,8 @@ h2{{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(26px,3.
 .grid{{display:grid;gap:24px}}
 .grid.m{{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .grid.l{{grid-template-columns:repeat(2,minmax(0,1fr));max-width:860px}}
-@media(max-width:900px){{.grid.m,.grid.l{{grid-template-columns:1fr;max-width:520px}}}}
+@media(max-width:900px){{.grid.m,.grid.l{{grid-template-columns:1fr 1fr;max-width:none}}}}
+@media(max-width:600px){{.grid.m,.grid.l{{grid-template-columns:1fr;max-width:520px}}}}
 .ad{{display:flex;flex-direction:column;gap:10px}}
 .card{{color:#050505;background:var(--white);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-family:'Geist',Arial,sans-serif;transition:transform .15s ease,border-color .15s ease}}
 .card:hover{{transform:translateY(-2px);border-color:var(--muted)}}
