@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Eiendomsdrift og vaktmester for borettslag og sameier i Bergen</title>
+<meta name="description" content="Eksempelside. Én totalleverandør og én fast kontaktperson som kjenner bygget.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+<style>
+:root{--navy:#002855;--sky:#EDF4FA;--text:#212529;--line:#E2E2E2;--white:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Poppins',Arial,sans-serif;font-size:16px;line-height:1.5;color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+.demo{background:var(--sky);color:var(--navy);font-size:14px;text-align:center;padding:10px 16px}
+.demo a{color:var(--navy);font-weight:600}
+header{background:var(--white)}
+header .wrap{display:flex;align-items:center;height:84px}
+header img{height:30px;width:auto}
+h1,h2,h3{color:var(--navy);font-weight:600;line-height:1.2}
+h1{font-size:clamp(32px,4.4vw,52px);padding-bottom:24px}
+h2{font-size:clamp(26px,3vw,32px);padding-bottom:16px}
+h3{font-size:clamp(20px,2.2vw,24px);padding-bottom:8px}
+p.lead,.body p{font-size:18px;line-height:1.9;color:var(--navy)}
+.btn{display:inline-block;font-family:inherit;font-size:18px;font-weight:400;text-transform:uppercase;letter-spacing:.3px;text-decoration:none;padding:15px 50px 15px 40px;border:2px solid var(--navy);background:var(--navy);color:var(--white);cursor:pointer;border-radius:0;line-height:1.3;transition:background .15s,color .15s}
+.btn:hover{background:#013a7a;border-color:#013a7a}
+.btn.sec{background:var(--white);border-color:var(--navy);color:var(--navy)}
+.btn.sec:hover{background:var(--navy);color:var(--white)}
+.btn:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
+/* hero */
+.hero{position:relative;padding:48px 0 56px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.hero .band{position:absolute;left:0;top:96px;width:52%;height:calc(100% - 152px);background:var(--sky);z-index:0}
+.hero .copy{position:relative;z-index:1;padding:40px 0 40px 0}
+.crumb{font-size:13px;color:#6b7280;padding-bottom:10px}
+.crumb span{margin:0 6px}
+.hero .pic{position:relative;z-index:1}
+.hero .pic img{width:100%;aspect-ratio:4/3;object-fit:cover;position:relative;z-index:1}
+.hero .pic::after{content:"";position:absolute;right:-28px;bottom:-28px;width:55%;height:55%;background:var(--sky);z-index:0}
+@media(max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:28px}.hero .band{width:100%;top:0;height:100%}.hero .copy{padding:24px 0 0}.hero .pic::after{right:-12px;bottom:-12px}}
+/* sections */
+section{padding:72px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+@media(max-width:860px){.two{grid-template-columns:1fr;gap:28px}}
+.two img{aspect-ratio:4/3;object-fit:cover;width:100%}
+ul.list{list-style:none;padding-top:8px}
+ul.list li{position:relative;padding:10px 0 10px 28px;font-size:18px;color:var(--navy);line-height:1.6;border-bottom:1px solid var(--line)}
+ul.list li::before{content:"";position:absolute;left:0;top:23px;width:14px;height:2px;background:var(--navy)}
+.sky{background:var(--sky)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:12px}
+.cards .card{background:var(--white);padding:32px 28px}
+.cards .card p{color:var(--navy);line-height:1.7}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding-top:8px}
+.cols p{color:var(--navy);line-height:1.8}
+@media(max-width:860px){.cards,.cols{grid-template-columns:1fr}}
+/* form */
+#skjema .inner{max-width:760px}
+.f{display:flex;flex-direction:column;gap:28px;padding-top:12px}
+fieldset{border:0;min-width:0}
+legend,label.l{display:block;font-weight:600;color:var(--navy);font-size:17px;padding-bottom:10px}
+.opt{display:inline-block;font-weight:400;color:var(--navy);padding-bottom:0}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;width:1px;height:1px}
+.chip span{display:inline-block;border:1.5px solid var(--navy);color:var(--navy);padding:10px 18px;font-size:15px;cursor:pointer;user-select:none;background:var(--white);line-height:1.3}
+.chip input:checked+span{background:var(--navy);color:var(--white)}
+.chip input:focus-visible+span{outline:3px solid var(--navy);outline-offset:3px}
+input[type=text],input[type=tel],input[type=email],textarea{width:100%;font-family:inherit;font-size:17px;color:var(--text);padding:14px 16px;border:1px solid var(--line);border-radius:0;background:var(--white)}
+input:focus,textarea:focus{border-color:var(--navy);outline:3px solid var(--navy);outline-offset:0}
+textarea{min-height:120px;resize:vertical}
+.err{display:none;color:#B3261E;font-size:14px;padding-top:6px}
+.bad .err{display:block}
+.bad input[type=text],.bad input[type=tel],.bad input[type=email]{border-color:#B3261E}
+.bad .chips span{border-color:#B3261E}
+.hint{font-size:14px;color:#6b7280;padding-top:12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:600px){.row2{grid-template-columns:1fr}}
+/* thanks */
+.thanks{display:none}
+.thanks.on{display:block}
+.box{background:var(--sky);padding:28px;margin:24px 0 28px}
+.box dl{display:grid;grid-template-columns:max-content 1fr;gap:8px 20px;padding:12px 0 18px;font-size:16px}
+.box dt{font-weight:600;color:var(--navy)}
+.box dd{color:var(--navy)}
+.box p{color:var(--navy);line-height:1.7}
+@media(max-width:600px){.box dl{grid-template-columns:1fr;gap:2px}.box dd{padding-bottom:8px}}
+footer{background:var(--navy);color:var(--white);padding:40px 0}
+footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer img{height:26px;width:auto}
+footer p{font-size:14px;opacity:.85}
+</style>
+</head>
+<body>
+<div class="demo">Eksempelside laget av Elevate Marketing for Servicealliansen. Skjemaet sender og lagrer ingenting. <a href="../">Tilbake til annonsene</a></div>
+
+<header><div class="wrap"><img src="../img/logo-navy.png" alt="Servicealliansen" width="541" height="106"></div></header>
+
+<main>
+<section class="hero">
+  <div class="band" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="copy">
+      <p class="crumb">Eiendom<span>›</span>Borettslag og sameier</p>
+      <h1>Eiendomsdrift og vaktmester for borettslag og sameier i Bergen</h1>
+      <p class="lead">Én totalleverandør og én fast kontaktperson som kjenner bygget. Velg fast tilstedeværelse, jevnlige runder eller hjelp ved behov.</p>
+      <p style="padding-top:28px"><a class="btn" href="#skjema">Få tilbud på avtale</a></p>
+    </div>
+    <div class="pic"><img src="../img/b1.webp" alt="Ansatt i Servicealliansen bærer planker" width="1600" height="1066" fetchpriority="high"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap two">
+    <div>
+      <h2>Dette tar vi oss av</h2>
+      <ul class="list">
+        <li>Daglig tilsyn og enkle reparasjoner</li>
+        <li>Kontroll av fellesarealer, belysning og inngangspartier</li>
+        <li>Bytte av lyspærer, låseservice og søppelhåndtering</li>
+        <li>Snørydding og strøing om vinteren</li>
+        <li>Gressklipping og enklere utearbeid</li>
+        <li>Teknisk tilsyn med installasjoner og bygningsmessige forhold</li>
+      </ul>
+    </div>
+    <img src="../img/b5.webp" alt="Ansatt i Servicealliansen på gardintrapp" width="1600" height="1066" loading="lazy">
+  </div>
+</section>
+
+<section class="sky">
+  <div class="wrap">
+    <h2>Velg avtalen som passer</h2>
+    <div class="cards">
+      <div class="card"><h3>Fast tilstedeværelse</h3><p>En vaktmester som er fast på bygget og kjenner det.</p></div>
+      <div class="card"><h3>Jevnlige runder</h3><p>Faste besøk med tilsyn og vedlikehold etter en plan.</p></div>
+      <div class="card"><h3>Ved behov</h3><p>Dere ringer når noe må gjøres, også ved akutte situasjoner.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Hvorfor en fast avtale</h2>
+    <div class="cols">
+      <div><h3>Avlaster styret</h3><p>Mange styrer bruker mye tid på driftsoppgaver. Når fagfolk tar dem, frigjøres tid til andre oppgaver.</p></div>
+      <div><h3>Forebygger før det blir dyrt</h3><p>Regelmessig tilsyn avdekker små feil før de utvikler seg til dyre reparasjoner eller driftsstans.</p></div>
+      <div><h3>Én kontaktperson</h3><p>Dere slipper å koordinere flere aktører. Vi tar ansvar for helheten.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="skjema" class="sky">
+  <div class="wrap"><div class="inner">
+    <div id="formwrap">
+      <h2>Be om tilbud på eiendomsdrift</h2>
+      <p class="lead">Fortell kort om eiendommen, så tar riktig avdeling kontakt.</p>
+      <form class="f" id="form" novalidate>
+
+        <fieldset class="q" data-req="one">
+          <legend>Hva slags eiendom gjelder det?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="eiendom" value="Borettslag"><span>Borettslag</span></label>
+            <label class="chip"><input type="radio" name="eiendom" value="Sameie"><span>Sameie</span></label>
+            <label class="chip"><input type="radio" name="eiendom" value="Næringsbygg"><span>Næringsbygg</span></label>
+            <label class="chip"><input type="radio" name="eiendom" value="Annet"><span>Annet</span></label>
+          </div>
+          <p class="err">Velg type eiendom</p>
+        </fieldset>
+
+        <fieldset class="q" data-req="many">
+          <legend>Hva trenger dere hjelp med? <span class="opt">(velg én eller flere)</span></legend>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="behov" value="Vaktmester"><span>Vaktmester</span></label>
+            <label class="chip"><input type="checkbox" name="behov" value="Teknisk tilsyn"><span>Teknisk tilsyn</span></label>
+            <label class="chip"><input type="checkbox" name="behov" value="Snørydding og strøing"><span>Snørydding og strøing</span></label>
+            <label class="chip"><input type="checkbox" name="behov" value="Utearbeid"><span>Utearbeid</span></label>
+            <label class="chip"><input type="checkbox" name="behov" value="Hele eiendomsdriften"><span>Hele eiendomsdriften</span></label>
+            <label class="chip"><input type="checkbox" name="behov" value="Usikker"><span>Usikker</span></label>
+          </div>
+          <p class="err">Velg minst ett behov</p>
+        </fieldset>
+
+        <fieldset class="q" data-req="one">
+          <legend>Hvilken type avtale ser dere for dere?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="avtale" value="Fast tilstedeværelse"><span>Fast tilstedeværelse</span></label>
+            <label class="chip"><input type="radio" name="avtale" value="Jevnlige runder"><span>Jevnlige runder</span></label>
+            <label class="chip"><input type="radio" name="avtale" value="Ved behov"><span>Ved behov</span></label>
+            <label class="chip"><input type="radio" name="avtale" value="Vet ikke ennå"><span>Vet ikke ennå</span></label>
+          </div>
+          <p class="err">Velg type avtale</p>
+        </fieldset>
+
+        <div class="row2">
+          <div class="q" data-req="postnr">
+            <label class="l" for="postnr">Postnummer</label>
+            <input type="text" id="postnr" name="postnr" inputmode="numeric" autocomplete="postal-code" maxlength="4">
+            <p class="err">Skriv et postnummer med fire siffer</p>
+          </div>
+          <div class="q">
+            <label class="l" for="navn-eiendom">Navn på borettslag eller sameie <span class="opt">(valgfritt)</span></label>
+            <input type="text" id="navn-eiendom" name="navn_eiendom" autocomplete="organization">
+          </div>
+        </div>
+
+        <div class="q" data-req="text">
+          <label class="l" for="navn">Ditt navn</label>
+          <input type="text" id="navn" name="navn" autocomplete="name">
+          <p class="err">Skriv navnet ditt</p>
+        </div>
+
+        <fieldset class="q" data-req="one">
+          <legend>Din rolle</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="rolle" value="Styreleder"><span>Styreleder</span></label>
+            <label class="chip"><input type="radio" name="rolle" value="Styremedlem"><span>Styremedlem</span></label>
+            <label class="chip"><input type="radio" name="rolle" value="Forvalter"><span>Forvalter</span></label>
+            <label class="chip"><input type="radio" name="rolle" value="Driftsansvarlig"><span>Driftsansvarlig</span></label>
+            <label class="chip"><input type="radio" name="rolle" value="Annet"><span>Annet</span></label>
+          </div>
+          <p class="err">Velg rollen din</p>
+        </fieldset>
+
+        <div class="row2">
+          <div class="q" data-req="tel">
+            <label class="l" for="tlf">Telefon</label>
+            <input type="tel" id="tlf" name="tlf" autocomplete="tel" inputmode="tel">
+            <p class="err">Skriv et gyldig telefonnummer</p>
+          </div>
+          <div class="q" data-req="email">
+            <label class="l" for="epost">E-post</label>
+            <input type="email" id="epost" name="epost" autocomplete="email" inputmode="email">
+            <p class="err">Skriv en gyldig e-postadresse</p>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="l" for="melding">Noe vi bør vite? <span class="opt">(valgfritt)</span></label>
+          <textarea id="melding" name="melding"></textarea>
+        </div>
+
+        <div>
+          <button class="btn" type="submit">Send forespørsel</button>
+          <p class="hint">Dette er en demo. Ingenting sendes eller lagres.</p>
+        </div>
+      </form>
+    </div>
+
+    <div class="thanks" id="thanks" tabindex="-1" aria-live="polite">
+      <h2>Takk, forespørselen er mottatt</h2>
+      <p class="lead">Dette er en demo, så ingenting er sendt eller lagret.</p>
+      <div class="box">
+        <h3>Slik ville dette fungert</h3>
+        <dl id="summary"></dl>
+        <p>I en ekte kampanje går forespørselen rett til avdelingen som dekker postnummeret, med kundetype og behov ferdig sortert. Kostnad per forespørsel måles og rapporteres hver måned.</p>
+      </div>
+      <a class="btn sec" href="../">Tilbake til annonsene</a>
+    </div>
+  </div></div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <img src="../img/logo-white-real.png" alt="Servicealliansen" width="541" height="106">
+  <p>Eksempelside. Ikke publisert av Servicealliansen.</p>
+</div></footer>
+
+<script>
+(function(){
+  var form=document.getElementById('form');
+  var rules={
+    one:function(q){return !!q.querySelector('input:checked');},
+    many:function(q){return !!q.querySelector('input:checked');},
+    postnr:function(q){return /^\d{4}$/.test(q.querySelector('input').value.trim());},
+    text:function(q){return q.querySelector('input').value.trim().length>1;},
+    tel:function(q){var v=q.querySelector('input').value.replace(/[\s\-()]/g,'');return /^(\+47|0047)?\d{8}$/.test(v);},
+    email:function(q){var v=q.querySelector('input').value.trim();return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);}
+  };
+  function check(q){var ok=rules[q.dataset.req](q);q.classList.toggle('bad',!ok);return ok;}
+  form.querySelectorAll('.q[data-req]').forEach(function(q){
+    q.addEventListener('change',function(){if(q.classList.contains('bad'))check(q);});
+    q.addEventListener('input',function(){if(q.classList.contains('bad'))check(q);});
+  });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var first=null;
+    form.querySelectorAll('.q[data-req]').forEach(function(q){if(!check(q)&&!first)first=q;});
+    if(first){var f=first.querySelector('input');if(f)f.focus();first.scrollIntoView({behavior:'smooth',block:'center'});return;}
+    var val=function(n){var c=form.querySelector('[name="'+n+'"]:checked');return c?c.value:'';};
+    var behov=Array.prototype.map.call(form.querySelectorAll('[name=behov]:checked'),function(i){return i.value;}).join(', ');
+    var rows=[['Eiendom',val('eiendom')],['Behov',behov],['Avtale',val('avtale')],['Postnummer',form.postnr.value.trim()],['Rolle',val('rolle')]];
+    var dl=document.getElementById('summary');dl.textContent='';
+    rows.forEach(function(r){var dt=document.createElement('dt');dt.textContent=r[0];var dd=document.createElement('dd');dd.textContent=r[1];dl.appendChild(dt);dl.appendChild(dd);});
+    document.getElementById('formwrap').style.display='none';
+    var t=document.getElementById('thanks');t.classList.add('on');
+    document.getElementById('skjema').scrollIntoView({behavior:'smooth',block:'start'});
+    t.focus({preventScroll:true});
+  });
+})();
+</script>
+</body>
+</html>
