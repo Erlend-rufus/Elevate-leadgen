@@ -14,7 +14,7 @@
  *      sendBeacon, data-netlify, form action= with a URL, or known tracker hosts.
  *   3. No phone-line number, commission or percentage wording, and no NOK amounts.
  *   4. netlify.toml has the X-Robots-Tag header for /demo/*.
- *   5. The ten ad links on the showcase page point at side/ or side-b/ with the
+ *   5. The twelve ad links (ten static, two film) on the showcase page point at side/ or side-b/ with the
  *      expected utm_content values.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
@@ -81,7 +81,7 @@ for (const demo of readdirSync(demoRoot)) {
     const html = readFileSync(index, 'utf8');
     const links = [...html.matchAll(/href="(side(?:-b)?)\/\?utm_source=(meta|linkedin)&utm_campaign=demo&utm_content=(\w+)"/g)];
     const got = links.map((m) => `${m[1]}:${m[2]}:${m[3]}`).sort();
-    const want = ['side-b:linkedin:b4', 'side-b:linkedin:b5', 'side-b:meta:b1', 'side-b:meta:b2', 'side-b:meta:b3',
+    const want = ['side-b:linkedin:b4', 'side-b:linkedin:b5', 'side-b:meta:b1', 'side-b:meta:b2', 'side-b:meta:b3', 'side-b:meta:b6', 'side-b:meta:b7',
                   'side:linkedin:a4', 'side:linkedin:a5', 'side:meta:a1', 'side:meta:a2', 'side:meta:a3'];
     if (JSON.stringify(got) !== JSON.stringify(want)) {
       fail(`${rel(index)}: ad links are ${got.join(', ') || 'missing'}; expected ${want.join(', ')}`);
