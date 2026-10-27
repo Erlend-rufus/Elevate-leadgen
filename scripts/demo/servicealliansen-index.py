@@ -38,6 +38,30 @@ ADS_B = [
       h='Forebyggende tilsyn for borettslag og sameier', d='servicealliansen.no', btn='Be om tilbud'),
 ]
 
+FILMS = [
+ dict(k='b6', ch='meta', src='img/film-sakslisten.mp4', poster='img/film-sakslisten-plakat.jpg', angle='sakslisten, 13 sekunder',
+      txt='Sak 4: lyspæren i oppgang B.\nSak 5: hvem måker?\nSak 6: kjellerdøren, igjen.\nStryk dem. Det tar vi.\nFast avtale for borettslag og sameier i Bergen.',
+      h='Styret bør ikke være vaktmester', d='Eiendomsdrift og vaktmester', btn='Få tilbud'),
+ dict(k='b7', ch='meta', src='img/film-takstein.mp4', poster='img/film-takstein-plakat.jpg', angle='takstein, 14 sekunder',
+      txt='En løs takstein i oktober.\nVannskade i januar.\nRegelmessig tilsyn fanger det opp i oktober.\n– Borettslag, sameier og næringsbygg\n– Én fast kontaktperson',
+      h='Eiendomsdrift med fast kontaktperson', d='Borettslag, sameier og næringsbygg', btn='Få tilbud'),
+]
+
+def film(ad, page):
+    e = html.escape
+    href = f'{page}/?utm_source={ad["ch"]}&utm_campaign=demo&utm_content={ad["k"]}'
+    return f'''      <article class="ad">
+        <div class="card" data-ad="{ad['k']}">
+          <div class="who"><div class="ava r"><img src="img/mark-white.png" alt=""></div><div><div class="n">Servicealliansen</div><div class="s">Sponset</div></div></div>
+          <p class="txt clamp">{e(ad['txt'])}</p>
+          <button class="more" type="button" aria-expanded="false">… mer</button>
+          <video class="img sq" src="{ad['src']}" poster="{ad['poster']}" muted loop playsinline controls preload="metadata" aria-label="Filmannonse: {e(ad['angle'])}"></video>
+          <a class="hit" href="{href}"><div class="foot"><div><div class="d">servicealliansen.no</div><div class="h">{e(ad['h'])}</div><div class="b">{e(ad['d'])}</div></div><span class="btn">{e(ad['btn'])}</span></div></a>
+        </div>
+        <p class="angle">Vinkel: {e(ad['angle'])}</p>
+      </article>
+'''
+
 def card(ad, page):
     e = html.escape
     href = f'{page}/?utm_source={ad["ch"]}&utm_campaign=demo&utm_content={ad["k"]}'
@@ -59,7 +83,10 @@ def card(ad, page):
       </article>
 '''
 
-def block(set_id, title, sub, ads, page):
+def block(set_id, title, sub, ads, page, films_=()):
+    films = ''
+    if films_:
+        films = '    <p class="eyebrow sub">Film, Facebook og Instagram</p>\n    <p class="note">Uten lyd, slik de vises i feeden. Trykk for å spille av.</p>\n    <div class="grid l">\n' + ''.join(film(a, page) for a in films_) + '    </div>\n'
     m = ''.join(card(a, page) for a in ads if a['ch'] == 'meta')
     l = ''.join(card(a, page) for a in ads if a['ch'] == 'linkedin')
     return f'''  <section class="set" id="{set_id}">
@@ -73,7 +100,7 @@ def block(set_id, title, sub, ads, page):
     <p class="eyebrow sub">LinkedIn</p>
     <div class="grid l">
 {l}    </div>
-  </section>
+{films}  </section>
 '''
 
 page = f'''<!doctype html>
@@ -136,6 +163,8 @@ h2{{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(26px,3.
 .li .foot{{background:var(--white);border-top:1px solid #E6E6E6}}
 .li .btn{{background:var(--white);border:1.5px solid #0A66C2;color:#0A66C2;border-radius:20px;padding:6px 16px}}
 .angle{{font-size:13px;color:var(--muted);padding:0 2px}}
+.note{{font-size:14px;color:var(--muted);margin:-10px 0 16px}}
+video.img{{background:#002855}}
 .how{{padding:56px 0 24px;margin-top:8px}}
 .how h2{{margin:12px 0 28px}}
 .step{{display:grid;grid-template-columns:40px 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--line)}}
@@ -161,11 +190,11 @@ h2{{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(26px,3.
   <section class="intro">
     <p class="eyebrow">Eksempelkampanje</p>
     <h1>Eiendomsdrift for borettslag og sameier i Bergen</h1>
-    <p class="lead">Slik kan en kampanje se ut. To annonsesett, ett med foto og ett typografisk, hvert med tre annonser for Facebook og Instagram og to for LinkedIn. Hvert sett leder til sin egen landingsside med skjema. Skjemaet spør om kundetype, behov og postnummer, så forespørselen kan gå rett til riktig avdeling.</p>
+    <p class="lead">Slik kan en kampanje se ut. To annonsesett, ett med foto og ett typografisk, hvert med tre annonser for Facebook og Instagram og to for LinkedIn, pluss to korte filmer. Hvert sett leder til sin egen landingsside med skjema. Skjemaet spør om kundetype, behov og postnummer, så forespørselen kan gå rett til riktig avdeling.</p>
   </section>
 
 {block('sett-a', 'Sett A, med foto', 'Deres egne bilder, nøktern tone.', ADS_A, 'side')}
-{block('sett-b', 'Sett B, typografisk', 'Ingen foto. Sakslisten, én kontaktperson, hele året.', ADS_B, 'side-b')}
+{block('sett-b', 'Sett B, typografisk', 'Ingen foto. Sakslisten, én kontaktperson, hele året.', ADS_B, 'side-b', FILMS)}
   <section class="how">
     <p class="eyebrow">Slik henger det sammen</p>
     <h2>Fra annonse til forespørsel</h2>
