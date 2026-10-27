@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/build-reports.mjs && node scripts/build-drafts.mjs && node scripts/build-cases.mjs && node scripts/check-placeholders.mjs",
+    "prebuild": "node scripts/build-reports.mjs && node scripts/build-drafts.mjs && node scripts/build-cases.mjs && node scripts/check-placeholders.mjs && node scripts/check-demo.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check:demo": "node scripts/check-demo.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
