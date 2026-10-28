@@ -1,15 +1,34 @@
 {
-  "_comment": "Homepage draft for The CFO HQ (ClickUp 124hhvu5ejk, pressed the quote button 28 Oct 2026). Research 28 Oct 2026. The form gave talent.thecfohq.com (the job-board subdomain, built on the Superio theme with template leftovers); the draft is for the corporate home, thecfohq.com, which is where a CEO lands. Figures and quotes are the ones on thecfohq.com today and are marked to confirm. The form's specialism (Cybersecurity) does not match the business; it is a finance leadership and finance talent firm.",
+  "_comment": "Homepage draft for The CFO HQ (ClickUp 124hhvu5ejk, pressed the quote button 28 Oct 2026). Research 28 Oct 2026. The form gave talent.thecfohq.com (the job-board subdomain, built on the Superio theme with template leftovers); the draft is for the corporate home, thecfohq.com, which is where a CEO lands. Figures and quotes are the ones on thecfohq.com today and are marked to confirm. The form's specialism (Cybersecurity) does not match the business; it is a finance leadership and finance talent firm. The team photograph is the one on thecfohq.com/about; its licence is for them to confirm. Style editorial.",
   "company": "The CFO HQ",
   "site": "https://thecfohq.com",
   "lang": "en-GB",
-  "logo": { "file": "logo.png", "height": 44 },
-  "palette": { "theme": "light", "primary": "#0E1542", "secondary": "#4AA8F5" },
+  "logo": {
+    "file": "logo.png",
+    "height": 44
+  },
+  "palette": {
+    "theme": "light",
+    "primary": "#0E1542",
+    "secondary": "#4AA8F5"
+  },
   "nav": [
-    { "label": "What we do", "href": "#services" },
-    { "label": "Client outcomes", "href": "#why" },
-    { "label": "Who we are", "href": "#about" },
-    { "label": "Talent Hub", "href": "https://talent.thecfohq.com" }
+    {
+      "label": "What we do",
+      "href": "#services"
+    },
+    {
+      "label": "Client outcomes",
+      "href": "#why"
+    },
+    {
+      "label": "Who we are",
+      "href": "#about"
+    },
+    {
+      "label": "Talent Hub",
+      "href": "https://talent.thecfohq.com"
+    }
   ],
   "cta": "Speak to a CFO",
   "hero": {
@@ -21,12 +40,24 @@
     "secondary": "What we do",
     "secondaryHref": "#services",
     "note": "A first conversation is about your situation, not a pitch.",
-    "stat": { "value": "7 days", "label": "replacement CFO deployed for one client [[TO CONFIRM: figure from the current site]]" }
+    "stat": {
+      "value": "7 days",
+      "label": "replacement CFO deployed for one client [[TO CONFIRM: figure from the current site]]"
+    }
   },
   "stats": [
-    { "value": "100+", "label": "years of combined finance leadership experience [[TO CONFIRM]]" },
-    { "value": "21 to 7", "label": "days to month-end close for a high-growth technology business [[TO CONFIRM]]" },
-    { "value": "6", "label": "service lines, from CFO advisory to talent on demand" }
+    {
+      "value": "100+",
+      "label": "years of combined finance leadership experience [[TO CONFIRM]]"
+    },
+    {
+      "value": "21 to 7",
+      "label": "days to month-end close for a high-growth technology business [[TO CONFIRM]]"
+    },
+    {
+      "value": "6",
+      "label": "service lines, from CFO advisory to talent on demand"
+    }
   ],
   "services": {
     "id": "services",
@@ -34,9 +65,18 @@
     "title": "Three ways to bring senior finance capability in",
     "lead": "Each engagement starts with what the business needs to decide, and ends with a finance function your own team can run.",
     "items": [
-      { "title": "CFO advisory", "text": "Interim, fractional and strategic CFO leadership for growth, transitions, performance improvement and critical decisions." },
-      { "title": "Finance transformation", "text": "Faster month-end close, better reporting and controls, and systems change that your team can actually run afterwards." },
-      { "title": "Talent on demand", "text": "Carefully matched CFOs, finance leaders and specialists, placed quickly on interim, fractional or permanent terms." }
+      {
+        "title": "CFO advisory",
+        "text": "Interim, fractional and strategic CFO leadership for growth, transitions, performance improvement and critical decisions."
+      },
+      {
+        "title": "Finance transformation",
+        "text": "Faster month-end close, better reporting and controls, and systems change that your team can actually run afterwards."
+      },
+      {
+        "title": "Talent on demand",
+        "text": "Carefully matched CFOs, finance leaders and specialists, placed quickly on interim, fractional or permanent terms."
+      }
     ]
   },
   "why": {
@@ -48,9 +88,18 @@
       "who": "CEO, Richardson Healthcare [[TO CONFIRM: permission to name the client on a new page]]"
     },
     "items": [
-      { "title": "Senior people only.", "text": "The people who work with you have run finance functions themselves, with over 100 years of combined experience across the team." },
-      { "title": "Speed without compromise.", "text": "A replacement CFO was deployed within seven days for one client, with the handover and controls in place." },
-      { "title": "Measurable outcomes.", "text": "Month-end close cut from 21 days to seven for a high-growth technology business, and the reporting that followed is still in use." }
+      {
+        "title": "Senior people only.",
+        "text": "The people who work with you have run finance functions themselves, with over 100 years of combined experience across the team."
+      },
+      {
+        "title": "Speed without compromise.",
+        "text": "A replacement CFO was deployed within seven days for one client, with the handover and controls in place."
+      },
+      {
+        "title": "Measurable outcomes.",
+        "text": "Month-end close cut from 21 days to seven for a high-growth technology business, and the reporting that followed is still in use."
+      }
     ]
   },
   "about": {
@@ -79,5 +128,14 @@
   "footer": {
     "legal": "© 2026 The CFO HQ. Where finance excellence lives.",
     "note": "[[TO CONFIRM: legal entity, company number and registered office]]"
+  },
+  "industry": "finance",
+  "style": "editorial",
+  "images": {
+    "hero": {
+      "file": "team.jpg",
+      "alt": "The CFO HQ team",
+      "position": "50% 30%"
+    }
   }
 }
