@@ -123,6 +123,8 @@ input::placeholder { color: var(--mist-dim); }
 .section + .section { border-top: 1px solid var(--line); }
 .svc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .svc article { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.more { color: var(--green-hi); font-size: 14px; text-decoration: none; font-family: var(--f-mono); }
+.more:hover { text-decoration: underline; }
 .svc img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 62%; border-radius: 4px; max-width: 100%; }
 .how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; counter-reset: s; }
 .how li { list-style: none; display: grid; gap: 8px; min-width: 0; }
@@ -148,6 +150,32 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
   .demo .long { display: none; }
 }
 @media (max-width: 860px) and (max-height: 760px) { .ui { display: none; } .card.final .ui { display: grid; } }
+
+/* Valgstopp og grenvise UI-kort */
+.card.choose { width: min(520px, calc(100% - 32px)); }
+.choice { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.choice button { display: grid; gap: 6px; align-content: start; text-align: left; background: var(--panel); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 6px; padding: 14px 14px 16px; color: var(--mist); min-width: 0; transition: border-color .2s, background .2s; }
+.choice button b { font-family: var(--f-display); font-weight: 600; font-size: 19px; color: var(--ink); }
+.choice button span { font-size: 13px; line-height: 1.35; }
+.choice button:hover { border-color: rgba(255,255,255,.4); }
+.choice button[aria-pressed="true"] { border-color: var(--green-hi); background: rgba(44,138,64,.32); }
+.choice button[aria-pressed="true"] b::after { content: " ✓"; color: var(--green-hi); }
+.note { font-family: var(--f-mono); font-size: 12px; color: var(--mist); }
+.note b { color: var(--ink); font-weight: 500; }
+.temp { display: flex; align-items: baseline; gap: 6px; font-family: var(--f-display); color: var(--ink); }
+.temp b { font-size: 44px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.temp span { font-size: 18px; color: var(--mist); }
+.spark { width: 100%; height: 80px; display: block; }
+.spark .band { fill: rgba(59,162,81,.12); }
+.spark .ax { fill: var(--mist-dim); font: 10px var(--f-mono); }
+.spark path { fill: none; stroke: var(--green-hi); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.spark circle { fill: var(--ink); stroke: var(--green); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 14px; }
+.checks li { display: flex; gap: 10px; align-items: center; color: var(--mist-dim); transition: color .3s; }
+.checks li::before { content: ""; width: 16px; height: 16px; border-radius: 3px; border: 1px solid var(--line); flex: none; display: grid; place-items: center; font-size: 12px; transition: background .3s, border-color .3s; }
+.checks li.ok { color: var(--ink); }
+.checks li.ok::before { content: "✓"; color: var(--ink); background: var(--green); border-color: var(--green); }
+@media (max-width: 860px) { .choice { grid-template-columns: 1fr; } .choice button { grid-template-columns: auto 1fr; align-items: baseline; gap: 10px; padding: 12px; } }
 </style>
 </head>
 <body>
@@ -156,7 +184,7 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
 
 <header class="top gutter">
   <a class="word" href="#topp" aria-label="Multi Trans Norge AS, til toppen"><img class="logo" src="logo-dark.svg" alt="Multi Trans Norge AS" width="154" height="48"></a>
-  <nav><span class="phone">55 16 10 00</span><a class="btn" href="#tilbud" data-jump="7">Få tilbud</a></nav>
+  <nav><span class="phone">55 16 10 00</span><a class="btn" href="#tilbud" data-jump="kveld">Få tilbud</a></nav>
 </header>
 
 <main id="topp">
@@ -166,73 +194,136 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
       <div class="shade"></div>
 
       <div class="cards">
-        <div class="card hero" data-card="0">
-          <span class="eyebrow">Hjemlevering for butikker og nettbutikker i Vestland</span>
+        <div class="card hero" data-scene="hero">
+          <span class="eyebrow" data-copy="heroEyebrow">Hjemlevering for butikker og nettbutikker i Vestland</span>
           <h1>Alltid en ledig bil. Garantert.</h1>
-          <p class="lead">Vi henter hos deg og leverer helt hjem til kunden din, samme dag. Kjølebil, små og store biler.</p>
-          <div class="row"><a class="btn" href="#tilbud" data-jump="7">Få tilbud på hjemlevering</a><span class="btn ghost" tabindex="0">Ring 55 16 10 00</span></div>
+          <p class="lead" data-copy="heroLead">Vi henter hos deg og leverer helt hjem til kunden din, samme dag. Kjølebil, små og store biler.</p>
+          <div class="row"><a class="btn" href="#tilbud" data-jump="kveld">Få tilbud</a><span class="btn ghost" tabindex="0">Ring 55 16 10 00</span></div>
         </div>
 
-        <div class="card" data-card="1">
+        <div class="card" data-scene="terminal">
           <span class="eyebrow">01 · Ordren kommer inn</span>
           <h2>Ingen venteliste. Bilen er klar.</h2>
           <p>Du får bekreftet bil samme dag, ikke neste uke.</p>
           <div class="ui" aria-label="Eksempel på ordrebekreftelse">
-            <div class="head"><span>Ordre <b>#4821</b></span><span>08:41</span></div>
-            <dl class="kv"><dt>Vare</dt><dd>Sofabord, 1 kolli</dd><dt>Fra</dt><dd>Butikklager, Bergen</dd><dt>Til</dt><dd>Privatkunde, Askøy</dd></dl>
-            <span class="status">Bil tildelt 08:42</span>
+            <div class="head"><span>Ordre <b data-copy="orderNo">#4821</b></span><span data-copy="orderTime">08:41</span></div>
+            <dl class="kv"><dt>Vare</dt><dd data-copy="orderItem">Sofabord, 1 kolli</dd><dt>Fra</dt><dd data-copy="orderFrom">Butikklager, Bergen</dd><dt>Til</dt><dd data-copy="orderTo">Privatkunde, Askøy</dd></dl>
+            <span class="status" data-copy="orderStatus">Bil tildelt 08:42</span>
           </div>
         </div>
 
-        <div class="card" data-card="2">
-          <span class="eyebrow">02 · Riktig bil</span>
-          <h2>Riktig bil til jobben.</h2>
-          <p>Vi matcher bilen etter varen, ikke omvendt.</p>
-          <div class="ui">
-            <div class="seg" role="group" aria-label="Velg type vare">
-              <button type="button" id="v-kjol" aria-pressed="false" data-v="Kjølebil, holder 2 til 8 °C hele veien">Kjølevarer</button>
-              <button type="button" id="v-pakke" aria-pressed="true" data-v="Liten varebil, rask i sentrum">Pakker</button>
-              <button type="button" id="v-mobel" aria-pressed="false" data-v="Stor bil med plass til møbler og paller">Møbler</button>
-            </div>
-            <span class="match" id="match">Vi sender: <b>Liten varebil, rask i sentrum</b></span>
+        <div class="card choose" data-scene="biler">
+          <span class="eyebrow">02 · Hva skal du sende?</span>
+          <h2>Velg varen, så viser vi deg leveransen.</h2>
+          <div class="choice" role="group" aria-label="Velg type vare">
+            <button type="button" id="b-pakker" data-branch="pakker" aria-pressed="true"><b>Pakker</b><span>Liten varebil, rask i sentrum</span></button>
+            <button type="button" id="b-kjol" data-branch="kjol" aria-pressed="false"><b>Kjølevarer</b><span>Kjølebil med temperaturlogg</span></button>
+            <button type="button" id="b-mobel" data-branch="mobel" aria-pressed="false"><b>Møbler</b><span>Stor bil, to mann, båret inn</span></button>
           </div>
+          <p class="note" id="chosen">Viser leveransen for <b>pakker</b>. Bytt når som helst.</p>
         </div>
 
-        <div class="card" data-card="3">
+        <!-- Pakker -->
+        <div class="card" data-scene="henting">
           <span class="eyebrow">03 · Henting</span>
           <h2>Trygt fra første løft.</h2>
           <p>Våre egne sjåfører henter, sikrer og håndterer varene. Ingen underleverandører.</p>
         </div>
-
-        <div class="card" data-card="4">
+        <div class="card" data-scene="bro">
           <span class="eyebrow">04 · Underveis</span>
           <h2>Daglige ruter i hele Vestland.</h2>
           <p>Over broer, langs fjorder og inn i boligfeltene, i alt slags vær.</p>
           <div class="ui" aria-label="Eksempel på sporing">
-            <div class="head"><span>Sporing <b>#4821</b></span><span id="eta">Ankomst ca. 17:45</span></div>
+            <div class="head"><span>Sporing <b>#4821</b></span><span id="eta">Ankomst om ca. 28 min</span></div>
             <div class="track"><i id="trk"></i><s id="dot"></s></div>
             <div class="stops"><span>Bergen</span><span>Askøybrua</span><span>Kleppestø</span></div>
           </div>
         </div>
-
-        <div class="card" data-card="5">
+        <div class="card" data-scene="fjordvei">
           <span class="eyebrow">04 · Underveis</span>
           <h2>Vi kjenner veiene, været og adressene.</h2>
           <p>Lokale sjåfører som vet hvor innkjørselen faktisk er.</p>
         </div>
-
-        <div class="card" data-card="6">
+        <div class="card" data-scene="levering">
           <span class="eyebrow">05 · Levert</span>
           <h2>Kunden får varen. Du får bekreftelsen.</h2>
           <p>Levering på døren, med signatur og tidspunkt rett til deg.</p>
           <div class="ui" aria-label="Eksempel på leveringsbekreftelse">
             <div class="head"><span>Ordre <b>#4821</b></span><span>17:48</span></div>
-            <svg class="sign" viewBox="0 0 220 46" aria-hidden="true"><path id="sig" d="M6 34 C 16 10, 26 10, 28 30 S 40 40, 46 22 C 50 12, 58 14, 58 28 C 58 36, 66 36, 72 24 L 80 30 C 92 6, 104 40, 116 20 C 124 8, 132 30, 140 26 C 156 18, 170 34, 196 16"/></svg>
+            <svg class="sign" viewBox="0 0 220 46" aria-hidden="true"><path class="sigpath" d="M6 34 C 16 10, 26 10, 28 30 S 40 40, 46 22 C 50 12, 58 14, 58 28 C 58 36, 66 36, 72 24 L 80 30 C 92 6, 104 40, 116 20 C 124 8, 132 30, 140 26 C 156 18, 170 34, 196 16"/></svg>
             <span class="status">Levert og signert</span>
           </div>
         </div>
 
-        <div class="card final" data-card="7" id="tilbud">
+        <!-- Kjølevarer -->
+        <div class="card" data-scene="k-henting">
+          <span class="eyebrow">03 · Henting</span>
+          <h2>Kald fra første minutt.</h2>
+          <p>Varene går rett fra kjølelageret inn i en forhåndskjølt bil.</p>
+          <div class="ui" aria-label="Eksempel på temperatur i lasterommet">
+            <div class="head"><span>Lasterom, kjølebil 3</span><span>05:14</span></div>
+            <div class="temp"><b id="t-now">+3,6</b><span>°C</span></div>
+            <span class="status">Innenfor 2 til 8 °C</span>
+          </div>
+        </div>
+        <div class="card" data-scene="k-vei">
+          <span class="eyebrow">04 · Underveis</span>
+          <h2>Temperaturen logges hele veien.</h2>
+          <p>Du får loggen med leveringen, klar for internkontrollen deres.</p>
+          <div class="ui" aria-label="Eksempel på temperaturlogg">
+            <div class="head"><span>Temperaturlogg <b>#5113</b></span><span id="t-read">+3,8 °C</span></div>
+            <svg class="spark" viewBox="0 0 300 80" preserveAspectRatio="none" aria-hidden="true">
+              <rect x="0" y="16" width="300" height="48" class="band"/>
+              <text x="4" y="13" class="ax">8 °C</text><text x="4" y="77" class="ax">2 °C</text>
+              <path id="t-line" d=""/>
+              <circle id="t-dot" r="3.5" cx="0" cy="40"/>
+            </svg>
+            <div class="stops"><span>05:14 lastet</span><span>Underveis</span><span>06:12 levert</span></div>
+          </div>
+        </div>
+        <div class="card" data-scene="k-levering">
+          <span class="eyebrow">05 · Levert</span>
+          <h2>Levert før døra åpner.</h2>
+          <p>Morgenlevering til restauranter og butikker, med temperaturloggen rett til deg.</p>
+          <div class="ui" aria-label="Eksempel på leveringsbekreftelse med temperatur">
+            <div class="head"><span>Ordre <b>#5113</b></span><span>06:12</span></div>
+            <dl class="kv"><dt>Mottaker</dt><dd>Restaurant, Bryggen</dd><dt>Temperatur</dt><dd>2,9 til 4,1 °C</dd><dt>Logg</dt><dd>Sendt til deg 06:12</dd></dl>
+            <span class="status">Innenfor krav hele veien</span>
+          </div>
+        </div>
+
+        <!-- Møbler -->
+        <div class="card" data-scene="m-henting">
+          <span class="eyebrow">03 · Henting</span>
+          <h2>To mann og stor bil.</h2>
+          <p>Møblene pakkes i tepper og stroppes fast før bilen kjører.</p>
+          <div class="ui" aria-label="Sjekkliste ved henting">
+            <div class="head"><span>Henting <b>#4907</b></span><span>13:20</span></div>
+            <ul class="checks" id="m-checks"><li>Pakket i tepper</li><li>Stroppet fast i lasterommet</li><li>To mann på oppdraget</li></ul>
+          </div>
+        </div>
+        <div class="card" data-scene="m-vei">
+          <span class="eyebrow">04 · Underveis</span>
+          <h2>Plass til det store.</h2>
+          <p>Stor bil med lift, også opp de smale veiene i boligfeltet.</p>
+          <div class="ui" aria-label="Eksempel på leveringsvindu">
+            <div class="head"><span>Levering <b>#4907</b></span><span>Vindu 16:00 til 18:00</span></div>
+            <div class="track"><i id="m-trk"></i><s id="m-dot"></s></div>
+            <div class="stops"><span>Møbellager</span><span>Underveis</span><span>Hos kunden</span></div>
+          </div>
+        </div>
+        <div class="card" data-scene="m-levering">
+          <span class="eyebrow">05 · Levert</span>
+          <h2>Båret inn, ikke satt på trappa.</h2>
+          <p>Vi bærer møbelet inn til rommet kunden ønsker, og du får bekreftelsen.</p>
+          <div class="ui" aria-label="Eksempel på leveringsbekreftelse">
+            <div class="head"><span>Ordre <b>#4907</b></span><span>16:42</span></div>
+            <svg class="sign" viewBox="0 0 220 46" aria-hidden="true"><path class="sigpath" d="M8 30 C 18 8, 30 14, 30 30 C 30 40, 44 38, 50 22 C 56 8, 66 20, 70 30 L 84 18 C 96 34, 110 6, 122 26 C 130 38, 146 12, 158 22 C 170 32, 186 20, 206 18"/></svg>
+            <span class="status">Båret inn og signert</span>
+          </div>
+        </div>
+
+        <div class="card final" data-scene="kveld" id="tilbud">
           <span class="eyebrow">Prisgaranti mot sammenlignbare konkurrenter</span>
           <h2>Klar for en transportør som faktisk har ledig bil?</h2>
           <p>Fra 599 kr per time for varebil og kjølebil. Fortell oss litt om behovet, så ringer vi deg samme dag.</p>
@@ -261,9 +352,9 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
       <span class="eyebrow">Tjenester</span>
       <h2 id="t-svc">Tre måter vi flytter varene dine</h2>
       <div class="svc">
-        <article><img src="p-henting.jpg" alt="Sjåfør laster pakker inn i varebil ved et butikklager" loading="lazy" width="1344" height="752"><h3>Hjemlevering</h3><p>For fysiske butikker og nettbutikker. Vi leverer på døren, med bekreftelse til deg.</p></article>
-        <article><img src="p-biler.jpg" alt="Kjølebil, liten varebil og stor bil parkert foran terminalen" loading="lazy" width="1344" height="752"><h3>Kjøletransport</h3><p>Kjølebiler for mat og temperaturfølsomme varer, med jevn temperatur hele veien.</p></article>
-        <article><img src="p-fjordvei.jpg" alt="Varebil på våt fjordvei i skumring" loading="lazy" width="1344" height="752"><h3>Fra A til B</h3><p>Når noe skal fra ett sted til et annet i Vestland, i dag eller på fast rute.</p></article>
+        <article><img src="p-henting.jpg" alt="Sjåfør laster pakker inn i varebil ved et butikklager" loading="lazy" width="1344" height="752"><h3>Hjemlevering</h3><p>For fysiske butikker og nettbutikker. Vi leverer på døren, med bekreftelse til deg.</p><a class="more" href="#pakker" data-pick="pakker">Se pakkeleveransen</a></article>
+        <article><img src="p-kjol.jpg" alt="Kjølebil lastes ved et kjølelager på kaia før soloppgang" loading="lazy" width="1344" height="752"><h3>Kjøletransport</h3><p>Kjølebiler som holder 2 til 8 °C, med temperaturlogg på hver levering.</p><a class="more" href="#kjol" data-pick="kjol">Se kjøleleveransen</a></article>
+        <article><img src="p-mobel.jpg" alt="To mann laster en innpakket sofa på liften til en stor bil" loading="lazy" width="1344" height="752"><h3>Møbler og store varer</h3><p>Stor bil og to mann. Vi bærer inn til rommet kunden ønsker.</p><a class="more" href="#mobel" data-pick="mobel">Se møbelleveransen</a></article>
       </div>
     </section>
 
@@ -299,16 +390,35 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
 
 <script>
 (() => {
-  const SCENES = [
-    { id: "hero",     len: 150, label: "Start" },
-    { id: "terminal", len: 140, label: "Ordre" },
-    { id: "biler",    len: 140, label: "Riktig bil" },
-    { id: "henting",  len: 140, label: "Henting" },
-    { id: "bro",      len: 150, label: "Underveis" },
-    { id: "fjordvei", len: 140, label: "Fjordvei" },
-    { id: "levering", len: 150, label: "Levert" },
-    { id: "kveld",    len: 130, label: "Tilbud" }
-  ];
+  // Felles start og slutt, egen midtdel per varetype. Ny gren: legg til scener her og kort med data-scene i HTML.
+  const ALL = {
+    "hero":       { len: 150, label: "Start" },
+    "terminal":   { len: 140, label: "Ordre" },
+    "biler":      { len: 170, label: "Velg vare" },
+    "henting":    { len: 140, label: "Henting" },
+    "bro":        { len: 150, label: "Underveis" },
+    "fjordvei":   { len: 140, label: "Fjordvei" },
+    "levering":   { len: 150, label: "Levert" },
+    "k-henting":  { len: 150, label: "Henting" },
+    "k-vei":      { len: 160, label: "Underveis" },
+    "k-levering": { len: 150, label: "Levert" },
+    "m-henting":  { len: 150, label: "Henting" },
+    "m-vei":      { len: 150, label: "Underveis" },
+    "m-levering": { len: 160, label: "Båret inn" },
+    "kveld":      { len: 130, label: "Tilbud" }
+  };
+  const START = ["hero", "terminal", "biler"], END = ["kveld"];
+  const BRANCHES = {
+    pakker: { scenes: ["henting", "bro", "fjordvei", "levering"], name: "pakker", form: "Pakker" },
+    kjol:   { scenes: ["k-henting", "k-vei", "k-levering"], name: "kjølevarer", form: "Kjølevarer" },
+    mobel:  { scenes: ["m-henting", "m-vei", "m-levering"], name: "møbler", form: "Møbler og store varer" }
+  };
+  // Tekst som endres når noen kommer inn via en annonse for én varetype (?type=kjol eller #kjol)
+  const COPY = {
+    pakker: { heroEyebrow: "Hjemlevering for butikker og nettbutikker i Vestland", heroLead: "Vi henter hos deg og leverer helt hjem til kunden din, samme dag. Kjølebil, små og store biler.", orderNo: "#4821", orderTime: "08:41", orderItem: "Sofabord, 1 kolli", orderFrom: "Butikklager, Bergen", orderTo: "Privatkunde, Askøy", orderStatus: "Bil tildelt 08:42" },
+    kjol:   { heroEyebrow: "Kjøletransport for dagligvare og restaurant i Vestland", heroLead: "Kjølebiler som holder 2 til 8 °C hele veien, med temperaturlogg på hver levering.", orderNo: "#5113", orderTime: "04:52", orderItem: "Fersk fisk, 6 kasser", orderFrom: "Kjølelager, Bergen havn", orderTo: "Restaurant, Bryggen", orderStatus: "Kjølebil tildelt 04:53" },
+    mobel:  { heroEyebrow: "Møbellevering for møbelbutikker i Vestland", heroLead: "Stor bil og to mann. Vi bærer møbelet helt inn til rommet kunden ønsker.", orderNo: "#4907", orderTime: "11:05", orderItem: "Sofa, 3-seter", orderFrom: "Møbellager, Åsane", orderTo: "Privatkunde, Fyllingsdalen", orderStatus: "Stor bil og to mann tildelt 11:06" }
+  };
   const FADE = 0.22;
   const mobile = matchMedia("(max-width: 860px), (pointer: coarse)").matches;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -316,60 +426,103 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
 
   const film = document.getElementById("film");
   const layersEl = document.getElementById("layers");
-  const cards = [...document.querySelectorAll("[data-card]")];
   const stepsEl = document.getElementById("steps");
   const bar = document.getElementById("bar");
   const hint = document.getElementById("hint");
+  const typeSel = document.getElementById("q-type");
+  const chosen = document.getElementById("chosen");
   const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
-  let total = 0;
-  SCENES.forEach(s => { s.start = total; total += s.len; });
-  film.style.height = (total + 100) + "vh";
-
-  SCENES.forEach((s, i) => {
+  // Lag lag (video eller stillbilde) og kort-oppslag for alle scener
+  Object.entries(ALL).forEach(([id, s]) => {
+    s.id = id; s.cur = 0;
+    s.card = document.querySelector('[data-scene="' + id + '"]');
     const layer = document.createElement("div");
     layer.className = "layer";
     const img = document.createElement("img");
-    img.src = s.id + ".jpg"; img.alt = ""; img.decoding = "async";
+    img.src = id + ".jpg"; img.alt = ""; img.decoding = "async"; img.loading = START.includes(id) ? "eager" : "lazy";
     layer.appendChild(img);
     if (useVideo) {
       const v = document.createElement("video");
-      v.muted = true; v.playsInline = true; v.preload = "auto"; v.poster = s.id + ".jpg";
+      v.muted = true; v.playsInline = true; v.preload = "auto"; v.poster = id + ".jpg";
       v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
       v.addEventListener("loadeddata", () => { s.ready = true; img.remove(); });
       layer.appendChild(v); s.v = v;
     }
     layersEl.appendChild(layer);
-    s.layer = layer; s.img = img; s.cur = 0;
-
-    const b = document.createElement("button");
-    b.type = "button"; b.innerHTML = "<span>" + s.label + "</span>";
-    b.setAttribute("aria-label", "Gå til " + s.label);
-    b.addEventListener("click", () => jump(i));
-    stepsEl.appendChild(b); s.btn = b;
+    s.layer = layer; s.img = img;
   });
+
+  let branch = "pakker", seq = [], total = 0;
+  const build = () => {
+    seq = [...START, ...BRANCHES[branch].scenes, ...END].map(id => ALL[id]);
+    total = 0;
+    seq.forEach(s => { s.start = total; total += s.len; });
+    film.style.height = (total + 100) + "vh";
+    stepsEl.innerHTML = "";
+    seq.forEach((s, i) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.innerHTML = "<span>" + s.label + "</span>";
+      b.setAttribute("aria-label", "Gå til " + s.label);
+      b.addEventListener("click", () => jump(i));
+      stepsEl.appendChild(b); s.btn = b;
+    });
+    Object.values(ALL).forEach(s => { if (!seq.includes(s)) { s.layer.style.opacity = 0; s.layer.classList.remove("on"); if (s.card) { s.card.style.opacity = 0; s.card.classList.remove("on"); } } });
+  };
+
+  const applyCopy = b => {
+    document.querySelectorAll("[data-copy]").forEach(el => { const t = COPY[b][el.dataset.copy]; if (t) el.textContent = t; });
+  };
+
+  const setBranch = (b, opts = {}) => {
+    if (!BRANCHES[b]) return;
+    branch = b;
+    document.querySelectorAll("[data-branch]").forEach(x => x.setAttribute("aria-pressed", x.dataset.branch === b ? "true" : "false"));
+    chosen.innerHTML = "Viser leveransen for <b>" + BRANCHES[b].name + "</b>. Bytt når som helst.";
+    typeSel.value = BRANCHES[b].form;
+    if (opts.copy) applyCopy(b);
+    build();
+    BRANCHES[b].scenes.forEach(id => { ALL[id].cur = 0; });
+    try { history.replaceState(null, "", location.pathname + location.search + "#" + b); } catch (e) {}
+  };
+  document.querySelectorAll("[data-branch]").forEach(x => x.addEventListener("click", () => setBranch(x.dataset.branch)));
+  document.querySelectorAll("[data-pick]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); setBranch(a.dataset.pick); jump(seq.indexOf(ALL[BRANCHES[a.dataset.pick].scenes[0]])); }));
+
+  // Annonselenker: ?type=kjol eller #kjol åpner rett gren og tilpasser åpningsteksten
+  const fromUrl = (new URLSearchParams(location.search).get("type") || location.hash.slice(1) || "").toLowerCase();
+  const startBranch = BRANCHES[fromUrl] ? fromUrl : "pakker";
+  branch = startBranch;
+  document.querySelectorAll("[data-branch]").forEach(x => x.setAttribute("aria-pressed", x.dataset.branch === startBranch ? "true" : "false"));
+  chosen.innerHTML = "Viser leveransen for <b>" + BRANCHES[startBranch].name + "</b>. Bytt når som helst.";
+  typeSel.value = BRANCHES[startBranch].form;
+  applyCopy(startBranch);
+  build();
 
   const vh = () => innerHeight;
   const jump = i => {
-    const top = film.getBoundingClientRect().top + scrollY + (SCENES[i].start + (i === 0 ? 0 : SCENES[i].len * 0.3)) / 100 * vh();
+    const s = seq[i];
+    const top = film.getBoundingClientRect().top + scrollY + (s.start + (i === 0 ? 0 : s.len * 0.3)) / 100 * vh();
     scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
   };
-  document.querySelectorAll("[data-jump]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); jump(+a.dataset.jump); }));
+  document.querySelectorAll("[data-jump]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); jump(seq.indexOf(ALL[a.dataset.jump])); }));
 
-  const load = i => { const s = SCENES[i]; if (s && s.v && !s.v.src) s.v.src = s.id + ".mp4"; };
+  const load = i => { const s = seq[i]; if (s && s.v && !s.v.src) s.v.src = s.id + ".mp4"; };
   load(0); load(1);
 
-  // Interaktive detaljer
-  const seg = [...document.querySelectorAll(".seg button")], match = document.getElementById("match");
-  seg.forEach(b => b.addEventListener("click", () => {
-    seg.forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
-    match.innerHTML = "Vi sender: <b>" + b.dataset.v + "</b>";
-  }));
   const form = document.getElementById("quote");
   form.addEventListener("submit", e => { e.preventDefault(); document.getElementById("done").hidden = false; });
+
+  // Små animasjoner i kortene, styrt av fremdriften i scenen
   const trk = document.getElementById("trk"), dot = document.getElementById("dot"), eta = document.getElementById("eta");
-  const sig = document.getElementById("sig"), sigLen = sig.getTotalLength();
-  sig.style.strokeDasharray = sigLen;
+  const mTrk = document.getElementById("m-trk"), mDot = document.getElementById("m-dot");
+  const sigs = [...document.querySelectorAll(".sigpath")].map(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; return [p, L]; });
+  const sigFor = id => sigs.find(([p]) => p.closest("[data-scene]").dataset.scene === id);
+  const tNow = document.getElementById("t-now"), tRead = document.getElementById("t-read"), tLine = document.getElementById("t-line"), tDot = document.getElementById("t-dot");
+  const checks = [...document.querySelectorAll("#m-checks li")];
+  // Temperaturkurve: 2 °C nederst (y=64), 8 °C øverst (y=16)
+  const tempAt = x => 3.4 + 0.45 * Math.sin(x * 9) + 0.25 * Math.sin(x * 23 + 1) + (x > 0.55 && x < 0.62 ? 0.5 : 0);
+  const yOf = t => 64 - (t - 2) / 6 * 48;
+  const fmt = t => (t >= 0 ? "+" : "") + t.toFixed(1).replace(".", ",");
 
   let pos = 0, last = performance.now();
   const frame = now => {
@@ -379,13 +532,13 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
     pos += (want - pos) * (reduce ? 1 : 1 - Math.exp(-dt * 9));
     if (Math.abs(want - pos) < 0.01) pos = want;
 
-    let idx = SCENES.length - 1;
-    for (let i = 0; i < SCENES.length; i++) { if (pos < SCENES[i].start + SCENES[i].len) { idx = i; break; } }
-    const s = SCENES[idx];
+    let idx = seq.length - 1;
+    for (let i = 0; i < seq.length; i++) { if (pos < seq[i].start + seq[i].len) { idx = i; break; } }
+    const s = seq[idx];
     const local = Math.min(1, Math.max(0, (pos - s.start) / s.len));
-    const fade = idx < SCENES.length - 1 ? ss(1 - FADE, 1, local) : 0;
+    const fade = idx < seq.length - 1 ? ss(1 - FADE, 1, local) : 0;
 
-    SCENES.forEach((sc, i) => {
+    seq.forEach((sc, i) => {
       let op = 0, lp = 0;
       if (i === idx) { op = 1; lp = local; }
       else if (i === idx + 1) { op = fade; lp = 0; }
@@ -402,27 +555,46 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
         sc.img.style.transform = "scale(" + (1.02 + lp * 0.06).toFixed(4) + ")";
       }
       sc.btn.classList.toggle("on", i === idx);
+
+      if (sc.card) {
+        let cop = 0;
+        if (i === idx) {
+          const fin = i === 0 ? 1 : ss(0.06, 0.2, local);
+          const fout = i === seq.length - 1 ? 1 : 1 - ss(0.68, 0.8, local);
+          cop = fin * fout;
+        }
+        sc.card.style.opacity = cop;
+        sc.card.classList.toggle("on", cop > 0.05);
+        sc.card.style.marginTop = ((1 - cop) * 14).toFixed(1) + "px";
+      }
     });
     load(idx); load(idx + 1); load(idx + 2);
 
-    cards.forEach((c, i) => {
-      let op = 0;
-      if (i === idx) {
-        const fin = i === 0 ? 1 : ss(0.06, 0.2, local);
-        const fout = i === SCENES.length - 1 ? 1 : 1 - ss(0.68, 0.8, local);
-        op = fin * fout;
-      }
-      c.style.opacity = op;
-      c.classList.toggle("on", op > 0.05);
-      c.style.marginTop = ((1 - op) * 14).toFixed(1) + "px";
-    });
-
-    if (idx === 4) {
+    const id = s.id;
+    if (id === "bro") {
       const p = ss(0.1, 0.75, local);
       trk.style.width = (p * 100) + "%"; dot.style.left = (p * 100) + "%";
-      const mins = Math.round(28 - p * 24); eta.textContent = "Ankomst om ca. " + mins + " min";
+      eta.textContent = "Ankomst om ca. " + Math.round(28 - p * 24) + " min";
     }
-    if (idx === 6) sig.style.strokeDashoffset = sigLen * (1 - ss(0.12, 0.5, local));
+    if (id === "m-vei") {
+      const p = ss(0.1, 0.75, local);
+      mTrk.style.width = (p * 100) + "%"; mDot.style.left = (p * 100) + "%";
+    }
+    if (id === "levering" || id === "m-levering") {
+      const sg = sigFor(id); if (sg) sg[0].style.strokeDashoffset = sg[1] * (1 - ss(0.12, 0.5, local));
+    }
+    if (id === "k-henting") {
+      tNow.textContent = fmt(6.5 - ss(0.05, 0.6, local) * 2.9);
+    }
+    if (id === "k-vei") {
+      const p = ss(0.08, 0.78, local), n = 60, pts = [];
+      for (let k = 0; k <= n * p; k++) { const x = k / n; pts.push((k ? "L" : "M") + (x * 300).toFixed(1) + " " + yOf(tempAt(x)).toFixed(1)); }
+      tLine.setAttribute("d", pts.join(" "));
+      const t = tempAt(p);
+      tDot.setAttribute("cx", (p * 300).toFixed(1)); tDot.setAttribute("cy", yOf(t).toFixed(1));
+      tRead.textContent = fmt(t) + " °C";
+    }
+    if (id === "m-henting") checks.forEach((li, k) => li.classList.toggle("ok", local > 0.18 + k * 0.14));
 
     bar.style.width = (Math.min(1, pos / total) * 100).toFixed(2) + "%";
     hint.style.opacity = 1 - ss(5, 20, pos);
