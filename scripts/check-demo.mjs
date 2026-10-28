@@ -8,13 +8,18 @@
  * in a search index or a lead lands nowhere. So the build fails instead.
  *
  * Checks, per demo folder:
- *   1. index.html and side/index.html exist and carry a robots noindex meta.
+ *   1. index.html (and side/index.html, for ad-showcase demos) exist and carry a
+ *      robots noindex meta. A demo is an ad showcase when it has a side/ folder.
  *   2. No network code anywhere in the folder: fetch(, XMLHttpRequest,
  *      sendBeacon, data-netlify, form action= with a URL, or known tracker hosts.
  *   3. No phone-line number, commission or percentage wording, and no NOK amounts.
  *   4. netlify.toml has the X-Robots-Tag header for /demo/*.
  *   5. The five ad links on the showcase page point at side/ with the expected
- *      utm_content values.
+ *      utm_content values (ad-showcase demos only).
+ *
+ * A demo may carry a demo.json manifest. "allowProspectPrices": true lets the
+ * demo show the prospect's own public NOK prices (rule 3 then skips NOK amounts
+ * only; commission, percentage and phone-line rules still apply).
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, dirname, relative } from 'node:path';
@@ -58,8 +63,12 @@ for (const demo of readdirSync(demoRoot)) {
   const dir = join(demoRoot, demo);
   if (!statSync(dir).isDirectory()) continue;
   const rel = (p) => relative(root, p);
+  const manifestPath = join(dir, 'demo.json');
+  const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : {};
+  const showcase = existsSync(join(dir, 'side'));
+  const pages = showcase ? ['index.html', 'side/index.html'] : ['index.html'];
 
-  for (const page of ['index.html', 'side/index.html']) {
+  for (const page of pages) {
     const p = join(dir, page);
     if (!existsSync(p)) { fail(`${rel(p)}: missing`); continue; }
     const html = readFileSync(p, 'utf8');
@@ -71,12 +80,13 @@ for (const demo of readdirSync(demoRoot)) {
   for (const file of walk(dir)) {
     const text = readFileSync(file, 'utf8');
     for (const [re, label] of forbidden) {
+      if (label === 'a NOK amount' && manifest.allowProspectPrices === true) continue;
       if (re.test(text)) fail(`${rel(file)}: contains ${label}`);
     }
   }
 
   const index = join(dir, 'index.html');
-  if (existsSync(index)) {
+  if (showcase && existsSync(index)) {
     const html = readFileSync(index, 'utf8');
     const links = [...html.matchAll(/href="side\/\?utm_source=(meta|linkedin)&utm_campaign=demo&utm_content=(\w+)"/g)];
     const got = links.map((m) => `${m[1]}:${m[2]}`).sort();
