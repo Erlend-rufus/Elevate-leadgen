@@ -58,6 +58,8 @@ pages, and never put a key in the repository: they are Netlify environment varia
 - Node 20
 - `npm install` → `npm run dev` (port 3000) · `npm run build` (outputs `dist/`, must stay green) · `npm run preview`
 - Deploy target: **Netlify** (static, publish dir `dist`, build cmd `npm run build`).
+- **Production deploys from `main`.** Base every PR on `main`. Other branches,
+  including any GitHub default other than `main`, never reach getelevateleads.com.
 
 ## Architecture — the rules that matter
 
