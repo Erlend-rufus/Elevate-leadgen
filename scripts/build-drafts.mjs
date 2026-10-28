@@ -32,6 +32,8 @@
 
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
+import { copyFileSync } from 'node:fs';
+import { renderSpec, countConfirms } from './lib/draft-page.mjs';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -289,6 +291,36 @@ for (const d of cfg.drafts) {
     die(`slug "${d.slug}" needs a random suffix of at least 5 characters`);
 
   const base = `/draft/${d.slug}`;
+
+  /* A spec-built homepage (see scripts/lib/draft-page.mjs and drafts/SPEC.md):
+     one page, rendered from drafts/<dir>/spec.json, logo copied next to it. */
+  if (d.spec) {
+    const from = join(SRC, d.dir, d.spec);
+    if (!existsSync(from)) die(`${d.dir}/${d.spec} is listed in drafts.json but not on disk`);
+    const spec = JSON.parse(readFileSync(from, 'utf8'));
+    if (!spec.company) die(`${d.dir}/${d.spec}: spec has no "company"`);
+    if (spec.company !== d.company) die(`${d.dir}/${d.spec}: spec company "${spec.company}" differs from drafts.json "${d.company}"`);
+    const dir = join(OUT, d.slug);
+    mkdirSync(dir, { recursive: true });
+    if (spec.logo && spec.logo.file) {
+      const logoFrom = join(SRC, d.dir, spec.logo.file);
+      if (!existsSync(logoFrom)) die(`${d.dir}/${spec.logo.file}: logo named in the spec is not on disk`);
+      if (!/\.(svg|png|jpe?g|webp)$/i.test(spec.logo.file)) die(`${d.dir}/${spec.logo.file}: logo must be svg, png, jpg or webp`);
+      copyFileSync(logoFrom, join(dir, spec.logo.file));
+      spec.logo.published = `${base}/${spec.logo.file}`;
+    }
+    const html = renderSpec(spec, { slug: d.slug });
+    if (/[!]/.test(JSON.stringify([spec.hero, spec.services, spec.why, spec.about, spec.band]).replace(/\\"/g, '')))
+      die(`${d.dir}/${d.spec}: an exclamation mark in the copy; the drafts do not shout`);
+    if (/<script\b[^>]*\ssrc=/.test(html) || /https?:\/\/(?!getelevateleads\.com)/.test(html.replace(/mailto:[^"]*/g, '').replace(/href="https?:\/\/[^"]*"/g, '')))
+      die(`${d.dir}/${d.spec}: the page would make a request outside the site`);
+    if (!/class="dc-banner"/.test(html) || !/<title>Draft\b/.test(html)) die(`${d.dir}/${d.spec}: banner or title guarantee failed`);
+    writeFileSync(join(dir, 'index.html'), html);
+    pageCount += 1;
+    console.log(`  drafts: ${base}/ (spec, ${countConfirms(spec)} to confirm)`);
+    continue;
+  }
+
   /** file name in the export -> published URL */
   const routeOf = new Map(
     d.pages.map((p) => [p.file || p.canvas, p.route ? `${base}/${p.route}/` : `${base}/`])
