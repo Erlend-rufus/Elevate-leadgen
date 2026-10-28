@@ -32,8 +32,8 @@
 
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
-import { copyFileSync } from 'node:fs';
-import { renderSpec, countConfirms } from './lib/draft-page.mjs';
+import { copyFileSync, statSync } from 'node:fs';
+import { renderSpec, countConfirms, imageFiles } from './lib/draft-page.mjs';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -302,13 +302,17 @@ for (const d of cfg.drafts) {
     if (spec.company !== d.company) die(`${d.dir}/${d.spec}: spec company "${spec.company}" differs from drafts.json "${d.company}"`);
     const dir = join(OUT, d.slug);
     mkdirSync(dir, { recursive: true });
-    if (spec.logo && spec.logo.file) {
-      const logoFrom = join(SRC, d.dir, spec.logo.file);
-      if (!existsSync(logoFrom)) die(`${d.dir}/${spec.logo.file}: logo named in the spec is not on disk`);
-      if (!/\.(svg|png|jpe?g|webp)$/i.test(spec.logo.file)) die(`${d.dir}/${spec.logo.file}: logo must be svg, png, jpg or webp`);
-      copyFileSync(logoFrom, join(dir, spec.logo.file));
-      spec.logo.published = `${base}/${spec.logo.file}`;
+    /* every image the spec names (logo, photographs from the prospect's own site,
+       accreditation marks) is copied next to the page so nothing loads from
+       elsewhere; a photograph over 400 KB is refused, resize it first */
+    for (const file of imageFiles(spec)) {
+      const imgFrom = join(SRC, d.dir, file);
+      if (!/^[A-Za-z0-9._-]+\.(svg|png|jpe?g|webp)$/i.test(file)) die(`${d.dir}/${file}: image names must be a plain file name ending in svg, png, jpg or webp`);
+      if (!existsSync(imgFrom)) die(`${d.dir}/${file}: image named in the spec is not on disk`);
+      if (statSync(imgFrom).size > 400 * 1024) die(`${d.dir}/${file}: over 400 KB, resize it (max 1600 px wide, jpg quality 80)`);
+      copyFileSync(imgFrom, join(dir, file));
     }
+    if (spec.logo && spec.logo.file) spec.logo.published = `${base}/${spec.logo.file}`;
     const html = renderSpec(spec, { slug: d.slug });
     if (/[!]/.test(JSON.stringify([spec.hero, spec.services, spec.why, spec.about, spec.band]).replace(/\\"/g, '')))
       die(`${d.dir}/${d.spec}: an exclamation mark in the copy; the drafts do not shout`);

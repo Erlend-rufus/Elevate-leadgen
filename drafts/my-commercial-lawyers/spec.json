@@ -1,15 +1,34 @@
 {
-  "_comment": "Homepage draft for My Commercial Lawyers (ClickUp 124hhvu5814, pressed the quote button 26 Oct 2026). Research 28 Oct 2026 against mycommerciallawyers.com: WordPress, Astra and Elementor, five font families and three blues. The firm is regulated by the Bar Standards Board (ref 191504), not the SRA, so the draft says barrister-led and never solicitors. No outcome figures exist on the site, so none are invented. Reviews are quoted as shown on their homepage and marked to confirm.",
+  "_comment": "Homepage draft for My Commercial Lawyers (ClickUp 124hhvu5814, pressed the quote button 26 Oct 2026). Research 28 Oct 2026 against mycommerciallawyers.com: WordPress, Astra and Elementor, five font families and three blues. The firm is regulated by the Bar Standards Board (ref 191504), not the SRA, so the draft says barrister-led and never solicitors. No outcome figures exist on the site, so none are invented. Reviews are quoted as shown on their homepage and marked to confirm. Photograph and accreditation marks are the ones on mycommerciallawyers.com; the handshake and gavel photographs there were left out (clichés the sector research says to avoid). Style editorial.",
   "company": "My Commercial Lawyers",
   "site": "https://www.mycommerciallawyers.com",
   "lang": "en-GB",
-  "logo": { "file": "logo.png", "height": 48 },
-  "palette": { "theme": "light", "primary": "#0048A8", "secondary": "#C29B60" },
+  "logo": {
+    "file": "logo.png",
+    "height": 48
+  },
+  "palette": {
+    "theme": "light",
+    "primary": "#0048A8",
+    "secondary": "#C29B60"
+  },
   "nav": [
-    { "label": "Construction", "href": "#services" },
-    { "label": "Commercial", "href": "#services" },
-    { "label": "How we work", "href": "#why" },
-    { "label": "About", "href": "#about" }
+    {
+      "label": "Construction",
+      "href": "#services"
+    },
+    {
+      "label": "Commercial",
+      "href": "#services"
+    },
+    {
+      "label": "How we work",
+      "href": "#why"
+    },
+    {
+      "label": "About",
+      "href": "#about"
+    }
   ],
   "cta": "Check whether your dispute is suitable",
   "hero": {
@@ -20,11 +39,7 @@
     "ctaHref": "#contact",
     "secondary": "See what we handle",
     "secondaryHref": "#services",
-    "note": "Authorised and regulated by the Bar Standards Board, reference 191504.",
-    "quote": {
-      "text": "“Excellent professional and efficient service. Would highly recommend.”",
-      "who": "Axel Dara, client review [[TO CONFIRM: permission to reuse the review]]"
-    }
+    "note": "Authorised and regulated by the Bar Standards Board, reference 191504."
   },
   "services": {
     "id": "services",
@@ -32,9 +47,18 @@
     "title": "Three kinds of dispute, one way of working",
     "lead": "Facts, contract and evidence first. The aim is not to push every matter towards legal action, but to tell you whether to negotiate, adjudicate, litigate or take another step.",
     "items": [
-      { "title": "Construction disputes", "text": "Payment, delay, defect and contract disputes under JCT, NEC and FIDIC, from unpaid invoices to adjudication." },
-      { "title": "Commercial and contract disputes", "text": "Breach of contract, business debt recovery and other contentious commercial matters where there is a clear commercial reason to proceed." },
-      { "title": "Litigation and arbitration", "text": "Representation where suitable in the County Court, the High Court and the Technology and Construction Court, and in cross-border arbitration." }
+      {
+        "title": "Construction disputes",
+        "text": "Payment, delay, defect and contract disputes under JCT, NEC and FIDIC, from unpaid invoices to adjudication."
+      },
+      {
+        "title": "Commercial and contract disputes",
+        "text": "Breach of contract, business debt recovery and other contentious commercial matters where there is a clear commercial reason to proceed."
+      },
+      {
+        "title": "Litigation and arbitration",
+        "text": "Representation where suitable in the County Court, the High Court and the Technology and Construction Court, and in cross-border arbitration."
+      }
     ]
   },
   "why": {
@@ -42,10 +66,23 @@
     "eyebrow": "How we work",
     "title": "Fixed scope, fixed fee, no pressure",
     "items": [
-      { "title": "You know where you stand first.", "text": "We review the facts, the contract and the evidence before we recommend a route, and we say so if the sensible answer is not to proceed." },
-      { "title": "Scoped and priced before you instruct us.", "text": "Fee, scope and timeline are confirmed in writing for each instruction. Fixed-fee options where the matter allows it." },
-      { "title": "Regulated and direct.", "text": "Authorised by the Bar Standards Board for public access and the conduct of litigation (reference 191504), at 7 Bell Yard, London." }
-    ]
+      {
+        "title": "You know where you stand first.",
+        "text": "We review the facts, the contract and the evidence before we recommend a route, and we say so if the sensible answer is not to proceed."
+      },
+      {
+        "title": "Scoped and priced before you instruct us.",
+        "text": "Fee, scope and timeline are confirmed in writing for each instruction. Fixed-fee options where the matter allows it."
+      },
+      {
+        "title": "Regulated and direct.",
+        "text": "Authorised by the Bar Standards Board for public access and the conduct of litigation (reference 191504), at 7 Bell Yard, London."
+      }
+    ],
+    "quote": {
+      "text": "“Excellent professional and efficient service. Would highly recommend.”",
+      "who": "Axel Dara, client review [[TO CONFIRM: permission to reuse the review]]"
+    }
   },
   "about": {
     "id": "about",
@@ -74,5 +111,26 @@
   "footer": {
     "legal": "My Commercial Lawyers is a trading name registered in England and Wales at 7 Bell Yard, London WC2A 2JR. Authorised and regulated by the Bar Standards Board, reference 191504. VAT 466287847.",
     "note": "[[TO CONFIRM: registration number shown on the current site as 1-5-0-0-6-9-2]]"
-  }
+  },
+  "industry": "law",
+  "style": "editorial",
+  "images": {
+    "hero": {
+      "file": "site.jpg",
+      "alt": "A site team reviewing paperwork on a construction site",
+      "position": "60% 40%"
+    }
+  },
+  "trustLabel": "Regulated by",
+  "trust": [
+    {
+      "file": "bsb.png",
+      "alt": "Bar Standards Board"
+    },
+    {
+      "file": "bar-council.png",
+      "alt": "The Bar Council"
+    }
+  ],
+  "trustText": "Authorised for public access and the conduct of litigation, reference 191504"
 }
