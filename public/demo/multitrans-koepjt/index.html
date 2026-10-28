@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Konseptforslag: Multi Trans hjemlevering i Vestland</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="description" content="Konseptforslag laget av Elevate Marketing for Multi Trans Norge AS. Ikke selskapets offisielle nettside.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: én fast filmscene som krysstoner mellom 8 klipp mens du scroller, kort til venstre, stegliste til høyre, vanlige seksjoner under */
+:root {
+  color-scheme: dark;
+  --fjord: #0F1B24;
+  --deep: #0A131A;
+  --ink: #FFFFFF;
+  --mist: #C9D1D3;
+  --mist-dim: #8A979C;
+  --line: rgba(201, 209, 211, .16);
+  --green: #2C8A40;
+  --green-hi: #3BA251;
+  --panel: rgba(10, 19, 26, .74);
+  --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--fjord); color: var(--mist); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--deep); }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-display); color: var(--ink); margin: 0; line-height: 1.05; text-wrap: balance; letter-spacing: -.01em; }
+h1 { font-size: clamp(36px, 5.6vw, 66px); font-weight: 700; }
+h2 { font-size: clamp(26px, 3.6vw, 40px); font-weight: 600; }
+h3 { font-size: 20px; font-weight: 600; }
+p { margin: 0; max-width: 60ch; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--green-hi); }
+button { font-family: var(--f-body); cursor: pointer; }
+:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+.btn { background: var(--green); color: var(--ink); font-weight: 500; padding: 11px 18px; border-radius: 3px; font-size: 15px; border: 0; text-decoration: none; display: inline-block; }
+.btn:hover { background: var(--green-hi); }
+.btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,.38); padding: 10px 17px; }
+.btn.ghost:hover { border-color: var(--ink); }
+
+/* Demobanner og topplinje */
+.demo { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20; background: var(--deep); color: var(--mist-dim); font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-align: center; padding-block: 5px; }
+.demo b { color: var(--mist); font-weight: 500; }
+.top { position: fixed; top: calc(24px + env(safe-area-inset-top, 0px)); left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; background: linear-gradient(180deg, rgba(10,19,26,.78), rgba(10,19,26,0)); }
+.word { font-family: var(--f-display); font-weight: 600; font-size: 20px; letter-spacing: .02em; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.word i { font-style: normal; color: var(--green-hi); }
+.logo { height: 40px; width: auto; display: block; }
+@media (max-width: 860px) { .top .logo { height: 34px; } }
+.top nav { display: flex; gap: 10px; align-items: center; }
+.phone { font-family: var(--f-mono); font-size: 13px; color: var(--mist); }
+
+/* Filmscenen */
+.film { position: relative; }
+.stage { position: sticky; top: 0; height: 100vh; overflow: hidden; background: var(--deep); }
+.layer { position: absolute; inset: 0; opacity: 0; visibility: hidden; will-change: opacity; }
+.layer.on { visibility: visible; }
+.layer video, .layer img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.layer img { transform-origin: 60% 50%; }
+.shade { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgba(10,19,26,.78) 0%, rgba(10,19,26,.5) 30%, rgba(10,19,26,0) 58%), linear-gradient(180deg, rgba(10,19,26,.45) 0%, rgba(10,19,26,0) 20%, rgba(10,19,26,0) 75%, rgba(10,19,26,.55) 100%); }
+.cards { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.card { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); top: 50%; transform: translateY(-46%); width: min(460px, calc(100% - 32px)); display: grid; gap: 14px; opacity: 0; visibility: hidden; }
+.card.on { visibility: visible; pointer-events: auto; }
+.card.hero { width: min(560px, calc(100% - 32px)); }
+.card .lead { font-size: 18px; color: var(--mist); }
+.card h1, .card h2, .card > p { text-shadow: 0 1px 18px rgba(10,19,26,.65); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+/* UI-kort i scenene */
+.ui { background: var(--panel); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; display: grid; gap: 10px; font-size: 14px; }
+.ui .head { display: flex; justify-content: space-between; gap: 12px; font-family: var(--f-mono); font-size: 12px; color: var(--mist-dim); }
+.ui .head b { color: var(--ink); font-weight: 500; }
+.status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 12px; color: var(--green-hi); }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green-hi); box-shadow: 0 0 0 3px rgba(59,162,81,.25); }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-family: var(--f-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+.kv dt { color: var(--mist-dim); }
+.kv dd { margin: 0; color: var(--ink); }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: rgba(255,255,255,.05); padding: 4px; border-radius: 4px; }
+.seg button { background: transparent; border: 0; color: var(--mist); padding: 8px 6px; border-radius: 3px; font-size: 13px; }
+.seg button[aria-pressed="true"] { background: var(--green); color: var(--ink); }
+.match { font-family: var(--f-mono); font-size: 12px; color: var(--mist); }
+.match b { color: var(--ink); font-weight: 500; }
+.track { position: relative; height: 4px; background: rgba(255,255,255,.12); border-radius: 2px; }
+.track i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--green-hi); border-radius: 2px; }
+.track s { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--green); left: 0; }
+.stops { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 11px; color: var(--mist-dim); }
+.sign { height: 46px; border-bottom: 1px dashed var(--line); }
+.sign path { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Stegliste */
+.steps { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); display: grid; gap: 6px; z-index: 5; list-style: none; margin: 0; padding: 0; }
+.steps button { display: flex; align-items: center; gap: 10px; justify-content: flex-end; background: transparent; border: 0; color: var(--mist-dim); font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 4px 0; }
+.steps button span { opacity: 0; transition: opacity .25s; }
+.steps button::after { content: ""; width: 18px; height: 2px; background: rgba(201,209,211,.35); border-radius: 1px; transition: width .25s, background .25s; }
+.steps button.on { color: var(--ink); }
+.steps button.on span, .steps:hover button span { opacity: 1; }
+.steps button.on::after { width: 30px; background: var(--green-hi); }
+.bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.08); z-index: 5; }
+.bar i { display: block; height: 100%; width: 0; background: var(--green); }
+.hint { position: absolute; left: 50%; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--mist); display: grid; justify-items: center; gap: 8px; pointer-events: none; }
+.hint::after { content: ""; width: 1px; height: 26px; background: linear-gradient(var(--mist), transparent); }
+
+/* Skjema i siste scene */
+form { display: grid; gap: 10px; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+label { display: grid; gap: 4px; font-size: 12px; color: var(--mist-dim); font-family: var(--f-mono); }
+input, select { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 3px; padding: 9px 10px; min-width: 0; }
+input::placeholder { color: var(--mist-dim); }
+.wide { grid-column: 1 / -1; }
+.done { font-size: 14px; color: var(--ink); }
+
+/* Seksjoner under filmen */
+.below { background: var(--fjord); position: relative; z-index: 2; }
+.section { max-width: 1120px; margin: 0 auto; padding-block: 88px; display: grid; gap: 32px; }
+.section + .section { border-top: 1px solid var(--line); }
+.svc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.svc article { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.svc img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 62%; border-radius: 4px; max-width: 100%; }
+.how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; counter-reset: s; }
+.how li { list-style: none; display: grid; gap: 8px; min-width: 0; }
+.how li::before { counter-increment: s; content: counter(s); font-family: var(--f-mono); font-size: 12px; color: var(--green-hi); border: 1px solid var(--green); width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; }
+.how ol { display: contents; }
+details { border-bottom: 1px solid var(--line); padding-block: 14px; }
+summary { color: var(--ink); font-size: 17px; cursor: pointer; }
+details p { margin-top: 8px; }
+footer { border-top: 1px solid var(--line); }
+footer .section { padding-block: 40px; grid-template-columns: 1fr auto; align-items: end; gap: 16px; font-size: 14px; }
+footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-dim); }
+
+@media (max-width: 860px) {
+  .svc, .how { grid-template-columns: 1fr; }
+  .steps { display: none; }
+  .top .phone { display: none; }
+  .card { top: auto; bottom: calc(40px + env(safe-area-inset-bottom, 0px)); transform: none; }
+  .shade { background: linear-gradient(180deg, rgba(10,19,26,.5) 0%, rgba(10,19,26,0) 22%, rgba(10,19,26,.15) 45%, rgba(10,19,26,.88) 100%); }
+  .card.hero .lead { font-size: 16px; }
+  .fields { grid-template-columns: 1fr; }
+  footer .section { grid-template-columns: 1fr; }
+  .hint { display: none; }
+  .demo .long { display: none; }
+}
+@media (max-width: 860px) and (max-height: 760px) { .ui { display: none; } .card.final .ui { display: grid; } }
+</style>
+</head>
+<body>
+
+<div class="demo"><b>Konseptforslag fra Elevate Marketing.</b><span class="long"> Ikke Multi Trans sin offisielle nettside. Skjemaet sender ingenting.</span></div>
+
+<header class="top gutter">
+  <a class="word" href="#topp" aria-label="Multi Trans Norge AS, til toppen"><img class="logo" src="logo-dark.svg" alt="Multi Trans Norge AS" width="154" height="48"></a>
+  <nav><span class="phone">55 16 10 00</span><a class="btn" href="#tilbud" data-jump="7">Få tilbud</a></nav>
+</header>
+
+<main id="topp">
+  <section class="film" id="film" aria-label="Følg en levering fra ordre til dør">
+    <div class="stage" id="stage">
+      <div id="layers"></div>
+      <div class="shade"></div>
+
+      <div class="cards">
+        <div class="card hero" data-card="0">
+          <span class="eyebrow">Hjemlevering for butikker og nettbutikker i Vestland</span>
+          <h1>Alltid en ledig bil. Garantert.</h1>
+          <p class="lead">Vi henter hos deg og leverer helt hjem til kunden din, samme dag. Kjølebil, små og store biler.</p>
+          <div class="row"><a class="btn" href="#tilbud" data-jump="7">Få tilbud på hjemlevering</a><span class="btn ghost" tabindex="0">Ring 55 16 10 00</span></div>
+        </div>
+
+        <div class="card" data-card="1">
+          <span class="eyebrow">01 · Ordren kommer inn</span>
+          <h2>Ingen venteliste. Bilen er klar.</h2>
+          <p>Du får bekreftet bil samme dag, ikke neste uke.</p>
+          <div class="ui" aria-label="Eksempel på ordrebekreftelse">
+            <div class="head"><span>Ordre <b>#4821</b></span><span>08:41</span></div>
+            <dl class="kv"><dt>Vare</dt><dd>Sofabord, 1 kolli</dd><dt>Fra</dt><dd>Butikklager, Bergen</dd><dt>Til</dt><dd>Privatkunde, Askøy</dd></dl>
+            <span class="status">Bil tildelt 08:42</span>
+          </div>
+        </div>
+
+        <div class="card" data-card="2">
+          <span class="eyebrow">02 · Riktig bil</span>
+          <h2>Riktig bil til jobben.</h2>
+          <p>Vi matcher bilen etter varen, ikke omvendt.</p>
+          <div class="ui">
+            <div class="seg" role="group" aria-label="Velg type vare">
+              <button type="button" id="v-kjol" aria-pressed="false" data-v="Kjølebil, holder 2 til 8 °C hele veien">Kjølevarer</button>
+              <button type="button" id="v-pakke" aria-pressed="true" data-v="Liten varebil, rask i sentrum">Pakker</button>
+              <button type="button" id="v-mobel" aria-pressed="false" data-v="Stor bil med plass til møbler og paller">Møbler</button>
+            </div>
+            <span class="match" id="match">Vi sender: <b>Liten varebil, rask i sentrum</b></span>
+          </div>
+        </div>
+
+        <div class="card" data-card="3">
+          <span class="eyebrow">03 · Henting</span>
+          <h2>Trygt fra første løft.</h2>
+          <p>Våre egne sjåfører henter, sikrer og håndterer varene. Ingen underleverandører.</p>
+        </div>
+
+        <div class="card" data-card="4">
+          <span class="eyebrow">04 · Underveis</span>
+          <h2>Daglige ruter i hele Vestland.</h2>
+          <p>Over broer, langs fjorder og inn i boligfeltene, i alt slags vær.</p>
+          <div class="ui" aria-label="Eksempel på sporing">
+            <div class="head"><span>Sporing <b>#4821</b></span><span id="eta">Ankomst ca. 17:45</span></div>
+            <div class="track"><i id="trk"></i><s id="dot"></s></div>
+            <div class="stops"><span>Bergen</span><span>Askøybrua</span><span>Kleppestø</span></div>
+          </div>
+        </div>
+
+        <div class="card" data-card="5">
+          <span class="eyebrow">04 · Underveis</span>
+          <h2>Vi kjenner veiene, været og adressene.</h2>
+          <p>Lokale sjåfører som vet hvor innkjørselen faktisk er.</p>
+        </div>
+
+        <div class="card" data-card="6">
+          <span class="eyebrow">05 · Levert</span>
+          <h2>Kunden får varen. Du får bekreftelsen.</h2>
+          <p>Levering på døren, med signatur og tidspunkt rett til deg.</p>
+          <div class="ui" aria-label="Eksempel på leveringsbekreftelse">
+            <div class="head"><span>Ordre <b>#4821</b></span><span>17:48</span></div>
+            <svg class="sign" viewBox="0 0 220 46" aria-hidden="true"><path id="sig" d="M6 34 C 16 10, 26 10, 28 30 S 40 40, 46 22 C 50 12, 58 14, 58 28 C 58 36, 66 36, 72 24 L 80 30 C 92 6, 104 40, 116 20 C 124 8, 132 30, 140 26 C 156 18, 170 34, 196 16"/></svg>
+            <span class="status">Levert og signert</span>
+          </div>
+        </div>
+
+        <div class="card final" data-card="7" id="tilbud">
+          <span class="eyebrow">Prisgaranti mot sammenlignbare konkurrenter</span>
+          <h2>Klar for en transportør som faktisk har ledig bil?</h2>
+          <p>Fra 599 kr per time for varebil og kjølebil. Fortell oss litt om behovet, så ringer vi deg samme dag.</p>
+          <form class="ui" id="quote" novalidate>
+            <div class="fields">
+              <label for="q-navn">Navn<input id="q-navn" name="navn" autocomplete="name" placeholder="Ola Nordmann"></label>
+              <label for="q-firma">Bedrift<input id="q-firma" name="firma" autocomplete="organization" placeholder="Butikken AS"></label>
+              <label for="q-tlf">Telefon<input id="q-tlf" name="tlf" type="tel" autocomplete="tel" placeholder="400 00 000"></label>
+              <label for="q-type">Hva skal leveres<select id="q-type" name="type"><option>Pakker</option><option>Kjølevarer</option><option>Møbler og store varer</option><option>Litt av alt</option></select></label>
+              <label for="q-antall" class="wide">Leveranser per uke<select id="q-antall" name="antall"><option>Under 10</option><option>10 til 50</option><option>50 til 200</option><option>Over 200</option></select></label>
+            </div>
+            <div class="row"><button class="btn" type="submit">Be om tilbud</button><span class="phone">eller ring 55 16 10 00</span></div>
+            <p class="done" id="done" hidden>Takk. Dette er en demo, så ingen forespørsel er sendt.</p>
+          </form>
+        </div>
+      </div>
+
+      <div class="steps" id="steps" role="navigation" aria-label="Steg i leveransen"></div>
+      <div class="hint" id="hint">Scroll</div>
+      <div class="bar"><i id="bar"></i></div>
+    </div>
+  </section>
+
+  <div class="below">
+    <section class="section gutter" aria-labelledby="t-svc">
+      <span class="eyebrow">Tjenester</span>
+      <h2 id="t-svc">Tre måter vi flytter varene dine</h2>
+      <div class="svc">
+        <article><img src="p-henting.jpg" alt="Sjåfør laster pakker inn i varebil ved et butikklager" loading="lazy" width="1344" height="752"><h3>Hjemlevering</h3><p>For fysiske butikker og nettbutikker. Vi leverer på døren, med bekreftelse til deg.</p></article>
+        <article><img src="p-biler.jpg" alt="Kjølebil, liten varebil og stor bil parkert foran terminalen" loading="lazy" width="1344" height="752"><h3>Kjøletransport</h3><p>Kjølebiler for mat og temperaturfølsomme varer, med jevn temperatur hele veien.</p></article>
+        <article><img src="p-fjordvei.jpg" alt="Varebil på våt fjordvei i skumring" loading="lazy" width="1344" height="752"><h3>Fra A til B</h3><p>Når noe skal fra ett sted til et annet i Vestland, i dag eller på fast rute.</p></article>
+      </div>
+    </section>
+
+    <section class="section gutter how" aria-labelledby="t-how">
+      <span class="eyebrow" style="grid-column: 1 / -1">Slik kommer dere i gang</span>
+      <h2 id="t-how" style="grid-column: 1 / -1">Fra første samtale til første levering</h2>
+      <ol>
+        <li><h3>Kort samtale</h3><p>Vi går gjennom volum, varetyper og hvor kundene dine bor.</p></li>
+        <li><h3>Fast pris og opplegg</h3><p>Du får et tilbud med pris, hentetider og hvilke biler som passer.</p></li>
+        <li><h3>Første levering</h3><p>Vi henter hos deg, og kundene dine får varene på døren.</p></li>
+      </ol>
+    </section>
+
+    <section class="section gutter" aria-labelledby="t-faq">
+      <span class="eyebrow">Spørsmål</span>
+      <h2 id="t-faq">Det folk lurer på</h2>
+      <div>
+        <details><summary>Hva betyr «garantert ledig bil»?</summary><p>At du ikke settes på venteliste. Avtaler vi henting, har vi en bil til deg.</p></details>
+        <details><summary>Hvor kjører dere?</summary><p>Daglig på de fleste veier i hele Vestland. Spør oss om adresser utenfor.</p></details>
+        <details><summary>Hva koster det?</summary><p>Fra 599 kr per time for varebil og kjølebil. Faste avtaler prises etter volum.</p></details>
+        <details><summary>Kan dere levere kjølevarer?</summary><p>Ja. Vi har egne kjølebiler for mat og temperaturfølsomme varer.</p></details>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="gutter">
+  <div class="section">
+    <div style="display:grid;gap:10px"><img class="logo" src="logo-dark.svg" alt="Multi Trans Norge AS" width="128" height="40"><p class="mono">Multi Trans Norge AS · Telefon 55 16 10 00</p></div>
+    <p class="mono">Konseptforslag fra Elevate Marketing. Bilder og film er AI-generert illustrasjon.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const SCENES = [
+    { id: "hero",     len: 150, label: "Start" },
+    { id: "terminal", len: 140, label: "Ordre" },
+    { id: "biler",    len: 140, label: "Riktig bil" },
+    { id: "henting",  len: 140, label: "Henting" },
+    { id: "bro",      len: 150, label: "Underveis" },
+    { id: "fjordvei", len: 140, label: "Fjordvei" },
+    { id: "levering", len: 150, label: "Levert" },
+    { id: "kveld",    len: 130, label: "Tilbud" }
+  ];
+  const FADE = 0.22;
+  const mobile = matchMedia("(max-width: 860px), (pointer: coarse)").matches;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const useVideo = !mobile && !reduce;
+
+  const film = document.getElementById("film");
+  const layersEl = document.getElementById("layers");
+  const cards = [...document.querySelectorAll("[data-card]")];
+  const stepsEl = document.getElementById("steps");
+  const bar = document.getElementById("bar");
+  const hint = document.getElementById("hint");
+  const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  let total = 0;
+  SCENES.forEach(s => { s.start = total; total += s.len; });
+  film.style.height = (total + 100) + "vh";
+
+  SCENES.forEach((s, i) => {
+    const layer = document.createElement("div");
+    layer.className = "layer";
+    const img = document.createElement("img");
+    img.src = s.id + ".jpg"; img.alt = ""; img.decoding = "async";
+    layer.appendChild(img);
+    if (useVideo) {
+      const v = document.createElement("video");
+      v.muted = true; v.playsInline = true; v.preload = "auto"; v.poster = s.id + ".jpg";
+      v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+      v.addEventListener("loadeddata", () => { s.ready = true; img.remove(); });
+      layer.appendChild(v); s.v = v;
+    }
+    layersEl.appendChild(layer);
+    s.layer = layer; s.img = img; s.cur = 0;
+
+    const b = document.createElement("button");
+    b.type = "button"; b.innerHTML = "<span>" + s.label + "</span>";
+    b.setAttribute("aria-label", "Gå til " + s.label);
+    b.addEventListener("click", () => jump(i));
+    stepsEl.appendChild(b); s.btn = b;
+  });
+
+  const vh = () => innerHeight;
+  const jump = i => {
+    const top = film.getBoundingClientRect().top + scrollY + (SCENES[i].start + (i === 0 ? 0 : SCENES[i].len * 0.3)) / 100 * vh();
+    scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
+  };
+  document.querySelectorAll("[data-jump]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); jump(+a.dataset.jump); }));
+
+  const load = i => { const s = SCENES[i]; if (s && s.v && !s.v.src) s.v.src = s.id + ".mp4"; };
+  load(0); load(1);
+
+  // Interaktive detaljer
+  const seg = [...document.querySelectorAll(".seg button")], match = document.getElementById("match");
+  seg.forEach(b => b.addEventListener("click", () => {
+    seg.forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    match.innerHTML = "Vi sender: <b>" + b.dataset.v + "</b>";
+  }));
+  const form = document.getElementById("quote");
+  form.addEventListener("submit", e => { e.preventDefault(); document.getElementById("done").hidden = false; });
+  const trk = document.getElementById("trk"), dot = document.getElementById("dot"), eta = document.getElementById("eta");
+  const sig = document.getElementById("sig"), sigLen = sig.getTotalLength();
+  sig.style.strokeDasharray = sigLen;
+
+  let pos = 0, last = performance.now();
+  const frame = now => {
+    const dt = Math.min(0.1, (now - last) / 1000); last = now;
+    const r = film.getBoundingClientRect();
+    const want = Math.max(0, -r.top) / vh() * 100;
+    pos += (want - pos) * (reduce ? 1 : 1 - Math.exp(-dt * 9));
+    if (Math.abs(want - pos) < 0.01) pos = want;
+
+    let idx = SCENES.length - 1;
+    for (let i = 0; i < SCENES.length; i++) { if (pos < SCENES[i].start + SCENES[i].len) { idx = i; break; } }
+    const s = SCENES[idx];
+    const local = Math.min(1, Math.max(0, (pos - s.start) / s.len));
+    const fade = idx < SCENES.length - 1 ? ss(1 - FADE, 1, local) : 0;
+
+    SCENES.forEach((sc, i) => {
+      let op = 0, lp = 0;
+      if (i === idx) { op = 1; lp = local; }
+      else if (i === idx + 1) { op = fade; lp = 0; }
+      else if (i < idx) { lp = 1; }
+      sc.layer.style.opacity = op;
+      sc.layer.classList.toggle("on", op > 0.001);
+      sc.layer.style.zIndex = i === idx + 1 ? 2 : 1;
+      if (sc.v && sc.ready && op > 0) {
+        const dur = sc.v.duration || 6;
+        const target = lp * (dur - 0.06);
+        sc.cur += (target - sc.cur) * (1 - Math.exp(-dt * 14));
+        if (Math.abs(sc.v.currentTime - sc.cur) > 1 / 48) sc.v.currentTime = sc.cur;
+      } else if (!sc.v && op > 0) {
+        sc.img.style.transform = "scale(" + (1.02 + lp * 0.06).toFixed(4) + ")";
+      }
+      sc.btn.classList.toggle("on", i === idx);
+    });
+    load(idx); load(idx + 1); load(idx + 2);
+
+    cards.forEach((c, i) => {
+      let op = 0;
+      if (i === idx) {
+        const fin = i === 0 ? 1 : ss(0.06, 0.2, local);
+        const fout = i === SCENES.length - 1 ? 1 : 1 - ss(0.68, 0.8, local);
+        op = fin * fout;
+      }
+      c.style.opacity = op;
+      c.classList.toggle("on", op > 0.05);
+      c.style.marginTop = ((1 - op) * 14).toFixed(1) + "px";
+    });
+
+    if (idx === 4) {
+      const p = ss(0.1, 0.75, local);
+      trk.style.width = (p * 100) + "%"; dot.style.left = (p * 100) + "%";
+      const mins = Math.round(28 - p * 24); eta.textContent = "Ankomst om ca. " + mins + " min";
+    }
+    if (idx === 6) sig.style.strokeDashoffset = sigLen * (1 - ss(0.12, 0.5, local));
+
+    bar.style.width = (Math.min(1, pos / total) * 100).toFixed(2) + "%";
+    hint.style.opacity = 1 - ss(5, 20, pos);
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
