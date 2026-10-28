@@ -6,7 +6,8 @@
     "suffix is a security control, exactly as on the audit reports: without it anyone",
     "could guess /draft/a-competitor/ and read another prospect's draft.",
     "Regenerate the published output with: node scripts/build-drafts.mjs",
-    "homepage-concepts/ also holds Mollis Group and Headvisor exports that are not configured above. Add a block here to publish either; nothing else is needed."
+    "homepage-concepts/ also holds Mollis Group and Headvisor exports that are not configured above. Add a block here to publish either; nothing else is needed.",
+    "A draft may instead name a spec (\"spec\": \"spec.json\") built by scripts/lib/draft-page.mjs from the Elevate design system with the prospect's logo and colours: see drafts/SPEC.md. This is how the automatic flow (project doc claude/forsideutkast/OPPSKRIFT.md) publishes a homepage draft for a lead that pressed the quote button."
   ],
   "drafts": [
     {
@@ -133,6 +134,20 @@
           "title": "Draft — Rounded IT: homepage concept, what we need confirmed"
         }
       ]
+    },
+    {
+      "dir": "my-commercial-lawyers",
+      "company": "My Commercial Lawyers",
+      "slug": "my-commercial-lawyers-cc13ec",
+      "spec": "spec.json",
+      "clickup": "124hhvu5814"
+    },
+    {
+      "dir": "the-cfo-hq",
+      "company": "The CFO HQ",
+      "slug": "the-cfo-hq-6d9f89",
+      "spec": "spec.json",
+      "clickup": "124hhvu5ejk"
     }
   ]
 }

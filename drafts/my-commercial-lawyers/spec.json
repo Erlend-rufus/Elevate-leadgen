@@ -1,0 +1,78 @@
+{
+  "_comment": "Homepage draft for My Commercial Lawyers (ClickUp 124hhvu5814, pressed the quote button 26 Oct 2026). Research 28 Oct 2026 against mycommerciallawyers.com: WordPress, Astra and Elementor, five font families and three blues. The firm is regulated by the Bar Standards Board (ref 191504), not the SRA, so the draft says barrister-led and never solicitors. No outcome figures exist on the site, so none are invented. Reviews are quoted as shown on their homepage and marked to confirm.",
+  "company": "My Commercial Lawyers",
+  "site": "https://www.mycommerciallawyers.com",
+  "lang": "en-GB",
+  "logo": { "file": "logo.png", "height": 48 },
+  "palette": { "theme": "light", "primary": "#0048A8", "secondary": "#C29B60" },
+  "nav": [
+    { "label": "Construction", "href": "#services" },
+    { "label": "Commercial", "href": "#services" },
+    { "label": "How we work", "href": "#why" },
+    { "label": "About", "href": "#about" }
+  ],
+  "cta": "Check whether your dispute is suitable",
+  "hero": {
+    "eyebrow": "Commercial and construction disputes · London",
+    "title": "Know where you stand before you choose a route",
+    "sub": "Barrister-led advice on commercial and construction disputes for UK contractors, developers and businesses. Scoped and priced in writing before any work begins.",
+    "cta": "Check whether your dispute is suitable",
+    "ctaHref": "#contact",
+    "secondary": "See what we handle",
+    "secondaryHref": "#services",
+    "note": "Authorised and regulated by the Bar Standards Board, reference 191504.",
+    "quote": {
+      "text": "“Excellent professional and efficient service. Would highly recommend.”",
+      "who": "Axel Dara, client review [[TO CONFIRM: permission to reuse the review]]"
+    }
+  },
+  "services": {
+    "id": "services",
+    "eyebrow": "What we handle",
+    "title": "Three kinds of dispute, one way of working",
+    "lead": "Facts, contract and evidence first. The aim is not to push every matter towards legal action, but to tell you whether to negotiate, adjudicate, litigate or take another step.",
+    "items": [
+      { "title": "Construction disputes", "text": "Payment, delay, defect and contract disputes under JCT, NEC and FIDIC, from unpaid invoices to adjudication." },
+      { "title": "Commercial and contract disputes", "text": "Breach of contract, business debt recovery and other contentious commercial matters where there is a clear commercial reason to proceed." },
+      { "title": "Litigation and arbitration", "text": "Representation where suitable in the County Court, the High Court and the Technology and Construction Court, and in cross-border arbitration." }
+    ]
+  },
+  "why": {
+    "id": "why",
+    "eyebrow": "How we work",
+    "title": "Fixed scope, fixed fee, no pressure",
+    "items": [
+      { "title": "You know where you stand first.", "text": "We review the facts, the contract and the evidence before we recommend a route, and we say so if the sensible answer is not to proceed." },
+      { "title": "Scoped and priced before you instruct us.", "text": "Fee, scope and timeline are confirmed in writing for each instruction. Fixed-fee options where the matter allows it." },
+      { "title": "Regulated and direct.", "text": "Authorised by the Bar Standards Board for public access and the conduct of litigation (reference 191504), at 7 Bell Yard, London." }
+    ]
+  },
+  "about": {
+    "id": "about",
+    "eyebrow": "Who you deal with",
+    "title": "A barrister-led practice at 7 Bell Yard",
+    "paragraphs": [
+      "My Commercial Lawyers acts for main contractors, subcontractors, developers, architects, consultants and UK businesses with commercial disputes, and for overseas clients and law firms with matters in England and Wales.",
+      "Your matter is handled by [[TO CONFIRM: name and title of the Head of Legal Practice]], who previously practised at a Legal 500 firm. [[TO CONFIRM: year the practice was founded and the size of the team]]",
+      "Open [[TO CONFIRM: 24/7 or Monday to Sunday, 6am to 10pm; the current site says both]]. Documents may be served by post at the address only."
+    ]
+  },
+  "band": {
+    "eyebrow": "Next step",
+    "title": "Tell us about the dispute. We will tell you whether it is one we can help with.",
+    "text": "A short call to understand the facts and what you want to achieve. No obligation, and no fee until a scope is agreed in writing.",
+    "cta": "Check whether your dispute is suitable",
+    "ctaHref": "mailto:reception@mycommerciallawyers.com",
+    "secondary": "Call +44 (0)20 8087 4177",
+    "secondaryHref": "tel:+442080874177"
+  },
+  "contact": {
+    "phone": "+44 (0)20 8087 4177",
+    "email": "reception@mycommerciallawyers.com",
+    "address": "7 Bell Yard, London WC2A 2JR"
+  },
+  "footer": {
+    "legal": "My Commercial Lawyers is a trading name registered in England and Wales at 7 Bell Yard, London WC2A 2JR. Authorised and regulated by the Bar Standards Board, reference 191504. VAT 466287847.",
+    "note": "[[TO CONFIRM: registration number shown on the current site as 1-5-0-0-6-9-2]]"
+  }
+}
