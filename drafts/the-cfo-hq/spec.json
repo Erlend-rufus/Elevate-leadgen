@@ -132,10 +132,25 @@
   "industry": "finance",
   "style": "editorial",
   "images": {
-    "hero": {
+    "about": {
       "file": "team.jpg",
       "alt": "The CFO HQ team",
       "position": "50% 30%"
     }
+  },
+  "highlight": {
+    "kind": "compare",
+    "eyebrow": "One engagement",
+    "title": "Month-end close for a high-growth technology business",
+    "lead": "The figure the current site leads with, set out as the change it describes. [[TO CONFIRM: the client, the period and the current state of the close]]",
+    "before": {
+      "value": "21",
+      "label": "days to close, before"
+    },
+    "after": {
+      "value": "7",
+      "label": "days to close, after"
+    },
+    "note": "Faster close is the visible result. The reporting and controls behind it are what the board keeps using afterwards."
   }
 }

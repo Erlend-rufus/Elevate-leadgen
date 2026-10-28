@@ -258,6 +258,28 @@ p{margin:0}
 .card p{color:var(--muted);font-size:15.5px}
 .card .img{aspect-ratio:16/10;margin:-32px -32px 8px;border-radius:var(--r) var(--r) 0 0}
 @media(max-width:860px){.cards{grid-template-columns:1fr}.card{min-height:0}}
+/* highlight: the one thing on the page that is only this firm's */
+.hl{padding:0 0 96px}
+.hl .box{border-top:2px solid var(--ink);padding-top:40px}
+.hl h2{font-size:clamp(30px,3.6vw,46px);max-width:22ch;margin:14px 0 0}
+.hl .lead{color:var(--muted);font-size:18px;max-width:580px;margin-top:18px}
+.hl .head2{align-items:start}
+.terms{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;border-top:1px solid var(--line)}
+.terms .t{padding:28px 28px 28px 0;border-bottom:1px solid var(--line)}
+.terms .t:nth-child(4n){padding-right:0}
+.terms .k{font-family:var(--display);font-weight:${t.hWeight};font-size:clamp(28px,3vw,40px);letter-spacing:-0.02em;line-height:1.05}
+.terms .l{font-family:var(--mono);font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+@media(max-width:900px){.terms{grid-template-columns:repeat(2,1fr)}.terms .t:nth-child(4n){padding-right:28px}.terms .t:nth-child(2n){padding-right:0}}
+@media(max-width:520px){.terms{grid-template-columns:1fr}.terms .t{padding-right:0}}
+.compare{display:grid;grid-template-columns:minmax(0,1fr) 120px minmax(0,1fr);gap:24px;align-items:center;margin-top:48px;padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.compare .k{font-family:var(--display);font-weight:${t.hWeight};font-size:clamp(64px,9vw,128px);letter-spacing:-0.04em;line-height:0.95}
+.compare .was .k{color:var(--muted);text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:var(--accent)}
+.compare .now .k{color:var(--accent)}
+.compare .l{font-family:var(--mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:14px;max-width:26ch}
+.compare .arrow{display:flex;justify-content:center}
+.compare .arrow svg{width:72px;height:72px;color:var(--ink)}
+.compare .note{grid-column:1/-1;font-size:15px;color:var(--muted);max-width:60ch;padding-top:8px}
+@media(max-width:700px){.compare{grid-template-columns:1fr;gap:12px}.compare .arrow svg{transform:rotate(90deg);width:48px;height:48px}}
 /* why */
 .sec-alt{background:var(--bg-alt)}
 .two{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:start}
@@ -351,7 +373,7 @@ export function renderSpec(spec, { slug }) {
   const t = TYPE[style];
   const c = palette(spec, style);
   const src = (file) => `/draft/${slug}/${file}`;
-  const pic = (im, cls = 'img') => im && im.file ? `<div class="${cls}"><img src="${esc(src(im.file))}" alt="${esc(im.alt || '')}" loading="lazy"${im.position ? ` style="object-position:${esc(im.position)}"` : ''}></div>` : '';
+  const pic = (im, cls = 'img') => im && im.file ? `<div class="${cls}"><img src="${esc(src(im.file))}" alt="${esc(im.alt || '')}"${im.position ? ` style="object-position:${esc(im.position)}"` : ''}></div>` : '';
 
   const h = spec.hero || {};
   const im = spec.images || {};
@@ -395,7 +417,7 @@ export function renderSpec(spec, { slug }) {
   const tiles = [
     ...stats.map((s) => `<div class="tile tile-stat"><div class="k">${text(s.value)}</div><div class="l">${text(s.label)}</div></div>`),
     quote ? `<div class="tile tile-quote${im.proof && im.proof.file ? '' : ' wide'}"><div class="mark">“</div><p>${text(quote.text)}</p><div class="who">${text(quote.who)}</div></div>` : '',
-    im.proof && im.proof.file ? `<div class="tile tile-img"><img src="${esc(src(im.proof.file))}" alt="${esc(im.proof.alt || '')}" loading="lazy"></div>` : '',
+    im.proof && im.proof.file ? `<div class="tile tile-img"><img src="${esc(src(im.proof.file))}" alt="${esc(im.proof.alt || '')}"></div>` : '',
   ].filter(Boolean);
   const proofHtml = tiles.length ? `<section class="proof" aria-label="Key figures"><div class="wrap"><div class="bento n${stats.length}">${tiles.join('')}</div></div></section>` : '';
 
@@ -413,6 +435,28 @@ export function renderSpec(spec, { slug }) {
   ${services.lead ? `<p class="lead">${text(services.lead)}</p>` : '<div></div>'}</div>
   ${list}
 </div></section>` : '';
+
+  // highlight: one element only this firm could have. "terms": the courts, contract
+  // forms, standards or specialisms it works in, set big; "compare": one before and
+  // after figure from its own site.
+  const hl = spec.highlight || {};
+  let hlBody = '';
+  if (hl.kind === 'terms' && (hl.items || []).length) {
+    hlBody = `<div class="terms">${hl.items.slice(0, 8).map((x) => `<div class="t"><div class="k">${text(x.term)}</div>${x.label ? `<div class="l">${text(x.label)}</div>` : ''}</div>`).join('')}</div>`;
+  } else if (hl.kind === 'compare' && hl.before && hl.after) {
+    hlBody = `<div class="compare">
+      <div class="was"><div class="k">${text(hl.before.value)}</div><div class="l">${text(hl.before.label)}</div></div>
+      <div class="arrow"><svg viewBox="0 0 72 72" aria-hidden="true"><path d="M8 36h52M44 20l16 16-16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="now"><div class="k">${text(hl.after.value)}</div><div class="l">${text(hl.after.label)}</div></div>
+      ${hl.note ? `<p class="note">${text(hl.note)}</p>` : ''}
+    </div>`;
+  }
+  const highlightHtml = hlBody ? `
+<section class="hl" id="${esc(hl.id || 'highlight')}"><div class="wrap"><div class="box">
+  <div class="head2"><div>${hl.eyebrow ? `<div class="eyebrow">${text(hl.eyebrow)}</div>` : ''}<h2>${text(hl.title || '')}</h2></div>
+  ${hl.lead ? `<p class="lead">${text(hl.lead)}</p>` : '<div></div>'}</div>
+  ${hlBody}
+</div></div></section>` : '';
 
   const whyHtml = (why.items || []).length ? `
 <section class="sec sec-alt" id="${esc(why.id || 'why')}"><div class="wrap">
@@ -471,6 +515,7 @@ ${heroHtml}
 ${trustHtml}
 ${proofHtml}
 ${servicesHtml}
+${highlightHtml}
 ${whyHtml}
 ${aboutHtml}
 ${bandHtml}

@@ -132,5 +132,45 @@
       "alt": "The Bar Council"
     }
   ],
-  "trustText": "Authorised for public access and the conduct of litigation, reference 191504"
+  "trustText": "Authorised for public access and the conduct of litigation, reference 191504",
+  "highlight": {
+    "kind": "terms",
+    "eyebrow": "Where we work",
+    "title": "The forms, the forums and the rules we deal with every week",
+    "lead": "The contract forms and courts named on the current site. Nothing here is new; it is set out so a contractor sees at once that this is the right door.",
+    "items": [
+      {
+        "term": "JCT",
+        "label": "Standard building contracts"
+      },
+      {
+        "term": "NEC",
+        "label": "Engineering and construction"
+      },
+      {
+        "term": "FIDIC",
+        "label": "International works"
+      },
+      {
+        "term": "Adjudication",
+        "label": "28-day decisions on payment"
+      },
+      {
+        "term": "TCC",
+        "label": "Technology and Construction Court"
+      },
+      {
+        "term": "High Court",
+        "label": "Business and Property Courts"
+      },
+      {
+        "term": "County Court",
+        "label": "Claims and enforcement"
+      },
+      {
+        "term": "Arbitration",
+        "label": "Cross-border disputes"
+      }
+    ]
+  }
 }
