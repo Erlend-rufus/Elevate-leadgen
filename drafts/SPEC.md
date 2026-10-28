@@ -46,6 +46,7 @@ cannot be guessed. `clickup` is the task id the draft was made for (informationa
 | `hero` | yes | `eyebrow`, `title`, `sub`, `cta`, `ctaHref`, optional `secondary`/`secondaryHref`, optional `note`, and either `stat` (`{ value, label }`) or `quote` (`{ text, who }`). |
 | `stats` | no | Up to 3 `{ value, label }`. Only figures that are on the prospect's site. Rendered with `why.quote` and `images.proof` as a bento grid under the hero. |
 | `services` | yes | `id`, `eyebrow`, `title`, `lead`, 3 `items` (`{ title, text, image? }`; editorial allows 4). |
+| `highlight` | no | The one element only this firm could have, set between services and why. `{ "kind": "terms", "eyebrow", "title", "lead", "items": [{ "term", "label" }] }` (up to 8: the courts, contract forms, standards, specialisms or systems it works in, as named on its site) or `{ "kind": "compare", "eyebrow", "title", "lead", "before": { "value", "label" }, "after": { "value", "label" }, "note" }` (one before-and-after figure from its own site). Give every draft one; it is what stops the page reading as a template. |
 | `why` | yes | `id`, `eyebrow`, `title`, 3 `items` (`{ title, text }`), optional `quote` (`{ text, who }`, shown in the proof grid). |
 | `about` | yes | `id`, `eyebrow`, `title`, 1 to 3 `paragraphs`. |
 | `band` | yes | `eyebrow`, `title`, `text`, `cta`, `ctaHref`, optional `secondary`/`secondaryHref`. |
@@ -61,9 +62,9 @@ cannot be guessed. `clickup` is the task id the draft was made for (informationa
    underline and is counted in the build log. Never invent figures, client names or quotes.
 4. No commission percentage, no Elevate Marketing prices, no mention of Elevate Marketing
    outside the banner.
+5. British spelling, no hype, no emoji.
 6. `[[TO CONFIRM]]` without a reason is allowed but renders as a bare "to confirm"; give the
    reason.
-5. British spelling, no hype, no emoji.
 
 ## Guarantees enforced by the build
 

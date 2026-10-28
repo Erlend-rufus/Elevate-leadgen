@@ -127,6 +127,28 @@ p{margin:0}
 .card p{color:var(--muted);font-size:15.5px}
 .card .img{aspect-ratio:16/10;margin:-32px -32px 8px;border-radius:var(--r) var(--r) 0 0}
 @media(max-width:860px){.cards{grid-template-columns:1fr}.card{min-height:0}}
+/* highlight: the one thing on the page that is only this firm's */
+.hl{padding:0 0 96px}
+.hl .box{border-top:2px solid var(--ink);padding-top:40px}
+.hl h2{font-size:clamp(30px,3.6vw,46px);max-width:22ch;margin:14px 0 0}
+.hl .lead{color:var(--muted);font-size:18px;max-width:580px;margin-top:18px}
+.hl .head2{align-items:start}
+.terms{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;border-top:1px solid var(--line)}
+.terms .t{padding:28px 28px 28px 0;border-bottom:1px solid var(--line)}
+.terms .t:nth-child(4n){padding-right:0}
+.terms .k{font-family:var(--display);font-weight:500;font-size:clamp(28px,3vw,40px);letter-spacing:-0.02em;line-height:1.05}
+.terms .l{font-family:var(--mono);font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+@media(max-width:900px){.terms{grid-template-columns:repeat(2,1fr)}.terms .t:nth-child(4n){padding-right:28px}.terms .t:nth-child(2n){padding-right:0}}
+@media(max-width:520px){.terms{grid-template-columns:1fr}.terms .t{padding-right:0}}
+.compare{display:grid;grid-template-columns:minmax(0,1fr) 120px minmax(0,1fr);gap:24px;align-items:center;margin-top:48px;padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.compare .k{font-family:var(--display);font-weight:500;font-size:clamp(64px,9vw,128px);letter-spacing:-0.04em;line-height:0.95}
+.compare .was .k{color:var(--muted);text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:var(--accent)}
+.compare .now .k{color:var(--accent)}
+.compare .l{font-family:var(--mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:14px;max-width:26ch}
+.compare .arrow{display:flex;justify-content:center}
+.compare .arrow svg{width:72px;height:72px;color:var(--ink)}
+.compare .note{grid-column:1/-1;font-size:15px;color:var(--muted);max-width:60ch;padding-top:8px}
+@media(max-width:700px){.compare{grid-template-columns:1fr;gap:12px}.compare .arrow svg{transform:rotate(90deg);width:48px;height:48px}}
 /* why */
 .sec-alt{background:var(--bg-alt)}
 .two{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:start}
@@ -170,14 +192,11 @@ h1,h2{font-variation-settings:"opsz" 144,"SOFT" 30}
 <div class="dc-banner"><i></i><span>Draft prepared by Elevate Marketing. Not published by The CFO HQ.</span></div>
 <header class="hd"><div class="wrap"><a class="logo" href="#top" aria-label="The CFO HQ"><img src="/draft/the-cfo-hq-6d9f89/logo.png" alt="The CFO HQ" height="44"></a><nav><a class="lnk" href="#services">What we do</a><a class="lnk" href="#why">Client outcomes</a><a class="lnk" href="#about">Who we are</a><a class="lnk" href="https://talent.thecfohq.com">Talent Hub</a><a class="btn btn-primary cta" href="#contact">Speak to a CFO</a></nav></div></header>
 <main>
-<section class="hero-img"><div class="wrap"><div class="grid">
-  <div class="copy"><div class="eyebrow">Finance leadership · London and international</div>
+<section class="hero"><div class="wrap"><div class="grid"><div><div class="eyebrow">Finance leadership · London and international</div>
     <h1>Senior finance leadership, when your business needs it</h1>
     <p class="sub">Interim, fractional and strategic CFOs, finance transformation and managed finance operations for growing businesses and the boards and investors behind them.</p>
     <div class="actions"><a class="btn btn-primary" href="#contact">Speak to a CFO<svg class="arr" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="btn btn-ghost" href="#services">What we do</a></div>
-    <p class="note">A first conversation is about your situation, not a pitch.</p></div>
-  <div class="pic"><img src="/draft/the-cfo-hq-6d9f89/team.jpg" alt="The CFO HQ team" style="object-position:50% 30%"><div class="hcard"><div class="k">7 days</div><div class="l">replacement CFO deployed for one client <em class="confirm" title="To confirm">figure from the current site</em></div></div></div>
-</div></div></section>
+    <p class="note">A first conversation is about your situation, not a pitch.</p></div><aside><div class="k">7 days</div><div class="l">replacement CFO deployed for one client <em class="confirm" title="To confirm">figure from the current site</em></div></aside></div></div></section>
 
 <section class="proof" aria-label="Key figures"><div class="wrap"><div class="bento n3"><div class="tile tile-stat"><div class="k">100+</div><div class="l">years of combined finance leadership experience <em class="confirm" title="To confirm">to confirm</em></div></div><div class="tile tile-stat"><div class="k">21 to 7</div><div class="l">days to month-end close for a high-growth technology business <em class="confirm" title="To confirm">to confirm</em></div></div><div class="tile tile-stat"><div class="k">6</div><div class="l">service lines, from CFO advisory to talent on demand</div></div><div class="tile tile-quote wide"><div class="mark">“</div><p>The CFO HQ has been instrumental in transforming our finance function.</p><div class="who">CEO, Richardson Healthcare <em class="confirm" title="To confirm">permission to name the client on a new page</em></div></div></div></div></section>
 
@@ -186,6 +205,17 @@ h1,h2{font-variation-settings:"opsz" 144,"SOFT" 30}
   <p class="lead">Each engagement starts with what the business needs to decide, and ends with a finance function your own team can run.</p></div>
   <div class="rows"><div class="row noimg"><div class="n">01</div><h3>CFO advisory</h3><p>Interim, fractional and strategic CFO leadership for growth, transitions, performance improvement and critical decisions.</p></div><div class="row noimg"><div class="n">02</div><h3>Finance transformation</h3><p>Faster month-end close, better reporting and controls, and systems change that your team can actually run afterwards.</p></div><div class="row noimg"><div class="n">03</div><h3>Talent on demand</h3><p>Carefully matched CFOs, finance leaders and specialists, placed quickly on interim, fractional or permanent terms.</p></div></div>
 </div></section>
+
+<section class="hl" id="highlight"><div class="wrap"><div class="box">
+  <div class="head2"><div><div class="eyebrow">One engagement</div><h2>Month-end close for a high-growth technology business</h2></div>
+  <p class="lead">The figure the current site leads with, set out as the change it describes. <em class="confirm" title="To confirm">the client, the period and the current state of the close</em></p></div>
+  <div class="compare">
+      <div class="was"><div class="k">21</div><div class="l">days to close, before</div></div>
+      <div class="arrow"><svg viewBox="0 0 72 72" aria-hidden="true"><path d="M8 36h52M44 20l16 16-16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="now"><div class="k">7</div><div class="l">days to close, after</div></div>
+      <p class="note">Faster close is the visible result. The reporting and controls behind it are what the board keeps using afterwards.</p>
+    </div>
+</div></div></section>
 
 <section class="sec sec-alt" id="why"><div class="wrap">
   <div class="two">
@@ -196,7 +226,7 @@ h1,h2{font-variation-settings:"opsz" 144,"SOFT" 30}
 
 <section class="sec" id="about"><div class="wrap">
   <div class="two">
-    <div><div class="eyebrow">Who we are</div><h2>A catalyst and a steward</h2></div>
+    <div><div class="eyebrow">Who we are</div><h2>A catalyst and a steward</h2><div style="margin-top:32px"><div class="img"><img src="/draft/the-cfo-hq-6d9f89/team.jpg" alt="The CFO HQ team" style="object-position:50% 30%"></div></div></div>
     <div class="body"><p>The CFO HQ works with CEOs, boards, founders and investors in businesses navigating growth, change and critical transactions, in the UK and internationally. <em class="confirm" title="To confirm">UK, Europe, US, UAE, Singapore and Africa, as the current site states</em></p><p>The firm is led by <em class="confirm" title="To confirm">founder name and title</em>, and is registered as <em class="confirm" title="To confirm">legal entity and company number</em>. Also home to the Talent Hub, a community and job board for finance professionals, and the Global Referral Partner Programme.</p></div>
   </div>
 </div></section>

@@ -127,6 +127,28 @@ p{margin:0}
 .card p{color:var(--muted);font-size:15.5px}
 .card .img{aspect-ratio:16/10;margin:-32px -32px 8px;border-radius:var(--r) var(--r) 0 0}
 @media(max-width:860px){.cards{grid-template-columns:1fr}.card{min-height:0}}
+/* highlight: the one thing on the page that is only this firm's */
+.hl{padding:0 0 96px}
+.hl .box{border-top:2px solid var(--ink);padding-top:40px}
+.hl h2{font-size:clamp(30px,3.6vw,46px);max-width:22ch;margin:14px 0 0}
+.hl .lead{color:var(--muted);font-size:18px;max-width:580px;margin-top:18px}
+.hl .head2{align-items:start}
+.terms{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;border-top:1px solid var(--line)}
+.terms .t{padding:28px 28px 28px 0;border-bottom:1px solid var(--line)}
+.terms .t:nth-child(4n){padding-right:0}
+.terms .k{font-family:var(--display);font-weight:500;font-size:clamp(28px,3vw,40px);letter-spacing:-0.02em;line-height:1.05}
+.terms .l{font-family:var(--mono);font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+@media(max-width:900px){.terms{grid-template-columns:repeat(2,1fr)}.terms .t:nth-child(4n){padding-right:28px}.terms .t:nth-child(2n){padding-right:0}}
+@media(max-width:520px){.terms{grid-template-columns:1fr}.terms .t{padding-right:0}}
+.compare{display:grid;grid-template-columns:minmax(0,1fr) 120px minmax(0,1fr);gap:24px;align-items:center;margin-top:48px;padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.compare .k{font-family:var(--display);font-weight:500;font-size:clamp(64px,9vw,128px);letter-spacing:-0.04em;line-height:0.95}
+.compare .was .k{color:var(--muted);text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:var(--accent)}
+.compare .now .k{color:var(--accent)}
+.compare .l{font-family:var(--mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:14px;max-width:26ch}
+.compare .arrow{display:flex;justify-content:center}
+.compare .arrow svg{width:72px;height:72px;color:var(--ink)}
+.compare .note{grid-column:1/-1;font-size:15px;color:var(--muted);max-width:60ch;padding-top:8px}
+@media(max-width:700px){.compare{grid-template-columns:1fr;gap:12px}.compare .arrow svg{transform:rotate(90deg);width:48px;height:48px}}
 /* why */
 .sec-alt{background:var(--bg-alt)}
 .two{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:start}
@@ -190,6 +212,12 @@ h1,h2{font-variation-settings:"opsz" 144,"SOFT" 30}
   <p class="lead">Facts, contract and evidence first. The aim is not to push every matter towards legal action, but to tell you whether to negotiate, adjudicate, litigate or take another step.</p></div>
   <div class="rows"><div class="row noimg"><div class="n">01</div><h3>Construction disputes</h3><p>Payment, delay, defect and contract disputes under JCT, NEC and FIDIC, from unpaid invoices to adjudication.</p></div><div class="row noimg"><div class="n">02</div><h3>Commercial and contract disputes</h3><p>Breach of contract, business debt recovery and other contentious commercial matters where there is a clear commercial reason to proceed.</p></div><div class="row noimg"><div class="n">03</div><h3>Litigation and arbitration</h3><p>Representation where suitable in the County Court, the High Court and the Technology and Construction Court, and in cross-border arbitration.</p></div></div>
 </div></section>
+
+<section class="hl" id="highlight"><div class="wrap"><div class="box">
+  <div class="head2"><div><div class="eyebrow">Where we work</div><h2>The forms, the forums and the rules we deal with every week</h2></div>
+  <p class="lead">The contract forms and courts named on the current site. Nothing here is new; it is set out so a contractor sees at once that this is the right door.</p></div>
+  <div class="terms"><div class="t"><div class="k">JCT</div><div class="l">Standard building contracts</div></div><div class="t"><div class="k">NEC</div><div class="l">Engineering and construction</div></div><div class="t"><div class="k">FIDIC</div><div class="l">International works</div></div><div class="t"><div class="k">Adjudication</div><div class="l">28-day decisions on payment</div></div><div class="t"><div class="k">TCC</div><div class="l">Technology and Construction Court</div></div><div class="t"><div class="k">High Court</div><div class="l">Business and Property Courts</div></div><div class="t"><div class="k">County Court</div><div class="l">Claims and enforcement</div></div><div class="t"><div class="k">Arbitration</div><div class="l">Cross-border disputes</div></div></div>
+</div></div></section>
 
 <section class="sec sec-alt" id="why"><div class="wrap">
   <div class="two">
