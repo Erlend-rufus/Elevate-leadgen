@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bjørsvik Transport: varebil med sjåfør i Bergen (miniatyr)</title>
+<title>Bjørsvik Transport: fleksibel varebiltransport i Bergen (filmversjon)</title>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<meta name="description" content="Pakker, flytting og ekspress i Bergen og omegn med elektrisk varebil. 600 kr per time, gratis befaring. Ring Richard på 920 37 976.">
+<meta name="description" content="Lite og fleksibelt transportfirma i Bergen og omegn. Pakker, flytting og ekspress, også kveld og helg. 600 kr per time, gratis befaring. Ring 920 37 976.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"MovingCompany","name":"Bjørsvik Transporttjenester AS","telephone":"+4792037976","email":"richardbjorsvik@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Bergen","addressCountry":"NO"},"areaServed":"Bergen og omegn","priceRange":"600 kr per time","identifier":"937069642","description":"Varebil med sjåfør i Bergen og omegn: pakker, mindre flyttinger og ekspress. Elektrisk varebil, 11 kubikk."}
+{"@context":"https://schema.org","@type":"MovingCompany","name":"Bjørsvik Transporttjenester AS","telephone":"+4792037976","email":"richardbjorsvik@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Bergen","addressCountry":"NO"},"areaServed":"Bergen og omegn","priceRange":"600 kr per time","identifier":"937069642","description":"Lite og fleksibelt transportfirma i Bergen og omegn: pakker, flytting og ekspress, også kveld og helg. Elektrisk varebil, 11 kubikk. Fast underleverandør for Fedex."}
 </script>
 <style>
 /* Layout: én fast filmscene som spoles med scroll, kort til venstre, stegliste til høyre, vanlige seksjoner under */
@@ -21,8 +21,8 @@
   --mist: #C9D1D3;
   --mist-dim: #8A979C;
   --line: rgba(201, 209, 211, .16);
-  --green: #2C8A40;
-  --green-hi: #3BA251;
+  --green: #2B6CB0;
+  --green-hi: #5B9BD8;
   --panel: rgba(10, 19, 26, .74);
   --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --f-body: "IBM Plex Sans", system-ui, sans-serif;
@@ -67,7 +67,7 @@ button { font-family: var(--f-body); cursor: pointer; }
 .layer { position: absolute; inset: 0; opacity: 0; visibility: hidden; will-change: opacity; }
 .layer.on { visibility: visible; }
 .layer video, .layer img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.layer img { transform-origin: 50% 55%; }
+.layer img { transform-origin: 60% 50%; }
 .shade { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgba(10,19,26,.78) 0%, rgba(10,19,26,.5) 30%, rgba(10,19,26,0) 58%), linear-gradient(180deg, rgba(10,19,26,.45) 0%, rgba(10,19,26,0) 20%, rgba(10,19,26,0) 75%, rgba(10,19,26,.55) 100%); }
 .cards { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
 .card { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); top: 50%; transform: translateY(-46%); width: min(460px, calc(100% - 32px)); display: grid; gap: 14px; opacity: 0; visibility: hidden; }
@@ -82,7 +82,7 @@ button { font-family: var(--f-body); cursor: pointer; }
 .ui .head { display: flex; justify-content: space-between; gap: 12px; font-family: var(--f-mono); font-size: 12px; color: var(--mist-dim); }
 .ui .head b { color: var(--ink); font-weight: 500; }
 .status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 12px; color: var(--green-hi); }
-.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green-hi); box-shadow: 0 0 0 3px rgba(59,162,81,.25); }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green-hi); box-shadow: 0 0 0 3px rgba(91,155,216,.25); }
 .kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-family: var(--f-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
 .kv dt { color: var(--mist-dim); }
 .kv dd { margin: 0; color: var(--ink); }
@@ -161,7 +161,7 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
 .choice button b { font-family: var(--f-display); font-weight: 600; font-size: 19px; color: var(--ink); }
 .choice button span { font-size: 13px; line-height: 1.35; }
 .choice button:hover { border-color: rgba(255,255,255,.4); }
-.choice button[aria-pressed="true"] { border-color: var(--green-hi); background: rgba(44,138,64,.32); }
+.choice button[aria-pressed="true"] { border-color: var(--green-hi); background: rgba(43,108,176,.32); }
 .choice button[aria-pressed="true"] b::after { content: " ✓"; color: var(--green-hi); }
 .note { font-family: var(--f-mono); font-size: 12px; color: var(--mist); }
 .note b { color: var(--ink); font-weight: 500; }
@@ -169,7 +169,7 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
 .temp b { font-size: 44px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
 .temp span { font-size: 18px; color: var(--mist); }
 .spark { width: 100%; height: 80px; display: block; }
-.spark .band { fill: rgba(59,162,81,.12); }
+.spark .band { fill: rgba(91,155,216,.12); }
 .spark .ax { fill: var(--mist-dim); font: 10px var(--f-mono); }
 .spark path { fill: none; stroke: var(--green-hi); stroke-width: 2; vector-effect: non-scaling-stroke; }
 .spark circle { fill: var(--ink); stroke: var(--green); stroke-width: 2; vector-effect: non-scaling-stroke; }
@@ -197,7 +197,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
 </head>
 <body>
 
-<div class="demo"><b>Utkast fra Elevate Marketing.</b><span class="long"> Ikke publisert. Skjemaet sender ingenting.</span> <a href="../" style="color:var(--green-hi)">Se filmversjonen</a></div>
+<div class="demo"><b>Utkast fra Elevate Marketing.</b><span class="long"> Ikke publisert. Skjemaet sender ingenting.</span> <a href="../" style="color:var(--green-hi)">Se miniatyrversjonen</a></div>
 
 <header class="top gutter">
   <a class="word" href="#topp" aria-label="Bjørsvik Transport, til toppen">Bjørsvik <i>Transport</i></a>
@@ -212,24 +212,24 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
 
       <div class="cards">
         <div class="card hero" data-scene="hero">
-          <span class="eyebrow" data-copy="heroEyebrow">Varebil med sjåfør i Bergen og omegn</span>
-          <h1>Han du ringer, er han som kommer.</h1>
-          <p class="lead" data-copy="heroLead">Pakker, flytting og ekspress med elektrisk varebil. 600 kr per time, og gratis befaring før større jobber.</p>
+          <span class="eyebrow" data-copy="heroEyebrow">Lite og fleksibelt transportfirma i Bergen og omegn</span>
+          <h1>Levert når det passer deg.<br>Også kveld og helg.</h1>
+          <p class="lead" data-copy="heroLead">Pakker, flytting og ekspress med elektrisk varebil. 600 kr per time, gratis befaring før større jobber, og du snakker direkte med sjåføren.</p>
           <div class="row"><a class="btn" href="tel:+4792037976">Ring 920 37 976</a><a class="btn ghost" href="sms:+4792037976">Send SMS</a></div>
         </div>
 
         <div class="card choose" data-scene="bestilling">
           <span class="eyebrow">01 · Du tar kontakt</span>
-          <h2>Ingen sentralbord. Du snakker med sjåføren.</h2>
+          <h2>Ingen sentralbord. Du får svar med en gang.</h2>
           <div class="ui sms" aria-label="Eksempel på SMS">
             <p class="me" data-copy="smsMe">Hei! Kan du hente 6 pakker hos oss i dag?</p>
-            <p class="him" id="sms-him" data-copy="smsHim">Ja, jeg er der 14:30. Richard</p>
+            <p class="him" id="sms-him" data-copy="smsHim">Ja, vi er der 14:30. Bjørsvik Transport</p>
             <small>Eksempel</small>
           </div>
           <div class="choice" role="group" aria-label="Velg type oppdrag">
-            <button type="button" data-branch="pakker" aria-pressed="true"><b>Pakker</b><span>For bedrifter og nettbutikker</span></button>
+            <button type="button" data-branch="pakker" aria-pressed="true"><b>Pakker</b><span>Faste ruter og enkeltturer</span></button>
             <button type="button" data-branch="flytting" aria-pressed="false"><b>Flytting</b><span>Gratis befaring, fast pris</span></button>
-            <button type="button" data-branch="ekspress" aria-pressed="false"><b>Ekspress</b><span>Når det haster</span></button>
+            <button type="button" data-branch="ekspress" aria-pressed="false"><b>Ekspress</b><span>Også kveld og helg</span></button>
           </div>
           <p class="note" id="chosen">Viser oppdraget for <b>pakker</b>. Bytt når som helst.</p>
         </div>
@@ -238,7 +238,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
         <div class="card" data-scene="p-henting">
           <span class="eyebrow">02 · Henting</span>
           <h2>Hentet, sikret og stablet.</h2>
-          <p>Richard kjører fast pakkerute i Bergen hver dag. Han vet hvordan pakker skal håndteres.</p>
+          <p>Vi kjører fast for Fedex i Bergen hver dag, og tar pakkeoppdrag for bedrifter og nettbutikker ved siden av.</p>
         </div>
         <div class="card" data-scene="p-levering">
           <span class="eyebrow">03 · Levert</span>
@@ -255,7 +255,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
         <div class="card" data-scene="f-lasting">
           <span class="eyebrow">02 · Befaring og lasting</span>
           <h2>Gratis befaring, så vet du prisen.</h2>
-          <p>Richard ser på jobben først. Du får en fast pris før flyttedagen.</p>
+          <p>Vi ser på jobben først. Du får en fast pris før flyttedagen, også for flytting på kveld eller i helgen.</p>
           <div class="ui" aria-label="Sjekkliste ved lasting">
             <div class="head"><span>Flytting</span><span>11 kubikk</span></div>
             <ul class="checks" id="f-checks"><li>Møbler pakket i tepper</li><li>Stroppet fast i lasterommet</li><li>Klar til å kjøre</li></ul>
@@ -276,7 +276,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
         <div class="card" data-scene="e-vei">
           <span class="eyebrow">02 · Underveis</span>
           <h2>Rett dit, med en gang.</h2>
-          <p>Ekspress i Bergen og omegn når noe må frem i dag.</p>
+          <p>Ekspress i Bergen og omegn når noe må frem i dag. Også på kveld og i helgen.</p>
           <div class="ui" aria-label="Eksempel på ekspresstur">
             <div class="head"><span>Ekspress</span><span id="eta">Fremme om ca. 25 min</span></div>
             <div class="track"><i id="trk"></i><s id="dot"></s></div>
@@ -294,16 +294,16 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
         </div>
 
         <div class="card final" data-scene="kveld" id="tilbud">
-          <span class="eyebrow">Elektrisk varebil · 11 kubikk</span>
-          <h2>Trenger du en varebil med sjåfør?</h2>
+          <span class="eyebrow">Elektrisk varebil · 11 kubikk · kveld og helg</span>
+          <h2>Trenger du transport i Bergen?</h2>
           <div class="price"><b>600 kr</b><span>per time</span></div>
-          <p>Faste priser etter gratis befaring. Fortell kort hva du trenger, så ringer Richard deg.</p>
+          <p>Faste priser etter gratis befaring. Fortell kort hva du trenger, så ringer vi deg.</p>
           <form class="ui" id="quote" novalidate>
             <div class="fields">
               <label for="q-navn">Navn<input id="q-navn" name="navn" autocomplete="name" placeholder="Ola Nordmann"></label>
               <label for="q-tlf">Telefon<input id="q-tlf" name="tlf" type="tel" autocomplete="tel" placeholder="400 00 000"></label>
               <label for="q-type">Hva gjelder det<select id="q-type" name="type"><option>Pakker</option><option>Flytting</option><option>Ekspress</option><option>Annet</option></select></label>
-              <label for="q-naar">Når<select id="q-naar" name="naar"><option>I dag</option><option>Denne uken</option><option>Senere</option></select></label>
+              <label for="q-naar">Når<select id="q-naar" name="naar"><option>I dag</option><option>Denne uken</option><option>Kveld eller helg</option><option>Senere</option></select></label>
               <label for="q-hva" class="wide">Kort om oppdraget<textarea id="q-hva" name="hva" placeholder="Fra hvor, til hvor, og hva skal fraktes"></textarea></label>
             </div>
             <div class="row"><button class="btn" type="submit">Send</button><a class="phone" href="tel:+4792037976">eller ring 920 37 976</a></div>
@@ -323,19 +323,19 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
       <span class="eyebrow">Tjenester</span>
       <h2 id="t-svc">Det meste som får plass i en varebil</h2>
       <div class="svc">
-        <article><img src="s-pakker.jpg" alt="Hender i arbeidshansker stabler pakker i en varebil" loading="lazy" width="1600" height="900"><h3>Pakker</h3><p>Faste ruter eller enkeltturer for bedrifter og nettbutikker i Bergen og omegn.</p><a class="more" href="#pakker" data-pick="pakker">Se pakkeoppdraget</a></article>
-        <article><img src="s-flytting.jpg" alt="Lenestol pakket i tepper og stroppet fast i varebilen" loading="lazy" width="1600" height="900"><h3>Flytting</h3><p>Mindre flyttinger og enkeltmøbler. Gratis befaring og fast pris.</p><a class="more" href="#flytting" data-pick="flytting">Se flytteoppdraget</a></article>
-        <article><img src="s-ekspress.jpg" alt="Hvit varebil kjører ut av en tunnel i regn" loading="lazy" width="1600" height="900"><h3>Ekspress</h3><p>Når noe må frem i dag. Ring, så får du svar med en gang.</p><a class="more" href="#ekspress" data-pick="ekspress">Se ekspressoppdraget</a></article>
+        <article><img src="s-pakker.jpg" alt="Hender i arbeidshansker stabler pakker i en varebil" loading="lazy" width="1600" height="900"><h3>Pakker</h3><p>Faste ruter eller enkeltturer for bedrifter og nettbutikker. Vi kjører fast for Fedex, og vet hvordan pakker skal håndteres.</p><a class="more" href="#pakker" data-pick="pakker">Se pakkeoppdraget</a></article>
+        <article><img src="s-flytting.jpg" alt="Lenestol pakket i tepper og stroppet fast i varebilen" loading="lazy" width="1600" height="900"><h3>Flytting</h3><p>Flytting og enkeltmøbler, på dagtid, kveld eller helg. Gratis befaring og fast pris.</p><a class="more" href="#flytting" data-pick="flytting">Se flytteoppdraget</a></article>
+        <article><img src="s-ekspress.jpg" alt="Hvit varebil kjører ut av en tunnel i regn" loading="lazy" width="1600" height="900"><h3>Ekspress</h3><p>Når noe må frem i dag, også utenfor vanlig arbeidstid. Ring, så får du svar med en gang.</p><a class="more" href="#ekspress" data-pick="ekspress">Se ekspressoppdraget</a></article>
       </div>
     </section>
 
     <section class="section gutter" aria-labelledby="t-om">
-      <span class="eyebrow">Om Richard</span>
-      <h2 id="t-om">Over 25 år bak rattet</h2>
-      <p>Bjørsvik Transporttjenester er Richard Bjørsvik. Han har kjørt i bransjen i over 25 år, og kjører fast pakkerute i Bergen hver dag. Når du bestiller, er det han som kommer.</p>
+      <span class="eyebrow">Om oss</span>
+      <h2 id="t-om">Lite firma, stor fleksibilitet</h2>
+      <p>Bjørsvik Transporttjenester er et lite transportfirma i Bergen med over 25 års erfaring fra bransjen. Vi kjører fast for Fedex, og tar oppdrag for bedrifter og private ved siden av, også på kveld og i helgen. Korte beslutningsveier gjør at vi kan si ja der større aktører må si nei.</p>
       <div class="about">
         <div><b>25+ år</b><span>i transportbransjen</span></div>
-        <div><b>11 kubikk</b><span>elektrisk varebil</span></div>
+        <div><b>Kveld og helg</b><span>vi leverer når det passer deg</span></div>
         <div><b>600 kr</b><span>per time, eller fast pris etter befaring</span></div>
       </div>
     </section>
@@ -344,9 +344,10 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
       <span class="eyebrow">Spørsmål</span>
       <h2 id="t-faq">Det folk lurer på</h2>
       <div>
-        <details><summary>Hva koster det?</summary><p>600 kr per time. Ved større jobber kommer Richard på gratis befaring, og du får en fast pris.</p></details>
-        <details><summary>Hvor kjører du?</summary><p>Bergen og omegn. Andre oppdrag i Norge etter avtale.</p></details>
-        <details><summary>Hvor mye får plass?</summary><p>Varebilen har 11 kubikk lasterom. Det holder til mange pakker, enkeltmøbler og mindre flyttinger.</p></details>
+        <details><summary>Hva koster det?</summary><p>600 kr per time. Ved større jobber kommer vi på gratis befaring, og du får en fast pris.</p></details>
+        <details><summary>Hvor kjører dere?</summary><p>Bergen og omegn. Andre oppdrag i Norge etter avtale.</p></details>
+        <details><summary>Leverer dere på kveld og i helgen?</summary><p>Ja. Si fra når du bestiller, så finner vi et tidspunkt som passer.</p></details>
+        <details><summary>Hvor mye får plass?</summary><p>Varebilen har 11 kubikk lasterom. Det holder til mange pakker, møbler og de fleste flyttinger.</p></details>
         <details><summary>Hvordan bestiller jeg?</summary><p>Ring eller send SMS til 920 37 976, eller send en e-post til richardbjorsvik@gmail.com.</p></details>
       </div>
     </section>
@@ -356,7 +357,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
 <footer class="gutter">
   <div class="section">
     <div style="display:grid;gap:6px"><b style="color:var(--ink);font-family:var(--f-display);font-size:18px">Bjørsvik Transporttjenester AS</b><p class="mono">Org.nr. 937 069 642 · Bergen · <a href="tel:+4792037976" style="color:inherit">920 37 976</a> · <a href="mailto:richardbjorsvik@gmail.com" style="color:inherit">richardbjorsvik@gmail.com</a></p></div>
-    <p class="mono">Film og bilder er miniatyrillustrasjoner laget med KI.<br>Utkast fra Elevate Marketing.</p>
+    <p class="mono">Film og bilder er illustrasjoner laget med KI.<br>Utkast fra Elevate Marketing.</p>
   </div>
 </footer>
 
@@ -382,9 +383,9 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
   };
   // Tekst som endres når noen kommer inn via en annonse for én oppdragstype (?type=flytting eller #flytting)
   const COPY = {
-    pakker:   { heroEyebrow: "Pakkekjøring for bedrifter i Bergen og omegn", heroLead: "Faste ruter eller enkeltturer med elektrisk varebil. 600 kr per time, og du snakker alltid med sjåføren.", smsMe: "Hei! Kan du hente 6 pakker hos oss i dag?", smsHim: "Ja, jeg er der 14:30. Richard" },
-    flytting: { heroEyebrow: "Mindre flyttinger i Bergen og omegn", heroLead: "Gratis befaring og fast pris før flyttedagen. Elektrisk varebil med 11 kubikk lasterom.", smsMe: "Hei! Vi skal flytte fra en toroms på Laksevåg. Kan du se på det?", smsHim: "Ja, jeg kan komme på befaring torsdag kl. 17. Richard" },
-    ekspress: { heroEyebrow: "Ekspress i Bergen og omegn", heroLead: "Når noe må frem i dag. Ring, så får du svar med en gang. 600 kr per time.", smsMe: "Hei! Kan du kjøre en konvolutt til sentrum med en gang?", smsHim: "Ja, jeg henter om 15 minutter. Richard" }
+    pakker:   { heroEyebrow: "Pakkekjøring for bedrifter i Bergen og omegn", heroLead: "Faste ruter eller enkeltturer med elektrisk varebil. Vi kjører fast for Fedex, og tar oppdrag ved siden av. 600 kr per time.", smsMe: "Hei! Kan dere hente 6 pakker hos oss i dag?", smsHim: "Ja, vi er der 14:30. Bjørsvik Transport" },
+    flytting: { heroEyebrow: "Flytting i Bergen og omegn, også kveld og helg", heroLead: "Gratis befaring og fast pris før flyttedagen. Elektrisk varebil med 11 kubikk lasterom.", smsMe: "Hei! Vi skal flytte fra en toroms på Laksevåg, helst en lørdag. Kan dere se på det?", smsHim: "Ja, vi kommer på befaring torsdag kl. 17. Bjørsvik Transport" },
+    ekspress: { heroEyebrow: "Ekspress i Bergen og omegn, også kveld og helg", heroLead: "Når noe må frem i dag, også utenfor vanlig arbeidstid. Ring, så får du svar med en gang. 600 kr per time.", smsMe: "Hei! Kan dere kjøre en konvolutt til sentrum med en gang?", smsHim: "Ja, vi henter om 15 minutter. Bjørsvik Transport" }
   };
   const FADE = 0.08;
   const mobile = matchMedia("(max-width: 860px), (pointer: coarse)").matches;
