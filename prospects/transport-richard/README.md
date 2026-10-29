@@ -13,7 +13,7 @@ til kundens eget domene når han har godkjent.
 - [ ] Logo og bilfoto lagt i `assets/`
 - [x] Samtykke til bruk som case bekreftet skriftlig (e-post 29.10.2026)
 - [x] Stilrammer og filmscener laget (KI, hvit E-Transit uten dekor)
-- [x] Utkast publisert under `/demo/bjorsvik-wlihro/`
+- [x] Utkast publisert under `/demo/bjorsvik-wlihro/` (miniatyr som hovedversjon, film under `film/`)
 - [ ] Logo og bilfoto mottatt, dekor lagt på bilen
 - [ ] Utkast sendt til ham
 - [ ] Godkjent, flyttet til eget domene

@@ -8,15 +8,15 @@ Svar mottatt på e-post 29.10.2026. Merk alt vi antar med **(antatt)** til det e
 | --- | --- | --- |
 | Firmanavn, org.nr., nettside i dag | Bjørsvik Transporttjenester AS, org.nr. 937 069 642. Ingen nettside. Enkeltpersonforetak fra 2020, AS fra 2026 (Brønnøysund: stiftet 1.1.2026, Bønes, Bergen). Over 25 års erfaring i bransjen. | Topp, bunntekst |
 | Hva kjører de mest av | Mest pakker, av og til paller og flyttejobber. De fleste jobber som kan gjøres med varebil. | Grener: pakker, flytting, ekspress |
-| Hvilke selskaper kjører de for | Fast underleverandør for Fedex via Bergen Kurer AS. **Ikke bruk navnene** før kontoret har sagt ja. | Holdes generelt: «kjører fast pakkerute i Bergen hver dag» |
+| Hvilke selskaper kjører de for | Fast underleverandør for Fedex via Bergen Kurer AS. 29.10: Fedex-navnet kan brukes i tekst, **ikke logoen**. Bergen Kurer nevnes ikke. | «Vi kjører fast for Fedex» |
 | Område | Bergen og omegn. Andre oppdrag i Norge etter avtale. | Overskrift, kart |
-| Antall biler og typer | 1 bil: Ford Transit, 11 kubikk, elektrisk (E-Transit). Han er eneste sjåfør, har planer om å utvide. | Bilen i filmene (hvit E-Transit **(antatt farge)**) |
+| Antall biler og typer | 1 bil: Ford Transit, 11 kubikk, elektrisk (E-Transit). Han er eneste sjåfør, har planer om å utvide. 29.10: **vinkles som «lite og fleksibelt transportfirma», ikke som én mann**, for ikke å skremme større oppdragsgivere. | Bilen i filmene, «vi»-form i all tekst |
 
 ## Kunder
 
 | Spørsmål | Svar | Brukes til |
 | --- | --- | --- |
-| Typiske kunder | Pakkekjøring, flyttejobber og ekspressturer. | Målgruppe, grener |
+| Typiske kunder | Pakkekjøring, flyttejobber og ekspressturer. 29.10: tilbyr også **kveld- og helgelevering**. | Målgruppe, grener, hovedbudskap |
 | Hva de gjør bedre | Svært kundeinnstilt, leverer effektivt og raskt til en rimelig pris. | Hovedløfte |
 | Prising, og om pris kan vises | 600 kr per time, faste priser etter gratis befaring. Kan vises. | Pris-seksjonen |
 
@@ -25,7 +25,7 @@ Svar mottatt på e-post 29.10.2026. Merk alt vi antar med **(antatt)** til det e
 | Spørsmål | Svar | Brukes til |
 | --- | --- | --- |
 | Logo | Kommer. | Topp, bunntekst, dekor (legges på bilen med Kling når den kommer) |
-| Bilfoto | Kommer. Vi starter med en hvit E-Transit uten dekor. | Referanse for filmscener |
+| Bilfoto | Kommer. 29.10: Richard foretrekker **miniatyrversjonen (tydelig KI)** fremfor stock med dekor. Miniatyren er hovedversjon. | Referanse hvis dekor skal på miniatyrbilen |
 | Bilde av ham | Ønsker ikke. Ingen ansikter i filmene. | |
 
 ## Praktisk
@@ -40,7 +40,6 @@ Svar mottatt på e-post 29.10.2026. Merk alt vi antar med **(antatt)** til det e
 ## Åpne spørsmål (sendt 29.10)
 
 - Har han hjelper på større flyttinger, eller skal vi skrive «mindre flyttinger»?
-- Bergen Kurer / Fedex: kan navnene brukes?
 - Domene og e-post med firmanavn?
 
 ## Historie
