@@ -222,27 +222,32 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
           <span class="eyebrow">01 · Du tar kontakt</span>
           <h2>Ingen sentralbord. Du får svar med en gang.</h2>
           <div class="ui sms" aria-label="Eksempel på SMS">
-            <p class="me" data-copy="smsMe">Hei! Kan du hente 6 pakker hos oss i dag?</p>
+            <p class="me" data-copy="smsMe">Hei! Kan dere hente 6 pakker hos oss i dag?</p>
             <p class="him" id="sms-him" data-copy="smsHim">Ja, vi er der 14:30. Bjørsvik Transport</p>
             <small>Eksempel</small>
           </div>
-          <div class="choice" role="group" aria-label="Velg type oppdrag">
+          <div class="choice" role="group" aria-label="Hopp til den delen av dagen som gjelder deg">
             <button type="button" data-branch="pakker" aria-pressed="true"><b>Pakker</b><span>Faste ruter og enkeltturer</span></button>
             <button type="button" data-branch="flytting" aria-pressed="false"><b>Flytting</b><span>Gratis befaring, fast pris</span></button>
             <button type="button" data-branch="ekspress" aria-pressed="false"><b>Ekspress</b><span>Også kveld og helg</span></button>
           </div>
-          <p class="note" id="chosen">Viser oppdraget for <b>pakker</b>. Bytt når som helst.</p>
+          <p class="note" id="chosen">Dette er én dag hos oss. Scroll videre, eller hopp rett til det som gjelder deg.</p>
         </div>
 
-        <!-- Pakker -->
-        <div class="card" data-scene="p-henting">
-          <span class="eyebrow">02 · Henting</span>
-          <h2>Hentet, sikret og stablet.</h2>
+        <!-- Dag: pakker -->
+        <div class="card" data-scene="p-vei">
+          <span class="eyebrow">02 · Underveis</span>
+          <h2>Hentet, sikret og på vei.</h2>
           <p>Vi kjører fast for Fedex i Bergen hver dag, og tar pakkeoppdrag for bedrifter og nettbutikker ved siden av.</p>
+          <div class="ui" aria-label="Eksempel på status underveis">
+            <div class="head"><span>6 pakker</span><span id="eta">Fremme om ca. 25 min</span></div>
+            <div class="track"><i id="trk"></i><s id="dot"></s></div>
+            <div class="stops"><span>Hentet</span><span>Underveis</span><span>Mottaker</span></div>
+          </div>
         </div>
         <div class="card" data-scene="p-levering">
           <span class="eyebrow">03 · Levert</span>
-          <h2>Levert på døra, og du får beskjed.</h2>
+          <h2>Levert i hånden, og du får beskjed.</h2>
           <p>Når pakken er levert, får du en melding med tidspunktet.</p>
           <div class="ui" aria-label="Eksempel på leveringsmelding">
             <div class="head"><span>Levert</span><span>15:10</span></div>
@@ -251,50 +256,45 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
           </div>
         </div>
 
-        <!-- Flytting -->
-        <div class="card" data-scene="f-lasting">
-          <span class="eyebrow">02 · Befaring og lasting</span>
-          <h2>Gratis befaring, så vet du prisen.</h2>
-          <p>Vi ser på jobben først. Du får en fast pris før flyttedagen, også for flytting på kveld eller i helgen.</p>
+        <!-- Kveld: ekspress og kveldslevering -->
+        <div class="card" data-scene="k-vei">
+          <span class="eyebrow">04 · Kveld</span>
+          <h2>Dagen slutter ikke klokka fire.</h2>
+          <p>Ekspress når noe må frem i dag, og leveringer på kvelden for dem som ikke er hjemme på dagtid. Samme pris, samme sjåfør.</p>
+        </div>
+        <div class="card" data-scene="k-levering">
+          <span class="eyebrow">05 · Kveldslevering</span>
+          <h2>Levert når du faktisk er hjemme.</h2>
+          <p>Du slipper hentelapp og kø på posten. Vi leverer på døra om kvelden, og sender deg beskjed når det er gjort.</p>
+          <div class="ui" aria-label="Eksempel på leveringsmelding om kvelden">
+            <div class="head"><span>Levert på døra</span><span>19:40</span></div>
+            <dl class="kv"><dt>Til</dt><dd>Enebolig, Bønes</dd><dt>Melding</dt><dd>Sendt til deg 19:40</dd></dl>
+          </div>
+        </div>
+
+        <!-- Helg: flytting -->
+        <div class="card" data-scene="h-lasting">
+          <span class="eyebrow">06 · Lørdag</span>
+          <h2>Flytting i helgen, til fast pris.</h2>
+          <p>Vi ser på jobben først, gratis. Du får en fast pris før flyttedagen, og vi kommer når det passer deg, også lørdag og søndag.</p>
           <div class="ui" aria-label="Sjekkliste ved lasting">
             <div class="head"><span>Flytting</span><span>11 kubikk</span></div>
             <ul class="checks" id="f-checks"><li>Møbler pakket i tepper</li><li>Stroppet fast i lasterommet</li><li>Klar til å kjøre</li></ul>
           </div>
         </div>
-        <div class="card" data-scene="f-levering">
-          <span class="eyebrow">03 · Levert</span>
+        <div class="card" data-scene="h-levering">
+          <span class="eyebrow">07 · Inn på plass</span>
           <h2>Inn der du vil ha det.</h2>
           <p>Eskene og møblene bæres inn, ikke bare settes av på fortauet.</p>
           <div class="ui" aria-label="Eksempel på bekreftelse">
-            <div class="head"><span>Flytting fullført</span><span>16:42</span></div>
+            <div class="head"><span>Flytting fullført</span><span>14:42</span></div>
             <svg class="sign" viewBox="0 0 220 46" aria-hidden="true"><path class="sigpath" d="M8 30 C 18 8, 30 14, 30 30 C 30 40, 44 38, 50 22 C 56 8, 66 20, 70 30 L 84 18 C 96 34, 110 6, 122 26 C 130 38, 146 12, 158 22 C 170 32, 186 20, 206 18"/></svg>
             <span class="status">Fast pris, som avtalt</span>
           </div>
         </div>
 
-        <!-- Ekspress -->
-        <div class="card" data-scene="e-vei">
-          <span class="eyebrow">02 · Underveis</span>
-          <h2>Rett dit, med en gang.</h2>
-          <p>Ekspress i Bergen og omegn når noe må frem i dag. Også på kveld og i helgen.</p>
-          <div class="ui" aria-label="Eksempel på ekspresstur">
-            <div class="head"><span>Ekspress</span><span id="eta">Fremme om ca. 25 min</span></div>
-            <div class="track"><i id="trk"></i><s id="dot"></s></div>
-            <div class="stops"><span>Hentet</span><span>Underveis</span><span>Mottaker</span></div>
-          </div>
-        </div>
-        <div class="card" data-scene="e-levering">
-          <span class="eyebrow">03 · Levert</span>
-          <h2>Levert i hånden.</h2>
-          <p>Du får beskjed med en gang det er levert.</p>
-          <div class="ui" aria-label="Eksempel på leveringsmelding">
-            <div class="head"><span>Ekspress levert</span><span>11:47</span></div>
-            <dl class="kv"><dt>Til</dt><dd>Resepsjonen, kontorbygg i sentrum</dd><dt>Melding</dt><dd>Sendt til deg 11:47</dd></dl>
-          </div>
-        </div>
-
         <div class="card final" data-scene="kveld" id="tilbud">
-          <span class="eyebrow">Elektrisk varebil · 11 kubikk · kveld og helg</span>
+          <span class="eyebrow">Elektrisk varebil · lader til i morgen · kveld og helg</span>
           <h2>Trenger du transport i Bergen?</h2>
           <div class="price"><b>600 kr</b><span>per time</span></div>
           <p>Faste priser etter gratis befaring. Fortell kort hva du trenger, så ringer vi deg.</p>
@@ -323,9 +323,9 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
       <span class="eyebrow">Tjenester</span>
       <h2 id="t-svc">Det meste som får plass i en varebil</h2>
       <div class="svc">
-        <article><img src="s-pakker.jpg" alt="Hender i arbeidshansker stabler pakker i en varebil" loading="lazy" width="1600" height="900"><h3>Pakker</h3><p>Faste ruter eller enkeltturer for bedrifter og nettbutikker. Vi kjører fast for Fedex, og vet hvordan pakker skal håndteres.</p><a class="more" href="#pakker" data-pick="pakker">Se pakkeoppdraget</a></article>
-        <article><img src="s-flytting.jpg" alt="Lenestol pakket i tepper og stroppet fast i varebilen" loading="lazy" width="1600" height="900"><h3>Flytting</h3><p>Flytting og enkeltmøbler, på dagtid, kveld eller helg. Gratis befaring og fast pris.</p><a class="more" href="#flytting" data-pick="flytting">Se flytteoppdraget</a></article>
-        <article><img src="s-ekspress.jpg" alt="Hvit varebil kjører ut av en tunnel i regn" loading="lazy" width="1600" height="900"><h3>Ekspress</h3><p>Når noe må frem i dag, også utenfor vanlig arbeidstid. Ring, så får du svar med en gang.</p><a class="more" href="#ekspress" data-pick="ekspress">Se ekspressoppdraget</a></article>
+        <article><img src="p-vei.jpg" alt="Miniatyr av hvit varebil i en smal gate i Bergen" loading="lazy" width="1600" height="900"><h3>Pakker</h3><p>Faste ruter eller enkeltturer for bedrifter og nettbutikker. Vi kjører fast for Fedex, og vet hvordan pakker skal håndteres.</p><a class="more" href="#pakker" data-pick="pakker">Se pakkeoppdraget</a></article>
+        <article><img src="h-lasting.jpg" alt="Miniatyr av varebil med lenestol stroppet fast i lasterommet" loading="lazy" width="1600" height="900"><h3>Flytting</h3><p>Flytting og enkeltmøbler, på dagtid, kveld eller helg. Gratis befaring og fast pris.</p><a class="more" href="#flytting" data-pick="flytting">Se flytteoppdraget</a></article>
+        <article><img src="k-vei.jpg" alt="Miniatyr av varebil som kjører ut av en tunnel i skumringen" loading="lazy" width="1600" height="900"><h3>Ekspress</h3><p>Når noe må frem i dag, også utenfor vanlig arbeidstid. Ring, så får du svar med en gang.</p><a class="more" href="#ekspress" data-pick="ekspress">Se kveldsturen</a></article>
       </div>
     </section>
 
@@ -363,23 +363,22 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
 
 <script>
 (() => {
-  // Felles start og slutt, egen midtdel per oppdragstype. Ny gren: legg til scener her og kort med data-scene i HTML.
+  // Én sammenhengende dag, ni scener i fast rekkefølge. Knappene under SMS-en hopper til riktig del av dagen.
   const ALL = {
-    "hero":       { len: 150, label: "Start" },
-    "bestilling": { len: 170, label: "Kontakt" },
-    "p-henting":  { len: 140, label: "Henting" },
+    "hero":       { len: 160, label: "Start" },
+    "bestilling": { len: 190, label: "Kontakt" },
+    "p-vei":      { len: 150, label: "Pakker" },
     "p-levering": { len: 150, label: "Levert" },
-    "f-lasting":  { len: 150, label: "Lasting" },
-    "f-levering": { len: 150, label: "Levert" },
-    "e-vei":      { len: 150, label: "Underveis" },
-    "e-levering": { len: 140, label: "Levert" },
-    "kveld":      { len: 130, label: "Pris" }
+    "k-vei":      { len: 140, label: "Kveld" },
+    "k-levering": { len: 170, label: "Levert" },
+    "h-lasting":  { len: 150, label: "Helg" },
+    "h-levering": { len: 150, label: "Levert" },
+    "kveld":      { len: 170, label: "Pris" }
   };
-  const START = ["hero", "bestilling"], END = ["kveld"];
   const BRANCHES = {
-    pakker:   { scenes: ["p-henting", "p-levering"], name: "pakker", form: "Pakker" },
-    flytting: { scenes: ["f-lasting", "f-levering"], name: "flytting", form: "Flytting" },
-    ekspress: { scenes: ["e-vei", "e-levering"], name: "ekspress", form: "Ekspress" }
+    pakker:   { scene: "p-vei", form: "Pakker" },
+    flytting: { scene: "h-lasting", form: "Flytting" },
+    ekspress: { scene: "k-vei", form: "Ekspress" }
   };
   // Tekst som endres når noen kommer inn via en annonse for én oppdragstype (?type=flytting eller #flytting)
   const COPY = {
@@ -387,7 +386,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
     flytting: { heroEyebrow: "Flytting i Bergen og omegn, også kveld og helg", heroLead: "Gratis befaring og fast pris før flyttedagen. Elektrisk varebil med 11 kubikk lasterom.", smsMe: "Hei! Vi skal flytte fra en toroms på Laksevåg, helst en lørdag. Kan dere se på det?", smsHim: "Ja, vi kommer på befaring torsdag kl. 17. Bjørsvik Transport" },
     ekspress: { heroEyebrow: "Ekspress i Bergen og omegn, også kveld og helg", heroLead: "Når noe må frem i dag, også utenfor vanlig arbeidstid. Ring, så får du svar med en gang. 600 kr per time.", smsMe: "Hei! Kan dere kjøre en konvolutt til sentrum med en gang?", smsHim: "Ja, vi henter om 15 minutter. Bjørsvik Transport" }
   };
-  const FADE = 0.08;
+  const FADE = 0.22;
   const mobile = matchMedia("(max-width: 860px), (pointer: coarse)").matches;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const useVideo = !mobile && !reduce;
@@ -398,17 +397,17 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
   const bar = document.getElementById("bar");
   const hint = document.getElementById("hint");
   const typeSel = document.getElementById("q-type");
-  const chosen = document.getElementById("chosen");
   const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
-  // Lag lag (video eller stillbilde) og kort-oppslag for alle scener
-  Object.entries(ALL).forEach(([id, s]) => {
-    s.id = id; s.cur = 0;
+  const seq = [];
+  let total = 0;
+  Object.entries(ALL).forEach(([id, s], i) => {
+    s.id = id; s.cur = 0; s.start = total; total += s.len;
     s.card = document.querySelector('[data-scene="' + id + '"]');
     const layer = document.createElement("div");
     layer.className = "layer";
     const img = document.createElement("img");
-    img.src = id + ".jpg"; img.alt = ""; img.decoding = "async"; img.loading = START.includes(id) ? "eager" : "lazy";
+    img.src = id + ".jpg"; img.alt = ""; img.decoding = "async"; img.loading = i < 2 ? "eager" : "lazy";
     layer.appendChild(img);
     if (useVideo) {
       const v = document.createElement("video");
@@ -419,52 +418,14 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
     }
     layersEl.appendChild(layer);
     s.layer = layer; s.img = img;
+    const b = document.createElement("button");
+    b.type = "button"; b.innerHTML = "<span>" + s.label + "</span>";
+    b.setAttribute("aria-label", "Gå til " + s.label);
+    b.addEventListener("click", () => jump(i));
+    stepsEl.appendChild(b); s.btn = b;
+    seq.push(s);
   });
-
-  let branch = "pakker", seq = [], total = 0;
-  const build = () => {
-    seq = [...START, ...BRANCHES[branch].scenes, ...END].map(id => ALL[id]);
-    total = 0;
-    seq.forEach(s => { s.start = total; total += s.len; });
-    film.style.height = (total + 100) + "vh";
-    stepsEl.innerHTML = "";
-    seq.forEach((s, i) => {
-      const b = document.createElement("button");
-      b.type = "button"; b.innerHTML = "<span>" + s.label + "</span>";
-      b.setAttribute("aria-label", "Gå til " + s.label);
-      b.addEventListener("click", () => jump(i));
-      stepsEl.appendChild(b); s.btn = b;
-    });
-    Object.values(ALL).forEach(s => { if (!seq.includes(s)) { s.layer.style.opacity = 0; s.layer.classList.remove("on"); if (s.card) { s.card.style.opacity = 0; s.card.classList.remove("on"); } } });
-  };
-
-  const applyCopy = b => {
-    document.querySelectorAll("[data-copy]").forEach(el => { const t = COPY[b][el.dataset.copy]; if (t) el.textContent = t; });
-  };
-
-  const setBranch = (b, opts = {}) => {
-    if (!BRANCHES[b]) return;
-    branch = b;
-    document.querySelectorAll("[data-branch]").forEach(x => x.setAttribute("aria-pressed", x.dataset.branch === b ? "true" : "false"));
-    chosen.innerHTML = "Viser oppdraget for <b>" + BRANCHES[b].name + "</b>. Bytt når som helst.";
-    typeSel.value = BRANCHES[b].form;
-    if (opts.copy) applyCopy(b);
-    build();
-    BRANCHES[b].scenes.forEach(id => { ALL[id].cur = 0; });
-    try { history.replaceState(null, "", location.pathname + location.search + "#" + b); } catch (e) {}
-  };
-  document.querySelectorAll("[data-branch]").forEach(x => x.addEventListener("click", () => setBranch(x.dataset.branch)));
-  document.querySelectorAll("[data-pick]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); setBranch(a.dataset.pick); jump(seq.indexOf(ALL[BRANCHES[a.dataset.pick].scenes[0]])); }));
-
-  // Annonselenker: ?type=kjol eller #kjol åpner rett gren og tilpasser åpningsteksten
-  const fromUrl = (new URLSearchParams(location.search).get("type") || location.hash.slice(1) || "").toLowerCase();
-  const startBranch = BRANCHES[fromUrl] ? fromUrl : "pakker";
-  branch = startBranch;
-  document.querySelectorAll("[data-branch]").forEach(x => x.setAttribute("aria-pressed", x.dataset.branch === startBranch ? "true" : "false"));
-  chosen.innerHTML = "Viser oppdraget for <b>" + BRANCHES[startBranch].name + "</b>. Bytt når som helst.";
-  typeSel.value = BRANCHES[startBranch].form;
-  applyCopy(startBranch);
-  build();
+  film.style.height = (total + 100) + "vh";
 
   const vh = () => innerHeight;
   const jump = i => {
@@ -472,7 +433,25 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
     const top = film.getBoundingClientRect().top + scrollY + (s.start + (i === 0 ? 0 : s.len * 0.3)) / 100 * vh();
     scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
   };
+  const applyCopy = b => {
+    document.querySelectorAll("[data-copy]").forEach(el => { const t = COPY[b][el.dataset.copy]; if (t) el.textContent = t; });
+  };
+  const mark = b => {
+    document.querySelectorAll("[data-branch]").forEach(x => x.setAttribute("aria-pressed", x.dataset.branch === b ? "true" : "false"));
+    typeSel.value = BRANCHES[b].form;
+    try { history.replaceState(null, "", location.pathname + location.search + "#" + b); } catch (e) {}
+  };
+  const go = b => { if (!BRANCHES[b]) return; mark(b); jump(seq.indexOf(ALL[BRANCHES[b].scene])); };
+  document.querySelectorAll("[data-branch]").forEach(x => x.addEventListener("click", () => go(x.dataset.branch)));
+  document.querySelectorAll("[data-pick]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); go(a.dataset.pick); }));
   document.querySelectorAll("[data-jump]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); jump(seq.indexOf(ALL[a.dataset.jump])); }));
+
+  // Annonselenker: ?type=flytting eller #flytting tilpasser åpningsteksten
+  const fromUrl = (new URLSearchParams(location.search).get("type") || location.hash.slice(1) || "").toLowerCase();
+  const startBranch = BRANCHES[fromUrl] ? fromUrl : "pakker";
+  applyCopy(startBranch);
+  document.querySelectorAll("[data-branch]").forEach(x => x.setAttribute("aria-pressed", x.dataset.branch === startBranch ? "true" : "false"));
+  typeSel.value = BRANCHES[startBranch].form;
 
   const load = i => { const s = seq[i]; if (s && s.v && !s.v.src) s.v.src = s.id + ".mp4"; };
   load(0); load(1);
@@ -504,13 +483,13 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
     seq.forEach((sc, i) => {
       let op = 0, lp = 0;
       if (i === idx) { op = 1; lp = local; }
-      else if (i === idx + 1) { op = fade; lp = 0; }
+      else if (i === idx + 1) { op = fade; lp = fade * 0.06; }
       else if (i < idx) { lp = 1; }
       sc.layer.style.opacity = op;
       sc.layer.classList.toggle("on", op > 0.001);
       sc.layer.style.zIndex = i === idx + 1 ? 2 : 1;
       if (sc.v && sc.ready && op > 0) {
-        const dur = sc.v.duration || 6;
+        const dur = sc.v.duration || 8;
         const target = lp * (dur - 0.06);
         sc.cur += (target - sc.cur) * (1 - Math.exp(-dt * 14));
         if (Math.abs(sc.v.currentTime - sc.cur) > 1 / 48) sc.v.currentTime = sc.cur;
@@ -523,7 +502,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
         let cop = 0;
         if (i === idx) {
           const fin = i === 0 ? 1 : ss(0.06, 0.2, local);
-          const fout = i === seq.length - 1 ? 1 : 1 - ss(0.68, 0.8, local);
+          const fout = i === seq.length - 1 ? 1 : 1 - ss(0.64, 0.76, local);
           cop = fin * fout;
         }
         sc.card.style.opacity = cop;
@@ -535,15 +514,15 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
 
     const id = s.id;
     if (id === "bestilling") smsHim.classList.toggle("on", local > 0.22);
-    if (id === "e-vei") {
+    if (id === "p-vei") {
       const p = ss(0.1, 0.75, local);
       trk.style.width = (p * 100) + "%"; dot.style.left = (p * 100) + "%";
       eta.textContent = "Fremme om ca. " + Math.max(1, Math.round(25 - p * 24)) + " min";
     }
-    if (id === "p-levering" || id === "f-levering") {
+    if (id === "p-levering" || id === "h-levering") {
       const sg = sigFor(id); if (sg) sg[0].style.strokeDashoffset = sg[1] * (1 - ss(0.12, 0.5, local));
     }
-    if (id === "f-lasting") checks.forEach((li, k) => li.classList.toggle("ok", local > 0.18 + k * 0.14));
+    if (id === "h-lasting") checks.forEach((li, k) => li.classList.toggle("ok", local > 0.18 + k * 0.14));
 
     bar.style.width = (Math.min(1, pos / total) * 100).toFixed(2) + "%";
     hint.style.opacity = 1 - ss(5, 20, pos);
