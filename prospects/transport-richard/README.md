@@ -9,11 +9,13 @@ til kundens eget domene når han har godkjent.
 ## Status
 
 - [x] Spørreskjema sendt på e-post (28.10.2026)
-- [ ] Svar mottatt, fylt inn i `intake.md`
+- [x] Svar mottatt, fylt inn i `intake.md` (29.10.2026)
 - [ ] Logo og bilfoto lagt i `assets/`
-- [ ] Samtykke til bruk som case (navn og logo) bekreftet skriftlig
-- [ ] Stilrammer og filmscener laget
-- [ ] Utkast publisert under `/demo/` og sendt til ham
+- [x] Samtykke til bruk som case bekreftet skriftlig (e-post 29.10.2026)
+- [x] Stilrammer og filmscener laget (KI, hvit E-Transit uten dekor)
+- [x] Utkast publisert under `/demo/bjorsvik-wlihro/`
+- [ ] Logo og bilfoto mottatt, dekor lagt på bilen
+- [ ] Utkast sendt til ham
 - [ ] Godkjent, flyttet til eget domene
 
 ## Regler for denne siden
