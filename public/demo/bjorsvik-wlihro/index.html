@@ -53,13 +53,18 @@ button { font-family: var(--f-body); cursor: pointer; }
 /* Demobanner og topplinje */
 .demo { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20; background: var(--deep); color: var(--mist-dim); font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-align: center; padding-block: 5px; }
 .demo b { color: var(--mist); font-weight: 500; }
-.top { position: fixed; top: calc(24px + env(safe-area-inset-top, 0px)); left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; background: linear-gradient(180deg, rgba(10,19,26,.78), rgba(10,19,26,0)); }
+.top.solid { background: #0a131a; box-shadow: 0 1px 0 rgba(255,255,255,.06); }
+.top { position: fixed; top: calc(24px + env(safe-area-inset-top, 0px)); left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; transition: background .3s; background: linear-gradient(180deg, rgba(10,19,26,.78), rgba(10,19,26,0)); }
 .word { font-family: var(--f-display); font-weight: 600; font-size: 20px; letter-spacing: .02em; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px; }
 .word i { font-style: normal; color: var(--green-hi); }
 .logo { height: 40px; width: auto; display: block; }
 @media (max-width: 860px) { .top .logo { height: 34px; } }
 .top nav { display: flex; gap: 10px; align-items: center; }
+.top .menu { gap: 22px; margin-left: auto; margin-right: 22px; }
+.top .menu a { color: var(--mist); text-decoration: none; font-size: 14px; letter-spacing: .01em; padding: 6px 0; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.top .menu a:hover { color: var(--ink); border-bottom-color: var(--green-hi); }
 .phone { font-family: var(--f-mono); font-size: 13px; color: var(--mist); }
+#tjenester, #om, #sporsmal { scroll-margin-top: 96px; }
 
 /* Filmscenen */
 .film { position: relative; }
@@ -99,9 +104,13 @@ button { font-family: var(--f-body); cursor: pointer; }
 .sign path { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Stegliste */
-.steps { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); display: grid; gap: 6px; z-index: 5; list-style: none; margin: 0; padding: 0; }
-.steps button { display: flex; align-items: center; gap: 10px; justify-content: flex-end; background: transparent; border: 0; color: var(--mist-dim); font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 4px 0; }
-.steps button span { opacity: 0; transition: opacity .25s; }
+.steps { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); display: grid; gap: 5px; z-index: 5; list-style: none; margin: 0; padding: 12px 14px 10px; background: rgba(10,19,26,.58); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; }
+.steps button { display: flex; align-items: center; gap: 10px; justify-content: flex-end; background: transparent; border: 0; color: var(--mist); font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 3px 0; }
+.steps button span { opacity: .85; transition: opacity .25s; }
+.steps button:hover span { opacity: 1; }
+.steps .cap { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--mist-dim); text-align: right; margin-bottom: 4px; }
+.steps a.skip { display: flex; align-items: center; gap: 10px; justify-content: flex-end; color: var(--mist); font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 10px 0 4px; text-decoration: none; margin-top: 4px; border-top: 1px solid rgba(255,255,255,.12); }
+.steps a.skip:hover { color: var(--ink); }
 .steps button::after { content: ""; width: 18px; height: 2px; background: rgba(201,209,211,.35); border-radius: 1px; transition: width .25s, background .25s; }
 .steps button.on { color: var(--ink); }
 .steps button.on span, .steps:hover button span { opacity: 1; }
@@ -144,6 +153,11 @@ footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-di
   .svc, .how { grid-template-columns: 1fr; }
   .steps { display: none; }
   .top .phone { display: none; }
+  .top { flex-wrap: wrap; row-gap: 6px; padding-block: 10px 8px; background: linear-gradient(180deg, rgba(10,19,26,.9), rgba(10,19,26,0)); }
+  .top .menu { order: 3; flex-basis: 100%; margin: 0; gap: 18px; }
+  .top .menu a { font-size: 13px; padding: 2px 0; }
+  .top .act { margin-left: auto; }
+  #tjenester, #om, #sporsmal { scroll-margin-top: 110px; }
   .card { top: auto; bottom: calc(40px + env(safe-area-inset-bottom, 0px)); transform: none; }
   .shade { background: linear-gradient(180deg, rgba(10,19,26,.5) 0%, rgba(10,19,26,0) 22%, rgba(10,19,26,.15) 45%, rgba(10,19,26,.88) 100%); }
   .card.hero .lead { font-size: 16px; }
@@ -201,7 +215,10 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
 
 <header class="top gutter">
   <a class="word" href="#topp" aria-label="Bjørsvik Transport, til toppen">Bjørsvik <i>Transport</i></a>
-  <nav><a class="phone" href="tel:+4792037976">920 37 976</a><a class="btn" href="#tilbud" data-jump="kveld">Få pris</a></nav>
+  <nav class="menu" aria-label="Meny">
+    <a href="#tjenester">Tjenester</a><a href="#tilbud" data-jump="kveld">Pris</a><a href="#om">Om oss</a><a href="#sporsmal">Spørsmål</a>
+  </nav>
+  <nav class="act"><a class="phone" href="tel:+4792037976">920 37 976</a><a class="btn" href="#tilbud" data-jump="kveld">Få pris</a></nav>
 </header>
 
 <main id="topp">
@@ -312,14 +329,14 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
         </div>
       </div>
 
-      <div class="steps" id="steps" role="navigation" aria-label="Steg i oppdraget"></div>
+      <div class="steps" id="steps" role="navigation" aria-label="Hopp i filmen"></div>
       <div class="hint" id="hint">Scroll</div>
       <div class="bar"><i id="bar"></i></div>
     </div>
   </section>
 
   <div class="below">
-    <section class="section gutter" aria-labelledby="t-svc">
+    <section class="section gutter" id="tjenester" aria-labelledby="t-svc">
       <span class="eyebrow">Tjenester</span>
       <h2 id="t-svc">Det meste som får plass i en varebil</h2>
       <div class="svc">
@@ -329,7 +346,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
       </div>
     </section>
 
-    <section class="section gutter" aria-labelledby="t-om">
+    <section class="section gutter" id="om" aria-labelledby="t-om">
       <span class="eyebrow">Om oss</span>
       <h2 id="t-om">Lite firma, stor fleksibilitet</h2>
       <p>Bjørsvik Transporttjenester er et lite transportfirma i Bergen med over 25 års erfaring fra bransjen. Vi kjører fast for Fedex, og tar oppdrag for bedrifter og private ved siden av, også på kveld og i helgen. Korte beslutningsveier gjør at vi kan si ja der større aktører må si nei.</p>
@@ -340,7 +357,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
       </div>
     </section>
 
-    <section class="section gutter" aria-labelledby="t-faq">
+    <section class="section gutter" id="sporsmal" aria-labelledby="t-faq">
       <span class="eyebrow">Spørsmål</span>
       <h2 id="t-faq">Det folk lurer på</h2>
       <div>
@@ -367,13 +384,13 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
   const ALL = {
     "hero":       { len: 160, label: "Start" },
     "bestilling": { len: 190, label: "Kontakt" },
-    "p-vei":      { len: 150, label: "Pakker" },
-    "p-levering": { len: 150, label: "Levert" },
-    "k-vei":      { len: 140, label: "Kveld" },
-    "k-levering": { len: 170, label: "Levert" },
-    "h-lasting":  { len: 150, label: "Helg" },
-    "h-levering": { len: 150, label: "Levert" },
-    "kveld":      { len: 170, label: "Pris" }
+    "p-vei":      { len: 150, label: "Pakker underveis" },
+    "p-levering": { len: 150, label: "Levert på dagtid" },
+    "k-vei":      { len: 140, label: "Ekspress og kveld" },
+    "k-levering": { len: 170, label: "Kveldslevering" },
+    "h-lasting":  { len: 150, label: "Flytting i helgen" },
+    "h-levering": { len: 150, label: "Båret inn" },
+    "kveld":      { len: 170, label: "Pris og bestilling" }
   };
   const BRANCHES = {
     pakker:   { scene: "p-vei", form: "Pakker" },
@@ -396,6 +413,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
   const stepsEl = document.getElementById("steps");
   const bar = document.getElementById("bar");
   const hint = document.getElementById("hint");
+  const top = document.querySelector(".top");
   const typeSel = document.getElementById("q-type");
   const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
@@ -426,6 +444,8 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
     seq.push(s);
   });
   film.style.height = (total + 100) + "vh";
+  const cap = document.createElement("div"); cap.className = "cap"; cap.textContent = "Hopp til"; stepsEl.prepend(cap);
+  const skip = document.createElement("a"); skip.className = "skip"; skip.href = "#tjenester"; skip.textContent = "Hopp over filmen ↓"; stepsEl.appendChild(skip);
 
   const vh = () => innerHeight;
   const jump = i => {
@@ -525,6 +545,7 @@ textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255
     if (id === "h-lasting") checks.forEach((li, k) => li.classList.toggle("ok", local > 0.18 + k * 0.14));
 
     bar.style.width = (Math.min(1, pos / total) * 100).toFixed(2) + "%";
+    top.classList.toggle("solid", r.bottom < 120);
     hint.style.opacity = 1 - ss(5, 20, pos);
     requestAnimationFrame(frame);
   };
