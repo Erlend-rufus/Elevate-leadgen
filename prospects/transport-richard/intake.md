@@ -33,14 +33,18 @@ Svar mottatt på e-post 29.10.2026. Merk alt vi antar med **(antatt)** til det e
 | Spørsmål | Svar | Brukes til |
 | --- | --- | --- |
 | Telefon og e-post på siden | 920 37 976, richardbjorsvik@gmail.com. Godkjent for siden. | Kontakt, ring/SMS-knapp |
-| Domene | Ikke avklart (spurt 29.10). | Publisering |
+| Domene | Ingen fra før (svar 30.10). Ledig per Norid RDAP 30.10: bjorsviktransport.no, bjorsvik-transport.no, bjørsviktransport.no, bjorsviktransporttjenester.no, og bjorsviktransport.com. bjorsvik.no er tatt (registrert 2001, ikke hans). | Publisering |
 | Samtykke til bruk som case | Ja, skriftlig 29.10.2026: «Du kan bruke nettstedet som en eksempel helt klart.» | Vår markedsføring |
 | Sitat fra fornøyd kunde | Kommer senere. | Tillitsseksjon (tom til da) |
 
-## Åpne spørsmål (sendt 29.10)
+## Avklart 30.10
 
-- Har han hjelper på større flyttinger, eller skal vi skrive «mindre flyttinger»?
-- Domene og e-post med firmanavn?
+- Hjelper på større flyttinger: ja, skaffes etter behov. Siden sier «vi stiller med hjelper når jobben krever det».
+- Domene: ingen fra før, se tabellen. Venter på hvilket navn han vil ha.
+
+## Åpne spørsmål
+
+- Valg av domenenavn og om han vil ha e-post med firmanavn.
 
 ## Historie
 
