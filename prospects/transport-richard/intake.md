@@ -24,8 +24,8 @@ Svar mottatt på e-post 29.10.2026. Merk alt vi antar med **(antatt)** til det e
 
 | Spørsmål | Svar | Brukes til |
 | --- | --- | --- |
-| Logo | Kommer. | Topp, bunntekst, dekor (legges på bilen med Kling når den kommer) |
-| Bilfoto | Kommer. 29.10: Richard foretrekker **miniatyrversjonen (tydelig KI)** fremfor stock med dekor. Miniatyren er hovedversjon. | Referanse hvis dekor skal på miniatyrbilen |
+| Logo | Mottatt 30.10 (PDF fra Illustrator, 2020): svart ordmerke «Bjørsvik» i fet slab-serif, svart stripe med «>>» og TRANSPORTTJENESTER, mobilnummer under. Kun svart/hvit. Vektorisert til `logo.svg` (hvit) og `logo-dark.svg` i demo-mappen, mobilnummerlinjen tatt bort. | Topp, bunntekst |
+| Bilfoto | Mottatt 30.10: hvit Ford E-Transit, mellomhøyt tak, helt uten dekor, blå striper i grillen. 29.10: Richard foretrekker **miniatyrversjonen (tydelig KI)** fremfor stock med dekor. Miniatyren er hovedversjon. | Miniatyrbilen stemmer allerede (hvit, uten dekor) |
 | Bilde av ham | Ønsker ikke. Ingen ansikter i filmene. | |
 
 ## Praktisk
