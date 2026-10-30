@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Test, nøytral palett · Bjørsvik Transport: fleksibel varebiltransport i Bergen</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="description" content="Lite og fleksibelt transportfirma i Bergen og omegn. Pakker, flytting og ekspress, også kveld og helg. 600 kr per time, gratis befaring. Ring 920 37 976.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MovingCompany","name":"Bjørsvik Transporttjenester AS","telephone":"+4792037976","email":"richardbjorsvik@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Bergen","addressCountry":"NO"},"areaServed":"Bergen og omegn","priceRange":"600 kr per time","identifier":"937069642","description":"Lite og fleksibelt transportfirma i Bergen og omegn: pakker, flytting og ekspress, også kveld og helg. Elektrisk varebil, 11 kubikk. Fast underleverandør for Fedex."}
+</script>
+<style>
+/* Layout: én fast filmscene som spoles med scroll, kort til venstre, stegliste til høyre, vanlige seksjoner under */
+:root {
+  color-scheme: dark;
+  --fjord: #0F1B24;
+  --deep: #0A131A;
+  --ink: #FFFFFF;
+  --mist: #C9D1D3;
+  --mist-dim: #8A979C;
+  --line: rgba(201, 209, 211, .16);
+  --green: #2C8A40;
+  --green-hi: #3BA251;
+  --panel: rgba(11, 12, 14, .74);
+  --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--fjord); color: var(--mist); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--deep); }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-display); color: var(--ink); margin: 0; line-height: 1.05; text-wrap: balance; letter-spacing: -.01em; }
+h1 { font-size: clamp(36px, 5.6vw, 66px); font-weight: 700; }
+h2 { font-size: clamp(26px, 3.6vw, 40px); font-weight: 600; }
+h3 { font-size: 20px; font-weight: 600; }
+p { margin: 0; max-width: 60ch; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--green-hi); }
+button { font-family: var(--f-body); cursor: pointer; }
+:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+.btn { background: var(--green); color: var(--ink); font-weight: 500; padding: 11px 18px; border-radius: 3px; font-size: 15px; border: 0; text-decoration: none; display: inline-block; }
+.btn:hover { background: var(--green-hi); }
+.btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,.38); padding: 10px 17px; }
+.btn.ghost:hover { border-color: var(--ink); }
+
+/* Demobanner og topplinje */
+.demo { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20; background: var(--deep); color: var(--mist-dim); font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-align: center; padding-block: 5px; }
+.demo b { color: var(--mist); font-weight: 500; }
+.top.solid { background: #0a131a; box-shadow: 0 1px 0 rgba(255,255,255,.06); }
+.top { position: fixed; top: calc(24px + env(safe-area-inset-top, 0px)); left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; transition: background .3s; background: linear-gradient(180deg, rgba(11,12,14,.78), rgba(11,12,14,0)); }
+.word { font-family: var(--f-display); font-weight: 600; font-size: 20px; letter-spacing: .02em; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.word i { font-style: normal; color: var(--green-hi); }
+.logo { height: 40px; width: auto; display: block; }
+@media (max-width: 860px) { .top .logo { height: 34px; } }
+.top nav { display: flex; gap: 10px; align-items: center; }
+.top .menu { gap: 22px; margin-left: auto; margin-right: 22px; }
+.top .menu a { color: var(--mist); text-decoration: none; font-size: 14px; letter-spacing: .01em; padding: 6px 0; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.top .menu a:hover { color: var(--ink); border-bottom-color: var(--green-hi); }
+.phone { font-family: var(--f-mono); font-size: 13px; color: var(--mist); }
+#tjenester, #om, #sporsmal { scroll-margin-top: 96px; }
+
+/* Filmscenen */
+.film { position: relative; }
+.stage { position: sticky; top: 0; height: 100vh; overflow: hidden; background: var(--deep); }
+.layer { position: absolute; inset: 0; opacity: 0; visibility: hidden; will-change: opacity; }
+.layer.on { visibility: visible; }
+.layer video, .layer img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.layer img { transform-origin: 50% 55%; }
+.shade { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgba(11,12,14,.78) 0%, rgba(11,12,14,.5) 30%, rgba(11,12,14,0) 58%), linear-gradient(180deg, rgba(11,12,14,.45) 0%, rgba(11,12,14,0) 20%, rgba(11,12,14,0) 75%, rgba(11,12,14,.55) 100%); }
+.cards { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.card { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); top: 50%; transform: translateY(-46%); width: min(460px, calc(100% - 32px)); display: grid; gap: 14px; opacity: 0; visibility: hidden; }
+.card.on { visibility: visible; pointer-events: auto; }
+.card.hero { width: min(560px, calc(100% - 32px)); }
+.card .lead { font-size: 18px; color: var(--mist); }
+.card h1, .card h2, .card > p { text-shadow: 0 1px 18px rgba(11,12,14,.65); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+/* UI-kort i scenene */
+.ui { background: var(--panel); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; display: grid; gap: 10px; font-size: 14px; }
+.ui .head { display: flex; justify-content: space-between; gap: 12px; font-family: var(--f-mono); font-size: 12px; color: var(--mist-dim); }
+.ui .head b { color: var(--ink); font-weight: 500; }
+.status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 12px; color: var(--green-hi); }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green-hi); box-shadow: 0 0 0 3px rgba(59,162,81,.25); }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-family: var(--f-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+.kv dt { color: var(--mist-dim); }
+.kv dd { margin: 0; color: var(--ink); }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: rgba(255,255,255,.05); padding: 4px; border-radius: 4px; }
+.seg button { background: transparent; border: 0; color: var(--mist); padding: 8px 6px; border-radius: 3px; font-size: 13px; }
+.seg button[aria-pressed="true"] { background: var(--green); color: var(--ink); }
+.match { font-family: var(--f-mono); font-size: 12px; color: var(--mist); }
+.match b { color: var(--ink); font-weight: 500; }
+.track { position: relative; height: 4px; background: rgba(255,255,255,.12); border-radius: 2px; }
+.track i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--green-hi); border-radius: 2px; }
+.track s { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--green); left: 0; }
+.stops { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 11px; color: var(--mist-dim); }
+.sign { height: 46px; border-bottom: 1px dashed var(--line); }
+.sign path { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Stegliste */
+.steps { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); display: grid; gap: 5px; z-index: 5; list-style: none; margin: 0; padding: 12px 14px 10px; background: rgba(11,12,14,.58); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; }
+.steps button { display: flex; align-items: center; gap: 10px; justify-content: flex-end; background: transparent; border: 0; color: var(--mist); font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 3px 0; }
+.steps button span { opacity: .85; transition: opacity .25s; }
+.steps button:hover span { opacity: 1; }
+.steps .cap { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--mist-dim); text-align: right; margin-bottom: 4px; }
+.steps a.skip { display: flex; align-items: center; gap: 10px; justify-content: flex-end; color: var(--mist); font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 10px 0 4px; text-decoration: none; margin-top: 4px; border-top: 1px solid rgba(255,255,255,.12); }
+.steps a.skip:hover { color: var(--ink); }
+.steps button::after { content: ""; width: 18px; height: 2px; background: rgba(201,209,211,.35); border-radius: 1px; transition: width .25s, background .25s; }
+.steps button.on { color: var(--ink); }
+.steps button.on span, .steps:hover button span { opacity: 1; }
+.steps button.on::after { width: 30px; background: var(--green-hi); }
+.bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.08); z-index: 5; }
+.bar i { display: block; height: 100%; width: 0; background: var(--green); }
+.hint { position: absolute; left: 50%; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--mist); display: grid; justify-items: center; gap: 8px; pointer-events: none; }
+.hint::after { content: ""; width: 1px; height: 26px; background: linear-gradient(var(--mist), transparent); }
+
+/* Skjema i siste scene */
+form { display: grid; gap: 10px; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+label { display: grid; gap: 4px; font-size: 12px; color: var(--mist-dim); font-family: var(--f-mono); }
+input, select { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 3px; padding: 9px 10px; min-width: 0; }
+input::placeholder { color: var(--mist-dim); }
+.wide { grid-column: 1 / -1; }
+.done { font-size: 14px; color: var(--ink); }
+
+/* Seksjoner under filmen */
+.below { background: var(--fjord); position: relative; z-index: 2; }
+.section { max-width: 1120px; margin: 0 auto; padding-block: 88px; display: grid; gap: 32px; }
+.section + .section { border-top: 1px solid var(--line); }
+.svc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.svc article { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.more { color: var(--green-hi); font-size: 14px; text-decoration: none; font-family: var(--f-mono); }
+.more:hover { text-decoration: underline; }
+.svc img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 62%; border-radius: 4px; max-width: 100%; }
+.how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; counter-reset: s; }
+.how li { list-style: none; display: grid; gap: 8px; min-width: 0; }
+.how li::before { counter-increment: s; content: counter(s); font-family: var(--f-mono); font-size: 12px; color: var(--green-hi); border: 1px solid var(--green); width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; }
+.how ol { display: contents; }
+details { border-bottom: 1px solid var(--line); padding-block: 14px; }
+summary { color: var(--ink); font-size: 17px; cursor: pointer; }
+details p { margin-top: 8px; }
+footer { border-top: 1px solid var(--line); }
+footer .section { padding-block: 40px; grid-template-columns: 1fr auto; align-items: end; gap: 16px; font-size: 14px; }
+footer .mono { font-family: var(--f-mono); font-size: 12px; color: var(--mist-dim); }
+
+@media (max-width: 860px) {
+  .svc, .how { grid-template-columns: 1fr; }
+  .steps { display: none; }
+  .top .phone { display: none; }
+  .top { flex-wrap: wrap; row-gap: 6px; padding-block: 10px 8px; background: linear-gradient(180deg, rgba(11,12,14,.9), rgba(11,12,14,0)); }
+  .top .menu { order: 3; flex-basis: 100%; margin: 0; gap: 18px; }
+  .top .menu a { font-size: 13px; padding: 2px 0; }
+  .top .act { margin-left: auto; }
+  #tjenester, #om, #sporsmal { scroll-margin-top: 110px; }
+  .card { top: auto; bottom: calc(40px + env(safe-area-inset-bottom, 0px)); transform: none; }
+  .shade { background: linear-gradient(180deg, rgba(11,12,14,.5) 0%, rgba(11,12,14,0) 22%, rgba(11,12,14,.15) 45%, rgba(11,12,14,.88) 100%); }
+  .card.hero .lead { font-size: 16px; }
+  .fields { grid-template-columns: 1fr; }
+  footer .section { grid-template-columns: 1fr; }
+  .hint { display: none; }
+  .demo .long { display: none; }
+}
+@media (max-width: 860px) and (max-height: 760px) { .ui { display: none; } .card.final .ui { display: grid; } }
+
+/* Valgstopp og grenvise UI-kort */
+.card.choose { width: min(520px, calc(100% - 32px)); }
+.choice { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.choice button { display: grid; gap: 6px; align-content: start; text-align: left; background: var(--panel); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 6px; padding: 14px 14px 16px; color: var(--mist); min-width: 0; transition: border-color .2s, background .2s; }
+.choice button b { font-family: var(--f-display); font-weight: 600; font-size: 19px; color: var(--ink); }
+.choice button span { font-size: 13px; line-height: 1.35; }
+.choice button:hover { border-color: rgba(255,255,255,.4); }
+.choice button[aria-pressed="true"] { border-color: var(--green-hi); background: rgba(44,138,64,.32); }
+.choice button[aria-pressed="true"] b::after { content: " ✓"; color: var(--green-hi); }
+.note { font-family: var(--f-mono); font-size: 12px; color: var(--mist); }
+.note b { color: var(--ink); font-weight: 500; }
+.temp { display: flex; align-items: baseline; gap: 6px; font-family: var(--f-display); color: var(--ink); }
+.temp b { font-size: 44px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.temp span { font-size: 18px; color: var(--mist); }
+.spark { width: 100%; height: 80px; display: block; }
+.spark .band { fill: rgba(59,162,81,.12); }
+.spark .ax { fill: var(--mist-dim); font: 10px var(--f-mono); }
+.spark path { fill: none; stroke: var(--green-hi); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.spark circle { fill: var(--ink); stroke: var(--green); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 14px; }
+.checks li { display: flex; gap: 10px; align-items: center; color: var(--mist-dim); transition: color .3s; }
+.checks li::before { content: ""; width: 16px; height: 16px; border-radius: 3px; border: 1px solid var(--line); flex: none; display: grid; place-items: center; font-size: 12px; transition: background .3s, border-color .3s; }
+.checks li.ok { color: var(--ink); }
+.checks li.ok::before { content: "✓"; color: var(--ink); background: var(--green); border-color: var(--green); }
+@media (max-width: 860px) { .choice { grid-template-columns: 1fr; } .choice button { grid-template-columns: auto 1fr; align-items: baseline; gap: 10px; padding: 12px; } }
+
+.sms { display: grid; gap: 8px; }
+.sms p { margin: 0; max-width: 80%; padding: 9px 12px; border-radius: 14px; font-size: 14px; line-height: 1.35; }
+.sms .me { justify-self: end; background: var(--green); color: var(--ink); border-bottom-right-radius: 4px; }
+.sms .him { justify-self: start; background: rgba(255,255,255,.1); color: var(--ink); border-bottom-left-radius: 4px; opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; }
+.sms .him.on { opacity: 1; transform: none; }
+.sms small { font-family: var(--f-mono); font-size: 11px; color: var(--mist-dim); }
+.price { display: flex; align-items: baseline; gap: 8px; font-family: var(--f-display); color: var(--ink); }
+.price b { font-size: 40px; font-weight: 600; line-height: 1; }
+.about { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.about div { display: grid; gap: 6px; }
+.about b { font-family: var(--f-display); font-size: 30px; color: var(--ink); font-weight: 600; }
+@media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+textarea { font: 15px var(--f-body); color: var(--ink); background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 3px; padding: 9px 10px; min-height: 64px; resize: vertical; }
+
+/* Testversjon: nøytral palett avledet av logoen (svart/hvit). Grønt er erstattet med hvitt som aksent. */
+:root {
+  --fjord: #121416;
+  --deep: #0B0C0E;
+  --mist: #D4D6D8;
+  --mist-dim: #8E9397;
+  --line: rgba(212, 214, 216, .16);
+  --green: #F3F3F1;
+  --green-hi: #FFFFFF;
+  --panel: rgba(11, 12, 14, .74);
+}
+.btn, .seg button[aria-pressed="true"], .checks li.ok::before, .sms .me { color: #0B0C0E; }
+.btn:hover { background: #FFFFFF; }
+.btn.ghost, .btn.ghost:hover { color: var(--ink); background: transparent; }
+.eyebrow { color: var(--mist-dim); }
+.status::before { box-shadow: 0 0 0 3px rgba(255,255,255,.22); }
+.choice button[aria-pressed="true"] { background: rgba(255,255,255,.12); }
+.track s { box-shadow: 0 0 0 3px rgba(255,255,255,.22); }
+.demo, .top.solid { background: #0B0C0E; }
+.top { background: linear-gradient(180deg, rgba(11,12,14,.78), rgba(11,12,14,0)); }
+.steps { background: rgba(11,12,14,.6); }
+</style>
+</head>
+<body>
+
+<div class="demo"><b>Utkast fra Elevate Marketing.</b><span class="long"> Ikke publisert. Skjemaet sender ingenting.</span> <a href="../" style="color:var(--green-hi)">Dette er testversjonen med nøytral palett. Se den grønne</a></div>
+
+<header class="top gutter">
+  <a class="word" href="#topp" aria-label="Bjørsvik Transporttjenester, til toppen"><img class="logo" src="../logo.svg" alt="Bjørsvik Transporttjenester" width="196" height="56"></a>
+  <nav class="menu" aria-label="Meny">
+    <a href="#tjenester">Tjenester</a><a href="#tilbud" data-jump="kveld">Pris</a><a href="#om">Om oss</a><a href="#sporsmal">Spørsmål</a>
+  </nav>
+  <nav class="act"><a class="phone" href="tel:+4792037976">920 37 976</a><a class="btn" href="#tilbud" data-jump="kveld">Få pris</a></nav>
+</header>
+
+<main id="topp">
+  <section class="film" id="film" aria-label="Slik foregår et oppdrag, fra du tar kontakt til det er levert">
+    <div class="stage" id="stage">
+      <div id="layers"></div>
+      <div class="shade"></div>
+
+      <div class="cards">
+        <div class="card hero" data-scene="hero">
+          <span class="eyebrow" data-copy="heroEyebrow">Lite og fleksibelt transportfirma i Bergen og omegn</span>
+          <h1>Levert når det passer deg.<br>Også kveld og helg.</h1>
+          <p class="lead" data-copy="heroLead">Pakker, flytting og ekspress med elektrisk varebil. 600 kr per time, gratis befaring før større jobber, og du snakker direkte med sjåføren.</p>
+          <div class="row"><a class="btn" href="tel:+4792037976">Ring 920 37 976</a><a class="btn ghost" href="sms:+4792037976">Send SMS</a></div>
+        </div>
+
+        <div class="card choose" data-scene="bestilling">
+          <span class="eyebrow">01 · Du tar kontakt</span>
+          <h2>Ingen sentralbord. Du får svar med en gang.</h2>
+          <div class="ui sms" aria-label="Eksempel på SMS">
+            <p class="me" data-copy="smsMe">Hei! Kan dere hente 6 pakker hos oss i dag?</p>
+            <p class="him" id="sms-him" data-copy="smsHim">Ja, vi er der 14:30. Bjørsvik Transport</p>
+            <small>Eksempel</small>
+          </div>
+          <div class="choice" role="group" aria-label="Hopp til den delen av dagen som gjelder deg">
+            <button type="button" data-branch="pakker" aria-pressed="true"><b>Pakker</b><span>Faste ruter og enkeltturer</span></button>
+            <button type="button" data-branch="flytting" aria-pressed="false"><b>Flytting</b><span>Gratis befaring, fast pris</span></button>
+            <button type="button" data-branch="ekspress" aria-pressed="false"><b>Ekspress</b><span>Også kveld og helg</span></button>
+          </div>
+          <p class="note" id="chosen">Dette er én dag hos oss. Scroll videre, eller hopp rett til det som gjelder deg.</p>
+        </div>
+
+        <!-- Dag: pakker -->
+        <div class="card" data-scene="p-vei">
+          <span class="eyebrow">02 · Underveis</span>
+          <h2>Hentet, sikret og på vei.</h2>
+          <p>Vi kjører fast for Fedex i Bergen hver dag, og tar pakkeoppdrag for bedrifter og nettbutikker ved siden av.</p>
+          <div class="ui" aria-label="Eksempel på status underveis">
+            <div class="head"><span>6 pakker</span><span id="eta">Fremme om ca. 25 min</span></div>
+            <div class="track"><i id="trk"></i><s id="dot"></s></div>
+            <div class="stops"><span>Hentet</span><span>Underveis</span><span>Mottaker</span></div>
+          </div>
+        </div>
+        <div class="card" data-scene="p-levering">
+          <span class="eyebrow">03 · Levert</span>
+          <h2>Levert i hånden, og du får beskjed.</h2>
+          <p>Når pakken er levert, får du en melding med tidspunktet.</p>
+          <div class="ui" aria-label="Eksempel på leveringsmelding">
+            <div class="head"><span>Levert</span><span>15:10</span></div>
+            <svg class="sign" viewBox="0 0 220 46" aria-hidden="true"><path class="sigpath" d="M6 34 C 16 10, 26 10, 28 30 S 40 40, 46 22 C 50 12, 58 14, 58 28 C 58 36, 66 36, 72 24 L 80 30 C 92 6, 104 40, 116 20 C 124 8, 132 30, 140 26 C 156 18, 170 34, 196 16"/></svg>
+            <span class="status">6 av 6 pakker levert</span>
+          </div>
+        </div>
+
+        <!-- Kveld: ekspress og kveldslevering -->
+        <div class="card" data-scene="k-vei">
+          <span class="eyebrow">04 · Kveld</span>
+          <h2>Dagen slutter ikke klokka fire.</h2>
+          <p>Ekspress når noe må frem i dag, og leveringer på kvelden for dem som ikke er hjemme på dagtid. Samme pris, samme sjåfør.</p>
+        </div>
+        <div class="card" data-scene="k-levering">
+          <span class="eyebrow">05 · Kveldslevering</span>
+          <h2>Levert når du faktisk er hjemme.</h2>
+          <p>Du slipper hentelapp og kø på posten. Vi leverer på døra om kvelden, og sender deg beskjed når det er gjort.</p>
+          <div class="ui" aria-label="Eksempel på leveringsmelding om kvelden">
+            <div class="head"><span>Levert på døra</span><span>19:40</span></div>
+            <dl class="kv"><dt>Til</dt><dd>Enebolig, Bønes</dd><dt>Melding</dt><dd>Sendt til deg 19:40</dd></dl>
+          </div>
+        </div>
+
+        <!-- Helg: flytting -->
+        <div class="card" data-scene="h-lasting">
+          <span class="eyebrow">06 · Lørdag</span>
+          <h2>Flytting i helgen, til fast pris.</h2>
+          <p>Vi ser på jobben først, gratis. Du får en fast pris før flyttedagen, og vi kommer når det passer deg, også lørdag og søndag.</p>
+          <div class="ui" aria-label="Sjekkliste ved lasting">
+            <div class="head"><span>Flytting</span><span>11 kubikk</span></div>
+            <ul class="checks" id="f-checks"><li>Møbler pakket i tepper</li><li>Stroppet fast i lasterommet</li><li>Klar til å kjøre</li></ul>
+          </div>
+        </div>
+        <div class="card" data-scene="h-levering">
+          <span class="eyebrow">07 · Inn på plass</span>
+          <h2>Inn der du vil ha det.</h2>
+          <p>Eskene og møblene bæres inn, ikke bare settes av på fortauet.</p>
+          <div class="ui" aria-label="Eksempel på bekreftelse">
+            <div class="head"><span>Flytting fullført</span><span>14:42</span></div>
+            <svg class="sign" viewBox="0 0 220 46" aria-hidden="true"><path class="sigpath" d="M8 30 C 18 8, 30 14, 30 30 C 30 40, 44 38, 50 22 C 56 8, 66 20, 70 30 L 84 18 C 96 34, 110 6, 122 26 C 130 38, 146 12, 158 22 C 170 32, 186 20, 206 18"/></svg>
+            <span class="status">Fast pris, som avtalt</span>
+          </div>
+        </div>
+
+        <div class="card final" data-scene="kveld" id="tilbud">
+          <span class="eyebrow">Elektrisk varebil · lader til i morgen · kveld og helg</span>
+          <h2>Trenger du transport i Bergen?</h2>
+          <div class="price"><b>600 kr</b><span>per time</span></div>
+          <p>Faste priser etter gratis befaring. Fortell kort hva du trenger, så ringer vi deg.</p>
+          <form class="ui" id="quote" novalidate>
+            <div class="fields">
+              <label for="q-navn">Navn<input id="q-navn" name="navn" autocomplete="name" placeholder="Ola Nordmann"></label>
+              <label for="q-tlf">Telefon<input id="q-tlf" name="tlf" type="tel" autocomplete="tel" placeholder="400 00 000"></label>
+              <label for="q-type">Hva gjelder det<select id="q-type" name="type"><option>Pakker</option><option>Flytting</option><option>Ekspress</option><option>Annet</option></select></label>
+              <label for="q-naar">Når<select id="q-naar" name="naar"><option>I dag</option><option>Denne uken</option><option>Kveld eller helg</option><option>Senere</option></select></label>
+              <label for="q-hva" class="wide">Kort om oppdraget<textarea id="q-hva" name="hva" placeholder="Fra hvor, til hvor, og hva skal fraktes"></textarea></label>
+            </div>
+            <div class="row"><button class="btn" type="submit">Send</button><a class="phone" href="tel:+4792037976">eller ring 920 37 976</a></div>
+            <p class="done" id="done" hidden>Takk. Dette er et utkast, så ingenting er sendt.</p>
+          </form>
+        </div>
+      </div>
+
+      <div class="steps" id="steps" role="navigation" aria-label="Hopp i filmen"></div>
+      <div class="hint" id="hint">Scroll</div>
+      <div class="bar"><i id="bar"></i></div>
+    </div>
+  </section>
+
+  <div class="below">
+    <section class="section gutter" id="tjenester" aria-labelledby="t-svc">
+      <span class="eyebrow">Tjenester</span>
+      <h2 id="t-svc">Det meste som får plass i en varebil</h2>
+      <div class="svc">
+        <article><img src="../p-vei.jpg" alt="Miniatyr av hvit varebil i en smal gate i Bergen" loading="lazy" width="1600" height="900"><h3>Pakker</h3><p>Faste ruter eller enkeltturer for bedrifter og nettbutikker. Vi kjører fast for Fedex, og vet hvordan pakker skal håndteres.</p><a class="more" href="#pakker" data-pick="pakker">Se pakkeoppdraget</a></article>
+        <article><img src="../h-lasting.jpg" alt="Miniatyr av varebil med lenestol stroppet fast i lasterommet" loading="lazy" width="1600" height="900"><h3>Flytting</h3><p>Flytting og enkeltmøbler, på dagtid, kveld eller helg. Gratis befaring og fast pris.</p><a class="more" href="#flytting" data-pick="flytting">Se flytteoppdraget</a></article>
+        <article><img src="../k-vei.jpg" alt="Miniatyr av varebil som kjører ut av en tunnel i skumringen" loading="lazy" width="1600" height="900"><h3>Ekspress</h3><p>Når noe må frem i dag, også utenfor vanlig arbeidstid. Ring, så får du svar med en gang.</p><a class="more" href="#ekspress" data-pick="ekspress">Se kveldsturen</a></article>
+      </div>
+    </section>
+
+    <section class="section gutter" id="om" aria-labelledby="t-om">
+      <span class="eyebrow">Om oss</span>
+      <h2 id="t-om">Lite firma, stor fleksibilitet</h2>
+      <p>Bjørsvik Transporttjenester er et lite transportfirma i Bergen med over 25 års erfaring fra bransjen. Vi kjører fast for Fedex, og tar oppdrag for bedrifter og private ved siden av, også på kveld og i helgen. Korte beslutningsveier gjør at vi kan si ja der større aktører må si nei.</p>
+      <div class="about">
+        <div><b>25+ år</b><span>i transportbransjen</span></div>
+        <div><b>Kveld og helg</b><span>vi leverer når det passer deg</span></div>
+        <div><b>600 kr</b><span>per time, eller fast pris etter befaring</span></div>
+      </div>
+    </section>
+
+    <section class="section gutter" id="sporsmal" aria-labelledby="t-faq">
+      <span class="eyebrow">Spørsmål</span>
+      <h2 id="t-faq">Det folk lurer på</h2>
+      <div>
+        <details><summary>Hva koster det?</summary><p>600 kr per time. Ved større jobber kommer vi på gratis befaring, og du får en fast pris.</p></details>
+        <details><summary>Hvor kjører dere?</summary><p>Bergen og omegn. Andre oppdrag i Norge etter avtale.</p></details>
+        <details><summary>Leverer dere på kveld og i helgen?</summary><p>Ja. Si fra når du bestiller, så finner vi et tidspunkt som passer.</p></details>
+        <details><summary>Hvor mye får plass?</summary><p>Varebilen har 11 kubikk lasterom. Det holder til mange pakker, møbler og de fleste flyttinger.</p></details>
+        <details><summary>Hvordan bestiller jeg?</summary><p>Ring eller send SMS til 920 37 976, eller send en e-post til richardbjorsvik@gmail.com.</p></details>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="gutter">
+  <div class="section">
+    <div style="display:grid;gap:6px"><img src="../logo.svg" alt="Bjørsvik Transporttjenester AS" width="196" height="56" style="height:44px;width:auto;display:block"><p class="mono">Org.nr. 937 069 642 · Bergen · <a href="tel:+4792037976" style="color:inherit">920 37 976</a> · <a href="mailto:richardbjorsvik@gmail.com" style="color:inherit">richardbjorsvik@gmail.com</a></p></div>
+    <p class="mono">Film og bilder er miniatyrillustrasjoner laget med KI.<br>Utkast fra Elevate Marketing.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // Én sammenhengende dag, ni scener i fast rekkefølge. Knappene under SMS-en hopper til riktig del av dagen.
+  const ALL = {
+    "hero":       { len: 160, label: "Start" },
+    "bestilling": { len: 190, label: "Kontakt" },
+    "p-vei":      { len: 150, label: "Pakker underveis" },
+    "p-levering": { len: 150, label: "Levert på dagtid" },
+    "k-vei":      { len: 140, label: "Ekspress og kveld" },
+    "k-levering": { len: 170, label: "Kveldslevering" },
+    "h-lasting":  { len: 150, label: "Flytting i helgen" },
+    "h-levering": { len: 150, label: "Båret inn" },
+    "kveld":      { len: 170, label: "Pris og bestilling" }
+  };
+  const BRANCHES = {
+    pakker:   { scene: "p-vei", form: "Pakker" },
+    flytting: { scene: "h-lasting", form: "Flytting" },
+    ekspress: { scene: "k-vei", form: "Ekspress" }
+  };
+  // Tekst som endres når noen kommer inn via en annonse for én oppdragstype (?type=flytting eller #flytting)
+  const COPY = {
+    pakker:   { heroEyebrow: "Pakkekjøring for bedrifter i Bergen og omegn", heroLead: "Faste ruter eller enkeltturer med elektrisk varebil. Vi kjører fast for Fedex, og tar oppdrag ved siden av. 600 kr per time.", smsMe: "Hei! Kan dere hente 6 pakker hos oss i dag?", smsHim: "Ja, vi er der 14:30. Bjørsvik Transport" },
+    flytting: { heroEyebrow: "Flytting i Bergen og omegn, også kveld og helg", heroLead: "Gratis befaring og fast pris før flyttedagen. Elektrisk varebil med 11 kubikk lasterom.", smsMe: "Hei! Vi skal flytte fra en toroms på Laksevåg, helst en lørdag. Kan dere se på det?", smsHim: "Ja, vi kommer på befaring torsdag kl. 17. Bjørsvik Transport" },
+    ekspress: { heroEyebrow: "Ekspress i Bergen og omegn, også kveld og helg", heroLead: "Når noe må frem i dag, også utenfor vanlig arbeidstid. Ring, så får du svar med en gang. 600 kr per time.", smsMe: "Hei! Kan dere kjøre en konvolutt til sentrum med en gang?", smsHim: "Ja, vi henter om 15 minutter. Bjørsvik Transport" }
+  };
+  const FADE = 0.22;
+  const mobile = matchMedia("(max-width: 860px), (pointer: coarse)").matches;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const useVideo = !mobile && !reduce;
+
+  const film = document.getElementById("film");
+  const layersEl = document.getElementById("layers");
+  const stepsEl = document.getElementById("steps");
+  const bar = document.getElementById("bar");
+  const hint = document.getElementById("hint");
+  const top = document.querySelector(".top");
+  const typeSel = document.getElementById("q-type");
+  const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  const seq = [];
+  let total = 0;
+  Object.entries(ALL).forEach(([id, s], i) => {
+    s.id = id; s.cur = 0; s.start = total; total += s.len;
+    s.card = document.querySelector('[data-scene="' + id + '"]');
+    const layer = document.createElement("div");
+    layer.className = "layer";
+    const img = document.createElement("img");
+    img.src = "../" + id + ".jpg"; img.alt = ""; img.decoding = "async"; img.loading = i < 2 ? "eager" : "lazy";
+    layer.appendChild(img);
+    if (useVideo) {
+      const v = document.createElement("video");
+      v.muted = true; v.playsInline = true; v.preload = "auto"; v.poster = "../" + id + ".jpg";
+      v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+      v.addEventListener("loadeddata", () => { s.ready = true; img.remove(); });
+      layer.appendChild(v); s.v = v;
+    }
+    layersEl.appendChild(layer);
+    s.layer = layer; s.img = img;
+    const b = document.createElement("button");
+    b.type = "button"; b.innerHTML = "<span>" + s.label + "</span>";
+    b.setAttribute("aria-label", "Gå til " + s.label);
+    b.addEventListener("click", () => jump(i));
+    stepsEl.appendChild(b); s.btn = b;
+    seq.push(s);
+  });
+  film.style.height = (total + 100) + "vh";
+  const cap = document.createElement("div"); cap.className = "cap"; cap.textContent = "Hopp til"; stepsEl.prepend(cap);
+  const skip = document.createElement("a"); skip.className = "skip"; skip.href = "#tjenester"; skip.textContent = "Hopp over filmen ↓"; stepsEl.appendChild(skip);
+
+  const vh = () => innerHeight;
+  const jump = i => {
+    const s = seq[i];
+    const top = film.getBoundingClientRect().top + scrollY + (s.start + (i === 0 ? 0 : s.len * 0.3)) / 100 * vh();
+    scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
+  };
+  const applyCopy = b => {
+    document.querySelectorAll("[data-copy]").forEach(el => { const t = COPY[b][el.dataset.copy]; if (t) el.textContent = t; });
+  };
+  const mark = b => {
+    document.querySelectorAll("[data-branch]").forEach(x => x.setAttribute("aria-pressed", x.dataset.branch === b ? "true" : "false"));
+    typeSel.value = BRANCHES[b].form;
+    try { history.replaceState(null, "", location.pathname + location.search + "#" + b); } catch (e) {}
+  };
+  const go = b => { if (!BRANCHES[b]) return; mark(b); jump(seq.indexOf(ALL[BRANCHES[b].scene])); };
+  document.querySelectorAll("[data-branch]").forEach(x => x.addEventListener("click", () => go(x.dataset.branch)));
+  document.querySelectorAll("[data-pick]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); go(a.dataset.pick); }));
+  document.querySelectorAll("[data-jump]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); jump(seq.indexOf(ALL[a.dataset.jump])); }));
+
+  // Annonselenker: ?type=flytting eller #flytting tilpasser åpningsteksten
+  const fromUrl = (new URLSearchParams(location.search).get("type") || location.hash.slice(1) || "").toLowerCase();
+  const startBranch = BRANCHES[fromUrl] ? fromUrl : "pakker";
+  applyCopy(startBranch);
+  document.querySelectorAll("[data-branch]").forEach(x => x.setAttribute("aria-pressed", x.dataset.branch === startBranch ? "true" : "false"));
+  typeSel.value = BRANCHES[startBranch].form;
+
+  const load = i => { const s = seq[i]; if (s && s.v && !s.v.src) s.v.src = "../" + s.id + ".mp4"; };
+  load(0); load(1);
+
+  const form = document.getElementById("quote");
+  form.addEventListener("submit", e => { e.preventDefault(); document.getElementById("done").hidden = false; });
+
+  // Små animasjoner i kortene, styrt av fremdriften i scenen
+  const trk = document.getElementById("trk"), dot = document.getElementById("dot"), eta = document.getElementById("eta");
+  const sigs = [...document.querySelectorAll(".sigpath")].map(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; return [p, L]; });
+  const sigFor = id => sigs.find(([p]) => p.closest("[data-scene]").dataset.scene === id);
+  const checks = [...document.querySelectorAll("#f-checks li")];
+  const smsHim = document.getElementById("sms-him");
+
+  let pos = 0, last = performance.now();
+  const frame = now => {
+    const dt = Math.min(0.1, (now - last) / 1000); last = now;
+    const r = film.getBoundingClientRect();
+    const want = Math.max(0, -r.top) / vh() * 100;
+    pos += (want - pos) * (reduce ? 1 : 1 - Math.exp(-dt * 9));
+    if (Math.abs(want - pos) < 0.01) pos = want;
+
+    let idx = seq.length - 1;
+    for (let i = 0; i < seq.length; i++) { if (pos < seq[i].start + seq[i].len) { idx = i; break; } }
+    const s = seq[idx];
+    const local = Math.min(1, Math.max(0, (pos - s.start) / s.len));
+    const fade = idx < seq.length - 1 ? ss(1 - FADE, 1, local) : 0;
+
+    seq.forEach((sc, i) => {
+      let op = 0, lp = 0;
+      if (i === idx) { op = 1; lp = local; }
+      else if (i === idx + 1) { op = fade; lp = fade * 0.06; }
+      else if (i < idx) { lp = 1; }
+      sc.layer.style.opacity = op;
+      sc.layer.classList.toggle("on", op > 0.001);
+      sc.layer.style.zIndex = i === idx + 1 ? 2 : 1;
+      if (sc.v && sc.ready && op > 0) {
+        const dur = sc.v.duration || 8;
+        const target = lp * (dur - 0.06);
+        sc.cur += (target - sc.cur) * (1 - Math.exp(-dt * 14));
+        if (Math.abs(sc.v.currentTime - sc.cur) > 1 / 48) sc.v.currentTime = sc.cur;
+      } else if (!sc.v && op > 0) {
+        sc.img.style.transform = "scale(" + (1.02 + lp * 0.06).toFixed(4) + ")";
+      }
+      sc.btn.classList.toggle("on", i === idx);
+
+      if (sc.card) {
+        let cop = 0;
+        if (i === idx) {
+          const fin = i === 0 ? 1 : ss(0.06, 0.2, local);
+          const fout = i === seq.length - 1 ? 1 : 1 - ss(0.64, 0.76, local);
+          cop = fin * fout;
+        }
+        sc.card.style.opacity = cop;
+        sc.card.classList.toggle("on", cop > 0.05);
+        sc.card.style.marginTop = ((1 - cop) * 14).toFixed(1) + "px";
+      }
+    });
+    load(idx); load(idx + 1); load(idx + 2);
+
+    const id = s.id;
+    if (id === "bestilling") smsHim.classList.toggle("on", local > 0.22);
+    if (id === "p-vei") {
+      const p = ss(0.1, 0.75, local);
+      trk.style.width = (p * 100) + "%"; dot.style.left = (p * 100) + "%";
+      eta.textContent = "Fremme om ca. " + Math.max(1, Math.round(25 - p * 24)) + " min";
+    }
+    if (id === "p-levering" || id === "h-levering") {
+      const sg = sigFor(id); if (sg) sg[0].style.strokeDashoffset = sg[1] * (1 - ss(0.12, 0.5, local));
+    }
+    if (id === "h-lasting") checks.forEach((li, k) => li.classList.toggle("ok", local > 0.18 + k * 0.14));
+
+    bar.style.width = (Math.min(1, pos / total) * 100).toFixed(2) + "%";
+    top.classList.toggle("solid", r.bottom < 120);
+    hint.style.opacity = 1 - ss(5, 20, pos);
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
