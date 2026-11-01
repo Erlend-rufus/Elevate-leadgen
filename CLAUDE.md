@@ -104,12 +104,32 @@ pages, and never put a key in the repository: they are Netlify environment varia
   primary CTAs, metric numbers, the arrow motif. Never full-section backgrounds.
 - Space Grotesk (display) + Inter (body). Utility classes: `.section-pad`, `.card-dark`,
   `.text-gradient`, `.eyebrow`, `.container-site`.
-- Motion via the `Reveal` component only (once, 24–40px, calm). `prefers-reduced-motion`
-  respected globally. No loops, no autoplay, no letter animations.
+- Motion is part of the look, not a risk to contain: scroll reveals, parallax, loops, video,
+  3D, text effects and micro-interactions are all welcome, enterprise and high-end included.
+  The test is that it lifts the page towards the CTA, does not slow the first screen (watch
+  LCP, INP and layout shift) and never hides content. Every animation has a resolved static
+  state under `prefers-reduced-motion` (accessibility, not a style limit; respected globally).
+  `Reveal` stays the default for plain reveals.
 - Arrow motif (`ArrowMotif`/`JourneyCurve`) only where already used: Logo, FinalCTA,
   home Process, /audit steps. Do not add new applications.
 - Tone: direct, concrete, zero hype. Banned: "skyrocket", "game-changer", "supercharge",
   "unlock", exclamation marks. British spellings.
+
+## BYQ Supply (always try it first)
+
+Erlend wants BYQ used for everything it is worth, so that no page looks like a generic
+"Claude website". For any page, section or interaction work, search the BYQ MCP before
+writing your own markup: `search_byq_components` (styled sections), `search_byq_wireframes`
+(layout skeletons), `search_byq_gems` (micro-interactions and motion), `search_byq_styles`,
+then `get_byq_*` for the integration prompt.
+
+- Restyle what you pick to the site's tokens and flag where a section clashes with the
+  Design DNA above. Copy from BYQ sections goes into `src/content/*.ts`, never into
+  components (architecture rule 1).
+- If you cannot make good BYQ choices yourself, do not fall back to generic markup. Say:
+  "I have not implemented any BYQ sections, but these are relevant. Please review my
+  suggestions and ask me to implement the ones you think are good", and list the candidates.
+- BYQ's own advice: naming the exact section in the prompt is the most reliable route.
 
 ## Placeholder policy
 
