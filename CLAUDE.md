@@ -113,6 +113,22 @@ pages, and never put a key in the repository: they are Netlify environment varia
 - Tone: direct, concrete, zero hype. Banned: "skyrocket", "game-changer", "supercharge",
   "unlock", exclamation marks. British spellings.
 
+## BYQ Supply (always try it first)
+
+Erlend wants BYQ used for everything it is worth, so that no page looks like a generic
+"Claude website". For any page, section or interaction work, search the BYQ MCP before
+writing your own markup: `search_byq_components` (styled sections), `search_byq_wireframes`
+(layout skeletons), `search_byq_gems` (micro-interactions and motion), `search_byq_styles`,
+then `get_byq_*` for the integration prompt.
+
+- Restyle what you pick to the site's tokens and flag where a section clashes with the
+  Design DNA above. Copy from BYQ sections goes into `src/content/*.ts`, never into
+  components (architecture rule 1).
+- If you cannot make good BYQ choices yourself, do not fall back to generic markup. Say:
+  "I have not implemented any BYQ sections, but these are relevant. Please review my
+  suggestions and ask me to implement the ones you think are good", and list the candidates.
+- BYQ's own advice: naming the exact section in the prompt is the most reliable route.
+
 ## Placeholder policy
 
 `[REPLACE: …]` marks content awaiting client data. As of July 2026 the only remaining
