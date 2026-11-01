@@ -68,6 +68,11 @@ const DEFAULT_LAYOUT = ['hero', 'cases', 'fit', 'pay', 'keep', 'measure', 'meeti
 /* The sections of the IT board live in the "page" and "cards" css; the ones added for the health
    and law boards live in "extra", included only on a page that uses one of them. */
 const EXTRA_SECTIONS = new Set(['strip', 'floors', 'pulse', 'beyond', 'search', 'records', 'how']);
+/* The v2 design (approved 1 Nov 2026, first used by Italy). Each draws the same copy block as its v1 namesake
+   (hero2 reads copy.hero), with the "v2" css and g/_growth/js/motion2.js, both included only on a page that
+   names one of them. The UK pages name none and are byte for byte what they were. */
+const V2_SECTIONS = new Set(['hero2', 'cases2', 'fit2', 'pay2', 'keep2', 'measure2', 'meeting2', 'faq2']);
+const copyKey = (name) => (V2_SECTIONS.has(name) ? name.slice(0, -1) : name);
 
 /* ------------------------------------------------------------------ helpers */
 
@@ -208,7 +213,7 @@ function checkOutput(path, html) {
 /** g/_growth/style.css is cut at its @section markers; a page gets the sections it uses. */
 function loadCss() {
   const src = readFileSync(join(SHARED, 'style.css'), 'utf8');
-  const parts = src.split(/\/\*@section ([a-z]+)\*\//);
+  const parts = src.split(/\/\*@section ([a-z0-9]+)\*\//);
   const sections = {};
   for (let i = 1; i < parts.length; i += 2) sections[parts[i]] = parts[i + 1];
   return sections;
@@ -401,6 +406,147 @@ function recordsTable(r) {
 }
 
 /* One renderer per section name. Each returns a <section>. "ctx" carries the pieces a section may need. */
+/* ------------------------------------------------------------- the v2 design
+   BYQ sections restyled to the paper and ink tokens (named per renderer). No photographs: the design system
+   draws information instead. Everything below is the finished page without script: the counters show their
+   final figures, every answer is open, the pipeline shows a still state. g/_growth/js/motion2.js only animates
+   what is already there, and does nothing under reduced motion. */
+
+const arrow = (cls) => `<svg class="v2-arr ${cls}" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M6 1l5 5-5 5M1 6h10" stroke="currentColor" stroke-width="1.5"/></svg>`;
+/* BYQ nextwell button: the arrow slides in from the left on hover. */
+const cta2 = (text) => `<a class="btn v2-btn" href="#form">${arrow('v2-arr-in')}<span class="v2-btn-t">${esc(text)}</span>${arrow('v2-arr-out')}</a>`;
+const tick = '<svg class="v2-tick" viewBox="0 0 26 26" aria-hidden="true" focusable="false"><path d="M4.5 12.5l5 5 10-11"/></svg>';
+const cross = '<svg class="v2-tick" viewBox="0 0 26 26" aria-hidden="true" focusable="false"><path d="M6 6l14 14M20 6L6 20"/></svg>';
+
+/* The still state of the illustrative pipeline: four leads, two meetings, one signed. */
+function pipeline(p) {
+  const card = (col, w) => `<div class="v2-card${col === 2 ? ' is-won' : ''}"><span class="v2-bar" style="width:${w}%"></span><span class="v2-bar v2-bar--s"></span><span class="v2-tag">${esc(p.tags[col])}</span></div>`;
+  const start = [[0, [78, 64, 88]], [1, [70, 84]], [2, [80]]];
+  const cols = start.map(([col, ws]) => `<div class="v2-pcol"><p class="v2-plabel">${esc(p.cols[col])} <b data-pc="${col}">${ws.length}</b></p><div class="v2-stack" data-ps="${col}">${ws.map((w) => card(col, w)).join('')}</div></div>`).join('');
+  return `<figure class="v2-pipe" aria-hidden="true" data-tags="${esc(JSON.stringify(p.tags))}">
+          <div class="v2-pipe-hd"><span class="v2-pipe-t">${esc(p.title)}</span><span class="v2-live"><i></i>${esc(p.source)}</span></div>
+          <div class="v2-pcols">${cols}</div>
+          <div class="v2-pipe-ft"><span class="v2-plabel">${esc(p.foot)} &rarr;</span></div>
+        </figure>
+        <div class="v2-pipe-ctl"><p class="v2-pipe-note">${esc(p.note)}</p><button class="v2-pause" type="button" hidden aria-pressed="false" data-pause="${esc(p.pause)}" data-resume="${esc(p.resume)}">${esc(p.pause)}</button></div>`;
+}
+
+const V2 = {
+  /* BYQ nextwell-hero-7 (split hero); the phone mockup is a pipeline drawn in HTML. Words rise in on load. */
+  hero2(c) {
+    const h = c.hero;
+    return `<section class="v2-hero" aria-labelledby="h-hero">
+      <div class="wrap"><div class="v2-hero-grid">
+        <div class="v2-hero-text">
+          <h1 class="v2-h1" id="h-hero">${esc(h.h1a)} <span class="v2-soft">${esc(h.h1b)}</span></h1>
+          <p class="v2-lead">${heroLead(h.ingress)}</p>
+          <div class="v2-cta">${cta2(c.cta)}<p class="micro">${esc(h.micro)}</p></div>
+        </div>
+        <div class="v2-hero-vis">${pipeline(c.v2.pipeline)}</div>
+      </div></div>
+    </section>`;
+  },
+  /* BYQ reforma-stats-2 (three stats cards); the count-up with blur is BYQ nextwell-stats-2. */
+  cases2(c) {
+    const tones = ['is-ink', 'is-navy', ''];
+    const cards = c.cases.items.map((item, i) => {
+      const [big, ...rest] = item.figs || [];
+      const bf = big && parseFigure(big.value);
+      const bigVal = bf ? counter(bf, { dur: 1600, delay: i * 180, play: 'sec' }) : esc(big ? big.value : '');
+      return `<article class="v2-case ${tones[i % 3]}">
+          <header><h3 class="v2-case-name">${esc(item.name)}</h3><p class="v2-case-sub">${esc(item.sub)}</p></header>
+          <div><p class="v2-big">${bigVal}</p><p class="v2-mono">${esc(big ? big.label : '')}</p>
+          <dl class="v2-case-row">${rest.map((f) => `<div><dd>${esc(f.value)}</dd><dt>${esc(f.label)}</dt></div>`).join('')}</dl></div>
+        </article>`;
+    }).join('\n        ');
+    const sum = c.cases.items.reduce((n, item) => {
+      const f = item.figs && item.figs[0] && parseFigure(item.figs[0].value);
+      return n + (f ? f.n : 0);
+    }, 0);
+    return `<section class="v2-sec" id="cases" aria-labelledby="h-cases">
+      <div class="wrap"><div class="v2-in">
+        <h2 class="h2" id="h-cases">${esc(c.cases.h2)}</h2>
+        <div class="v2-cases">
+        ${cards}
+        </div>
+        <p class="v2-total"><b>${counter({ pre: '', n: sum, dec: 0, suf: '' }, { dur: 1600, delay: 600, play: 'sec' })}</b> <span>${esc(c.v2.total)}</span></p>
+        <p class="note">${esc(c.cases.note)}</p>
+      </div></div>
+    </section>`;
+  },
+  /* No BYQ section fitted: the ticks draw and the "no" list is struck through as it arrives. */
+  fit2(c) {
+    const f = c.fit;
+    const list = (items, mark, cls) => `<ul class="v2-ticks${cls}">${items.map((x) => `<li class="v2-rv">${mark}<span>${esc(x)}</span></li>`).join('')}</ul>`;
+    return `<section class="v2-sec" aria-labelledby="h-fit">
+      <div class="wrap"><div class="v2-in">
+        <h2 class="h2" id="h-fit">${esc(f.h2)}</h2>
+        <p class="intro v2-intro">${esc(f.body)}</p>
+        <div class="v2-cols">
+          <div><h3 class="v2-col-h">${esc(f.yesTitle)}</h3>${list(f.yes, tick, '')}</div>
+          <div><h3 class="v2-col-h">${esc(f.noTitle)}</h3>${list(f.no, cross, ' v2-no')}</div>
+        </div>
+        <p class="note">${esc(f.note)}</p>
+      </div></div>
+    </section>`;
+  },
+  /* BYQ avenir-structured-data-2 (numbered rows on a dark band, staggered). */
+  pay2(c) {
+    const p = c.pay;
+    const key = c.v2.payKey;
+    return `<section class="v2-band" data-theme="marine" aria-labelledby="h-pay">
+      <div class="wrap"><div class="v2-pay">
+        <div><h2 class="h2" id="h-pay">${esc(p.h2)}</h2><p class="intro v2-intro">${esc(p.body)}</p></div>
+        <ol class="v2-rows">${p.open.map((x, i) => `<li class="v2-rv${i === key ? ' is-key' : ''}"><span class="v2-ix">${String(i + 1).padStart(2, '0')}</span><p>${esc(x)}</p></li>`).join('')}</ol>
+      </div></div>
+    </section>`;
+  },
+  /* The rules draw from the left, the movement of BYQ kelvin-process-1. */
+  keep2(c) {
+    const k = c.keep;
+    return `<section class="v2-sec v2-after-band" aria-labelledby="h-keep">
+      <div class="wrap">
+        <h2 class="h2" id="h-keep">${esc(k.h2)}</h2>
+        <ul class="v2-trio">${k.items.map((x) => `<li class="v2-rv"><h3>${esc(x.t)}</h3><p>${esc(x.p)}</p></li>`).join('')}</ul>
+      </div>
+    </section>`;
+  },
+  /* BYQ gem scroll-blur-reveal-01: scroll brings each row into focus; the two that count get a rule. */
+  measure2(c) {
+    const m = c.measure;
+    return `<section class="v2-sec" aria-labelledby="h-measure">
+      <div class="wrap"><div class="v2-in"><div class="v2-measure">
+        <div class="v2-sticky"><h2 class="h2" id="h-measure">${esc(m.h2)}</h2><p class="v2-side">${esc(c.v2.measureSide)}</p></div>
+        <table class="v2-mt"><tbody>${m.rows.map((r) => `<tr class="v2-mrow${r.key ? ' is-key' : ''}"><th scope="row">${esc(r.metric)}</th><td>${esc(r.status)}</td></tr>`).join('')}</tbody></table>
+      </div></div></div>
+    </section>`;
+  },
+  /* BYQ kelvin-process-1: the track fills, then the steps arrive one by one. */
+  meeting2(c) {
+    const m = c.meeting;
+    return `<section class="v2-sec" aria-labelledby="h-meeting">
+      <div class="wrap"><div class="v2-in">
+        <h2 class="h2" id="h-meeting">${esc(m.h2)}</h2>
+        <p class="intro v2-intro">${esc(m.body)}</p>
+        <div class="v2-track" aria-hidden="true"><i></i></div>
+        <ol class="v2-steps">${m.steps.map((s, i) => `<li class="v2-rv"><span class="v2-ix">${String(i + 1).padStart(2, '0')}</span><h3>${esc(s.t)}</h3><p>${esc(s.p)}</p></li>`).join('')}</ol>
+        <p class="v2-closing">${esc(m.closing)}</p>
+      </div></div>
+    </section>`;
+  },
+  /* BYQ stringer-faq-2: the heading stays while the answers scroll; one answer open at a time once the
+     script runs. Without it every answer is open. */
+  faq2(c) {
+    const f = c.faq;
+    return `<section class="v2-sec" aria-labelledby="h-faq">
+      <div class="wrap"><div class="v2-in"><div class="v2-faq-grid">
+        <div class="v2-sticky"><h2 class="h2" id="h-faq">${esc(f.h2)}</h2>${cta2(c.cta)}</div>
+        <div class="v2-faq">${f.items.map((q) => `<details class="v2-qa" open><summary><span>${esc(q.q)}</span><span class="v2-plus" aria-hidden="true"></span></summary><div class="v2-ans"><div><p>${esc(q.a)}</p></div></div></details>`).join('')}</div>
+      </div></div></div>
+    </section>`;
+  },
+};
+
 const SECTIONS = {
   hero(c, ctx) {
     const h = c.hero;
@@ -575,6 +721,7 @@ const SECTIONS = {
       </div></div>
     </section>`;
   },
+  ...V2,
   form(c, ctx) {
     return `<section class="sec--form" id="form">
       <div class="wrap">${ctx.formHtml}</div>
@@ -586,7 +733,8 @@ function landingMain(cfg, copy, formHtml, layout) {
   const ctx = { formHtml, cta: () => `<a class="btn btn--primary" href="#form">${esc(copy.cta)}</a>` };
   const parts = layout.map((name) => {
     if (!SECTIONS[name] || name.startsWith('_')) die(`copy.json layout names "${name}", which is not a section the build knows`);
-    if (!copy[name] && name !== 'form') die(`copy.json layout names "${name}" but has no "${name}" block`);
+    if (!copy[copyKey(name)] && name !== 'form') die(`copy.json layout names "${name}" but has no "${copyKey(name)}" block`);
+    if (V2_SECTIONS.has(name) && !copy.v2) die(`copy.json layout names "${name}" but has no "v2" block`);
     return SECTIONS[name](copy, ctx);
   });
   return `<main id="main">\n    ${parts.join('\n\n    ')}\n  </main>`;
@@ -630,7 +778,7 @@ ${consent}
 
 const JS = {};
 function loadJs() {
-  for (const f of ['base', 'form', 'motion', 'book', 'notafit']) JS[f] = readFileSync(join(SHARED, 'js', `${f}.js`), 'utf8');
+  for (const f of ['base', 'form', 'motion', 'motion2', 'book', 'notafit']) JS[f] = readFileSync(join(SHARED, 'js', `${f}.js`), 'utf8');
 }
 
 /** core.mjs has no imports, so removing the word "export" is all it takes to run it in a page. */
@@ -646,10 +794,12 @@ const jsonForScript = (o) => JSON.stringify(o)
   .split(String.fromCharCode(0x2028)).join('\\u2028')
   .split(String.fromCharCode(0x2029)).join('\\u2029');
 
-function pageScript(cfgClient, kind, coreSrc) {
+function pageScript(cfgClient, kind, coreSrc, v2) {
   const parts = [`var CFG = ${jsonForScript(cfgClient)};`, JS.base];
   if (kind === 'landing') {
-    parts.push(coreForBrowser(coreSrc), JS.form, JS.motion, 'initForm();\ninitMotion();\ninitBanner();');
+    parts.push(coreForBrowser(coreSrc), JS.form, JS.motion);
+    if (v2) parts.push(JS.motion2);
+    parts.push(v2 ? 'initForm();\ninitMotion();\ninitMotion2();\ninitBanner();' : 'initForm();\ninitMotion();\ninitBanner();');
   } else if (kind === 'book') {
     parts.push(JS.book, 'initBook();');
   } else if (kind === 'review') {
@@ -762,6 +912,8 @@ async function build(slug) {
   const layout = Array.isArray(rawCopy.layout) ? rawCopy.layout : DEFAULT_LAYOUT;
   const extra = layout.some((n) => EXTRA_SECTIONS.has(n)) ? ['extra'] : [];
   if (extra.length && !sections.extra) die('g/_growth/style.css has no @section extra');
+  const v2 = layout.some((n) => V2_SECTIONS.has(n));
+  if (v2 && !sections.v2) die('g/_growth/style.css has no @section v2');
 
   const cfgClient = {
     slug: cfg.slug,
@@ -786,7 +938,7 @@ async function build(slug) {
   /* ---- the landing page ---- */
   const landing = head(cfg, {
     title: copy.meta.title, description: copy.meta.description, og: true,
-    css: cssFor.apply(null, ['base', 'page', 'cards'].concat(extra, ['form', 'banner'])),
+    css: cssFor.apply(null, ['base', 'page', 'cards'].concat(extra, v2 ? ['v2'] : [], ['form', 'banner'])),
     scripts: { track: cfg.funnel.viewEvent },
   }) + `
 <body>
@@ -797,7 +949,7 @@ async function build(slug) {
 </div></div>
 ${banner(cfg, copy)}
 <script>
-${pageScript(cfgClient, 'landing', coreSrc)}
+${pageScript(cfgClient, 'landing', coreSrc, v2)}
 </script>
 </body>
 </html>

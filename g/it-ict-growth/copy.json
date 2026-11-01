@@ -1,5 +1,17 @@
 {
   "_comment": "Page copy for /g/it-ict-growth (Italy, IT and ICT firms). An Italian draft of the UK IT board v56 (g/uk-it-growth/copy.json), sentence for sentence, with one change that is not a translation: the cases are the three UK consultancies and the page says so. A native speaker has to read it before launch (LAUNCH.md). {THRESHOLD}, {OFFER}, {WORTH} and {EMAIL} are filled from config.json at build time. The build refuses dashes, exclamation marks, a telephone number and a commission rate or amount (see scripts/build-g-growth.mjs, the Italian set of rules).",
+  "layout": [
+    "hero2",
+    "cases2",
+    "fit2",
+    "pay2",
+    "keep2",
+    "measure2",
+    "meeting2",
+    "faq2",
+    "form"
+  ],
+  "_layout": "The v2 design approved by Erlend on 1 Nov 2026: the same copy, the same order, drawn by the v2 renderers in scripts/build-g-growth.mjs (BYQ sections restyled to the paper and ink tokens, motion in g/_growth/js/motion2.js). Put the plain names back (hero, cases, ...) to return to the v1 page.",
   "review": {
     "by": "",
     "on": "",
@@ -269,5 +281,29 @@
         "privacy": "Come usiamo i vostri dati"
       }
     }
+  },
+  "v2": {
+    "_comment": "Words that only the v2 design draws: the illustrative pipeline in the hero, the line under the cases and the line beside the measure table.",
+    "pipeline": {
+      "title": "Pipeline",
+      "source": "dal vostro CRM",
+      "cols": [
+        "Lead",
+        "Incontri",
+        "Firmati"
+      ],
+      "tags": [
+        "Qualificato",
+        "Incontro fissato",
+        "Contratto firmato"
+      ],
+      "foot": "Si paga solo qui",
+      "pause": "Pausa",
+      "resume": "Riprendi",
+      "note": "Illustrazione. Nessun dato reale."
+    },
+    "total": "lead qualificati in totale, da campagne che abbiamo gestito noi.",
+    "payKey": 3,
+    "measureSide": "Impressioni, clic e lead li misuriamo. Ma non sono il risultato."
   }
 }
