@@ -102,8 +102,12 @@ pages, and never put a key in the repository: they are Netlify environment varia
   primary CTAs, metric numbers, the arrow motif. Never full-section backgrounds.
 - Space Grotesk (display) + Inter (body). Utility classes: `.section-pad`, `.card-dark`,
   `.text-gradient`, `.eyebrow`, `.container-site`.
-- Motion via the `Reveal` component only (once, 24–40px, calm). `prefers-reduced-motion`
-  respected globally. No loops, no autoplay, no letter animations.
+- Motion is part of the look, not a risk to contain: scroll reveals, parallax, loops, video,
+  3D, text effects and micro-interactions are all welcome, enterprise and high-end included.
+  The test is that it lifts the page towards the CTA, does not slow the first screen (watch
+  LCP, INP and layout shift) and never hides content. Every animation has a resolved static
+  state under `prefers-reduced-motion` (accessibility, not a style limit; respected globally).
+  `Reveal` stays the default for plain reveals.
 - Arrow motif (`ArrowMotif`/`JourneyCurve`) only where already used: Logo, FinalCTA,
   home Process, /audit steps. Do not add new applications.
 - Tone: direct, concrete, zero hype. Banned: "skyrocket", "game-changer", "supercharge",
