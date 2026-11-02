@@ -52,6 +52,19 @@ export function countConfirms(spec) {
   return (JSON.stringify(spec).match(/\[\[TO CONFIRM\b/g) || []).length;
 }
 
+/**
+ * Design 2: wrap every word of already-escaped HTML in a masked span so the
+ * heading can rise word by word (BYQ gem scroll-text-reveal-01, as a load
+ * animation in CSS). Tags, and so the [[TO CONFIRM]] marks, are left whole.
+ */
+export function words(html) {
+  let n = 0;
+  return String(html).split(/(<[^>]*>)/g).map((part) => {
+    if (part.startsWith('<')) return part;
+    return part.split(/(\s+)/).map((w) => (!w || /^\s+$/.test(w) ? w : `<span class="w"><span style="--i:${n++}">${w}</span></span>`)).join('');
+  }).join('');
+}
+
 const STYLES = ['editorial', 'technical', 'clinical'];
 export function styleOf(spec) {
   if (STYLES.includes(spec.style)) return spec.style;
@@ -139,7 +152,7 @@ const TYPE = {
   },
 };
 
-function css(c, t, style) {
+function css(c, t, style, m2 = false) {
   return `${t.fonts.join('\n')}
 :root{--bg:${c.bg};--bg-alt:${c.bgAlt};--tint:${c.tint};--ink:${c.ink};--muted:${c.muted};--faint:${c.faint};
   --line:${c.line};--line-strong:${c.lineStrong};--accent:${c.accentOnBg};--brand:${c.primary};--brand2:${c.secondary};
@@ -310,8 +323,8 @@ p{margin:0}
 /* footer */
 .ft{padding:28px 0 44px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .ft .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
-${STYLE_CSS[style]}
-@media print{.dc-banner{position:static;background:#fff;border-bottom:2px solid #000}.dc-banner span{color:#000;font-weight:700}.dc-banner i{background:#000}}`;
+${STYLE_CSS[style]}${m2 ? MOTION_CSS : ''}
+@media print{.dc-banner{position:static;background:#fff;border-bottom:2px solid #000}.dc-banner span{color:#000;font-weight:700}.dc-banner i{background:#000}${m2 ? '.m2 *,.m2 *::before,.m2 *::after{animation:none!important}' : ''}}`;
 }
 
 const STYLE_CSS = {
@@ -348,6 +361,88 @@ h1,h2{font-variation-settings:"opsz" 144,"SOFT" 30}
 .btn-primary:hover{filter:brightness(1.06)}`,
 };
 
+/**
+ * Design 2 (spec.design === 2): motion from the BYQ Supply library, ported to CSS
+ * because a draft ships no script and makes no request outside getelevateleads.com.
+ *   hero heading: words rise from a mask         (gem scroll-text-reveal-01, on load)
+ *   hero photograph: curtain wipe, slow settle,  (gem curtain-image-reveal-01, and
+ *     parallax while it passes                    avenir-hero-5)
+ *   sections, rows, cards, terms: rise in on     (nextwell-value-features-6,
+ *     scroll, staggered along a row               genesis-value-features-4)
+ *   figures: come into focus as they enter       (gem scroll-blur-reveal-01)
+ *   why list: a spine draws as you scroll        (gem scroll-timeline-01)
+ *   before and after: the strike-through draws   (own)
+ *   hover: row line draws, button arrow slides   (stringer-team-grid-2, reforma-hero-7)
+ * Rules: nothing loops (WCAG 2.2.2); every animation sits behind
+ * prefers-reduced-motion: no-preference, and the scroll-driven ones also behind
+ * @supports (animation-timeline: view()), so a browser without them, a printout or a
+ * crawler gets the finished page; no element is hidden except by an animation that
+ * reveals it. overflow:clip, not hidden, on anything that contains a view() element,
+ * because overflow:hidden makes the element the scroller and the timeline would never run.
+ */
+const MOTION_CSS = `
+/* design 2 */
+.m2 .pic,.m2 .img,.m2 .card,.m2 .band,.m2 .tile{overflow:clip}
+.m2 .hl .box{border-top:0;position:relative}
+.m2 .hl .box::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--ink);transform-origin:left}
+.m2 .compare .was .k{text-decoration:none;background:linear-gradient(var(--accent),var(--accent)) 0 47%/100% 4px no-repeat;width:max-content;max-width:100%}
+.m2 .why-list{position:relative;isolation:isolate}
+.m2 .why-list::before,.m2 .why-list::after{content:"";position:absolute;z-index:-1;left:19px;top:0;bottom:0;width:2px}
+.m2 .why-list::before{background:var(--line-strong)}
+.m2 .why-list::after{background:var(--accent);transform-origin:top}
+.m2 .why-list .n{position:relative;z-index:1;background:var(--bg-alt);text-align:center;align-self:start;padding:6px 0}
+.m2 .card,.m2 .row{position:relative}
+.m2 h1 .w{display:inline-block;overflow:clip;vertical-align:top;padding:.1em 0;margin:-.1em 0}
+.m2 h1 .w>span{display:inline-block}
+.m2[data-style=technical] .hero-img .pic::before{background:var(--deep)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:no-preference){
+@keyframes m2-word{from{transform:translateY(110%)}to{transform:none}}
+@keyframes m2-fade{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}
+@keyframes m2-curtain{from{transform:translateX(0)}to{transform:translateX(101%)}}
+@keyframes m2-settle{from{scale:1.24}to{scale:1.1}}
+@keyframes m2-pan{from{translate:0 -5%}to{translate:0 5%}}
+@keyframes m2-rise{from{opacity:0;translate:0 34px}to{opacity:1;translate:0 0}}
+@keyframes m2-sharp{from{opacity:.12;filter:blur(14px);translate:0 18px}to{opacity:1;filter:blur(0);translate:0 0}}
+@keyframes m2-strike{from{background-size:0 4px}to{background-size:100% 4px}}
+@keyframes m2-slide{from{opacity:0;translate:-24px 0}to{opacity:1;translate:0 0}}
+@keyframes m2-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes m2-spine{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.m2 h1 .w>span{animation:m2-word .95s cubic-bezier(.2,.7,.1,1) both;animation-delay:calc(.1s + var(--i,0)*.055s)}
+.m2 .hero .eyebrow,.m2 .hero-img .eyebrow{animation:m2-fade .7s .05s both}
+.m2 .hero .sub,.m2 .hero-img .sub{animation:m2-fade .8s .4s both}
+.m2 .hero .actions,.m2 .hero-img .actions{animation:m2-fade .8s .55s both}
+.m2 .hero .note,.m2 .hero-img .note{animation:m2-fade .8s .7s both}
+.m2 .hero aside{animation:m2-fade .9s .5s both}
+.m2 .hero-img .pic::before{content:"";position:absolute;inset:0;z-index:3;background:var(--bg);transform-origin:right;animation:m2-curtain 1.1s .15s cubic-bezier(.7,0,.2,1) both}
+.m2 .hero-img .pic img,.m2 .tile-img img{scale:1.1}
+.m2 .hero-img .pic img{animation:m2-settle 1.6s .15s cubic-bezier(.2,.7,.1,1) both}
+@media (hover:hover){
+  .m2 .btn .arr{transition:translate .25s cubic-bezier(.2,.7,.1,1)}
+  .m2 .btn:hover .arr{translate:5px 0}
+  .m2 .row::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.2,.7,.1,1)}
+  .m2 .row:hover::after{transform:scaleX(1)}
+  .m2 .row h3{transition:translate .35s cubic-bezier(.2,.7,.1,1)}
+  .m2 .row:hover h3{translate:10px 0}
+  .m2 .card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.1,1)}
+  .m2 .card:hover::before{transform:scaleX(1)}
+  .m2 .terms .t .k{transition:color .25s ease,translate .35s cubic-bezier(.2,.7,.1,1)}
+  .m2 .terms .t:hover .k{color:var(--accent);translate:6px 0}
+}
+@supports (animation-timeline:view()){
+  .m2 .head2>*,.m2 .row,.m2 .card,.m2 .terms .t,.m2 .why-list .it,.m2 .two .body p,.m2 .two>div:first-child>*,
+  .m2 .band .eyebrow,.m2 .band h2,.m2 .band p,.m2 .band .actions,.m2 .band .contact>div,.m2 .trust .wrap>*,.m2 .compare .note,.m2 .compare .now{
+    animation:m2-rise linear both;animation-timeline:view();animation-range:entry calc(var(--i,0)*8%) entry calc(52% + var(--i,0)*8%)}
+  .m2 .tile{animation:m2-sharp linear both;animation-timeline:view();animation-range:entry calc(var(--i,0)*8%) entry calc(60% + var(--i,0)*8%)}
+  .m2 .hero-img .pic img{animation:m2-settle 1.6s .15s cubic-bezier(.2,.7,.1,1) both,m2-pan linear both;animation-timeline:auto,view();animation-range:normal,cover}
+  .m2 .tile-img img{animation:m2-pan linear both;animation-timeline:view();animation-range:cover}
+  .m2 .hl .box::before{animation:m2-draw linear both;animation-timeline:view();animation-range:entry 0% entry 80%}
+  .m2 .compare .was .k{animation:m2-strike linear both;animation-timeline:view();animation-range:entry 35% cover 45%}
+  .m2 .compare .arrow svg{animation:m2-slide linear both;animation-timeline:view();animation-range:entry 20% entry 90%}
+  .m2 .why-list::after{animation:m2-spine linear both;animation-timeline:view();animation-range:cover 8% cover 62%}
+}
+}`;
+
 function logoHtml(spec) {
   const l = spec.logo || {};
   if (l.file) return `<a class="logo" href="#top" aria-label="${esc(spec.company)}"><img src="${esc(l.published)}" alt="${esc(spec.company)}"${l.width ? ` width="${l.width}"` : ''}${l.height ? ` height="${l.height}"` : ''}></a>`;
@@ -372,6 +467,8 @@ export function renderSpec(spec, { slug }) {
   const style = styleOf(spec);
   const t = TYPE[style];
   const c = palette(spec, style);
+  const m2 = spec.design === 2;                       // see MOTION_CSS and drafts/SPEC.md
+  const si = (i) => (m2 ? ` style="--i:${i}"` : '');   // position along a row, for the stagger
   const src = (file) => `/draft/${slug}/${file}`;
   const pic = (im, cls = 'img') => im && im.file ? `<div class="${cls}"><img src="${esc(src(im.file))}" alt="${esc(im.alt || '')}"${im.position ? ` style="object-position:${esc(im.position)}"` : ''}></div>` : '';
 
@@ -382,7 +479,7 @@ export function renderSpec(spec, { slug }) {
   const ctaHref = h.ctaHref || '#contact';
   const actions = `<div class="actions"><a class="btn btn-primary" href="${esc(ctaHref)}">${text(ctaLabel)}${ARROW}</a>${h.secondary ? `<a class="btn btn-ghost" href="${esc(h.secondaryHref || '#services')}">${text(h.secondary)}</a>` : ''}</div>`;
   const copy = `${h.eyebrow ? `<div class="eyebrow">${text(h.eyebrow)}</div>` : ''}
-    <h1>${text(h.title || spec.company)}</h1>
+    <h1>${m2 ? words(text(h.title || spec.company)) : text(h.title || spec.company)}</h1>
     ${h.sub ? `<p class="sub">${text(h.sub)}</p>` : ''}
     ${actions}
     ${h.note ? `<p class="note">${text(h.note)}</p>` : ''}`;
@@ -406,8 +503,8 @@ export function renderSpec(spec, { slug }) {
   const trust = spec.trust || [];
   const trustHtml = trust.length || spec.trustText ? `<section class="trust" aria-label="Accreditation"><div class="wrap">
   ${spec.trustLabel ? `<span class="l">${text(spec.trustLabel)}</span>` : ''}
-  ${trust.map((x) => x.file ? `<img src="${esc(src(x.file))}" alt="${esc(x.alt || '')}">` : `<span class="t">${text(x.text || '')}</span>`).join('')}
-  ${spec.trustText ? `<span class="t">${text(spec.trustText)}</span>` : ''}
+  ${trust.map((x, i) => x.file ? `<img src="${esc(src(x.file))}" alt="${esc(x.alt || '')}"${si(i + 1)}>` : `<span class="t"${si(i + 1)}>${text(x.text || '')}</span>`).join('')}
+  ${spec.trustText ? `<span class="t"${si(trust.length + 1)}>${text(spec.trustText)}</span>` : ''}
 </div></section>` : '';
 
   // proof: stats, the quote, a photograph, as a bento
@@ -415,9 +512,9 @@ export function renderSpec(spec, { slug }) {
   const why = spec.why || {};
   const quote = why.quote || spec.quote;
   const tiles = [
-    ...stats.map((s) => `<div class="tile tile-stat"><div class="k">${text(s.value)}</div><div class="l">${text(s.label)}</div></div>`),
-    quote ? `<div class="tile tile-quote${im.proof && im.proof.file ? '' : ' wide'}"><div class="mark">“</div><p>${text(quote.text)}</p><div class="who">${text(quote.who)}</div></div>` : '',
-    im.proof && im.proof.file ? `<div class="tile tile-img"><img src="${esc(src(im.proof.file))}" alt="${esc(im.proof.alt || '')}"></div>` : '',
+    ...stats.map((s, i) => `<div class="tile tile-stat"${si(i)}><div class="k">${text(s.value)}</div><div class="l">${text(s.label)}</div></div>`),
+    quote ? `<div class="tile tile-quote${im.proof && im.proof.file ? '' : ' wide'}"${si(stats.length)}><div class="mark">“</div><p>${text(quote.text)}</p><div class="who">${text(quote.who)}</div></div>` : '',
+    im.proof && im.proof.file ? `<div class="tile tile-img"${si(stats.length + 1)}><img src="${esc(src(im.proof.file))}" alt="${esc(im.proof.alt || '')}"></div>` : '',
   ].filter(Boolean);
   const proofHtml = tiles.length ? `<section class="proof" aria-label="Key figures"><div class="wrap"><div class="bento n${stats.length}">${tiles.join('')}</div></div></section>` : '';
 
@@ -427,7 +524,7 @@ export function renderSpec(spec, { slug }) {
   if (items.length && style === 'editorial') {
     list = `<div class="rows">${items.map((s, i) => `<div class="row${s.image && s.image.file ? '' : ' noimg'}"><div class="n">0${i + 1}</div><h3>${text(s.title)}</h3><p>${text(s.text)}</p>${pic(s.image)}</div>`).join('')}</div>`;
   } else if (items.length) {
-    list = `<div class="cards">${items.slice(0, 3).map((s, i) => `<div class="card">${pic(s.image)}<div class="n">0${i + 1}</div><h3>${text(s.title)}</h3><p>${text(s.text)}</p></div>`).join('')}</div>`;
+    list = `<div class="cards">${items.slice(0, 3).map((s, i) => `<div class="card"${si(i)}>${pic(s.image)}<div class="n">0${i + 1}</div><h3>${text(s.title)}</h3><p>${text(s.text)}</p></div>`).join('')}</div>`;
   }
   const servicesHtml = list ? `
 <section class="sec" id="${esc(services.id || 'services')}"><div class="wrap">
@@ -442,7 +539,7 @@ export function renderSpec(spec, { slug }) {
   const hl = spec.highlight || {};
   let hlBody = '';
   if (hl.kind === 'terms' && (hl.items || []).length) {
-    hlBody = `<div class="terms">${hl.items.slice(0, 8).map((x) => `<div class="t"><div class="k">${text(x.term)}</div>${x.label ? `<div class="l">${text(x.label)}</div>` : ''}</div>`).join('')}</div>`;
+    hlBody = `<div class="terms">${hl.items.slice(0, 8).map((x, i) => `<div class="t"${si(i % 4)}><div class="k">${text(x.term)}</div>${x.label ? `<div class="l">${text(x.label)}</div>` : ''}</div>`).join('')}</div>`;
   } else if (hl.kind === 'compare' && hl.before && hl.after) {
     hlBody = `<div class="compare">
       <div class="was"><div class="k">${text(hl.before.value)}</div><div class="l">${text(hl.before.label)}</div></div>
@@ -477,10 +574,8 @@ export function renderSpec(spec, { slug }) {
 
   const contact = spec.contact || {};
   const rows = [
-    contact.phone && `<div><div class="l">Telephone</div><p class="v">${text(contact.phone)}</p></div>`,
-    contact.email && `<div><div class="l">Email</div><p class="v">${text(contact.email)}</p></div>`,
-    contact.address && `<div><div class="l">Address</div><p class="v">${text(contact.address)}</p></div>`,
-  ].filter(Boolean).join('');
+    ['Telephone', contact.phone], ['Email', contact.email], ['Address', contact.address],
+  ].filter(([, v]) => v).map(([l, v], i) => `<div${si(i)}><div class="l">${l}</div><p class="v">${text(v)}</p></div>`).join('');
   const band = spec.band || {};
   const bandHtml = `
 <section class="band" id="contact"><div class="wrap">
@@ -505,9 +600,9 @@ export function renderSpec(spec, { slug }) {
 <meta name="referrer" content="no-referrer">
 <link rel="icon" href="data:,">
 <title>Draft — ${esc(spec.company)}: homepage</title>
-<style>${css(c, t, style)}</style>
+<style>${css(c, t, style, m2)}</style>
 </head>
-<body id="top" data-style="${style}">
+<body id="top" data-style="${style}"${m2 ? ' class="m2"' : ''}>
 ${banner}
 <header class="hd"><div class="wrap">${logoHtml(spec)}<nav>${nav}<a class="btn btn-primary cta" href="${esc(ctaHref)}">${text(ctaLabel)}</a></nav></div></header>
 <main>
