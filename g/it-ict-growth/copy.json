@@ -22,7 +22,7 @@
     "description": "Conversazioni commerciali per aziende IT e ICT italiane, da campagne che gestiamo noi. Poche domande per capire se possiamo lavorare insieme."
   },
   "topline": "Per aziende IT e ICT italiane con fatturato da {THRESHOLD} in su",
-  "cta": "Verificate se possiamo lavorare insieme",
+  "cta": "Scoprite se possiamo lavorare insieme",
   "hero": {
     "h1a": "Nel Regno Unito abbiamo già riempito la pipeline di società di consulenza IT.",
     "h1b": "Ecco com’è andata.",
@@ -36,11 +36,11 @@
         "cls": "em"
       },
       {
-        "t": " in totale, da campagne che abbiamo gestito noi. Ora portiamo lo stesso metodo in Italia: se la vostra azienda sta crescendo e volete più conversazioni giuste, è il lavoro che facciamo.",
+        "t": " in totale, da campagne gestite da noi. Ora portiamo lo stesso metodo in Italia. Se la vostra azienda sta crescendo e volete più contatti con i clienti giusti, possiamo aiutarvi.",
         "cls": ""
       }
     ],
-    "micro": "Poche domande. Accogliamo solo aziende che pensiamo di poter aiutare."
+    "micro": "Poche domande. Lavoriamo solo con aziende che pensiamo di poter aiutare."
   },
   "cases": {
     "h2": "Tre società di consulenza IT britanniche. I loro numeri.",
@@ -103,17 +103,17 @@
         ]
       }
     ],
-    "note": "Sono tre aziende britanniche, non italiane: questi risultati non sono stati ottenuti in Italia. Il tasso di chiusura è la quota di lead qualificati che ogni cliente ha dichiarato come vinta. Cifre tratte dai registri di ciascun cliente. Nomi e dati pubblicati con il permesso scritto di ciascun cliente."
+    "note": "Sono tre aziende britanniche, non italiane: questi risultati non sono stati ottenuti in Italia. Il tasso di chiusura è la quota di lead qualificati che ogni cliente ha dichiarato di aver chiuso con successo. Cifre tratte dai registri di ciascun cliente, con nomi e dati pubblicati con il permesso scritto di ciascun cliente."
   },
   "fit": {
     "h2": "È per aziende che crescono, non per aziende in difficoltà.",
-    "body": "Le aziende con cui lavoriamo meglio ottengono già lavoro con il passaparola e la reputazione. Quello che manca loro è un secondo canale che porti lo stesso tipo di cliente, in modo prevedibile, senza che i soci debbano fare tutta la vendita.",
+    "body": "Le aziende con cui lavoriamo meglio acquisiscono già clienti grazie al passaparola e alla reputazione. A loro manca un secondo canale che porti con regolarità lo stesso tipo di clienti, senza che tutto il lavoro commerciale ricada sui soci.",
     "yesTitle": "Funziona se",
     "yes": [
-      "Gestite un’azienda IT o ICT italiana con fatturato di {THRESHOLD} o più e almeno due anni di attività",
+      "Gestite un’azienda IT o ICT italiana con fatturato di almeno {THRESHOLD} e minimo due anni di attività",
       "Un nuovo cliente vale per voi {WORTH} o più nel primo anno",
       "Avete una funzione commerciale, anche solo il fondatore, in grado di rispondere entro due giorni lavorativi",
-      "Avete capacità per nuovi clienti nei prossimi tre mesi"
+      "Siete in grado di seguire nuovi clienti nei prossimi tre mesi"
     ],
     "noTitle": "Non funziona se",
     "no": [
@@ -125,14 +125,14 @@
     "note": "Verifichiamo i dati che ci date dopo la candidatura e confermiamo il fatturato con voi durante la chiamata."
   },
   "pay": {
-    "h2": "Si paga quando un contratto si chiude. I nostri incentivi sono i vostri.",
-    "body": "Nessun canone fisso, nessun costo di avvio, nessuna durata minima. Fatturiamo una commissione sui contratti che si chiudono grazie alle campagne che gestiamo. La percentuale dipende da quanto vale un cliente per voi, quindi la concordiamo prima che parta qualsiasi cosa. Non la pubblichiamo, perché non è uguale per due aziende.",
+    "h2": "Si paga quando un contratto si chiude: guadagniamo solo se guadagnate voi.",
+    "body": "Si paga quando viene chiuso un contratto. I nostri incentivi sono i vostri. Nessun canone fisso, nessun costo di attivazione, nessuna durata minima. Applichiamo una commissione sui contratti che si chiudono grazie alle campagne che gestiamo. La percentuale dipende da quanto vale un cliente per voi, quindi la concordiamo prima della partenza. Non la pubblichiamo perché non è uguale per due aziende.",
     "open": [
       "Una vendita è un contratto firmato o un ordine d’acquisto con un nuovo cliente arrivato da un lead prodotto dalle nostre campagne. I clienti esistenti e quelli arrivati da altre fonti non contano.",
       "Il vostro CRM è il registro. Ogni mese confermate quali contratti chiusi vengono dalle nostre campagne, e fatturiamo solo quelli.",
-      "Fatturiamo ogni mese, per i contratti chiusi in quel mese. Il pagamento è a 14 giorni.",
-      "Se non si chiude nulla, non fatturiamo nulla.",
-      "Il budget pubblicitario è separato. Lo pagate direttamente alle piattaforme e lo concordiamo con voi prima che parta qualsiasi cosa."
+      "Ogni mese fatturiamo solo i contratti chiusi in quel mese, con pagamento a 14 giorni.",
+      "Nessun contratto chiuso, nessuna fattura.",
+      "Il budget pubblicitario è separato. Lo concordiamo con voi prima dell’avvio delle campagne e lo pagate direttamente alle piattaforme."
     ]
   },
   "keep": {
@@ -140,15 +140,15 @@
     "items": [
       {
         "t": "Gli account pubblicitari sono vostri",
-        "p": "Le campagne girano in account pubblicitari di vostra proprietà. Pagate direttamente le piattaforme, senza ricarichi da parte nostra."
+        "p": "Le campagne vengono gestite in account pubblicitari di vostra proprietà. Pagate direttamente le piattaforme, senza alcun ricarico da parte nostra."
       },
       {
         "t": "I dati sono vostri",
-        "p": "Lead, risultati e vendite sono tracciati nel vostro CRM. Se smettiamo di lavorare insieme, tenete tutto."
+        "p": "Lead, risultati e vendite sono tracciati nel vostro CRM. Se smettiamo di collaborare, resta tutto a voi."
       },
       {
-        "t": "Il vostro team fa gli incontri",
-        "p": "Non sostituiamo il vostro team commerciale. Riempiamo la sua agenda di conversazioni adatte."
+        "t": "Il vostro team commerciale gestisce gli incontri",
+        "p": "Non sostituiamo il vostro team commerciale. Riempiamo la sua agenda di appuntamenti adatti."
       }
     ]
   },
@@ -169,41 +169,41 @@
       },
       {
         "metric": "Incontri qualificati",
-        "status": "Ciò verso cui lavoriamo",
+        "status": "Il nostro obiettivo",
         "key": true
       },
       {
         "metric": "Contratti chiusi",
-        "status": "Ciò su cui siamo pagati",
+        "status": "Ciò per cui siamo pagati",
         "key": true
       }
     ]
   },
   "meeting": {
-    "h2": "Il primo incontro: {OFFER}",
-    "body": "Non facciamo presentazioni commerciali. Ci sediamo con i vostri numeri e capiamo cosa servirebbe per raggiungere l’obiettivo dell’anno prossimo.",
+    "h2": "Il primo incontro: 30 minuti per analizzare la vostra pipeline",
+    "body": "Non facciamo presentazioni commerciali. Analizziamo insieme i vostri numeri e capiamo cosa servirebbe per raggiungere l’obiettivo dell’anno prossimo.",
     "steps": [
       {
         "t": "Prima della chiamata",
-        "p": "Ci dite il fatturato, l’obiettivo per l’anno prossimo e quanto vale un nuovo cliente tipico."
+        "p": "Ci indicate il fatturato, l’obiettivo per l’anno prossimo e quanto vale in media un nuovo cliente."
       },
       {
         "t": "Durante la chiamata",
-        "p": "Confermiamo insieme quattro numeri: il fatturato dell’anno scorso, l’obiettivo del prossimo, quanto vale un nuovo cliente nel primo anno e quanti incontri commerciali diventano clienti."
+        "p": "Verifichiamo insieme quattro numeri: il fatturato dell’anno scorso, l’obiettivo per il prossimo, il valore di un nuovo cliente nel primo anno e quanti incontri commerciali si trasformano in clienti."
       },
       {
         "t": "Entro un giorno lavorativo",
-        "p": "Ricevete un foglio di una pagina con i calcoli: quanti nuovi clienti al mese servono, quanti incontri commerciali al mese comporta e come si confronta con la vostra pipeline di oggi."
+        "p": "Riceverete una pagina di sintesi con i calcoli: quanti nuovi clienti vi servono ogni mese, quanti incontri commerciali servono per ottenerli e quanto distate dalla vostra pipeline attuale."
       }
     ],
-    "closing": "Il foglio resta vostro, che lavoriamo insieme o no. Contiene solo i vostri numeri. Nessun preventivo, nessuna percentuale di commissione, nessuna promessa."
+    "closing": "La pagina di sintesi resta vostra, anche se poi non lavoriamo insieme. Contiene solo i vostri numeri. Nessun preventivo, nessuna percentuale di commissione, nessuna promessa."
   },
   "faq": {
     "h2": "Risposte dirette",
     "items": [
       {
-        "q": "Funzionerà con le nostre dimensioni?",
-        "a": "Il meccanismo è lo stesso: un’offerta chiara, un acquirente chiaro e campagne tracciate fino ai contratti chiusi. Con le dimensioni cambiano il budget e il ciclo di vendita, e li pianifichiamo entrambi nella prima chiamata."
+        "q": "Funziona anche per un’azienda delle nostre dimensioni?",
+        "a": "Il meccanismo è lo stesso: un’offerta chiara, un cliente target ben definito e campagne tracciate fino alla firma dei contratti. Con le dimensioni cambiano il budget e il ciclo di vendita, e li pianifichiamo entrambi durante la prima chiamata."
       },
       {
         "q": "In che cosa è diverso da un’agenzia a canone mensile?",
@@ -219,7 +219,7 @@
       },
       {
         "q": "E se volessimo smettere?",
-        "a": "Non c’è una durata minima. Potete interrompere con 30 giorni di preavviso e tenete account e dati."
+        "a": "Non c’è una durata minima. Potete recedere con 30 giorni di preavviso. Account e dati rimangono a voi."
       }
     ]
   },
@@ -236,12 +236,12 @@
     "label": "Scelta sui cookie"
   },
   "form": {
-    "heading": "Verificate se possiamo lavorare insieme",
-    "under": "Poche domande. Accogliamo solo aziende che pensiamo di poter aiutare.",
+    "heading": "Scoprite se possiamo lavorare insieme",
+    "under": "Poche domande. Lavoriamo solo con aziende che pensiamo di poter aiutare.",
     "back": "Indietro",
     "next": "Avanti",
     "submit": "Invia",
-    "cta": "Verificate se possiamo lavorare insieme",
+    "cta": "Scoprite se possiamo lavorare insieme",
     "retry": "Riprovare",
     "sending": "Controlliamo alcuni dettagli. Ci vogliono pochi secondi.",
     "failed": "Qualcosa è andato storto da parte nostra. Le risposte sono ancora qui. Riprovare, oppure scrivere a",
@@ -302,8 +302,8 @@
       "resume": "Riprendi",
       "note": "Illustrazione. Nessun dato reale."
     },
-    "total": "lead qualificati in totale, da campagne che abbiamo gestito noi.",
+    "total": "lead qualificati in totale, da campagne gestite da noi.",
     "payKey": 3,
-    "measureSide": "Impressioni, clic e lead li misuriamo. Ma non sono il risultato."
+    "measureSide": "Misuriamo impressioni, clic e lead. Ma non sono il risultato."
   }
 }
