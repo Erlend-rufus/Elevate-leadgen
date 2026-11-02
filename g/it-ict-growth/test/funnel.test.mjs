@@ -246,11 +246,11 @@ test('pages: Aurora\'s address is the only address, and it is a link; Sondre and
 test('pages: the offer is the UK offer: commission only, the client pays the advertising, no rate, no setup fee', () => {
   const t = text('index.html');
   assert.match(t, /Si paga quando un contratto si chiude/);
-  assert.match(t, /Nessun canone fisso, nessun costo di avvio, nessuna durata minima/);
-  assert.match(t, /Fatturiamo una commissione sui contratti che si chiudono/);
+  assert.match(t, /Nessun canone fisso, nessun costo di attivazione, nessuna durata minima/);
+  assert.match(t, /Applichiamo una commissione sui contratti che si chiudono/);
   assert.match(t, /Non la pubblichiamo/);
-  assert.match(t, /Il budget pubblicitario è separato\. Lo pagate direttamente alle piattaforme/);
-  assert.match(t, /Se non si chiude nulla, non fatturiamo nulla/);
+  assert.match(t, /Il budget pubblicitario è separato\. Lo concordiamo con voi prima dell’avvio delle campagne e lo pagate direttamente alle piattaforme/);
+  assert.match(t, /Nessun contratto chiuso, nessuna fattura/);
 });
 
 test('pages: the Sondre once-only e-mail is not used in Italy; the opt-in quote button is, and nothing else', () => {

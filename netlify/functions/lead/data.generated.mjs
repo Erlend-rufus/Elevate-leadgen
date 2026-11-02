@@ -298,12 +298,12 @@ export const funnels = {
   },
   "copy": {
    "form": {
-    "heading": "Verificate se possiamo lavorare insieme",
-    "under": "Poche domande. Accogliamo solo aziende che pensiamo di poter aiutare.",
+    "heading": "Scoprite se possiamo lavorare insieme",
+    "under": "Poche domande. Lavoriamo solo con aziende che pensiamo di poter aiutare.",
     "back": "Indietro",
     "next": "Avanti",
     "submit": "Invia",
-    "cta": "Verificate se possiamo lavorare insieme",
+    "cta": "Scoprite se possiamo lavorare insieme",
     "retry": "Riprovare",
     "sending": "Controlliamo alcuni dettagli. Ci vogliono pochi secondi.",
     "failed": "Qualcosa è andato storto da parte nostra. Le risposte sono ancora qui. Riprovare, oppure scrivere a",
