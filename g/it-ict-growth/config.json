@@ -50,8 +50,8 @@
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
     "_qualifiedEvent": "A custom event, never the standard Lead. Fires on /book and /review only, with eventID = lead_id, and only after the visitor has accepted. The server sends the same event with the same id (Conversions API), so Meta counts it once.",
-    "calendlyUrl": "",
-    "_calendlyUrl": "The event URL with no query string, from Calendly: Share, Add to website, Inline embed. Empty is allowed only while live is false. Aurora's Calendly event does not exist yet: a person must create it (collective or single event, 30 minutes, 'Elevate Marketing | Commission | IT Italia'), with Calendly's own redirect left off.",
+    "calendlyUrl": "https://calendly.com/au-growwithelevate/elevate-marketing-commission-it-italia",
+    "_calendlyUrl": "The event URL with no query string, from Calendly: Share, Add to website, Inline embed. Empty is allowed only while live is false. The event 'Elevate Marketing | Commission | IT Italia' (30 minutes, a single event on Aurora's account, made 2 Nov 2026) is bookable. Calendly's own redirect must stay off.",
     "calendlyLeadParam": "utm_content",
     "_calendlyLeadParam": "The tracking parameter that carries the lead id into Calendly, where the Calendly Zap reads it back (Invitee Created, tracking). Change it here and in the Zap together, never in one place.",
     "bookingHeights": {

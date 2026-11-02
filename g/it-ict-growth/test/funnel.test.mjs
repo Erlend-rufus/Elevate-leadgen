@@ -285,10 +285,10 @@ test('the funnel has a cookie bar in Italian with Accetta and Rifiuta, and the M
   for (const bad of ['connect.facebook.net', 'fbevents.js', "fbq('init'", 'googletagmanager', 'fonts.googleapis']) assert.equal(h.includes(bad), false, bad);
 });
 
-test('settings: not live, the UK pixel is a placeholder the build refuses to launch with, review blocks are empty', () => {
+test('settings: not live, the UK pixel is a placeholder the build refuses to launch with, the Italy event is wired, review blocks are empty', () => {
   assert.equal(cfg.live, false);
   assert.equal(cfg.funnel.pixelId, '1466790598245604');
-  assert.equal(cfg.funnel.calendlyUrl, '');
+  assert.equal(cfg.funnel.calendlyUrl, 'https://calendly.com/au-growwithelevate/elevate-marketing-commission-it-italia');
   assert.equal(cfg.contact.email, 'au@growwithelevate.eu');
   assert.equal(cfg.origin, 'https://getelevateleads.com');
   assert.equal(cfg.reviewer.name, 'Aurora');
