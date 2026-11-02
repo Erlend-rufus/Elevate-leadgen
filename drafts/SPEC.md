@@ -34,6 +34,7 @@ cannot be guessed. `clickup` is the task id the draft was made for (informationa
 | `company` | yes | Must equal `company` in drafts.json. Used in the banner and `<title>`. |
 | `industry` | no | Free text, e.g. `law`, `it`, `health`, `finance`. Picks the style. |
 | `style` | no | `editorial`, `technical` or `clinical`. Overrides `industry`. |
+| `design` | no | `2` switches on design 2: BYQ-derived motion and micro-interactions, in CSS only (see "Design 2" below). Absent, the page renders exactly as before, so drafts already sent do not change. The `forsideutkast` run sets `2` on every new draft. |
 | `images` | no | `{ "hero": {...}, "proof": {...}, "about": {...} }`, each `{ "file", "alt", "position" }`. Files sit next to spec.json, max 400 KB each (resize to 1600 px, jpg quality 80). Only photographs taken from the prospect's own site; never stock found elsewhere, never AI imagery. Skip the gavel, the handshake and the stethoscope: the sector research says clichés cost trust. With `hero` the page gets the photograph hero with the `hero.stat` or `hero.quote` floating on it; without it the typographic hero. `proof` adds an image tile to the figures; `about` a portrait next to the about text. |
 | `trust` | no | Up to 4 accreditation marks `{ "file", "alt" }` or `{ "text" }` shown in a strip under the hero (regulator, professional body, certification). Only marks the prospect shows on their own site. |
 | `trustLabel`, `trustText` | no | Label before the marks ("Regulated by") and a short line after them. |
@@ -73,3 +74,27 @@ cannot be guessed. `clickup` is the task id the draft was made for (informationa
 and `/g/_assets/fonts/`, every image is copied next to the page).
 `netlify.toml` adds `X-Robots-Tag` on `/draft/*` and a 404 on the bare `/draft` path. Drafts
 are never linked from the site and never listed in the sitemap.
+
+## Design 2 (`"design": 2`)
+
+Motion taken from the BYQ Supply library (the repo rule in CLAUDE.md: search BYQ before writing your own), ported to CSS because a draft ships no script and makes no request outside getelevateleads.com. All of it lives in `MOTION_CSS` in `scripts/lib/draft-page.mjs`.
+
+| Where | Effect | BYQ source |
+| --- | --- | --- |
+| Hero heading | words rise from a mask, on load | gem `scroll-text-reveal-01` |
+| Hero photograph | curtain wipe, slow settle, parallax while it passes | gem `curtain-image-reveal-01`, section `avenir-hero-5` |
+| Sections, rows, cards, terms, contact | rise in on scroll, staggered along a row | sections `nextwell-value-features-6`, `genesis-value-features-4` |
+| Figures and quote tile | come into focus as they enter | gem `scroll-blur-reveal-01` |
+| Why list | a spine draws as you scroll | gem `scroll-timeline-01` |
+| Before and after | the strike-through draws, the arrow slides in | own |
+| Hover | row line draws, card top line draws, button arrow slides | `stringer-team-grid-2`, `reforma-hero-7` |
+
+Rules that keep it safe, and that a change to the motion must keep:
+
+1. Nothing loops (WCAG 2.2.2). No marquee, no pulsing.
+2. Every animation sits behind `prefers-reduced-motion: no-preference`, and the scroll-driven ones also behind `@supports (animation-timeline: view())`. Without them (older browser, reduced motion, print, a crawler) the page is the finished page.
+3. Nothing is hidden except by an animation that reveals it. Anything that contains a `view()` element uses `overflow: clip`, never `overflow: hidden`: hidden makes the element the scroller and the timeline never runs.
+4. The first screen is not delayed: the heading, sub line and buttons are in place within 0.7 s, and the photograph is painted under its curtain from the first frame.
+5. No script, no external request, no new font: the build guarantees above still hold.
+
+What design 2 deliberately does not have: cursor-following previews, magnetic buttons, pinned scroll stories, count-ups and marquees. They need script or loop; BYQ has them, the drafts cannot.

@@ -148,6 +148,13 @@
       "slug": "the-cfo-hq-6d9f89",
       "spec": "spec.json",
       "clickup": "124hhvu5ejk"
+    },
+    {
+      "dir": "my-commercial-lawyers",
+      "company": "My Commercial Lawyers",
+      "slug": "my-commercial-lawyers-v2-47nx4t",
+      "spec": "spec-v2.json",
+      "clickup": "124hhvu5814"
     }
   ]
 }
