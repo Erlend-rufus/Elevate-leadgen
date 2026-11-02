@@ -127,7 +127,7 @@ const CAMPAIGNS: Record<string, Campaign> = {
     label: "IT ITALY",
     listId: "", // IT - ITALY - Commission, to be made
     tag: "growth-it",
-    eventTypes: [], // the event type id of "Elevate Marketing | Commission | IT Italia", when it exists
+    eventTypes: ["82a67d1d-2a3b-4bd4-b892-97c41d4a47ad"], // Elevate Marketing | Commission | IT Italia (Aurora, made 2 Nov 2026)
     lang: "en",
     zones: [{ tz: "Europe/Rome", label: "Rome" }],
     field: {

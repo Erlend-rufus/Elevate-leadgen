@@ -9,6 +9,8 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://assets.calendly.com" crossorigin>
+<link rel="preconnect" href="https://calendly.com" crossorigin>
 <link rel="preload" href="/g/_assets/fonts/geist-v1.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/g/_assets/fonts/fraunces-v1.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -199,7 +201,8 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
         <p class="o-p">Scegliete uno slot per l’analisi della pipeline di 30 minuti. Bastano i vostri numeri.</p>
         
         <div class="o-cal-wrap">
-          <div class="o-cal" id="cal"><p class="o-note">Il calendario non è ancora collegato. Impostare funnel.calendlyUrl in g/it-ict-growth/config.json.</p></div>
+          <div class="o-cal" id="cal"></div>
+          <noscript><p class="o-small"><a href="https://calendly.com/au-growwithelevate/elevate-marketing-commission-it-italia">Aprire il calendario in una pagina a parte</a></p></noscript>
           <p class="o-small">Nessun orario va bene? Rispondete all’email di conferma e ne troveremo uno.</p>
         </div>
       </div>
@@ -224,7 +227,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 <script>
 (function(){
 'use strict';
-var CFG = {"slug":"it-ict-growth","campaign":"it-ict-growth","path":"/g/it-ict-growth","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"au@growwithelevate.eu","calendlyUrl":"","calendlyLeadParam":"utm_content","takkPath":"/g/it-ict-growth/takk/","prefillKey":"elevate:g:it-ict-growth:prefill","text":{"back":"Indietro","next":"Avanti","cta":"Verificate se possiamo lavorare insieme","retry":"Riprovare","sending":"Controlliamo alcuni dettagli. Ci vogliono pochi secondi.","failed":"Qualcosa è andato storto da parte nostra. Le risposte sono ancora qui. Riprovare, oppure scrivere a","askDone":"Grazie. Vi scriveremo da au@growwithelevate.eu entro due giorni lavorativi.","askError":"Non è andata a buon fine. Scrivete a au@growwithelevate.eu chiedendo un preventivo e ve lo invieremo."}};
+var CFG = {"slug":"it-ict-growth","campaign":"it-ict-growth","path":"/g/it-ict-growth","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"au@growwithelevate.eu","calendlyUrl":"https://calendly.com/au-growwithelevate/elevate-marketing-commission-it-italia","calendlyLeadParam":"utm_content","takkPath":"/g/it-ict-growth/takk/","prefillKey":"elevate:g:it-ict-growth:prefill","text":{"back":"Indietro","next":"Avanti","cta":"Verificate se possiamo lavorare insieme","retry":"Riprovare","sending":"Controlliamo alcuni dettagli. Ci vogliono pochi secondi.","failed":"Qualcosa è andato storto da parte nostra. Le risposte sono ancora qui. Riprovare, oppure scrivere a","askDone":"Grazie. Vi scriveremo da au@growwithelevate.eu entro due giorni lavorativi.","askError":"Non è andata a buon fine. Scrivete a au@growwithelevate.eu chiedendo un preventivo e ve lo invieremo."}};
 /* Shared by every page of a growth funnel. The build wraps the pieces of a page in one
    function and writes CFG above them; nothing here reads the page's own copy. */
 
