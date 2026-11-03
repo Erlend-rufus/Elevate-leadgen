@@ -6,8 +6,9 @@ check, in Italian and in euro. Decided and scoped on 23 Oct 2026. Read `g/uk-it-
 does not repeat (the endpoint, hosting, the Zapier build and the privacy notice). This file lists what is **different** for Italy
 and what a person has to supply before it can go live.
 
-**Status: built and tested; not live. The switch is `"live"` in `config.json`.** While it is `false` the endpoint answers every
-post with a 503 and stores nothing, and every page carries `noindex`. The build says what is outstanding:
+**Status: live since 3 Nov 2026 (branch `go-live/it-ict-growth`). The switch is `"live"` in `config.json`.** While it is `false`
+the endpoint answers every post with a 503 and stores nothing (that is also the rollback, section 11). Every page carries `noindex`
+either way, because it is an ad landing page. The build says what is outstanding:
 
 ```
 npm run build                  # or: node scripts/build-g-growth.mjs
@@ -16,8 +17,10 @@ node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts && node g/_growth/
 node g/_growth/zapier/build.mjs zap2-calendly-booking.ts && node g/_growth/zapier/zap2-it.test.mjs        # 98 checks
 ```
 
-The Italian funnel has not been through a real phone test, a solicitor or a native speaker. (The Zapier side has: both workflows
-were published with the Italian entries on 3 Nov 2026 after draft runs, section 4.) Do not set `"live": true` until section 9 is done.
+Reviews: `copy.json` review names Aurora Ulliana and `legal.json` review records an Italian solicitor, both dated 3 Nov 2026 and
+confirmed by Erlend Rufus. The solicitor's name and firm are still to be added. Not done by a person: the phone test of section 9
+step 9. The Meta ads stay paused until Erlend activates them (section 9 step 11). (The Zapier side: both workflows were published
+with the Italian entries on 3 Nov 2026 after draft runs, section 4.)
 
 ---
 
