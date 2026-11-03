@@ -381,6 +381,7 @@ const CAMPAIGNS: Record<string, Campaign> = {
       value_under_10k: "client value under €10k",
       // review and fit (the codes of g/it-ict-growth/route.mjs; there is no register check in Italy)
       turnover_1m_2m: "turnover €1m to under €2m",
+      spend_5k_plus: "marketing spend €5,000 a month or more (a call is worth having whatever else they said)",
       turnover_2m_plus: "turnover €2m or more",
       turnover_inferred: "turnover not stated, taken as €2m or more from headcount and marketing spend",
       turnover_not_stated: "turnover not stated",

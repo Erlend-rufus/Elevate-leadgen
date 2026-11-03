@@ -296,6 +296,15 @@ const shipped = (await import(pathToFileURL(path.join(here, 'out/zap1-lead-to-cl
   const r = w3.slack[0].text;
   ok(r.startsWith('*REVIEW* · IT ITALY') && r.includes('Why: client value €10k to under €25k\n'), '1m to 2m review: the reason');
 
+  // 5,000 euro a month or more on marketing: a fit whatever else was said, and the post says why (the small answers stay in the post).
+  const w5 = makeWorld();
+  await run(wf, w5, lead({ lead_id: 'l_it_0045', route: 'fit', route_reason: 'spend_5k_plus, register_not_used', turnover_band: 'Meno di 1 milione di €', trading_years: 'Meno di due anni', first_year_value: 'Meno di 10.000 €', email: 'b45@acme-it.it' }));
+  const b = w5.slack[0].text;
+  ok(b.startsWith('*FIT* · IT ITALY'), 'big spender: heading');
+  ok(b.includes('Turnover: Under €1m'), 'big spender: the small turnover is in the post, so the reader sees it');
+  ok(b.includes('\nWhy: marketing spend €5,000 a month or more (a call is worth having whatever else they said), no company register check\n'), 'big spender: why it is a fit');
+  noNorwegian(b, 'big spender slack');
+
   // A lead made before 3 Nov still reads as it did.
   const w4 = makeWorld();
   await run(wf, w4, lead({ lead_id: 'l_it_0044', route: 'not_a_fit', route_reason: 'turnover_below_2m', turnover_band: 'Da 1 milione a meno di 2 milioni di €', email: 'o44@acme-it.it' }));
