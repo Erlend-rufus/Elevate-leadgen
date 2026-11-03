@@ -375,10 +375,12 @@ const CAMPAIGNS: Record<string, Campaign> = {
     slackDetail: true,
     reasonText: {
       // not a fit
-      turnover_below_2m: "turnover under €2m",
+      turnover_below_1m: "turnover under €1m", // the limit since 3 Nov 2026
+      turnover_below_2m: "turnover under €2m", // the limit before 3 Nov 2026: still on the leads made until then
       trading_under_2y: "under two years trading",
       value_under_10k: "client value under €10k",
       // review and fit (the codes of g/it-ict-growth/route.mjs; there is no register check in Italy)
+      turnover_1m_2m: "turnover €1m to under €2m",
       turnover_2m_plus: "turnover €2m or more",
       turnover_inferred: "turnover not stated, taken as €2m or more from headcount and marketing spend",
       turnover_not_stated: "turnover not stated",
