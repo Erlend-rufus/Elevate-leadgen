@@ -58,7 +58,8 @@ const DEFAULT_LOCALE = {
     other: 'Other',
   },
 };
-/* The UK pixel. A funnel for another country must not go live on it by mistake (see the checks in build()). */
+/* The UK pixel, which is also the pixel of the rest of getelevateleads.com. A funnel for another country may go live on it
+   only when its config says so on purpose ("funnel.sharedPixel": true, Italy since 3 Nov 2026). See the checks in build(). */
 const UK_PIXEL_ID = '1466790598245604';
 let LOCALE = DEFAULT_LOCALE;
 
@@ -854,14 +855,22 @@ async function build(slug) {
   if (typeof cfg.live !== 'boolean') die('"live" must be true or false');
   const url = cfg.funnel.calendlyUrl;
   if (cfg.live && !url) die('funnel.calendlyUrl is empty while "live" is true');
-  if (cfg.live && !slug.startsWith('uk-') && cfg.funnel.pixelId === UK_PIXEL_ID) {
-    die('funnel.pixelId is still the UK pixel while "live" is true. Make a pixel for this country and set it, or change this check on purpose.');
+  // A non-UK funnel on the UK pixel has to say so ("sharedPixel": true, Italy since 3 Nov 2026), so it can never happen by a copied value.
+  if (cfg.funnel.sharedPixel !== undefined && typeof cfg.funnel.sharedPixel !== 'boolean') die('funnel.sharedPixel must be true or false');
+  if (cfg.funnel.sharedPixel && cfg.funnel.pixelId !== UK_PIXEL_ID) {
+    die('funnel.sharedPixel is true but funnel.pixelId is not the shared (UK) pixel. Set pixelId to the shared pixel, or remove sharedPixel and give this funnel its own pixel and token.');
+  }
+  if (cfg.funnel.sharedPixel && cfg.funnel.capiTokenEnv) {
+    die('funnel.sharedPixel and funnel.capiTokenEnv are both set. A funnel on the shared pixel sends with the shared token (META_CAPI_TOKEN): remove one of them.');
+  }
+  if (cfg.live && !slug.startsWith('uk-') && cfg.funnel.pixelId === UK_PIXEL_ID && !cfg.funnel.sharedPixel) {
+    die('funnel.pixelId is the UK pixel while "live" is true for a non-UK funnel. Set "sharedPixel": true if that is the decision, or make a pixel for this country and set it.');
   }
   if (cfg.funnel.capiTokenEnv !== undefined && !/^META_CAPI_TOKEN_[A-Z0-9_]{1,30}$/.test(cfg.funnel.capiTokenEnv)) {
     die(`funnel.capiTokenEnv "${cfg.funnel.capiTokenEnv}" must be the name of a Netlify variable like META_CAPI_TOKEN_IT (never the token itself)`);
   }
-  if (cfg.live && !slug.startsWith('uk-') && !cfg.funnel.capiTokenEnv) {
-    die('funnel.capiTokenEnv is empty while "live" is true for a non-UK funnel. A Meta token belongs to one pixel: name the variable that holds this funnel\'s own token (META_CAPI_TOKEN_<COUNTRY>).');
+  if (cfg.live && !slug.startsWith('uk-') && !cfg.funnel.capiTokenEnv && !cfg.funnel.sharedPixel) {
+    die('funnel.capiTokenEnv is empty while "live" is true for a non-UK funnel with a pixel of its own. A Meta token belongs to one pixel: name the variable that holds this funnel\'s own token (META_CAPI_TOKEN_<COUNTRY>), or share the UK pixel on purpose with "sharedPixel": true.');
   }
   if (url && !/^https:\/\/calendly\.com\/[^?#\s]+$/.test(url)) die(`funnel.calendlyUrl "${url}" must be a calendly.com address with no query string: the page adds its own`);
   if (!/^[A-Za-z][A-Za-z0-9_]{2,44}$/.test(cfg.funnel.qualifiedEvent) ||

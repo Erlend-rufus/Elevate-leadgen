@@ -62,6 +62,19 @@ const sdk = createZapierSdk();
  *     for a refusal in the one-line post.
  *   - The fit and review posts show the marketing spend: it now decides whether a smaller firm is a fit.
  *   - IT team size "50 to 99" fits inside ClickUp's "50+" and is set.
+ *
+ * Changed 3 Nov 2026, Italy (Erlend: the Slack posts must give as much English information as possible). The
+ * answers of the Italian form arrive as the form's own Italian words, so the English posts need a table for them:
+ *   - answersEn: the form's answer words in English. The Slack posts show the English. The ClickUp description shows
+ *     the English with the visitor's own word after it in brackets, so nothing is lost. A word the table does not
+ *     know is shown as it came in. A test checks that every option of the Italian form has an entry.
+ *   - slackDetail: the full post also carries the IT area, the years trading, the target, the website and a line
+ *     saying why the lead was routed as it was (reasonText now has the codes of fit and review too); the one-line
+ *     "not a fit" post carries the website, which is what the reviewer needs to judge it. Still no name, e-mail
+ *     address or phone number in Slack.
+ *   - What the visitor wrote in their own words (what they want from the meeting, the target) is shown as written:
+ *     a table cannot translate it.
+ *   An entry without these keys behaves exactly as before; the UK posts did not change.
  */
 
 // ---------------------------------------------------------------------------------------------
@@ -124,7 +137,8 @@ const EN: Record<string, string> = {
   "uten navn": "no name",
   "Selvbetalende": "Self-pay",
   "Verdi førstekonsultasjon": "First consultation value",
-  "Vil ha ut av møtet": "Wants from the meeting",
+  "Vil ha ut av møtet": "Wants from the meeting (their own words)",
+  "Hvorfor": "Why",
   "ukjent": "unknown",
   "åpne oppgaven": "open the task",
   "⚠ Størrelse ikke bekreftet, sjekk før møtet": "⚠ Size not confirmed, check before the meeting",
@@ -183,6 +197,8 @@ type Campaign = {
   phonePrefix?: string; // default "44"; "39" for Italy
   otherSpecialism?: string; // default "Other"; the form's own word, "Altro" in Italy
   reasonText?: Record<string, string>; // default REASON_TEXT
+  answersEn?: Record<string, string>; // the form's own answer words in English (Italy); a word that is missing is shown as it came in
+  slackDetail?: boolean; // default false (the posts are as they were); true: the full post also carries area, years trading, target, website and why
   field: Record<string, string>;
   option: {
     crmItemType: string;
@@ -335,29 +351,89 @@ const CAMPAIGNS: Record<string, Campaign> = {
       contractValue: {},
     },
   },
-  // Italy, IT and ICT firms (23 Oct 2026). NOT LIVE: the ClickUp list does not exist yet (a person duplicates
-  // "IT - UK - Commision"; the fields and options come with it, so the ids below are the IT list's), there is no
-  // Slack channel yet, and Aurora is not in ClickUp or Slack yet. With listId or slackChannel empty a run fails on
-  // purpose and shows in the run history; the lead itself is safe in the function's store. The function answers 503
-  // while the funnel's config says live: false, so no lead reaches this entry before launch.
+  // Italy, IT and ICT firms (23 Oct 2026, wired 3 Nov 2026). The ClickUp list "IT - ITALY - Commission" sits in the CRM
+  // folder with the nine statuses of "IT - UK - Commision", and the UK list's own fields were added to it as existing
+  // fields (the fields are shared, not copied), so every field and option id below is the UK one. The Slack channel is
+  // #leads-it. Aurora is not in ClickUp or Slack yet: nobody is assigned or pinged until her ids are filled in under
+  // reviewer. With listId or slackChannel empty a run fails on purpose and shows in the run history; the lead itself
+  // is safe in the function's store. The function answers 503 while the funnel's config says live: false, so no lead
+  // reaches this entry before launch.
   // The ClickUp dropdowns are in pounds. Euro bands do not fit inside a pound band without a wrong bucket, so
   // ad spend and contract value are left empty (the exact answers are in the description). Specialism has no
   // currency and is set, team size only for "100 o più" (inside "50+"), "Non lo so" is "Unknown".
   "it-ict-growth": {
     label: "IT ITALY",
-    listId: "", // IT - ITALY - Commission, to be made
+    listId: "1201270000004918", // IT - ITALY - Commission
     tag: "growth-it",
     peopleWord: "employees",
     lang: "en",
     reviewer: { clickupId: 0, slackId: "", name: "Aurora" }, // ids when she has been invited
-    slackChannel: "", // #leads-it, to be made
+    slackChannel: "C0CEKL5H4LC", // #leads-it
     register: false,
     phonePrefix: "39",
     otherSpecialism: "Altro",
+    slackDetail: true,
     reasonText: {
+      // not a fit
       turnover_below_2m: "turnover under €2m",
       trading_under_2y: "under two years trading",
       value_under_10k: "client value under €10k",
+      // review and fit (the codes of g/it-ict-growth/route.mjs; there is no register check in Italy)
+      turnover_2m_plus: "turnover €2m or more",
+      turnover_inferred: "turnover not stated, taken as €2m or more from headcount and marketing spend",
+      turnover_not_stated: "turnover not stated",
+      value_10k_to_25k: "client value €10k to under €25k",
+      trading_2y_plus: "two years or more trading",
+      register_not_used: "no company register check",
+      register_off: "company register check switched off",
+      capacity_none: "no capacity for new clients",
+    },
+    // The form's own words in English, for the Slack posts and the ClickUp description. The English is the UK form's
+    // wording for the same position, with euro for pound. g/it-ict-growth/core.mjs is the source of the Italian words:
+    // zap1-it.test.mjs fails if an option there has no entry here, or if an entry here is no option any more.
+    answersEn: {
+      "Strategia IT e trasformazione digitale": "IT strategy and digital transformation",
+      "Servizi IT gestiti (MSP)": "Managed IT services (MSP)",
+      "Sviluppo software": "Software development",
+      "Dati e intelligenza artificiale": "Data and AI",
+      "Cybersecurity": "Cybersecurity",
+      "Altro": "Other",
+      "Meno di 1 milione di €": "Under €1m",
+      "Da 1 milione a meno di 2 milioni di €": "€1m to under €2m",
+      "Da 2 a meno di 5 milioni di €": "€2m to under €5m",
+      "Da 5 a meno di 10 milioni di €": "€5m to under €10m",
+      "10 milioni di € o più": "€10m or more",
+      "Preferisco non dirlo": "I would rather not say",
+      "Meno di due anni": "Under two years",
+      "Da due a cinque anni": "Two to five years",
+      "Più di cinque anni": "More than five years",
+      "Meno di 10": "Under 10",
+      "Da 10 a 24": "10 to 24",
+      "Da 25 a 49": "25 to 49",
+      "Da 50 a 99": "50 to 99",
+      "100 o più": "100 or more",
+      "Meno di 1.000 €": "Under €1,000",
+      "Da 1.000 € a meno di 5.000 €": "€1,000 to under €5,000",
+      "Da 5.000 € a meno di 15.000 €": "€5,000 to under €15,000",
+      "15.000 € o più": "€15,000 or more",
+      "Non lo so": "I do not know",
+      "Meno di 10.000 €": "Under €10k",
+      "Da 10.000 € a meno di 25.000 €": "€10k to under €25k",
+      "Da 25.000 € a meno di 50.000 €": "€25k to under €50k",
+      "Da 50.000 € a meno di 150.000 €": "€50k to under €150k",
+      "150.000 € o più": "€150k or more",
+      "Meno di quattro settimane": "Under four weeks",
+      "Da uno a meno di tre mesi": "One to under three months",
+      "Da tre a sei mesi": "Three to six months",
+      "Più di sei mesi": "Over six months",
+      "Io": "Me",
+      "Io, insieme a un socio o al consiglio": "Me, with a co-founder or board",
+      "Qualcun altro, che coinvolgerei": "Someone else, I would bring them in",
+      "Un processo di acquisto strutturato": "A procurement process",
+      "Nessuno, siamo al limite": "None, we are at capacity",
+      "Da uno a tre": "One to three",
+      "Da quattro a dieci": "Four to ten",
+      "Più di dieci": "More than ten",
     },
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
@@ -591,8 +667,28 @@ function goalBlock(lead: Lead): string {
   return ["**What do you want to get out of this meeting?**", quoted].join("\n");
 }
 
+// The form's own answer word in English, for a campaign that has a table for it (Italy). "Altro: text" keeps the
+// visitor's text after the English word. A word the table does not know is shown as it came in, never dropped.
+function english(c: Campaign, value: string): string {
+  const map = c.answersEn;
+  if (!map || !value) return value;
+  if (Object.prototype.hasOwnProperty.call(map, value)) return map[value];
+  const other = c.otherSpecialism;
+  if (other && value.startsWith(`${other}: `) && Object.prototype.hasOwnProperty.call(map, other)) {
+    return `${map[other]}: ${value.slice(other.length + 2)}`;
+  }
+  return value;
+}
+
+// The ClickUp description is the record: the English first, the visitor's own word after it in brackets.
+function withOriginal(c: Campaign, value: string): string {
+  const en = english(c, value);
+  return en === value ? value : `${en} (${value})`;
+}
+
 function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): string {
   const t = (no: string) => tr(c, no);
+  const of = (value: string) => withOriginal(c, value);
   const row = (label: string, value: string) => (value ? `- ${t(label)}: ${value}` : "");
   const block = (title: string, rows: string[]) => {
     const body = rows.filter(Boolean);
@@ -619,22 +715,22 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
       withRegister ? row("Sjekk mot registeret", lead.ch_check) : "",
     ]),
     block("Svar i skjemaet", [
-      row("Spesialisering", lead.specialism),
+      row("Spesialisering", of(lead.specialism)),
       row("Fagområder", lead.practice_areas),
       row("SRA-nummer", lead.sra_number),
       row("Registreringsnummer hos tilsynet", lead.regulator_number),
       row("Spesialiteter", lead.specialties),
       row("Andel selvbetalende", lead.self_pay_share),
       row("Verdi av førstekonsultasjon", lead.first_consultation_value),
-      row("Omsetning", lead.turnover_band),
-      row("Hvor lenge i drift", lead.trading_years),
-      row("Antall folk", lead.employees_or_fee_earners),
-      row("Markedsføring per måned", lead.marketing_spend),
-      row("Verdi første år", lead.first_year_value),
-      row("Salgssyklus", lead.sales_cycle),
+      row("Omsetning", of(lead.turnover_band)),
+      row("Hvor lenge i drift", of(lead.trading_years)),
+      row("Antall folk", of(lead.employees_or_fee_earners)),
+      row("Markedsføring per måned", of(lead.marketing_spend)),
+      row("Verdi første år", of(lead.first_year_value)),
+      row("Salgssyklus", of(lead.sales_cycle)),
       row("Mål neste år", lead.target_next_year),
-      row("Beslutter", lead.decision_maker),
-      row("Kapasitet", lead.capacity),
+      row("Beslutter", of(lead.decision_maker)),
+      row("Kapasitet", of(lead.capacity)),
     ]),
     goalBlock(lead),
     block("Kontakt", [
@@ -667,8 +763,10 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
 function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, isTest: boolean): string {
   const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const t = (no: string) => tr(c, no);
+  const en = (value: string) => english(c, value);
+  const detail = c.slackDetail === true;
   const head = `${isTest ? "[TEST] " : ""}*${t(route.heading)}* · ${c.label} · ${esc(lead.company_name || t("uten navn"))}`;
-  const people = lead.employees_or_fee_earners ? `${lead.employees_or_fee_earners} ${c.peopleWord}` : "";
+  const people = lead.employees_or_fee_earners ? `${en(lead.employees_or_fee_earners)} ${c.peopleWord}` : "";
   const year = lead.ch_incorporated.slice(0, 4);
   let register = "";
   if (c.register === false) {
@@ -682,21 +780,33 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   } else {
     register = "Companies House: ikke sjekket";
   }
-  const line2 = [lead.turnover_band, people, register].filter(Boolean).join(" · ");
+  const turnover = detail && lead.turnover_band ? `${t("Omsetning")}: ${en(lead.turnover_band)}` : en(lead.turnover_band);
+  const line2 = [turnover, people, register].filter(Boolean).join(" · ");
+  // Only with slackDetail: what the firm does and how long it has traded.
+  const profile = detail
+    ? [lead.specialism && `${t("Spesialisering")}: ${en(lead.specialism)}`, lead.trading_years && `${t("Hvor lenge i drift")}: ${en(lead.trading_years)}`]
+        .filter(Boolean)
+        .join(" · ")
+    : "";
   const line3 = [
-    lead.marketing_spend && `${t("Markedsføring per måned")}: ${lead.marketing_spend}`,
-    lead.first_year_value && `${t("Verdi første år")}: ${lead.first_year_value}`,
+    lead.marketing_spend && `${t("Markedsføring per måned")}: ${en(lead.marketing_spend)}`,
+    lead.first_year_value && `${t("Verdi første år")}: ${en(lead.first_year_value)}`,
     lead.first_consultation_value && `${t("Verdi førstekonsultasjon")}: ${lead.first_consultation_value}`,
     lead.self_pay_share && `${t("Selvbetalende")}: ${lead.self_pay_share}`,
     lead.specialties && `${t("Spesialiteter")}: ${lead.specialties}`,
     lead.practice_areas && `${t("Fagområder")}: ${lead.practice_areas}`,
-    lead.sales_cycle && `${t("Salgssyklus")}: ${lead.sales_cycle}`,
+    lead.sales_cycle && `${t("Salgssyklus")}: ${en(lead.sales_cycle)}`,
   ]
     .filter(Boolean)
     .join(" · ");
-  const line4 = [lead.capacity && `${t("Kapasitet")}: ${lead.capacity}`, lead.decision_maker && `${t("Beslutter")}: ${lead.decision_maker}`]
+  const line4 = [lead.capacity && `${t("Kapasitet")}: ${en(lead.capacity)}`, lead.decision_maker && `${t("Beslutter")}: ${en(lead.decision_maker)}`]
     .filter(Boolean)
     .join(" · ");
+  // Only with slackDetail: the target in the visitor's own words, why the lead was routed as it was, the website.
+  const target = detail && lead.target_next_year ? `${t("Mål neste år")}: ${lead.target_next_year}` : "";
+  const reasons = detail ? reasonsShown(c, lead) : "";
+  const why = reasons ? `${t("Hvorfor")}: ${reasons}` : "";
+  const website = detail && lead.company_website ? `${t("Nettside")}: ${lead.company_website}` : "";
   let goal = "";
   if (lead.meeting_goal) {
     const flat = lead.meeting_goal.replace(/\s+/g, " ").trim();
@@ -704,7 +814,19 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
     goal = `${t("Vil ha ut av møtet")}: _${esc(cut)}_`;
   }
   const source = [lead.utm_source, lead.utm_content].filter(Boolean).join(" / ") || t("ukjent");
-  const lines = [head, esc(line2), esc(line3), esc(line4), goal, `${t("Kilde")}: ${esc(source)}`, `ClickUp: <${taskUrl}|${t("åpne oppgaven")}>`];
+  const lines = [
+    head,
+    esc(line2),
+    esc(profile),
+    esc(line3),
+    esc(line4),
+    esc(target),
+    esc(why),
+    goal,
+    esc(website),
+    `${t("Kilde")}: ${esc(source)}`,
+    `ClickUp: <${taskUrl}|${t("åpne oppgaven")}>`,
+  ];
   if (c.register !== false && (lead.ch_check === "mismatch" || lead.ch_check === "timeout" || lead.ch_check === "not_found")) {
     lines.push(t("⚠ Størrelse ikke bekreftet, sjekk før møtet"));
   }
@@ -734,19 +856,32 @@ const FLAGS = new Set(["fertility", "personal_injury_ticked", "value_under_2k_vo
 
 const slackEscape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-// Not a fit: short, no ping. The assignment in ClickUp is what tells Sondre.
-function slackCompact(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, isTest: boolean): string {
+// The function's reason codes in the words of the country. A flag is not a reason, and a code that is not known is
+// shown as it is.
+function reasonsShown(c: Campaign, lead: Lead): string {
   const reasons = c.reasonText ?? REASON_TEXT;
-  const people = lead.employees_or_fee_earners ? `${lead.employees_or_fee_earners} ${c.peopleWord}` : "";
-  const why = lead.route_reason
+  return lead.route_reason
     .split(",")
     .map((code) => code.trim())
     .filter((code) => code && !FLAGS.has(code))
     .map((code) => (Object.prototype.hasOwnProperty.call(reasons, code) ? reasons[code] : code))
     .join(", ");
+}
+
+// Not a fit: short, no ping. The assignment in ClickUp is what tells Sondre. With slackDetail the website is in the
+// post too: the reviewer decides from it whether a website or a retainer could suit the firm.
+function slackCompact(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, isTest: boolean): string {
+  const people = lead.employees_or_fee_earners ? `${english(c, lead.employees_or_fee_earners)} ${c.peopleWord}` : "";
+  const why = reasonsShown(c, lead);
   const head = `${isTest ? "[TEST] " : ""}*${tr(c, route.heading)}* · ${c.label} · ${slackEscape(lead.company_name || tr(c, "uten navn"))}`;
-  const line2 = [lead.turnover_band, people, why && `${tr(c, "Grunn")}: ${why}`].filter(Boolean).join(" · ");
-  return [head, slackEscape(line2), `${tr(c, "{name} vurderer nettside eller retainer", { name: reviewerOf(c).name })} · ClickUp: <${taskUrl}|${tr(c, "åpne oppgaven")}>`]
+  const line2 = [english(c, lead.turnover_band), people, why && `${tr(c, "Grunn")}: ${why}`].filter(Boolean).join(" · ");
+  const website = c.slackDetail === true && lead.company_website ? `${tr(c, "Nettside")}: ${lead.company_website}` : "";
+  return [
+    head,
+    slackEscape(line2),
+    slackEscape(website),
+    `${tr(c, "{name} vurderer nettside eller retainer", { name: reviewerOf(c).name })} · ClickUp: <${taskUrl}|${tr(c, "åpne oppgaven")}>`,
+  ]
     .filter(Boolean)
     .join("\n");
 }

@@ -1,19 +1,21 @@
 // Zap 1 for Italy (it-ict-growth). The UK checks are in zap1.test.mjs and must stay green next to these.
-// The shipped source has no ClickUp list, no Slack channel and no ids for Aurora yet, so the checks that need
-// them build a copy of the source with test values put into the Italy entry (nothing is written to the repository).
+// The shipped source has the Italy list and the Slack channel #leads-it, but no ids for Aurora yet (she is not in
+// ClickUp or Slack). The checks that need her build a copy of the source with test ids put into the Italy entry,
+// and the failure checks build a copy with the list or the channel taken out (nothing is written to the repository).
 //   node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts && node g/_growth/zapier/zap1-it.test.mjs
 import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { build } from 'esbuild';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { OPTIONS } from '../../it-ict-growth/core.mjs'; // the Italian words of the form: the English table is checked against them
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const truth = JSON.parse(fs.readFileSync(path.join(here, 'truth.json'), 'utf8'));
 const SOURCE = fs.readFileSync(path.join(here, 'zap1-lead-to-clickup-slack.ts'), 'utf8');
 
-const IT_LIST = '901599999999';
-const IT_CHANNEL = 'CITALY00001';
+const IT_LIST = '1201270000004918'; // IT - ITALY - Commission
+const IT_CHANNEL = 'C0CEKL5H4LC'; // #leads-it
 const AURORA_CLICKUP = 777001;
 const AURORA_SLACK = 'UAURORA001';
 const UK_LIST = '901522580321';
@@ -27,14 +29,16 @@ const ok = (cond, label) => { assert.ok(cond, label); passed++; };
 const eq = (a, b, label) => { assert.deepEqual(a, b, label); passed++; };
 
 // ---------------------------------------------------------------- the Italy entry with test values, built
-function patchedSource({ list = IT_LIST, channel = IT_CHANNEL, aurora = true } = {}) {
+// list and channel: left as shipped unless a value is given ('' takes it out, for the failure checks);
+// aurora: true puts test ids for Aurora into the entry, false leaves the shipped (empty) ones.
+function patchedSource({ list, channel, aurora = true } = {}) {
   const at = SOURCE.indexOf('"it-ict-growth": {');
   assert.ok(at > 0, 'the Italy entry exists');
   let head = SOURCE.slice(0, at);
   let entry = SOURCE.slice(at);
   const swap = (from, to) => { assert.ok(entry.includes(from), 'in the Italy entry: ' + from); entry = entry.replace(from, to); };
-  swap('listId: "",', `listId: "${list}",`);
-  swap('slackChannel: "",', `slackChannel: "${channel}",`);
+  if (list !== undefined) swap(`listId: "${IT_LIST}",`, `listId: "${list}",`);
+  if (channel !== undefined) swap(`slackChannel: "${IT_CHANNEL}",`, `slackChannel: "${channel}",`);
   if (aurora) swap('reviewer: { clickupId: 0, slackId: "", name: "Aurora" },', `reviewer: { clickupId: ${AURORA_CLICKUP}, slackId: "${AURORA_SLACK}", name: "Aurora" },`);
   return head + entry;
 }
@@ -142,19 +146,30 @@ const base = {
   utm_term: '', fbclid: '', page_slug: 'it-ict-growth', referrer: '',
 };
 const lead = (o) => ({ ...base, ...o });
-const NORWEGIAN = ['Selskap', 'Svar i skjemaet', 'Kontakt', 'Kapasitet', 'Beslutter', 'Omsetning', 'Salgssyklus', 'åpne oppgaven', 'skjema levert', 'Grunn', 'vurderer', 'ansatte', 'Verdi første år', 'Vil ha ut av møtet', 'Kilde', 'uten navn', 'virkedager', 'Ønsker', 'Rute'];
+const NORWEGIAN = ['Selskap', 'Svar i skjemaet', 'Kontakt', 'Kapasitet', 'Beslutter', 'Omsetning', 'Salgssyklus', 'åpne oppgaven', 'skjema levert', 'Grunn', 'vurderer', 'ansatte', 'Verdi første år', 'Vil ha ut av møtet', 'Kilde', 'uten navn', 'virkedager', 'Ønsker', 'Rute', 'Hvorfor', 'Nettside', 'Spesialisering', 'Hvor lenge', 'Mål neste'];
 const noNorwegian = (text, label) => { for (const w of NORWEGIAN) ok(!text.includes(w), `${label}: no Norwegian "${w}"`); };
 
-// ---------------------------------------------------------------- 1. as shipped, Italy fails on purpose and writes nothing
+// ---------------------------------------------------------------- 1. as shipped: the Italy list and #leads-it, and a missing list or channel fails on purpose
+const shipped = (await import(pathToFileURL(path.join(here, 'out/zap1-lead-to-clickup-slack.mjs')).href)).default;
 {
-  const shipped = (await import(pathToFileURL(path.join(here, 'out/zap1-lead-to-clickup-slack.mjs')).href)).default;
   const w = makeWorld();
-  let err = '';
-  try { await run(shipped, w, lead({})); } catch (e) { err = String(e.message); }
-  ok(/has no ClickUp list yet/.test(err), 'shipped: an Italian lead fails on the missing list');
-  eq(w.tasks.length, 0, 'shipped: nothing written to ClickUp'); eq(w.slack.length, 0, 'shipped: nothing posted');
+  await run(shipped, w, lead({}));
+  eq(w.tasks.length, 1, 'shipped: an Italian lead is written to ClickUp');
+  eq(w.tasks[0].list, IT_LIST, 'shipped: on the Italy list, not a UK list'); eq(w.tasks[0].tags, ['growth-it'], 'shipped: tag growth-it');
+  eq(w.slack.length, 1, 'shipped: one Slack post'); eq(w.slack[0].channel, IT_CHANNEL, 'shipped: posted in #leads-it, not in #leads-uk');
+  ok(w.slack[0].channel !== UK_CHANNEL, 'shipped: not the UK channel');
+  // the entry in the source carries the real ids, so a later edit that empties them is caught here
+  const entry = SOURCE.slice(SOURCE.indexOf('"it-ict-growth": {'));
+  ok(entry.includes(`listId: "${IT_LIST}",`) && entry.includes(`slackChannel: "${IT_CHANNEL}",`), 'shipped: the source carries the list and the channel');
+  // no list: on purpose, before anything is written
+  const noList = await load({ list: '', aurora: false });
+  const w1 = makeWorld();
+  let err1 = '';
+  try { await run(noList, w1, lead({})); } catch (e) { err1 = String(e.message); }
+  ok(/has no ClickUp list yet/.test(err1), 'no list: an Italian lead fails on the missing list');
+  eq(w1.tasks.length, 0, 'no list: nothing written to ClickUp'); eq(w1.slack.length, 0, 'no list: nothing posted');
   // a list but no Slack channel: also on purpose, before anything is written
-  const noChannel = await load({ channel: '' });
+  const noChannel = await load({ channel: '', aurora: false });
   const w2 = makeWorld();
   let err2 = '';
   try { await run(noChannel, w2, lead({})); } catch (e) { err2 = String(e.message); }
@@ -176,7 +191,7 @@ const noNorwegian = (text, label) => { for (const w of NORWEGIAN) ok(!text.inclu
   const d = t.description;
   console.log('--- description (Italy) ---\n' + d + '\n---');
   ok(d.startsWith('**FIT** · IT ITALY · form submitted 2026-10-23T10:00:00Z'), 'fit: header in English');
-  for (const label of ['**Company**', '**Form answers**', '**Contact**', '**Routing**', '**Source**', '- Turnover: Da 2 a meno di 5 milioni di €', '- First-year value: Da 25.000 € a meno di 50.000 €', '- Sales cycle:', '- Capacity: Da quattro a dieci', '- E-mail: marco@rossi-informatica.it'])
+  for (const label of ['**Company**', '**Form answers**', '**Contact**', '**Routing**', '**Source**', '- Turnover: €2m to under €5m (Da 2 a meno di 5 milioni di €)', '- First-year value: €25k to under €50k (Da 25.000 € a meno di 50.000 €)', '- Sales cycle: One to under three months (Da uno a meno di tre mesi)', '- Capacity: Four to ten (Da quattro a dieci)', '- Decision maker: Me (Io)', '- Specialism: Managed IT services (MSP) (Servizi IT gestiti (MSP))', '- Target next year: 6 milioni di euro', '- E-mail: marco@rossi-informatica.it'])
     ok(d.includes(label), 'fit: ' + label);
   ok(d.includes('**What do you want to get out of this meeting?**\n> Una risposta chiara'), 'fit: the question block the routines read, with the answer as a quote');
   ok(!d.includes('Companies House') && !d.includes('Register check'), 'fit: no register rows');
@@ -185,13 +200,26 @@ const noNorwegian = (text, label) => { for (const w of NORWEGIAN) ok(!text.inclu
   eq(w.slack.length, 1, 'fit: one Slack post'); eq(w.slack[0].channel, IT_CHANNEL, 'fit: posted to the Italy channel, not #leads-uk');
   const msg = w.slack[0].text;
   console.log('--- Slack (Italy fit) ---\n' + msg + '\n---');
-  ok(msg.startsWith('*FIT* · IT ITALY · Rossi Informatica S.r.l.\n'), 'fit slack: head');
-  ok(msg.includes('Da 2 a meno di 5 milioni di € · Da 25 a 49 employees'), 'fit slack: turnover and people');
+  // 3 Nov 2026: the whole post, in English. The answers are the form's Italian words, translated; the visitor's own
+  // words (the target, what they want from the meeting) stay as written. Area, years trading, target, why and the
+  // website are in the post since slackDetail.
+  eq(msg, [
+    '*FIT* · IT ITALY · Rossi Informatica S.r.l.',
+    'Turnover: €2m to under €5m · 25 to 49 employees',
+    'Specialism: Managed IT services (MSP) · Years trading: More than five years',
+    'Marketing spend per month: €5,000 to under €15,000 · First-year value: €25k to under €50k · Sales cycle: One to under three months',
+    'Capacity: Four to ten · Decision maker: Me',
+    'Target next year: 6 milioni di euro',
+    'Why: turnover €2m or more, two years or more trading, no company register check',
+    'Wants from the meeting (their own words): _Una risposta chiara su se questo può funzionare._',
+    'Website: www.rossi-informatica.it',
+    'Source: meta / ad1',
+    'ClickUp: <https://app.clickup.com/t/T1|open the task>',
+  ].join('\n'), 'fit slack: the whole post, in English');
   ok(!msg.includes('Companies House'), 'fit slack: no register line');
-  ok(msg.includes('First-year value: Da 25.000 € a meno di 50.000 €'), 'fit slack: value line'); ok(msg.includes('Wants from the meeting: _Una risposta chiara'), 'fit slack: the goal');
-  ok(msg.includes('ClickUp: <https://app.clickup.com/t/T1|open the task>'), 'fit slack: link'); ok(msg.includes('Source: meta / ad1'), 'fit slack: source');
   ok(!msg.includes('⚠'), 'fit slack: no size warning when there is no register');
-  ok(!msg.includes('marco@') && !msg.includes('Amministratore') && !msg.includes('rossi-informatica.it'), 'fit slack: no e-mail, role or website');
+  ok(!msg.includes('marco@') && !msg.includes('Amministratore') && !msg.includes('Marco'), 'fit slack: no e-mail, role or contact name');
+  for (const word of [].concat(...Object.values(OPTIONS))) if (word.length > 3) ok(!msg.includes(word), 'fit slack: no Italian option word: ' + word);
   noNorwegian(msg, 'fit slack');
   eq(out.test, false, 'fit: not a test');
   console.log('2 ok');
@@ -204,8 +232,11 @@ const noNorwegian = (text, label) => { for (const w of NORWEGIAN) ok(!text.inclu
   const t = w.tasks[0];
   eq(optName(t, F.spec), 'Other', '"Altro: ..." maps to Other'); eq(optName(t, F.team), '50+', '100 o più -> 50+'); eq(optName(t, F.spend), 'Unknown', 'Non lo so -> Unknown');
   eq(optName(t, F.phone), '+393331234567', 'Italian mobile -> +39');
-  ok(t.description.includes('Altro: Telecomunicazioni'), 'the free text is in the description');
-  ok(!w.slack[0].text.includes('Telecomunicazioni'), 'and not in Slack');
+  ok(t.description.includes('- Specialism: Other: Telecomunicazioni (Altro: Telecomunicazioni)'), 'the free text is in the description, English first and the visitor\'s words after it');
+  ok(w.slack[0].text.includes('Specialism: Other: Telecomunicazioni'), 'and in Slack, after the English word');
+  ok(w.slack[0].text.includes('100 or more employees') && w.slack[0].text.includes('Marketing spend per month: I do not know'), 'Slack: team size and "I do not know" in English');
+  ok(!w.slack[0].text.includes('Altro') && !w.slack[0].text.includes('Non lo so') && !w.slack[0].text.includes('o più'), 'Slack: none of the Italian words');
+  ok(!w.slack[0].text.includes('333') && !w.slack[0].text.includes('a@acme-it.it'), 'Slack: no phone number, no e-mail address');
   const phones = [['+39 02 1234 5678', '+390212345678'], ['02 1234 5678', '+390212345678'], ['0039 333 1234567', '+393331234567'], ['3331234567', '+393331234567'], ['12345', ''], ['4331234567', ''], ['+44 7700 900123', '+447700900123']];
   for (const [input, want] of phones) {
     const w2 = makeWorld();
@@ -222,6 +253,7 @@ const noNorwegian = (text, label) => { for (const w of NORWEGIAN) ok(!text.inclu
   eq(w.tasks[0].tags, ['growth-it', 'sjekk-størrelse'], 'review: tags');
   const msg = w.slack[0].text;
   ok(msg.startsWith('*REVIEW* · IT ITALY'), 'review slack: head'); ok(!msg.includes('⚠'), 'review slack: no register warning'); noNorwegian(msg, 'review slack');
+  ok(msg.includes('Turnover: I would rather not say') && msg.includes('Why: turnover not stated\n'), 'review slack: the withheld turnover and why it is a review, in English');
 
   const naf = lead({ lead_id: 'l_it_0004', route: 'not_a_fit', route_reason: 'turnover_below_2m, value_under_10k, mystery_code', turnover_band: 'Meno di 1 milione di €', email: 'n@acme-it.it' });
   const w2 = makeWorld();
@@ -231,6 +263,9 @@ const noNorwegian = (text, label) => { for (const w of NORWEGIAN) ok(!text.inclu
   const c = w2.slack[0].text;
   console.log('--- Slack (Italy not a fit) ---\n' + c + '\n---');
   ok(c.startsWith('*NOT A FIT* · IT ITALY · Rossi Informatica S.r.l.'), 'not a fit slack: heading'); ok(c.includes('Reason: turnover under €2m, client value under €10k, mystery_code'), 'not a fit slack: reasons in euro, an unknown code as it is');
+  ok(c.includes('Under €1m · 25 to 49 employees · Reason:'), 'not a fit slack: turnover and people in English');
+  ok(c.includes('\nWebsite: www.rossi-informatica.it\n'), 'not a fit slack: the website, which the reviewer needs');
+  ok(!c.includes('Meno di') && !c.includes('Da 25'), 'not a fit slack: none of the Italian words');
   ok(c.includes('Aurora reviews website or retainer'), 'not a fit slack: names Aurora'); ok(!c.includes('Sondre') && !c.includes('<@'), 'not a fit slack: no Sondre, no ping'); noNorwegian(c, 'not a fit slack');
   eq(w2.slack[0].channel, IT_CHANNEL, 'not a fit: Italy channel');
   console.log('4 ok');
@@ -255,9 +290,9 @@ const noNorwegian = (text, label) => { for (const w of NORWEGIAN) ok(!text.inclu
   eq(w2.slack.length, 0, 'interest test: silent'); eq(w2.tasks[0].assignees, [], 'interest test: not assigned'); eq(w2.tasks[0].commentFlags[0], false, 'interest test: does not notify');
   console.log('5 ok');
 }
-// ---------------------------------------------------------------- 6. before Aurora has been invited: nobody assigned, nobody pinged, still works
+// ---------------------------------------------------------------- 6. before Aurora has been invited (the shipped state): nobody assigned, nobody pinged, still works
 {
-  const wf = await load({ aurora: false });
+  const wf = shipped;
   const w = makeWorld();
   const naf = lead({ lead_id: 'l_it_0007', route: 'not_a_fit', route_reason: 'turnover_below_2m', turnover_band: 'Meno di 1 milione di €', email: 'n2@acme-it.it' });
   await run(wf, w, naf);
@@ -286,5 +321,82 @@ const noNorwegian = (text, label) => { for (const w of NORWEGIAN) ok(!text.inclu
   await run(wf, w2, { ...uk, lead_id: 'l_uk_0002', route: 'not_a_fit', route_reason: 'turnover_below_2m', email: 'u@acme-it.co.uk' });
   eq(w2.tasks[0].assignees, [106690144], 'UK: not a fit goes to Sondre'); ok(w2.slack[0].text.includes('Sondre vurderer nettside eller retainer') && w2.slack[0].text.includes('omsetning under £2m'), 'UK: Norwegian compact post with pounds');
   console.log('7 ok');
+}
+// ---------------------------------------------------------------- 8. English for the people who read Slack (3 Nov 2026)
+// The answers arrive as the Italian form's own words. The table that turns them into English must cover every option of
+// the form (g/it-ict-growth/core.mjs), and nothing else may change with it: no table in the UK entries.
+{
+  const entry = SOURCE.slice(SOURCE.indexOf('"it-ict-growth": {'));
+  const from = entry.indexOf('answersEn: {');
+  ok(from > 0, 'the Italy entry has answersEn');
+  const block = entry.slice(from, entry.indexOf('\n    },', from));
+  const pairs = [...block.matchAll(/^\s+"([^"]+)": "([^"]+)",$/gm)].map((m) => [m[1], m[2]]);
+  const table = new Map(pairs);
+  const words = [].concat(...Object.values(OPTIONS));
+  eq(table.size, pairs.length, 'answersEn: no word is in the table twice');
+  eq(new Set(words).size, words.length, 'the Italian form has no option word twice, so one flat table is unambiguous');
+  eq(pairs.length, words.length, 'answersEn: as many entries as the form has options (' + words.length + ')');
+  for (const word of words) ok(table.has(word), 'answersEn has an entry for: ' + word);
+  for (const [it, en] of pairs) {
+    ok(words.includes(it), 'answersEn has no stale entry: ' + it);
+    ok(en.trim() === en && en.length > 0 && !/[àèéìíòóùú]/i.test(en), 'English, not Italian: ' + en);
+    ok(en !== it || it === 'Cybersecurity', 'translated: ' + it);
+  }
+  const uk = SOURCE.slice(SOURCE.indexOf('const CAMPAIGNS'), SOURCE.indexOf('"it-ict-growth": {'));
+  ok(!uk.includes('answersEn:') && !uk.includes('slackDetail:'), 'the UK entries have no table and no detail lines: their posts are as they were');
+
+  // every option, in the field it belongs to: Slack has the English and none of the Italian, the description has both
+  const FIELD = { area: 'specialism', turnover: 'turnover_band', trading: 'trading_years', people: 'employees_or_fee_earners', spend: 'marketing_spend', worth: 'first_year_value', cycle: 'sales_cycle', decider: 'decision_maker', capacity: 'capacity' };
+  const SHOWN = {
+    specialism: (en) => `Specialism: ${en}`, turnover_band: (en) => `Turnover: ${en}`, trading_years: (en) => `Years trading: ${en}`,
+    employees_or_fee_earners: (en) => `${en} employees`, marketing_spend: (en) => `Marketing spend per month: ${en}`, first_year_value: (en) => `First-year value: ${en}`,
+    sales_cycle: (en) => `Sales cycle: ${en}`, decision_maker: (en) => `Decision maker: ${en}`, capacity: (en) => `Capacity: ${en}`,
+  };
+  const ROW = { specialism: 'Specialism', turnover_band: 'Turnover', trading_years: 'Years trading', employees_or_fee_earners: 'People', marketing_spend: 'Marketing spend per month', first_year_value: 'First-year value', sales_cycle: 'Sales cycle', decision_maker: 'Decision maker', capacity: 'Capacity' };
+  const wf = await load({});
+  let i = 0;
+  for (const [list, field] of Object.entries(FIELD)) {
+    for (const word of OPTIONS[list]) {
+      const w = makeWorld();
+      await run(wf, w, lead({ lead_id: 'l_it_en_' + (++i), email: `en${i}@acme-it.it`, [field]: word }));
+      const en = table.get(word);
+      const msg = w.slack[0].text;
+      ok(msg.includes(SHOWN[field](en)), `${field} "${word}" is "${en}" in Slack`);
+      if (word.length > 3 && word !== en) ok(!msg.includes(word), `${field} "${word}": the Italian word is not in Slack`);
+      // a word that is English already ("Cybersecurity") is printed once
+      const row = en === word ? `- ${ROW[field]}: ${word}\n` : `- ${ROW[field]}: ${en} (${word})\n`;
+      ok(w.tasks[0].description.includes(row), `${field} "${word}": the description has the English and the visitor's word`);
+    }
+  }
+
+  // a word the table does not know is shown as it came in, in Slack and in the description, never dropped
+  {
+    const w = makeWorld();
+    await run(wf, w, lead({ lead_id: 'l_it_en_new', email: 'new@acme-it.it', capacity: 'Qualcosa di nuovo' }));
+    ok(w.slack[0].text.includes('Capacity: Qualcosa di nuovo'), 'an unknown word is shown as it came in in Slack');
+    ok(w.tasks[0].description.includes('- Capacity: Qualcosa di nuovo\n') && !w.tasks[0].description.includes('Qualcosa di nuovo ('), 'and in the description, without brackets');
+  }
+  // why a lead was routed as it was, in English; unknown codes as they are
+  {
+    const w = makeWorld();
+    await run(wf, w, lead({ lead_id: 'l_it_en_why', email: 'why@acme-it.it', route: 'review', turnover_band: 'Preferisco non dirlo', employees_or_fee_earners: '100 o più', marketing_spend: '15.000 € o più', first_year_value: 'Da 10.000 € a meno di 25.000 €', route_reason: 'turnover_inferred, value_10k_to_25k, mystery_code' }));
+    ok(w.slack[0].text.includes('\nWhy: turnover not stated, taken as €2m or more from headcount and marketing spend, client value €10k to under €25k, mystery_code\n'), 'review slack: the reasons in English, an unknown code as it is');
+  }
+  // what is not there is not printed: no empty lines, no empty labels
+  {
+    const w = makeWorld();
+    await run(wf, w, lead({ lead_id: 'l_it_en_min', email: 'min@acme-it.it', target_next_year: '', company_website: '', meeting_goal: '', route_reason: '' }));
+    const m = w.slack[0].text;
+    ok(!m.includes('\n\n') && !m.includes('Target next year') && !m.includes('Website') && !m.includes('Why') && !m.includes('Wants from the meeting'), 'a post without target, website, goal and reasons has none of those lines');
+  }
+  // the visitor's own text cannot start a mention, a link or a tag
+  {
+    const w = makeWorld();
+    await run(wf, w, lead({ lead_id: 'l_it_en_esc', email: 'esc@acme-it.it', target_next_year: '<!channel> 5 milioni & più', company_website: 'a.it/?x=1&y=<2>' }));
+    const m = w.slack[0].text;
+    ok(m.includes('Target next year: &lt;!channel&gt; 5 milioni &amp; più') && m.includes('Website: a.it/?x=1&amp;y=&lt;2&gt;'), 'target and website are escaped for Slack');
+    ok(!m.includes('<!channel>') && !m.includes('<2>'), 'no raw < or > from the visitor');
+  }
+  console.log('8 ok');
 }
 console.log('\nALL PASSED (Italy, Zap 1): ' + passed + ' checks');

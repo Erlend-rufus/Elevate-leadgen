@@ -22,21 +22,26 @@ state the workflows are in (switched on or off) is also kept there, not here.
    node g/_growth/zapier/build.mjs zap2-calendly-booking.ts
    node g/_growth/zapier/zap2.test.mjs        # 201 checks
    node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
-   node g/_growth/zapier/zap1.test.mjs        # 235 checks
-   node g/_growth/zapier/zap1-it.test.mjs     # 198 checks, Italy (after zap1's build)
-   node g/_growth/zapier/zap2-it.test.mjs     # 93 checks, Italy (after zap2's build)
+   node g/_growth/zapier/zap1.test.mjs        # 244 checks
+   node g/_growth/zapier/zap1-it.test.mjs     # 584 checks, Italy (after zap1's build)
+   node g/_growth/zapier/zap2-it.test.mjs     # 98 checks, Italy (after zap2's build)
    ```
 
-   The two `-it` tests build a copy of the source with test values put into the Italy entry (the shipped entry has no
-   list, channel or ids yet) and import that copy from `out/`. They also check that the UK output is unchanged in the
-   same build. A strict type check also passes with `tsc --strict --noEmit` against stub declarations for the two
-   Zapier packages (esbuild strips types without checking them, Zapier compiles the file for real).
+   The two `-it` tests build copies of the source with values put into the Italy entry (test ids for Aurora, who is not
+   in ClickUp or Slack yet, and for the failure checks the list or the channel taken out) and import those copies from
+   `out/`. The shipped Italy entry has its list, its Slack channel and its Calendly event type. They also check that
+   the UK output is unchanged in the same build. A strict type check also passes with `tsc --strict --noEmit` against
+   stub declarations for the two Zapier packages (esbuild strips types without checking them, Zapier compiles the
+   file for real).
 
    `truth.json` is a snapshot of the ClickUp field and option ids the tests check the mappings against.
    Refresh it when a field or option in ClickUp changes.
-3. Put the file into the workflow as `workflow.ts` through a Zapier draft, run the draft once against
-   made-up data (a draft run is free and changes nothing in Zapier), then publish it. Publish with
-   the workflow switched off. Switching a workflow on is a separate step and needs a person's yes.
+3. Put the file into the workflow as `workflow.ts` through a Zapier draft and check that the draft holds it byte for
+   byte (sha256 of `source_files["workflow.ts"]`). Run the draft against made-up data: the campaign you changed, and
+   one UK test lead, because the two campaigns share the code (a draft run changes nothing in Zapier; a test lead
+   makes a ClickUp task, archive it afterwards). Then publish it. Leave `enabled` out of the publish call: the
+   workflow stays as it is. Both workflows have been switched on since 26 Oct 2026 and carry live UK leads, so a
+   publish is a change to production. Read the published version back and compare the sha256 again.
 4. If the payload keys change in `netlify/functions/lead/payload.mjs`, change Zap 1 in the same
    step. `g/uk-it-growth/test/units.test.mjs` fails on the function side until the key list is
    updated on purpose.
@@ -54,30 +59,63 @@ option ids. A dropdown is set only when the form's band fits inside one ClickUp 
 Specialism, Team Size and Contract Value empty for health and law. Both workflows were published after
 draft runs against all three lists (create, link on `l_` and `d_` ids, move from `ny lead`).
 
-Italy (`it-ict-growth`, 23 Oct 2026) was added the same way and is the first entry that differs from the UK in
-more than ids. What an entry can say beyond the ids (all optional, the UK entries say none of it and behave as
-before): `lang: "en"` (ClickUp description, comments and Slack in English, through `tr()` and the `EN` table; the
-labels and Norwegian texts stay the source), `reviewer` (who reads the not-a-fit leads; ClickUp id 0 or no Slack id
-means nobody is assigned or pinged), `slackChannel` (empty fails the run on purpose), `register: false` (no company
-register rows or Slack line), `phonePrefix`, `otherSpecialism`, `reasonText` (zap 1), `zones` (zap 2, the time zones
-the meeting time is written in). **The Italy entries are in the source but are not published in Zapier**: the list,
-the channel, Aurora's ids and the Calendly event type do not exist yet, and the shared workflows carry live UK leads.
-Publish when `g/it-ict-growth/LAUNCH.md` section 4 says so, after a draft run against a UK test lead.
+Italy (`it-ict-growth`, added 23 Oct 2026, wired and published 3 Nov 2026) was added the same way and is the first entry
+that differs from the UK in more than ids. What an entry can say beyond the ids (all optional, the UK entries say none
+of it and behave as before): `lang: "en"` (ClickUp description, comments and Slack in English, through `tr()` and the
+`EN` table; the labels and Norwegian texts stay the source), `reviewer` (who reads the not-a-fit leads; ClickUp id 0 or
+no Slack id means nobody is assigned or pinged), `slackChannel` (empty fails the run on purpose), `register: false` (no
+company register rows or Slack line), `phonePrefix`, `otherSpecialism`, `reasonText` (zap 1, the reason codes in the
+words of the country, also for fit and review), `answersEn` (zap 1, the Italian form's answer words in English),
+`slackDetail` (zap 1, more lines in the Slack posts), `zones` (zap 2, the time zones the meeting time is written in).
 
-**What runs is in `published/`.** Since the Italy entries went into the source (23 Oct 2026), the file in Zapier is no longer
-the source file byte for byte. `published/` holds the exact `workflow.ts` of each workflow: the last version before Italy
-(`132129b` for Zap 1, `8d7c322` for Zap 2) with the UK changes made since. Change both files in the same step: the source
-here, and the copy in `published/`, which is what goes into the Zapier draft. Test the copy by building it in place of the
-source (`cp published/zap1-lead-to-clickup-slack.ts zap1-x.ts && node build.mjs zap1-x.ts`, then copy `out/zap1-x.mjs` over
-`out/zap1-lead-to-clickup-slack.mjs` and run `zap1.test.mjs`; remove `zap1-x.*` afterwards). When Italy goes live, publish
-the source and delete `published/`.
+**The Italy entries are published.** The list `IT - ITALY - Commission` (`1201270000004918`, made 3 Nov 2026 with the nine
+statuses of the UK list, and the UK list's custom fields added to it as the same fields, so every field and option id is
+the UK one), the Slack channel `#leads-it` (`C0CEKL5H4LC`) and Aurora's Calendly event type
+(`82a67d1d-2a3b-4bd4-b892-97c41d4a47ad`) are in the source. Aurora has no ClickUp or Slack account yet, so `reviewer` says
+ClickUp id 0 and no Slack id: nobody is assigned or pinged until she is invited, and then her ids go into the entry in the
+source and in a new publish. The funnel itself is `live: false`, so no Italian lead reaches the workflow before
+`g/it-ict-growth/LAUNCH.md` says so.
+
+**What runs is the source file, byte for byte** (since 3 Nov 2026; the `published/` folder that held the pre-Italy copy
+is gone). To check: read the workflow's current version with `get_workflow` and compare the sha256 of its `workflow.ts`
+with the file here. To go back to an older version, read its `workflow.ts` with `get_workflow_version`, put it into a
+draft and publish that.
+
+**The Slack posts for Italy are in English and carry the answers in English** (3 Nov 2026, Erlend: "the Slack
+notifications must give us as much English info as possible"). The Italian form sends its own Italian option words, so
+`answersEn` turns each of the 42 into English (the UK form's wording, euro for pound). The Slack posts show the English;
+the ClickUp description shows the English with the visitor's own word after it in brackets. `zap1-it.test.mjs` fails if
+an option of `g/it-ict-growth/core.mjs` has no entry, or an entry no option. A word the table does not know is shown as it
+came in. With `slackDetail` the full post also carries the IT area, the years trading, the target, the website and a
+"Why" line (the reason codes in English), and the one-line not-a-fit post carries the website. What the visitor wrote in
+their own words (the target, what they want from the meeting) is shown as written: a table cannot translate it. Still no
+name, e-mail address or phone number in Slack, as for the UK.
 
 26 Oct 2026: health tag `growth-health` (was `growth-5m`), the new spend bands, words for the new reason codes, the
 marketing spend in the fit and review posts, flags left out of the not-a-fit reason, IT team size 50 to 99. Drafts of both
 workflows were test-run against the real ClickUp lists (three test tasks, archived afterwards).
 Published 26 Oct 2026 at 16:41 UTC with Erlend's go-ahead: Zap 1 version `01a17916-b4d5-78e6-a84f-8170b7afe520`, Zap 2
-version `01a17916-bf88-7565-8896-5a0da61d5704`, both still switched on. The published source was read back and is
-identical to `published/` (sha256 `768ef06b...` and `0e63a054...`). The three health tasks that had `growth-5m` were retagged.
+version `01a17916-bf88-7565-8896-5a0da61d5704`, both still switched on. The three health tasks that had `growth-5m` were
+retagged.
+
+3 Nov 2026: Italy wired and published, as part of Erlend's request to set up the technical side for Italy. Drafts of
+both workflows were run in Zapier against the real ClickUp lists and #leads-it (Italy: fit with a Slack post, not a fit,
+booking linked on the lead id, booking without a form, a cancellation, another event; UK: fit, booking, booking without
+a form; the test tasks were archived, never deleted). The enabled state was not touched. Published at 13:31 UTC: Zap 1
+version `01a1a19b-6314-7084-94f5-76efe8d6b7d2`, Zap 2 version `01a1a19b-6f1d-7b23-ace8-1fdda467c5a0`, both switched on with
+their triggers active. The published sources were read back and were identical to the files then (Zap 1 sha256
+`3f4aeaf2...`, Zap 2 `c7b20394...`). The versions before, for going back: Zap 1 `01a17916-b4d5-78e6-a84f-8170b7afe520`,
+Zap 2 `01a17916-bf88-7565-8896-5a0da61d5704`.
+
+3 Nov 2026, second publish (the English Slack posts for Italy, described above): Zap 1 only. A draft of the new file was
+run in Zapier against the real ClickUp list and #leads-it with four made-up leads: Italy fit with a Slack post (read back
+from Slack, line for line the expected text), Italy review, Italy not a fit (both checked in `slack.preview`), and a UK fit.
+The UK result was also compared offline with the previous version on 238 UK payloads (three campaigns, every status, test
+and real leads) and is identical (that comparison script is not kept in the repo). The four test tasks were archived,
+never deleted; the one `[TEST]` post stays in #leads-it. Published at 13:56 UTC: Zap 1 version
+`01a1a1b2-6ec3-76d0-9053-de5d83f2804f`, sha256 `64c61e5f...`, read back and identical to the file here, still switched on
+with its trigger active (the enabled state was not touched). Zap 2 was not changed (`01a1a19b-6f1d-7b23-ace8-1fdda467c5a0`,
+`c7b20394...`). To go back: Zap 1 `01a1a19b-6314-7084-94f5-76efe8d6b7d2`.
 
 ## Conventions
 

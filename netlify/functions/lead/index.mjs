@@ -28,9 +28,11 @@
  *   COMPANIES_HOUSE_MODE     "off" skips the register, on a deploy preview only. Set it for the deploy-preview
  *                            context and nowhere else; on every other address it is ignored (registerSwitchedOff).
  *   META_CAPI_TOKEN         needed for the server side event (capi.mjs). META_PIXEL_ID defaults to the page's pixel;
- *                            META_TEST_EVENT_CODE is optional (events then show only under Test Events).
- *   META_CAPI_TOKEN_IT      the Italian funnel's own token (config.json funnel.capiTokenEnv). A token belongs to one pixel;
- *                            for such a funnel META_PIXEL_ID is ignored and the event goes to funnel.pixelId.
+ *                            META_TEST_EVENT_CODE is optional (events then show only under Test Events). The UK funnels and the
+ *                            Italian one (config.json funnel.sharedPixel) share this pixel and this token.
+ *   META_CAPI_TOKEN_<XX>    only for a funnel with a pixel of its own (config.json funnel.capiTokenEnv names the variable). A token
+ *                            belongs to one pixel; for such a funnel META_PIXEL_ID is ignored and the event goes to funnel.pixelId.
+ *                            No funnel uses one today.
  *   RESEND_API_KEY, ALERT_EMAIL_FROM, ALERT_EMAIL_TO, SLACK_ALERT_WEBHOOK_URL   see alert.mjs
  *   LEAD_IP_SALT             optional. Salt for the hashed address in the rate limiter.
  *
@@ -318,9 +320,10 @@ export function createHandler(deps = {}) {
 
   /**
    * The environment the Conversions API call sees. A Meta access token belongs to one pixel, so a funnel with a pixel of its
-   * own (Italy) names its own token variable in config.json (funnel.capiTokenEnv, e.g. META_CAPI_TOKEN_IT). Its events then
+   * own would name its own token variable in config.json (funnel.capiTokenEnv, e.g. META_CAPI_TOKEN_DE). Its events then
    * always go to its own pixel, and the shared META_PIXEL_ID test override is ignored: it would send them to another country's
-   * pixel. A funnel without capiTokenEnv (the UK ones) behaves exactly as before.
+   * pixel. A funnel without capiTokenEnv (the UK ones, and Italy, which shares the pixel on purpose: funnel.sharedPixel)
+   * uses META_CAPI_TOKEN and behaves exactly as before.
    */
   function capiEnv(e, cfg) {
     const own = cfg.funnel.capiTokenEnv;
