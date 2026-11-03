@@ -1,8 +1,10 @@
 // Tests for /g/it-ict-growth (Italy, IT and ICT firms): the form, the routing, the endpoint and the pages.
 // Run with: npm run test:g-growth
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, cpSync, mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import * as core from '../core.mjs';
 import * as route from '../route.mjs';
@@ -53,10 +55,11 @@ const GOOD = {
   fbc: '',
 };
 
+// over.funnel changes funnel settings for one test (a pixel of its own, say); the shipped settings are the shared UK pixel.
 function itRig(over = {}) {
-  const r = rig(Object.assign({}, over, { env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined, META_CAPI_TOKEN_IT: 'capi-test-token-it' }, over.env || {}) }));
+  const r = rig(Object.assign({}, over, { env: Object.assign({ COMPANIES_HOUSE_API_KEY: undefined }, over.env || {}) }));
   const base = realCampaigns[SLUG];
-  r.campaigns[SLUG] = Object.assign({}, base, { cfg: Object.assign({}, base.cfg, { live: over.live !== false }) });
+  r.campaigns[SLUG] = Object.assign({}, base, { cfg: Object.assign({}, base.cfg, { live: over.live !== false, funnel: Object.assign({}, base.cfg.funnel, over.funnel || {}) }) });
   return r;
 }
 const go = async (over, fields, opts) => {
@@ -145,17 +148,36 @@ test('endpoint: a fit books, Zapier gets the Italian answers under the same keys
   assert.equal(r.of('capi').length, 1);
 });
 
-test('Meta: Italy has its own token variable; the UK token and the shared pixel override are never used for it', async () => {
-  assert.equal(cfg.funnel.capiTokenEnv, 'META_CAPI_TOKEN_IT');
-  // Both tokens and a stray META_PIXEL_ID set (as on the shared Netlify site): Italy uses its own token and its own pixel.
-  let x = await go({ env: { META_CAPI_TOKEN: 'uk-token', META_CAPI_TOKEN_IT: 'it-token', META_PIXEL_ID: '999000111' } }, GOOD);
+test('Meta: Italy shares the UK pixel on purpose, so the server event goes to that pixel with the shared token', async () => {
+  const ukCfg = JSON.parse(readFileSync(join(ROOT, 'g', 'uk-it-growth', 'config.json'), 'utf8'));
+  assert.equal(cfg.funnel.sharedPixel, true, 'chosen on purpose (3 Nov 2026), never by a copied value');
+  assert.equal(cfg.funnel.pixelId, ukCfg.funnel.pixelId, 'the same pixel as the UK funnels and the rest of getelevateleads.com');
+  assert.equal(cfg.funnel.capiTokenEnv, undefined, 'a shared pixel uses the shared token, not one of its own');
+  let x = await go({ env: { META_CAPI_TOKEN: 'shared-token' } }, GOOD);
   assert.equal(x.r.of('capi').length, 1);
   const c = x.r.of('capi')[0];
   assert.equal(new URL(c.url).pathname, `/v21.0/${cfg.funnel.pixelId}/events`);
-  assert.equal(c.body.access_token, 'it-token');
+  assert.equal(c.body.access_token, 'shared-token');
   assert.equal(c.body.data[0].event_id, 'l_ita0001');
-  // Only the UK token present: nothing is sent for Italy (it would be refused by Meta, and is the wrong pixel's token).
-  x = await go({ env: { META_CAPI_TOKEN: 'uk-token', META_CAPI_TOKEN_IT: undefined } }, GOOD);
+  assert.equal(c.body.data[0].event_name, cfg.funnel.qualifiedEvent);
+  assert.equal(c.body.data[0].custom_data.campaign, SLUG, 'the campaign is how the two countries are told apart in one pixel');
+  // The shared token is missing: nothing is sent, and the lead is not held up.
+  x = await go({ env: { META_CAPI_TOKEN: undefined } }, GOOD);
+  assert.equal(x.r.of('capi').length, 0);
+  assert.deepEqual(x.r.blobs.lead('l_ita0001').capi, { state: 'skipped', reason: 'not_configured' });
+  assert.equal(x.body.route, 'fit', 'the lead is not held up');
+});
+
+test('Meta: a funnel with a pixel of its own (not Italy today) uses its own token and pixel, never the shared ones', async () => {
+  const own = { sharedPixel: undefined, pixelId: '2200000000000001', capiTokenEnv: 'META_CAPI_TOKEN_IT' };
+  // Both tokens and a stray META_PIXEL_ID set (as on the shared Netlify site): the funnel's own token and its own pixel.
+  let x = await go({ funnel: own, env: { META_CAPI_TOKEN: 'shared-token', META_CAPI_TOKEN_IT: 'own-token', META_PIXEL_ID: '999000111' } }, GOOD);
+  assert.equal(x.r.of('capi').length, 1);
+  const c = x.r.of('capi')[0];
+  assert.equal(new URL(c.url).pathname, '/v21.0/2200000000000001/events');
+  assert.equal(c.body.access_token, 'own-token');
+  // Only the shared token present: nothing is sent (it would be the wrong pixel's token, and Meta would refuse it).
+  x = await go({ funnel: own, env: { META_CAPI_TOKEN: 'shared-token', META_CAPI_TOKEN_IT: undefined } }, GOOD);
   assert.equal(x.r.of('capi').length, 0);
   assert.deepEqual(x.r.blobs.lead('l_ita0001').capi, { state: 'skipped', reason: 'not_configured' });
   assert.equal(x.body.route, 'fit', 'the lead is not held up');
@@ -285,14 +307,78 @@ test('the funnel has a cookie bar in Italian with Accetta and Rifiuta, and the M
   for (const bad of ['connect.facebook.net', 'fbevents.js', "fbq('init'", 'googletagmanager', 'fonts.googleapis']) assert.equal(h.includes(bad), false, bad);
 });
 
-test('settings: not live, the UK pixel is a placeholder the build refuses to launch with, the Italy event is wired, review blocks are empty', () => {
+test('settings: not live, the pixel is the shared UK one on purpose, the Italy event is wired, review blocks are empty', () => {
   assert.equal(cfg.live, false);
   assert.equal(cfg.funnel.pixelId, '1466790598245604');
+  assert.equal(cfg.funnel.sharedPixel, true);
   assert.equal(cfg.funnel.calendlyUrl, 'https://calendly.com/au-growwithelevate/elevate-marketing-commission-it-italia');
   assert.equal(cfg.contact.email, 'au@growwithelevate.eu');
   assert.equal(cfg.origin, 'https://getelevateleads.com');
   assert.equal(cfg.reviewer.name, 'Aurora');
   assert.deepEqual([legal.review.by, legal.review.on, copy.review.by, copy.review.on], ['', '', '', '']);
+});
+
+/* The build's refusals about the pixel (scripts/build-g-growth.mjs). The generator and the sources are copied to a scratch
+   folder, the Italian settings are changed there, and the generator is run into that folder: the committed files are never
+   touched. A refusal is exit code 1 and a reason on stderr. "reviewed" fills the two review blocks that a funnel in another
+   language needs before it may go live, so that the pixel is the only thing under test. */
+let scratch = null;
+after(() => { if (scratch) rmSync(scratch, { recursive: true, force: true }); });
+function buildItalyWith({ live = false, reviewed = false, funnel = {} } = {}) {
+  if (!scratch) {
+    scratch = mkdtempSync(join(tmpdir(), 'it-pixel-'));
+    cpSync(join(ROOT, 'g'), join(scratch, 'g'), { recursive: true, filter: (s) => !s.includes('node_modules') });
+    mkdirSync(join(scratch, 'scripts'));
+    cpSync(join(ROOT, 'scripts', 'build-g-growth.mjs'), join(scratch, 'scripts', 'build-g-growth.mjs'));
+  }
+  const put = (file, change) => {
+    const o = JSON.parse(readFileSync(join(ROOT, 'g', SLUG, file), 'utf8'));
+    change(o);
+    writeFileSync(join(scratch, 'g', SLUG, file), JSON.stringify(o, null, 2));
+  };
+  put('config.json', (o) => { o.live = live; Object.assign(o.funnel, funnel); });
+  const review = (o) => { if (reviewed) Object.assign(o.review, { by: 'Revisore di prova', on: '2026-11-03' }); };
+  put('legal.json', review);
+  put('copy.json', review);
+  const res = spawnSync(process.execPath, [join(scratch, 'scripts', 'build-g-growth.mjs')], {
+    cwd: scratch, encoding: 'utf8',
+    env: Object.assign({}, process.env, { G_GROWTH_OUT: join(scratch, 'out'), G_GROWTH_FUNCTION_DATA: join(scratch, 'data.generated.mjs') }),
+  });
+  return { status: res.status, said: String(res.stderr || '') + String(res.stdout || '') };
+}
+
+test('build: Italy may go live on the shared UK pixel only because its config says so on purpose', () => {
+  const as = buildItalyWith();
+  assert.equal(as.status, 0, 'control: the shipped settings build: ' + as.said);
+  const live = buildItalyWith({ live: true, reviewed: true });
+  assert.equal(live.status, 0, 'shared pixel, shared token, reviewed: nothing else stands in the way: ' + live.said);
+  const copied = buildItalyWith({ live: true, reviewed: true, funnel: { sharedPixel: undefined } });
+  assert.equal(copied.status, 1, 'the UK pixel without the explicit choice is refused');
+  assert.match(copied.said, /is the UK pixel while "live" is true for a non-UK funnel/);
+});
+
+test('build: sharedPixel must be a boolean, must name the shared pixel, and must not come with a token variable of its own', () => {
+  const notBool = buildItalyWith({ funnel: { sharedPixel: 'yes' } });
+  assert.equal(notBool.status, 1);
+  assert.match(notBool.said, /funnel\.sharedPixel must be true or false/);
+  const wrongPixel = buildItalyWith({ funnel: { pixelId: '2200000000000001' } });
+  assert.equal(wrongPixel.status, 1, 'sharedPixel is true but the pixel is another one');
+  assert.match(wrongPixel.said, /sharedPixel is true but funnel\.pixelId is not the shared \(UK\) pixel/);
+  const both = buildItalyWith({ funnel: { capiTokenEnv: 'META_CAPI_TOKEN_IT' } });
+  assert.equal(both.status, 1, 'a shared pixel is sent with the shared token');
+  assert.match(both.said, /sharedPixel and funnel\.capiTokenEnv are both set/);
+});
+
+test('build: a pixel of its own goes live only with a token variable of its own', () => {
+  const own = { sharedPixel: undefined, pixelId: '2200000000000001' };
+  const noToken = buildItalyWith({ live: true, reviewed: true, funnel: own });
+  assert.equal(noToken.status, 1);
+  assert.match(noToken.said, /capiTokenEnv is empty while "live" is true/);
+  const withToken = buildItalyWith({ live: true, reviewed: true, funnel: Object.assign({}, own, { capiTokenEnv: 'META_CAPI_TOKEN_IT' }) });
+  assert.equal(withToken.status, 0, withToken.said);
+  const notAName = buildItalyWith({ funnel: Object.assign({}, own, { capiTokenEnv: 'EAAB-the-token-itself' }) });
+  assert.equal(notAName.status, 1, 'the config names the variable, it never holds the token');
+  assert.match(notAName.said, /must be the name of a Netlify variable/);
 });
 
 test('every page of the funnel has its header and redirect rule in netlify.toml', () => {

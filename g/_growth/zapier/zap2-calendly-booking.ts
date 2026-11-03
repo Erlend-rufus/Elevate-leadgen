@@ -119,13 +119,14 @@ const CAMPAIGNS: Record<string, Campaign> = {
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
   },
-  // Italy, IT and ICT firms (23 Oct 2026). NOT LIVE: the ClickUp list does not exist yet (a person duplicates
-  // "IT - UK - Commision", so the field ids are the IT list's) and neither does the Calendly event. With listId
-  // empty this campaign is left out of every search, so nothing here can touch the UK lists. The event must be made in
-  // the same Calendly organisation as the UK events, because the trigger listens to that organisation only.
+  // Italy, IT and ICT firms (23 Oct 2026, wired 3 Nov 2026). The ClickUp list "IT - ITALY - Commission" has the same
+  // statuses and the same fields as "IT - UK - Commision" (the fields are shared), so the field ids are the UK ones.
+  // The Calendly event is made in the same organisation as the UK events, because the trigger listens to that
+  // organisation only. With listId empty this campaign would be left out of every search, so nothing here can touch
+  // the UK lists.
   "it-ict-growth": {
     label: "IT ITALY",
-    listId: "", // IT - ITALY - Commission, to be made
+    listId: "1201270000004918", // IT - ITALY - Commission
     tag: "growth-it",
     eventTypes: ["82a67d1d-2a3b-4bd4-b892-97c41d4a47ad"], // Elevate Marketing | Commission | IT Italia (Aurora, made 2 Nov 2026)
     lang: "en",

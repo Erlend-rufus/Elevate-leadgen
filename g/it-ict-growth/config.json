@@ -43,9 +43,9 @@
   },
   "funnel": {
     "pixelId": "1466790598245604",
-    "_pixelId": "PLACEHOLDER: the UK pixel, so that the cookie bar and the page work in review. The build refuses live: true while this is the UK pixel. Make an Italian pixel (or choose on purpose to share the UK one and change the check), then set it here. Also check that META_PIXEL_ID is not set in Netlify: it overrides this value in the server-side event.",
-    "capiTokenEnv": "META_CAPI_TOKEN_IT",
-    "_capiTokenEnv": "The NAME of the Netlify variable that holds this funnel's own Meta Conversions API token (never the token). A Meta token belongs to one pixel, so Italy cannot use META_CAPI_TOKEN (the UK pixel's). With this set, the server event always goes to pixelId and the shared META_PIXEL_ID override is ignored. The build refuses live: true without it.",
+    "_pixelId": "The same pixel as the UK funnels and the rest of getelevateleads.com (decision 3 Nov 2026, Erlend). The browser event and the server event (QualifiedForm) go to it, and the server event is sent with the shared token META_CAPI_TOKEN, as for the UK funnels. Events from both countries land in one dataset: split them by campaign or page URL when reporting. Check that META_PIXEL_ID is not set to anything else in Netlify: it overrides this value in the server-side event.",
+    "sharedPixel": true,
+    "_sharedPixel": "On purpose: this non-UK funnel uses the UK pixel. For a non-UK funnel the build refuses live: true on the UK pixel unless this is true, refuses sharedPixel: true when pixelId is not the UK pixel, and refuses it together with capiTokenEnv (a shared pixel uses the shared token). To give a country its own pixel later: set pixelId, remove sharedPixel, and name the Netlify variable that holds that pixel's token in capiTokenEnv (META_CAPI_TOKEN_<COUNTRY>).",
     "applyPath": "/api/lead",
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
@@ -77,7 +77,7 @@
   ],
   "honeypot": "contact_by_fax",
   "clickup": {
-    "listId": "",
-    "_comment": "The ClickUp list the daily reconciliation compares against. EMPTY until the list exists: a person duplicates 'IT - UK - Commision' in the CRM folder (the statuses and fields come with it) and the id is put here and in Zap 1 and Zap 2. With it empty the daily check skips ClickUp for this funnel."
+    "listId": "1201270000004918",
+    "_comment": "The ClickUp list the daily reconciliation compares against: 'IT - ITALY - Commission' in the CRM folder, made 3 Nov 2026 with the statuses of 'IT - UK - Commision' and the same fields added to it as existing fields (same ids). The same id is in Zap 1 and Zap 2 (g/_growth/zapier). With it empty the daily check skips ClickUp for this funnel."
   }
 }

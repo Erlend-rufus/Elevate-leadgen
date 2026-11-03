@@ -129,8 +129,8 @@ branch below, without it nothing is different from before. Nobody is contacted a
 ### How the two Zaps are built
 
 Both are Zapier durable workflows written in code, not click-built Zaps. The source, the tests and a
-short README are in `g/_growth/zapier/`. What is published in Zapier is `g/_growth/zapier/published/`, byte for byte: the
-source carries the Italy entries, which are not published yet (see the README there).
+short README are in `g/_growth/zapier/`. What is published in Zapier is the source there, byte for byte (since 3 Nov 2026,
+when the Italy entries were published; see the README there for how to check it).
 
 | | Zapier workflow | Id | Trigger |
 |---|---|---|---|

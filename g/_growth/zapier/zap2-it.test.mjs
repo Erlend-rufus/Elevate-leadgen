@@ -1,6 +1,7 @@
 // Zap 2 for Italy (it-ict-growth). The UK checks are in zap2.test.mjs and must stay green next to these.
-// The shipped source has no ClickUp list and no Calendly event type for Italy yet, so the checks that need them
-// build a copy of the source with test values put into the Italy entry (nothing is written to the repository).
+// The shipped source has the Italy list and the Italy Calendly event type (Aurora's, made 2 Nov 2026), so the checks
+// run on it as it is. The failure checks build a copy of the source with the list or the event type taken out
+// (nothing is written to the repository).
 //   node g/_growth/zapier/build.mjs zap2-calendly-booking.ts && node g/_growth/zapier/zap2-it.test.mjs
 import fs from 'node:fs';
 import path from 'node:path';
@@ -12,11 +13,11 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const truth = JSON.parse(fs.readFileSync(path.join(here, 'truth.json'), 'utf8'));
 const SOURCE = fs.readFileSync(path.join(here, 'zap2-calendly-booking.ts'), 'utf8');
 
-const IT_LIST = '901599999999';
+const IT_LIST = '1201270000004918'; // IT - ITALY - Commission
 const UK_LIST = '901522580321';
 const UK_HEALTH_LIST = '1201270000003578';
 const UK_LAW_LIST = '1201270000003579';
-const IT_TYPE = 'c0ffee00-1111-4222-8333-444455556666';
+const IT_TYPE = '82a67d1d-2a3b-4bd4-b892-97c41d4a47ad'; // Elevate Marketing | Commission | IT Italia
 const UK_IT_TYPE = '769980c2-23c5-4a60-8f1e-462e5e4ea12e';
 const EV = '11111111-2222-3333-4444-555555555555';
 const INV = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee';
@@ -28,13 +29,14 @@ let passed = 0;
 const ok = (cond, label) => { assert.ok(cond, label); passed++; };
 const eq = (a, b, label) => { assert.deepEqual(a, b, label); passed++; };
 
-function patchedSource({ list = IT_LIST, types = [IT_TYPE] } = {}) {
+// list and types: left as shipped unless a value is given ('' and [] take them out, for the failure checks).
+function patchedSource({ list, types } = {}) {
   const at = SOURCE.indexOf('"it-ict-growth": {');
   assert.ok(at > 0, 'the Italy entry exists');
   let entry = SOURCE.slice(at);
   const swap = (from, to) => { assert.ok(entry.includes(from), 'in the Italy entry: ' + from); entry = entry.replace(from, to); };
-  swap('listId: "",', `listId: "${list}",`);
-  swap('eventTypes: [],', `eventTypes: ${JSON.stringify(types)},`);
+  if (list !== undefined) swap(`listId: "${IT_LIST}",`, `listId: "${list}",`);
+  if (types !== undefined) swap(`eventTypes: ["${IT_TYPE}"],`, `eventTypes: ${JSON.stringify(types)},`);
   return SOURCE.slice(0, at) + entry;
 }
 let n = 0;
@@ -122,20 +124,32 @@ const booking = (o = {}, type = IT_TYPE) => ({
 const NORWEGIAN = ['Møte booket', 'Status flyttet', 'Flyttet fra', 'Kontakt', 'Tidssone', 'booket uten skjema', 'BOOKET UTEN SKJEMA', 'Koblet på', 'Skjemaet rutet', 'kl.', 'Oppgaven sto', 'Status ikke endret', 'Personen booket', 'virkedager', 'ukjent'];
 const noNorwegian = (text, label) => { for (const w of NORWEGIAN) ok(!text.includes(w), `${label}: no Norwegian "${w}"`); };
 
-// ---------------------------------------------------------------- 1. as shipped: Italy has no list and no event type, so an Italian booking is shown as a failure, never guessed onto a UK list
+// ---------------------------------------------------------------- 1. as shipped: the Italy list and event type; with no list an Italian booking is shown as a failure, never guessed onto a UK list
+const shipped = (await import(pathToFileURL(path.join(here, 'out/zap2-calendly-booking.mjs')).href)).default;
 {
-  const shipped = (await import(pathToFileURL(path.join(here, 'out/zap2-calendly-booking.mjs')).href)).default;
   const w = makeWorld();
   const t = w.addTask({ leadId: 'l_it_book_0001', status: 'ny lead' });
+  const out = await run(shipped, w, booking());
+  eq(out.outcome, 'linked', 'shipped: an Italian booking is linked to the lead\'s task'); eq(t.status, 'møte booket', 'shipped: the task is moved to møte booket');
+  ok(w.calls.some((c) => c.path.includes(IT_LIST)), 'shipped: the Italy list is searched');
+  ok(w.calls.every((c) => !c.path.includes(`/list/${UK_LIST}/`) && !c.path.includes(`/list/${UK_HEALTH_LIST}/`) && !c.path.includes(`/list/${UK_LAW_LIST}/`)), 'shipped: no UK list is touched for an Italian booking');
+  // the entry in the source carries the real list and event type, so a later edit that empties them is caught here
+  const entry = SOURCE.slice(SOURCE.indexOf('"it-ict-growth": {'));
+  ok(entry.includes(`listId: "${IT_LIST}",`) && entry.includes(`eventTypes: ["${IT_TYPE}"],`), 'shipped: the source carries the list and the event type');
+  // no list: the campaign cannot be searched, so the booking fails visibly
+  const noList = await load({ list: '' });
+  const w1 = makeWorld();
+  const t1 = w1.addTask({ leadId: 'l_it_book_0001', status: 'ny lead' });
   let err = '';
-  try { await run(shipped, w, booking()); } catch (e) { err = String(e.message); }
-  ok(/is not in CAMPAIGNS/.test(err), 'shipped: an Italian booking with a lead id fails visibly (its event type is unknown)');
-  eq(t.status, 'ny lead', 'shipped: the task is untouched'); eq(w.tasks.length, 1, 'shipped: nothing is created');
-  ok(w.calls.every((c) => c.method === 'GET' && !c.path.includes(IT_LIST)), 'shipped: only searches, none on the Italy list');
-  // and a booking with no lead id of ours and an unknown event is skipped, as for any event that is not ours
+  try { await run(noList, w1, booking()); } catch (e) { err = String(e.message); }
+  ok(/is not in CAMPAIGNS/.test(err), 'no list: an Italian booking with a lead id fails visibly');
+  eq(t1.status, 'ny lead', 'no list: the task is untouched'); eq(w1.tasks.length, 1, 'no list: nothing is created');
+  ok(w1.calls.every((c) => c.method === 'GET' && !c.path.includes(IT_LIST)), 'no list: only searches, none on the Italy list');
+  // no event type: a booking with no lead id of ours and an unknown event is skipped, as for any event that is not ours
+  const noType = await load({ types: [] });
   const w2 = makeWorld();
-  const out = await run(shipped, w2, booking({ tracking: { utm_content: null } }));
-  eq(out.skipped, 'other_event', 'shipped: an unknown event without our lead id is skipped'); eq(w2.calls.length, 0, 'shipped: ClickUp is not called');
+  const out2 = await run(noType, w2, booking({ tracking: { utm_content: null } }));
+  eq(out2.skipped, 'other_event', 'no event type: an unknown event without our lead id is skipped'); eq(w2.calls.length, 0, 'no event type: ClickUp is not called');
   console.log('1 ok');
 }
 // ---------------------------------------------------------------- 2. the lead's task: moved, due date, English comment in Rome time

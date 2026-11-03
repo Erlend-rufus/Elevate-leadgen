@@ -264,7 +264,7 @@ export const funnels = {
    },
    "funnel": {
     "pixelId": "1466790598245604",
-    "capiTokenEnv": "META_CAPI_TOKEN_IT",
+    "sharedPixel": true,
     "applyPath": "/api/lead",
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
@@ -293,7 +293,7 @@ export const funnels = {
    ],
    "honeypot": "contact_by_fax",
    "clickup": {
-    "listId": ""
+    "listId": "1201270000004918"
    }
   },
   "copy": {
