@@ -13,9 +13,9 @@
   ],
   "_layout": "The v2 design approved by Erlend on 1 Nov 2026: the same copy, the same order, drawn by the v2 renderers in scripts/build-g-growth.mjs (BYQ sections restyled to the paper and ink tokens, motion in g/_growth/js/motion2.js). Put the plain names back (hero, cases, ...) to return to the v1 page.",
   "review": {
-    "by": "",
-    "on": "",
-    "_note": "Name of the native Italian speaker who read this page and the date. Empty until then; the build refuses live: true with it empty."
+    "by": "Aurora Ulliana (local representative, Italian). Approval confirmed by Erlend Rufus, EngeCo AS, 3 Nov 2026.",
+    "on": "2026-11-03",
+    "_note": "Name of the native Italian speaker who read this page and the date. The build refuses live: true with it empty."
   },
   "meta": {
     "title": "Elevate Marketing per aziende IT e ICT in Italia",

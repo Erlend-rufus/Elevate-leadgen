@@ -194,12 +194,12 @@ test('endpoint: not a fit goes to the archive page and Meta is not told; not now
   assert.match(x.body.next, /^\/g\/it-ict-growth\/review\//);
 });
 
-test('endpoint: while not live, every post is refused and nothing is stored', async () => {
+test('endpoint: switched off (the rollback), every post is refused and nothing is stored', async () => {
   const { r, res } = await go({ live: false }, GOOD);
   assert.equal(res.status, 503);
   assert.equal(r.of('zapier').length, 0);
   assert.equal(r.blobs.leads().length, 0);
-  assert.equal(realCampaigns[SLUG].cfg.live, false, 'the shipped config is not live');
+  assert.equal(realCampaigns[SLUG].cfg.live, true, 'the shipped config is live (go-live 3 Nov 2026)');
 });
 
 test('endpoint without JavaScript: a bad post gives the form back in Italian with the answers kept', async () => {
@@ -307,24 +307,28 @@ test('the funnel has a cookie bar in Italian with Accetta and Rifiuta, and the M
   for (const bad of ['connect.facebook.net', 'fbevents.js', "fbq('init'", 'googletagmanager', 'fonts.googleapis']) assert.equal(h.includes(bad), false, bad);
 });
 
-test('settings: not live, the pixel is the shared UK one on purpose, the Italy event is wired, review blocks are empty', () => {
-  assert.equal(cfg.live, false);
+test('settings: live since 3 Nov 2026, the pixel is the shared UK one on purpose, the Italy event is wired, both reviews are recorded', () => {
+  assert.equal(cfg.live, true);
   assert.equal(cfg.funnel.pixelId, '1466790598245604');
   assert.equal(cfg.funnel.sharedPixel, true);
   assert.equal(cfg.funnel.calendlyUrl, 'https://calendly.com/au-growwithelevate/elevate-marketing-commission-it-italia');
   assert.equal(cfg.contact.email, 'au@growwithelevate.eu');
   assert.equal(cfg.origin, 'https://getelevateleads.com');
   assert.equal(cfg.reviewer.name, 'Aurora');
-  assert.deepEqual([legal.review.by, legal.review.on, copy.review.by, copy.review.on], ['', '', '', '']);
+  for (const [name, r] of [['legal', legal.review], ['copy', copy.review]]) {
+    assert.ok(r.by && r.by.trim(), name + ' review: a named reviewer');
+    assert.match(r.on, /^\d{4}-\d{2}-\d{2}$/, name + ' review: an ISO date');
+  }
 });
 
 /* The build's refusals about the pixel (scripts/build-g-growth.mjs). The generator and the sources are copied to a scratch
    folder, the Italian settings are changed there, and the generator is run into that folder: the committed files are never
    touched. A refusal is exit code 1 and a reason on stderr. "reviewed" fills the two review blocks that a funnel in another
-   language needs before it may go live, so that the pixel is the only thing under test. */
+   language needs before it may go live, so that the pixel is the only thing under test (legalReviewed and copyReviewed set one each;
+   unset they are blanked, whatever the shipped files say). */
 let scratch = null;
 after(() => { if (scratch) rmSync(scratch, { recursive: true, force: true }); });
-function buildItalyWith({ live = false, reviewed = false, funnel = {} } = {}) {
+function buildItalyWith({ live = false, reviewed = false, legalReviewed = reviewed, copyReviewed = reviewed, funnel = {} } = {}) {
   if (!scratch) {
     scratch = mkdtempSync(join(tmpdir(), 'it-pixel-'));
     cpSync(join(ROOT, 'g'), join(scratch, 'g'), { recursive: true, filter: (s) => !s.includes('node_modules') });
@@ -337,9 +341,10 @@ function buildItalyWith({ live = false, reviewed = false, funnel = {} } = {}) {
     writeFileSync(join(scratch, 'g', SLUG, file), JSON.stringify(o, null, 2));
   };
   put('config.json', (o) => { o.live = live; Object.assign(o.funnel, funnel); });
-  const review = (o) => { if (reviewed) Object.assign(o.review, { by: 'Revisore di prova', on: '2026-11-03' }); };
-  put('legal.json', review);
-  put('copy.json', review);
+  // The shipped review blocks are filled since go-live, so the scratch copy sets them either way: a test never depends on them.
+  const review = (filled) => (o) => { Object.assign(o.review, filled ? { by: 'Revisore di prova', on: '2026-11-03' } : { by: '', on: '' }); };
+  put('legal.json', review(legalReviewed));
+  put('copy.json', review(copyReviewed));
   const res = spawnSync(process.execPath, [join(scratch, 'scripts', 'build-g-growth.mjs')], {
     cwd: scratch, encoding: 'utf8',
     env: Object.assign({}, process.env, { G_GROWTH_OUT: join(scratch, 'out'), G_GROWTH_FUNCTION_DATA: join(scratch, 'data.generated.mjs') }),
@@ -355,6 +360,15 @@ test('build: Italy may go live on the shared UK pixel only because its config sa
   const copied = buildItalyWith({ live: true, reviewed: true, funnel: { sharedPixel: undefined } });
   assert.equal(copied.status, 1, 'the UK pixel without the explicit choice is refused');
   assert.match(copied.said, /is the UK pixel while "live" is true for a non-UK funnel/);
+});
+
+test('build: live is refused while the legal review or the copy review is empty', () => {
+  const noLegal = buildItalyWith({ live: true, copyReviewed: true });
+  assert.equal(noLegal.status, 1, 'no solicitor named: refused');
+  assert.match(noLegal.said, /legal\.json "review" is empty while "live" is true/);
+  const noCopy = buildItalyWith({ live: true, legalReviewed: true });
+  assert.equal(noCopy.status, 1, 'no native speaker named: refused');
+  assert.match(noCopy.said, /copy\.json "review" is empty while "live" is true/);
 });
 
 test('build: sharedPixel must be a boolean, must name the shared pixel, and must not come with a token variable of its own', () => {

@@ -231,7 +231,7 @@ export const funnels = {
    "campaign": "it-ict-growth",
    "path": "/g/it-ict-growth",
    "origin": "https://getelevateleads.com",
-   "live": false,
+   "live": true,
    "locale": {
     "lang": "it-IT",
     "numbers": "it-IT",

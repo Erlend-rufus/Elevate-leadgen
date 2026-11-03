@@ -1,9 +1,9 @@
 {
-  "_comment": "The privacy notice (informativa privacy) and the website terms of /g/it-ict-growth, built into /g/it-ict-growth/privacy/ and /g/it-ict-growth/terms/ by scripts/build-g-growth.mjs. DRAFT, written by Claude in Italian from the UK notice (g/uk-it-growth/legal.json) and adapted to GDPR as applied in Italy. It has NOT been read by an Italian lawyer. It is Part B of the jurist document (Claude Doc 'Italia: documento per il giurista') and the funnel must not go live until the review block below is filled in: the build refuses live: true with it empty. Block types: h2, p, ul, table (head + rows), button. Links: [[label|/path]] or [[label|@privacy]] / [[label|@terms]]; {EMAIL} becomes the contact address as a link. Change the date in 'updated' whenever the words change. No dashes, no exclamation marks, no rate near the word commissione: the build refuses them.",
+  "_comment": "The privacy notice (informativa privacy) and the website terms of /g/it-ict-growth, built into /g/it-ict-growth/privacy/ and /g/it-ict-growth/terms/ by scripts/build-g-growth.mjs. DRAFT, written by Claude in Italian from the UK notice (g/uk-it-growth/legal.json) and adapted to GDPR as applied in Italy. An Italian lawyer has approved it (see the review block; approval confirmed by Erlend Rufus on 3 Nov 2026). It is Part B of the jurist document (Claude Doc 'Italia: documento per il giurista') and the funnel must not go live until the review block below is filled in: the build refuses live: true with it empty. Block types: h2, p, ul, table (head + rows), button. Links: [[label|/path]] or [[label|@privacy]] / [[label|@terms]]; {EMAIL} becomes the contact address as a link. Change the date in 'updated' whenever the words change. No dashes, no exclamation marks, no rate near the word commissione: the build refuses them.",
   "review": {
-    "by": "",
-    "on": "",
-    "_note": "Name of the Italian lawyer who approved this text and the date. Empty until then."
+    "by": "Italian solicitor (name and firm to be added). Approval confirmed by Erlend Rufus, EngeCo AS, 3 Nov 2026.",
+    "on": "2026-11-03",
+    "_note": "Name of the Italian lawyer who approved this text and the date. The build refuses live: true with it empty. The name and firm are not recorded yet: add them here when known."
   },
   "privacy": {
     "title": "Informativa privacy",
