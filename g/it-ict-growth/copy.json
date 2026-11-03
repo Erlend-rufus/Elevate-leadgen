@@ -19,10 +19,10 @@
   },
   "meta": {
     "title": "Elevate Marketing per aziende IT e ICT in Italia",
-    "description": "Conversazioni commerciali per aziende IT e ICT italiane, da campagne che gestiamo noi. Poche domande per capire se possiamo lavorare insieme."
+    "description": "Incontri commerciali per aziende IT e ICT italiane, da campagne che gestiamo noi. Poche domande per capire se possiamo lavorare insieme."
   },
   "topline": "Per aziende IT e ICT italiane con fatturato da {THRESHOLD} in su",
-  "cta": "Scoprite se possiamo lavorare insieme",
+  "cta": "Scoprite se fa per voi",
   "hero": {
     "h1a": "Nel Regno Unito abbiamo già riempito la pipeline di società di consulenza IT.",
     "h1b": "Ecco com’è andata.",
@@ -126,7 +126,7 @@
   },
   "pay": {
     "h2": "Si paga quando un contratto si chiude: guadagniamo solo se guadagnate voi.",
-    "body": "Si paga quando viene chiuso un contratto. I nostri incentivi sono i vostri. Nessun canone fisso, nessun costo di attivazione, nessuna durata minima. Applichiamo una commissione sui contratti che si chiudono grazie alle campagne che gestiamo. La percentuale dipende da quanto vale un cliente per voi, quindi la concordiamo prima della partenza. Non la pubblichiamo perché non è uguale per due aziende.",
+    "body": "Nessun canone fisso, nessun costo di attivazione, nessuna durata minima. Applichiamo una commissione sui contratti che si chiudono grazie alle campagne che gestiamo. La percentuale dipende da quanto vale un cliente per voi, quindi la concordiamo prima della partenza. Non la pubblichiamo perché non è uguale per due aziende.",
     "open": [
       "Una vendita è un contratto firmato o un ordine d’acquisto con un nuovo cliente arrivato da un lead prodotto dalle nostre campagne. I clienti esistenti e quelli arrivati da altre fonti non contano.",
       "Il vostro CRM è il registro. Ogni mese confermate quali contratti chiusi vengono dalle nostre campagne, e fatturiamo solo quelli.",
@@ -193,10 +193,10 @@
       },
       {
         "t": "Entro un giorno lavorativo",
-        "p": "Riceverete una pagina di sintesi con i calcoli: quanti nuovi clienti vi servono ogni mese, quanti incontri commerciali servono per ottenerli e quanto distate dalla vostra pipeline attuale."
+        "p": "Riceverete una pagina di sintesi con i calcoli: di quanti nuovi clienti avete bisogno ogni mese, quanti incontri servono per ottenerli e quanto siete lontani dalla pipeline attuale."
       }
     ],
-    "closing": "La pagina di sintesi resta vostra, anche se poi non lavoriamo insieme. Contiene solo i vostri numeri. Nessun preventivo, nessuna percentuale di commissione, nessuna promessa."
+    "closing": "La pagina di sintesi resta vostra, anche se poi non lavoriamo insieme. Contiene solo i vostri numeri: nessun preventivo, nessuna percentuale di commissione, nessun impegno."
   },
   "faq": {
     "h2": "Risposte dirette",
@@ -207,7 +207,7 @@
       },
       {
         "q": "In che cosa è diverso da un’agenzia a canone mensile?",
-        "a": "Un canone si paga che si chiuda qualcosa o no. La nostra fattura dipende dalla chiusura di un contratto, quindi guadagniamo solo quando guadagna il vostro team commerciale."
+        "a": "Un canone mensile si paga a prescindere dai risultati. La nostra fattura parte solo da un contratto chiuso."
       },
       {
         "q": "Di chi sono gli account pubblicitari?",
@@ -236,12 +236,12 @@
     "label": "Scelta sui cookie"
   },
   "form": {
-    "heading": "Scoprite se possiamo lavorare insieme",
+    "heading": "Scoprite se fa per voi",
     "under": "Poche domande. Lavoriamo solo con aziende che pensiamo di poter aiutare.",
     "back": "Indietro",
     "next": "Avanti",
     "submit": "Invia",
-    "cta": "Scoprite se possiamo lavorare insieme",
+    "cta": "Scoprite se fa per voi",
     "retry": "Riprovare",
     "sending": "Controlliamo alcuni dettagli. Ci vogliono pochi secondi.",
     "failed": "Qualcosa è andato storto da parte nostra. Le risposte sono ancora qui. Riprovare, oppure scrivere a",
