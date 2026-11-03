@@ -13,7 +13,7 @@
  * The routes, in the order they are tried. The first that applies wins, so a firm that is
  * too small and also at capacity is "not a fit" (structural beats temporary):
  *
- *   not_a_fit   turnover under 2 million euro, trading under two years, a typical client worth under
+ *   not_a_fit   turnover under 1 million euro, trading under two years, a typical client worth under
  *               10,000 euro, or (when turnover is not stated) accounts filed as micro-entity or
  *               dormant.
  *   not_now     no capacity for new clients in the next three months.
@@ -28,7 +28,21 @@
  * "turnover_2m_plus" so nobody reads it as stated. What the visitor wrote is never altered: the
  * lift is made here, inside the rules, and the payload keeps "I would rather not say".
  *
- * Deliberate reading, say so if it is wrong: a firm that claims 2 million euro or more but files
+ * Changed 3 Nov 2026 (Erlend and Sondre in #leads-it, after the first real lead, a cybersecurity firm at 1 to under
+ * 2 million euro, was refused): the limit that refuses a firm is turnover under 1 million euro, not under 2. A firm at
+ * 1 to under 2 million euro now goes through the same rules as one above it, with its own reason "turnover_1m_2m" so
+ * Slack and ClickUp do not call it "2 million or more". The 2 million euro stays on the page and in the ads as the
+ * target (the topline "fatturato da 2 milioni in su"), the same split the UK pages have; it no longer refuses anyone.
+ * Meant as a starting setting so the person taking the meetings gets practice. To go back: put T[1] into
+ * BELOW_THRESHOLD again, take it out of CLAIMS_THRESHOLD and drop the "turnover_1m_2m" line in decide() below.
+ * Unlike the UK IT funnel since 26 Oct 2026, the band has no marketing budget condition here: the UK asks for 1,000
+ * pounds a month or more at 1 to under 2 million.
+ *
+ * Changed 3 Nov 2026, the same evening (Erlend): 5,000 euro or more a month on marketing is a fit whatever else was
+ * said, except at capacity. That is decide() at the bottom: it wraps the rules above and changes nothing for a firm
+ * that spends less.
+ *
+ * Deliberate reading, say so if it is wrong: a firm that claims 1 million euro or more but files
  * micro-entity or dormant accounts is "review", not "not a fit". The accounts are
  * evidence against the claim, but a company can file late or be one of several in a
  * group, and rejecting a firm on that alone costs a real lead. It is one line to change:
@@ -43,8 +57,10 @@ const CAPACITY = OPTIONS.capacity;
 const PEOPLE = OPTIONS.people;
 const SPEND = OPTIONS.spend;
 
-const BELOW_THRESHOLD = new Set([T[0], T[1]]);
-const CLAIMS_THRESHOLD = new Set([T[2], T[3], T[4]]);
+/** Under 1 million euro refuses (since 3 Nov 2026; T[1], 1 to under 2 million, used to refuse as well). */
+const BELOW_THRESHOLD = new Set([T[0]]);
+/** Answers that claim the 1 million euro limit is met, for the register check that is not used in Italy yet. */
+const CLAIMS_THRESHOLD = new Set([T[1], T[2], T[3], T[4]]);
 const NOT_STATED = T[5];
 
 export const ROUTES = ['fit', 'review', 'not_now', 'not_a_fit'];
@@ -72,7 +88,8 @@ const TWO_YEARS = 2 * 365.25 * DAY;
 /** Reasons a firm is "not a fit" from what it said about itself. */
 export function selfReport(v) {
   const reasons = [];
-  if (BELOW_THRESHOLD.has(v.turnover_band)) reasons.push('turnover_below_2m');
+  // Own reason since 3 Nov 2026 so ClickUp and Slack do not say "under 2 million" for a firm that is not refused at 1.5.
+  if (BELOW_THRESHOLD.has(v.turnover_band)) reasons.push('turnover_below_1m');
   if (v.trading_years === TRADING[0]) reasons.push('trading_under_2y');
   if (v.first_year_value === WORTH[0]) reasons.push('value_under_10k');
   return reasons;
@@ -111,7 +128,9 @@ export function assessProfile(v, profile, now) {
 }
 
 /**
- * The decision. "ch" is what the register said: {check, reasons, profile}, where check is
+ * The decision from the answers and the register, by the rules in the header, in the order they are tried.
+ * decide() below adds the one rule that overrides them (marketing spend). "ch" is what the register said:
+ * {check, reasons, profile}, where check is
  * 'skipped' (not asked), 'ok', 'not_found', 'timeout', 'mismatch' or 'off'.
  *
  * 'unchecked' means the funnel makes no register check at all (legal.registerCheck is false in config.json): a firm
@@ -125,7 +144,7 @@ export function assessProfile(v, profile, now) {
  *
  * Returns {route, reasons}.
  */
-export function decide(v, ch) {
+function decideByAnswers(v, ch) {
   const registry = ch || { check: 'skipped', reasons: [] };
   const profile = registry.profile || {};
   const inferred = turnoverInferred(v) ? ['turnover_inferred'] : [];
@@ -150,9 +169,33 @@ export function decide(v, ch) {
     return { route: 'review', reasons: inferred.concat(review) };
   }
 
-  const fit = [inferred.length ? 'turnover_inferred' : 'turnover_2m_plus', 'trading_2y_plus'];
+  let turnover = 'turnover_2m_plus';
+  if (inferred.length) turnover = 'turnover_inferred';
+  else if (v.turnover_band === T[1]) turnover = 'turnover_1m_2m';
+  const fit = [turnover, 'trading_2y_plus'];
   if (profile.accounts_type) fit.push('ch_' + profile.accounts_type);
   if (registry.check === 'off') fit.push('register_off');
   if (registry.check === 'unchecked') fit.push('register_not_used');
+  return { route: 'fit', reasons: fit };
+}
+
+/**
+ * Changed 3 Nov 2026 (Erlend, in the chat): 5,000 euro or more a month on marketing makes a conversation worth having
+ * whatever else the firm said. A firm that spends that much and would be refused (turnover, trading, client value) or
+ * sent to review (turnover withheld, a client worth 10,000 to under 25,000 euro) is a fit, with the reason
+ * "spend_5k_plus", so Slack and ClickUp say why it got the calendar and nobody reads it as qualified on size.
+ * What stays: a firm at capacity is "not now" (a call cannot help a firm that cannot take clients); a firm that is a
+ * fit already keeps the reasons it passed on (turnover_2m_plus, turnover_1m_2m, turnover_inferred); the answers the
+ * visitor wrote are never altered. The spend is what the visitor said: nothing here checks it, and a fit sends
+ * QualifiedForm to Meta like any other. To go back: delete this function and rename decideByAnswers to decide.
+ */
+export function decide(v, ch) {
+  const d = decideByAnswers(v, ch);
+  if (!SPENDS_5K.has(v.marketing_spend) || d.route === 'fit' || d.route === 'not_now') return d;
+  if (v.capacity === CAPACITY[0]) return { route: 'not_now', reasons: ['capacity_none'] };
+  const registry = ch || { check: 'skipped', reasons: [] };
+  const fit = ['spend_5k_plus'];
+  if (registry.check === 'off') fit.push('register_off');
+  else if (registry.check === 'unchecked' || registry.check === 'skipped') fit.push('register_not_used');
   return { route: 'fit', reasons: fit };
 }

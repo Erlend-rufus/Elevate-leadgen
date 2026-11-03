@@ -23,7 +23,7 @@ state the workflows are in (switched on or off) is also kept there, not here.
    node g/_growth/zapier/zap2.test.mjs        # 201 checks
    node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
    node g/_growth/zapier/zap1.test.mjs        # 244 checks
-   node g/_growth/zapier/zap1-it.test.mjs     # 584 checks, Italy (after zap1's build)
+   node g/_growth/zapier/zap1-it.test.mjs     # 669 checks, Italy (after zap1's build)
    node g/_growth/zapier/zap2-it.test.mjs     # 98 checks, Italy (after zap2's build)
    ```
 
@@ -116,6 +116,16 @@ never deleted; the one `[TEST]` post stays in #leads-it. Published at 13:56 UTC:
 `01a1a1b2-6ec3-76d0-9053-de5d83f2804f`, sha256 `64c61e5f...`, read back and identical to the file here, still switched on
 with its trigger active (the enabled state was not touched). Zap 2 was not changed (`01a1a19b-6f1d-7b23-ace8-1fdda467c5a0`,
 `c7b20394...`). To go back: Zap 1 `01a1a19b-6314-7084-94f5-76efe8d6b7d2`.
+
+3 Nov 2026, third publish (Erlend's two rules for Italy, PR #127): Zap 1 only. The Italy `reasonText` gained
+`turnover_below_1m`, `turnover_1m_2m` and `spend_5k_plus` (`turnover_below_2m` stays, for the leads made before). A draft of
+the new file was run in Zapier against the real ClickUp lists with four made-up test leads: Italy fit by the 5,000 euro rule,
+Italy fit at 1 to under 2 million euro, Italy not a fit under 1 million euro (all three read in `slack.preview`, with the
+"Why" and "Reason" lines as expected) and a UK fit (unchanged, Norwegian post). Nothing was posted to Slack. The four test
+tasks were archived, never deleted. Published at 22:02 UTC: Zap 1 version `01a1a36f-7dd5-7ec9-8f10-59f31b925a5b`, sha256
+`7d54ea49...`, read back and identical to the file here, still switched on with its trigger active (the enabled state was
+not touched). Zap 2 was not changed (`01a1a19b-6f1d-7b23-ace8-1fdda467c5a0`, `c7b20394...`). To go back: Zap 1
+`01a1a1b2-6ec3-76d0-9053-de5d83f2804f`.
 
 ## Conventions
 

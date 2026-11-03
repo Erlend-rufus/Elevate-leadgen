@@ -95,12 +95,14 @@ test('the form rejects what the UK form rejects', () => {
   assert.equal(bad({ specialism: O.area[0], specialism_other: 'ignorato' }).values.specialism_other, '', 'the free text counts only for "Altro"');
 });
 
-test('routing: the UK decision table, answer for answer, with the same reason codes', () => {
+test('routing: the UK decision table with the same reason codes, except the turnover limit (1 million euro here, 3 Nov 2026)', () => {
   const v = core.validate(GOOD).values;
   const un = { check: 'unchecked', reasons: [] };
   const d = (patch, ch = un) => route.decide(Object.assign({}, v, patch), ch);
   assert.deepEqual(d({}), { route: 'fit', reasons: ['turnover_2m_plus', 'trading_2y_plus', 'register_not_used'] });
-  for (const t of [O.turnover[0], O.turnover[1]]) assert.deepEqual(d({ turnover_band: t }), { route: 'not_a_fit', reasons: ['turnover_below_2m'] });
+  assert.deepEqual(d({ turnover_band: O.turnover[0] }), { route: 'not_a_fit', reasons: ['turnover_below_1m'] }, 'under 1 million euro refuses, with its own reason');
+  assert.deepEqual(d({ turnover_band: O.turnover[1] }), { route: 'fit', reasons: ['turnover_1m_2m', 'trading_2y_plus', 'register_not_used'] }, '1 to under 2 million euro no longer refuses');
+  for (const t of [O.turnover[2], O.turnover[3], O.turnover[4]]) assert.deepEqual(d({ turnover_band: t }).reasons, ['turnover_2m_plus', 'trading_2y_plus', 'register_not_used'], 'the codes above 2 million euro are unchanged');
   assert.deepEqual(d({ trading_years: O.trading[0] }), { route: 'not_a_fit', reasons: ['trading_under_2y'] });
   assert.deepEqual(d({ first_year_value: O.worth[0] }), { route: 'not_a_fit', reasons: ['value_under_10k'] });
   assert.deepEqual(d({ capacity: O.capacity[0] }), { route: 'not_now', reasons: ['capacity_none'] });
@@ -111,6 +113,74 @@ test('routing: the UK decision table, answer for answer, with the same reason co
   assert.deepEqual(route.ROUTES, ukRoute.ROUTES);
 });
 
+test('routing, 3 Nov 2026: a firm at 1 to under 2 million euro goes through the same rules as one above it, and never refuses on turnover', () => {
+  const v = core.validate(GOOD).values;
+  const un = { check: 'unchecked', reasons: [] };
+  const d = (patch, ch = un) => route.decide(Object.assign({}, v, { turnover_band: O.turnover[1] }, patch), ch);
+  // The shape of the first real lead (ResilientX, cybersecurity): 1 to under 2 million, 10 to 24 people, a client worth
+  // 10,000 to under 25,000, capacity for more than ten. It was refused on turnover alone; by this rule a person reviews it.
+  // (ResilientX itself spent 5,000 to under 15,000 a month, which is a fit on its own since the second change of that
+  // evening: the next test. Here the spend is below 5,000, so the limit change is all that is tested.)
+  const resilientx = { trading_years: O.trading[1], employees_or_fee_earners: O.people[1], marketing_spend: O.spend[1], first_year_value: O.worth[1], capacity: O.capacity[3] };
+  assert.deepEqual(d(resilientx), { route: 'review', reasons: ['value_10k_to_25k'] });
+  assert.deepEqual(d({ first_year_value: O.worth[2] }), { route: 'fit', reasons: ['turnover_1m_2m', 'trading_2y_plus', 'register_not_used'] });
+  // The other rules still apply to the band: nothing about it is waved through.
+  assert.deepEqual(d({ trading_years: O.trading[0] }), { route: 'not_a_fit', reasons: ['trading_under_2y'] });
+  assert.deepEqual(d({ first_year_value: O.worth[0] }), { route: 'not_a_fit', reasons: ['value_under_10k'] });
+  assert.deepEqual(d({ capacity: O.capacity[0] }), { route: 'not_now', reasons: ['capacity_none'] });
+  // The marketing budget does not decide the band here (it does in the UK funnel since 26 Oct 2026).
+  for (const s of [O.spend[0], O.spend[1], O.spend[4]]) assert.equal(d({ marketing_spend: s }).route, 'fit', s);
+  // Under 1 million euro still refuses, whatever else is said (except 5,000 euro a month or more on marketing: the next test).
+  assert.deepEqual(route.decide(Object.assign({}, v, { turnover_band: O.turnover[0], marketing_spend: O.spend[1], first_year_value: O.worth[4] }), un), { route: 'not_a_fit', reasons: ['turnover_below_1m'] });
+  assert.equal(route.decide(Object.assign({}, v, { turnover_band: O.turnover[0], capacity: O.capacity[0] }), un).route, 'not_a_fit', 'structural beats temporary');
+  // Withheld turnover is unchanged: the inference rule below still lifts it to 2 to under 5 million, never to 1 to under 2.
+  assert.deepEqual(d({ turnover_band: O.turnover[5] }), { route: 'review', reasons: ['turnover_not_stated'] });
+  // The register is not used in Italy, but the shape stays: a firm claiming 1 million or more, filing micro-entity accounts, is a mismatch.
+  const profile = { number: '1', name: 'X', status: 'active', created: '2015-01-01', accounts_type: 'micro-entity' };
+  assert.deepEqual(route.assessProfile(Object.assign({}, v, { turnover_band: O.turnover[1] }), profile, new Date('2026-11-03')).reasons, ['ch_accounts_too_small']);
+  assert.equal(route.assessProfile(Object.assign({}, v, { turnover_band: O.turnover[0] }), profile, new Date('2026-11-03')).check, 'ok', 'under 1 million is refused before the register is asked');
+  assert.equal(route.needsRegistry(Object.assign({}, v, { turnover_band: O.turnover[1] })), true);
+  assert.equal(route.needsRegistry(Object.assign({}, v, { turnover_band: O.turnover[0] })), false);
+});
+
+test('routing, 3 Nov 2026: 5,000 euro a month or more on marketing is a fit whatever else was said, except at capacity', () => {
+  const v = core.validate(GOOD).values;
+  const un = { check: 'unchecked', reasons: [] };
+  const d = (patch, ch = un) => route.decide(Object.assign({}, v, patch), ch);
+  const FIT = { route: 'fit', reasons: ['spend_5k_plus', 'register_not_used'] };
+  for (const s of [O.spend[2], O.spend[3]]) {
+    // refused before, a fit now
+    assert.deepEqual(d({ marketing_spend: s, turnover_band: O.turnover[0] }), FIT, 'under 1 million euro');
+    assert.deepEqual(d({ marketing_spend: s, trading_years: O.trading[0] }), FIT, 'under two years');
+    assert.deepEqual(d({ marketing_spend: s, first_year_value: O.worth[0] }), FIT, 'a client worth under 10,000');
+    assert.deepEqual(d({ marketing_spend: s, turnover_band: O.turnover[0], trading_years: O.trading[0], first_year_value: O.worth[0] }), FIT, 'all three at once');
+    // a review before, a fit now
+    assert.deepEqual(d({ marketing_spend: s, first_year_value: O.worth[1] }), FIT, 'a client worth 10,000 to under 25,000');
+    assert.deepEqual(d({ marketing_spend: s, turnover_band: O.turnover[5] }), FIT, 'turnover withheld, fewer than 50 people');
+    // the first real lead (ResilientX): a fit, where the limit change alone made it a review
+    assert.deepEqual(d({ marketing_spend: s, turnover_band: O.turnover[1], trading_years: O.trading[1], employees_or_fee_earners: O.people[1], first_year_value: O.worth[1], capacity: O.capacity[3] }), FIT);
+    // a firm that is a fit already keeps the reasons it passed on
+    assert.deepEqual(d({ marketing_spend: s }).reasons, ['turnover_2m_plus', 'trading_2y_plus', 'register_not_used']);
+    assert.deepEqual(d({ marketing_spend: s, turnover_band: O.turnover[1] }).reasons, ['turnover_1m_2m', 'trading_2y_plus', 'register_not_used']);
+    // at capacity it is "not now", whatever it spends and however small it is
+    assert.deepEqual(d({ marketing_spend: s, capacity: O.capacity[0] }), { route: 'not_now', reasons: ['capacity_none'] });
+    assert.deepEqual(d({ marketing_spend: s, capacity: O.capacity[0], turnover_band: O.turnover[0] }), { route: 'not_now', reasons: ['capacity_none'] });
+  }
+  // Under 5,000, and "I do not know": nothing changes.
+  for (const s of [O.spend[0], O.spend[1], O.spend[4]]) {
+    assert.equal(d({ marketing_spend: s, turnover_band: O.turnover[0] }).route, 'not_a_fit', s);
+    assert.equal(d({ marketing_spend: s, trading_years: O.trading[0] }).route, 'not_a_fit', s);
+    assert.equal(d({ marketing_spend: s, first_year_value: O.worth[1] }).route, 'review', s);
+  }
+  // The register states: a preview with the register off says so, and a firm that was never sent to the register is "not used".
+  const small = { marketing_spend: O.spend[2], turnover_band: O.turnover[0] };
+  assert.deepEqual(d(small, { check: 'off', reasons: [] }), { route: 'fit', reasons: ['spend_5k_plus', 'register_off'] });
+  assert.deepEqual(d(small, { check: 'skipped', reasons: [] }), FIT);
+  assert.deepEqual(d(small, undefined), FIT);
+  // Withheld turnover with 50+ people keeps the reason of the 22 Oct rule, which says more.
+  assert.deepEqual(d({ marketing_spend: O.spend[2], turnover_band: O.turnover[5], employees_or_fee_earners: O.people[3] }), { route: 'fit', reasons: ['turnover_inferred', 'trading_2y_plus', 'register_not_used'] });
+});
+
 test('routing, 22 Oct 2026 rule: withheld turnover is inferred only from 50+ people AND 5,000 euro a month or more', () => {
   const v = core.validate(GOOD).values;
   const un = { check: 'unchecked', reasons: [] };
@@ -118,9 +188,12 @@ test('routing, 22 Oct 2026 rule: withheld turnover is inferred only from 50+ peo
   const d = (patch) => route.decide(Object.assign({}, v, withheld, patch), un);
   assert.deepEqual(d({}), { route: 'fit', reasons: ['turnover_inferred', 'trading_2y_plus', 'register_not_used'] });
   assert.equal(d({ marketing_spend: O.spend[3] }).route, 'fit');
-  for (const over of [{ employees_or_fee_earners: O.people[2] }, { marketing_spend: O.spend[1] }, { marketing_spend: O.spend[4] }]) {
+  for (const over of [{ marketing_spend: O.spend[1] }, { marketing_spend: O.spend[4] }]) {
     assert.deepEqual(d(over), { route: 'review', reasons: ['turnover_not_stated'] }, JSON.stringify(over));
   }
+  // Fewer than 50 people used to be a review here. Since 3 Nov 2026 5,000 euro a month or more is a fit on its own
+  // (next test), so the headcount only decides which reason the fit carries.
+  assert.deepEqual(d({ employees_or_fee_earners: O.people[2] }), { route: 'fit', reasons: ['spend_5k_plus', 'register_not_used'] });
   assert.equal(route.turnoverInferred(Object.assign({}, v, withheld)), true);
   assert.equal(route.turnoverInferred(v), false);
 });
@@ -188,10 +261,42 @@ test('endpoint: not a fit goes to the archive page and Meta is not told; not now
   assert.equal(x.body.route, 'not_a_fit');
   assert.match(x.body.next, /^\/g\/it-ict-growth\/not-a-fit\//);
   assert.equal(x.r.of('capi').length, 0);
+  assert.equal(x.r.of('zapier')[0].body.route_reason, 'turnover_below_1m');
   x = await go({}, Object.assign({}, GOOD, { capacity: O.capacity[0] }));
   assert.match(x.body.next, /^\/g\/it-ict-growth\/not-now\//);
   x = await go({}, Object.assign({}, GOOD, { turnover_band: O.turnover[5] }));
   assert.match(x.body.next, /^\/g\/it-ict-growth\/review\//);
+});
+
+test('endpoint, 3 Nov 2026: a firm at 1 to under 2 million euro books, Zapier gets its own reason, and Meta is told once', async () => {
+  const { r, res, body } = await go({}, Object.assign({}, GOOD, { turnover_band: O.turnover[1] }));
+  assert.equal(res.status, 200);
+  assert.equal(body.route, 'fit');
+  assert.match(body.next, /^\/g\/it-ict-growth\/book\//);
+  const z = r.of('zapier')[0].body;
+  assert.equal(z.route, 'fit');
+  assert.equal(z.route_reason, 'turnover_1m_2m, trading_2y_plus, register_not_used');
+  assert.equal(z.turnover_band, 'Da 1 milione a meno di 2 milioni di €', 'what the visitor wrote is never altered');
+  assert.equal(r.of('capi').length, 1, 'a fit is reported to Meta as QualifiedForm, whatever its band');
+  assert.equal(r.of('capi')[0].body.data[0].event_id, 'l_ita0001');
+});
+
+test('endpoint, 3 Nov 2026: 5,000 euro a month on marketing books whatever else was said, and the reason says so', async () => {
+  const small = Object.assign({}, GOOD, { turnover_band: O.turnover[0], trading_years: O.trading[0], first_year_value: O.worth[0], marketing_spend: O.spend[2] });
+  const { r, res, body } = await go({}, small);
+  assert.equal(res.status, 200);
+  assert.equal(body.route, 'fit');
+  assert.match(body.next, /^\/g\/it-ict-growth\/book\//);
+  const z = r.of('zapier')[0].body;
+  assert.equal(z.route, 'fit');
+  assert.equal(z.route_reason, 'spend_5k_plus, register_not_used');
+  assert.equal(z.turnover_band, 'Meno di 1 milione di €', 'the answers are kept as the visitor wrote them');
+  assert.equal(z.marketing_spend, 'Da 5.000 € a meno di 15.000 €');
+  assert.equal(r.of('capi').length, 1, 'a fit is reported to Meta as QualifiedForm, however it became one');
+  // Under 5,000 the same small firm is refused, as before.
+  const refused = await go({}, Object.assign({}, small, { marketing_spend: O.spend[1] }));
+  assert.equal(refused.body.route, 'not_a_fit');
+  assert.equal(refused.r.of('capi').length, 0);
 });
 
 test('endpoint: switched off (the rollback), every post is refused and nothing is stored', async () => {

@@ -1,6 +1,7 @@
 # Launch notes · /g/it-ict-growth
 
-Italian IT and ICT firms with a turnover of 2 million euro or more. A copy of the UK IT funnel (`g/uk-it-growth/`): the same
+Italian IT and ICT firms with a turnover of 2 million euro or more (the target on the page and in the ads; since 3 Nov 2026 the
+limit that refuses a firm is 1 million euro, and 5,000 euro a month on marketing is a fit on its own: section 6). A copy of the UK IT funnel (`g/uk-it-growth/`): the same
 landing page, the same thirteen question form, the same four outcomes, the same endpoint (`/api/lead`) and the same daily
 check, in Italian and in euro. Decided and scoped on 23 Oct 2026. Read `g/uk-it-growth/LAUNCH.md` for the mechanics this file
 does not repeat (the endpoint, hosting, the Zapier build and the privacy notice). This file lists what is **different** for Italy
@@ -29,7 +30,7 @@ with the Italian entries on 3 Nov 2026 after draft runs, section 4.)
 | | UK (`uk-it-growth`) | Italy (`it-ict-growth`) |
 |---|---|---|
 | Language, locale | English, `en-GB` | Italian, `it-IT`. Form, validation messages, outcome pages, privacy notice and terms are Italian. |
-| Currency, bands | £ | €. Same thresholds in euro (2m, 10,000, 25,000, 5,000 a month). **These are conversions, not research.** |
+| Currency, bands | £ | €. Same thresholds in euro (2m, 10,000, 25,000, 5,000 a month). **These are conversions, not research.** Since 3 Nov 2026 the turnover limit that refuses a firm is 1m, and 5,000 a month on marketing is a fit on its own (section 6). |
 | Register check | Companies House (optional, off) | None. `legal.registerCheck: false`, `registerSupported: false`. A firm whose own answers qualify is a `fit` with the reason `register_not_used`. |
 | Offer | 100 % commission, client pays the ad spend, no setup fee | **Identical.** No commission rate is published. |
 | Contact | Sondre's mailbox and the once-only e-mail | Aurora's address `au@growwithelevate.eu` is the only address shown. The domain stays `getelevateleads.com`. |
@@ -150,13 +151,30 @@ position of an answer in `core.mjs` `OPTIONS`: never reorder them.
 
 | Route | When |
 |---|---|
-| `not_a_fit` | turnover under 2 million euro, trading under 2 years, or a typical client worth under 10,000 euro in year one |
-| `not_now` | no capacity for new clients in the next three months (and not already `not_a_fit`) |
-| `review` | turnover withheld without the inference rule, or a client worth 10,000 to under 25,000 euro, or an answer that needs a person |
+| `not_a_fit` | turnover under 1 million euro (2 until 3 Nov 2026), trading under 2 years, or a typical client worth under 10,000 euro in year one, unless the firm spends 5,000 euro or more a month on marketing |
+| `not_now` | no capacity for new clients in the next three months (and not already `not_a_fit`), whatever the firm spends |
+| `review` | turnover withheld without the inference rule, or a client worth 10,000 to under 25,000 euro, or an answer that needs a person, unless the firm spends 5,000 euro or more a month on marketing |
 | `fit` | everything else; reason `register_not_used`, marked `unchecked` |
 
 Inference rule (22 Oct 2026, same as UK): withheld turnover counts as 2 to under 5 million euro when the firm has 50 or more people **and**
 5,000 euro or more a month on marketing (`turnover_inferred`). The payload keeps what the visitor wrote.
+
+**Two changes of 3 Nov 2026** (Erlend and Sondre in #leads-it, then Erlend in the chat), made after the first real lead (ResilientX,
+cybersecurity, 1 to under 2 million euro) was refused on turnover alone. They differ from the UK funnel and are meant as a starting setting, so
+the person taking the meetings gets practice:
+
+1. **The limit that refuses a firm is turnover under 1 million euro, not 2.** A firm at 1 to under 2 million goes through the same rules as one
+   above it and carries its own reason, `turnover_1m_2m`; under 1 million is `turnover_below_1m`. Unlike the UK funnel since 26 Oct 2026, the band
+   has no marketing budget condition. The 2 million euro stays on the page and in the ads as the target (`THRESHOLD` in `config.json`: the topline,
+   the "works if" list and the not-a-fit page), the same split the UK pages have. That text was approved by Aurora and the jurist on 3 Nov 2026
+   and is **not** changed with the rules.
+2. **5,000 euro or more a month on marketing is a `fit` whatever else was said** (`spend_5k_plus`), except at capacity (`not_now`). A firm that would
+   be refused or sent to review and spends that much gets the calendar; a firm that is a fit already keeps its own reasons. It is `decide()` in
+   `route.mjs`, a wrapper round `decideByAnswers()`: to go back, delete `decide()` and rename `decideByAnswers()`. The spend is what the visitor
+   wrote and nothing checks it. Meta gets `QualifiedForm` for these firms like for any `fit` (section 5).
+
+Zap 1's Italy table has the words for the three new codes (`turnover_below_1m`, `turnover_1m_2m`, `spend_5k_plus`); the old `turnover_below_2m` keeps
+its words for the leads made before. `zap1-it.test.mjs` fails if the route can give a code that the table has no words for.
 
 **Consequence of no register:** the calendar is open to anyone who answers the form right. Aurora checks the company in Registro Imprese before
 the meeting. Adding a register later is one provider, `legal.registerCheck: true` and a line in the privacy notice.

@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import { build } from 'esbuild';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { OPTIONS } from '../../it-ict-growth/core.mjs'; // the Italian words of the form: the English table is checked against them
+import * as itRoute from '../../it-ict-growth/route.mjs'; // the reason codes the English table has to have words for
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const truth = JSON.parse(fs.readFileSync(path.join(here, 'truth.json'), 'utf8'));
@@ -269,6 +270,60 @@ const shipped = (await import(pathToFileURL(path.join(here, 'out/zap1-lead-to-cl
   ok(c.includes('Aurora reviews website or retainer'), 'not a fit slack: names Aurora'); ok(!c.includes('Sondre') && !c.includes('<@'), 'not a fit slack: no Sondre, no ping'); noNorwegian(c, 'not a fit slack');
   eq(w2.slack[0].channel, IT_CHANNEL, 'not a fit: Italy channel');
   console.log('4 ok');
+}
+// ---------------------------------------------------------------- 4b. 3 Nov 2026: the limit is 1 million euro, and the band 1 to under 2 million says so in Slack
+{
+  const wf = await load({});
+  const w = makeWorld();
+  await run(wf, w, lead({ lead_id: 'l_it_0041', route: 'not_a_fit', route_reason: 'turnover_below_1m', turnover_band: 'Meno di 1 milione di €', email: 'n41@acme-it.it' }));
+  const c = w.slack[0].text;
+  ok(c.includes('Reason: turnover under €1m'), 'under 1m: the reason names €1m');
+  ok(!c.includes('€2m'), 'under 1m: no €2m anywhere in the post');
+  noNorwegian(c, 'under 1m slack');
+
+  const w2 = makeWorld();
+  await run(wf, w2, lead({ lead_id: 'l_it_0042', route: 'fit', route_reason: 'turnover_1m_2m, trading_2y_plus, register_not_used', turnover_band: 'Da 1 milione a meno di 2 milioni di €', email: 'f42@acme-it.it' }));
+  const m = w2.slack[0].text;
+  ok(m.startsWith('*FIT* · IT ITALY'), '1m to 2m fit: heading');
+  ok(m.includes('Turnover: €1m to under €2m'), '1m to 2m fit: the band in English');
+  ok(m.includes('\nWhy: turnover €1m to under €2m, two years or more trading, no company register check\n'), '1m to 2m fit: its own reason');
+  ok(!m.includes('€2m or more'), '1m to 2m fit: never called "€2m or more"');
+  noNorwegian(m, '1m to 2m fit slack');
+
+  // The first real lead (ResilientX) would now be a review: a client worth 10,000 to under 25,000 euro always is.
+  const w3 = makeWorld();
+  await run(wf, w3, lead({ lead_id: 'l_it_0043', route: 'review', route_reason: 'value_10k_to_25k', turnover_band: 'Da 1 milione a meno di 2 milioni di €', employees_or_fee_earners: 'Da 10 a 24', first_year_value: 'Da 10.000 € a meno di 25.000 €', email: 'r43@acme-it.it' }));
+  const r = w3.slack[0].text;
+  ok(r.startsWith('*REVIEW* · IT ITALY') && r.includes('Why: client value €10k to under €25k\n'), '1m to 2m review: the reason');
+
+  // 5,000 euro a month or more on marketing: a fit whatever else was said, and the post says why (the small answers stay in the post).
+  const w5 = makeWorld();
+  await run(wf, w5, lead({ lead_id: 'l_it_0045', route: 'fit', route_reason: 'spend_5k_plus, register_not_used', turnover_band: 'Meno di 1 milione di €', trading_years: 'Meno di due anni', first_year_value: 'Meno di 10.000 €', email: 'b45@acme-it.it' }));
+  const b = w5.slack[0].text;
+  ok(b.startsWith('*FIT* · IT ITALY'), 'big spender: heading');
+  ok(b.includes('Turnover: Under €1m'), 'big spender: the small turnover is in the post, so the reader sees it');
+  ok(b.includes('\nWhy: marketing spend €5,000 a month or more (a call is worth having whatever else they said), no company register check\n'), 'big spender: why it is a fit');
+  noNorwegian(b, 'big spender slack');
+
+  // A lead made before 3 Nov still reads as it did.
+  const w4 = makeWorld();
+  await run(wf, w4, lead({ lead_id: 'l_it_0044', route: 'not_a_fit', route_reason: 'turnover_below_2m', turnover_band: 'Da 1 milione a meno di 2 milioni di €', email: 'o44@acme-it.it' }));
+  ok(w4.slack[0].text.includes('Reason: turnover under €2m'), 'an old lead: the old code still has its words');
+
+  // Every code the Italian route can give has its words in the Italy table, so Slack never shows a raw code for it.
+  const fromItaly = SOURCE.slice(SOURCE.indexOf('"it-ict-growth": {'));
+  const table = fromItaly.slice(fromItaly.indexOf('reasonText: {'), fromItaly.indexOf('answersEn: {'));
+  const have = new Set([...table.matchAll(/^\s+([a-z0-9_]+):/gm)].map((x) => x[1]));
+  const codes = new Set();
+  for (const turnover_band of OPTIONS.turnover) for (const trading_years of OPTIONS.trading) for (const employees_or_fee_earners of OPTIONS.people)
+    for (const marketing_spend of OPTIONS.spend) for (const first_year_value of OPTIONS.worth) for (const capacity of OPTIONS.capacity) for (const check of ['unchecked', 'off']) {
+      const v = { turnover_band, trading_years, employees_or_fee_earners, marketing_spend, first_year_value, capacity };
+      for (const code of itRoute.decide(v, { check, reasons: [] }).reasons) codes.add(code);
+    }
+  const missing = [...codes].filter((code) => !have.has(code));
+  eq(missing, [], 'every reason code the Italian route can give has words in the Italy table: ' + missing.join(', '));
+  ok(codes.has('turnover_1m_2m') && codes.has('turnover_below_1m') && !codes.has('turnover_below_2m'), 'the route gives the new codes and no longer the old one');
+  console.log('4b ok');
 }
 // ---------------------------------------------------------------- 5. the quote button
 {
