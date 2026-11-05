@@ -801,6 +801,8 @@ function pageScript(cfgClient, kind, coreSrc, v2) {
     parts.push(coreForBrowser(coreSrc), JS.form, JS.motion);
     if (v2) parts.push(JS.motion2);
     parts.push(v2 ? 'initForm();\ninitMotion();\ninitMotion2();\ninitBanner();' : 'initForm();\ninitMotion();\ninitBanner();');
+  } else if (kind === 'apply') {
+    parts.push(coreForBrowser(coreSrc), JS.form, 'initForm();\ninitBanner();');
   } else if (kind === 'book') {
     parts.push(JS.book, 'initBook();');
   } else if (kind === 'review') {
@@ -1094,6 +1096,42 @@ ${pageScript(cfgClient, key === 'privacy' ? 'privacy' : 'plain', coreSrc)}
   rmSync(outDir, { recursive: true, force: true });
   for (const sub of ['book', 'takk', 'review', 'not-now', 'not-a-fit', 'privacy', 'terms']) mkdirSync(join(outDir, sub), { recursive: true });
   for (const [rel, html] of pages) writeFileSync(join(outDir, rel), html);
+
+  /* ---- form-only pages served elsewhere (cfg.applyPages) ----
+     A page that holds nothing but this funnel's form, at a path outside the funnel, for a
+     landing page that wants to send its visitor straight to the questions (the C-Medical
+     case, 5 Nov 2026). Same hidden campaign, same endpoint, same outcome pages. The page
+     itself says nothing about how we are paid: that is for the call. */
+  for (const ap of cfg.applyPages || []) {
+    if (!/^\/[a-z0-9/-]+\/$/.test(ap.path)) die(`applyPages.path must start and end with / : ${ap.path}`);
+    const html = head(cfg, {
+      title: ap.title, description: ap.description, og: false,
+      css: cssFor('base', 'page', 'form', 'banner'), scripts: { track: cfg.funnel.viewEvent },
+    }) + `
+<body>
+<div class="pg"><div class="pg-in em-fluid">
+  ${topbar({ topline: ap.topline || copy.topline })}
+  <main id="main">
+    <h1 class="vh">${esc(ap.title)}</h1>
+    <section class="sec--form" id="form">
+      <div class="wrap">${ap.back ? `<p class="lf-backlink" style="margin:0 0 24px;padding-inline:var(--lf-mx,24px);font-size:15px"><a style="color:var(--ink)" href="${esc(ap.back.href)}">${esc(ap.back.label)}</a></p>` : ''}${formHtml}</div>
+    </section>
+  </main>
+  ${footer(cfg, copy)}
+</div></div>
+${banner(cfg, copy)}
+<script>
+${pageScript(cfgClient, 'apply', coreSrc, false)}
+</script>
+</body>
+</html>
+`;
+    checkOutput(ap.path, html);
+    const dir = join(root, 'public', ap.path);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'index.html'), html);
+    console.log(`  g-growth: ${ap.path} (form of /g/${slug}, ${Math.round(html.length / 1024)} KB)`);
+  }
 
   /* What the lead function needs: no page copy beyond the form's, no notes. Written once, for all funnels, below. */
   const dataCfg = JSON.parse(JSON.stringify(cfg, (k, v) => (k.startsWith('_') ? undefined : v)));

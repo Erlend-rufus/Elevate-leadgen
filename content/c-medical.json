@@ -11,86 +11,94 @@
  "hero": {
   "eyebrow": "C-Medical, Norway. February to November 2026",
   "h1": "Same visitors. 1,167 more bookings.",
-  "lede": "A private clinic group for women's health, urology, fertility and orthopaedics, with over 60,000 patient visits a year. We took over its Google Ads on 25 January 2026 and its search presence from 1 February. Nine months on: 3.5% more visits, 45% more online bookings.",
+  "lede": "A private clinic group, over 60,000 patient visits a year. Nine months after we took over its Google Ads and search: 3.5% more visits, 45% more online bookings.",
   "footLeft": "Google Ads · SEO · AI search",
   "footMid": "1 February to 5 November 2026 against the same days of 2025",
-  "footRight": "Read the numbers",
+  "footRight": "See the numbers",
   "imgAlt": "A quiet clinic corridor in morning light, pale oak and stone, one empty chair",
   "coverCaption": "Scroll"
  },
  "stats": {
-  "eyebrow": "The whole website, both years, 236 counted days",
+  "eyebrow": "The whole website, February to November, 2026 against 2025",
   "items": [
    {
     "value": 3734,
     "label": "online bookings",
-    "sub": "against 2,567 in 2025, up 45.5%"
+    "sub": "against 2,567 a year earlier, up 45%"
    },
    {
-    "value": 162144,
-    "label": "visits",
-    "sub": "against 156,603, up 3.5%"
+    "value": 45.5,
+    "decimals": 1,
+    "suffix": "%",
+    "label": "more bookings",
+    "sub": "on 3.5% more visits"
    },
    {
     "value": 2.3,
     "decimals": 2,
     "suffix": "%",
-    "label": "of visits book",
-    "sub": "against 1.64%: more bookings from almost the same traffic"
+    "label": "of visits now book",
+    "sub": "against 1.64% a year earlier"
    }
   ],
-  "note": "Online bookings are the GA4 event booking_completed on cmedical.no, every channel, counted on the same calendar days in both years. Phone bookings are not in these figures.",
-  "lede": "Below is every figure, where it comes from, and what it does not prove."
+  "note": "Completed online bookings, every channel, same calendar days both years. Phone bookings come on top.",
+  "lede": ""
  },
  "chapters": {
-  "eyebrow": "What changed, in four parts",
-  "h2": "Four things we did. Four things the numbers say.",
+  "eyebrow": "Four things we did",
+  "h2": "One account, rebuilt one door at a time.",
   "items": [
    {
     "num": "01",
     "title": "The takeover",
-    "line": "On 25 January 2026 we took over a Google Ads account with eleven broad campaigns and a Performance Max campaign that partly bought searches for the clinic's own name. From 30 January we rebuilt it: one campaign per treatment, 47 campaigns with real spend by November. Performance Max was switched off.",
+    "big": "11 to 47",
+    "bigLabel": "campaigns, one per treatment",
+    "line": "We took over the Google Ads account on 25 January 2026 and rebuilt it from eleven broad campaigns into one per treatment area.",
     "img": "ch-floorplan",
     "alt": "A hand-drawn floor plan on cream paper with a pencil and brass ruler"
    },
    {
     "num": "02",
-    "title": "One door per treatment",
-    "line": "Google Ads bookings went from 1,251 to 1,601, up 28%, on 11% more spend. The cost of a booking fell from NOK 1,087 to NOK 946, down 13%. Clicks rose 29% and taps on the phone number 41%. The first fourteen weeks were behind 2025. Since mid-May, 2026 has been ahead in 18 of 20 counted weeks.",
+    "title": "More bookings, each one cheaper",
+    "big": "+28%",
+    "bigLabel": "Google Ads bookings, at 13% lower cost each",
+    "line": "1,601 bookings against 1,251, with the cost of a booking down from £87 to £76. Taps on the phone number rose 41%.",
     "img": "ch-reception",
     "alt": "An empty clinic reception counter in oak and stone with a single eucalyptus stem"
    },
    {
     "num": "03",
-    "title": "Being found without paying",
-    "line": "From February we did the technical and content work on cmedical.no: around 30 articles, about 150 rewritten meta titles, many pages rewritten, and a new website launched in August. Organic bookings went from 932 to 1,547, up 66%, on 12% more organic visits.",
+    "title": "Found without paying",
+    "big": "+66%",
+    "bigLabel": "organic bookings",
+    "line": "Technical and content SEO from February and a new website in August: 1,547 organic bookings against 932, on only 12% more organic visits.",
     "img": "ch-pages",
     "alt": "A neat stack of printed pages on a pale oak desk with a fountain pen"
    },
    {
     "num": "04",
-    "title": "Being the answer",
-    "line": "Visits from ChatGPT, Perplexity, Copilot, Gemini and Claude went from 623 to 1,313, up 111%, and bookings from those visits from 7 to 28. Small numbers still, and growing every month.",
+    "title": "The answer in AI search",
+    "big": "2.1x",
+    "bigLabel": "visits from ChatGPT, Perplexity, Copilot, Gemini and Claude",
+    "line": "1,313 visits against 623, and four times the bookings from them.",
     "img": "ch-glass",
     "alt": "Soft morning light through frosted glass panels in a clinic"
    }
   ]
  },
  "ledger": {
-  "eyebrow": "Google Ads, floor by floor",
+  "eyebrow": "Google Ads, by treatment area",
   "h2": "Where the bookings came from",
-  "intro": "Each row is a treatment area, derived from campaign names. Reception is searches for the clinic group's own name; we ran those campaigns too, but we do not claim the demand. Other includes the Performance Max campaign that ran in 2025 and was switched off in 2026, which is why that row went backwards.",
   "head": [
    "Treatment area",
-   "2025 bookings",
-   "2026 bookings",
+   "2025",
+   "2026",
    "Change",
-   "Cost per booking 2025",
-   "Cost per booking 2026"
+   "Cost per booking"
   ],
   "rows": [
    [
-    "Reception (own name)",
+    "Searches for the clinic's own name",
     "reception"
    ],
    [
@@ -104,97 +112,54 @@
    [
     "Fertility",
     "fertility"
-   ],
-   [
-    "Outpatients and other",
-    "other"
    ]
   ],
   "totalLabel": "Whole account",
-  "noReceptionLabel": "Without reception",
-  "note": "NOK converted at £1 = NOK 12.5148 (5 November 2026). Bookings are GA4 booking_completed from google / cpc; spend is from the Google Ads account."
- },
- "weeks": {
-  "eyebrow": "Week by week",
-  "h2": "Ahead in 22 of 34 weeks. Not all of them.",
-  "intro": "Google Ads bookings, each counted week of 2026 against the same week of 2025. A filled mark is a week 2026 was ahead. The six weeks of the tracking gap are left out. The rebuild cost us the spring; it has paid since mid-May.",
-  "legend": "Filled: 2026 ahead · Outline: level · Empty: 2025 ahead",
-  "footLeft": "Google Ads online bookings per ISO week",
-  "footRight": "18 of 20 weeks ahead since 11 May"
- },
- "months": {
-  "eyebrow": "Month by month, the whole website",
-  "h2": "Ahead in every month the tracking was whole.",
-  "intro": "Online bookings from every channel, 2026 in ink against 2025 in grey. Eight of ten months are ahead. The two that are not sit in the tracking fault of 13 July to 23 August, which hid bookings from the ads and the organic figures alike; November is five days old. February was the first month after the takeover, with the rebuilt account still learning, and the website was still ahead.",
-  "legend2025": "2025",
-  "legend2026": "2026",
-  "partial": "partial month, see the note"
+  "note": "Google Ads bookings, 1 February to 5 November 2026 against the same days of 2025. £1 = NOK 12.5148."
  },
  "beyond": {
   "eyebrow": "Beyond the booking",
-  "h2": "What a booking is worth",
-  "intro": "These are estimates built on figures the clinic group gave us, not measured revenue. They are here because a booking is not the point; a patient who attends and goes on to treatment is.",
+  "h2": "What the spend came back as",
+  "intro": "Estimates on the clinic group's own figures: 92% attendance, £156 a first consultation, £4,714 a procedure.",
   "rows": [
    {
     "label": "Attended first consultations",
-    "note": "1,601 Google Ads bookings at 92% attendance"
+    "note": "from 1,601 Google Ads bookings"
    },
    {
     "label": "Ad spend per attended consultation",
-    "note": "NOK 1,515,143 of spend, 1 February to 5 November"
+    "note": "on £121,000 of spend"
    },
    {
-    "label": "First consultations alone",
-    "note": "at NOK 1,950 (about £156) each, against the spend"
+    "label": "Return on ad spend, consultations alone",
+    "note": "first consultations against the spend"
    },
    {
-    "label": "With procedures, lower case",
-    "note": "35% of consultations lead to a procedure at NOK 59,000 (about £4,714)"
+    "label": "Return once procedures are counted",
+    "note": "at 35% of consultations; 13x leaving out searches for the clinic's own name"
    },
    {
-    "label": "With procedures, without reception",
-    "note": "the same, leaving out searches for the clinic's own name and their spend"
-   },
-   {
-    "label": "With procedures, upper case",
-    "note": "60% of consultations lead to a procedure"
+    "label": "At the clinic group's upper estimate",
+    "note": "60% of consultations leading to a procedure"
    }
   ],
-  "note": "Revenue figures, not profit, and they leave out what we charge. Phone bookings are in none of them: taps on the phone number rose 41%, and if 46% of calls book and 90% attend, add roughly half again. These multiples depend on the attendance, price and procedure figures the clinic group gave us, which we have not audited."
- },
- "limits": {
-  "eyebrow": "What this case does not show",
-  "h2": "Read these before you believe the rest.",
-  "items": [
-   "Attendance. Every figure is an online booking, not a patient in a chair. The 92% attendance rate is the clinic group's own figure.",
-   "That we caused all of it. The whole website is up 45% on bookings. Direct visits, which nobody buys, also booked more: 440 against 290. Some of the rise is the clinic group's own reputation and a better website, which we built, and some is demand we did not create.",
-   "That a UK clinic gets the same prices. This is a Norwegian account in Norwegian kroner. UK click prices in private healthcare are different, and usually higher.",
-   "Searches for the clinic's own name. Over half of the Google Ads bookings come from people who already knew C-Medical. We ran those campaigns, but we do not take credit for that demand. Without reception, bookings are up 15% and the cost per booking down 7%, not 28% and 13%.",
-   "The outpatient floor went backwards. Bookings for orthopaedics, dermatology and the other outpatient areas fell 29% once Performance Max was switched off. That was a choice: the campaign was buying brand searches and cheap, poorly qualified bookings.",
-   "The spring. From February to mid-May, the rebuilt account booked fewer patients than the old one had a year earlier. A rebuild has a learning period, and this one lasted about fourteen weeks.",
-   "Forty-two days are missing. A tracking fault from 13 July to 23 August 2026 hid bookings. Those days are removed from both years, so the comparison is fair, but the 2026 total is lower than the clinic group actually took."
-  ]
+  "note": "Revenue, not profit, before our fee. Phone bookings are in none of these."
  },
  "method": {
-  "eyebrow": "Source and method",
-  "h2": "How the figures were counted",
+  "eyebrow": "Source",
+  "h2": "How it was counted",
   "items": [
-   "Source: C-Medical's Google Ads account and Google Analytics 4 property, read through Windsor.ai on 5 November 2026. Published with the clinic group's written permission.",
-   "Window: 1 February to 5 November 2026 against the same calendar days of 2025. The 42 days of the tracking fault, 13 July to 23 August, are removed from both years, leaving 236 counted days.",
-   "Booking: the GA4 event booking_completed, a completed online booking. Google Ads bookings are those with source and medium google / cpc. Organic is any medium organic. AI search is chatgpt.com, perplexity, copilot, gemini.google.com and claude.ai. Google Ads' own conversion count is not used, because it counts some actions twice.",
-   "Treatment areas are derived from campaign names and have not been confirmed by the clinic group.",
-   "Currency: NOK converted at £1 = NOK 12.5148, the published rate for 5 November 2026. Kroner are the figures; pounds are for reading.",
-   "Revenue multiples use the clinic group's stated attendance (92%), first-consultation price (NOK 1,950) and average procedure value (NOK 59,000), and its stated range of 35% to 60% of consultations leading to a procedure."
+   "C-Medical's Google Ads and Google Analytics accounts, read 5 November 2026, published with the clinic group's written permission.",
+   "1 February to 5 November 2026 against the same days of 2025. A tracking fault of 13 July to 23 August is left out of both years.",
+   "A booking is a completed online booking in Google Analytics. NOK converted at £1 = NOK 12.5148, 5 November 2026."
   ]
  },
  "cta": {
   "eyebrow": "For UK private hospitals and clinic groups",
   "h2": "Thirty minutes about your bookings",
-  "body": "Bring three numbers: last year's turnover, your main specialties and what an attended first consultation is worth. We will tell you whether we would take you on, and if paid search would not pay for itself in your group, we will say so. No commitment, no deck.",
+  "body": "A few questions about your group, two minutes. If we do not think we can help, we say so on the next page.",
   "button": "See whether we would take you on",
-  "buttonHref": "/g/uk-private-hospitals/",
-  "quiet": "Or book the call directly",
-  "quietHref": "/book"
+  "buttonHref": "/case/c-medical/apply/"
  },
  "footer": {
   "legal": "Elevate Marketing is a trading name of EngeCo AS, org. no. 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norway.",
@@ -679,5 +644,33 @@
     "partial": true
    }
   ]
+ },
+ "channels": {
+  "eyebrow": "Bookings by channel",
+  "h2": "Every channel booked more.",
+  "items": [
+   [
+    "Google Ads",
+    "ads"
+   ],
+   [
+    "Organic search",
+    "seo"
+   ],
+   [
+    "Direct",
+    "direct"
+   ],
+   [
+    "AI assistants",
+    "ai"
+   ]
+  ],
+  "legend2025": "2025",
+  "legend2026": "2026"
+ },
+ "sticky": {
+  "label": "C-Medical: 45% more bookings",
+  "button": "See whether we would take you on"
  }
 }

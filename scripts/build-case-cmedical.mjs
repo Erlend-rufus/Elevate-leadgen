@@ -72,10 +72,9 @@ const spendPerAttended = ads.spend2026 / attended;
 
 const beyondValues = [
   n(Math.round(attended)),
-  nok(spendPerAttended) + ' (' + gbp(spendPerAttended) + ')',
+  gbp(spendPerAttended),
   roasConsult.toFixed(1) + 'x',
   Math.round(roasLow) + 'x',
-  Math.round(roasNrLow) + 'x',
   Math.round(roasHigh) + 'x',
 ];
 
@@ -272,6 +271,35 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-bet
 footer nav{display:flex;gap:20px}
 footer img{width:40px}
 
+/* CTA bands between sections */
+.band{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between;padding:28px 0;border-top:1px solid var(--hairline-soft)}
+.band p{font-family:var(--font-display);font-size:clamp(20px,2vw,28px);letter-spacing:-.01em;max-width:28ch}
+/* sticky CTA */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--paper);border-top:1px solid var(--hairline);padding:12px var(--gutter);padding-bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:16px;transform:translateY(110%);transition:transform .4s var(--ease-out)}
+.sticky.on{transform:none}
+.sticky .lbl{font-weight:500;font-size:15px}
+.sticky .btn{min-height:46px;padding:10px 20px;font-size:15px}
+@media (max-width:600px){.sticky .lbl{display:none}.sticky .btn{flex:1}}
+html.has-sticky{scroll-padding-bottom:80px}
+html.has-sticky .cb{bottom:72px}
+/* chapter big number */
+.ch-big{display:block;font-family:var(--font-display);font-size:clamp(48px,6vw,96px);line-height:1;letter-spacing:-.03em;margin:18px 0 6px;font-variant-numeric:tabular-nums}
+.ch-biglbl{display:block;font-size:14px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
+/* channel bars */
+.chan{display:grid;gap:22px;margin-top:40px}
+.chan-row{display:grid;grid-template-columns:minmax(120px,180px) 1fr;gap:16px;align-items:center}
+.chan-k{font-weight:500}
+.chan-k small{display:block;color:var(--muted);font-weight:400;font-size:13px}
+.chan-bars{display:grid;gap:6px}
+.chan-bar{display:flex;align-items:center;gap:10px;font-size:14px;font-variant-numeric:tabular-nums}
+.chan-bar i{display:block;height:18px;background:var(--mark-off);transform-origin:left;width:var(--w)}
+.chan-bar.b26 i{background:var(--ink);height:26px}
+.chan-bar b{font-weight:500;white-space:nowrap}
+.chan-bar.b26 b{font-family:var(--font-display);font-size:20px}
+html.anim .chan-bar i{transform:scaleX(0);transition:transform 1s var(--ease-out)}
+html.anim .chan.in .chan-bar i{transform:none}
+@media (max-width:600px){.chan-row{grid-template-columns:1fr;gap:8px}}
+
 /* consent banner (paper) */
 .cb{position:fixed;left:0;right:0;bottom:0;z-index:50;width:100%;padding:16px var(--gutter);padding-bottom:max(16px,env(safe-area-inset-bottom));pointer-events:none;animation:cb-in .24s cubic-bezier(.2,.7,.2,1) both}
 .cb-in{pointer-events:auto;display:flex;flex-direction:column;gap:16px;width:100%;max-width:620px;padding:20px;background:var(--white);color:var(--ink);border:1px solid var(--field-border);border-radius:var(--radius-card);box-shadow:0 12px 40px rgba(16,20,28,.18)}
@@ -296,8 +324,29 @@ var EASE_OUT='cubic-bezier(.16,1,.3,1)',P3_INOUT='cubic-bezier(.76,0,.24,1)',P2_
 /* reveals */
 if(anim&&'IntersectionObserver' in window){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
-  document.querySelectorAll('.rv,.wk,.chart').forEach(function(el){io.observe(el);});
-}else{document.querySelectorAll('.rv,.wk,.chart').forEach(function(el){el.classList.add('in');});}
+  document.querySelectorAll('.rv,.chan').forEach(function(el){io.observe(el);});
+}else{document.querySelectorAll('.rv,.chan').forEach(function(el){el.classList.add('in');});}
+
+/* the ad's tracking parameters travel with the visitor to the form */
+(function(){
+  var q=location.search;if(!q||q.length<2)return;
+  document.querySelectorAll('a[href^="/case/c-medical/apply/"]').forEach(function(a){
+    var h=a.getAttribute('href');a.setAttribute('href',h+(h.indexOf('?')>=0?'&':'?')+q.slice(1));
+  });
+})();
+
+/* sticky CTA after the hero, hidden again at the final CTA */
+(function(){
+  var bar=document.getElementById('sticky'),hero=document.getElementById('hero-track'),end=document.getElementById('h-cta');
+  if(!bar||!hero||!end)return;
+  function check(){
+    var past=hero.getBoundingClientRect().bottom<window.innerHeight*.5;
+    var atEnd=end.getBoundingClientRect().top<window.innerHeight;
+    var on=past&&!atEnd;
+    bar.classList.toggle('on',on);docEl.classList.toggle('has-sticky',on);
+  }
+  window.addEventListener('scroll',check,{passive:true});window.addEventListener('resize',check);check();
+})();
 
 /* hero: cover image clips into the frame as you scroll (BYQ stringer-hero-8) */
 (function(){
@@ -459,7 +508,7 @@ function stats() {
 <section class="section flush" id="numbers" aria-labelledby="h-stats">
   <div class="wrap">
     <p class="eyebrow rv" id="h-stats">${esc(s.eyebrow)}</p>
-    <p class="lead rv" style="margin-bottom:40px">${esc(s.lede)}</p>
+${s.lede ? `    <p class="lead rv" style="margin-bottom:40px">${esc(s.lede)}</p>` : ''}
     <div class="stats">
 ${s.items.map((it) => {
     const dec = it.decimals || 0;
@@ -489,7 +538,7 @@ function chapters() {
 ${c.items.map((it) => `      <div class="ch-step">
         <button class="ch-entry" type="button">
           <span class="ch-num" aria-hidden="true">${esc(it.num)}</span>
-          <span><span class="ch-title">${esc(it.title)}</span><span class="ch-line">${esc(it.line)}</span></span>
+          <span><span class="ch-title">${esc(it.title)}</span><span class="ch-big">${esc(it.big)}</span><span class="ch-biglbl">${esc(it.bigLabel)}</span><span class="ch-line">${esc(it.line)}</span></span>
         </button>
       </div>`).join('\n')}
     </div>
@@ -506,27 +555,21 @@ function ledger() {
   const l = d.ledger;
   const row = (label, f, cls = '') => {
     const per5 = f.spend2025 / f.b2025, per6 = f.spend2026 / f.b2026;
-    const ch = pct(f.b2025, f.b2026);
-    return `        <tr class="${cls}"><td>${esc(label)}</td><td>${n(f.b2025)}</td><td>${n(f.b2026)}</td><td class="${f.b2026 >= f.b2025 ? 'up' : 'down'}">${ch}</td><td>${nok(per5)}<small>${gbp(per5)}</small></td><td>${nok(per6)}<small>${gbp(per6)}</small></td></tr>`;
+    return `        <tr class="${cls}"><td>${esc(label)}</td><td>${n(f.b2025)}</td><td>${n(f.b2026)}</td><td class="up">${pct(f.b2025, f.b2026, 0)}</td><td>${gbp(per6)}<small>was ${gbp(per5)}</small></td></tr>`;
   };
   const tot = { b2025: ads.b2025, b2026: ads.b2026, spend2025: ads.spend2025, spend2026: ads.spend2026 };
   return `
 <section class="section" aria-labelledby="h-ledger">
   <div class="wrap">
-    <div class="cols">
-      <div><p class="eyebrow rv">${esc(l.eyebrow)}</p><h2 class="rv" id="h-ledger">${esc(l.h2)}</h2></div>
-      <p class="lead rv">${esc(l.intro)}</p>
-    </div>
+    <p class="eyebrow rv">${esc(l.eyebrow)}</p><h2 class="rv" id="h-ledger">${esc(l.h2)}</h2>
     <div class="ledger-scroll rv" style="margin-top:40px">
     <table class="ledger">
-      <caption class="eyebrow" style="text-align:left">C-Medical, Google Ads, 1 February to 5 November 2026 against the same days of 2025</caption>
       <thead><tr>${l.head.map((h) => `<th scope="col">${esc(h)}</th>`).join('')}</tr></thead>
       <tbody>
 ${l.rows.map(([label, key]) => row(label, F.floors[key])).join('\n')}
       </tbody>
       <tfoot>
 ${row(l.totalLabel, tot)}
-${row(l.noReceptionLabel, F.noReception, 'nr')}
       </tfoot>
     </table>
     </div>
@@ -535,62 +578,29 @@ ${row(l.noReceptionLabel, F.noReception, 'nr')}
 </section>`;
 }
 
-function weeks() {
-  const w = d.weeks;
-  const list = F.weeks;
-  const fmt = (iso) => { const dt = new Date(iso + 'T00:00:00Z'); return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }); };
+function channels() {
+  const c = d.channels;
+  const max = Math.max(...c.items.map(([, k]) => Math.max(F[k].b2025, F[k].b2026)));
   return `
-<section class="section" aria-labelledby="h-weeks">
+<section class="section" aria-labelledby="h-chan">
   <div class="wrap">
-    <div class="cols">
-      <div><p class="eyebrow rv">${esc(w.eyebrow)}</p><h2 class="rv" id="h-weeks">${esc(w.h2)}</h2></div>
-      <p class="lead rv">${esc(w.intro)}</p>
+    <p class="eyebrow rv">${esc(c.eyebrow)}</p><h2 class="rv" id="h-chan">${esc(c.h2)}</h2>
+    <div class="chan" role="img" aria-label="Online bookings by channel, 2025 against 2026: ${c.items.map(([label, k]) => `${label} ${n(F[k].b2025)} to ${n(F[k].b2026)}`).join(', ')}">
+${c.items.map(([label, k]) => {
+    const f = F[k];
+    return `      <div class="chan-row"><div class="chan-k">${esc(label)}<small>${pct(f.b2025, f.b2026, 0)}</small></div><div class="chan-bars">
+        <div class="chan-bar b25"><i style="--w:${((f.b2025 / max) * 100).toFixed(1)}%"></i><b>${n(f.b2025)}</b> <span class="muted">${esc(c.legend2025)}</span></div>
+        <div class="chan-bar b26"><i style="--w:${((f.b2026 / max) * 100).toFixed(1)}%"></i><b>${n(f.b2026)}</b> <span class="muted">${esc(c.legend2026)}</span></div>
+      </div></div>`;
+  }).join('\n')}
     </div>
-    <div class="wk-scroll" style="margin-top:40px">
-      <div class="wk" role="img" aria-label="Google Ads bookings by week: ${list.map((x) => `week from ${fmt(x.start)}, ${x.b2026} against ${x.b2025}`).join('; ')}">
-${list.map((x) => `        <div class="wk-col" title="Week of ${fmt(x.start)}: ${x.b2026} bookings in 2026, ${x.b2025} in 2025"><span class="wk-mark${x.ahead ? ' on' : x.equal ? ' eq' : ''}"></span><span class="wk-lbl">${fmt(x.start)}</span></div>`).join('\n')}
-      </div>
-    </div>
-    <div class="wk-foot rv"><span>${esc(w.footLeft)}</span><span class="c">${esc(w.legend)}</span><span>${esc(w.footRight)}</span></div>
   </div>
 </section>`;
 }
 
-function months() {
-  const m = d.months;
-  const ms = F.months;
-  const W = 1200, H = 420, padL = 44, padB = 44, padT = 16, gap = 10;
-  const max = Math.max(...ms.flatMap((x) => [x.all2025, x.all2026]));
-  const colW = (W - padL) / ms.length;
-  const barW = (colW - gap * 2) / 2;
-  const y = (v) => padT + (H - padT - padB) * (1 - v / max);
-  let bars = '', labels = '';
-  ms.forEach((x, i) => {
-    const x0 = padL + i * colW + gap;
-    const h5 = H - padB - y(x.all2025), h6 = H - padB - y(x.all2026);
-    bars += `<rect class="bar" x="${x0.toFixed(1)}" y="${y(x.all2025).toFixed(1)}" width="${barW.toFixed(1)}" height="${h5.toFixed(1)}" fill="var(--mark-off)"><title>${x.m} 2025: ${n(x.all2025)} bookings</title></rect>`;
-    bars += `<rect class="bar" x="${(x0 + barW).toFixed(1)}" y="${y(x.all2026).toFixed(1)}" width="${barW.toFixed(1)}" height="${h6.toFixed(1)}" fill="var(--ink)"><title>${x.m} 2026: ${n(x.all2026)} bookings</title></rect>`;
-    labels += `<text x="${(x0 + barW).toFixed(1)}" y="${H - padB + 20}" text-anchor="middle">${x.m}${x.partial ? '*' : ''}</text>`;
-    labels += `<text class="lbl-b" x="${(x0 + barW).toFixed(1)}" y="${(y(x.all2026) - 6).toFixed(1)}" text-anchor="middle">${n(x.all2026)}</text>`;
-  });
-  const ticks = [0, 200, 400, 600].filter((t) => t <= max).map((t) => `<line x1="${padL}" x2="${W}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}" stroke="var(--hairline-soft)"/><text x="${padL - 8}" y="${(y(t) + 4).toFixed(1)}" text-anchor="end">${t}</text>`).join('');
+function band(text) {
   return `
-<section class="section" aria-labelledby="h-months">
-  <div class="wrap">
-    <div class="cols">
-      <div><p class="eyebrow rv">${esc(m.eyebrow)}</p><h2 class="rv" id="h-months">${esc(m.h2)}</h2></div>
-      <p class="lead rv">${esc(m.intro)}</p>
-    </div>
-    <figure style="margin:40px 0 0">
-      <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Online bookings per month, 2025 and 2026: ${ms.map((x) => `${x.m} ${x.all2026} against ${x.all2025}`).join(', ')}">
-        ${ticks}
-        ${bars}
-        ${labels}
-      </svg>
-      <figcaption class="legend"><span class="l25">${esc(m.legend2025)}</span><span>${esc(m.legend2026)}</span><span class="plain" style="margin-left:auto">* ${esc(m.partial)}</span></figcaption>
-    </figure>
-  </div>
-</section>`;
+<div class="wrap"><div class="band rv"><p>${esc(text)}</p><a class="btn" href="${esc(d.cta.buttonHref)}">${esc(d.cta.button)}</a></div></div>`;
 }
 
 function beyond() {
@@ -632,7 +642,7 @@ function cta() {
     <p class="eyebrow rv">${esc(c.eyebrow)}</p>
     <h2 class="rv" id="h-cta">${esc(c.h2)}</h2>
     <p class="lead rv" style="margin-top:20px">${esc(c.body)}</p>
-    <p class="rv" style="margin-top:32px"><a class="btn" href="${esc(c.buttonHref)}">${esc(c.button)}</a><a class="quiet" href="${esc(c.quietHref)}">${esc(c.quiet)}</a></p>
+    <p class="rv" style="margin-top:32px"><a class="btn" href="${esc(c.buttonHref)}">${esc(c.button)}</a></p>
   </div>
 </section>`;
 }
@@ -689,12 +699,12 @@ const html = `<!DOCTYPE html>
 <main id="main">
 ${hero()}
 ${stats()}
+${band('45% more bookings on the same traffic. What would that be worth in your group?')}
 ${chapters()}
+${channels()}
+${band('Every channel up. The same method is on offer to UK groups.')}
 ${ledger()}
-${weeks()}
-${months()}
 ${beyond()}
-${listSection('limits', d.limits)}
 ${listSection('method', d.method)}
 ${cta()}
 </main>
@@ -704,6 +714,7 @@ ${cta()}
     <nav aria-label="Legal">${d.footer.links.map((l) => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('')}</nav>
   </div>
 </footer>
+<div class="sticky" id="sticky" aria-label="Book a call"><span class="lbl">${esc(d.sticky.label)}</span><a class="btn" href="${esc(d.cta.buttonHref)}">${esc(d.sticky.button)}</a></div>
 <div class="cb" id="g-consent" role="region" aria-label="Cookie choice" hidden>
   <div class="cb-in">
     <p class="cb-t">${esc(d.consent.text)} <a href="${esc(d.consent.privacyHref)}">Privacy</a></p>

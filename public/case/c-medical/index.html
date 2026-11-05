@@ -212,6 +212,35 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-bet
 footer nav{display:flex;gap:20px}
 footer img{width:40px}
 
+/* CTA bands between sections */
+.band{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between;padding:28px 0;border-top:1px solid var(--hairline-soft)}
+.band p{font-family:var(--font-display);font-size:clamp(20px,2vw,28px);letter-spacing:-.01em;max-width:28ch}
+/* sticky CTA */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--paper);border-top:1px solid var(--hairline);padding:12px var(--gutter);padding-bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:16px;transform:translateY(110%);transition:transform .4s var(--ease-out)}
+.sticky.on{transform:none}
+.sticky .lbl{font-weight:500;font-size:15px}
+.sticky .btn{min-height:46px;padding:10px 20px;font-size:15px}
+@media (max-width:600px){.sticky .lbl{display:none}.sticky .btn{flex:1}}
+html.has-sticky{scroll-padding-bottom:80px}
+html.has-sticky .cb{bottom:72px}
+/* chapter big number */
+.ch-big{display:block;font-family:var(--font-display);font-size:clamp(48px,6vw,96px);line-height:1;letter-spacing:-.03em;margin:18px 0 6px;font-variant-numeric:tabular-nums}
+.ch-biglbl{display:block;font-size:14px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
+/* channel bars */
+.chan{display:grid;gap:22px;margin-top:40px}
+.chan-row{display:grid;grid-template-columns:minmax(120px,180px) 1fr;gap:16px;align-items:center}
+.chan-k{font-weight:500}
+.chan-k small{display:block;color:var(--muted);font-weight:400;font-size:13px}
+.chan-bars{display:grid;gap:6px}
+.chan-bar{display:flex;align-items:center;gap:10px;font-size:14px;font-variant-numeric:tabular-nums}
+.chan-bar i{display:block;height:18px;background:var(--mark-off);transform-origin:left;width:var(--w)}
+.chan-bar.b26 i{background:var(--ink);height:26px}
+.chan-bar b{font-weight:500;white-space:nowrap}
+.chan-bar.b26 b{font-family:var(--font-display);font-size:20px}
+html.anim .chan-bar i{transform:scaleX(0);transition:transform 1s var(--ease-out)}
+html.anim .chan.in .chan-bar i{transform:none}
+@media (max-width:600px){.chan-row{grid-template-columns:1fr;gap:8px}}
+
 /* consent banner (paper) */
 .cb{position:fixed;left:0;right:0;bottom:0;z-index:50;width:100%;padding:16px var(--gutter);padding-bottom:max(16px,env(safe-area-inset-bottom));pointer-events:none;animation:cb-in .24s cubic-bezier(.2,.7,.2,1) both}
 .cb-in{pointer-events:auto;display:flex;flex-direction:column;gap:16px;width:100%;max-width:620px;padding:20px;background:var(--white);color:var(--ink);border:1px solid var(--field-border);border-radius:var(--radius-card);box-shadow:0 12px 40px rgba(16,20,28,.18)}
@@ -243,13 +272,13 @@ footer img{width:40px}
       <div class="hero-head" id="hero-head">
         <p class="eyebrow">C-Medical, Norway. February to November 2026</p>
         <h1 id="h1">Same visitors. 1,167 more bookings.</h1>
-        <p class="lead">A private clinic group for women's health, urology, fertility and orthopaedics, with over 60,000 patient visits a year. We took over its Google Ads on 25 January 2026 and its search presence from 1 February. Nine months on: 3.5% more visits, 45% more online bookings.</p>
+        <p class="lead">A private clinic group, over 60,000 patient visits a year. Nine months after we took over its Google Ads and search: 3.5% more visits, 45% more online bookings.</p>
       </div>
       <div class="hero-frame" id="hero-frame"><img src="/case/c-medical/img/hero-corridor-1800.webp" srcset="/case/c-medical/img/hero-corridor-800.webp 800w, /case/c-medical/img/hero-corridor-1200.webp 1200w, /case/c-medical/img/hero-corridor-1800.webp 1800w" sizes="(min-width: 1328px) 1200px, 92vw" width="2752" height="1536" alt="A quiet clinic corridor in morning light, pale oak and stone, one empty chair"></div>
       <div class="hero-foot" id="hero-foot">
         <span>Google Ads · SEO · AI search</span>
         <span class="mid">1 February to 5 November 2026 against the same days of 2025</span>
-        <a href="#numbers">Read the numbers</a>
+        <a href="#numbers">See the numbers</a>
       </div>
     </div>
   </div>
@@ -257,58 +286,60 @@ footer img{width:40px}
 
 <section class="section flush" id="numbers" aria-labelledby="h-stats">
   <div class="wrap">
-    <p class="eyebrow rv" id="h-stats">The whole website, both years, 236 counted days</p>
-    <p class="lead rv" style="margin-bottom:40px">Below is every figure, where it comes from, and what it does not prove.</p>
+    <p class="eyebrow rv" id="h-stats">The whole website, February to November, 2026 against 2025</p>
+
     <div class="stats">
       <div class="stat rv">
         <div class="odo" data-value="3734" data-dec="0" data-suffix="" role="img" aria-label="3,734"><span class="odo-fallback">3,734</span></div>
         <p class="stat-l">online bookings</p>
-        <p class="stat-s">against 2,567 in 2025, up 45.5%</p>
+        <p class="stat-s">against 2,567 a year earlier, up 45%</p>
       </div>
       <div class="stat rv">
-        <div class="odo" data-value="162144" data-dec="0" data-suffix="" role="img" aria-label="162,144"><span class="odo-fallback">162,144</span></div>
-        <p class="stat-l">visits</p>
-        <p class="stat-s">against 156,603, up 3.5%</p>
+        <div class="odo" data-value="45.5" data-dec="1" data-suffix="%" role="img" aria-label="45.5%"><span class="odo-fallback">45.5%</span></div>
+        <p class="stat-l">more bookings</p>
+        <p class="stat-s">on 3.5% more visits</p>
       </div>
       <div class="stat rv">
         <div class="odo" data-value="2.3" data-dec="2" data-suffix="%" role="img" aria-label="2.30%"><span class="odo-fallback">2.30%</span></div>
-        <p class="stat-l">of visits book</p>
-        <p class="stat-s">against 1.64%: more bookings from almost the same traffic</p>
+        <p class="stat-l">of visits now book</p>
+        <p class="stat-s">against 1.64% a year earlier</p>
       </div>
     </div>
-    <p class="stats-note rv">Online bookings are the GA4 event booking_completed on cmedical.no, every channel, counted on the same calendar days in both years. Phone bookings are not in these figures.</p>
+    <p class="stats-note rv">Completed online bookings, every channel, same calendar days both years. Phone bookings come on top.</p>
   </div>
 </section>
 
+<div class="wrap"><div class="band rv"><p>45% more bookings on the same traffic. What would that be worth in your group?</p><a class="btn" href="/case/c-medical/apply/">See whether we would take you on</a></div></div>
+
 <section class="section" aria-labelledby="h-ch">
   <div class="wrap">
-    <p class="eyebrow rv">What changed, in four parts</p>
-    <h2 class="rv" id="h-ch">Four things we did. Four things the numbers say.</h2>
+    <p class="eyebrow rv">Four things we did</p>
+    <h2 class="rv" id="h-ch">One account, rebuilt one door at a time.</h2>
   </div>
   <div class="wrap ch" id="chapters" style="margin-top:clamp(32px,4vw,56px)">
     <div class="ch-steps">
       <div class="ch-step">
         <button class="ch-entry" type="button">
           <span class="ch-num" aria-hidden="true">01</span>
-          <span><span class="ch-title">The takeover</span><span class="ch-line">On 25 January 2026 we took over a Google Ads account with eleven broad campaigns and a Performance Max campaign that partly bought searches for the clinic's own name. From 30 January we rebuilt it: one campaign per treatment, 47 campaigns with real spend by November. Performance Max was switched off.</span></span>
+          <span><span class="ch-title">The takeover</span><span class="ch-big">11 to 47</span><span class="ch-biglbl">campaigns, one per treatment</span><span class="ch-line">We took over the Google Ads account on 25 January 2026 and rebuilt it from eleven broad campaigns into one per treatment area.</span></span>
         </button>
       </div>
       <div class="ch-step">
         <button class="ch-entry" type="button">
           <span class="ch-num" aria-hidden="true">02</span>
-          <span><span class="ch-title">One door per treatment</span><span class="ch-line">Google Ads bookings went from 1,251 to 1,601, up 28%, on 11% more spend. The cost of a booking fell from NOK 1,087 to NOK 946, down 13%. Clicks rose 29% and taps on the phone number 41%. The first fourteen weeks were behind 2025. Since mid-May, 2026 has been ahead in 18 of 20 counted weeks.</span></span>
+          <span><span class="ch-title">More bookings, each one cheaper</span><span class="ch-big">+28%</span><span class="ch-biglbl">Google Ads bookings, at 13% lower cost each</span><span class="ch-line">1,601 bookings against 1,251, with the cost of a booking down from £87 to £76. Taps on the phone number rose 41%.</span></span>
         </button>
       </div>
       <div class="ch-step">
         <button class="ch-entry" type="button">
           <span class="ch-num" aria-hidden="true">03</span>
-          <span><span class="ch-title">Being found without paying</span><span class="ch-line">From February we did the technical and content work on cmedical.no: around 30 articles, about 150 rewritten meta titles, many pages rewritten, and a new website launched in August. Organic bookings went from 932 to 1,547, up 66%, on 12% more organic visits.</span></span>
+          <span><span class="ch-title">Found without paying</span><span class="ch-big">+66%</span><span class="ch-biglbl">organic bookings</span><span class="ch-line">Technical and content SEO from February and a new website in August: 1,547 organic bookings against 932, on only 12% more organic visits.</span></span>
         </button>
       </div>
       <div class="ch-step">
         <button class="ch-entry" type="button">
           <span class="ch-num" aria-hidden="true">04</span>
-          <span><span class="ch-title">Being the answer</span><span class="ch-line">Visits from ChatGPT, Perplexity, Copilot, Gemini and Claude went from 623 to 1,313, up 111%, and bookings from those visits from 7 to 28. Small numbers still, and growing every month.</span></span>
+          <span><span class="ch-title">The answer in AI search</span><span class="ch-big">2.1x</span><span class="ch-biglbl">visits from ChatGPT, Perplexity, Copilot, Gemini and Claude</span><span class="ch-line">1,313 visits against 623, and four times the bookings from them.</span></span>
         </button>
       </div>
     </div>
@@ -323,144 +354,78 @@ footer img{width:40px}
   </div>
 </section>
 
+<section class="section" aria-labelledby="h-chan">
+  <div class="wrap">
+    <p class="eyebrow rv">Bookings by channel</p><h2 class="rv" id="h-chan">Every channel booked more.</h2>
+    <div class="chan" role="img" aria-label="Online bookings by channel, 2025 against 2026: Google Ads 1,251 to 1,601, Organic search 932 to 1,547, Direct 290 to 440, AI assistants 7 to 28">
+      <div class="chan-row"><div class="chan-k">Google Ads<small>+28%</small></div><div class="chan-bars">
+        <div class="chan-bar b25"><i style="--w:78.1%"></i><b>1,251</b> <span class="muted">2025</span></div>
+        <div class="chan-bar b26"><i style="--w:100.0%"></i><b>1,601</b> <span class="muted">2026</span></div>
+      </div></div>
+      <div class="chan-row"><div class="chan-k">Organic search<small>+66%</small></div><div class="chan-bars">
+        <div class="chan-bar b25"><i style="--w:58.2%"></i><b>932</b> <span class="muted">2025</span></div>
+        <div class="chan-bar b26"><i style="--w:96.6%"></i><b>1,547</b> <span class="muted">2026</span></div>
+      </div></div>
+      <div class="chan-row"><div class="chan-k">Direct<small>+52%</small></div><div class="chan-bars">
+        <div class="chan-bar b25"><i style="--w:18.1%"></i><b>290</b> <span class="muted">2025</span></div>
+        <div class="chan-bar b26"><i style="--w:27.5%"></i><b>440</b> <span class="muted">2026</span></div>
+      </div></div>
+      <div class="chan-row"><div class="chan-k">AI assistants<small>+300%</small></div><div class="chan-bars">
+        <div class="chan-bar b25"><i style="--w:0.4%"></i><b>7</b> <span class="muted">2025</span></div>
+        <div class="chan-bar b26"><i style="--w:1.7%"></i><b>28</b> <span class="muted">2026</span></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="band rv"><p>Every channel up. The same method is on offer to UK groups.</p><a class="btn" href="/case/c-medical/apply/">See whether we would take you on</a></div></div>
+
 <section class="section" aria-labelledby="h-ledger">
   <div class="wrap">
-    <div class="cols">
-      <div><p class="eyebrow rv">Google Ads, floor by floor</p><h2 class="rv" id="h-ledger">Where the bookings came from</h2></div>
-      <p class="lead rv">Each row is a treatment area, derived from campaign names. Reception is searches for the clinic group's own name; we ran those campaigns too, but we do not claim the demand. Other includes the Performance Max campaign that ran in 2025 and was switched off in 2026, which is why that row went backwards.</p>
-    </div>
+    <p class="eyebrow rv">Google Ads, by treatment area</p><h2 class="rv" id="h-ledger">Where the bookings came from</h2>
     <div class="ledger-scroll rv" style="margin-top:40px">
     <table class="ledger">
-      <caption class="eyebrow" style="text-align:left">C-Medical, Google Ads, 1 February to 5 November 2026 against the same days of 2025</caption>
-      <thead><tr><th scope="col">Treatment area</th><th scope="col">2025 bookings</th><th scope="col">2026 bookings</th><th scope="col">Change</th><th scope="col">Cost per booking 2025</th><th scope="col">Cost per booking 2026</th></tr></thead>
+      <thead><tr><th scope="col">Treatment area</th><th scope="col">2025</th><th scope="col">2026</th><th scope="col">Change</th><th scope="col">Cost per booking</th></tr></thead>
       <tbody>
-        <tr class=""><td>Reception (own name)</td><td>568</td><td>815</td><td class="up">+43.5%</td><td>NOK 312<small>£25</small></td><td>NOK 307<small>£25</small></td></tr>
-        <tr class=""><td>Women's health</td><td>208</td><td>340</td><td class="up">+63.5%</td><td>NOK 1,164<small>£93</small></td><td>NOK 1,042<small>£83</small></td></tr>
-        <tr class=""><td>Urology</td><td>92</td><td>128</td><td class="up">+39.1%</td><td>NOK 1,384<small>£111</small></td><td>NOK 1,286<small>£103</small></td></tr>
-        <tr class=""><td>Fertility</td><td>28</td><td>66</td><td class="up">+135.7%</td><td>NOK 12,420<small>£992</small></td><td>NOK 4,663<small>£373</small></td></tr>
-        <tr class=""><td>Outpatients and other</td><td>355</td><td>252</td><td class="down">-29.0%</td><td>NOK 1,310<small>£105</small></td><td>NOK 1,739<small>£139</small></td></tr>
+        <tr class=""><td>Searches for the clinic's own name</td><td>568</td><td>815</td><td class="up">+43%</td><td>£25<small>was £25</small></td></tr>
+        <tr class=""><td>Women's health</td><td>208</td><td>340</td><td class="up">+63%</td><td>£83<small>was £93</small></td></tr>
+        <tr class=""><td>Urology</td><td>92</td><td>128</td><td class="up">+39%</td><td>£103<small>was £111</small></td></tr>
+        <tr class=""><td>Fertility</td><td>28</td><td>66</td><td class="up">+136%</td><td>£373<small>was £992</small></td></tr>
       </tbody>
       <tfoot>
-        <tr class=""><td>Whole account</td><td>1,251</td><td>1,601</td><td class="up">+28.0%</td><td>NOK 1,087<small>£87</small></td><td>NOK 946<small>£76</small></td></tr>
-        <tr class="nr"><td>Without reception</td><td>683</td><td>786</td><td class="up">+15.1%</td><td>NOK 1,731<small>£138</small></td><td>NOK 1,609<small>£129</small></td></tr>
+        <tr class=""><td>Whole account</td><td>1,251</td><td>1,601</td><td class="up">+28%</td><td>£76<small>was £87</small></td></tr>
       </tfoot>
     </table>
     </div>
-    <p class="tnote rv">NOK converted at £1 = NOK 12.5148 (5 November 2026). Bookings are GA4 booking_completed from google / cpc; spend is from the Google Ads account.</p>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="h-weeks">
-  <div class="wrap">
-    <div class="cols">
-      <div><p class="eyebrow rv">Week by week</p><h2 class="rv" id="h-weeks">Ahead in 22 of 34 weeks. Not all of them.</h2></div>
-      <p class="lead rv">Google Ads bookings, each counted week of 2026 against the same week of 2025. A filled mark is a week 2026 was ahead. The six weeks of the tracking gap are left out. The rebuild cost us the spring; it has paid since mid-May.</p>
-    </div>
-    <div class="wk-scroll" style="margin-top:40px">
-      <div class="wk" role="img" aria-label="Google Ads bookings by week: week from 2 Feb, 53 against 30; week from 9 Feb, 41 against 44; week from 16 Feb, 8 against 29; week from 23 Feb, 42 against 44; week from 2 Mar, 52 against 39; week from 9 Mar, 55 against 31; week from 16 Mar, 27 against 42; week from 23 Mar, 37 against 39; week from 30 Mar, 28 against 44; week from 6 Apr, 38 against 41; week from 13 Apr, 34 against 30; week from 20 Apr, 26 against 41; week from 27 Apr, 30 against 34; week from 4 May, 37 against 38; week from 11 May, 51 against 33; week from 18 May, 48 against 42; week from 25 May, 70 against 36; week from 1 Jun, 54 against 29; week from 8 Jun, 54 against 23; week from 15 Jun, 49 against 34; week from 22 Jun, 43 against 41; week from 29 Jun, 56 against 30; week from 6 Jul, 39 against 24; week from 24 Aug, 79 against 32; week from 31 Aug, 48 against 41; week from 7 Sept, 39 against 50; week from 14 Sept, 66 against 38; week from 21 Sept, 55 against 42; week from 28 Sept, 47 against 39; week from 5 Oct, 85 against 44; week from 12 Oct, 64 against 41; week from 19 Oct, 40 against 40; week from 26 Oct, 59 against 37; week from 2 Nov, 37 against 28">
-        <div class="wk-col" title="Week of 2 Feb: 53 bookings in 2026, 30 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">2 Feb</span></div>
-        <div class="wk-col" title="Week of 9 Feb: 41 bookings in 2026, 44 in 2025"><span class="wk-mark"></span><span class="wk-lbl">9 Feb</span></div>
-        <div class="wk-col" title="Week of 16 Feb: 8 bookings in 2026, 29 in 2025"><span class="wk-mark"></span><span class="wk-lbl">16 Feb</span></div>
-        <div class="wk-col" title="Week of 23 Feb: 42 bookings in 2026, 44 in 2025"><span class="wk-mark"></span><span class="wk-lbl">23 Feb</span></div>
-        <div class="wk-col" title="Week of 2 Mar: 52 bookings in 2026, 39 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">2 Mar</span></div>
-        <div class="wk-col" title="Week of 9 Mar: 55 bookings in 2026, 31 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">9 Mar</span></div>
-        <div class="wk-col" title="Week of 16 Mar: 27 bookings in 2026, 42 in 2025"><span class="wk-mark"></span><span class="wk-lbl">16 Mar</span></div>
-        <div class="wk-col" title="Week of 23 Mar: 37 bookings in 2026, 39 in 2025"><span class="wk-mark"></span><span class="wk-lbl">23 Mar</span></div>
-        <div class="wk-col" title="Week of 30 Mar: 28 bookings in 2026, 44 in 2025"><span class="wk-mark"></span><span class="wk-lbl">30 Mar</span></div>
-        <div class="wk-col" title="Week of 6 Apr: 38 bookings in 2026, 41 in 2025"><span class="wk-mark"></span><span class="wk-lbl">6 Apr</span></div>
-        <div class="wk-col" title="Week of 13 Apr: 34 bookings in 2026, 30 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">13 Apr</span></div>
-        <div class="wk-col" title="Week of 20 Apr: 26 bookings in 2026, 41 in 2025"><span class="wk-mark"></span><span class="wk-lbl">20 Apr</span></div>
-        <div class="wk-col" title="Week of 27 Apr: 30 bookings in 2026, 34 in 2025"><span class="wk-mark"></span><span class="wk-lbl">27 Apr</span></div>
-        <div class="wk-col" title="Week of 4 May: 37 bookings in 2026, 38 in 2025"><span class="wk-mark"></span><span class="wk-lbl">4 May</span></div>
-        <div class="wk-col" title="Week of 11 May: 51 bookings in 2026, 33 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">11 May</span></div>
-        <div class="wk-col" title="Week of 18 May: 48 bookings in 2026, 42 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">18 May</span></div>
-        <div class="wk-col" title="Week of 25 May: 70 bookings in 2026, 36 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">25 May</span></div>
-        <div class="wk-col" title="Week of 1 Jun: 54 bookings in 2026, 29 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">1 Jun</span></div>
-        <div class="wk-col" title="Week of 8 Jun: 54 bookings in 2026, 23 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">8 Jun</span></div>
-        <div class="wk-col" title="Week of 15 Jun: 49 bookings in 2026, 34 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">15 Jun</span></div>
-        <div class="wk-col" title="Week of 22 Jun: 43 bookings in 2026, 41 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">22 Jun</span></div>
-        <div class="wk-col" title="Week of 29 Jun: 56 bookings in 2026, 30 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">29 Jun</span></div>
-        <div class="wk-col" title="Week of 6 Jul: 39 bookings in 2026, 24 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">6 Jul</span></div>
-        <div class="wk-col" title="Week of 24 Aug: 79 bookings in 2026, 32 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">24 Aug</span></div>
-        <div class="wk-col" title="Week of 31 Aug: 48 bookings in 2026, 41 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">31 Aug</span></div>
-        <div class="wk-col" title="Week of 7 Sept: 39 bookings in 2026, 50 in 2025"><span class="wk-mark"></span><span class="wk-lbl">7 Sept</span></div>
-        <div class="wk-col" title="Week of 14 Sept: 66 bookings in 2026, 38 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">14 Sept</span></div>
-        <div class="wk-col" title="Week of 21 Sept: 55 bookings in 2026, 42 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">21 Sept</span></div>
-        <div class="wk-col" title="Week of 28 Sept: 47 bookings in 2026, 39 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">28 Sept</span></div>
-        <div class="wk-col" title="Week of 5 Oct: 85 bookings in 2026, 44 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">5 Oct</span></div>
-        <div class="wk-col" title="Week of 12 Oct: 64 bookings in 2026, 41 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">12 Oct</span></div>
-        <div class="wk-col" title="Week of 19 Oct: 40 bookings in 2026, 40 in 2025"><span class="wk-mark eq"></span><span class="wk-lbl">19 Oct</span></div>
-        <div class="wk-col" title="Week of 26 Oct: 59 bookings in 2026, 37 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">26 Oct</span></div>
-        <div class="wk-col" title="Week of 2 Nov: 37 bookings in 2026, 28 in 2025"><span class="wk-mark on"></span><span class="wk-lbl">2 Nov</span></div>
-      </div>
-    </div>
-    <div class="wk-foot rv"><span>Google Ads online bookings per ISO week</span><span class="c">Filled: 2026 ahead · Outline: level · Empty: 2025 ahead</span><span>18 of 20 weeks ahead since 11 May</span></div>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="h-months">
-  <div class="wrap">
-    <div class="cols">
-      <div><p class="eyebrow rv">Month by month, the whole website</p><h2 class="rv" id="h-months">Ahead in every month the tracking was whole.</h2></div>
-      <p class="lead rv">Online bookings from every channel, 2026 in ink against 2025 in grey. Eight of ten months are ahead. The two that are not sit in the tracking fault of 13 July to 23 August, which hid bookings from the ads and the organic figures alike; November is five days old. February was the first month after the takeover, with the rebuilt account still learning, and the website was still ahead.</p>
-    </div>
-    <figure style="margin:40px 0 0">
-      <svg class="chart" viewBox="0 0 1200 420" role="img" aria-label="Online bookings per month, 2025 and 2026: Feb 401 against 269, Mar 440 against 365, Apr 466 against 284, May 497 against 338, Jun 480 against 298, Jul 217 against 193, Aug 203 against 364, Sep 500 against 367, Oct 583 against 415, Nov 90 against 69">
-        <line x1="44" x2="1200" y1="376.0" y2="376.0" stroke="var(--hairline-soft)"/><text x="36" y="380.0" text-anchor="end">0</text><line x1="44" x2="1200" y1="252.5" y2="252.5" stroke="var(--hairline-soft)"/><text x="36" y="256.5" text-anchor="end">200</text><line x1="44" x2="1200" y1="129.0" y2="129.0" stroke="var(--hairline-soft)"/><text x="36" y="133.0" text-anchor="end">400</text>
-        <rect class="bar" x="54.0" y="209.9" width="47.8" height="166.1" fill="var(--mark-off)"><title>Feb 2025: 269 bookings</title></rect><rect class="bar" x="101.8" y="128.4" width="47.8" height="247.6" fill="var(--ink)"><title>Feb 2026: 401 bookings</title></rect><rect class="bar" x="169.6" y="150.6" width="47.8" height="225.4" fill="var(--mark-off)"><title>Mar 2025: 365 bookings</title></rect><rect class="bar" x="217.4" y="104.3" width="47.8" height="271.7" fill="var(--ink)"><title>Mar 2026: 440 bookings</title></rect><rect class="bar" x="285.2" y="200.6" width="47.8" height="175.4" fill="var(--mark-off)"><title>Apr 2025: 284 bookings</title></rect><rect class="bar" x="333.0" y="88.2" width="47.8" height="287.8" fill="var(--ink)"><title>Apr 2026: 466 bookings</title></rect><rect class="bar" x="400.8" y="167.3" width="47.8" height="208.7" fill="var(--mark-off)"><title>May 2025: 338 bookings</title></rect><rect class="bar" x="448.6" y="69.1" width="47.8" height="306.9" fill="var(--ink)"><title>May 2026: 497 bookings</title></rect><rect class="bar" x="516.4" y="192.0" width="47.8" height="184.0" fill="var(--mark-off)"><title>Jun 2025: 298 bookings</title></rect><rect class="bar" x="564.2" y="79.6" width="47.8" height="296.4" fill="var(--ink)"><title>Jun 2026: 480 bookings</title></rect><rect class="bar" x="632.0" y="256.8" width="47.8" height="119.2" fill="var(--mark-off)"><title>Jul 2025: 193 bookings</title></rect><rect class="bar" x="679.8" y="242.0" width="47.8" height="134.0" fill="var(--ink)"><title>Jul 2026: 217 bookings</title></rect><rect class="bar" x="747.6" y="151.2" width="47.8" height="224.8" fill="var(--mark-off)"><title>Aug 2025: 364 bookings</title></rect><rect class="bar" x="795.4" y="250.6" width="47.8" height="125.4" fill="var(--ink)"><title>Aug 2026: 203 bookings</title></rect><rect class="bar" x="863.2" y="149.4" width="47.8" height="226.6" fill="var(--mark-off)"><title>Sep 2025: 367 bookings</title></rect><rect class="bar" x="911.0" y="67.3" width="47.8" height="308.7" fill="var(--ink)"><title>Sep 2026: 500 bookings</title></rect><rect class="bar" x="978.8" y="119.7" width="47.8" height="256.3" fill="var(--mark-off)"><title>Oct 2025: 415 bookings</title></rect><rect class="bar" x="1026.6" y="16.0" width="47.8" height="360.0" fill="var(--ink)"><title>Oct 2026: 583 bookings</title></rect><rect class="bar" x="1094.4" y="333.4" width="47.8" height="42.6" fill="var(--mark-off)"><title>Nov 2025: 69 bookings</title></rect><rect class="bar" x="1142.2" y="320.4" width="47.8" height="55.6" fill="var(--ink)"><title>Nov 2026: 90 bookings</title></rect>
-        <text x="101.8" y="396" text-anchor="middle">Feb</text><text class="lbl-b" x="101.8" y="122.4" text-anchor="middle">401</text><text x="217.4" y="396" text-anchor="middle">Mar</text><text class="lbl-b" x="217.4" y="98.3" text-anchor="middle">440</text><text x="333.0" y="396" text-anchor="middle">Apr</text><text class="lbl-b" x="333.0" y="82.2" text-anchor="middle">466</text><text x="448.6" y="396" text-anchor="middle">May</text><text class="lbl-b" x="448.6" y="63.1" text-anchor="middle">497</text><text x="564.2" y="396" text-anchor="middle">Jun</text><text class="lbl-b" x="564.2" y="73.6" text-anchor="middle">480</text><text x="679.8" y="396" text-anchor="middle">Jul*</text><text class="lbl-b" x="679.8" y="236.0" text-anchor="middle">217</text><text x="795.4" y="396" text-anchor="middle">Aug*</text><text class="lbl-b" x="795.4" y="244.6" text-anchor="middle">203</text><text x="911.0" y="396" text-anchor="middle">Sep</text><text class="lbl-b" x="911.0" y="61.3" text-anchor="middle">500</text><text x="1026.6" y="396" text-anchor="middle">Oct</text><text class="lbl-b" x="1026.6" y="10.0" text-anchor="middle">583</text><text x="1142.2" y="396" text-anchor="middle">Nov*</text><text class="lbl-b" x="1142.2" y="314.4" text-anchor="middle">90</text>
-      </svg>
-      <figcaption class="legend"><span class="l25">2025</span><span>2026</span><span class="plain" style="margin-left:auto">* partial month, see the note</span></figcaption>
-    </figure>
+    <p class="tnote rv">Google Ads bookings, 1 February to 5 November 2026 against the same days of 2025. £1 = NOK 12.5148.</p>
   </div>
 </section>
 
 <section class="section" aria-labelledby="h-beyond">
   <div class="wrap">
     <div class="cols">
-      <div><p class="eyebrow rv">Beyond the booking</p><h2 class="rv" id="h-beyond">What a booking is worth</h2></div>
-      <p class="lead rv">These are estimates built on figures the clinic group gave us, not measured revenue. They are here because a booking is not the point; a patient who attends and goes on to treatment is.</p>
+      <div><p class="eyebrow rv">Beyond the booking</p><h2 class="rv" id="h-beyond">What the spend came back as</h2></div>
+      <p class="lead rv">Estimates on the clinic group's own figures: 92% attendance, £156 a first consultation, £4,714 a procedure.</p>
     </div>
     <div class="beyond rv" style="margin-top:40px">
-      <div class="b-row"><div><span class="k">Attended first consultations</span><small>1,601 Google Ads bookings at 92% attendance</small></div><span class="v">1,473</span></div>
-      <div class="b-row"><div><span class="k">Ad spend per attended consultation</span><small>NOK 1,515,143 of spend, 1 February to 5 November</small></div><span class="v">NOK 1,029 (£82)</span></div>
-      <div class="b-row"><div><span class="k">First consultations alone</span><small>at NOK 1,950 (about £156) each, against the spend</small></div><span class="v">1.9x</span></div>
-      <div class="b-row"><div><span class="k">With procedures, lower case</span><small>35% of consultations lead to a procedure at NOK 59,000 (about £4,714)</small></div><span class="v">22x</span></div>
-      <div class="b-row"><div><span class="k">With procedures, without reception</span><small>the same, leaving out searches for the clinic's own name and their spend</small></div><span class="v">13x</span></div>
-      <div class="b-row"><div><span class="k">With procedures, upper case</span><small>60% of consultations lead to a procedure</small></div><span class="v">36x</span></div>
+      <div class="b-row"><div><span class="k">Attended first consultations</span><small>from 1,601 Google Ads bookings</small></div><span class="v">1,473</span></div>
+      <div class="b-row"><div><span class="k">Ad spend per attended consultation</span><small>on £121,000 of spend</small></div><span class="v">£82</span></div>
+      <div class="b-row"><div><span class="k">Return on ad spend, consultations alone</span><small>first consultations against the spend</small></div><span class="v">1.9x</span></div>
+      <div class="b-row"><div><span class="k">Return once procedures are counted</span><small>at 35% of consultations; 13x leaving out searches for the clinic's own name</small></div><span class="v">22x</span></div>
+      <div class="b-row"><div><span class="k">At the clinic group's upper estimate</span><small>60% of consultations leading to a procedure</small></div><span class="v">36x</span></div>
     </div>
-    <p class="tnote rv">Revenue figures, not profit, and they leave out what we charge. Phone bookings are in none of them: taps on the phone number rose 41%, and if 46% of calls book and 90% attend, add roughly half again. These multiples depend on the attendance, price and procedure figures the clinic group gave us, which we have not audited.</p>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="h-limits">
-  <div class="wrap">
-    <div class="cols">
-      <div><p class="eyebrow rv">What this case does not show</p><h2 class="rv" id="h-limits">Read these before you believe the rest.</h2></div>
-      <ol class="list rv">
-        <li>Attendance. Every figure is an online booking, not a patient in a chair. The 92% attendance rate is the clinic group's own figure.</li>
-        <li>That we caused all of it. The whole website is up 45% on bookings. Direct visits, which nobody buys, also booked more: 440 against 290. Some of the rise is the clinic group's own reputation and a better website, which we built, and some is demand we did not create.</li>
-        <li>That a UK clinic gets the same prices. This is a Norwegian account in Norwegian kroner. UK click prices in private healthcare are different, and usually higher.</li>
-        <li>Searches for the clinic's own name. Over half of the Google Ads bookings come from people who already knew C-Medical. We ran those campaigns, but we do not take credit for that demand. Without reception, bookings are up 15% and the cost per booking down 7%, not 28% and 13%.</li>
-        <li>The outpatient floor went backwards. Bookings for orthopaedics, dermatology and the other outpatient areas fell 29% once Performance Max was switched off. That was a choice: the campaign was buying brand searches and cheap, poorly qualified bookings.</li>
-        <li>The spring. From February to mid-May, the rebuilt account booked fewer patients than the old one had a year earlier. A rebuild has a learning period, and this one lasted about fourteen weeks.</li>
-        <li>Forty-two days are missing. A tracking fault from 13 July to 23 August 2026 hid bookings. Those days are removed from both years, so the comparison is fair, but the 2026 total is lower than the clinic group actually took.</li>
-      </ol>
-    </div>
+    <p class="tnote rv">Revenue, not profit, before our fee. Phone bookings are in none of these.</p>
   </div>
 </section>
 
 <section class="section" aria-labelledby="h-method">
   <div class="wrap">
     <div class="cols">
-      <div><p class="eyebrow rv">Source and method</p><h2 class="rv" id="h-method">How the figures were counted</h2></div>
+      <div><p class="eyebrow rv">Source</p><h2 class="rv" id="h-method">How it was counted</h2></div>
       <ol class="list rv">
-        <li>Source: C-Medical's Google Ads account and Google Analytics 4 property, read through Windsor.ai on 5 November 2026. Published with the clinic group's written permission.</li>
-        <li>Window: 1 February to 5 November 2026 against the same calendar days of 2025. The 42 days of the tracking fault, 13 July to 23 August, are removed from both years, leaving 236 counted days.</li>
-        <li>Booking: the GA4 event booking_completed, a completed online booking. Google Ads bookings are those with source and medium google / cpc. Organic is any medium organic. AI search is chatgpt.com, perplexity, copilot, gemini.google.com and claude.ai. Google Ads' own conversion count is not used, because it counts some actions twice.</li>
-        <li>Treatment areas are derived from campaign names and have not been confirmed by the clinic group.</li>
-        <li>Currency: NOK converted at £1 = NOK 12.5148, the published rate for 5 November 2026. Kroner are the figures; pounds are for reading.</li>
-        <li>Revenue multiples use the clinic group's stated attendance (92%), first-consultation price (NOK 1,950) and average procedure value (NOK 59,000), and its stated range of 35% to 60% of consultations leading to a procedure.</li>
+        <li>C-Medical's Google Ads and Google Analytics accounts, read 5 November 2026, published with the clinic group's written permission.</li>
+        <li>1 February to 5 November 2026 against the same days of 2025. A tracking fault of 13 July to 23 August is left out of both years.</li>
+        <li>A booking is a completed online booking in Google Analytics. NOK converted at £1 = NOK 12.5148, 5 November 2026.</li>
       </ol>
     </div>
   </div>
@@ -470,8 +435,8 @@ footer img{width:40px}
   <div class="wrap">
     <p class="eyebrow rv">For UK private hospitals and clinic groups</p>
     <h2 class="rv" id="h-cta">Thirty minutes about your bookings</h2>
-    <p class="lead rv" style="margin-top:20px">Bring three numbers: last year's turnover, your main specialties and what an attended first consultation is worth. We will tell you whether we would take you on, and if paid search would not pay for itself in your group, we will say so. No commitment, no deck.</p>
-    <p class="rv" style="margin-top:32px"><a class="btn" href="/g/uk-private-hospitals/">See whether we would take you on</a><a class="quiet" href="/book">Or book the call directly</a></p>
+    <p class="lead rv" style="margin-top:20px">A few questions about your group, two minutes. If we do not think we can help, we say so on the next page.</p>
+    <p class="rv" style="margin-top:32px"><a class="btn" href="/case/c-medical/apply/">See whether we would take you on</a></p>
   </div>
 </section>
 </main>
@@ -481,6 +446,7 @@ footer img{width:40px}
     <nav aria-label="Legal"><a href="/cases/">All cases</a><a href="/g/uk-private-hospitals/privacy/">Privacy</a><a href="/g/uk-private-hospitals/terms/">Website terms</a></nav>
   </div>
 </footer>
+<div class="sticky" id="sticky" aria-label="Book a call"><span class="lbl">C-Medical: 45% more bookings</span><a class="btn" href="/case/c-medical/apply/">See whether we would take you on</a></div>
 <div class="cb" id="g-consent" role="region" aria-label="Cookie choice" hidden>
   <div class="cb-in">
     <p class="cb-t">We use a Meta cookie to measure whether our advertising works. It is not set until you choose. The page works the same either way. <a href="/g/uk-private-hospitals/privacy/">Privacy</a></p>
@@ -498,8 +464,29 @@ var EASE_OUT='cubic-bezier(.16,1,.3,1)',P3_INOUT='cubic-bezier(.76,0,.24,1)',P2_
 /* reveals */
 if(anim&&'IntersectionObserver' in window){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
-  document.querySelectorAll('.rv,.wk,.chart').forEach(function(el){io.observe(el);});
-}else{document.querySelectorAll('.rv,.wk,.chart').forEach(function(el){el.classList.add('in');});}
+  document.querySelectorAll('.rv,.chan').forEach(function(el){io.observe(el);});
+}else{document.querySelectorAll('.rv,.chan').forEach(function(el){el.classList.add('in');});}
+
+/* the ad's tracking parameters travel with the visitor to the form */
+(function(){
+  var q=location.search;if(!q||q.length<2)return;
+  document.querySelectorAll('a[href^="/case/c-medical/apply/"]').forEach(function(a){
+    var h=a.getAttribute('href');a.setAttribute('href',h+(h.indexOf('?')>=0?'&':'?')+q.slice(1));
+  });
+})();
+
+/* sticky CTA after the hero, hidden again at the final CTA */
+(function(){
+  var bar=document.getElementById('sticky'),hero=document.getElementById('hero-track'),end=document.getElementById('h-cta');
+  if(!bar||!hero||!end)return;
+  function check(){
+    var past=hero.getBoundingClientRect().bottom<window.innerHeight*.5;
+    var atEnd=end.getBoundingClientRect().top<window.innerHeight;
+    var on=past&&!atEnd;
+    bar.classList.toggle('on',on);docEl.classList.toggle('has-sticky',on);
+  }
+  window.addEventListener('scroll',check,{passive:true});window.addEventListener('resize',check);check();
+})();
 
 /* hero: cover image clips into the frame as you scroll (BYQ stringer-hero-8) */
 (function(){
