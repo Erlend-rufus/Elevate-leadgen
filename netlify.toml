@@ -379,9 +379,24 @@
   to = "/cases/index.html"
   status = 200
 
+# The specialist clinic group is now named, with the client's permission, at
+# /case/c-medical (built by scripts/build-case-cmedical.mjs from content/c-medical.json).
+# The anonymous page is retired and sends its visitors there.
 [[redirects]]
   from = "/case/specialist-clinic-group"
-  to = "/case/specialist-clinic-group/index.html"
+  to = "/case/c-medical"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/case/specialist-clinic-group/*"
+  to = "/case/c-medical"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/case/c-medical"
+  to = "/case/c-medical/index.html"
   status = 200
 
 [[redirects]]
