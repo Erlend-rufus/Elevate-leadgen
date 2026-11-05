@@ -638,7 +638,7 @@ function cta() {
 }
 
 /* -------------------------------------------------------------------- page */
-const url = `${SITE}/case/${d.slug}`;
+const url = `${SITE}/case/${d.slug}/`;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
