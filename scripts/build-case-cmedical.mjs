@@ -327,6 +327,14 @@ if(anim&&'IntersectionObserver' in window){
   document.querySelectorAll('.rv,.chan').forEach(function(el){io.observe(el);});
 }else{document.querySelectorAll('.rv,.chan').forEach(function(el){el.classList.add('in');});}
 
+/* the ad's tracking parameters travel with the visitor to the form */
+(function(){
+  var q=location.search;if(!q||q.length<2)return;
+  document.querySelectorAll('a[href^="/case/c-medical/apply/"]').forEach(function(a){
+    var h=a.getAttribute('href');a.setAttribute('href',h+(h.indexOf('?')>=0?'&':'?')+q.slice(1));
+  });
+})();
+
 /* sticky CTA after the hero, hidden again at the final CTA */
 (function(){
   var bar=document.getElementById('sticky'),hero=document.getElementById('hero-track'),end=document.getElementById('h-cta');

@@ -128,7 +128,18 @@ export const funnels = {
    "honeypot": "contact_by_fax",
    "clickup": {
     "listId": "1201270000003578"
-   }
+   },
+   "applyPages": [
+    {
+     "path": "/case/c-medical/apply/",
+     "title": "See whether we would take you on | Elevate Marketing",
+     "description": "A few questions about your group. We only take on groups we think we can help.",
+     "back": {
+      "href": "/case/c-medical/",
+      "label": "Back to the C-Medical case"
+     }
+    }
+   ]
   },
   "copy": {
    "form": {

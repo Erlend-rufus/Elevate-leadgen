@@ -60,5 +60,17 @@
   "clickup": {
     "listId": "1201270000003578",
     "_comment": "The ClickUp list the daily reconciliation compares against: HEALTH - UK - Commission. Leads carry tag growth-health in it (growth-5m until 26 Oct 2026; older tasks were retagged). The custom field lead_id on that list holds the key."
-  }
+  },
+  "applyPages": [
+    {
+      "path": "/case/c-medical/apply/",
+      "title": "See whether we would take you on | Elevate Marketing",
+      "description": "A few questions about your group. We only take on groups we think we can help.",
+      "back": {
+        "href": "/case/c-medical/",
+        "label": "Back to the C-Medical case"
+      }
+    }
+  ],
+  "_applyPages": "Form-only pages served outside the funnel: the same form, campaign and endpoint, with the outcome pages of this funnel after it. Added 5 Nov 2026 for the C-Medical case page, whose every CTA goes here. Nothing on such a page may describe how we are paid; that is settled on the call (owner, 5 Nov 2026)."
 }

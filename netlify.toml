@@ -400,6 +400,11 @@
   status = 200
 
 [[redirects]]
+  from = "/case/c-medical/apply"
+  to = "/case/c-medical/apply/index.html"
+  status = 200
+
+[[redirects]]
   from = "/case/family-law-firm-norway"
   to = "/case/family-law-firm-norway/index.html"
   status = 200

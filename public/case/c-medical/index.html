@@ -309,7 +309,7 @@ html.anim .chan.in .chan-bar i{transform:none}
   </div>
 </section>
 
-<div class="wrap"><div class="band rv"><p>45% more bookings on the same traffic. What would that be worth in your group?</p><a class="btn" href="/g/uk-private-hospitals/">See whether we would take you on</a></div></div>
+<div class="wrap"><div class="band rv"><p>45% more bookings on the same traffic. What would that be worth in your group?</p><a class="btn" href="/case/c-medical/apply/">See whether we would take you on</a></div></div>
 
 <section class="section" aria-labelledby="h-ch">
   <div class="wrap">
@@ -378,7 +378,7 @@ html.anim .chan.in .chan-bar i{transform:none}
   </div>
 </section>
 
-<div class="wrap"><div class="band rv"><p>Every channel up. The same method is on offer to UK groups.</p><a class="btn" href="/g/uk-private-hospitals/">See whether we would take you on</a></div></div>
+<div class="wrap"><div class="band rv"><p>Every channel up. The same method is on offer to UK groups.</p><a class="btn" href="/case/c-medical/apply/">See whether we would take you on</a></div></div>
 
 <section class="section" aria-labelledby="h-ledger">
   <div class="wrap">
@@ -435,8 +435,8 @@ html.anim .chan.in .chan-bar i{transform:none}
   <div class="wrap">
     <p class="eyebrow rv">For UK private hospitals and clinic groups</p>
     <h2 class="rv" id="h-cta">Thirty minutes about your bookings</h2>
-    <p class="lead rv" style="margin-top:20px">Bring three numbers: last year's turnover, your main specialties and what an attended first consultation is worth. If paid search would not pay for itself in your group, we will say so.</p>
-    <p class="rv" style="margin-top:32px"><a class="btn" href="/g/uk-private-hospitals/">See whether we would take you on</a></p>
+    <p class="lead rv" style="margin-top:20px">A few questions about your group, two minutes. If we do not think we can help, we say so on the next page.</p>
+    <p class="rv" style="margin-top:32px"><a class="btn" href="/case/c-medical/apply/">See whether we would take you on</a></p>
   </div>
 </section>
 </main>
@@ -446,7 +446,7 @@ html.anim .chan.in .chan-bar i{transform:none}
     <nav aria-label="Legal"><a href="/cases/">All cases</a><a href="/g/uk-private-hospitals/privacy/">Privacy</a><a href="/g/uk-private-hospitals/terms/">Website terms</a></nav>
   </div>
 </footer>
-<div class="sticky" id="sticky" aria-label="Book a call"><span class="lbl">C-Medical: 45% more bookings</span><a class="btn" href="/g/uk-private-hospitals/">See whether we would take you on</a></div>
+<div class="sticky" id="sticky" aria-label="Book a call"><span class="lbl">C-Medical: 45% more bookings</span><a class="btn" href="/case/c-medical/apply/">See whether we would take you on</a></div>
 <div class="cb" id="g-consent" role="region" aria-label="Cookie choice" hidden>
   <div class="cb-in">
     <p class="cb-t">We use a Meta cookie to measure whether our advertising works. It is not set until you choose. The page works the same either way. <a href="/g/uk-private-hospitals/privacy/">Privacy</a></p>
@@ -466,6 +466,14 @@ if(anim&&'IntersectionObserver' in window){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
   document.querySelectorAll('.rv,.chan').forEach(function(el){io.observe(el);});
 }else{document.querySelectorAll('.rv,.chan').forEach(function(el){el.classList.add('in');});}
+
+/* the ad's tracking parameters travel with the visitor to the form */
+(function(){
+  var q=location.search;if(!q||q.length<2)return;
+  document.querySelectorAll('a[href^="/case/c-medical/apply/"]').forEach(function(a){
+    var h=a.getAttribute('href');a.setAttribute('href',h+(h.indexOf('?')>=0?'&':'?')+q.slice(1));
+  });
+})();
 
 /* sticky CTA after the hero, hidden again at the final CTA */
 (function(){
