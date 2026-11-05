@@ -10,7 +10,7 @@ const LIST = '901522580321'; // IT - UK - Commision
 const HEALTH_LIST = '1201270000003578'; // HEALTH - UK - Commission
 const LAW_LIST = '1201270000003579'; // LAW - UK - Commission
 const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST]);
-const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import', 'vurder-nettside']);
+const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import', 'vurder-nettside', 'ingen-kommisjon-lovet']); // ingen-kommisjon-lovet made in the space 6 Nov 2026
 const SONDRE = 106690144;
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow']);
 
@@ -533,5 +533,37 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
   ok(!w4.slack[0].includes('Private words'), 'goal: not in the compact not-a-fit post');
   ok(w4.tasks[0].description.includes('> Private words'), 'goal: but in the task');
   console.log('17 ok');
+}
+// ---------------------------------------------------------------- 18. commission_promised: no (6 Nov 2026): the C-Medical case page's form
+{
+  const open = { campaign: 'uk-private-hospitals', entry: 'case-c-medical', commission_promised: 'no', page_slug: 'uk-private-hospitals', regulator_number: '', self_pay_share: '30 to 59 %', specialties: 'Orthopaedics', first_consultation_value: '£500 to under £1,000', turnover_band: '£5m to under £10m', employees_or_fee_earners: '', specialism: '' };
+  const w = makeWorld();
+  await run(w, withLead({ ...open, lead_id: 'l_open_0001', email: 'open@example.invalid', company_name: 'Open Clinic Group', slack_test: true }));
+  const t = w.tasks[0];
+  eq(t.name, '[INGEN KOMMISJON LOVET] Open Clinic Group · Test Fit', 'open: the task name says it first');
+  ok(t.tags.includes('ingen-kommisjon-lovet') && t.tags.includes('growth-health'), 'open: tagged, next to the campaign tag');
+  const d = t.description;
+  ok(d.includes('**⚠ INGEN KOMMISJON LOVET**\nSkjemaet sto på en side som ikke sier noe om hvordan vi tar betalt (case-c-medical). Ingen har lovet denne leaden kommisjon: vi står fritt til retainer eller kommisjon, og Sondre velger modell i møtet. Ikke nevn kommisjon før det.'), 'open: the warning block, in full');
+  ok(d.indexOf('INGEN KOMMISJON LOVET') < d.indexOf('**Selskap**'), 'open: the warning comes before the company');
+  ok(d.includes('- Skjema på: case-c-medical'), 'open: the entry page in the source block');
+  const lines = w.slack[0].split('\n');
+  eq(lines[1], '⚠ *INGEN KOMMISJON LOVET* · fri til retainer eller kommisjon, Sondre velger i møtet (via case-c-medical)', 'open: the second line of the Slack post');
+  // not a fit: the compact post carries it too, and so does the quote request afterwards
+  const w2 = makeWorld();
+  await run(w2, withLead({ ...naf, ...open, lead_id: 'l_open_0002', email: 'open2@example.invalid', slack_test: true }));
+  eq(w2.slack[0].split('\n')[1], '⚠ *INGEN KOMMISJON LOVET* · fri til retainer eller kommisjon, Sondre velger i møtet (via case-c-medical)', 'open: in the not-a-fit post');
+  ok(w2.tasks[0].name.startsWith('[INGEN KOMMISJON LOVET] '), 'open: not-a-fit task named');
+  await run(w2, press({ lead_id: 'l_open_0002', email: 'open2@example.invalid', slack_test: true, ...open }));
+  ok(w2.slack[1].split('\n')[1].startsWith('⚠ *INGEN KOMMISJON LOVET*'), 'open: in the quote request post');
+  // a lead that promised commission, or one from before the key existed, is exactly as before
+  for (const v of ['yes', '', undefined]) {
+    const w3 = makeWorld();
+    await run(w3, withLead({ lead_id: 'l_open_yes_' + (v === undefined ? 'u' : v || 'e'), email: 'y@example.invalid', commission_promised: v, entry: '', slack_test: true }));
+    eq(w3.tasks[0].name, 'TEST Leadflow Fit Ltd · Test Fit', 'promised: plain name (' + v + ')');
+    ok(!w3.tasks[0].tags.includes('ingen-kommisjon-lovet'), 'promised: no tag');
+    ok(!w3.tasks[0].description.includes('KOMMISJON') && !w3.slack[0].includes('KOMMISJON'), 'promised: nothing said');
+    ok(!w3.tasks[0].description.includes('Skjema på'), 'promised: no entry row without an entry');
+  }
+  console.log('18 ok');
 }
 console.log('\nALL PASSED: ' + passed + ' checks');

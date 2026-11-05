@@ -1104,6 +1104,10 @@ ${pageScript(cfgClient, key === 'privacy' ? 'privacy' : 'plain', coreSrc)}
      itself says nothing about how we are paid: that is for the call. */
   for (const ap of cfg.applyPages || []) {
     if (!/^\/[a-z0-9/-]+\/$/.test(ap.path)) die(`applyPages.path must start and end with / : ${ap.path}`);
+    if (ap.entry && !/^[a-z0-9-]{3,40}$/.test(ap.entry)) die(`applyPages.entry must be a short slug: ${ap.entry}`);
+    if (ap.entry && !cfg.hiddenFields.includes('entry')) die('applyPages.entry needs "entry" in hiddenFields');
+    // The page says which form it is (hidden field entry): the lead function reads it and the lead carries it on.
+    const applyFormHtml = ap.entry ? renderForm({ copy, cfg, values: {}, errors: {}, hidden: { entry: ap.entry }, general: false }) : formHtml;
     const html = head(cfg, {
       title: ap.title, description: ap.description, og: false,
       css: cssFor('base', 'page', 'form', 'banner'), scripts: { track: cfg.funnel.viewEvent },
@@ -1114,7 +1118,7 @@ ${pageScript(cfgClient, key === 'privacy' ? 'privacy' : 'plain', coreSrc)}
   <main id="main">
     <h1 class="vh">${esc(ap.title)}</h1>
     <section class="sec--form" id="form">
-      <div class="wrap">${ap.back ? `<p class="lf-backlink" style="margin:0 0 24px;padding-inline:var(--lf-mx,24px);font-size:15px"><a style="color:var(--ink)" href="${esc(ap.back.href)}">${esc(ap.back.label)}</a></p>` : ''}${formHtml}</div>
+      <div class="wrap">${ap.back ? `<p class="lf-backlink" style="margin:0 0 24px;padding-inline:var(--lf-mx,24px);font-size:15px"><a style="color:var(--ink)" href="${esc(ap.back.href)}">${esc(ap.back.label)}</a></p>` : ''}${applyFormHtml}</div>
     </section>
   </main>
   ${footer(cfg, copy)}

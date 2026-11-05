@@ -241,7 +241,8 @@ test('payload: every key is present, empty when it does not apply, and nothing e
   const p = buildPayload({ leadId: 'l_1', campaign: 'c', route: 'fit', reasons: ['a', 'b'], submittedAt: 'T', values: {}, ch: null, tracking: null });
   assert.deepEqual(Object.keys(p), PAYLOAD_KEYS);
   assert.equal(p.route_reason, 'a, b');
-  for (const k of PAYLOAD_KEYS) if (!['lead_id', 'campaign', 'route', 'route_reason', 'submitted_at'].includes(k)) assert.equal(p[k], '', k);
+  for (const k of PAYLOAD_KEYS) if (!['lead_id', 'campaign', 'route', 'route_reason', 'submitted_at', 'commission_promised'].includes(k)) assert.equal(p[k], '', k);
+  assert.equal(p.commission_promised, 'yes', 'a lead without an entry page promised commission');
 });
 
 test('payload: browser identifiers and the consent state never go to Zapier', () => {
@@ -257,7 +258,7 @@ test('payload: browser identifiers and the consent state never go to Zapier', ()
 });
 
 test('payload: the key list is the contract with the Zap, and changing it is deliberate', () => {
-  assert.equal(PAYLOAD_KEYS.length, 42); // 37 at launch, four health keys added 20 Oct 2026, meeting_goal 21 Oct 2026
+  assert.equal(PAYLOAD_KEYS.length, 44); // 37 at launch, four health keys added 20 Oct 2026, meeting_goal 21 Oct 2026, entry and commission_promised 6 Nov 2026
   assert.deepEqual(PAYLOAD_KEYS.slice(0, 5), ['lead_id', 'campaign', 'route', 'route_reason', 'submitted_at']);
   assert.equal(new Set(PAYLOAD_KEYS).size, PAYLOAD_KEYS.length, 'no key twice');
 });

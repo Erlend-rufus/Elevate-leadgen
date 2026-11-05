@@ -123,7 +123,8 @@ export const funnels = {
     "referrer",
     "consent",
     "fbp",
-    "fbc"
+    "fbc",
+    "entry"
    ],
    "honeypot": "contact_by_fax",
    "clickup": {
@@ -132,6 +133,8 @@ export const funnels = {
    "applyPages": [
     {
      "path": "/case/c-medical/apply/",
+     "entry": "case-c-medical",
+     "commissionPromised": false,
      "title": "See whether we would take you on | Elevate Marketing",
      "description": "A few questions about your group. We only take on groups we think we can help.",
      "back": {

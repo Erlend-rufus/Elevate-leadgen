@@ -6,6 +6,10 @@
  * Four keys were added on 20 Oct 2026 for the health funnel (regulator_number, self_pay_share,
  * specialties, first_consultation_value); they are empty for the other campaigns. One key, meeting_goal
  * (the visitor's own words on what they want from the meeting), was added on 21 Oct 2026 for all three.
+ * Two keys were added on 6 Nov 2026 for the form-only pages (cfg.applyPages): entry (the page the form was
+ * on, e.g. "case-c-medical", empty for the funnel's own page) and commission_promised ("yes" or "no"). A page
+ * that says nothing about how we are paid sends "no": Sondre is then free to offer a retainer or commission
+ * on the call, and ClickUp and Slack say so loudly. Everything else sends "yes".
  */
 export const PAYLOAD_KEYS = [
   'lead_id', 'campaign', 'route', 'route_reason', 'submitted_at',
@@ -19,6 +23,7 @@ export const PAYLOAD_KEYS = [
   'first_name', 'last_name', 'job_title', 'email', 'mobile',
   'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
   'fbclid', 'page_slug', 'referrer',
+  'entry', 'commission_promised',
 ];
 
 const s = (v) => (v === null || v === undefined ? '' : String(v));
@@ -69,8 +74,10 @@ export function buildPayload({ leadId, campaign, route, reasons, submittedAt, va
     mobile: s(v.mobile),
   };
   const t = tracking || {};
-  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'page_slug', 'referrer']
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'page_slug', 'referrer', 'entry']
     .forEach((k) => { out[k] = s(t[k]); });
+  // A lead stored before 6 Nov 2026 has no such field; it came from a funnel page, which promises commission.
+  out.commission_promised = t.commission_promised === 'no' ? 'no' : 'yes';
   // Same order as PAYLOAD_KEYS, and nothing else.
   const ordered = {};
   PAYLOAD_KEYS.forEach((k) => { ordered[k] = out[k] === undefined ? '' : out[k]; });
