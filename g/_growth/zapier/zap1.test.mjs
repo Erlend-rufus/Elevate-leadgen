@@ -9,8 +9,8 @@ const wf = mod.default;
 const LIST = '901522580321'; // IT - UK - Commision
 const HEALTH_LIST = '1201270000003578'; // HEALTH - UK - Commission
 const LAW_LIST = '1201270000003579'; // LAW - UK - Commission
-const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST]);
-const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import', 'vurder-nettside', 'ingen-kommisjon-lovet']); // ingen-kommisjon-lovet made in the space 6 Nov 2026
+const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST, '1201270000005380']);
+const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import', 'vurder-nettside', 'ingen-kommisjon-lovet', 'ai-visibility', 'retainer']); // ingen-kommisjon-lovet made in the space 6 Nov 2026
 const SONDRE = 106690144;
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow']);
 
@@ -565,5 +565,29 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
     ok(!w3.tasks[0].description.includes('Skjema på'), 'promised: no entry row without an entry');
   }
   console.log('18 ok');
+}
+// ---------------------------------------------------------------- 19. uk-ai-visibility (6 Nov 2026): a retainer campaign, every lead marked RETAINER
+{
+  const ai = { campaign: 'uk-ai-visibility', page_slug: 'uk-ai-visibility', specialism: 'IT and technology', turnover_band: '£2m to under £5m', employees_or_fee_earners: '10 to 49', marketing_spend: '£3,000 to under £10,000', decision_maker: 'Me', meeting_goal: 'Who is the best managed IT provider in Leeds?', route_reason: 'turnover_2m_plus, register_not_used', practice_areas: '', sra_number: '', regulator_number: '', self_pay_share: '', specialties: '', first_consultation_value: '', first_year_value: '', sales_cycle: '', capacity: '', trading_years: '', company_number: '', ch_check: 'unchecked' };
+  const w = makeWorld();
+  await run(w, withLead({ ...ai, lead_id: 'l_ai_0001', email: 'ai@example.invalid', company_name: 'Northgate IT', slack_test: true }));
+  const t = w.tasks[0];
+  eq(t.list, '1201270000005380', 'ai: the retainer list');
+  eq(t.name, '[RETAINER] Northgate IT · Test Fit', 'ai: the name says RETAINER first');
+  ok(t.tags.includes('ai-visibility') && t.tags.includes('retainer') && !t.tags.includes('ingen-kommisjon-lovet'), 'ai: tagged ai-visibility and retainer');
+  ok(t.description.includes('**💼 RETAINER**\nAI Visibility: fra £1 500 i måneden'), 'ai: the retainer block');
+  ok(t.description.indexOf('RETAINER') < t.description.indexOf('**Selskap**'), 'ai: before the company');
+  const lines = w.slack[0].split('\n');
+  eq(lines[1], '💼 *RETAINER* · AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon', 'ai: line 2 of the post');
+  ok(w.slack[0].includes('Spesialisering: IT and technology'), 'ai: the sector is in the post');
+  ok(!w.slack[0].includes('KOMMISJON LOVET'), 'ai: the open-terms line never shows on a retainer lead');
+  const w2 = makeWorld();
+  await run(w2, withLead({ ...ai, specialism: 'Legal', route_reason: 'turnover_2m_plus, register_not_used, legal_no_chatgpt_ads', lead_id: 'l_ai_0002', email: 'ai2@example.invalid', slack_test: true }));
+  ok(w2.slack[0].includes('⚠ Juss: OpenAI tar ikke annonser for juridiske tjenester'), 'ai: the legal flag');
+  const w3 = makeWorld();
+  await run(w3, withLead({ ...ai, route: 'not_a_fit', route_reason: 'turnover_below_1m', turnover_band: 'Under £1m', lead_id: 'l_ai_0003', email: 'ai3@example.invalid', slack_test: true }));
+  eq(w3.slack[0].split('\n')[1], '💼 *RETAINER* · AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon', 'ai: in the not-a-fit post too');
+  ok(w3.slack[0].includes('Grunn: omsetning under £1m'), 'ai: the reason');
+  console.log('19 ok');
 }
 console.log('\nALL PASSED: ' + passed + ' checks');

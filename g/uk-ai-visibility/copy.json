@@ -1,0 +1,187 @@
+{
+  "_comment": "Page copy for /g/uk-ai-visibility, written 6 Nov 2026 from the owner's decisions of that day: a retainer from £1,500 a month with £500 of ChatGPT ad spend included, month to month, 30 days' notice, a named contact and a monthly status report; no guarantee; UK companies with £1m or more in turnover. The case is C-Medical, named with its written consent. Figures: AI assistant bookings are booking_completed in the group's Google Analytics (property 419601371) by month, all AI sources, paid and unpaid together, because the ChatGPT ads carried no utm tags until 6 Nov 2026 and some ad clicks are therefore inside the count. The ad figures (NOK 10,000, 420 clicks, 12 bookings, the 30 days to 6 Nov 2026) are the owner's, from OpenAI's ads manager, at NOK 12.5148 to the pound. The two are shown side by side and never added. Market figures: Which?, December 2025 (Yonder, 4,189 UK adults, 10 to 14 Sept 2025); OpenAI's head of ChatGPT, February 2026; OpenAI Ads Manager open to UK advertisers from 22 June 2026. The build refuses dashes, exclamation marks and American spellings. Nothing here may describe commission.",
+  "layout": ["hero", "strip", "search", "how", "fit", "pay", "keep", "measure", "meeting", "faq", "form"],
+  "meta": {
+    "title": "AI visibility for UK companies | Elevate Marketing",
+    "description": "Be named when your buyers ask ChatGPT. Content, mentions and ChatGPT ads from £1,500 a month, ad spend included, month to month."
+  },
+  "topline": "For UK companies with {THRESHOLD}+ turnover",
+  "cta": "See whether we would take you on",
+  "hero": {
+    "h1a": "Your buyers ask ChatGPT now.",
+    "h1b": "We make sure it names you.",
+    "ingress": [
+      { "t": "Half of UK adults already use AI tools to look for products, services and advice. For a Norwegian private clinic group we wrote the content and ran the ChatGPT ads that put it in those answers. Bookings from AI assistants went from ", "cls": "" },
+      { "t": "about one a month to ten in October", "cls": "em" },
+      { "t": ".", "cls": "" }
+    ],
+    "micro": "From £1,500 a month, ChatGPT ad spend included. Month to month.",
+    "cta2": { "t": "See the numbers", "href": "#strip" },
+    "panel": {
+      "title": "C-Medical, ChatGPT",
+      "total": { "value": "£67", "label": "per booking from ChatGPT ads, the last 30 days" },
+      "rows": [
+        { "n": "1", "name": "Ad spend, 30 days", "value": "£799", "sr": "NOK 10,000" },
+        { "n": "2", "name": "Clicks from ChatGPT ads", "value": "420" },
+        { "n": "3", "name": "Bookings from ChatGPT ads", "value": "12" },
+        { "n": "4", "name": "Bookings from AI assistants, October 2026", "value": "10", "sr": "against none in October 2025" }
+      ],
+      "foot": "Ad figures from OpenAI's ads manager, the 30 days to 5 November 2026, at NOK 12.5148 to the pound. AI assistant bookings counted in the group's Google Analytics, paid and unpaid together. Shown side by side, never added up."
+    }
+  },
+  "strip": {
+    "h2": "One clinic group, AI search, 2026",
+    "items": [
+      { "value": "18", "label": "bookings from AI assistants in September and October 2026, against 2 in the same months of 2025" },
+      { "value": "£67", "label": "per booking from ChatGPT ads over the last 30 days: 12 bookings from 420 clicks" },
+      { "value": "240", "label": "visits from AI assistants in October 2026, the most in any month so far, up 34% on October 2025" }
+    ],
+    "tail": "C-Medical is a private clinic group in Oslo. From February 2026 we worked on its site for search and AI assistants: around 30 articles, about 150 page titles and descriptions, a new website in August, mentions on the third-party sites AI tools read, and ChatGPT ads. Bookings are online bookings counted in Google Analytics."
+  },
+  "search": {
+    "theme": "dark",
+    "h2": "Why now",
+    "intro": "Google is not going away. But a growing share of buying questions now start in an AI assistant, and the answer names two or three companies, not ten links.",
+    "items": [
+      { "value": "51%", "label": "of UK adults use AI search tools to look for products, services and advice" },
+      { "value": "24%", "label": "use them daily or a few times a week. Search engines are still used that often by 82%: this is a second front door, not a replacement" },
+      { "value": "900m", "label": "people use ChatGPT every week" },
+      { "value": "£0", "label": "minimum spend for ChatGPT ads, open to UK advertisers since June 2026" }
+    ],
+    "note": "Sources: Which?, Consumer use and attitudes towards AI search tools, December 2025 (4,189 UK adults, September 2025). OpenAI, head of ChatGPT, February 2026. OpenAI Ads Manager, open to UK advertisers from 22 June 2026."
+  },
+  "how": {
+    "h2": "What you get, every month",
+    "intro": "One package, run by one team, reported once a month. The ChatGPT ad spend is inside the price.",
+    "items": [
+      { "t": "Where you stand", "p": "In the first month we track 25 questions your buyers ask across ChatGPT, Gemini, Perplexity, Copilot and Google's AI answers, see who is named instead of you, and fix what stops AI tools reading your site." },
+      { "t": "Content and mentions", "p": "Every month, four pages written to answer those questions, and work to get you named on the third-party sites AI tools trust: trade directories, industry press and review sites." },
+      { "t": "ChatGPT ads", "p": "We set up and run your ChatGPT ads, with £500 a month of ad spend included, and track every enquiry they bring in." }
+    ]
+  },
+  "fit": {
+    "h2": "For companies whose buyers research before they call.",
+    "body": "This works best where one new client is worth thousands and the buyer asks a lot of questions first: IT and technology, professional services, healthcare, property, finance and business services.",
+    "yesTitle": "This works if",
+    "yes": [
+      "You are a UK company with £1m or more in turnover",
+      "Your buyers compare a few suppliers before they get in touch",
+      "You have a website we can add pages to",
+      "Someone can reply to a new enquiry within one working day"
+    ],
+    "noTitle": "This does not work if",
+    "no": [
+      "You turn over less than £1m",
+      "You need results this month: being named in unpaid AI answers takes months, not days",
+      "You want ChatGPT ads for legal services, which OpenAI does not allow (law firms can still have the search work)",
+      "Nobody has time to approve content"
+    ],
+    "note": "We confirm the details you give on the call."
+  },
+  "pay": {
+    "h2": "From £1,500 a month. Ad spend included.",
+    "body": "One price each month, with £500 of ChatGPT ad spend inside it. Nothing to pay up front and no long contract: the agreement runs month to month from the start, and you can stop with 30 days' notice.",
+    "open": [
+      "From £1,500 a month, excluding VAT, with £500 of ChatGPT ad spend included. A larger scope is priced on the call, in writing, before anything runs.",
+      "Month to month from the first day. Give 30 days' notice by email to stop.",
+      "A named contact person at Elevate Marketing, who answers within one working day.",
+      "A status report every month: where you are named in AI answers and where you are not, what we published, what the ads cost and what they brought in."
+    ]
+  },
+  "keep": {
+    "h2": "What stays yours",
+    "items": [
+      { "t": "Your ad account", "p": "ChatGPT ads run in an account in your company's name. If you stop, you keep it." },
+      { "t": "Your content", "p": "Every page we write is yours, on your site, approved by you before it goes live." },
+      { "t": "A straight report", "p": "If a question still names a competitor after three months, the report says so, and what we will change." }
+    ]
+  },
+  "measure": {
+    "h2": "What we report every month",
+    "rows": [
+      { "metric": "Mentions in AI answers to your 25 questions", "status": "Against named competitors", "key": true },
+      { "metric": "Visits from AI assistants", "status": "Counted in your own analytics" },
+      { "metric": "Enquiries from AI assistants and ChatGPT ads", "status": "What we work towards", "key": true },
+      { "metric": "Cost per enquiry from ChatGPT ads", "status": "Reported, with the spend" }
+    ]
+  },
+  "meeting": {
+    "h2": "The first meeting: a {OFFER}",
+    "body": "We do not pitch. Before the call we put your buyers' questions to ChatGPT, Gemini and Perplexity and look at who they name.",
+    "steps": [
+      { "t": "Before the call", "p": "You tell us your website and the questions your best clients ask before they buy." },
+      { "t": "On the call", "p": "We show you what the AI tools answer today, who they name instead of you, and why." },
+      { "t": "Within one working day", "p": "You receive a one page summary: where you stand, the three changes that would matter most, and what the package would cost for you." }
+    ],
+    "closing": "You keep the summary whether or not we work together."
+  },
+  "faq": {
+    "h2": "Straight answers",
+    "items": [
+      { "q": "Is this just SEO with a new name?", "a": "Partly. AI assistants read the same web as Google, so a site that is easy to read and well referenced helps both. What is new is that an AI answer names a few companies instead of listing ten, leans heavily on third-party sources, and now carries ads. We work on all three." },
+      { "q": "How soon will we see anything?", "a": "ChatGPT ads can bring visits in the first week. Being named in unpaid AI answers usually takes two to four months of content and mentions, and depends on how strong your competitors are." },
+      { "q": "Do you guarantee results?", "a": "No. An AI answer changes from one person and one day to the next, so nobody can honestly promise a position. We track the same questions every month, so you can see whether it is working." },
+      { "q": "Your case is a Norwegian clinic group. Why would this work for us?", "a": "ChatGPT, Gemini and Perplexity give UK and Norwegian buyers the same kind of answer, built from the same kind of sources. What differs is competition and cost per click, and we go through both on the first call." },
+      { "q": "Can law firms use this?", "a": "Yes, for the search work. OpenAI does not take ads for legal services in ChatGPT, so we agree the scope for a law firm on the call." },
+      { "q": "What if we want to stop?", "a": "Give 30 days' notice by email. You keep the content and the ad account." }
+    ]
+  },
+  "footer": {
+    "text": "Elevate Marketing is operated by EngeCo AS, Norwegian organisation no. 924 490 926, Midtfjellet 66, 5363 Ågotnes, Norway.",
+    "privacy": "Privacy",
+    "terms": "Website terms"
+  },
+  "consent": {
+    "text": "We use a Meta cookie to measure whether our advertising works. It is not set until you choose. The page works the same either way.",
+    "privacy": "Privacy",
+    "accept": "Accept",
+    "decline": "Decline",
+    "label": "Cookie choice"
+  },
+  "form": {
+    "heading": "See whether we would take you on",
+    "under": "A few questions. We only take on companies we think we can help.",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "cta": "See whether we would take you on",
+    "retry": "Try again",
+    "sending": "Checking a few details. This takes a few seconds.",
+    "failed": "Something went wrong on our side. Your answers are still here. Please try again, or email",
+    "consent": "We use your details to reply to this application, to arrange a call and to keep a record of it. We contact you by email, and by text message if you give us a mobile number.",
+    "privacy": "Privacy"
+  },
+  "outcomes": {
+    "book": {
+      "h": "Thank you. Choose a time that suits you.",
+      "p": "Pick a slot for a {OFFER}. We will have put your questions to ChatGPT before we meet.",
+      "small": "No time that works? Reply to the confirmation email and we will find one."
+    },
+    "takk": {
+      "h": "You are booked in.",
+      "p": "We will send a confirmation. Have your website and your buyers' three most important questions to hand."
+    },
+    "review": {
+      "h": "Thank you. We will be in touch within one working day.",
+      "p": "We want to check a few details before we suggest a time."
+    },
+    "not-now": {
+      "h": "Thank you. Come back when the time is right.",
+      "p": "We will ask again in three months."
+    },
+    "not-a-fit": {
+      "h": "Thank you. This is not the right fit at the moment.",
+      "p": "We work with UK companies that turn over £1m or more. If that changes, we would be glad to hear from you.",
+      "note": "If we have misread your answers, email {EMAIL} and we will look again.",
+      "interest": {
+        "h": "Looking for a new website instead?",
+        "p": "If you would like a fixed-price quote for a new website, or a smaller monthly package, press the button and we will email you once, within two working days. A person at Elevate Marketing also reads every application, and may email you once about this if we think it could suit your company. Every email says how to say no.",
+        "button": "Yes, send me a quote",
+        "done": "Thank you. We will email you from {EMAIL} within two working days.",
+        "error": "That did not go through. Email {EMAIL} and ask for a quote, and we will send one.",
+        "noscript": "To ask for a quote on a new website, email {EMAIL}.",
+        "privacy": "How we use your details"
+      }
+    }
+  }
+}

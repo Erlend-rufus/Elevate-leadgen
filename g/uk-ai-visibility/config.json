@@ -1,0 +1,60 @@
+{
+  "_comment": "Everything in this funnel that is a setting rather than copy. Copy is in copy.json, the form in core.mjs, the routing rules in route.mjs. Built 6 Nov 2026 for the AI visibility retainer (GEO and ChatGPT ads). Read g/uk-ai-visibility/LAUNCH.md before changing anything here. Nothing on these pages may describe commission: this is a retainer, priced on the page.",
+  "slug": "uk-ai-visibility",
+  "campaign": "uk-ai-visibility",
+  "path": "/g/uk-ai-visibility",
+  "_path": "The address the funnel is served at. The build checks it against the redirect and header rules in netlify.toml.",
+  "origin": "https://getelevateleads.com",
+  "live": true,
+  "_live": "True from the start (6 Nov 2026): ClickUp list, Calendly event and both Zaps were set up the same day. The ads stay paused until the owner says yes.",
+  "variables": {
+    "THRESHOLD": "£1m",
+    "OFFER": "30 minute AI visibility review",
+    "WORTH": "£1,500"
+  },
+  "links": {
+    "privacy": "/g/uk-ai-visibility/privacy/",
+    "terms": "/g/uk-ai-visibility/terms/"
+  },
+  "legal": {
+    "registerCheck": false,
+    "_registerCheck": "As the law funnel: true only in the same change that sets COMPANIES_HOUSE_API_KEY in production."
+  },
+  "contact": {
+    "email": "post@elevatemarketing.no"
+  },
+  "funnel": {
+    "pixelId": "1466790598245604",
+    "applyPath": "/api/lead",
+    "viewEvent": "ViewContent",
+    "qualifiedEvent": "QualifiedForm",
+    "calendlyUrl": "https://calendly.com/eb-growwithelevate/elevate-marketing-ai-visibility-30-minute-review",
+    "_calendlyUrl": "Event type f1f1d78a-9b14-435d-8de6-3472da1df542, made 6 Nov 2026 on the organisation account. Its id is in Zap 2's eventTypes.",
+    "calendlyLeadParam": "utm_content",
+    "bookingHeights": {
+      "narrow": 1150,
+      "medium": 1000,
+      "wide": 700
+    }
+  },
+  "hiddenFields": [
+    "campaign",
+    "page_slug",
+    "lead_id",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "utm_term",
+    "fbclid",
+    "referrer",
+    "consent",
+    "fbp",
+    "fbc"
+  ],
+  "honeypot": "contact_by_fax",
+  "clickup": {
+    "listId": "1201270000005380",
+    "_comment": "AI VISIBILITY - UK - Retainer (CRM folder), made 6 Nov 2026 with the statuses of the health and law lists and the shared fields (lead_id, Nettside, Email, Contact Name, Phone, Job Title, CRM Item Type, Sales Stage). Leads carry the tags ai-visibility and retainer."
+  }
+}

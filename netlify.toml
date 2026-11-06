@@ -200,6 +200,17 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
+# /g/uk-ai-visibility: the AI visibility retainer (6 Nov 2026). Same as /g/uk-it-growth, paid traffic only.
+[[headers]]
+  for = "/g/uk-ai-visibility"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-ai-visibility/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # /g/uk-law-firms: same as /g/uk-it-growth, paid traffic only.
 [[headers]]
   for = "/g/uk-law-firms"
@@ -626,6 +637,47 @@
 [[redirects]]
   from = "/g/uk-law-firms/terms"
   to = "/g/uk-law-firms/terms/index.html"
+  status = 200
+
+# /g/uk-ai-visibility (6 Nov 2026): the same eight pages as /g/uk-it-growth, built by scripts/build-g-growth.mjs.
+[[redirects]]
+  from = "/g/uk-ai-visibility"
+  to = "/g/uk-ai-visibility/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-ai-visibility/book"
+  to = "/g/uk-ai-visibility/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-ai-visibility/takk"
+  to = "/g/uk-ai-visibility/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-ai-visibility/review"
+  to = "/g/uk-ai-visibility/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-ai-visibility/not-now"
+  to = "/g/uk-ai-visibility/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-ai-visibility/not-a-fit"
+  to = "/g/uk-ai-visibility/not-a-fit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-ai-visibility/privacy"
+  to = "/g/uk-ai-visibility/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-ai-visibility/terms"
+  to = "/g/uk-ai-visibility/terms/index.html"
   status = 200
 
 # /g/it-ict-growth: the same eight pages as /g/uk-it-growth, built by scripts/build-g-growth.mjs.
