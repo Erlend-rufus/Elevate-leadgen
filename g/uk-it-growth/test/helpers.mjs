@@ -167,7 +167,12 @@ export function rig(over = {}) {
   const base = realCampaigns[cfg.campaign];
   const campaigns = {
     [cfg.campaign]: Object.assign({}, base, {
-      cfg: Object.assign({}, base.cfg, { live: over.live !== false, legal: { registerCheck: over.registerCheck !== undefined ? over.registerCheck : Boolean(env.COMPANIES_HOUSE_API_KEY) } }),
+      cfg: Object.assign({}, base.cfg, {
+        live: over.live !== false,
+        legal: { registerCheck: over.registerCheck !== undefined ? over.registerCheck : Boolean(env.COMPANIES_HOUSE_API_KEY) },
+        // a form-only page outside the funnel that says nothing about how we are paid (cfg.applyPages)
+        applyPages: over.applyPages || base.cfg.applyPages || [],
+      }),
     }),
   };
 

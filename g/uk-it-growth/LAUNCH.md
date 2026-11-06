@@ -115,7 +115,19 @@ and is covered by a test; change it there and in the Zap together.
 ch_status, ch_accounts_type, ch_incorporated, ch_check, specialism, practice_areas, sra_number,
 turnover_band, trading_years, employees_or_fee_earners, marketing_spend, first_year_value, sales_cycle,
 target_next_year, decision_maker, capacity, first_name, last_name, job_title, email, mobile,
-utm_source, utm_medium, utm_campaign, utm_content, utm_term, fbclid, page_slug, referrer`
+utm_source, utm_medium, utm_campaign, utm_content, utm_term, fbclid, page_slug, referrer, entry, commission_promised`
+
+(`regulator_number, self_pay_share, specialties, first_consultation_value` were added for the health funnel on 20 Oct
+2026 and `meeting_goal` on 21 Oct 2026; they sit before `turnover_band` and before `first_name` respectively.)
+
+**`entry` and `commission_promised` (6 Nov 2026).** A funnel may serve its form on a page outside the funnel
+(`applyPages` in its `config.json`; first `/case/c-medical/apply/` for the C-Medical case page). Such a page carries a
+hidden field `entry` with the slug the config gives it; the function keeps it only when the config names it, so a forged
+value is treated as the funnel's own page. `commission_promised` is `no` when that page's config says
+`commissionPromised: false` (the page says nothing about how we are paid), otherwise `yes`. Zap 1 marks a `no` lead
+in ClickUp (name prefix `[INGEN KOMMISJON LOVET]`, tag `ingen-kommisjon-lovet`, a warning block first in the description)
+and as the second line of every Slack post, so that nobody promises commission before Sondre has chosen retainer or
+commission on the call.
 
 Never sent: the browser's Meta identifiers, the consent state, the IP address. `fbclid` is empty unless
 the visitor accepted the cookie choice. `route` is `fit`, `review`, `not_now` or `not_a_fit`.

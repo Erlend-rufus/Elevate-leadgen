@@ -143,3 +143,17 @@ not touched). Zap 2 was not changed (`01a1a19b-6f1d-7b23-ace8-1fdda467c5a0`, `c7
 The exact shape of the data Zapier's Calendly trigger hands over. `parseBooking` in Zap 2 accepts
 nested, flattened and wrapped forms and fails with the names of the keys it saw if it can not read the
 booking; only a real booking on a switched-on workflow confirms which form it is.
+
+6 Nov 2026: leads nobody promised commission (PR #131). The lead function sends two more keys, `entry` and
+`commission_promised` (44 keys; see `g/uk-it-growth/LAUNCH.md` section 4). A `no` lead (first: the form on the C-Medical case
+page, `/case/c-medical/apply/`, which says nothing about how we are paid) gets the task name prefix `[INGEN KOMMISJON LOVET]`,
+the tag `ingen-kommisjon-lovet` (made in the EM space, red, 6 Nov 2026), a warning block first in the ClickUp description,
+a "Skjema på" row in the source block, and a second line on every Slack post (fit, review, not a fit, quote request). A `yes`
+lead, and a lead from before the key existed, is unchanged (`zap1.test.mjs` section 18, 265 checks; Italy 669). A draft of
+the file was run in Zapier against the real health list and #leads-uk (one `no` lead with `slack_test`, read back from
+ClickUp and Slack line for line) and the real IT list (one plain `yes` lead, no warning anywhere); both test tasks were
+archived, never deleted; the one `[TEST]` post stays in #leads-uk. Published at 23:18 UTC: Zap 1 version
+`01a1ae01-93e0-7556-ac7e-acd19b365cd7`, sha256 `0947d256...`, read back and identical to the file here, still switched on
+with its trigger active (the enabled state was not touched). Zap 2 was not changed. To go back: the version before,
+`01a1a36f-7dd5-7ec9-8f10-59f31b925a5b`. The Zap was published before the function (PR #131 merged after): a lead without the
+two keys is read as `yes`, so the order did not matter.

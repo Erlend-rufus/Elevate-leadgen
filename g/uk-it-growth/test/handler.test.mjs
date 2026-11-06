@@ -101,7 +101,33 @@ test('what Zapier receives: fixed keys in a fixed order, nothing else', async ()
     first_name: 'Alex', last_name: 'Morgan', job_title: 'Managing Director', email: 'alex@northbridge-it.co.uk', mobile: '07700 900123',
     utm_source: 'meta', utm_medium: 'paid', utm_campaign: 'itq4', utm_content: 'ad7', utm_term: 'managed',
     fbclid: 'FB1', page_slug: 'uk-it-growth', referrer: 'https://l.facebook.com/',
+    entry: '', commission_promised: 'yes',
   });
+});
+
+const OPEN_PAGE = [{ path: '/case/x/apply/', entry: 'case-x', commissionPromised: false }];
+
+test('entry: a lead from a form-only page that says nothing about pay is marked commission_promised: no', async () => {
+  const { r, res } = await go({ applyPages: OPEN_PAGE }, Object.assign({}, GOOD, { entry: 'case-x' }));
+  assert.equal(res.status, 200);
+  const sent = r.of('zapier')[0].body;
+  assert.equal(sent.entry, 'case-x');
+  assert.equal(sent.commission_promised, 'no');
+  const rec = r.blobs.lead('l_test123');
+  assert.equal(rec.tracking.entry, 'case-x');
+  assert.equal(rec.tracking.commission_promised, 'no');
+});
+
+test('entry: the funnel page itself, and any entry the config does not name, promised commission', async () => {
+  const plain = await go({ applyPages: OPEN_PAGE }, GOOD);
+  assert.equal(plain.r.of('zapier')[0].body.entry, '');
+  assert.equal(plain.r.of('zapier')[0].body.commission_promised, 'yes');
+  const forged = await go({ applyPages: OPEN_PAGE }, Object.assign({}, GOOD, { entry: 'constructor' }));
+  assert.equal(forged.r.of('zapier')[0].body.entry, '');
+  assert.equal(forged.r.of('zapier')[0].body.commission_promised, 'yes');
+  const promised = await go({ applyPages: [{ path: '/p/', entry: 'case-y' }] }, Object.assign({}, GOOD, { entry: 'case-y' }));
+  assert.equal(promised.r.of('zapier')[0].body.entry, 'case-y');
+  assert.equal(promised.r.of('zapier')[0].body.commission_promised, 'yes', 'commissionPromised not set to false means the page promised it');
 });
 
 test('"Other" as the area is sent with the visitor\'s own words', async () => {

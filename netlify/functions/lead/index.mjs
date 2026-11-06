@@ -52,7 +52,7 @@ const BUDGET_MS = 8000;
 const RATE_LIMIT_PER_HOUR = 12;
 const LEAD_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 const UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-const TRACKING = UTM.concat(['fbclid', 'referrer', 'consent', 'fbp', 'fbc']);
+const TRACKING = UTM.concat(['fbclid', 'referrer', 'consent', 'fbp', 'fbc', 'entry']);
 
 const SECURITY = {
   'Cache-Control': 'no-store',
@@ -161,6 +161,12 @@ export function createHandler(deps = {}) {
     if (!LEAD_ID_RE.test(leadId)) leadId = 'l_' + uuid().replace(/-/g, '').slice(0, 20);
     hidden.lead_id = leadId;
     hidden.page_slug = cfg.slug;
+    /* entry: which form-only page (cfg.applyPages) the form was on. Only a page the config names counts; anything
+       else is treated as the funnel's own page. A page that says nothing about how we are paid (commissionPromised
+       false) marks the lead so that nobody promises commission before the call. */
+    const applyPage = (cfg.applyPages || []).find((ap) => ap.entry && ap.entry === hidden.entry) || null;
+    hidden.entry = applyPage ? applyPage.entry : '';
+    const commissionPromised = applyPage && applyPage.commissionPromised === false ? 'no' : 'yes';
 
     const rawValues = {};
     core.FIELDS.forEach((f) => { const v = get(f); if (v !== null) rawValues[f] = v; });
@@ -272,6 +278,7 @@ export function createHandler(deps = {}) {
         page_slug: cfg.slug, referrer: hidden.referrer, fbclid: hidden.fbclid,
         utm_source: hidden.utm_source, utm_medium: hidden.utm_medium, utm_campaign: hidden.utm_campaign,
         utm_content: hidden.utm_content, utm_term: hidden.utm_term,
+        entry: hidden.entry, commission_promised: commissionPromised,
       },
       consent: hidden.consent,
       ch,

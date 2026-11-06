@@ -54,7 +54,8 @@
     "referrer",
     "consent",
     "fbp",
-    "fbc"
+    "fbc",
+    "entry"
   ],
   "honeypot": "contact_by_fax",
   "clickup": {
@@ -64,6 +65,8 @@
   "applyPages": [
     {
       "path": "/case/c-medical/apply/",
+      "entry": "case-c-medical",
+      "commissionPromised": false,
       "title": "See whether we would take you on | Elevate Marketing",
       "description": "A few questions about your group. We only take on groups we think we can help.",
       "back": {
@@ -72,5 +75,5 @@
       }
     }
   ],
-  "_applyPages": "Form-only pages served outside the funnel: the same form, campaign and endpoint, with the outcome pages of this funnel after it. Added 5 Nov 2026 for the C-Medical case page, whose every CTA goes here. Nothing on such a page may describe how we are paid; that is settled on the call (owner, 5 Nov 2026)."
+  "_applyPages": "Form-only pages served outside the funnel: the same form, campaign and endpoint, with the outcome pages of this funnel after it. Added 5 Nov 2026 for the C-Medical case page, whose every CTA goes here. Nothing on such a page may describe how we are paid; that is settled on the call (owner, 5 Nov 2026). entry names the page in the lead (hidden field, validated by the function); commissionPromised false makes the function send commission_promised: no, and Zap 1 then marks the task and the Slack post INGEN KOMMISJON LOVET (owner, 6 Nov 2026)."
 }

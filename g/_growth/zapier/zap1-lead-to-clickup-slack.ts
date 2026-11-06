@@ -93,6 +93,13 @@ type Reviewer = { clickupId: number; slackId: string; name: string };
 const REVIEWER: Reviewer = { clickupId: 106690144, slackId: "U0AR2CM4NTZ", name: "Sondre" };
 const REVIEW_TAG = "vurder-nettside";
 const INTEREST_TAG = "ønsker-nettsidetilbud";
+// A lead whose form stood on a page that says nothing about how we are paid (the function sends
+// commission_promised: "no"; 6 Nov 2026, first the C-Medical case page). Nobody has promised it commission,
+// so we are free to offer a retainer or commission on the call. The task name, a tag, the first block of
+// the description and the second line of every Slack post say so, so that nobody promises it by habit.
+const OPEN_TAG = "ingen-kommisjon-lovet";
+const OPEN_PREFIX = "[INGEN KOMMISJON LOVET] ";
+const openTerms = (lead: Lead): boolean => lead.commission_promised === "no";
 const INTEREST_EVENT = "website_interest";
 
 // The Norwegian text of the workflow is the source. A campaign with lang "en" reads it through this table; an
@@ -131,6 +138,7 @@ const EN: Record<string, string> = {
   "Årsaker": "Reasons",
   "Kilde": "Source",
   "Side": "Page",
+  "Skjema på": "Form on",
   // route headings
   "IKKE TREFF": "NOT A FIT",
   // Slack
@@ -154,6 +162,11 @@ const EN: Record<string, string> = {
   "Send ett tilbud på e-post{to} innen to virkedager.": "Send one quote by e-mail{to} within two working days.",
   " til {email}": " to {email}",
   "Disse feltene ble ikke satt automatisk: {failed}. Svarene står i beskrivelsen.": "These fields were not set automatically: {failed}. The answers are in the description.",
+  // a lead from a page that says nothing about how we are paid
+  "INGEN KOMMISJON LOVET": "NO COMMISSION PROMISED",
+  "Skjemaet sto på en side som ikke sier noe om hvordan vi tar betalt ({entry}). Ingen har lovet denne leaden kommisjon: vi står fritt til retainer eller kommisjon, og {name} velger modell i møtet. Ikke nevn kommisjon før det.":
+    "The form stood on a page that says nothing about how we are paid ({entry}). Nobody has promised this lead commission: we are free to offer a retainer or commission, and {name} chooses the model on the call. Do not mention commission before then.",
+  "fri til retainer eller kommisjon, {name} velger i møtet (via {entry})": "free to offer a retainer or commission, {name} chooses on the call (via {entry})",
 };
 
 function tr(c: Campaign, no: string, vars?: Record<string, string>): string {
@@ -496,6 +509,7 @@ const KEYS = [
   "first_name", "last_name", "job_title", "email", "mobile",
   "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
   "fbclid", "page_slug", "referrer",
+  "entry", "commission_promised",
 ] as const;
 
 type Lead = Record<(typeof KEYS)[number], string>;
@@ -711,6 +725,13 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
     .join(" · ");
   const sections = [
     `**${t(route.heading)}** · ${c.label}${isTest ? " · TEST" : ""} · ${t("skjema levert")} ${lead.submitted_at}`,
+    openTerms(lead)
+      ? `**⚠ ${t("INGEN KOMMISJON LOVET")}**\n${tr(
+          c,
+          "Skjemaet sto på en side som ikke sier noe om hvordan vi tar betalt ({entry}). Ingen har lovet denne leaden kommisjon: vi står fritt til retainer eller kommisjon, og {name} velger modell i møtet. Ikke nevn kommisjon før det.",
+          { entry: lead.entry || "?", name: reviewerOf(c).name },
+        )}`
+      : "",
     block("Selskap", [
       row("Navn", lead.company_name),
       row("Nettside", lead.company_website),
@@ -752,6 +773,7 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
       row("fbclid", lead.fbclid),
       row("Side", lead.page_slug),
       row("Referrer", lead.referrer),
+      row("Skjema på", lead.entry),
     ]),
     `lead_id: ${lead.lead_id}`,
   ];
@@ -819,6 +841,7 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   const source = [lead.utm_source, lead.utm_content].filter(Boolean).join(" / ") || t("ukjent");
   const lines = [
     head,
+    openLine(c, lead),
     esc(line2),
     esc(profile),
     esc(line3),
@@ -859,6 +882,13 @@ const FLAGS = new Set(["fertility", "personal_injury_ticked", "value_under_2k_vo
 
 const slackEscape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+// The second line of every Slack post about a lead nobody promised commission. Empty for the others.
+function openLine(c: Campaign, lead: Lead): string {
+  if (!openTerms(lead)) return "";
+  const rest = tr(c, "fri til retainer eller kommisjon, {name} velger i møtet (via {entry})", { entry: lead.entry || "?", name: reviewerOf(c).name });
+  return `⚠ *${tr(c, "INGEN KOMMISJON LOVET")}* · ${slackEscape(rest)}`;
+}
+
 // The function's reason codes in the words of the country. A flag is not a reason, and a code that is not known is
 // shown as it is.
 function reasonsShown(c: Campaign, lead: Lead): string {
@@ -881,6 +911,7 @@ function slackCompact(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string
   const website = c.slackDetail === true && lead.company_website ? `${tr(c, "Nettside")}: ${lead.company_website}` : "";
   return [
     head,
+    openLine(c, lead),
     slackEscape(line2),
     slackEscape(website),
     `${tr(c, "{name} vurderer nettside eller retainer", { name: reviewerOf(c).name })} · ClickUp: <${taskUrl}|${tr(c, "åpne oppgaven")}>`,
@@ -894,7 +925,9 @@ function slackInterest(c: Campaign, lead: Lead, taskUrl: string, isTest: boolean
   const rev = reviewerOf(c);
   const who = isTest || !rev.slackId ? rev.name : `<@${rev.slackId}>`;
   const head = `${isTest ? "[TEST] " : ""}*${tr(c, "ØNSKER NETTSIDETILBUD")}* · ${c.label} · ${slackEscape(lead.company_name || tr(c, "uten navn"))}`;
-  return [head, `${tr(c, "{who} sender ett tilbud på e-post innen to virkedager", { who })} · ClickUp: <${taskUrl}|${tr(c, "åpne oppgaven")}>`].join("\n");
+  return [head, openLine(c, lead), `${tr(c, "{who} sender ett tilbud på e-post innen to virkedager", { who })} · ClickUp: <${taskUrl}|${tr(c, "åpne oppgaven")}>`]
+    .filter(Boolean)
+    .join("\n");
 }
 
 function interestComment(c: Campaign, lead: Lead): string {
@@ -921,12 +954,12 @@ async function createTask(
 ): Promise<TaskRef> {
   const existing = await findTask(campaign, lead.lead_id);
   if (existing) return { id: existing.id, url: existing.url, existed: true, fieldsDropped: "" };
-  const name = [lead.company_name, personName(lead)].filter(Boolean).join(" · ") || lead.lead_id;
+  const name = (openTerms(lead) ? OPEN_PREFIX : "") + ([lead.company_name, personName(lead)].filter(Boolean).join(" · ") || lead.lead_id);
   const body: Record<string, unknown> = {
     name,
     markdown_description: describe(campaign, lead, route, isTest),
     status: route.status,
-    tags: [campaign.tag, ...route.tags, ...(isTest ? ["test"] : [])],
+    tags: [campaign.tag, ...route.tags, ...(openTerms(lead) ? [OPEN_TAG] : []), ...(isTest ? ["test"] : [])],
     custom_fields: fields,
   };
   if (route.priority !== null) body.priority = route.priority;
