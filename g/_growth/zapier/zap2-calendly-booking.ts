@@ -102,6 +102,24 @@ const CAMPAIGNS: Record<string, Campaign> = {
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
   },
+  // The AI visibility retainer (6 Nov 2026). Its own list and its own Calendly event, made on the organisation account.
+  "uk-ai-visibility": {
+    label: "UK AI VISIBILITY",
+    listId: "1201270000005380", // AI VISIBILITY - UK - Retainer
+    tag: "ai-visibility",
+    eventTypes: ["f1f1d78a-9b14-435d-8de6-3472da1df542"], // Elevate Marketing | AI visibility | 30 minute review
+    field: {
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+    },
+  },
   "uk-law-firms": {
     label: "UK LAW",
     listId: "1201270000003579", // LAW - UK - Commission

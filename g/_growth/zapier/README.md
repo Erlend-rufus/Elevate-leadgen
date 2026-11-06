@@ -157,3 +157,14 @@ archived, never deleted; the one `[TEST]` post stays in #leads-uk. Published at 
 with its trigger active (the enabled state was not touched). Zap 2 was not changed. To go back: the version before,
 `01a1a36f-7dd5-7ec9-8f10-59f31b925a5b`. The Zap was published before the function (PR #131 merged after): a lead without the
 two keys is read as `yes`, so the order did not matter.
+
+6 Nov 2026: the AI visibility retainer (`/g/uk-ai-visibility`, PR #132). Zap 1 has a CAMPAIGNS entry `uk-ai-visibility`
+(list `AI VISIBILITY - UK - Retainer`, 1201270000005380, tag `ai-visibility`) and a `retainer` block: every lead of the
+campaign gets the task name prefix `[RETAINER]`, the tag `retainer`, a RETAINER block first in the description and a
+`💼 RETAINER` second line on every Slack post (`zap1.test.mjs` section 19, 276 checks). Zap 2 has the same campaign with the
+Calendly event `f1f1d78a-9b14-435d-8de6-3472da1df542` (`zap2.test.mjs`, 201 checks). Both drafts were run in Zapier against the
+real list (Zap 1: one fit lead with `slack_test`; Zap 2: one booking without a form, `@example.invalid`), read back from
+ClickUp and Slack, and the test tasks archived, never deleted. Published at about 21:30 UTC: Zap 1 version
+`01a1b2c8-8662-7981-b417-24543fc5e57f`, sha256 `b9fb9c97...`; Zap 2 version `01a1b2cc-97ea-7b0a-ac6b-cb94a2c204c2`, sha256
+`138f6f9d...`; both read back and identical to the files here, the enabled state not touched. To go back: Zap 1
+`01a1ae01-93e0-7556-ac7e-acd19b365cd7`, Zap 2 `01a1a19b-6f1d-7b23-ace8-1fdda467c5a0`.

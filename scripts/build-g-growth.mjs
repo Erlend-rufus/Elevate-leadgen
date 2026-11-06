@@ -41,7 +41,7 @@ const SHARED = join(G, '_growth');
 const OUT = process.env.G_GROWTH_OUT || join(root, 'public', 'g');
 const FUNCTION_DATA = process.env.G_GROWTH_FUNCTION_DATA || join(root, 'netlify', 'functions', 'lead', 'data.generated.mjs');
 
-const FUNNELS = ['uk-it-growth', 'uk-private-hospitals', 'uk-law-firms', 'it-ict-growth'];
+const FUNNELS = ['uk-it-growth', 'uk-private-hospitals', 'uk-law-firms', 'it-ict-growth', 'uk-ai-visibility'];
 
 /* What a funnel says about its own language. The UK funnels have no "locale" in config.json and get this, so their
    output is exactly what it was before Italy: lang en-GB, UK number format, the English rule set. A funnel may

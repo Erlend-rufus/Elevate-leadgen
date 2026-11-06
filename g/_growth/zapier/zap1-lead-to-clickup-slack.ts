@@ -99,6 +99,10 @@ const INTEREST_TAG = "ønsker-nettsidetilbud";
 // the description and the second line of every Slack post say so, so that nobody promises it by habit.
 const OPEN_TAG = "ingen-kommisjon-lovet";
 const OPEN_PREFIX = "[INGEN KOMMISJON LOVET] ";
+// A campaign that sells a retainer (6 Nov 2026, first /g/uk-ai-visibility) marks every lead the same way, so that
+// nobody mixes it up with the commission funnels in the same CRM folder.
+const RETAINER_PREFIX = "[RETAINER] ";
+const RETAINER_TAG = "retainer";
 const openTerms = (lead: Lead): boolean => lead.commission_promised === "no";
 const INTEREST_EVENT = "website_interest";
 
@@ -212,6 +216,7 @@ type Campaign = {
   reasonText?: Record<string, string>; // default REASON_TEXT
   answersEn?: Record<string, string>; // the form's own answer words in English (Italy); a word that is missing is shown as it came in
   slackDetail?: boolean; // default false (the posts are as they were); true: the full post also carries area, years trading, target, website and why
+  retainer?: { block: string; line: string }; // a retainer offer (6 Nov 2026): every lead is marked [RETAINER] in the name, a tag, a block first in the description and line 2 of each Slack post
   field: Record<string, string>;
   option: {
     crmItemType: string;
@@ -491,6 +496,46 @@ const CAMPAIGNS: Record<string, Campaign> = {
       contractValue: {},
     },
   },
+  // The AI visibility retainer (6 Nov 2026): GEO and ChatGPT ads for UK companies with £1m or more in turnover, any
+  // sector. The list "AI VISIBILITY - UK - Retainer" sits in the CRM folder with the statuses of the health and law
+  // lists; lead_id and Nettside were added to it as the existing shared fields, the rest come from the folder. No Tier,
+  // ad spend, team size or contract value dropdowns on this list: those stay empty (the answers are in the description).
+  // The sector is sent as "specialism"; the IT Specialism dropdown is left alone.
+  "uk-ai-visibility": {
+    label: "UK AI VISIBILITY",
+    listId: "1201270000005380", // AI VISIBILITY - UK - Retainer
+    tag: "ai-visibility",
+    peopleWord: "ansatte",
+    slackDetail: true, // the sector, the website and why the lead was routed as it was belong in the post
+    retainer: {
+      block: "AI Visibility: fra £1 500 i måneden inkl. £500 i ChatGPT-annonser, månedlig fra start, 30 dagers oppsigelse. Ingen kommisjon og ingen garanti. Sondre er kontaktperson.",
+      line: "AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon",
+    },
+    field: {
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
+      website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
+      adSpend: "",
+      teamSize: "",
+      contractValue: "",
+      tier: "",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      phone: "a0c06e36-5028-4b86-af93-c57de3ad2418",
+      specialism: "",
+      jobTitle: "cf254478-a92a-4805-921a-a89ba06c69a0",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+      tier: { fit: "", review: "", other: "" },
+      specialism: {},
+      teamSize: {},
+      adSpend: {},
+      contractValue: {},
+    },
+  },
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -725,6 +770,7 @@ function describe(c: Campaign, lead: Lead, route: RouteRule, isTest: boolean): s
     .join(" · ");
   const sections = [
     `**${t(route.heading)}** · ${c.label}${isTest ? " · TEST" : ""} · ${t("skjema levert")} ${lead.submitted_at}`,
+    c.retainer ? `**💼 RETAINER**\n${c.retainer.block}` : "",
     openTerms(lead)
       ? `**⚠ ${t("INGEN KOMMISJON LOVET")}**\n${tr(
           c,
@@ -858,6 +904,8 @@ function slackText(c: Campaign, lead: Lead, route: RouteRule, taskUrl: string, i
   }
   if (lead.route_reason.includes("fertility")) lines.push(t("⚠ Fertilitet: HFEA-regulert, sjekk før annonser"));
   if (lead.route_reason.includes("personal_injury_ticked")) lines.push(t("⚠ Personskade er krysset av: avtalen må unnta personskadesaker"));
+  if (lead.route_reason.includes("legal_no_chatgpt_ads")) lines.push("⚠ Juss: OpenAI tar ikke annonser for juridiske tjenester, bare GEO-delen kan selges");
+  if (lead.route_reason.includes("health_ads_check")) lines.push("⚠ Helse: sjekk OpenAIs annonseregler for tjenesten før møtet");
   return lines.filter(Boolean).join("\n");
 }
 
@@ -884,6 +932,7 @@ const slackEscape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;"
 
 // The second line of every Slack post about a lead nobody promised commission. Empty for the others.
 function openLine(c: Campaign, lead: Lead): string {
+  if (c.retainer) return `💼 *RETAINER* · ${slackEscape(c.retainer.line)}`;
   if (!openTerms(lead)) return "";
   const rest = tr(c, "fri til retainer eller kommisjon, {name} velger i møtet (via {entry})", { entry: lead.entry || "?", name: reviewerOf(c).name });
   return `⚠ *${tr(c, "INGEN KOMMISJON LOVET")}* · ${slackEscape(rest)}`;
@@ -954,12 +1003,12 @@ async function createTask(
 ): Promise<TaskRef> {
   const existing = await findTask(campaign, lead.lead_id);
   if (existing) return { id: existing.id, url: existing.url, existed: true, fieldsDropped: "" };
-  const name = (openTerms(lead) ? OPEN_PREFIX : "") + ([lead.company_name, personName(lead)].filter(Boolean).join(" · ") || lead.lead_id);
+  const name = (campaign.retainer ? RETAINER_PREFIX : openTerms(lead) ? OPEN_PREFIX : "") + ([lead.company_name, personName(lead)].filter(Boolean).join(" · ") || lead.lead_id);
   const body: Record<string, unknown> = {
     name,
     markdown_description: describe(campaign, lead, route, isTest),
     status: route.status,
-    tags: [campaign.tag, ...route.tags, ...(openTerms(lead) ? [OPEN_TAG] : []), ...(isTest ? ["test"] : [])],
+    tags: [campaign.tag, ...route.tags, ...(campaign.retainer ? [RETAINER_TAG] : openTerms(lead) ? [OPEN_TAG] : []), ...(isTest ? ["test"] : [])],
     custom_fields: fields,
   };
   if (route.priority !== null) body.priority = route.priority;
