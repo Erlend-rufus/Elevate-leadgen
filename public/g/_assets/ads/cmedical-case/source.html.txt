@@ -1,0 +1,157 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:F;src:url(fraunces-v1.woff2)}
+@font-face{font-family:G;src:url(geist-v1.woff2)}
+:root{--paper:#F7F5F0;--paper2:#EFEDE7;--ink:#10141C;--muted:#4A5162;--navy:#0A1628;--line:#CFCBC0;--ok:#1F7A4D;--okbg:#E3F1E9}
+*{margin:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);font-family:G,sans-serif;color:var(--ink)}
+.scene{position:absolute;inset:0;opacity:0;padding:300px 96px 0}
+.eye{display:inline-flex;align-items:center;gap:14px;font-size:30px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--muted);border:2px solid var(--line);border-radius:999px;padding:12px 26px}
+.dot{width:14px;height:14px;border-radius:50%;background:#C8372D}
+h1,h2{font-family:F,serif;font-weight:500;letter-spacing:-.02em;line-height:1.04}
+h2{font-size:84px;margin-top:34px}
+.big{font-family:F,serif;font-weight:500;letter-spacing:-.04em;line-height:.9}
+.small{font-size:28px;color:var(--muted);line-height:1.4}
+/* s1 */
+#s1{background:var(--navy);color:#fff;padding:0}
+#s1 .ph{position:absolute;inset:0;background:url(corridor.webp) center/cover;filter:saturate(.7)}
+#s1 .sh{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,.55),rgba(10,22,40,.85) 55%,rgba(10,22,40,.95))}
+#s1 .in{position:absolute;left:96px;right:96px;top:520px}
+#s1 .eye{color:#fff;border-color:rgba(255,255,255,.4)}
+#s1 h1{font-size:76px;margin-top:40px}
+#s1 .big{font-size:250px;margin:18px 0 10px}
+/* s2 */
+.card{position:absolute;background:#fff;border:2px solid var(--line);border-radius:22px;padding:22px 28px;display:flex;align-items:center;gap:20px;box-shadow:0 18px 40px rgba(16,20,28,.10);font-size:30px;white-space:nowrap}
+.tick{width:44px;height:44px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:26px;flex:none}
+.card b{display:block;font-weight:600}
+.card span{color:var(--muted);font-size:24px}
+.camp{display:flex;align-items:baseline;gap:30px;margin-top:60px}
+.camp .big{font-size:200px}
+.camp .arrow{font-size:90px;color:var(--muted)}
+/* bars */
+.chart{position:absolute;left:96px;right:96px;bottom:520px;height:700px;border-bottom:3px solid var(--ink);display:flex;align-items:flex-end;justify-content:space-around}
+.col{width:300px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar{width:100%;border-radius:14px 14px 0 0;background:var(--paper2);border:2px solid var(--line);border-bottom:0}
+.bar.g{background:var(--ok);border-color:var(--ok)}
+.val{font-family:F,serif;font-size:64px;margin-bottom:18px;white-space:nowrap}
+.lab{position:absolute;bottom:-70px;font-size:28px;color:var(--muted);white-space:nowrap}
+.col{position:relative}
+/* funnel */
+.row{margin-top:46px;background:#fff;border:2px solid var(--line);border-radius:24px;padding:34px 40px;display:flex;justify-content:space-between;align-items:center}
+.row .n{font-family:F,serif;font-size:110px;letter-spacing:-.03em}
+.row .t{font-size:32px;color:var(--muted);text-align:right;line-height:1.3}
+.row.hl{background:var(--navy);border-color:var(--navy);color:#fff}
+.row.hl .t{color:#C9D2E0}
+/* s6 */
+#s6{background:var(--ok);color:#fff}
+#s6 .eye{color:#fff;border-color:rgba(255,255,255,.5)}
+#s6 .big{font-size:400px;margin-top:80px}
+#s6 p{font-size:52px;font-family:F,serif;line-height:1.15;margin-top:30px}
+.pill{display:inline-block;border-radius:999px;padding:14px 30px;font-size:34px;font-weight:600}
+.pw{background:#fff;color:var(--ink)}
+.pg{background:var(--navy);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:22px;margin-top:70px}
+.chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:20px 34px;font-size:38px}
+.chip.you{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}
+/* end */
+.logo{display:flex;align-items:center;gap:22px;font-size:40px;font-weight:600}
+.mark{width:84px;height:84px;border-radius:20px;background:var(--navy);display:grid;place-items:center}
+.btn{display:inline-block;margin-top:60px;background:var(--ink);color:#fff;border-radius:999px;padding:34px 60px;font-size:40px;font-weight:600}
+.foot{position:absolute;left:96px;right:96px;bottom:430px}
+</style></head><body>
+
+<section class="scene" id="s1"><div class="ph"></div><div class="sh"></div>
+ <div class="in"><span class="eye"><i class="dot"></i>Real client case</span>
+  <h1>What happens when a private clinic group puts</h1>
+  <div class="big" id="s1n">£121,000</div>
+  <h1>into Google Ads?</h1></div>
+</section>
+
+<section class="scene" id="s2"><span class="eye">Step 1</span>
+ <h2>We rebuilt the account,<br>one campaign per treatment.</h2>
+ <div class="camp"><span class="big">11</span><span class="arrow">→</span><span class="big" id="s2n">11</span></div>
+ <div class="small">campaigns</div>
+ <div class="card" id="c1" style="left:96px;top:1080px"><div class="tick">✓</div><div><b>New booking</b><span>Women's health</span></div></div>
+ <div class="card" id="c2" style="left:480px;top:1210px"><div class="tick">✓</div><div><b>New booking</b><span>Urology</span></div></div>
+ <div class="card" id="c3" style="left:150px;top:1340px"><div class="tick">✓</div><div><b>New booking</b><span>Fertility</span></div></div>
+ <div class="card" id="c4" style="left:560px;top:1460px"><div class="tick">✓</div><div><b>New booking</b><span>Gynaecology</span></div></div>
+</section>
+
+<section class="scene" id="s3"><span class="eye">Step 2</span>
+ <h2>The bookings came in.</h2>
+ <div class="small" style="margin-top:20px">Online bookings from Google Ads, February to November 2026</div>
+ <div class="chart"><div class="col"><div class="val">1,251</div><div class="bar" id="b31"></div><div class="lab">Same days, 2025</div></div>
+ <div class="col"><div class="val" id="v32">0</div><div class="bar g" id="b32"></div><div class="lab">2026, with us</div></div></div>
+</section>
+
+<section class="scene" id="s4"><span class="eye">Step 3</span>
+ <h2>Then the patients walked in.</h2>
+ <div class="row" id="r1"><span class="n" id="n41">0</span><span class="t">bookings</span></div>
+ <div class="row" id="r2"><span class="n" id="n42">0</span><span class="t">came to the<br>consultation (93%)</span></div>
+ <div class="row hl" id="r3"><span class="n" id="n43">0</span><span class="t">went on to a<br>procedure (60%)</span></div>
+</section>
+
+<section class="scene" id="s5"><span class="eye">Step 4</span>
+ <h2>And the revenue followed.</h2>
+ <div class="chart"><div class="col"><div class="val">£121k</div><div class="bar" id="b51"></div><div class="lab">Spent on ads</div></div>
+ <div class="col"><div class="val" id="v52">£0</div><div class="bar g" id="b52"></div><div class="lab">Treatment revenue</div></div></div>
+ <div class="small foot" style="bottom:330px">Estimate on the clinic group's own figures: 93% attendance, 60% to a procedure at about £5,200. Revenue, not profit.</div>
+</section>
+
+<section class="scene" id="s6"><span class="eye">The result</span>
+ <div class="big" id="s6n">0x</div>
+ <p>Every £1 in ads came back as about £40 in revenue.</p>
+ <div style="margin-top:50px;display:flex;align-items:center;gap:20px"><span class="pill pw">£121k</span><span style="font-size:50px">→</span><span class="pill pg">£4.87m</span></div>
+</section>
+
+<section class="scene" id="s7"><span class="eye">Built for UK groups</span>
+ <h2>One clinic group was the example.</h2>
+ <div class="small" style="margin-top:20px">Same method, your specialities.</div>
+ <div class="chips" id="chips">
+  <span class="chip">Private hospitals</span><span class="chip">Fertility</span><span class="chip">Orthopaedics</span><span class="chip">Gynaecology</span><span class="chip">Urology</span><span class="chip">Cosmetic surgery</span><span class="chip">Eye clinics</span><span class="chip">Dermatology</span><span class="chip">Dental groups</span><span class="chip you">Your group?</span>
+ </div>
+</section>
+
+<section class="scene" id="s8">
+ <div class="logo" style="margin-top:220px"><div class="mark"><svg width="46" height="46" viewBox="0 0 46 46"><path d="M8 34 L23 12 L38 34" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Elevate Marketing</div>
+ <h2 style="font-size:96px;margin-top:80px">What would 45% more bookings be worth to your group?</h2>
+ <span class="btn" id="btn">See the numbers</span>
+ <div class="small foot">C-Medical, Norway. Google Ads, 1 Feb to 5 Nov 2026, against the same days of 2025. Published with the clinic group's permission.</div>
+</section>
+
+<script>
+const S=[['s1',0,3.6],['s2',3.6,8.4],['s3',8.4,12.6],['s4',12.6,17],['s5',17,21.2],['s6',21.2,24.4],['s7',24.4,27.4],['s8',27.4,31]];
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.round(n).toLocaleString('en-GB');
+function render(t){
+ for(const [id,a,b] of S){const el=$(id);const fi=cl((t-a)/0.35),fo=id==='s8'?1:cl((b-t)/0.3);const vis=t>=a-0.001&&t<b+0.001;
+  el.style.opacity=vis?Math.min(fi,fo):0;el.style.transform=`translateY(${(1-eo(fi))*40}px)`;}
+ // s1
+ let p=(t-0.4)/1.4; $('s1n').textContent='£'+fmt(121000*eo(p)); $('s1n').style.transform=`scale(${0.85+0.15*eb(p)})`;$('s1n').style.transformOrigin='left center';
+ document.querySelector('#s1 .ph').style.transform=`scale(${1.08-0.06*cl(t/3.6)})`;
+ // s2
+ $('s2n').textContent=Math.round(11+36*eo((t-4.4)/1.6));
+ ['c1','c2','c3','c4'].forEach((c,i)=>{const q=eb((t-(5.4+i*0.55))/0.5);$(c).style.opacity=cl((t-(5.4+i*0.55))/0.2);$(c).style.transform=`scale(${0.6+0.4*q})`});
+ // s3
+ const h31=700*0.62, h32=700*0.79*1.0;
+ $('b31').style.height=(h31*eo((t-8.8)/0.9))+'px';
+ const q3=eo((t-9.4)/2.0);$('b32').style.height=(h31*1601/1251*q3)+'px';$('v32').textContent=fmt(1601*q3);
+ // s4
+ const r=[['n41',1601,13.0],['n42',1489,14.2],['n43',893,15.4]];
+ r.forEach(([id,v,s],i)=>{const q=eo((t-s)/1.0);$(id).textContent=fmt(v*q);$('r'+(i+1)).style.opacity=cl((t-s+0.2)/0.3);});
+ // s5
+ $('b51').style.height=(12*eo((t-17.4)/0.6))+'px';
+ const q5=eo((t-18.0)/2.2);$('b52').style.height=(470*q5)+'px';const m=4.87*q5;$('v52').textContent=m<1?'£'+Math.round(m*1000)+'k':'£'+m.toFixed(2)+'m';
+ // s6
+ const q6=eo((t-21.5)/1.3);$('s6n').textContent=Math.round(40*q6)+'x';$('s6n').style.transform=`scale(${0.8+0.2*eb((t-21.5)/1.0)})`;$('s6n').style.transformOrigin='left center';
+ // s7
+ [...document.querySelectorAll('#chips .chip')].forEach((c,i)=>{const s=24.8+i*0.17;c.style.opacity=cl((t-s)/0.15);c.style.transform=`scale(${0.5+0.5*eb((t-s)/0.35)})`});
+ // s8
+ $('btn').style.transform=`scale(${1+0.04*Math.sin(Math.max(0,t-28.4)*5)*cl(t-28.4)})`;
+}
+window.render=render;render(0);
+</script></body></html>
