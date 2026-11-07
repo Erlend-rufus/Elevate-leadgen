@@ -1,5 +1,5 @@
 {
- "_comment": "Content and figures for /case/c-medical (built by scripts/build-case-cmedical.mjs). Figures: C-Medical's Google Ads account (692-047-3801) and GA4 property (419601371) via Windsor.ai, retrieved 5 November 2026, 1 February to 5 November 2026 against the same days of 2025, the tracking gap 13 July to 23 August left out of both years (236 counted days). Named with the clinic group's written permission (owner, 20 Oct 2026); revenue figures are estimates built on the owner's stated assumptions (attendance 92%, first consultation NOK 1,950, procedure NOK 59,000, 35 to 60% of consultations lead to a procedure). Never a commission rate. The build refuses em dashes, exclamation marks and a rate near the word commission.",
+ "_comment": "Content and figures for /case/c-medical (built by scripts/build-case-cmedical.mjs). Figures: C-Medical's Google Ads account (692-047-3801) and GA4 property (419601371) via Windsor.ai, retrieved 5 November 2026, 1 February to 5 November 2026 against the same days of 2025, the tracking gap 13 July to 23 August left out of both years (236 counted days). Named with the clinic group's written permission (owner, 20 Oct 2026); revenue figures are estimates built on the owner's stated assumptions (attendance 93%, first consultation NOK 1,950, procedure NOK 65,000 (both updated by the owner 7 Nov 2026, were 92% and NOK 59,000), 35 to 60% of consultations lead to a procedure). Never a commission rate. The build refuses em dashes, exclamation marks and a rate near the word commission.",
  "slug": "c-medical",
  "meta": {
   "title": "C-Medical: 45% more bookings on the same traffic | Elevate Marketing",
@@ -120,7 +120,7 @@
  "beyond": {
   "eyebrow": "Beyond the booking",
   "h2": "What the spend came back as",
-  "intro": "Estimates on the clinic group's own figures: 92% attendance, £156 a first consultation, £4,714 a procedure.",
+  "intro": "Estimates on the clinic group's own figures: 93% attendance, £156 a first consultation, £5,194 a procedure.",
   "rows": [
    {
     "label": "Attended first consultations",
@@ -136,7 +136,7 @@
    },
    {
     "label": "Return once procedures are counted",
-    "note": "at 35% of consultations; 13x leaving out searches for the clinic's own name"
+    "note": "at 35% of consultations; 14x leaving out searches for the clinic's own name"
    },
    {
     "label": "At the clinic group's upper estimate",
@@ -261,9 +261,9 @@
    "spend2026": 1264880
   },
   "assumptions": {
-   "attendance": 0.92,
+   "attendance": 0.93,
    "consultationNok": 1950,
-   "procedureNok": 59000,
+   "procedureNok": 65000,
    "procedureShareLow": 0.35,
    "procedureShareHigh": 0.6,
    "phoneBookRate": 0.46
