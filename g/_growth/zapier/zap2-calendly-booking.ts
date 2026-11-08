@@ -102,12 +102,17 @@ const CAMPAIGNS: Record<string, Campaign> = {
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
   },
-  // The AI visibility retainer (6 Nov 2026). Its own list and its own Calendly event, made on the organisation account.
+  // The AI visibility retainer (6 Nov 2026). Its own list and its own Calendly event. Since 8 Nov 2026 the event is owned by
+  // Sondre, so he is the host of every meeting. The first event, on the organisation account, stays in the list so that a
+  // cancellation or a reschedule of a booking made on it still finds its lead.
   "uk-ai-visibility": {
     label: "UK AI VISIBILITY",
     listId: "1201270000005380", // AI VISIBILITY - UK - Retainer
     tag: "ai-visibility",
-    eventTypes: ["f1f1d78a-9b14-435d-8de6-3472da1df542"], // Elevate Marketing | AI visibility | 30 minute review
+    eventTypes: [
+      "2b6f4168-ecb4-45a4-b565-aadb51fe96ce", // Elevate Marketing | AI visibility | 30 minute review (Sondre, 8 Nov 2026)
+      "f1f1d78a-9b14-435d-8de6-3472da1df542", // the same name on the organisation account (6 Nov 2026), replaced 8 Nov 2026
+    ],
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
       email: "78c13487-0fee-46d2-893f-68b212b09e6b",

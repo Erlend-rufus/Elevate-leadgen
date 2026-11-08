@@ -10,13 +10,16 @@ const LIST = '901522580321'; // IT - UK - Commision
 const HEALTH_LIST = '1201270000003578'; // HEALTH - UK - Commission
 const LAW_LIST = '1201270000003579'; // LAW - UK - Commission
 const ITALY_LIST = '1201270000004918'; // IT - ITALY - Commission (a lead id on an event that is not ours is searched on every list that has one)
-const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST, ITALY_LIST, '1201270000005380']);
-const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import']);
+const AI_LIST = '1201270000005380'; // AI VISIBILITY - UK - Retainer
+const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST, ITALY_LIST, AI_LIST]);
+const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'ai-visibility', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import']);
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow', 'møte gjennomført']);
 const F = { leadId: '08cf9ecc-ff51-4296-9e03-c5250ebb7abf', email: '78c13487-0fee-46d2-893f-68b212b09e6b', contact: '8fb666f4-c213-4f7a-a8ce-627e496a8313', crm: '8289eaa9-7492-40eb-a35d-092c51bd01ac', stage: 'f4bfea58-b05c-4427-ba1c-b4aa61200583' };
 const IT_TYPE = '769980c2-23c5-4a60-8f1e-462e5e4ea12e';
 const HEALTH_TYPE = '516ab30e-089f-49dc-a8e6-0e1071a71a1d';
 const LAW_TYPE = '1a655d87-d08d-4b52-a8fa-2120472d584d';
+const AI_TYPE = '2b6f4168-ecb4-45a4-b565-aadb51fe96ce'; // AI visibility, owned by Sondre (8 Nov 2026): the event the page embeds
+const AI_TYPE_FIRST = 'f1f1d78a-9b14-435d-8de6-3472da1df542'; // the first AI visibility event, organisation account (6 Nov 2026), replaced 8 Nov 2026 but kept for cancellations and reschedules
 const OTHER_TYPE = 'a71fef8d-91f6-44cd-abbf-03feb49574f4';
 const EV = '11111111-2222-3333-4444-555555555555';
 const INV = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee';
@@ -473,5 +476,49 @@ for (const [label, type, list, tag] of [['health', HEALTH_TYPE, HEALTH_LIST, 'gr
   const { out } = await run(w, nested({ scheduled_event: { event_type: `https://api.calendly.com/event_types/${OTHER_TYPE}` } }));
   eq(out.outcome, 'linked', 'other event, lead id in the law list: linked'); eq(t.status, 'møte booket', 'moved'); eq(out.eventNotInCampaigns, true, 'flagged');
   console.log('17 other ok');
+}
+// ---------------------------------------------------------------- 18. AI visibility retainer: Sondre's event (8 Nov 2026) and the first event it replaced
+// Both event types are in the AI campaign: a booking on Sondre's event is the normal case, and a cancellation or a reschedule of the one booking made on the first event
+// (Wed 11 Nov 2026) must still find its lead. A booking on either never touches another campaign's list.
+for (const [label, type] of [['sondre event', AI_TYPE], ['first event', AI_TYPE_FIRST]]) {
+  const bookedOn = (extra = {}) => nested({ ...extra, scheduled_event: { name: 'Elevate Marketing | AI visibility | 30 minute review', event_type: `https://api.calendly.com/event_types/${type}` } });
+  // the lead's task is in the AI list: linked by lead id, status moved, due date set, the event counts as ours
+  const w = makeWorld();
+  const t = w.addTask({ leadId: 'l_test_book_0001', status: 'ny lead', list: AI_LIST });
+  const { out } = await run(w, bookedOn());
+  eq(out.outcome, 'linked', 'ai ' + label + ': linked'); eq(out.how, 'lead_id', 'ai ' + label + ': by lead id'); eq(t.status, 'møte booket', 'ai ' + label + ': moved'); eq(t.due_date, startMs, 'ai ' + label + ': due date');
+  eq(out.eventNotInCampaigns, false, 'ai ' + label + ': event is in CAMPAIGNS');
+  ok(w.calls.every((c) => !c.path.startsWith('/list/') || c.path.startsWith('/list/' + AI_LIST + '/')), 'ai ' + label + ': only the AI list was searched');
+  // no lead id, no task: a task of its own in the AI list with the AI tag
+  const w2 = makeWorld();
+  const { out: o2 } = await run(w2, bookedOn({ tracking: { utm_content: 'd_0123456789abcdef0123' } }));
+  eq(o2.outcome, 'created_without_form', 'ai ' + label + ': created'); eq(w2.tasks.length, 1, 'ai ' + label + ': one task'); eq(w2.tasks[0].list, AI_LIST, 'ai ' + label + ': in the AI list');
+  eq(w2.tasks[0].tags, ['ai-visibility', 'booket-uten-skjema', 'test'], 'ai ' + label + ': tags'); eq(w2.tasks[0].status, 'møte booket', 'ai ' + label + ': booked');
+  // no lead id: matched by e-mail inside the AI list only, never on the same address in another campaign's list
+  const w3 = makeWorld();
+  const elsewhere = w3.addTask({ leadId: 'l_it_task', email: 'booker@example.invalid', status: 'ny lead', list: LIST });
+  const mine = w3.addTask({ leadId: 'l_mine', email: 'booker@example.invalid', status: 'ny lead', list: AI_LIST });
+  await run(w3, bookedOn({ tracking: { utm_content: null } }));
+  eq([elsewhere.status, mine.status], ['ny lead', 'møte booket'], 'ai ' + label + ': e-mail match stays inside the AI list');
+  console.log('18 ' + label + ' ok');
+}
+// a cancellation or a reschedule of the booking made on the first event: the invitee is rescheduled, the lead is found on the lead id and moved to the new time
+{
+  const w = makeWorld();
+  const t = w.addTask({ leadId: 'l_test_book_0001', status: 'møte booket', list: AI_LIST });
+  const { out } = await run(w, nested({ scheduled_event: { event_type: `https://api.calendly.com/event_types/${AI_TYPE_FIRST}` } }));
+  eq(out.outcome, 'linked', 'ai first event, already booked: linked'); eq(t.list, AI_LIST, 'stays in the AI list'); eq(t.due_date, startMs, 'due date follows the booking');
+  eq(out.eventNotInCampaigns, false, 'ai first event: still in CAMPAIGNS');
+  console.log('18 first event, rebooked ok');
+}
+// every event type id is in exactly one campaign: an id in two would give the first campaign in the list another campaign's bookings
+{
+  const src = fs.readFileSync(new URL('./zap2-calendly-booking.ts', import.meta.url), 'utf8');
+  const ids = [];
+  for (const m of src.matchAll(/eventTypes:\s*\[([^\]]*)\]/g)) for (const u of m[1].matchAll(/"([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"/g)) ids.push(u[1]);
+  ok(ids.length >= 6, 'the campaigns carry their event type ids (' + ids.length + ' found)');
+  eq(new Set(ids).size, ids.length, 'no event type id is in two campaigns');
+  ok(ids.includes(AI_TYPE) && ids.includes(AI_TYPE_FIRST), 'both AI visibility event types are in CAMPAIGNS');
+  console.log('18 unique ids ok');
 }
 console.log(`\nALL OK: ${passed} checks`);

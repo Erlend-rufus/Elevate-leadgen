@@ -28,8 +28,8 @@
     "applyPath": "/api/lead",
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
-    "calendlyUrl": "https://calendly.com/eb-growwithelevate/elevate-marketing-ai-visibility-30-minute-review",
-    "_calendlyUrl": "Event type f1f1d78a-9b14-435d-8de6-3472da1df542, made 6 Nov 2026 on the organisation account. Its id is in Zap 2's eventTypes.",
+    "calendlyUrl": "https://calendly.com/sh-elevatemarketing/elevate-marketing-ai-visibility-30-minute-review",
+    "_calendlyUrl": "Event type 2b6f4168-ecb4-45a4-b565-aadb51fe96ce, owned by Sondre so that he is the host of every meeting (8 Nov 2026). The first event, f1f1d78a-9b14-435d-8de6-3472da1df542 (6 Nov 2026, organisation account), stays in Zap 2's eventTypes beside it so that a cancellation or a reschedule of a booking made on it still finds its lead.",
     "calendlyLeadParam": "utm_content",
     "bookingHeights": {
       "narrow": 1150,

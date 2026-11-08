@@ -358,7 +358,7 @@ export const funnels = {
     "applyPath": "/api/lead",
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
-    "calendlyUrl": "https://calendly.com/eb-growwithelevate/elevate-marketing-ai-visibility-30-minute-review",
+    "calendlyUrl": "https://calendly.com/sh-elevatemarketing/elevate-marketing-ai-visibility-30-minute-review",
     "calendlyLeadParam": "utm_content",
     "bookingHeights": {
      "narrow": 1150,
