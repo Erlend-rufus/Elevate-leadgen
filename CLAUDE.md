@@ -149,8 +149,14 @@ Clarity, European servers, team bios (Erlend Rufus, Sondre Henanger).
 ## Contact / booking facts
 
 - Email only: `hello@getelevateleads.com` (no phone anywhere — deliberate).
-- Calendly event: `eb-growwithelevate/elevate-marketing-intro-meeting-clone-1`
-  (embedded on `/growth-audit` and `/book`).
+- Calendly event: `sh-elevatemarketing/elevate-marketing-intro-meeting`
+  (embedded on `/growth-audit` and `/book`; the static pages `/case/what-a-client-costs/booking`,
+  `/geo-audit/thanks` and `/journey.html` carry their own copy of the URL, so grep the old slug
+  before changing it).
+- Host rule (Nov 2026): Sondre Henanger hosts first meetings for the UK and the rest of the
+  world except Italy; Aurora hosts Italy. The host takes first meetings alone and invites
+  Erlend through the event only when they ask him. Create new Calendly event types under the
+  host's own user, never under the shared organisation account.
 - Typeform: live-embed `01KYF20M5CAMYSVACWPM3AMY4S` on `/contact`.
 
 ## Likely next tasks
