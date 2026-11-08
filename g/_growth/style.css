@@ -733,3 +733,72 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 @media (prefers-reduced-motion:reduce){
   .v2-arr,.v2-btn-t,.v2-tick path,.v2-no li span,.v2-rv,.v2-trio li::before,.v2-track i,.v2-steps li::before,.v2-plus::before,.v2-plus::after,.v2-ans,.v2-big .cn,.v2-total .cn{transition:none}
 }
+
+/*@section tenone*/
+/* Ten results become one answer (copy.json "tenone"). The still, which is also what reduced motion,
+   print and a browser without scroll-driven animation get: the three steps as text, then the ten
+   rows, then the answer. With scroll-driven animation the module is a 240vh track whose stage
+   sticks: the rows fold into the middle and fade, the answer card arrives in their place, and the
+   last chip fills in. Only opacity and transform move, so nothing shifts the layout. BYQ gem
+   lens-accordion-01 (rows that compress into desaturated strips) is the source of the look; its
+   GSAP loop is replaced by CSS, as the funnels load nothing from another host. */
+.t1{--rh:48px;--t1-dim:.6}
+.t1-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-40) var(--column-gap);align-items:center;margin-top:var(--space-40)}
+.t1-steps{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-28)}
+.t1-step{border-top:1px solid var(--line);padding-top:var(--space-16)}
+.t1-step > p:last-child{margin:var(--space-8) 0 0;max-width:30em;color:var(--text-body);text-wrap:pretty}
+.t1-k,.t1-lab{margin:0 0 var(--space-8);font-size:13px;font-weight:500;line-height:1.3;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+.t1-vis{display:grid;gap:var(--space-24);width:100%;max-width:480px;justify-self:center}
+.t1-list ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.t1-list li{display:flex;align-items:center;gap:12px;height:calc(var(--rh) - 8px);padding:0 14px;background:var(--white);border:1px solid var(--hairline-soft);border-radius:var(--radius-card)}
+.t1-n{flex:none;width:18px;font-size:13px;font-variant-numeric:tabular-nums;color:var(--text-muted)}
+.t1-bars{flex:1;display:grid;gap:5px}
+.t1-bars i{display:block;height:6px;border-radius:3px;background:var(--hairline)}
+.t1-bars i:first-child{width:calc(82% - var(--i) * 3%);background:var(--muted)}
+.t1-bars i:last-child{width:calc(52% - var(--i) * 2%)}
+.t1-ans{padding:var(--card-pad);border-radius:var(--radius-card);background:var(--navy);color:#FFFFFF}
+.t1-ans .t1-lab{color:rgba(255,255,255,.7)}
+.t1-q{margin:0;font-family:var(--font-display);font-size:var(--fs-faq);line-height:1.3;color:#FFFFFF}
+.t1-a{margin:var(--space-16) 0 var(--space-12);font-size:15px;line-height:1.45;color:rgba(255,255,255,.82)}
+.t1-ans ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.t1-ans li{padding:8px 14px;border:1px solid rgba(255,255,255,.42);border-radius:999px;font-size:15px;font-weight:500;line-height:1.3}
+.t1-ans .t1-you{border-style:dashed;color:rgba(255,255,255,.8)}
+@media (min-width:900px){.t1-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+@media (max-width:899px){.t1{--rh:36px;--t1-dim:0}}
+
+@media screen and (prefers-reduced-motion:no-preference){
+  @supports (animation-timeline:view()) and (animation-range:contain 0% contain 100%){
+    .t1-track{height:240vh;view-timeline:--t1 block}
+    .t1-stage{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center}
+    .t1-grid{margin-top:0}
+    .t1-vis{grid-template-areas:"v"}
+    .t1-list,.t1-ans{grid-area:v}
+    .t1-ans{align-self:center}
+    .t1-list li,.t1-list .t1-lab,.t1-ans,.t1-ans .t1-you,.t1-step,.t1-step > *{animation-timing-function:linear;animation-fill-mode:both;animation-timeline:--t1}
+    .t1-list li{animation-name:t1-row;animation-range:contain 18% contain 48%}
+    .t1-list .t1-lab{animation-name:t1-out;animation-range:contain 18% contain 36%}
+    .t1-ans{animation-name:t1-in;animation-range:contain 40% contain 60%}
+    .t1-ans .t1-you{animation-name:t1-you;animation-range:contain 72% contain 86%}
+    /* On a wide screen the three steps stand side by side with the picture; the one being told is
+       full ink and the others at 60 % (still 4.5:1 on paper). The small label keeps its colour. */
+    .t1-step--1 > :not(.t1-k){animation-name:t1-s1;animation-range:contain 0% contain 34%}
+    .t1-step--2 > :not(.t1-k){animation-name:t1-s2;animation-range:contain 34% contain 68%}
+    .t1-step--3 > :not(.t1-k){animation-name:t1-s3;animation-range:contain 68% contain 100%}
+    /* On a narrow screen there is room for one step at a time: they share a cell and take turns. */
+    @media (max-width:899px){
+      .t1-steps{grid-template-areas:"s"}
+      .t1-step{grid-area:s;align-self:end}
+      .t1-step > *{animation-name:none}
+      .t1-step--1{animation-name:t1-s1;animation-range:contain 0% contain 34%}
+      .t1-step--2{animation-name:t1-s2;animation-range:contain 34% contain 68%}
+      .t1-step--3{animation-name:t1-s3;animation-range:contain 68% contain 100%}
+    }
+  }
+}
+@keyframes t1-row{to{opacity:0;transform:translateY(calc((4.5 - var(--i)) * var(--rh))) scaleY(.15)}}
+@keyframes t1-out{to{opacity:0}}
+@keyframes t1-in{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes t1-you{to{background:#FFFFFF;color:var(--ink);border-color:#FFFFFF;border-style:solid}}
+@keyframes t1-s1{0%,80%{opacity:1}100%{opacity:var(--t1-dim)}}
+@keyframes t1-s2{0%{opacity:var(--t1-dim)}20%,80%{opacity:1}100%{opacity:var(--t1-dim)}}
+@keyframes t1-s3{0%{opacity:var(--t1-dim)}25%,100%{opacity:1}}

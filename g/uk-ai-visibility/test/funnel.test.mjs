@@ -110,3 +110,14 @@ test('ai pages: built, noindex, the price is on the page, commission is nowhere'
   assert.ok(!/guarantee(d|s)? (a|your) (ranking|position|result)/i.test(t.replace(/Do you guarantee results\?/, '')), 'no guarantee is offered');
   assert.match(readFileSync(join(dir, 'book', 'index.html'), 'utf8'), /elevate-marketing-ai-visibility-30-minute-review/);
 });
+
+test('ai ab test: the ten to one module is variant b only, hidden without a script, events wired', () => {
+  const html = readFileSync(join(ROOT, 'public', 'g', 'uk-ai-visibility', 'index.html'), 'utf8');
+  assert.match(html, /<section data-ab-only="b" class="sec t1" id="tenone"/);
+  assert.match(html, /\[data-ab-only\]\{display:none\}/, 'no script, no variant class: the module stays hidden (variant a)');
+  assert.match(html, /elevate:g:uk-ai-visibility:ab/);
+  for (const ev of ['AbView', 'AbFormReach', 'AbFormStart', 'AbQualified']) assert.ok(html.includes(`'${ev}'`), ev + ' is sent');
+  assert.ok(html.indexOf('data-ab') < html.indexOf('<body'), 'the variant is drawn in the head, before the body');
+  const other = readFileSync(join(ROOT, 'public', 'g', 'uk-it-growth', 'index.html'), 'utf8');
+  assert.ok(!/data-ab-only|AbView/.test(other), 'a funnel without "ab" gets no test');
+});

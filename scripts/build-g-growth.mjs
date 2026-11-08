@@ -632,6 +632,26 @@ const SECTIONS = {
       ? `<section class="band band--tiles" data-theme="marine" id="${id}" aria-labelledby="h-${id}"><div class="wrap"><div class="band-in">${inner}</div></div></section>`
       : `<section class="sec" id="${id}" aria-labelledby="h-${id}"><div class="wrap"><div class="sec-in">${inner}</div></div></section>`;
   },
+  /* Ten results become one answer (the C7 ad's line), as a scroll story. Without scroll-driven
+     animation, under reduced motion and in print it is a still: the steps as text, the ten rows
+     and the answer below them. The picture is decoration; the steps carry the meaning. */
+  tenone(c, ctx) {
+    const t = c.tenone;
+    const rows = Array.from({ length: 10 }, (_, i) =>
+      `<li style="--i:${i}"><span class="t1-n">${i + 1}</span><span class="t1-bars"><i></i><i></i></span></li>`).join('');
+    const a = t.answer;
+    return `<section class="sec t1" id="tenone" aria-labelledby="h-tenone">
+      <div class="wrap"><div class="sec-in t1-head"><h2 class="h2" id="h-tenone">${esc(t.h2)}</h2></div></div>
+      <div class="t1-track"><div class="t1-stage"><div class="wrap t1-grid">
+        <ol class="t1-steps">${t.steps.map((s, i) => `<li class="t1-step t1-step--${i + 1}"><p class="t1-k">${esc(s.k)}</p><h3 class="h3">${esc(s.t)}</h3><p>${esc(s.p)}</p></li>`).join('')}</ol>
+        <div class="t1-vis" aria-hidden="true">
+          <div class="t1-list"><p class="t1-lab">${esc(t.list)}</p><ol>${rows}</ol></div>
+          <div class="t1-ans"><p class="t1-lab">${esc(a.label)}</p><p class="t1-q">${esc(a.q)}</p><p class="t1-a">${esc(a.lead)}</p><ul>${a.names.map((n) => `<li>${esc(n)}</li>`).join('')}<li class="t1-you">${esc(a.you)}</li></ul></div>
+        </div>
+      </div></div></div>
+      <div class="wrap"><p class="note">${esc(t.note)}</p><div class="cta-row">${ctx.cta()}</div></div>
+    </section>`;
+  },
   records(c, ctx) {
     const r = c.records;
     return `<section class="sec" id="records" aria-labelledby="h-records">
@@ -736,7 +756,11 @@ function landingMain(cfg, copy, formHtml, layout) {
     if (!SECTIONS[name] || name.startsWith('_')) die(`copy.json layout names "${name}", which is not a section the build knows`);
     if (!copy[copyKey(name)] && name !== 'form') die(`copy.json layout names "${name}" but has no "${copyKey(name)}" block`);
     if (V2_SECTIONS.has(name) && !copy.v2) die(`copy.json layout names "${name}" but has no "v2" block`);
-    return SECTIONS[name](copy, ctx);
+    const html = SECTIONS[name](copy, ctx);
+    const only = cfg.ab && cfg.ab.sections[name];
+    if (!only) return html;
+    if (!/^<section /.test(html)) die(`config.json "ab" names "${name}", whose markup does not start with a <section>`);
+    return html.replace(/^<section /, `<section data-ab-only="${esc(only)}" `);
   });
   return `<main id="main">\n    ${parts.join('\n\n    ')}\n  </main>`;
 }
@@ -746,7 +770,20 @@ function landingMain(cfg, copy, formHtml, layout) {
    will see it count. */
 const HEAD_SCRIPT = `(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();`;
 
-function head(cfg, { title, description, css, og, scripts, preconnect }) {
+/* The A/B test (config.json "ab"), on the landing page only. The variant is set on <html> before the
+   body is drawn, so a section kept for one variant never appears and then disappears. Drawn per visit,
+   kept for the session so that /book knows it; ?ab=a|b forces one for checking and is not kept.
+   With no script the page is variant a: every [data-ab-only] section stays hidden. */
+function abHead(cfg) {
+  const id = cfg.ab.id;
+  if (!/^[a-z0-9_]{1,32}$/.test(id)) die('config.json "ab.id" must be lower case letters, digits and _');
+  const key = `elevate:g:${cfg.slug}:ab`;
+  const script = `(function(){var d=document.documentElement,k=${JSON.stringify(key)},id=${JSON.stringify(id)},v=null,f=0,s=null;try{var m=/[?&]ab=([ab])(&|$)/.exec(location.search);if(m){v=m[1];f=1}}catch(e){}if(!v){try{s=sessionStorage.getItem(k)}catch(e){}if(s&&s.indexOf(id+':')===0)v=s.slice(id.length+1)}if(v!=='a'&&v!=='b'){v=Math.random()<.5?'a':'b'}if(!f){try{sessionStorage.setItem(k,id+':'+v)}catch(e){}}else d.setAttribute('data-ab-forced','1');d.setAttribute('data-ab',v);d.classList.add('ab-'+v)})();`;
+  const css = '[data-ab-only]{display:none}\nhtml.ab-a [data-ab-only="a"],html.ab-b [data-ab-only="b"]{display:block}';
+  return { script, css };
+}
+
+function head(cfg, { title, description, css, og, scripts, preconnect, ab }) {
   const font = (f) => `<link rel="preload" href="/g/_assets/fonts/${f}" as="font" type="font/woff2" crossorigin>`;
   const consent = scripts
     ? `<script src="/js/consent.js?v=4" data-pixel="${esc(cfg.funnel.pixelId)}" data-banner="off"${scripts.track ? ` data-track="${esc(scripts.track)}"` : ''}></script>`
@@ -768,9 +805,9 @@ ${og ? `<meta property="og:type" content="website">
 ${(preconnect || []).map((u) => `<link rel="preconnect" href="${u}" crossorigin>`).join('\n')}${preconnect && preconnect.length ? '\n' : ''}${font('geist-v1.woff2')}
 ${font('fraunces-v1.woff2')}
 <style>
-${css}
+${css}${ab ? `\n${ab.css}` : ''}
 </style>
-<script>${HEAD_SCRIPT}</script>
+<script>${HEAD_SCRIPT}</script>${ab ? `\n<script>${ab.script}</script>` : ''}
 ${consent}
 </head>`;
 }
@@ -779,7 +816,7 @@ ${consent}
 
 const JS = {};
 function loadJs() {
-  for (const f of ['base', 'form', 'motion', 'motion2', 'book', 'notafit']) JS[f] = readFileSync(join(SHARED, 'js', `${f}.js`), 'utf8');
+  for (const f of ['base', 'form', 'motion', 'motion2', 'book', 'notafit', 'ab']) JS[f] = readFileSync(join(SHARED, 'js', `${f}.js`), 'utf8');
 }
 
 /** core.mjs has no imports, so removing the word "export" is all it takes to run it in a page. */
@@ -800,7 +837,9 @@ function pageScript(cfgClient, kind, coreSrc, v2) {
   if (kind === 'landing') {
     parts.push(coreForBrowser(coreSrc), JS.form, JS.motion);
     if (v2) parts.push(JS.motion2);
+    if (cfgClient.ab) parts.push(JS.ab);
     parts.push(v2 ? 'initForm();\ninitMotion();\ninitMotion2();\ninitBanner();' : 'initForm();\ninitMotion();\ninitBanner();');
+    if (cfgClient.ab) parts.push('initAb();');
   } else if (kind === 'apply') {
     parts.push(coreForBrowser(coreSrc), JS.form, 'initForm();\ninitBanner();');
   } else if (kind === 'book') {
@@ -925,6 +964,15 @@ async function build(slug) {
   if (extra.length && !sections.extra) die('g/_growth/style.css has no @section extra');
   const v2 = layout.some((n) => V2_SECTIONS.has(n));
   if (v2 && !sections.v2) die('g/_growth/style.css has no @section v2');
+  const tenone = layout.includes('tenone') ? ['tenone'] : [];
+  if (tenone.length && !sections.tenone) die('g/_growth/style.css has no @section tenone');
+  if (cfg.ab) {
+    if (!cfg.ab.sections || !Object.keys(cfg.ab.sections).length) die('config.json "ab" needs "sections": { "<section>": "a" | "b" }');
+    for (const [name, v] of Object.entries(cfg.ab.sections)) {
+      if (!layout.includes(name)) die(`config.json "ab" names "${name}", which is not in the layout`);
+      if (v !== 'a' && v !== 'b') die(`config.json "ab.sections.${name}" must be "a" or "b"`);
+    }
+  }
 
   const cfgClient = {
     slug: cfg.slug,
@@ -938,6 +986,7 @@ async function build(slug) {
     calendlyLeadParam: cfg.funnel.calendlyLeadParam,
     takkPath: `${cfg.path}/takk/`,
     prefillKey: `elevate:g:${cfg.slug}:prefill`,
+    ...(cfg.ab ? { ab: { id: cfg.ab.id } } : {}),
     text: {
       back: copy.form.back, next: copy.form.next, cta: copy.form.cta, retry: copy.form.retry,
       sending: copy.form.sending, failed: copy.form.failed,
@@ -949,8 +998,9 @@ async function build(slug) {
   /* ---- the landing page ---- */
   const landing = head(cfg, {
     title: copy.meta.title, description: copy.meta.description, og: true,
-    css: cssFor.apply(null, ['base', 'page', 'cards'].concat(extra, v2 ? ['v2'] : [], ['form', 'banner'])),
+    css: cssFor.apply(null, ['base', 'page', 'cards'].concat(extra, v2 ? ['v2'] : [], tenone, ['form', 'banner'])),
     scripts: { track: cfg.funnel.viewEvent },
+    ab: cfg.ab ? abHead(cfg) : null,
   }) + `
 <body>
 <div class="pg"><div class="pg-in em-fluid">

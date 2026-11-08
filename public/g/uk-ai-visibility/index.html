@@ -346,6 +346,62 @@ html.anim .cn:not(.cn-on) > [aria-hidden]{visibility:hidden;animation:cn-failsaf
 .fb-bar{grid-template-columns:minmax(0,1fr) minmax(0,2fr) auto;align-items:center;gap:var(--space-12)}
 .dp{max-width:560px}
 }
+.t1{--rh:48px;--t1-dim:.6}
+.t1-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-40) var(--column-gap);align-items:center;margin-top:var(--space-40)}
+.t1-steps{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-28)}
+.t1-step{border-top:1px solid var(--line);padding-top:var(--space-16)}
+.t1-step > p:last-child{margin:var(--space-8) 0 0;max-width:30em;color:var(--text-body);text-wrap:pretty}
+.t1-k,.t1-lab{margin:0 0 var(--space-8);font-size:13px;font-weight:500;line-height:1.3;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+.t1-vis{display:grid;gap:var(--space-24);width:100%;max-width:480px;justify-self:center}
+.t1-list ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.t1-list li{display:flex;align-items:center;gap:12px;height:calc(var(--rh) - 8px);padding:0 14px;background:var(--white);border:1px solid var(--hairline-soft);border-radius:var(--radius-card)}
+.t1-n{flex:none;width:18px;font-size:13px;font-variant-numeric:tabular-nums;color:var(--text-muted)}
+.t1-bars{flex:1;display:grid;gap:5px}
+.t1-bars i{display:block;height:6px;border-radius:3px;background:var(--hairline)}
+.t1-bars i:first-child{width:calc(82% - var(--i) * 3%);background:var(--muted)}
+.t1-bars i:last-child{width:calc(52% - var(--i) * 2%)}
+.t1-ans{padding:var(--card-pad);border-radius:var(--radius-card);background:var(--navy);color:#FFFFFF}
+.t1-ans .t1-lab{color:rgba(255,255,255,.7)}
+.t1-q{margin:0;font-family:var(--font-display);font-size:var(--fs-faq);line-height:1.3;color:#FFFFFF}
+.t1-a{margin:var(--space-16) 0 var(--space-12);font-size:15px;line-height:1.45;color:rgba(255,255,255,.82)}
+.t1-ans ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.t1-ans li{padding:8px 14px;border:1px solid rgba(255,255,255,.42);border-radius:999px;font-size:15px;font-weight:500;line-height:1.3}
+.t1-ans .t1-you{border-style:dashed;color:rgba(255,255,255,.8)}
+@media (min-width:900px){.t1-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+@media (max-width:899px){.t1{--rh:36px;--t1-dim:0}}
+@media screen and (prefers-reduced-motion:no-preference){
+@supports (animation-timeline:view()) and (animation-range:contain 0% contain 100%){
+.t1-track{height:240vh;view-timeline:--t1 block}
+.t1-stage{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center}
+.t1-grid{margin-top:0}
+.t1-vis{grid-template-areas:"v"}
+.t1-list,.t1-ans{grid-area:v}
+.t1-ans{align-self:center}
+.t1-list li,.t1-list .t1-lab,.t1-ans,.t1-ans .t1-you,.t1-step,.t1-step > *{animation-timing-function:linear;animation-fill-mode:both;animation-timeline:--t1}
+.t1-list li{animation-name:t1-row;animation-range:contain 18% contain 48%}
+.t1-list .t1-lab{animation-name:t1-out;animation-range:contain 18% contain 36%}
+.t1-ans{animation-name:t1-in;animation-range:contain 40% contain 60%}
+.t1-ans .t1-you{animation-name:t1-you;animation-range:contain 72% contain 86%}
+.t1-step--1 > :not(.t1-k){animation-name:t1-s1;animation-range:contain 0% contain 34%}
+.t1-step--2 > :not(.t1-k){animation-name:t1-s2;animation-range:contain 34% contain 68%}
+.t1-step--3 > :not(.t1-k){animation-name:t1-s3;animation-range:contain 68% contain 100%}
+@media (max-width:899px){
+.t1-steps{grid-template-areas:"s"}
+.t1-step{grid-area:s;align-self:end}
+.t1-step > *{animation-name:none}
+.t1-step--1{animation-name:t1-s1;animation-range:contain 0% contain 34%}
+.t1-step--2{animation-name:t1-s2;animation-range:contain 34% contain 68%}
+.t1-step--3{animation-name:t1-s3;animation-range:contain 68% contain 100%}
+}
+}
+}
+@keyframes t1-row{to{opacity:0;transform:translateY(calc((4.5 - var(--i)) * var(--rh))) scaleY(.15)}}
+@keyframes t1-out{to{opacity:0}}
+@keyframes t1-in{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes t1-you{to{background:#FFFFFF;color:var(--ink);border-color:#FFFFFF;border-style:solid}}
+@keyframes t1-s1{0%,80%{opacity:1}100%{opacity:var(--t1-dim)}}
+@keyframes t1-s2{0%{opacity:var(--t1-dim)}20%,80%{opacity:1}100%{opacity:var(--t1-dim)}}
+@keyframes t1-s3{0%{opacity:var(--t1-dim)}25%,100%{opacity:1}}
 .lf{container-type:inline-size;container-name:lf;color:var(--text);font-family:var(--font-body);font-weight:400;font-size:var(--fs-body);line-height:1.55}
 .lf-wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-32);padding-inline:var(--lf-mx,24px);padding-block:var(--lf-my,0px)}
 .lf-intro{display:flex;flex-direction:column;gap:var(--space-16)}
@@ -442,8 +498,11 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 @keyframes cb-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.cb{animation:none}}
 @media print{.cb{display:none}}
+[data-ab-only]{display:none}
+html.ab-a [data-ab-only="a"],html.ab-b [data-ab-only="b"]{display:block}
 </style>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
+<script>(function(){var d=document.documentElement,k="elevate:g:uk-ai-visibility:ab",id="ten_one",v=null,f=0,s=null;try{var m=/[?&]ab=([ab])(&|$)/.exec(location.search);if(m){v=m[1];f=1}}catch(e){}if(!v){try{s=sessionStorage.getItem(k)}catch(e){}if(s&&s.indexOf(id+':')===0)v=s.slice(id.length+1)}if(v!=='a'&&v!=='b'){v=Math.random()<.5?'a':'b'}if(!f){try{sessionStorage.setItem(k,id+':'+v)}catch(e){}}else d.setAttribute('data-ab-forced','1');d.setAttribute('data-ab',v);d.classList.add('ab-'+v)})();</script>
 <script src="/js/consent.js?v=4" data-pixel="1466790598245604" data-banner="off" data-track="ViewContent"></script>
 </head>
 <body>
@@ -484,6 +543,18 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
         <p class="intro">Google is not going away. But a growing share of buying questions now start in an AI assistant, and the answer names two or three companies, not ten links.</p>
         <ul class="tiles"><li class="tile"><span class="tile-v"><span class="cn" data-to="51" data-dec="0" data-pre="" data-suf="%" data-dur="1100" data-delay="150" data-play="sec"><span class="cn-sr">51%</span><span aria-hidden="true">51%</span></span></span><span class="tile-l">of UK adults use AI search tools to look for products, services and advice</span></li><li class="tile"><span class="tile-v"><span class="cn" data-to="24" data-dec="0" data-pre="" data-suf="%" data-dur="1250" data-delay="270" data-play="sec"><span class="cn-sr">24%</span><span aria-hidden="true">24%</span></span></span><span class="tile-l">use them daily or a few times a week. Search engines are still used that often by 82%: this is a second front door, not a replacement</span></li><li class="tile"><span class="tile-v"><span class="cn" data-to="900" data-dec="0" data-pre="" data-suf="m" data-dur="1400" data-delay="390" data-play="sec"><span class="cn-sr">900m</span><span aria-hidden="true">900m</span></span></span><span class="tile-l">people use ChatGPT every week</span></li><li class="tile"><span class="tile-v"><span class="cn" data-to="0" data-dec="0" data-pre="£" data-suf="" data-dur="1550" data-delay="510" data-play="sec"><span class="cn-sr">£0</span><span aria-hidden="true">£0</span></span></span><span class="tile-l">minimum spend for ChatGPT ads, open to UK advertisers since June 2026</span></li></ul>
         <p class="note">Sources: Which?, Consumer use and attitudes towards AI search tools, December 2025 (4,189 UK adults, September 2025). OpenAI, head of ChatGPT, February 2026. OpenAI Ads Manager, open to UK advertisers from 22 June 2026.</p></div></div></section>
+
+    <section data-ab-only="b" class="sec t1" id="tenone" aria-labelledby="h-tenone">
+      <div class="wrap"><div class="sec-in t1-head"><h2 class="h2" id="h-tenone">Search shows ten results. AI gives one answer.</h2></div></div>
+      <div class="t1-track"><div class="t1-stage"><div class="wrap t1-grid">
+        <ol class="t1-steps"><li class="t1-step t1-step--1"><p class="t1-k">Search</p><h3 class="h3">Ten links to compare.</h3><p>A Google search gives your buyer a page of links. They open a few and compare, so third or fourth place still gets looked at.</p></li><li class="t1-step t1-step--2"><p class="t1-k">AI</p><h3 class="h3">One question, one answer.</h3><p>The same buyer asks ChatGPT and gets a short answer that names two or three firms. That is where the shortlist starts.</p></li><li class="t1-step t1-step--3"><p class="t1-k">You</p><h3 class="h3">In the answer, or not in it.</h3><p>There is no second page to scroll to. Before the first call we put your buyers&#39; questions to the AI tools and show you whether they name you.</p></li></ol>
+        <div class="t1-vis" aria-hidden="true">
+          <div class="t1-list"><p class="t1-lab">Search results</p><ol><li style="--i:0"><span class="t1-n">1</span><span class="t1-bars"><i></i><i></i></span></li><li style="--i:1"><span class="t1-n">2</span><span class="t1-bars"><i></i><i></i></span></li><li style="--i:2"><span class="t1-n">3</span><span class="t1-bars"><i></i><i></i></span></li><li style="--i:3"><span class="t1-n">4</span><span class="t1-bars"><i></i><i></i></span></li><li style="--i:4"><span class="t1-n">5</span><span class="t1-bars"><i></i><i></i></span></li><li style="--i:5"><span class="t1-n">6</span><span class="t1-bars"><i></i><i></i></span></li><li style="--i:6"><span class="t1-n">7</span><span class="t1-bars"><i></i><i></i></span></li><li style="--i:7"><span class="t1-n">8</span><span class="t1-bars"><i></i><i></i></span></li><li style="--i:8"><span class="t1-n">9</span><span class="t1-bars"><i></i><i></i></span></li><li style="--i:9"><span class="t1-n">10</span><span class="t1-bars"><i></i><i></i></span></li></ol></div>
+          <div class="t1-ans"><p class="t1-lab">AI answer</p><p class="t1-q">Who should we talk to about this?</p><p class="t1-a">The firms that come up most often:</p><ul><li>Firm A</li><li>Firm B</li><li class="t1-you">Your firm?</li></ul></div>
+        </div>
+      </div></div></div>
+      <div class="wrap"><p class="note">Illustration. AI answers change from one question, person and day to the next.</p><div class="cta-row"><a class="btn btn--primary" href="#form">See whether we would take you on</a></div></div>
+    </section>
 
     <section class="sec" id="how" aria-labelledby="h-how">
       <div class="wrap"><div class="sec-in">
@@ -601,7 +672,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 <script>
 (function(){
 'use strict';
-var CFG = {"slug":"uk-ai-visibility","campaign":"uk-ai-visibility","path":"/g/uk-ai-visibility","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"https://calendly.com/sh-elevatemarketing/elevate-marketing-ai-visibility-30-minute-review","calendlyLeadParam":"utm_content","takkPath":"/g/uk-ai-visibility/takk/","prefillKey":"elevate:g:uk-ai-visibility:prefill","text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email","askDone":"Thank you. We will email you from post@elevatemarketing.no within two working days.","askError":"That did not go through. Email post@elevatemarketing.no and ask for a quote, and we will send one."}};
+var CFG = {"slug":"uk-ai-visibility","campaign":"uk-ai-visibility","path":"/g/uk-ai-visibility","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"https://calendly.com/sh-elevatemarketing/elevate-marketing-ai-visibility-30-minute-review","calendlyLeadParam":"utm_content","takkPath":"/g/uk-ai-visibility/takk/","prefillKey":"elevate:g:uk-ai-visibility:prefill","ab":{"id":"ten_one"},"text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email","askDone":"Thank you. We will email you from post@elevatemarketing.no within two working days.","askError":"That did not go through. Email post@elevatemarketing.no and ask for a quote, and we will send one."}};
 /* Shared by every page of a growth funnel. The build wraps the pieces of a page in one
    function and writes CFG above them; nothing here reads the page's own copy. */
 
@@ -709,6 +780,11 @@ function fireQualified(route, leadId) {
   var key = 'elevate:g:' + CFG.slug + ':' + CFG.qualifiedEvent + ':' + leadId;
   if (storeGet(key) === '1') return;
   Consent.track(CFG.qualifiedEvent, { route: route, campaign: CFG.campaign }, { eventID: leadId });
+  /* A page with an A/B test keeps "<test>:<variant>" for the session (config.json "ab"). The
+     variant goes in an event of its own, so the server copy of QualifiedForm stays as it was. */
+  var ab = storeGet('elevate:g:' + CFG.slug + ':ab');
+  var abm = ab && /^([a-z0-9_]{1,32}):([ab])$/.exec(ab);
+  if (abm) Consent.track('AbQualified', { test: abm[1], variant: abm[2], route: route });
   storeSet(key, '1');
 }
 
@@ -1289,9 +1365,48 @@ function initMotion() {
   });
 }
 
+/* The A/B test's events (config.json "ab"). The head of the page has already drawn the variant and
+   set it on <html> as data-ab. Everything here goes through /js/consent.js, so nothing is sent
+   before Accept and nothing at all after Decline. The events are counts for the test and carry no
+   answer from the form:
+     AbView       the landing page was seen, once per page view
+     AbFormReach  a quarter of the form came into view
+     AbFormStart  the first focus inside the form
+   AbQualified is sent beside QualifiedForm, in base.js, with the variant kept for the session. */
+
+function initAb() {
+  var v = docEl.getAttribute('data-ab');
+  if (!Consent || !CFG.ab || (v !== 'a' && v !== 'b')) return;
+  var p = { test: CFG.ab.id, variant: v, forced: docEl.hasAttribute('data-ab-forced') ? 1 : 0 };
+  Consent.track('AbView', p);
+
+  var form = document.getElementById('form');
+  if (!form) return;
+  var reached = false;
+  var started = false;
+  if (typeof IntersectionObserver === 'function') {
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting && !reached) {
+          reached = true;
+          Consent.track('AbFormReach', p);
+          io.disconnect();
+        }
+      }
+    }, { threshold: 0.25 });
+    io.observe(form);
+  }
+  form.addEventListener('focusin', function () {
+    if (started) return;
+    started = true;
+    Consent.track('AbFormStart', p);
+  });
+}
+
 initForm();
 initMotion();
 initBanner();
+initAb();
 })();
 </script>
 </body>
