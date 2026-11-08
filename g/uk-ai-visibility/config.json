@@ -37,6 +37,13 @@
       "wide": 700
     }
   },
+  "ab": {
+    "id": "ten_one",
+    "sections": {
+      "tenone": "b"
+    },
+    "_ab": "A 50/50 test from 8 Nov 2026: variant b shows the ten to one module after 'Why now', variant a is the page as before. The variant is drawn per visit in the head of the page and kept in sessionStorage for the rest of the session, so /book can tell which one a lead saw. Without a script the page is variant a. ?ab=a or ?ab=b forces a variant for checking, is not stored, and is sent as forced: 1. Events, Meta custom events after Accept only: AbView, AbFormReach (the form a quarter in view), AbFormStart (first focus in the form), AbQualified (with QualifiedForm). Read the result as AbFormStart per AbView by variant. Remove this block and the module together, or make the winner the page."
+  },
   "hiddenFields": [
     "campaign",
     "page_slug",

@@ -366,6 +366,12 @@ export const funnels = {
      "wide": 700
     }
    },
+   "ab": {
+    "id": "ten_one",
+    "sections": {
+     "tenone": "b"
+    }
+   },
    "hiddenFields": [
     "campaign",
     "page_slug",
