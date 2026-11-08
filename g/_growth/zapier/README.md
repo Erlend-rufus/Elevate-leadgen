@@ -168,3 +168,19 @@ ClickUp and Slack, and the test tasks archived, never deleted. Published at abou
 `01a1b2c8-8662-7981-b417-24543fc5e57f`, sha256 `b9fb9c97...`; Zap 2 version `01a1b2cc-97ea-7b0a-ac6b-cb94a2c204c2`, sha256
 `138f6f9d...`; both read back and identical to the files here, the enabled state not touched. To go back: Zap 1
 `01a1ae01-93e0-7556-ac7e-acd19b365cd7`, Zap 2 `01a1a19b-6f1d-7b23-ace8-1fdda467c5a0`.
+
+8 Nov 2026: the AI visibility booking page moves to an event owned by Sondre (PR #134). The owner's rule (8 Nov 2026) is that
+Sondre hosts the meetings booked for the UK and the rest of the world except Italy, where Aurora does, and that the host
+takes first meetings alone. The new Calendly event is `2b6f4168-ecb4-45a4-b565-aadb51fe96ce` (owner Sondre). Zap 2's
+`uk-ai-visibility` entry now lists both event types: the new one first, and `f1f1d78a-9b14-435d-8de6-3472da1df542` (the
+organisation account's) kept so that a cancellation or a reschedule of the one booking made on it (Wed 11 Nov 2026, 10:00 Oslo
+time) still finds its lead. It can come out once that meeting is over. `zap2.test.mjs` is at 232 checks (a case for each event
+type, a guard that no event type id appears twice) and `zap2-it.test.mjs` at 98 (it was failing on main: its fake ClickUp
+list whitelist did not know the AI list). The draft was run in Zapier against the real lists with made-up data
+(`@example.invalid`): a booking on the new event made a task without a form, a booking on the old event with the same
+`lead_id` was linked to that task (no second task, the status untouched), and a booking on the UK IT event behaved as before.
+Both test tasks were archived, never deleted. Published at 18:07 UTC with the owner's go-ahead, before the
+page change was merged, so that no booking on the new event could arrive before Zap 2 knew it: Zap 2 version
+`01a1bc57-c79e-7944-8c25-d4171c50f14d`, sha256 `adf4912d...`, 33,856 bytes, read back and byte-identical to the file here, still
+switched on with its trigger active (the enabled state was not touched). Zap 1 was not changed. To go back: the version before,
+`01a1b2cc-97ea-7b0a-ac6b-cb94a2c204c2`.
