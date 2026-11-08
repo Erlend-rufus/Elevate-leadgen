@@ -20,7 +20,7 @@ state the workflows are in (switched on or off) is also kept there, not here.
 
    ```
    node g/_growth/zapier/build.mjs zap2-calendly-booking.ts
-   node g/_growth/zapier/zap2.test.mjs        # 201 checks
+   node g/_growth/zapier/zap2.test.mjs        # 232 checks
    node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
    node g/_growth/zapier/zap1.test.mjs        # 244 checks
    node g/_growth/zapier/zap1-it.test.mjs     # 669 checks, Italy (after zap1's build)

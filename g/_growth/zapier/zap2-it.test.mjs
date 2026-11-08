@@ -17,6 +17,7 @@ const IT_LIST = '1201270000004918'; // IT - ITALY - Commission
 const UK_LIST = '901522580321';
 const UK_HEALTH_LIST = '1201270000003578';
 const UK_LAW_LIST = '1201270000003579';
+const UK_AI_LIST = '1201270000005380'; // AI VISIBILITY - UK - Retainer (6 Nov 2026): an Italian booking whose own list is missing falls back to searching every list
 const IT_TYPE = '82a67d1d-2a3b-4bd4-b892-97c41d4a47ad'; // Elevate Marketing | Commission | IT Italia
 const UK_IT_TYPE = '769980c2-23c5-4a60-8f1e-462e5e4ea12e';
 const EV = '11111111-2222-3333-4444-555555555555';
@@ -73,7 +74,7 @@ function makeWorld() {
     assert.equal(init.connection, 'clickup_main');
     let m = p.match(/^\/list\/(\d+)\/task$/);
     if (m && method === 'GET') {
-      assert.ok([IT_LIST, UK_LIST, UK_HEALTH_LIST, UK_LAW_LIST].includes(m[1]), 'search on a known list: ' + m[1]);
+      assert.ok([IT_LIST, UK_LIST, UK_HEALTH_LIST, UK_LAW_LIST, UK_AI_LIST].includes(m[1]), 'search on a known list: ' + m[1]);
       const cf = JSON.parse(u.searchParams.get('custom_fields') || '[]');
       let tasks = w.tasks.filter((t) => t.list === m[1]);
       for (const f of cf) tasks = tasks.filter((t) => (t.custom_fields.find((c) => c.id === f.field_id) || {}).value === f.value);
@@ -132,7 +133,7 @@ const shipped = (await import(pathToFileURL(path.join(here, 'out/zap2-calendly-b
   const out = await run(shipped, w, booking());
   eq(out.outcome, 'linked', 'shipped: an Italian booking is linked to the lead\'s task'); eq(t.status, 'møte booket', 'shipped: the task is moved to møte booket');
   ok(w.calls.some((c) => c.path.includes(IT_LIST)), 'shipped: the Italy list is searched');
-  ok(w.calls.every((c) => !c.path.includes(`/list/${UK_LIST}/`) && !c.path.includes(`/list/${UK_HEALTH_LIST}/`) && !c.path.includes(`/list/${UK_LAW_LIST}/`)), 'shipped: no UK list is touched for an Italian booking');
+  ok(w.calls.every((c) => !c.path.includes(`/list/${UK_LIST}/`) && !c.path.includes(`/list/${UK_HEALTH_LIST}/`) && !c.path.includes(`/list/${UK_LAW_LIST}/`) && !c.path.includes(`/list/${UK_AI_LIST}/`)), 'shipped: no UK list is touched for an Italian booking');
   // the entry in the source carries the real list and event type, so a later edit that empties them is caught here
   const entry = SOURCE.slice(SOURCE.indexOf('"it-ict-growth": {'));
   ok(entry.includes(`listId: "${IT_LIST}",`) && entry.includes(`eventTypes: ["${IT_TYPE}"],`), 'shipped: the source carries the list and the event type');
