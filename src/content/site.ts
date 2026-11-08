@@ -16,9 +16,14 @@ export const site = {
   email: 'hello@getelevateleads.com',
   /** When false, BookingEmbed renders the [REPLACE] placeholder card. */
   bookingEnabled: true,
-  /** Calendly event URL for the inline booking widget (used by BookingEmbed). */
+  /**
+   * Calendly event URL for the inline booking widget (used by BookingEmbed).
+   * Host is Sondre Henanger: first meetings for the UK and the world outside
+   * Italy are his (Italy is Aurora's). Create any replacement event under his
+   * own Calendly user, not the shared organisation account.
+   */
   calendlyUrl:
-    'https://calendly.com/eb-growwithelevate/elevate-marketing-intro-meeting-clone-1?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=00a3d6',
+    'https://calendly.com/sh-elevatemarketing/elevate-marketing-intro-meeting?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=00a3d6',
   /** Legal entity (trading as Elevate Marketing), per Brønnøysund/proff.no. */
   companyNo: 'EngeCo AS · Org.nr 924 490 926',
   /** Footer brand blurb (reuses the home meta description). */
