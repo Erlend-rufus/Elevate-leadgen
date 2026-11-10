@@ -75,6 +75,29 @@ const sdk = createZapierSdk();
  *   - What the visitor wrote in their own words (what they want from the meeting, the target) is shown as written:
  *     a table cannot translate it.
  *   An entry without these keys behaves exactly as before; the UK posts did not change.
+ *
+ * Added 10 Nov 2026, booking reminders (Erlend: "we want to nag a lot at the start, so they do not fall off").
+ * A fit lead that has not booked a meeting gets an e-mail 2, 6, 12 and 48 hours after the form was sent, each
+ * with the link to its own booking page. It applies to every campaign (REMIND has an entry for each one, and a
+ * test fails if one is missing):
+ *   - "Not booked" is read from ClickUp right before each e-mail: the task is still in "ny lead". The booking
+ *     workflow (Zap 2) moves it to "møte booket"; a person who moves it anywhere else (kontaktet, archive) also
+ *     stops the reminders. That is the off switch for one lead: move the task out of "ny lead".
+ *   - The run waits between the e-mails (ctx.wait), so a fit lead's run now ends after up to 48 hours. Everything
+ *     else (task, Slack, fields, phone) is done before the first wait, exactly as before.
+ *   - The e-mails are sent from the shared mailbox post@elevatemarketing.no, the address the pages give, with the
+ *     host of the meeting as Reply-To (Sondre for the UK, Aurora for Italy), and signed by the host. Each one is
+ *     noted in a ClickUp comment without a notification. Nothing about them goes to Slack.
+ *   - Nothing here can fail the run: a ClickUp read that fails skips that one reminder (never an e-mail on a guess),
+ *     an e-mail that fails is noted and the next one is still tried.
+ *   - A reminder whose time has passed when the lead arrives (a late delivery from the function's store) is skipped,
+ *     so nobody gets three e-mails at once.
+ *   - A test lead gets no e-mail and no wait: the four e-mails come back as a preview in the run's output. Two keys
+ *     in the payload, read for test leads only, let a draft run exercise the real path: reminder_test_seconds (the
+ *     gap between reminders, 1 to 30 seconds) and reminder_test_send (the e-mails are sent, to REMIND_TEST_TO and
+ *     never to the lead).
+ *   - The texts say nothing about how we are paid, so they are right for commission, retainer and
+ *     "no commission promised" leads alike.
  */
 
 // ---------------------------------------------------------------------------------------------
@@ -105,6 +128,89 @@ const RETAINER_PREFIX = "[RETAINER] ";
 const RETAINER_TAG = "retainer";
 const openTerms = (lead: Lead): boolean => lead.commission_promised === "no";
 const INTEREST_EVENT = "website_interest";
+
+// Booking reminders (10 Nov 2026): a fit lead that has not booked gets an e-mail this many hours after the form.
+const REMIND_ON = true; // false: no reminders for anyone, nothing else changes
+const REMIND_HOURS = [2, 6, 12, 48];
+const REMIND_STATUS = "ny lead"; // a task still here has not booked and nobody has taken it by hand
+const REMIND_MAX_WAIT_S = 6 * 60 * 60; // one wait is at most this long; a longer gap is several waits in a row
+const REMIND_SITE = "https://getelevateleads.com";
+const OUTLOOK = "outlook_main";
+const REMIND_FROM = "post@elevatemarketing.no"; // the shared mailbox the pages give as the contact address
+const REMIND_TEST_TO = "post@elevatemarketing.no"; // where a test lead's e-mails go when the payload asks for a real send
+
+type Remind = {
+  lang: "en" | "it";
+  offer: string; // the meeting, in the words of the campaign's booking page
+  prep: string; // one sentence about the meeting, also from the booking page
+  host: string; // first name, in the text
+  sign: string; // the name under the e-mail
+  replyTo: string; // the host's own address
+};
+
+const REMIND: Record<string, Remind> = {
+  "uk-it-growth": { lang: "en", offer: "30 minute pipeline review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
+  "uk-private-hospitals": { lang: "en", offer: "30-minute bookings review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
+  "uk-law-firms": { lang: "en", offer: "30 minute instruction review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
+  "uk-ai-visibility": { lang: "en", offer: "30 minute AI visibility review", prep: "We put your buyers' questions to ChatGPT before we meet, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
+  "it-ict-growth": { lang: "it", offer: "analisi della pipeline di 30 minuti", prep: "Bastano i vostri numeri, non c’è nulla da preparare.", host: "Aurora", sign: "Aurora", replyTo: "au@growwithelevate.eu" },
+};
+
+// The four e-mails, in order. Tokens: {hi} the greeting line, {company}, {offer}, {prep}, {host}, {link}.
+// Plain text on purpose: it reads as a note from a person and needs no template.
+type Mail = { subject: string; subjectNoName?: string; body: string };
+const REMIND_MAIL: Record<"en" | "it", { hi: string; hiNoName: string; company: string; foot: string; mails: Mail[] }> = {
+  en: {
+    hi: "Hi {first},",
+    hiNoName: "Hello,",
+    company: "your firm",
+    foot: "If you no longer want the call, reply and say so, and these reminders stop.",
+    mails: [
+      {
+        subject: "Your {offer}: pick a time",
+        body: "{hi}\n\nThank you for applying. From your answers, {company} looks like a fit, so the next step is the {offer} with {host}.\n\nYou have not picked a time yet. It takes under a minute:\n{link}\n\nIf none of the times suit you, reply to this email with two or three that do and we will find one.",
+      },
+      {
+        subject: "No time booked yet for {company}",
+        body: "{hi}\n\nA short reminder: your application went through, but there is no call in the calendar yet.\n\nThe {offer} is a call with {host}. {prep}\n\nPick a time here:\n{link}",
+      },
+      {
+        subject: "Shall we find a time, {first}?",
+        subjectNoName: "Shall we find a time?",
+        body: "{hi}\n\nYou applied for a {offer} but have not chosen a time. The calendar is open here:\n{link}\n\nIf the times do not suit you, or something came up, reply to this email and tell us when would be better.",
+      },
+      {
+        subject: "Last reminder: your {offer}",
+        body: "{hi}\n\nThis is the last reminder from us. Your application for {company} is still open, and you can book the {offer} here:\n{link}\n\nIf now is not the right time, reply and tell us when to come back to you.",
+      },
+    ],
+  },
+  it: {
+    hi: "Buongiorno {first},",
+    hiNoName: "Buongiorno,",
+    company: "la vostra azienda",
+    foot: "Se la chiamata non vi interessa più, rispondete a questa email e i promemoria si fermano.",
+    mails: [
+      {
+        subject: "Scegliete un orario per l’{offer}",
+        body: "{hi}\n\ngrazie per la candidatura. Dalle vostre risposte, {company} rientra tra le aziende che seguiamo: il passo successivo è l’{offer} con {host}.\n\nNon avete ancora scelto un orario. Basta meno di un minuto:\n{link}\n\nSe nessun orario va bene, rispondete a questa email con due o tre alternative e ne troveremo uno.",
+      },
+      {
+        subject: "Nessun orario prenotato per {company}",
+        body: "{hi}\n\nun breve promemoria: la candidatura è arrivata, ma in calendario non c’è ancora una chiamata.\n\nL’{offer} è una chiamata con {host}. {prep}\n\nScegliete un orario qui:\n{link}",
+      },
+      {
+        subject: "Troviamo un orario, {first}?",
+        subjectNoName: "Troviamo un orario?",
+        body: "{hi}\n\navete chiesto l’{offer}, ma non avete ancora scelto un orario. Il calendario è aperto qui:\n{link}\n\nSe gli orari non vanno bene, o è sopraggiunto un imprevisto, rispondete a questa email e diteci quando preferite.",
+      },
+      {
+        subject: "Ultimo promemoria: l’{offer}",
+        body: "{hi}\n\nquesto è il nostro ultimo promemoria. La vostra candidatura resta aperta e potete prenotare l’{offer} qui:\n{link}\n\nSe non è il momento giusto, rispondete e diteci quando risentirci.",
+      },
+    ],
+  },
+};
 
 // The Norwegian text of the workflow is the source. A campaign with lang "en" reads it through this table; an
 // entry that is missing falls back to the Norwegian text (a test checks that none is missing for what an
@@ -171,6 +277,9 @@ const EN: Record<string, string> = {
   "Skjemaet sto på en side som ikke sier noe om hvordan vi tar betalt ({entry}). Ingen har lovet denne leaden kommisjon: vi står fritt til retainer eller kommisjon, og {name} velger modell i møtet. Ikke nevn kommisjon før det.":
     "The form stood on a page that says nothing about how we are paid ({entry}). Nobody has promised this lead commission: we are free to offer a retainer or commission, and {name} chooses the model on the call. Do not mention commission before then.",
   "fri til retainer eller kommisjon, {name} velger i møtet (via {entry})": "free to offer a retainer or commission, {name} chooses on the call (via {entry})",
+  // booking reminders
+  "Påminnelse {n} av {total} om å booke møte er sendt på e-post ({hours} t etter skjemaet).": "Reminder {n} of {total} to book a meeting was sent by e-mail ({hours} h after the form).",
+  "Påminnelse {n} av {total} om å booke møte ble ikke sendt: {error}": "Reminder {n} of {total} to book a meeting was not sent: {error}",
 };
 
 function tr(c: Campaign, no: string, vars?: Record<string, string>): string {
@@ -1133,6 +1242,179 @@ async function interest(
   };
 }
 
+// ---------------------------------------------------------------------------------------------
+// Booking reminders
+// ---------------------------------------------------------------------------------------------
+
+// A first name or a company name goes into an e-mail only when it looks like one. The form is public: somebody
+// could put a link or a sales line in those fields and have us send it to an address that is not theirs.
+function mailWord(v: string, max: number, name = false): string {
+  const s = v.trim();
+  if (!s || s.length > max) return "";
+  if (/[<>@\/\\{}\[\]|:;=]/.test(s) || /https?|www\./i.test(s)) return "";
+  if (name && /[0-9.,!?]/.test(s)) return "";
+  return s;
+}
+
+// The lead's own booking page. The lead id ties the booking to the task (Zap 2 reads it back from Calendly);
+// utm_medium=reminder tells the page that this visit is not a new qualified form.
+function bookingLink(campaignKey: string, leadId: string, hours: number): string {
+  return `${REMIND_SITE}/g/${campaignKey}/book/?lead_id=${encodeURIComponent(leadId)}&utm_source=email&utm_medium=reminder&utm_campaign=booking_${hours}h`;
+}
+
+function reminderMail(campaignKey: string, lead: Lead, index: number): { subject: string; body: string } {
+  const r = REMIND[campaignKey];
+  const t = REMIND_MAIL[r.lang];
+  const mail = t.mails[index];
+  const first = mailWord(lead.first_name, 40, true);
+  const vars: [string, string][] = [
+    ["hi", first ? t.hi : t.hiNoName],
+    ["first", first],
+    ["company", mailWord(lead.company_name, 80) || t.company],
+    ["offer", r.offer],
+    ["prep", r.prep],
+    ["host", r.host],
+    ["link", bookingLink(campaignKey, lead.lead_id, REMIND_HOURS[index])],
+  ];
+  const fill = (text: string): string => {
+    let out = text;
+    for (const [k, v] of vars) out = out.split(`{${k}}`).join(v);
+    return out;
+  };
+  return {
+    subject: fill(first ? mail.subject : mail.subjectNoName ?? mail.subject),
+    body: `${fill(mail.body)}\n\n${r.sign}\nElevate Marketing\n\n${t.foot}`,
+  };
+}
+
+type ReminderEntry = { n: number; hours: number; action: "sent" | "not_sent" | "skipped" | "stopped" | "preview"; reason?: string; status?: string; noted?: boolean };
+
+// The reminders of one fit lead. Every step here answers with a value instead of throwing, so a ClickUp or
+// Outlook error can never fail a run whose lead is already safe in ClickUp. The waits and the steps themselves
+// are not wrapped in try and catch: the runtime must be free to pause the run there.
+async function remind(
+  ctx: any,
+  campaignKey: string,
+  campaign: Campaign,
+  lead: Lead,
+  taskId: string,
+  isTest: boolean,
+  parsed: Record<string, unknown>,
+): Promise<Record<string, unknown>> {
+  const total = REMIND_HOURS.length;
+  if (!REMIND_ON) return { on: false, reason: "switched off" };
+  if (!Object.prototype.hasOwnProperty.call(REMIND, campaignKey)) return { on: false, reason: "the campaign has no REMIND entry" };
+  const to = validEmail(lead.email);
+  if (!to) return { on: false, reason: "no usable e-mail address" };
+
+  // A test lead: no wait and no e-mail, the four e-mails come back as text. With reminder_test_seconds a draft
+  // run takes the real path with seconds for hours, and with reminder_test_send the e-mails go to REMIND_TEST_TO.
+  const testGap = isTest ? Math.floor(Number(parsed.reminder_test_seconds)) : NaN;
+  const realPath = !isTest || (testGap >= 1 && testGap <= 30);
+  if (!realPath) {
+    return { on: true, test: true, sent: 0, preview: REMIND_HOURS.map((hours, i) => ({ n: i + 1, hours, ...reminderMail(campaignKey, lead, i) })) };
+  }
+  const testSend = isTest && truthy(parsed.reminder_test_send);
+
+  const started: number = await ctx.step({ name: "start-booking-reminders", run: async () => Date.now() });
+  const submitted = Date.parse(lead.submitted_at);
+  const base = !isTest && Number.isFinite(submitted) && submitted <= started && started - submitted < 7 * DAY_MS ? submitted : started;
+  const log: ReminderEntry[] = [];
+  let cursor = started;
+  let sentCount = 0;
+
+  for (let i = 0; i < total; i++) {
+    const n = i + 1;
+    const hours = REMIND_HOURS[i];
+    const due = isTest ? started + n * testGap * 1000 : base + hours * 60 * 60 * 1000;
+    if (due < cursor) {
+      log.push({ n, hours, action: "skipped", reason: "its time had passed when the lead arrived" });
+      continue;
+    }
+    let left = Math.ceil((due - cursor) / 1000);
+    for (let part = 1; left > 0; part++) {
+      const chunk = Math.min(left, REMIND_MAX_WAIT_S);
+      await ctx.wait(`wait-before-reminder-${n}-part-${part}`, chunk);
+      left -= chunk;
+    }
+    cursor = due;
+
+    const state: { ok: boolean; status: string; gone: boolean } = await ctx.step({
+      name: `check-booking-before-reminder-${n}`,
+      run: async () => {
+        for (let attempt = 0; attempt < 3; attempt++) {
+          try {
+            const r = await clickup("GET", `/task/${taskId}`);
+            if (r.ok) return { ok: true, status: String(r.json?.status?.status ?? "").toLowerCase(), gone: Boolean(r.json?.archived) };
+          } catch {
+            // tried again below
+          }
+        }
+        return { ok: false, status: "", gone: false };
+      },
+    });
+    if (!state.ok) {
+      log.push({ n, hours, action: "skipped", reason: "ClickUp could not be read, so nothing was sent" });
+      continue;
+    }
+    if (state.gone || state.status !== REMIND_STATUS) {
+      log.push({ n, hours, action: "stopped", status: state.gone ? "archived" : state.status });
+      break;
+    }
+
+    const mail = reminderMail(campaignKey, lead, i);
+    if (isTest && !testSend) {
+      log.push({ n, hours, action: "preview", status: state.status });
+      continue;
+    }
+    // One attempt: a second try after an answer that got lost could send the same e-mail twice.
+    const sent: { sent: boolean; error: string } = await ctx.step({
+      name: `send-reminder-${n}`,
+      run: async () => {
+        try {
+          await sdk.runAction({
+            appKey: "MicrosoftOutlookCLIAPI",
+            actionType: "write",
+            actionKey: "send_email",
+            connection: OUTLOOK,
+            inputs: {
+              sender: REMIND_FROM,
+              recipients: [isTest ? REMIND_TEST_TO : to],
+              replyTo: [REMIND[campaignKey].replyTo],
+              subject: (isTest ? "[TEST] " : "") + mail.subject,
+              body: mail.body,
+              bodyFormat: "Text",
+            },
+          });
+          return { sent: true, error: "" };
+        } catch (e) {
+          return { sent: false, error: clean((e as any)?.message ?? e, 200) || "unknown error" };
+        }
+      },
+    });
+    if (sent.sent) sentCount++;
+
+    const note: { noted: boolean } = await ctx.step({
+      name: `note-reminder-${n}`,
+      run: async () => {
+        const vars = { n: String(n), total: String(total), hours: String(hours), error: sent.error };
+        const text = sent.sent
+          ? tr(campaign, "Påminnelse {n} av {total} om å booke møte er sendt på e-post ({hours} t etter skjemaet).", vars)
+          : tr(campaign, "Påminnelse {n} av {total} om å booke møte ble ikke sendt: {error}", vars);
+        try {
+          const r = await clickup("POST", `/task/${taskId}/comment`, { comment_text: text, notify_all: false });
+          return { noted: r.ok };
+        } catch {
+          return { noted: false };
+        }
+      },
+    });
+    log.push({ n, hours, action: sent.sent ? "sent" : "not_sent", status: state.status, noted: note.noted });
+  }
+
+  return { on: true, test: isTest, sent: sentCount, log };
+}
+
 const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og-slack", async (ctx, rawInput) => {
   // Validate before anything is written. An unknown campaign or route fails the run on purpose,
   // so it shows in the run history and the e-mail alert instead of vanishing.
@@ -1239,6 +1521,10 @@ const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og
     });
   }
 
+  // 5. Booking reminders, fit only: an e-mail 2, 6, 12 and 48 hours after the form while the task is still in
+  //    "ny lead". Everything above is done by now. A real fit lead's run ends here after up to 48 hours.
+  const reminders = routeKey === "fit" ? await remind(ctx, lead.campaign, campaign, lead, task.id, isTest, parsed as Record<string, unknown>) : null;
+
   return {
     lead_id: lead.lead_id,
     campaign: lead.campaign,
@@ -1252,6 +1538,7 @@ const workflow = defineDurable<unknown, unknown>("leads-v3-skjema-til-clickup-og
     salvage,
     slack,
     phone: phoneResult,
+    reminders,
   };
 });
 
