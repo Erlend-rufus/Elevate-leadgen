@@ -59,7 +59,7 @@ async function load(opts) {
 
 // ---------------------------------------------------------------- fakes
 function makeWorld() {
-  const w = { tasks: [], slack: [], calls: [], nextId: 1 };
+  const w = { tasks: [], slack: [], mail: [], waits: [], calls: [], nextId: 1, reminders: false };
   const reply = (status, json) => ({ ok: status >= 200 && status < 300, status, text: async () => (typeof json === 'string' ? json : JSON.stringify(json)) });
   const fullTask = (t) => ({ id: t.id, url: 'https://app.clickup.com/t/' + t.id, tags: t.tags.map((name) => ({ name })), custom_fields: t.custom_fields.map((c) => ({ id: c.id, name: truth[c.id].name, value: c.value })) });
   w.fetch = async (url, init = {}) => {
@@ -98,6 +98,12 @@ function makeWorld() {
       t.custom_fields.push({ id: m[2], value: body.value });
       return reply(200, {});
     }
+    // the booking reminders read the status; outside the reminder section the lead has "booked" by then
+    m = p.match(/^\/task\/([^/]+)$/);
+    if (m && method === 'GET') {
+      const t = w.tasks.find((x) => x.id === m[1]);
+      return reply(200, { id: t.id, status: { status: w.reminders ? t.status : 'møte booket' }, archived: false });
+    }
     m = p.match(/^\/task\/([^/]+)\/comment$/);
     if (m && method === 'POST') {
       const t = w.tasks.find((x) => x.id === m[1]);
@@ -115,6 +121,11 @@ function makeWorld() {
     throw new Error('unexpected ClickUp call ' + method + ' ' + p);
   };
   w.runAction = async (args) => {
+    if (args.appKey === 'MicrosoftOutlookCLIAPI') {
+      assert.equal(args.connection, 'outlook_main'); assert.equal(args.inputs.sender, 'post@elevatemarketing.no');
+      w.mail.push({ to: args.inputs.recipients[0], replyTo: args.inputs.replyTo[0], subject: args.inputs.subject, body: args.inputs.body });
+      return { data: [{}] };
+    }
     w.slack.push({ channel: args.inputs.channel, text: args.inputs.text });
     return { data: [{ ts: '1700000000.000100', channel: args.inputs.channel }] };
   };
@@ -129,6 +140,7 @@ async function run(wf, world, input) {
       throw last;
     },
   };
+  ctx.wait = async (name, seconds) => { world.waits.push({ name, seconds }); };
   return wf.run(ctx, input);
 }
 const optName = (t, fid) => { const c = t.custom_fields.find((x) => x.id === fid); return c ? (truth[fid].options ? truth[fid].options[c.value] : c.value) : undefined; };
@@ -453,5 +465,27 @@ const shipped = (await import(pathToFileURL(path.join(here, 'out/zap1-lead-to-cl
     ok(!m.includes('<!channel>') && !m.includes('<2>'), 'no raw < or > from the visitor');
   }
   console.log('8 ok');
+}
+// ---------------------------------------------------------------- 9. booking reminders for Italy (10 Nov 2026): Italian, Aurora, the Italian booking page
+{
+  const w = makeWorld(); w.reminders = true;
+  const out = await run(shipped, w, lead({ lead_id: 'l_it_rem_1' }));
+  eq(w.mail.length, 4, 'reminders: four e-mails'); eq(out.reminders.sent, 4, 'reminders: four sent');
+  ok(w.mail.every((m) => m.to === 'marco@rossi-informatica.it' && m.replyTo === 'au@growwithelevate.eu'), 'reminders: to the lead, replies to Aurora');
+  eq(w.mail.map((m) => m.subject), ['Scegliete un orario per l’analisi della pipeline di 30 minuti', 'Nessun orario prenotato per Rossi Informatica S.r.l.', 'Troviamo un orario, Marco?', 'Ultimo promemoria: l’analisi della pipeline di 30 minuti'], 'reminders: the Italian subjects');
+  const all = w.mail.map((m) => m.subject + '\n' + m.body).join('\n');
+  console.log('--- promemoria 1 ---\n' + w.mail[0].body + '\n---');
+  ok(w.mail.every((m) => m.body.startsWith('Buongiorno Marco,\n\n') && m.body.endsWith('\n\nAurora\nElevate Marketing\n\nSe la chiamata non vi interessa più, rispondete a questa email e i promemoria si fermano.')), 'reminders: greeting, Aurora, the way out');
+  [2, 6, 12, 48].forEach((h, i) => ok(w.mail[i].body.includes('\nhttps://getelevateleads.com/g/it-ict-growth/book/?lead_id=l_it_rem_1&utm_source=email&utm_medium=reminder&utm_campaign=booking_' + h + 'h\n'), 'reminders: the Italian booking page, e-mail ' + (i + 1)));
+  ok(!/[!—–]/.test(all) && !/\{[a-z]+\}/.test(all), 'reminders: no exclamation mark, no dash, no token left');
+  ok(!/\b(the|your|you|call|reply|Hi|Sondre)\b/.test(all), 'reminders: no English and no Sondre in the Italian e-mails');
+  ok(!/provvigion|commission|canone|%/i.test(all), 'reminders: nothing about how we are paid');
+  eq(w.tasks[0].comments[0], 'Reminder 1 of 4 to book a meeting was sent by e-mail (2 h after the form).', 'reminders: the note on the task is in English, like the rest of the Italy list');
+  eq(w.slack.length, 1, 'reminders: nothing more in Slack');
+  const w2 = makeWorld(); w2.reminders = true;
+  await run(shipped, w2, lead({ lead_id: 'l_it_rem_2', first_name: '', company_name: '' }));
+  ok(w2.mail[0].body.startsWith('Buongiorno,\n\ngrazie per la candidatura. Dalle vostre risposte, la vostra azienda rientra tra le aziende che seguiamo'), 'reminders: without a name or a company');
+  eq(w2.mail[2].subject, 'Troviamo un orario?', 'reminders: the subject without a name');
+  console.log('9 ok');
 }
 console.log('\nALL PASSED (Italy, Zap 1): ' + passed + ' checks');

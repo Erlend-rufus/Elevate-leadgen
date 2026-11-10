@@ -52,8 +52,10 @@ function initBook() {
     }
   });
 
-  /* A qualified form is a lead we sent here from the form. A visit without a lead id is not. */
-  function fire() { if (known) fireQualified('fit', leadId); }
+  /* A qualified form is a lead we sent here from the form. A visit without a lead id is not, and neither is
+     a visit from a booking reminder e-mail (utm_medium=reminder, set by the lead Zap): that lead was counted
+     when the form sent it here, and a second count days later would be a second conversion in Meta. */
+  function fire() { if (known && q.utm_medium !== 'reminder') fireQualified('fit', leadId); }
   initBanner(fire);
   fire();
 }

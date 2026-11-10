@@ -15,7 +15,7 @@ const SONDRE = 106690144;
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow']);
 
 function makeWorld(opts = {}) {
-  const w = { tasks: [], slack: [], calls: [], nextId: 1, opts, failNext: [] };
+  const w = { tasks: [], slack: [], mail: [], waits: [], calls: [], nextId: 1, opts, failNext: [] };
   const reply = (status, json) => ({
     ok: status >= 200 && status < 300, status,
     text: async () => (typeof json === 'string' ? json : JSON.stringify(json)),
@@ -74,6 +74,16 @@ function makeWorld(opts = {}) {
       if (ex) ex.value = body.value; else t.custom_fields.push({ id: m[2], value: body.value });
       return reply(200, {});
     }
+    // GET /task/:id (the booking reminders read the status)
+    m = path.match(/^\/task\/([^/]+)$/);
+    if (m && method === 'GET') {
+      if (w.opts.taskReadFails) return reply(500, { err: 'forced read failure' });
+      const t = w.tasks.find((x) => x.id === m[1]);
+      if (!t) return reply(404, { err: 'no task' });
+      // Sections 1 to 19 are about the task and Slack: there the lead "books" before the first reminder, so they
+      // run as before. A world made with reminders: true shows the task's real status (section 20).
+      return reply(200, { id: t.id, status: { status: w.opts.reminders ? t.status : 'møte booket' }, archived: Boolean(t.archived) });
+    }
     m = path.match(/^\/task\/([^/]+)\/comment$/);
     if (m && method === 'POST') {
       const t = w.tasks.find((x) => x.id === m[1]);
@@ -102,6 +112,18 @@ function makeWorld(opts = {}) {
   };
   const fullTask = (t) => ({ id: t.id, url: 'https://app.clickup.com/t/' + t.id, tags: t.tags.map((name) => ({ name })), custom_fields: t.custom_fields.map((c) => ({ id: c.id, name: truth[c.id].name, value: c.value })) });
   w.runAction = async (args) => {
+    if (args.appKey === 'MicrosoftOutlookCLIAPI') {
+      assert.equal(args.actionType, 'write');
+      assert.equal(args.actionKey, 'send_email');
+      assert.equal(args.connection, 'outlook_main');
+      assert.equal(args.inputs.sender, 'post@elevatemarketing.no');
+      assert.equal(args.inputs.bodyFormat, 'Text');
+      assert.ok(Array.isArray(args.inputs.recipients) && args.inputs.recipients.length === 1, 'one recipient');
+      assert.ok(Array.isArray(args.inputs.replyTo) && args.inputs.replyTo.length === 1, 'one reply-to');
+      if (w.opts.mailFails && w.opts.mailFails.includes(w.mail.length + (w.mailFailed || 0) + 1)) { w.mailFailed = (w.mailFailed || 0) + 1; throw new Error('Outlook said no'); }
+      w.mail.push({ to: args.inputs.recipients[0], replyTo: args.inputs.replyTo[0], subject: args.inputs.subject, body: args.inputs.body });
+      return { data: [{ subject: args.inputs.subject }], nextCursor: undefined };
+    }
     assert.equal(args.appKey, 'SlackCLIAPI');
     assert.equal(args.actionType, 'write');
     assert.equal(args.actionKey, 'channel_message');
@@ -130,6 +152,12 @@ async function run(world, input) {
       }
       throw lastErr;
     },
+  };
+  ctx.wait = async (name, seconds) => {
+    assert.ok(Number.isInteger(seconds) && seconds > 0 && seconds <= 6 * 3600, 'a wait is a whole number of seconds, at most six hours: ' + seconds);
+    world.waits.push({ name, seconds });
+    log.push({ name, wait: seconds });
+    if (world.opts.onWait) await world.opts.onWait(world, name);
   };
   const out = await wf.run(ctx, input);
   return { out, log };
@@ -589,5 +617,134 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
   eq(w3.slack[0].split('\n')[1], '💼 *RETAINER* · AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon', 'ai: in the not-a-fit post too');
   ok(w3.slack[0].includes('Grunn: omsetning under £1m'), 'ai: the reason');
   console.log('19 ok');
+}
+// ---------------------------------------------------------------- 20. booking reminders (10 Nov 2026): 2, 6, 12 and 48 hours, fit only, until the task leaves "ny lead"
+{
+  const H = 3600;
+  const real = (o) => withLead({ lead_id: 'l_rem_0001', email: 'owner@acme-it.co.uk', first_name: 'Dana', company_name: 'Acme IT Ltd', ...o });
+  const sum = (w, n) => w.waits.filter((x) => x.name.startsWith('wait-before-reminder-' + n + '-')).reduce((a, x) => a + x.seconds, 0);
+  // a) nobody books: four e-mails, at 2, 6, 12 and 48 hours, each noted on the task
+  {
+    const w = makeWorld({ reminders: true });
+    const { out, log } = await run(w, real({}));
+    eq(w.mail.length, 4, 'four e-mails');
+    eq([sum(w, 1), sum(w, 1) + sum(w, 2), sum(w, 1) + sum(w, 2) + sum(w, 3), sum(w, 1) + sum(w, 2) + sum(w, 3) + sum(w, 4)], [2 * H, 6 * H, 12 * H, 48 * H], 'at 2, 6, 12 and 48 hours');
+    eq(w.waits.filter((x) => x.name.startsWith('wait-before-reminder-4-')).length, 6, 'the 36 hour gap is six waits of six hours');
+    ok(w.mail.every((m) => m.to === 'owner@acme-it.co.uk' && m.replyTo === 'sh@elevatemarketing.no'), 'to the lead, replies to Sondre');
+    eq(w.mail.map((m) => m.subject), ['Your 30 minute pipeline review: pick a time', 'No time booked yet for Acme IT Ltd', 'Shall we find a time, Dana?', 'Last reminder: your 30 minute pipeline review'], 'the four subjects');
+    const link = (h) => 'https://getelevateleads.com/g/uk-it-growth/book/?lead_id=l_rem_0001&utm_source=email&utm_medium=reminder&utm_campaign=booking_' + h + 'h';
+    [2, 6, 12, 48].forEach((h, i) => ok(w.mail[i].body.includes('\n' + link(h) + '\n'), 'the link of e-mail ' + (i + 1) + ' on a line of its own'));
+    ok(w.mail.every((m) => m.body.startsWith('Hi Dana,\n\n') && m.body.endsWith('\n\nSondre Henanger\nElevate Marketing\n\nIf you no longer want the call, reply and say so, and these reminders stop.')), 'greeting, signature and the way out');
+    console.log('--- reminder 1 ---\n' + w.mail[0].body + '\n---');
+    const all = w.mail.map((m) => m.subject + '\n' + m.body).join('\n');
+    ok(!/[!—–]/.test(all), 'no exclamation mark and no dash');
+    ok(!/commission|retainer|%|guarantee|unlock|skyrocket/i.test(all), 'nothing about how we are paid, no hype');
+    ok(!/\{[a-z]+\}/.test(all), 'no token left unfilled');
+    eq(w.tasks[0].comments, [1, 2, 3, 4].map((n, i) => 'Påminnelse ' + n + ' av 4 om å booke møte er sendt på e-post (' + [2, 6, 12, 48][i] + ' t etter skjemaet).'), 'each one noted on the task');
+    ok(w.tasks[0].commentFlags.every((f) => f.notify_all === false), 'the notes notify nobody');
+    eq(w.slack.length, 1, 'Slack got the lead and nothing about the reminders');
+    eq(out.reminders.sent, 4, 'output: four sent'); eq(out.reminders.log.map((x) => x.action), ['sent', 'sent', 'sent', 'sent'], 'output: the log');
+    ok(!JSON.stringify(out.reminders).includes('acme') && !JSON.stringify(out.reminders).includes('Dana'), 'no name or address in the output');
+    const order = log.map((x) => x.name);
+    ok(order.indexOf('post-to-slack') < order.indexOf('wait-before-reminder-1-part-1'), 'task and Slack are done before the first wait');
+    eq(order.filter((n) => /^(check-booking-before|send|note)-reminder-/.test(n)), [1, 2, 3, 4].flatMap((n) => ['check-booking-before-reminder-' + n, 'send-reminder-' + n, 'note-reminder-' + n]), 'the steps, in order, with fixed names');
+  }
+  // b) the lead books after the first e-mail: the second check stops the run
+  {
+    const w = makeWorld({ reminders: true, onWait: (world, name) => { if (name === 'wait-before-reminder-2-part-1') world.tasks[0].status = 'møte booket'; } });
+    const { out } = await run(w, real({ lead_id: 'l_rem_0002' }));
+    eq(w.mail.length, 1, 'booked after one: one e-mail');
+    eq(out.reminders.log, [{ n: 1, hours: 2, action: 'sent', status: 'ny lead', noted: true }, { n: 2, hours: 6, action: 'stopped', status: 'møte booket' }], 'the log says why it stopped');
+    ok(!w.waits.some((x) => x.name.startsWith('wait-before-reminder-3')), 'no more waits after the stop');
+  }
+  // c) booked before the first one, moved by a person, archived: nothing is sent
+  for (const [label, change] of [['booked', (t) => { t.status = 'møte booket'; }], ['kontaktet', (t) => { t.status = 'kontaktet'; }], ['archive', (t) => { t.status = 'ukvalifisert - archive'; }], ['archived', (t) => { t.archived = true; }]]) {
+    const w = makeWorld({ reminders: true, onWait: (world) => change(world.tasks[0]) });
+    const { out } = await run(w, real({ lead_id: 'l_rem_c_' + label }));
+    eq(w.mail.length, 0, label + ': no e-mail'); eq(out.reminders.log.length, 1, label + ': one entry'); eq(out.reminders.log[0].action, 'stopped', label + ': stopped');
+    eq(w.tasks[0].comments.length, 0, label + ': no note');
+  }
+  // d) only fit: review, not now and not a fit get no reminder and no wait
+  for (const route of ['review', 'not_now', 'not_a_fit']) {
+    const w = makeWorld({ reminders: true });
+    const { out } = await run(w, real({ lead_id: 'l_rem_d_' + route, route }));
+    eq(w.mail.length, 0, route + ': no e-mail'); eq(w.waits.length, 0, route + ': no wait'); eq(out.reminders, null, route + ': reminders null');
+  }
+  // e) a test lead: no wait, no e-mail, the four e-mails as a preview
+  {
+    const w = makeWorld({ reminders: true });
+    const { out } = await run(w, withLead({ lead_id: 'l_rem_test_1' }));
+    eq(w.mail.length, 0, 'test: no e-mail'); eq(w.waits.length, 0, 'test: no wait');
+    eq(out.reminders.preview.length, 4, 'test: four previews'); ok(out.reminders.preview[0].body.includes('lead_id=l_rem_test_1&'), 'test: the preview has the link');
+  }
+  // f) a test lead on the real path: seconds for hours; with reminder_test_send the e-mails go to the test inbox, never to the lead
+  {
+    const w = makeWorld({ reminders: true });
+    const { out } = await run(w, withLead({ lead_id: 'l_rem_test_2', reminder_test_seconds: 5 }));
+    eq(w.mail.length, 0, 'seconds only: nothing sent'); eq(w.waits.map((x) => x.seconds), [5, 5, 5, 5], 'seconds only: four short waits');
+    eq(out.reminders.log.map((x) => x.action), ['preview', 'preview', 'preview', 'preview'], 'seconds only: previews');
+    const w2 = makeWorld({ reminders: true });
+    await run(w2, withLead({ lead_id: 'l_rem_test_3', reminder_test_seconds: 5, reminder_test_send: true }));
+    eq(w2.mail.length, 4, 'test send: four'); ok(w2.mail.every((m) => m.to === 'post@elevatemarketing.no' && m.subject.startsWith('[TEST] ')), 'test send: to the test inbox, marked');
+    const w3 = makeWorld({ reminders: true });
+    await run(w3, real({ lead_id: 'l_rem_0003', reminder_test_seconds: 5, reminder_test_send: true }));
+    ok(w3.mail.every((m) => m.to === 'owner@acme-it.co.uk') && sum(w3, 1) === 2 * H, 'the test keys do nothing on a real lead');
+  }
+  // g) ClickUp cannot be read: nothing is sent on a guess, and the run does not fail
+  {
+    const w = makeWorld({ reminders: true, taskReadFails: true });
+    const { out } = await run(w, real({ lead_id: 'l_rem_0004' }));
+    eq(w.mail.length, 0, 'unreadable: no e-mail'); eq(out.reminders.log.map((x) => x.action), ['skipped', 'skipped', 'skipped', 'skipped'], 'unreadable: all skipped');
+  }
+  // h) Outlook refuses one: noted, the next one is still sent, the run does not fail
+  {
+    const w = makeWorld({ reminders: true, mailFails: [2] });
+    const { out } = await run(w, real({ lead_id: 'l_rem_0005' }));
+    eq(w.mail.length, 3, 'one refused: three sent'); eq(out.reminders.log.map((x) => x.action), ['sent', 'not_sent', 'sent', 'sent'], 'one refused: the log');
+    eq(w.tasks[0].comments[1], 'Påminnelse 2 av 4 om å booke møte ble ikke sendt: Outlook said no', 'one refused: the note says so');
+  }
+  // i) a lead delivered late: a reminder whose time has passed is skipped, the rest keep their hours
+  {
+    const w = makeWorld({ reminders: true });
+    const { out } = await run(w, real({ lead_id: 'l_rem_0006', submitted_at: new Date(Date.now() - 7 * H * 1000).toISOString() }));
+    eq(out.reminders.log.map((x) => x.action), ['skipped', 'skipped', 'sent', 'sent'], 'seven hours late: 2 and 6 skipped');
+    ok(Math.abs(sum(w, 3) - 5 * H) <= 2, 'seven hours late: the 12 hour one comes five hours later'); eq(sum(w, 4), 36 * H, 'and the last one 36 hours after that');
+    const w2 = makeWorld({ reminders: true });
+    await run(w2, real({ lead_id: 'l_rem_0007', submitted_at: new Date(Date.now() - 60 * 1000).toISOString() }));
+    ok(Math.abs(sum(w2, 1) - (2 * H - 60)) <= 2, 'a minute late: the first one is two hours after the form, not after the delivery');
+    const w3 = makeWorld({ reminders: true });
+    await run(w3, real({ lead_id: 'l_rem_0008', submitted_at: 'not a date' }));
+    eq(sum(w3, 1), 2 * H, 'an unreadable time: counted from the delivery');
+  }
+  // j) what goes into the text: a name or a company that does not look like one is left out
+  {
+    const w = makeWorld({ reminders: true });
+    await run(w, real({ lead_id: 'l_rem_0009', first_name: 'Win cash at https://spam.example', company_name: 'Buy now: www.spam.example/offer' }));
+    const all = w.mail.map((m) => m.subject + '\n' + m.body).join('\n');
+    ok(!all.includes('spam') && !all.includes('Win cash'), 'a link in the name or the company never reaches the e-mail');
+    ok(w.mail[0].body.startsWith('Hello,\n\nThank you for applying. From your answers, your firm looks like a fit'), 'the plain wording instead');
+    eq(w.mail[2].subject, 'Shall we find a time?', 'the subject without a name');
+    const w2 = makeWorld({ reminders: true });
+    await run(w2, real({ lead_id: 'l_rem_0010', email: 'no address' }));
+    eq(w2.mail.length, 0, 'no usable address: no e-mail'); eq(w2.waits.length, 0, 'and no wait');
+  }
+  // k) every campaign has its reminders, in its own words; the second delivery of a lead starts no second round
+  {
+    const camp = { 'uk-private-hospitals': ['30-minute bookings review', 'sh@elevatemarketing.no'], 'uk-law-firms': ['30 minute instruction review', 'sh@elevatemarketing.no'], 'uk-ai-visibility': ['30 minute AI visibility review', 'sh@elevatemarketing.no'] };
+    for (const [campaign, [offer, replyTo]] of Object.entries(camp)) {
+      const w = makeWorld({ reminders: true });
+      await run(w, real({ lead_id: 'l_rem_k_' + campaign.length, campaign, page_slug: campaign, specialism: '', marketing_spend: '', first_year_value: '', employees_or_fee_earners: '' }));
+      eq(w.mail.length, 4, campaign + ': four'); ok(w.mail[0].subject === 'Your ' + offer + ': pick a time' && w.mail[0].replyTo === replyTo, campaign + ': its own meeting');
+      ok(w.mail[0].body.includes('https://getelevateleads.com/g/' + campaign + '/book/?lead_id='), campaign + ': its own booking page');
+    }
+    const src = fs.readFileSync(new URL('./zap1-lead-to-clickup-slack.ts', import.meta.url), 'utf8');
+    const keys = (name) => [...src.slice(src.indexOf('const ' + name + ':')).split('\n};')[0].matchAll(/^  "([a-z0-9-]+)": \{/gm)].map((m) => m[1]).sort();
+    eq(keys('REMIND'), keys('CAMPAIGNS'), 'REMIND has an entry for every campaign in CAMPAIGNS, and for no other');
+    const w = makeWorld({ reminders: true });
+    await run(w, real({ lead_id: 'l_rem_dup' }));
+    const { out } = await run(w, real({ lead_id: 'l_rem_dup' }));
+    eq(out.deduped, true, 'second delivery: deduped'); eq(w.mail.length, 4, 'second delivery: no second round');
+  }
+  console.log('20 ok');
 }
 console.log('\nALL PASSED: ' + passed + ' checks');
