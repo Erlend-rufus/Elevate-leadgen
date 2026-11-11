@@ -102,6 +102,7 @@ test('health routing: the table from the brief, as changed by the workshop of 26
   assert.equal(d({ self_pay_share: O.selfpay[4] }).route, 'review');
   assert.equal(d({ specialties: 'Other' }).route, 'review');
   assert.equal(d({ specialties: 'Other, Urology' }).route, 'fit');
+  assert.equal(d({ specialties: 'Dentistry and implants', turnover_band: T[0], marketing_spend: S[1] }).route, 'fit', 'a private dental practice under £2m spending £3k+ is a fit');
   assert.ok(d({ specialties: 'Fertility' }).reasons.includes('fertility'), 'fertility is flagged');
   assert.equal(d({}, { check: 'timeout', reasons: [] }).route, 'review');
   assert.equal(d({}, { check: 'mismatch', reasons: ['ch_accounts_too_small'], profile: { accounts_type: 'micro-entity' } }).route, 'review');
