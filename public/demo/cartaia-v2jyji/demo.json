@@ -1,5 +1,6 @@
 {
   "prospect": "Cartaia (Northflow Technologies AS)",
   "kind": "showcase",
-  "note": "Kampanjeforslag etter Microsoft 365-nedetiden 12. og 13. november 2026: sju filmer, ti fotoannonser og fjorten tekstannonser for Meta. Prisene står bare i annonsebildene. Ingen landingsside ennå, så ingen side/-mappe."
+  "allowProspectPrices": true,
+  "note": "Kampanjeforslag etter Microsoft 365-nedetiden 12. og 13. november 2026. Fem valgte annonser med Meta-forhåndsvisning, fem landingssider under lp/ med zip-eksport, og annonsefiler under annonser/. NOK-beløpene er Cartaias egne offentlige priser fra cartaia.no. Skjemaene sender ingenting."
 }
