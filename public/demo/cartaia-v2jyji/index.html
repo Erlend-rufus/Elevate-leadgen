@@ -40,6 +40,35 @@ ul.need{margin:0;padding:0 0 0 20px}
 ul.need li{margin:6px 0}
 footer{padding:32px 0 56px;font-size:14px;color:#4A5162;border-top:1px solid #CFCBC0}
 @media(prefers-reduced-motion:reduce){video{}}
+
+.pick{display:grid;gap:28px;padding:36px 0;border-top:1px solid #CFCBC0}
+.pick:first-of-type{border-top:0;padding-top:0}
+@media(min-width:860px){.pick{grid-template-columns:400px 1fr;gap:48px;align-items:start}}
+.feed{background:#fff;border:1px solid #CFCBC0;border-radius:10px;overflow:hidden;max-width:400px;font-size:15px;line-height:1.4}
+.feed-top{display:flex;gap:10px;align-items:center;padding:12px 14px}
+.feed-top img{width:40px;height:40px;border-radius:50%;border:1px solid #CFCBC0;background:#fff;padding:5px}
+.feed-top div{display:flex;flex-direction:column}.feed-top span{font-size:13px;color:#4A5162}
+.feed-text{padding:0 14px 12px}.feed-text p{margin:0 0 8px}.feed-text p:last-child{margin:0}
+.feed-media img,.feed-media video{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;background:#e8e5dd}
+.feed-bar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 14px;background:#F0EEE8}
+.feed-bar div{display:flex;flex-direction:column;min-width:0}.feed-bar span{font-size:13px;color:#4A5162}.feed-bar .dom{text-transform:uppercase;font-size:12px;letter-spacing:.04em}
+.feed-cta{flex-shrink:0;background:#DAD7CE;color:#10141C !important;font-weight:600;font-size:14px !important;padding:9px 14px;border-radius:6px}
+.pick-h{font-family:Fraunces,Georgia,serif;font-weight:400;font-size:30px;line-height:1.1;margin:0 0 18px}
+.copy{border:1px solid #CFCBC0;border-radius:4px;background:#fff;margin-bottom:12px}
+.copy-h{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid #CFCBC0;font-size:13px;min-height:44px}
+.copy pre{margin:0;padding:12px;white-space:pre-wrap;font:400 15px/1.5 Geist,system-ui,sans-serif}
+button{font:600 13px Geist,system-ui,sans-serif;background:#0A1628;color:#fff;border:0;border-radius:3px;padding:0 14px;min-height:36px;cursor:pointer}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;background:#0A1628;color:#fff;text-decoration:none;font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;border-radius:3px}
+.links{margin:18px 0 10px}.dl{font-size:14px;color:#4A5162;margin:0}
+a{color:#0A1628}
+.dev{border:1px solid #CFCBC0;border-radius:4px;background:#fff;margin-bottom:12px}
+.dev-h{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;align-items:center;padding:12px 14px;font-size:15px}
+.dev details{border-top:1px solid #CFCBC0}.dev summary{padding:12px 14px;cursor:pointer;font-size:14px;color:#4A5162}
+.dev textarea{display:block;width:100%;border:0;border-top:1px solid #CFCBC0;padding:12px;font:12px/1.5 ui-monospace,Menlo,monospace;background:#FBFAF7;color:#10141C;resize:vertical}
+.zipall{margin:0 0 22px;display:flex;flex-wrap:wrap;gap:12px}
+.rest{opacity:.92}.rest h3{font:600 12px Geist,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4A5162;margin:32px 0 14px}
+.rest .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+:focus-visible{outline:2px solid #0A1628;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -49,19 +78,941 @@ footer{padding:32px 0 56px;font-size:14px;color:#4A5162;border-top:1px solid #CF
 <div class="brand"><img src="media/cartaia-logo.png" alt="Cartaia"><span>Kampanjeforslag fra Elevate Marketing</span></div>
 <p class="label">Kampanjeforslag</p>
 <h1>Microsoft falt.<br>Cartaia sto.</h1>
-<p class="ingress">Torsdag 12. november falt Outlook, Teams-kalenderen og flere Microsoft 365-tjenester ut, og problemene varte inn i fredagen. Cartaia var oppe hele tiden. Her er et forslag til en Meta-kampanje som bruker det, mens det fortsatt er ferskt: ni korte filmer, ti fotoannonser og fjorten tekstannonser. Alle leder til en egen landingsside med prøveperiode eller samtale.</p>
+<p class="ingress">Fem annonser er valgt ut. Hver av dem har sin egen landingsside med samme budskap, og annonseteksten står klar til Meta. Nederst ligger koden og filene til utvikling.</p>
 </header>
-<section aria-labelledby="h-film">
-<div class="sh"><h2 id="h-film">Filmer</h2><p>Fem sekunder, til Reels og Stories (9:16). Tørr humor fra et kontor som ikke får jobbet, med Cartaias svar til slutt. Spilles uten lyd.</p></div>
-<div class="grid films"><figure class="card"><video src="media/film-12-to-kontorer-a.mp4" poster="media/film-12-to-kontorer-a.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="To kontorer, samme torsdag"></video><figcaption><b>To kontorer, samme torsdag</b><span>Landskapet som står stille, og det som ringer i salgsklokka</span></figcaption></figure><figure class="card"><video src="media/film-13-to-kontorer-b.mp4" poster="media/film-13-to-kontorer-b.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="To kontorer, samme torsdag"></video><figcaption><b>To kontorer, samme torsdag</b><span>Møterommet som venter, og bordet som signerer</span></figcaption></figure><figure class="card"><video src="media/film-04-dekningen.mp4" poster="media/film-04-dekningen.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Signalet"></video><figcaption><b>Signalet</b><span>Holder PC-en opp mot vinduet</span></figcaption></figure><figure class="card"><video src="media/film-05-kaffekoppene.mp4" poster="media/film-05-kaffekoppene.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Dag to"></video><figcaption><b>Dag to</b><span>Tårn av kaffekopper</span></figcaption></figure><figure class="card"><video src="media/film-06-bordtennis.mp4" poster="media/film-06-bordtennis.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Møtet er utsatt"></video><figcaption><b>Møtet er utsatt</b><span>Bordtennis over møtebordet</span></figcaption></figure><figure class="card"><video src="media/film-07-plantene.mp4" poster="media/film-07-plantene.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Plantene"></video><figcaption><b>Plantene</b><span>Vanner plantene grundig</span></figcaption></figure><figure class="card"><video src="media/film-08-lappene.mp4" poster="media/film-08-lappene.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Ny e-postløsning"></video><figcaption><b>Ny e-postløsning</b><span>Pulten dekket av lapper</span></figcaption></figure><figure class="card"><video src="media/film-10-pennen.mp4" poster="media/film-10-pennen.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Er den oppe nå?"></video><figcaption><b>Er den oppe nå?</b><span>Fire kolleger og én lukket PC</span></figcaption></figure><figure class="card"><video src="media/film-11-kosten.mp4" poster="media/film-11-kosten.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Fortsatt ikke dekningen"></video><figcaption><b>Fortsatt ikke dekningen</b><span>Står på stol, får en kost</span></figcaption></figure></div>
+<section aria-labelledby="h-valgt">
+<div class="sh"><h2 id="h-valgt">De fem valgte annonsene</h2><p>Slik ser hver annonse ut i feeden på Facebook og Instagram, med tekst, overskrift og knapp. Landingssiden er lenket ved siden av.</p></div>
+<article class="pick" id="to-kontorer">
+<div class="feed" aria-label="Forhåndsvisning av annonsen i feed">
+<div class="feed-top"><img src="media/cartaia-merke.png" alt="" width="40" height="40"><div><b>Cartaia</b><span>Sponset</span></div></div>
+<div class="feed-text"><p>Torsdag 12. november falt Outlook og flere Microsoft 365-tjenester ut. Noen kontorer ble stående stille. Andre jobbet som vanlig.</p><p>Cartaia var oppe begge dagene. E-post, dokumenter og filer i nettleseren, fra et norsk selskap. Prøv gratis i 14 dager.</p></div>
+<div class="feed-media"><video src="media/film-12-to-kontorer-a.mp4" poster="media/film-12-to-kontorer-a.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="To kontorer, samme torsdag"></video></div>
+<div class="feed-bar"><div><span class="dom">cartaia.no</span><b>Samme torsdag. Annen kontorpakke.</b><span>149 kr per bruker/mnd inkl. mva.</span></div><span class="feed-cta">Registrer deg</span></div>
+</div>
+<div class="pick-info">
+<p class="label">Annonse 1 av 5</p>
+<h3 class="pick-h">To kontorer, samme torsdag</h3>
+<div class="copy"><div class="copy-h"><b>Primærtekst</b><button type="button" data-copy="p-to-kontorer">Kopier</button></div><pre id="p-to-kontorer">Torsdag 12. november falt Outlook og flere Microsoft 365-tjenester ut. Noen kontorer ble stående stille. Andre jobbet som vanlig.
+
+Cartaia var oppe begge dagene. E-post, dokumenter og filer i nettleseren, fra et norsk selskap. Prøv gratis i 14 dager.</pre></div>
+<div class="copy"><div class="copy-h"><b>Overskrift</b><button type="button" data-copy="h-to-kontorer">Kopier</button></div><pre id="h-to-kontorer">Samme torsdag. Annen kontorpakke.</pre></div>
+<div class="copy"><div class="copy-h"><b>Beskrivelse og knapp</b></div><pre>149 kr per bruker/mnd inkl. mva.
+Knapp: Registrer deg</pre></div>
+<p class="links"><a class="btn" href="lp/to-kontorer/">Se landingssiden</a></p>
+<p class="dl">Annonsefil: <a href="annonser/to-kontorer-9x16.mp4" download>to-kontorer-9x16.mp4</a> · <a href="annonser/to-kontorer-4x5.mp4" download>to-kontorer-4x5.mp4</a></p>
+</div>
+</article><article class="pick" id="signalet">
+<div class="feed" aria-label="Forhåndsvisning av annonsen i feed">
+<div class="feed-top"><img src="media/cartaia-merke.png" alt="" width="40" height="40"><div><b>Cartaia</b><span>Sponset</span></div></div>
+<div class="feed-text"><p>Nei, det hjelper ikke å holde PC-en nærmere vinduet.</p><p>Outlook og flere Microsoft 365-tjenester falt ut 12. og 13. november. Cartaia var oppe begge dagene. Prøv gratis i 14 dager, og logg inn med BankID.</p></div>
+<div class="feed-media"><video src="media/film-04-dekningen.mp4" poster="media/film-04-dekningen.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Signalet"></video></div>
+<div class="feed-bar"><div><span class="dom">cartaia.no</span><b>Det er ikke dekningen. Det er Microsoft.</b><span>149 kr per bruker/mnd inkl. mva.</span></div><span class="feed-cta">Registrer deg</span></div>
+</div>
+<div class="pick-info">
+<p class="label">Annonse 2 av 5</p>
+<h3 class="pick-h">Signalet</h3>
+<div class="copy"><div class="copy-h"><b>Primærtekst</b><button type="button" data-copy="p-signalet">Kopier</button></div><pre id="p-signalet">Nei, det hjelper ikke å holde PC-en nærmere vinduet.
+
+Outlook og flere Microsoft 365-tjenester falt ut 12. og 13. november. Cartaia var oppe begge dagene. Prøv gratis i 14 dager, og logg inn med BankID.</pre></div>
+<div class="copy"><div class="copy-h"><b>Overskrift</b><button type="button" data-copy="h-signalet">Kopier</button></div><pre id="h-signalet">Det er ikke dekningen. Det er Microsoft.</pre></div>
+<div class="copy"><div class="copy-h"><b>Beskrivelse og knapp</b></div><pre>149 kr per bruker/mnd inkl. mva.
+Knapp: Registrer deg</pre></div>
+<p class="links"><a class="btn" href="lp/signalet/">Se landingssiden</a></p>
+<p class="dl">Annonsefil: <a href="annonser/signalet-9x16.mp4" download>signalet-9x16.mp4</a></p>
+</div>
+</article><article class="pick" id="motet-er-utsatt">
+<div class="feed" aria-label="Forhåndsvisning av annonsen i feed">
+<div class="feed-top"><img src="media/cartaia-merke.png" alt="" width="40" height="40"><div><b>Cartaia</b><span>Sponset</span></div></div>
+<div class="feed-text"><p>Når kalenderen er nede, får møtebordet nye bruksområder.</p><p>Kalender og innkallinger i Microsoft 365 falt ut 12. november. Cartaia har kalender, chat og videomøter i samme løsning, og var oppe begge dagene. Prøv gratis i 14 dager.</p></div>
+<div class="feed-media"><video src="media/film-06-bordtennis.mp4" poster="media/film-06-bordtennis.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Møtet er utsatt"></video></div>
+<div class="feed-bar"><div><span class="dom">cartaia.no</span><b>Møtet er utsatt. Kalenderen er nede.</b><span>149 kr per bruker/mnd inkl. mva.</span></div><span class="feed-cta">Registrer deg</span></div>
+</div>
+<div class="pick-info">
+<p class="label">Annonse 3 av 5</p>
+<h3 class="pick-h">Møtet er utsatt</h3>
+<div class="copy"><div class="copy-h"><b>Primærtekst</b><button type="button" data-copy="p-motet-er-utsatt">Kopier</button></div><pre id="p-motet-er-utsatt">Når kalenderen er nede, får møtebordet nye bruksområder.
+
+Kalender og innkallinger i Microsoft 365 falt ut 12. november. Cartaia har kalender, chat og videomøter i samme løsning, og var oppe begge dagene. Prøv gratis i 14 dager.</pre></div>
+<div class="copy"><div class="copy-h"><b>Overskrift</b><button type="button" data-copy="h-motet-er-utsatt">Kopier</button></div><pre id="h-motet-er-utsatt">Møtet er utsatt. Kalenderen er nede.</pre></div>
+<div class="copy"><div class="copy-h"><b>Beskrivelse og knapp</b></div><pre>149 kr per bruker/mnd inkl. mva.
+Knapp: Registrer deg</pre></div>
+<p class="links"><a class="btn" href="lp/motet-er-utsatt/">Se landingssiden</a></p>
+<p class="dl">Annonsefil: <a href="annonser/motet-er-utsatt-9x16.mp4" download>motet-er-utsatt-9x16.mp4</a></p>
+</div>
+</article><article class="pick" id="plantene">
+<div class="feed" aria-label="Forhåndsvisning av annonsen i feed">
+<div class="feed-top"><img src="media/cartaia-merke.png" alt="" width="40" height="40"><div><b>Cartaia</b><span>Sponset</span></div></div>
+<div class="feed-text"><p>To dager uten Outlook gir god tid til kontorplantene.</p><p>Outlook var nede torsdag 12. og fredag 13. november. Cartaia var oppe. E-post, dokumenter og filer i nettleseren, fra et norsk selskap. Prøv gratis i 14 dager.</p></div>
+<div class="feed-media"><video src="media/film-07-plantene.mp4" poster="media/film-07-plantene.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Plantene"></video></div>
+<div class="feed-bar"><div><span class="dom">cartaia.no</span><b>Plantene har aldri hatt det bedre.</b><span>149 kr per bruker/mnd inkl. mva.</span></div><span class="feed-cta">Registrer deg</span></div>
+</div>
+<div class="pick-info">
+<p class="label">Annonse 4 av 5</p>
+<h3 class="pick-h">Plantene</h3>
+<div class="copy"><div class="copy-h"><b>Primærtekst</b><button type="button" data-copy="p-plantene">Kopier</button></div><pre id="p-plantene">To dager uten Outlook gir god tid til kontorplantene.
+
+Outlook var nede torsdag 12. og fredag 13. november. Cartaia var oppe. E-post, dokumenter og filer i nettleseren, fra et norsk selskap. Prøv gratis i 14 dager.</pre></div>
+<div class="copy"><div class="copy-h"><b>Overskrift</b><button type="button" data-copy="h-plantene">Kopier</button></div><pre id="h-plantene">Plantene har aldri hatt det bedre.</pre></div>
+<div class="copy"><div class="copy-h"><b>Beskrivelse og knapp</b></div><pre>149 kr per bruker/mnd inkl. mva.
+Knapp: Registrer deg</pre></div>
+<p class="links"><a class="btn" href="lp/plantene/">Se landingssiden</a></p>
+<p class="dl">Annonsefil: <a href="annonser/plantene-9x16.mp4" download>plantene-9x16.mp4</a></p>
+</div>
+</article><article class="pick" id="meldingen">
+<div class="feed" aria-label="Forhåndsvisning av annonsen i feed">
+<div class="feed-top"><img src="media/cartaia-merke.png" alt="" width="40" height="40"><div><b>Cartaia</b><span>Sponset</span></div></div>
+<div class="feed-text"><p>«Er Outlook nede hos deg også?»</p><p>Den meldingen gikk i mange bedrifter torsdag og fredag. Hos Cartaia var svaret nei. E-post, dokumenter og filer fra et norsk selskap. Prøv gratis i 14 dager.</p></div>
+<div class="feed-media"><img src="media/B11b-sporsmalet.jpg" alt="Annonse: Meldingen" width="720" height="900"></div>
+<div class="feed-bar"><div><span class="dom">cartaia.no</span><b>«Er Outlook nede hos deg også?»</b><span>149 kr per bruker/mnd inkl. mva.</span></div><span class="feed-cta">Registrer deg</span></div>
+</div>
+<div class="pick-info">
+<p class="label">Annonse 5 av 5</p>
+<h3 class="pick-h">Meldingen</h3>
+<div class="copy"><div class="copy-h"><b>Primærtekst</b><button type="button" data-copy="p-meldingen">Kopier</button></div><pre id="p-meldingen">«Er Outlook nede hos deg også?»
+
+Den meldingen gikk i mange bedrifter torsdag og fredag. Hos Cartaia var svaret nei. E-post, dokumenter og filer fra et norsk selskap. Prøv gratis i 14 dager.</pre></div>
+<div class="copy"><div class="copy-h"><b>Overskrift</b><button type="button" data-copy="h-meldingen">Kopier</button></div><pre id="h-meldingen">«Er Outlook nede hos deg også?»</pre></div>
+<div class="copy"><div class="copy-h"><b>Beskrivelse og knapp</b></div><pre>149 kr per bruker/mnd inkl. mva.
+Knapp: Registrer deg</pre></div>
+<p class="links"><a class="btn" href="lp/meldingen/">Se landingssiden</a></p>
+<p class="dl">Annonsefil: <a href="annonser/meldingen-4x5.png" download>meldingen-4x5.png</a></p>
+</div>
+</article>
 </section>
-<section aria-labelledby="h-foto">
-<div class="sh"><h2 id="h-foto">Fotoannonser</h2><p>Til feed på Facebook og Instagram (4:5). To bildevalg per budskap, så vi kan teste hvilket som virker.</p></div>
-<div class="grid"><figure class="card"><img src="media/B01a-kontoret.jpg" alt="Annonse: Microsoft falt" loading="lazy" width="720" height="900"><figcaption><b>Microsoft falt</b></figcaption></figure><figure class="card"><img src="media/B01b-klossene.jpg" alt="Annonse: Microsoft falt" loading="lazy" width="720" height="900"><figcaption><b>Microsoft falt</b></figcaption></figure><figure class="card"><img src="media/B02a-venter.jpg" alt="Annonse: To dager" loading="lazy" width="720" height="900"><figcaption><b>To dager</b></figcaption></figure><figure class="card"><img src="media/B02b-tom-pult.jpg" alt="Annonse: To dager" loading="lazy" width="720" height="900"><figcaption><b>To dager</b></figcaption></figure><figure class="card"><img src="media/B06a-fingrene.jpg" alt="Annonse: Lei av å vente" loading="lazy" width="720" height="900"><figcaption><b>Lei av å vente</b></figcaption></figure><figure class="card"><img src="media/B06b-i-gang.jpg" alt="Annonse: Lei av å vente" loading="lazy" width="720" height="900"><figcaption><b>Lei av å vente</b></figcaption></figure><figure class="card"><img src="media/B08a-pulten.jpg" alt="Annonse: Regnskapskontoret" loading="lazy" width="720" height="900"><figcaption><b>Regnskapskontoret</b></figcaption></figure><figure class="card"><img src="media/B08b-kollegene.jpg" alt="Annonse: Regnskapskontoret" loading="lazy" width="720" height="900"><figcaption><b>Regnskapskontoret</b></figcaption></figure><figure class="card"><img src="media/B11a-telefonen.jpg" alt="Annonse: Meldingen" loading="lazy" width="720" height="900"><figcaption><b>Meldingen</b></figcaption></figure><figure class="card"><img src="media/B11b-sporsmalet.jpg" alt="Annonse: Meldingen" loading="lazy" width="720" height="900"><figcaption><b>Meldingen</b></figcaption></figure></div>
-</section>
-<section aria-labelledby="h-typo">
-<div class="sh"><h2 id="h-typo">Tekstannonser</h2><p>Rene budskap i Cartaias egne farger og skrift. De to siste er roligere, som kontroll i testen.</p></div>
-<div class="grid"><figure class="card"><img src="media/Main.jpg" alt="Annonse: Microsoft falt" loading="lazy" width="720" height="900"><figcaption><b>Microsoft falt</b></figcaption></figure><figure class="card"><img src="media/A02-torsdag.jpg" alt="Annonse: To dager" loading="lazy" width="720" height="900"><figcaption><b>To dager</b></figcaption></figure><figure class="card"><img src="media/A04-ett-feilpunkt.jpg" alt="Annonse: Én leverandør" loading="lazy" width="720" height="900"><figcaption><b>Én leverandør</b></figcaption></figure><figure class="card"><img src="media/A05-regn-ut.jpg" alt="Annonse: Regnestykket" loading="lazy" width="720" height="900"><figcaption><b>Regnestykket</b></figcaption></figure><figure class="card"><img src="media/A06-prov-i-dag.jpg" alt="Annonse: Lei av å vente" loading="lazy" width="720" height="900"><figcaption><b>Lei av å vente</b></figcaption></figure><figure class="card"><img src="media/A07-filene.jpg" alt="Annonse: Filene" loading="lazy" width="720" height="900"><figcaption><b>Filene</b></figcaption></figure><figure class="card"><img src="media/A08-regnskap.jpg" alt="Annonse: Regnskapskontoret" loading="lazy" width="720" height="900"><figcaption><b>Regnskapskontoret</b></figcaption></figure><figure class="card"><img src="media/A09-radgivere.jpg" alt="Annonse: Rådgiveren" loading="lazy" width="720" height="900"><figcaption><b>Rådgiveren</b></figcaption></figure><figure class="card"><img src="media/A10-egen-drift.jpg" alt="Annonse: Egen drift" loading="lazy" width="720" height="900"><figcaption><b>Egen drift</b></figcaption></figure><figure class="card"><img src="media/A11-nede-hos-deg.jpg" alt="Annonse: Meldingen" loading="lazy" width="720" height="900"><figcaption><b>Meldingen</b></figcaption></figure><figure class="card"><img src="media/A12-solo.jpg" alt="Annonse: Privat" loading="lazy" width="720" height="900"><figcaption><b>Privat</b></figcaption></figure><figure class="card"><img src="media/A15-motene.jpg" alt="Annonse: Møtet" loading="lazy" width="720" height="900"><figcaption><b>Møtet</b></figcaption></figure><figure class="card"><img src="media/A03-plan-b.jpg" alt="Annonse: Plan B (rolig)" loading="lazy" width="720" height="900"><figcaption><b>Plan B (rolig)</b></figcaption></figure><figure class="card"><img src="media/A13-ingen-binding.jpg" alt="Annonse: Ingen binding (rolig)" loading="lazy" width="720" height="900"><figcaption><b>Ingen binding (rolig)</b></figcaption></figure></div>
+<section aria-labelledby="h-dev">
+<div class="sh"><h2 id="h-dev">Til utvikling</h2><p>Hver landingsside er én HTML-fil med en assets-mappe: bilde eller video, logo og fonter. Ingen rammeverk og ingen eksterne kall. Zip-filen har også en LES-MEG med det som må endres før siden legges på cartaia.no.</p></div>
+<p class="zipall"><a class="btn" href="lp/cartaia-alle-landingssider.zip" download>Alle fem landingssider (zip)</a><a class="btn" href="annonser/cartaia-annonser.zip" download>Annonsefiler og tekst (zip)</a></p>
+<div class="dev" id="kode-to-kontorer">
+<div class="dev-h"><b>To kontorer, samme torsdag</b><span><a href="lp/to-kontorer/">Åpne siden</a> · <a href="lp/cartaia-lp-to-kontorer.zip" download>Last ned zip</a> · <button type="button" data-copy="c-to-kontorer">Kopier koden</button></span></div>
+<details><summary>Vis koden (index.html)</summary><textarea id="c-to-kontorer" readonly rows="14" spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;!-- DEMO: fjern neste linje når siden flyttes til cartaia.no --&gt;
+&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow, noarchive, nosnippet&quot;&gt;
+&lt;title&gt;Samme torsdag. Annen kontorpakke. | Cartaia Bedrift&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;Torsdag 12. november falt Outlook og flere Microsoft 365-tjenester ut. Noen kontorer ble stående stille. Cartaia var oppe begge dagene, med e-post, dokumenter og filer i nettleseren.&quot;&gt;
+&lt;link rel=&quot;preload&quot; href=&quot;assets/instrument-sans-400.woff2&quot; as=&quot;font&quot; type=&quot;font/woff2&quot; crossorigin&gt;
+&lt;style&gt;
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:400;font-display:swap;src:url(&quot;assets/instrument-sans-400.woff2&quot;) format(&quot;woff2&quot;)}
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:500;font-display:swap;src:url(&quot;assets/instrument-sans-500.woff2&quot;) format(&quot;woff2&quot;)}
+:root{--ink:#1b2a23;--ink-70:#1b2a23b3;--verdigris:#2f5f52;--verdigris-hover:#264b41;--black:#111614;--mint:#e3f1ea;--mint-strong:#cfe6da;--cream:#f2f4f2;--cream-muted:#c3ccc7;--flate:#f5f6f5;--white:#fff;--line:#1b2a2324;--field:#6b7570;--r:6px;--r-card:12px;--shadow:0 1px 2px #1b2a230a,0 12px 32px -24px #1b2a2347}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--ink);font:400 18px/1.6 &quot;Instrument Sans&quot;,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+.sec{padding:64px 0}.flate{background:var(--flate)}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+h1{font-size:40px;line-height:1.06;letter-spacing:-.03em}
+h2{font-size:30px;line-height:1.15;letter-spacing:-.02em}
+h3{font-size:19px;line-height:1.3;font-weight:500;letter-spacing:-.01em}
+p{margin:0}
+.label{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--verdigris)}
+.ingress{font-size:18px;line-height:1.5;color:var(--ink-70);max-width:34em}
+.muted{color:var(--ink-70)}.small{font-size:15px;line-height:1.5}
+.stack&gt;*+*{margin-top:16px}.stack-lg&gt;*+*{margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:var(--r);font:500 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif;text-decoration:none;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--verdigris);color:var(--white)}.btn-primary:hover{background:var(--verdigris-hover)}
+.btn-secondary{background:var(--white);color:var(--ink);border-color:var(--field)}.btn-secondary:hover{background:var(--flate)}
+.btnrow{display:flex;flex-wrap:wrap;gap:12px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--verdigris);outline-offset:2px}
+.header{border-bottom:1px solid var(--line)}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.header img{height:30px;width:auto}
+.hero{display:grid;gap:40px;align-items:center}
+.hero-media{border-radius:var(--r-card);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--flate)}
+.hero-media video,.hero-media img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.status{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:var(--r);background:var(--mint);font-size:15px;font-weight:500}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--verdigris)}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tag{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:var(--r);background:var(--mint);font-size:14px;font-weight:500}
+.grid{display:grid;gap:16px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);padding:24px;box-shadow:var(--shadow)}
+.fact{border-left:0;background:var(--mint);border-radius:var(--r-card);padding:28px}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{border-top:2px solid var(--verdigris);padding-top:16px}
+.price{font-size:42px;line-height:1.1;letter-spacing:-.025em}
+details{border-top:1px solid #1b2a2333}
+summary{min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;font-weight:500;list-style:none}
+summary::-webkit-details-marker{display:none}
+details p{padding-bottom:24px;color:var(--ink-70)}
+label{display:block}label span{display:block;font-size:15px;font-weight:500;margin-bottom:8px}
+input,select{width:100%;min-height:48px;padding:0 16px;border:1px solid var(--field);border-radius:var(--r);background:var(--white);color:var(--ink);font:400 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif}
+.footer{background:var(--black);color:var(--cream);padding:48px 0}
+.footer p{color:var(--cream-muted)}.footer a{color:var(--cream)}
+.footer .logo{display:inline-flex;background:var(--white);border-radius:var(--r);padding:8px 12px}.footer .logo img{height:26px;width:auto}
+a{color:var(--verdigris);text-underline-offset:3px}
+@media(max-width:480px){.btnrow .btn{width:100%}}
+@media(min-width:800px){.sec{padding:96px 0}h1{font-size:64px;line-height:1.02;letter-spacing:-.038em}h2{font-size:42px;line-height:1.1;letter-spacing:-.025em}.ingress{font-size:20px}.hero{grid-template-columns:1.15fr .85fr;gap:64px}.grid{gap:32px}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&quot;header&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;
+&lt;a href=&quot;#&quot; aria-label=&quot;Cartaia&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;119&quot; height=&quot;30&quot;&gt;&lt;/a&gt;
+&lt;!-- LENKE: prøvestart for bedrift. Bytt hvis Cartaia har egen adresse for Bedrift. --&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis&lt;/a&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap hero&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Cartaia Bedrift&lt;/p&gt;
+&lt;h1&gt;Samme torsdag. Annen kontorpakke.&lt;/h1&gt;
+&lt;p class=&quot;ingress&quot;&gt;Torsdag 12. november falt Outlook og flere Microsoft 365-tjenester ut. Noen kontorer ble stående stille. Cartaia var oppe begge dagene, med e-post, dokumenter og filer i nettleseren.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;status&quot;&gt;&lt;i aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Cartaia var oppe 12. og 13. november&lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;btnrow&quot;&gt;&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;&lt;a class=&quot;btn btn-secondary&quot; href=&quot;#samtale&quot;&gt;Avtal en samtale&lt;/a&gt;&lt;/div&gt;
+&lt;p class=&quot;small muted&quot;&gt;149 kr per bruker per måned, inkl. mva. Ingen binding ved månedlig betaling.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;hero-media&quot;&gt;&lt;video src=&quot;assets/hero.mp4&quot; poster=&quot;assets/hero.jpg&quot; autoplay muted loop playsinline aria-label=&quot;Delt bilde: et stille kontor øverst og et travelt kontor nederst&quot;&gt;&lt;/video&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;div class=&quot;fact stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Hva skjedde&lt;/p&gt;
+&lt;p&gt;Torsdag 12. november 2026 kl. 17.17 norsk tid meldte Microsoft om problemer med e-post i Microsoft 365. Outlook, kalender, SharePoint og OneDrive ble berørt, og problemene varte inn i fredag 13. november.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Kilde: Microsofts statusmeldinger EX1550543 og MO1550821. Lest 13.11.2026.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;h2&gt;Kontorpakken dere kjenner, hos et norsk selskap.&lt;/h2&gt;
+&lt;div class=&quot;grid g3&quot;&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Oppe 12. og 13. november&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Cartaia kjører i et datasenter i Tyskland og gikk som normalt begge dagene.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Filene åpnes som før&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Cartaia åpner og lagrer .docx, .xlsx og .pptx. Ta med filene dere bruker mest og test selv.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Logg inn med BankID&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ingen installasjon og ingen nye passord. Alt kjører i nettleseren.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;tags&quot;&gt;&lt;span class=&quot;tag&quot;&gt;.docx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.xlsx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.pptx&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Slik kommer dere i gang&lt;/p&gt;&lt;h2&gt;Tre steg, i dag.&lt;/h2&gt;&lt;/div&gt;
+&lt;ol class=&quot;steps grid g3&quot;&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 1&lt;/p&gt;&lt;h3&gt;Start prøveperioden&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Logg inn med BankID. 14 dager gratis, uten betalingskort.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 2&lt;/p&gt;&lt;h3&gt;Åpne filene dere har&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Last opp noen Word- og Excel-filer og se hvordan de oppfører seg.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 3&lt;/p&gt;&lt;h3&gt;Ta en samtale om resten&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Vi går gjennom e-post, brukere og hva et bytte innebærer for dere.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Fire løfter&lt;/p&gt;&lt;h2&gt;Det dere kan holde oss til.&lt;/h2&gt;&lt;/div&gt;
+&lt;div class=&quot;grid g4&quot;&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Suverenitet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Data i Europa, under GDPR.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Frihet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ta med alle data når som helst, i åpne formater.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Personvern&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ingen annonser og ingen videresalg av data.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Åpenhet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Åpne standarder og åpen kildekode.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap grid g2&quot; style=&quot;align-items:center&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Én pris per bruker.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;For virksomheter med 1 til 50 brukere. 1 TB lagring per bruker og e-post på eget domene.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot; style=&quot;border:2px solid var(--verdigris)&quot;&gt;
+&lt;h3&gt;Cartaia Bedrift&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&quot;price&quot;&gt;149 kr&lt;/span&gt; &lt;span class=&quot;small&quot;&gt;per bruker per måned&lt;/span&gt;&lt;/p&gt;
+&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;inkl. mva.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Ingen binding ved månedlig betaling. To måneder gratis ved årsbetaling.&lt;/p&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot; style=&quot;width:100%&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot; style=&quot;max-width:820px&quot;&gt;
+&lt;h2&gt;Vanlige spørsmål.&lt;/h2&gt;
+&lt;div&gt;
+&lt;details open&gt;&lt;summary&gt;Fungerer Word- og Excel-filene våre?&lt;/summary&gt;&lt;p&gt;Cartaia åpner og lagrer .docx, .xlsx og .pptx. Ta med filene dere bruker mest i prøveperioden, så ser dere selv.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvor ligger dataene?&lt;/summary&gt;&lt;p&gt;I et datasenter i Tyskland, under GDPR.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvem står bak?&lt;/summary&gt;&lt;p&gt;Northflow Technologies AS i Stavanger, org.nr 936 979 815.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hva om vi vil bytte tilbake?&lt;/summary&gt;&lt;p&gt;Dere tar med alle data i åpne formater. Det er ingen binding ved månedlig betaling.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Kan Cartaia også gå ned?&lt;/summary&gt;&lt;p&gt;Alle systemer kan få driftsproblemer. Cartaia var oppe 12. og 13. november, og kjører uavhengig av Microsoft 365.&lt;/p&gt;&lt;/details&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot; id=&quot;samtale&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Avtal en samtale.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;Fortell litt om virksomheten, så tar vi kontakt. Samtalen tar 20 minutter.&lt;/p&gt;&lt;/div&gt;
+&lt;!-- SKJEMA: i demoen sendes ingenting. Koble skjemaet til Cartaias eget mottak (se LES-MEG.md). --&gt;
+&lt;form class=&quot;card stack&quot; id=&quot;skjema&quot; novalidate&gt;
+&lt;label&gt;&lt;span&gt;Virksomhet&lt;/span&gt;&lt;input name=&quot;virksomhet&quot; autocomplete=&quot;organization&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Antall brukere&lt;/span&gt;&lt;select name=&quot;brukere&quot;&gt;&lt;option&gt;1 til 4&lt;/option&gt;&lt;option&gt;5 til 10&lt;/option&gt;&lt;option&gt;11 til 25&lt;/option&gt;&lt;option&gt;26 til 50&lt;/option&gt;&lt;option&gt;Over 50&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Dagens løsning&lt;/span&gt;&lt;select name=&quot;losning&quot;&gt;&lt;option&gt;Microsoft 365&lt;/option&gt;&lt;option&gt;Google Workspace&lt;/option&gt;&lt;option&gt;Annet&lt;/option&gt;&lt;option&gt;Vet ikke&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Navn&lt;/span&gt;&lt;input name=&quot;navn&quot; autocomplete=&quot;name&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;E-post&lt;/span&gt;&lt;input name=&quot;epost&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Telefon&lt;/span&gt;&lt;input name=&quot;telefon&quot; type=&quot;tel&quot; autocomplete=&quot;tel&quot;&gt;&lt;/label&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;vinkel&quot; value=&quot;to-kontorer&quot;&gt;
+&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot; style=&quot;width:100%&quot;&gt;Send&lt;/button&gt;
+&lt;p class=&quot;small muted&quot; id=&quot;skjema-status&quot; role=&quot;status&quot;&gt;Cartaia behandler opplysningene for å svare på henvendelsen. &lt;a href=&quot;https://cartaia.no&quot;&gt;Personvern&lt;/a&gt;&lt;/p&gt;
+&lt;/form&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;span class=&quot;logo&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;103&quot; height=&quot;26&quot;&gt;&lt;/span&gt;&lt;p class=&quot;small&quot;&gt;Hele kontorpakken, på norske vilkår.&lt;/p&gt;&lt;/div&gt;
+&lt;p class=&quot;small&quot;&gt;Northflow Technologies AS&lt;br&gt;Org.nr 936 979 815&lt;br&gt;Jåttåveien 92, Stavanger&lt;br&gt;post@cartaia.no&lt;/p&gt;
+&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+// DEMO: skjemaet sender ingenting. Bytt ut denne blokken med ekte innsending.
+document.getElementById(&#x27;skjema&#x27;).addEventListener(&#x27;submit&#x27;,function(e){e.preventDefault();var s=document.getElementById(&#x27;skjema-status&#x27;);s.textContent=&#x27;Takk. Dette er en demo, så ingenting er sendt.&#x27;;});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea></details>
+</div><div class="dev" id="kode-signalet">
+<div class="dev-h"><b>Signalet</b><span><a href="lp/signalet/">Åpne siden</a> · <a href="lp/cartaia-lp-signalet.zip" download>Last ned zip</a> · <button type="button" data-copy="c-signalet">Kopier koden</button></span></div>
+<details><summary>Vis koden (index.html)</summary><textarea id="c-signalet" readonly rows="14" spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;!-- DEMO: fjern neste linje når siden flyttes til cartaia.no --&gt;
+&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow, noarchive, nosnippet&quot;&gt;
+&lt;title&gt;Det er ikke dekningen. Det er Microsoft. | Cartaia Bedrift&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;Da Outlook falt ut torsdag 12. november, hjalp det ikke å flytte seg nærmere vinduet. Cartaia var oppe begge dagene. Prøv kontorpakken fra et norsk selskap.&quot;&gt;
+&lt;link rel=&quot;preload&quot; href=&quot;assets/instrument-sans-400.woff2&quot; as=&quot;font&quot; type=&quot;font/woff2&quot; crossorigin&gt;
+&lt;style&gt;
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:400;font-display:swap;src:url(&quot;assets/instrument-sans-400.woff2&quot;) format(&quot;woff2&quot;)}
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:500;font-display:swap;src:url(&quot;assets/instrument-sans-500.woff2&quot;) format(&quot;woff2&quot;)}
+:root{--ink:#1b2a23;--ink-70:#1b2a23b3;--verdigris:#2f5f52;--verdigris-hover:#264b41;--black:#111614;--mint:#e3f1ea;--mint-strong:#cfe6da;--cream:#f2f4f2;--cream-muted:#c3ccc7;--flate:#f5f6f5;--white:#fff;--line:#1b2a2324;--field:#6b7570;--r:6px;--r-card:12px;--shadow:0 1px 2px #1b2a230a,0 12px 32px -24px #1b2a2347}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--ink);font:400 18px/1.6 &quot;Instrument Sans&quot;,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+.sec{padding:64px 0}.flate{background:var(--flate)}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+h1{font-size:40px;line-height:1.06;letter-spacing:-.03em}
+h2{font-size:30px;line-height:1.15;letter-spacing:-.02em}
+h3{font-size:19px;line-height:1.3;font-weight:500;letter-spacing:-.01em}
+p{margin:0}
+.label{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--verdigris)}
+.ingress{font-size:18px;line-height:1.5;color:var(--ink-70);max-width:34em}
+.muted{color:var(--ink-70)}.small{font-size:15px;line-height:1.5}
+.stack&gt;*+*{margin-top:16px}.stack-lg&gt;*+*{margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:var(--r);font:500 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif;text-decoration:none;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--verdigris);color:var(--white)}.btn-primary:hover{background:var(--verdigris-hover)}
+.btn-secondary{background:var(--white);color:var(--ink);border-color:var(--field)}.btn-secondary:hover{background:var(--flate)}
+.btnrow{display:flex;flex-wrap:wrap;gap:12px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--verdigris);outline-offset:2px}
+.header{border-bottom:1px solid var(--line)}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.header img{height:30px;width:auto}
+.hero{display:grid;gap:40px;align-items:center}
+.hero-media{border-radius:var(--r-card);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--flate)}
+.hero-media video,.hero-media img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.status{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:var(--r);background:var(--mint);font-size:15px;font-weight:500}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--verdigris)}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tag{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:var(--r);background:var(--mint);font-size:14px;font-weight:500}
+.grid{display:grid;gap:16px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);padding:24px;box-shadow:var(--shadow)}
+.fact{border-left:0;background:var(--mint);border-radius:var(--r-card);padding:28px}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{border-top:2px solid var(--verdigris);padding-top:16px}
+.price{font-size:42px;line-height:1.1;letter-spacing:-.025em}
+details{border-top:1px solid #1b2a2333}
+summary{min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;font-weight:500;list-style:none}
+summary::-webkit-details-marker{display:none}
+details p{padding-bottom:24px;color:var(--ink-70)}
+label{display:block}label span{display:block;font-size:15px;font-weight:500;margin-bottom:8px}
+input,select{width:100%;min-height:48px;padding:0 16px;border:1px solid var(--field);border-radius:var(--r);background:var(--white);color:var(--ink);font:400 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif}
+.footer{background:var(--black);color:var(--cream);padding:48px 0}
+.footer p{color:var(--cream-muted)}.footer a{color:var(--cream)}
+.footer .logo{display:inline-flex;background:var(--white);border-radius:var(--r);padding:8px 12px}.footer .logo img{height:26px;width:auto}
+a{color:var(--verdigris);text-underline-offset:3px}
+@media(max-width:480px){.btnrow .btn{width:100%}}
+@media(min-width:800px){.sec{padding:96px 0}h1{font-size:64px;line-height:1.02;letter-spacing:-.038em}h2{font-size:42px;line-height:1.1;letter-spacing:-.025em}.ingress{font-size:20px}.hero{grid-template-columns:1.15fr .85fr;gap:64px}.grid{gap:32px}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&quot;header&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;
+&lt;a href=&quot;#&quot; aria-label=&quot;Cartaia&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;119&quot; height=&quot;30&quot;&gt;&lt;/a&gt;
+&lt;!-- LENKE: prøvestart for bedrift. Bytt hvis Cartaia har egen adresse for Bedrift. --&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis&lt;/a&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap hero&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Cartaia Bedrift&lt;/p&gt;
+&lt;h1&gt;Det er ikke dekningen. Det er Microsoft.&lt;/h1&gt;
+&lt;p class=&quot;ingress&quot;&gt;Da Outlook falt ut torsdag 12. november, hjalp det ikke å flytte seg nærmere vinduet. Cartaia var oppe begge dagene. Prøv kontorpakken fra et norsk selskap.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;status&quot;&gt;&lt;i aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Cartaia var oppe 12. og 13. november&lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;btnrow&quot;&gt;&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;&lt;a class=&quot;btn btn-secondary&quot; href=&quot;#samtale&quot;&gt;Avtal en samtale&lt;/a&gt;&lt;/div&gt;
+&lt;p class=&quot;small muted&quot;&gt;149 kr per bruker per måned, inkl. mva. Ingen binding ved månedlig betaling.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;hero-media&quot;&gt;&lt;video src=&quot;assets/hero.mp4&quot; poster=&quot;assets/hero.jpg&quot; autoplay muted loop playsinline aria-label=&quot;Kvinne holder en bærbar PC opp mot vinduet&quot;&gt;&lt;/video&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;div class=&quot;fact stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Hva skjedde&lt;/p&gt;
+&lt;p&gt;Torsdag 12. november 2026 kl. 17.17 norsk tid meldte Microsoft om problemer med e-post i Microsoft 365. Outlook, kalender, SharePoint og OneDrive ble berørt, og problemene varte inn i fredag 13. november.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Kilde: Microsofts statusmeldinger EX1550543 og MO1550821. Lest 13.11.2026.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;h2&gt;Kontorpakken dere kjenner, hos et norsk selskap.&lt;/h2&gt;
+&lt;div class=&quot;grid g3&quot;&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Oppe 12. og 13. november&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Cartaia kjører i et datasenter i Tyskland og gikk som normalt begge dagene.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Logg inn med BankID&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ingen installasjon og ingen nye passord. Alt kjører i nettleseren.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Filene åpnes som før&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Cartaia åpner og lagrer .docx, .xlsx og .pptx. Ta med filene dere bruker mest og test selv.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;tags&quot;&gt;&lt;span class=&quot;tag&quot;&gt;.docx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.xlsx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.pptx&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Slik kommer dere i gang&lt;/p&gt;&lt;h2&gt;Tre steg, i dag.&lt;/h2&gt;&lt;/div&gt;
+&lt;ol class=&quot;steps grid g3&quot;&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 1&lt;/p&gt;&lt;h3&gt;Start prøveperioden&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Logg inn med BankID. 14 dager gratis, uten betalingskort.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 2&lt;/p&gt;&lt;h3&gt;Åpne filene dere har&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Last opp noen Word- og Excel-filer og se hvordan de oppfører seg.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 3&lt;/p&gt;&lt;h3&gt;Ta en samtale om resten&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Vi går gjennom e-post, brukere og hva et bytte innebærer for dere.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Fire løfter&lt;/p&gt;&lt;h2&gt;Det dere kan holde oss til.&lt;/h2&gt;&lt;/div&gt;
+&lt;div class=&quot;grid g4&quot;&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Suverenitet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Data i Europa, under GDPR.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Frihet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ta med alle data når som helst, i åpne formater.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Personvern&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ingen annonser og ingen videresalg av data.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Åpenhet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Åpne standarder og åpen kildekode.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap grid g2&quot; style=&quot;align-items:center&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Én pris per bruker.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;For virksomheter med 1 til 50 brukere. 1 TB lagring per bruker og e-post på eget domene.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot; style=&quot;border:2px solid var(--verdigris)&quot;&gt;
+&lt;h3&gt;Cartaia Bedrift&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&quot;price&quot;&gt;149 kr&lt;/span&gt; &lt;span class=&quot;small&quot;&gt;per bruker per måned&lt;/span&gt;&lt;/p&gt;
+&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;inkl. mva.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Ingen binding ved månedlig betaling. To måneder gratis ved årsbetaling.&lt;/p&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot; style=&quot;width:100%&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot; style=&quot;max-width:820px&quot;&gt;
+&lt;h2&gt;Vanlige spørsmål.&lt;/h2&gt;
+&lt;div&gt;
+&lt;details open&gt;&lt;summary&gt;Fungerer Word- og Excel-filene våre?&lt;/summary&gt;&lt;p&gt;Cartaia åpner og lagrer .docx, .xlsx og .pptx. Ta med filene dere bruker mest i prøveperioden, så ser dere selv.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvor ligger dataene?&lt;/summary&gt;&lt;p&gt;I et datasenter i Tyskland, under GDPR.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvem står bak?&lt;/summary&gt;&lt;p&gt;Northflow Technologies AS i Stavanger, org.nr 936 979 815.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hva om vi vil bytte tilbake?&lt;/summary&gt;&lt;p&gt;Dere tar med alle data i åpne formater. Det er ingen binding ved månedlig betaling.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Kan Cartaia også gå ned?&lt;/summary&gt;&lt;p&gt;Alle systemer kan få driftsproblemer. Cartaia var oppe 12. og 13. november, og kjører uavhengig av Microsoft 365.&lt;/p&gt;&lt;/details&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot; id=&quot;samtale&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Avtal en samtale.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;Fortell litt om virksomheten, så tar vi kontakt. Samtalen tar 20 minutter.&lt;/p&gt;&lt;/div&gt;
+&lt;!-- SKJEMA: i demoen sendes ingenting. Koble skjemaet til Cartaias eget mottak (se LES-MEG.md). --&gt;
+&lt;form class=&quot;card stack&quot; id=&quot;skjema&quot; novalidate&gt;
+&lt;label&gt;&lt;span&gt;Virksomhet&lt;/span&gt;&lt;input name=&quot;virksomhet&quot; autocomplete=&quot;organization&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Antall brukere&lt;/span&gt;&lt;select name=&quot;brukere&quot;&gt;&lt;option&gt;1 til 4&lt;/option&gt;&lt;option&gt;5 til 10&lt;/option&gt;&lt;option&gt;11 til 25&lt;/option&gt;&lt;option&gt;26 til 50&lt;/option&gt;&lt;option&gt;Over 50&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Dagens løsning&lt;/span&gt;&lt;select name=&quot;losning&quot;&gt;&lt;option&gt;Microsoft 365&lt;/option&gt;&lt;option&gt;Google Workspace&lt;/option&gt;&lt;option&gt;Annet&lt;/option&gt;&lt;option&gt;Vet ikke&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Navn&lt;/span&gt;&lt;input name=&quot;navn&quot; autocomplete=&quot;name&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;E-post&lt;/span&gt;&lt;input name=&quot;epost&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Telefon&lt;/span&gt;&lt;input name=&quot;telefon&quot; type=&quot;tel&quot; autocomplete=&quot;tel&quot;&gt;&lt;/label&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;vinkel&quot; value=&quot;signalet&quot;&gt;
+&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot; style=&quot;width:100%&quot;&gt;Send&lt;/button&gt;
+&lt;p class=&quot;small muted&quot; id=&quot;skjema-status&quot; role=&quot;status&quot;&gt;Cartaia behandler opplysningene for å svare på henvendelsen. &lt;a href=&quot;https://cartaia.no&quot;&gt;Personvern&lt;/a&gt;&lt;/p&gt;
+&lt;/form&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;span class=&quot;logo&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;103&quot; height=&quot;26&quot;&gt;&lt;/span&gt;&lt;p class=&quot;small&quot;&gt;Hele kontorpakken, på norske vilkår.&lt;/p&gt;&lt;/div&gt;
+&lt;p class=&quot;small&quot;&gt;Northflow Technologies AS&lt;br&gt;Org.nr 936 979 815&lt;br&gt;Jåttåveien 92, Stavanger&lt;br&gt;post@cartaia.no&lt;/p&gt;
+&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+// DEMO: skjemaet sender ingenting. Bytt ut denne blokken med ekte innsending.
+document.getElementById(&#x27;skjema&#x27;).addEventListener(&#x27;submit&#x27;,function(e){e.preventDefault();var s=document.getElementById(&#x27;skjema-status&#x27;);s.textContent=&#x27;Takk. Dette er en demo, så ingenting er sendt.&#x27;;});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea></details>
+</div><div class="dev" id="kode-motet-er-utsatt">
+<div class="dev-h"><b>Møtet er utsatt</b><span><a href="lp/motet-er-utsatt/">Åpne siden</a> · <a href="lp/cartaia-lp-motet-er-utsatt.zip" download>Last ned zip</a> · <button type="button" data-copy="c-motet-er-utsatt">Kopier koden</button></span></div>
+<details><summary>Vis koden (index.html)</summary><textarea id="c-motet-er-utsatt" readonly rows="14" spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;!-- DEMO: fjern neste linje når siden flyttes til cartaia.no --&gt;
+&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow, noarchive, nosnippet&quot;&gt;
+&lt;title&gt;Møtet er utsatt. Kalenderen er nede. | Cartaia Bedrift&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;Samtalene i Teams gikk stort sett 12. november, men kalenderen og innkallingene falt ut. Cartaia har kalender, chat og videomøter i samme løsning, og var oppe begge dagene.&quot;&gt;
+&lt;link rel=&quot;preload&quot; href=&quot;assets/instrument-sans-400.woff2&quot; as=&quot;font&quot; type=&quot;font/woff2&quot; crossorigin&gt;
+&lt;style&gt;
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:400;font-display:swap;src:url(&quot;assets/instrument-sans-400.woff2&quot;) format(&quot;woff2&quot;)}
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:500;font-display:swap;src:url(&quot;assets/instrument-sans-500.woff2&quot;) format(&quot;woff2&quot;)}
+:root{--ink:#1b2a23;--ink-70:#1b2a23b3;--verdigris:#2f5f52;--verdigris-hover:#264b41;--black:#111614;--mint:#e3f1ea;--mint-strong:#cfe6da;--cream:#f2f4f2;--cream-muted:#c3ccc7;--flate:#f5f6f5;--white:#fff;--line:#1b2a2324;--field:#6b7570;--r:6px;--r-card:12px;--shadow:0 1px 2px #1b2a230a,0 12px 32px -24px #1b2a2347}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--ink);font:400 18px/1.6 &quot;Instrument Sans&quot;,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+.sec{padding:64px 0}.flate{background:var(--flate)}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+h1{font-size:40px;line-height:1.06;letter-spacing:-.03em}
+h2{font-size:30px;line-height:1.15;letter-spacing:-.02em}
+h3{font-size:19px;line-height:1.3;font-weight:500;letter-spacing:-.01em}
+p{margin:0}
+.label{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--verdigris)}
+.ingress{font-size:18px;line-height:1.5;color:var(--ink-70);max-width:34em}
+.muted{color:var(--ink-70)}.small{font-size:15px;line-height:1.5}
+.stack&gt;*+*{margin-top:16px}.stack-lg&gt;*+*{margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:var(--r);font:500 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif;text-decoration:none;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--verdigris);color:var(--white)}.btn-primary:hover{background:var(--verdigris-hover)}
+.btn-secondary{background:var(--white);color:var(--ink);border-color:var(--field)}.btn-secondary:hover{background:var(--flate)}
+.btnrow{display:flex;flex-wrap:wrap;gap:12px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--verdigris);outline-offset:2px}
+.header{border-bottom:1px solid var(--line)}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.header img{height:30px;width:auto}
+.hero{display:grid;gap:40px;align-items:center}
+.hero-media{border-radius:var(--r-card);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--flate)}
+.hero-media video,.hero-media img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.status{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:var(--r);background:var(--mint);font-size:15px;font-weight:500}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--verdigris)}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tag{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:var(--r);background:var(--mint);font-size:14px;font-weight:500}
+.grid{display:grid;gap:16px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);padding:24px;box-shadow:var(--shadow)}
+.fact{border-left:0;background:var(--mint);border-radius:var(--r-card);padding:28px}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{border-top:2px solid var(--verdigris);padding-top:16px}
+.price{font-size:42px;line-height:1.1;letter-spacing:-.025em}
+details{border-top:1px solid #1b2a2333}
+summary{min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;font-weight:500;list-style:none}
+summary::-webkit-details-marker{display:none}
+details p{padding-bottom:24px;color:var(--ink-70)}
+label{display:block}label span{display:block;font-size:15px;font-weight:500;margin-bottom:8px}
+input,select{width:100%;min-height:48px;padding:0 16px;border:1px solid var(--field);border-radius:var(--r);background:var(--white);color:var(--ink);font:400 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif}
+.footer{background:var(--black);color:var(--cream);padding:48px 0}
+.footer p{color:var(--cream-muted)}.footer a{color:var(--cream)}
+.footer .logo{display:inline-flex;background:var(--white);border-radius:var(--r);padding:8px 12px}.footer .logo img{height:26px;width:auto}
+a{color:var(--verdigris);text-underline-offset:3px}
+@media(max-width:480px){.btnrow .btn{width:100%}}
+@media(min-width:800px){.sec{padding:96px 0}h1{font-size:64px;line-height:1.02;letter-spacing:-.038em}h2{font-size:42px;line-height:1.1;letter-spacing:-.025em}.ingress{font-size:20px}.hero{grid-template-columns:1.15fr .85fr;gap:64px}.grid{gap:32px}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&quot;header&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;
+&lt;a href=&quot;#&quot; aria-label=&quot;Cartaia&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;119&quot; height=&quot;30&quot;&gt;&lt;/a&gt;
+&lt;!-- LENKE: prøvestart for bedrift. Bytt hvis Cartaia har egen adresse for Bedrift. --&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis&lt;/a&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap hero&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Cartaia Bedrift&lt;/p&gt;
+&lt;h1&gt;Møtet er utsatt. Kalenderen er nede.&lt;/h1&gt;
+&lt;p class=&quot;ingress&quot;&gt;Samtalene i Teams gikk stort sett 12. november, men kalenderen og innkallingene falt ut. Cartaia har kalender, chat og videomøter i samme løsning, og var oppe begge dagene.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;status&quot;&gt;&lt;i aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Cartaia var oppe 12. og 13. november&lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;btnrow&quot;&gt;&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;&lt;a class=&quot;btn btn-secondary&quot; href=&quot;#samtale&quot;&gt;Avtal en samtale&lt;/a&gt;&lt;/div&gt;
+&lt;p class=&quot;small muted&quot;&gt;149 kr per bruker per måned, inkl. mva. Ingen binding ved månedlig betaling.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;hero-media&quot;&gt;&lt;video src=&quot;assets/hero.mp4&quot; poster=&quot;assets/hero.jpg&quot; autoplay muted loop playsinline aria-label=&quot;To kolleger spiller bordtennis over møtebordet&quot;&gt;&lt;/video&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;div class=&quot;fact stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Hva skjedde&lt;/p&gt;
+&lt;p&gt;Torsdag 12. november 2026 kl. 17.17 norsk tid meldte Microsoft om problemer med e-post i Microsoft 365. Outlook, kalender, SharePoint og OneDrive ble berørt, og problemene varte inn i fredag 13. november.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Kilde: Microsofts statusmeldinger EX1550543 og MO1550821. Lest 13.11.2026.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;h2&gt;Kontorpakken dere kjenner, hos et norsk selskap.&lt;/h2&gt;
+&lt;div class=&quot;grid g3&quot;&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Kalender som var oppe&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Kalenderen ligger i samme løsning som e-posten, og begge gikk som normalt 12. og 13. november.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Cartaia Rom&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Chat og videomøter uten ekstra verktøy, i samme innlogging.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;E-post på eget domene&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Felles adresser, kalender og 1 TB lagring per bruker i samme løsning.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;tags&quot;&gt;&lt;span class=&quot;tag&quot;&gt;.docx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.xlsx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.pptx&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Slik kommer dere i gang&lt;/p&gt;&lt;h2&gt;Tre steg, i dag.&lt;/h2&gt;&lt;/div&gt;
+&lt;ol class=&quot;steps grid g3&quot;&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 1&lt;/p&gt;&lt;h3&gt;Start prøveperioden&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Logg inn med BankID. 14 dager gratis, uten betalingskort.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 2&lt;/p&gt;&lt;h3&gt;Åpne filene dere har&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Last opp noen Word- og Excel-filer og se hvordan de oppfører seg.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 3&lt;/p&gt;&lt;h3&gt;Ta en samtale om resten&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Vi går gjennom e-post, brukere og hva et bytte innebærer for dere.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Fire løfter&lt;/p&gt;&lt;h2&gt;Det dere kan holde oss til.&lt;/h2&gt;&lt;/div&gt;
+&lt;div class=&quot;grid g4&quot;&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Suverenitet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Data i Europa, under GDPR.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Frihet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ta med alle data når som helst, i åpne formater.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Personvern&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ingen annonser og ingen videresalg av data.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Åpenhet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Åpne standarder og åpen kildekode.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap grid g2&quot; style=&quot;align-items:center&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Én pris per bruker.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;For virksomheter med 1 til 50 brukere. 1 TB lagring per bruker og e-post på eget domene.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot; style=&quot;border:2px solid var(--verdigris)&quot;&gt;
+&lt;h3&gt;Cartaia Bedrift&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&quot;price&quot;&gt;149 kr&lt;/span&gt; &lt;span class=&quot;small&quot;&gt;per bruker per måned&lt;/span&gt;&lt;/p&gt;
+&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;inkl. mva.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Ingen binding ved månedlig betaling. To måneder gratis ved årsbetaling.&lt;/p&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot; style=&quot;width:100%&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot; style=&quot;max-width:820px&quot;&gt;
+&lt;h2&gt;Vanlige spørsmål.&lt;/h2&gt;
+&lt;div&gt;
+&lt;details open&gt;&lt;summary&gt;Fungerer Word- og Excel-filene våre?&lt;/summary&gt;&lt;p&gt;Cartaia åpner og lagrer .docx, .xlsx og .pptx. Ta med filene dere bruker mest i prøveperioden, så ser dere selv.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvor ligger dataene?&lt;/summary&gt;&lt;p&gt;I et datasenter i Tyskland, under GDPR.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvem står bak?&lt;/summary&gt;&lt;p&gt;Northflow Technologies AS i Stavanger, org.nr 936 979 815.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hva om vi vil bytte tilbake?&lt;/summary&gt;&lt;p&gt;Dere tar med alle data i åpne formater. Det er ingen binding ved månedlig betaling.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Kan Cartaia også gå ned?&lt;/summary&gt;&lt;p&gt;Alle systemer kan få driftsproblemer. Cartaia var oppe 12. og 13. november, og kjører uavhengig av Microsoft 365.&lt;/p&gt;&lt;/details&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot; id=&quot;samtale&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Avtal en samtale.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;Fortell litt om virksomheten, så tar vi kontakt. Samtalen tar 20 minutter.&lt;/p&gt;&lt;/div&gt;
+&lt;!-- SKJEMA: i demoen sendes ingenting. Koble skjemaet til Cartaias eget mottak (se LES-MEG.md). --&gt;
+&lt;form class=&quot;card stack&quot; id=&quot;skjema&quot; novalidate&gt;
+&lt;label&gt;&lt;span&gt;Virksomhet&lt;/span&gt;&lt;input name=&quot;virksomhet&quot; autocomplete=&quot;organization&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Antall brukere&lt;/span&gt;&lt;select name=&quot;brukere&quot;&gt;&lt;option&gt;1 til 4&lt;/option&gt;&lt;option&gt;5 til 10&lt;/option&gt;&lt;option&gt;11 til 25&lt;/option&gt;&lt;option&gt;26 til 50&lt;/option&gt;&lt;option&gt;Over 50&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Dagens løsning&lt;/span&gt;&lt;select name=&quot;losning&quot;&gt;&lt;option&gt;Microsoft 365&lt;/option&gt;&lt;option&gt;Google Workspace&lt;/option&gt;&lt;option&gt;Annet&lt;/option&gt;&lt;option&gt;Vet ikke&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Navn&lt;/span&gt;&lt;input name=&quot;navn&quot; autocomplete=&quot;name&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;E-post&lt;/span&gt;&lt;input name=&quot;epost&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Telefon&lt;/span&gt;&lt;input name=&quot;telefon&quot; type=&quot;tel&quot; autocomplete=&quot;tel&quot;&gt;&lt;/label&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;vinkel&quot; value=&quot;motet-er-utsatt&quot;&gt;
+&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot; style=&quot;width:100%&quot;&gt;Send&lt;/button&gt;
+&lt;p class=&quot;small muted&quot; id=&quot;skjema-status&quot; role=&quot;status&quot;&gt;Cartaia behandler opplysningene for å svare på henvendelsen. &lt;a href=&quot;https://cartaia.no&quot;&gt;Personvern&lt;/a&gt;&lt;/p&gt;
+&lt;/form&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;span class=&quot;logo&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;103&quot; height=&quot;26&quot;&gt;&lt;/span&gt;&lt;p class=&quot;small&quot;&gt;Hele kontorpakken, på norske vilkår.&lt;/p&gt;&lt;/div&gt;
+&lt;p class=&quot;small&quot;&gt;Northflow Technologies AS&lt;br&gt;Org.nr 936 979 815&lt;br&gt;Jåttåveien 92, Stavanger&lt;br&gt;post@cartaia.no&lt;/p&gt;
+&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+// DEMO: skjemaet sender ingenting. Bytt ut denne blokken med ekte innsending.
+document.getElementById(&#x27;skjema&#x27;).addEventListener(&#x27;submit&#x27;,function(e){e.preventDefault();var s=document.getElementById(&#x27;skjema-status&#x27;);s.textContent=&#x27;Takk. Dette er en demo, så ingenting er sendt.&#x27;;});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea></details>
+</div><div class="dev" id="kode-plantene">
+<div class="dev-h"><b>Plantene</b><span><a href="lp/plantene/">Åpne siden</a> · <a href="lp/cartaia-lp-plantene.zip" download>Last ned zip</a> · <button type="button" data-copy="c-plantene">Kopier koden</button></span></div>
+<details><summary>Vis koden (index.html)</summary><textarea id="c-plantene" readonly rows="14" spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;!-- DEMO: fjern neste linje når siden flyttes til cartaia.no --&gt;
+&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow, noarchive, nosnippet&quot;&gt;
+&lt;title&gt;Plantene har aldri hatt det bedre. | Cartaia Bedrift&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;Outlook var nede i to dager, torsdag 12. og fredag 13. november. Noen kontorer fikk god tid til plantene. Hos Cartaia gikk arbeidsdagen som normalt.&quot;&gt;
+&lt;link rel=&quot;preload&quot; href=&quot;assets/instrument-sans-400.woff2&quot; as=&quot;font&quot; type=&quot;font/woff2&quot; crossorigin&gt;
+&lt;style&gt;
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:400;font-display:swap;src:url(&quot;assets/instrument-sans-400.woff2&quot;) format(&quot;woff2&quot;)}
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:500;font-display:swap;src:url(&quot;assets/instrument-sans-500.woff2&quot;) format(&quot;woff2&quot;)}
+:root{--ink:#1b2a23;--ink-70:#1b2a23b3;--verdigris:#2f5f52;--verdigris-hover:#264b41;--black:#111614;--mint:#e3f1ea;--mint-strong:#cfe6da;--cream:#f2f4f2;--cream-muted:#c3ccc7;--flate:#f5f6f5;--white:#fff;--line:#1b2a2324;--field:#6b7570;--r:6px;--r-card:12px;--shadow:0 1px 2px #1b2a230a,0 12px 32px -24px #1b2a2347}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--ink);font:400 18px/1.6 &quot;Instrument Sans&quot;,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+.sec{padding:64px 0}.flate{background:var(--flate)}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+h1{font-size:40px;line-height:1.06;letter-spacing:-.03em}
+h2{font-size:30px;line-height:1.15;letter-spacing:-.02em}
+h3{font-size:19px;line-height:1.3;font-weight:500;letter-spacing:-.01em}
+p{margin:0}
+.label{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--verdigris)}
+.ingress{font-size:18px;line-height:1.5;color:var(--ink-70);max-width:34em}
+.muted{color:var(--ink-70)}.small{font-size:15px;line-height:1.5}
+.stack&gt;*+*{margin-top:16px}.stack-lg&gt;*+*{margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:var(--r);font:500 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif;text-decoration:none;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--verdigris);color:var(--white)}.btn-primary:hover{background:var(--verdigris-hover)}
+.btn-secondary{background:var(--white);color:var(--ink);border-color:var(--field)}.btn-secondary:hover{background:var(--flate)}
+.btnrow{display:flex;flex-wrap:wrap;gap:12px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--verdigris);outline-offset:2px}
+.header{border-bottom:1px solid var(--line)}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.header img{height:30px;width:auto}
+.hero{display:grid;gap:40px;align-items:center}
+.hero-media{border-radius:var(--r-card);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--flate)}
+.hero-media video,.hero-media img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.status{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:var(--r);background:var(--mint);font-size:15px;font-weight:500}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--verdigris)}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tag{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:var(--r);background:var(--mint);font-size:14px;font-weight:500}
+.grid{display:grid;gap:16px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);padding:24px;box-shadow:var(--shadow)}
+.fact{border-left:0;background:var(--mint);border-radius:var(--r-card);padding:28px}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{border-top:2px solid var(--verdigris);padding-top:16px}
+.price{font-size:42px;line-height:1.1;letter-spacing:-.025em}
+details{border-top:1px solid #1b2a2333}
+summary{min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;font-weight:500;list-style:none}
+summary::-webkit-details-marker{display:none}
+details p{padding-bottom:24px;color:var(--ink-70)}
+label{display:block}label span{display:block;font-size:15px;font-weight:500;margin-bottom:8px}
+input,select{width:100%;min-height:48px;padding:0 16px;border:1px solid var(--field);border-radius:var(--r);background:var(--white);color:var(--ink);font:400 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif}
+.footer{background:var(--black);color:var(--cream);padding:48px 0}
+.footer p{color:var(--cream-muted)}.footer a{color:var(--cream)}
+.footer .logo{display:inline-flex;background:var(--white);border-radius:var(--r);padding:8px 12px}.footer .logo img{height:26px;width:auto}
+a{color:var(--verdigris);text-underline-offset:3px}
+@media(max-width:480px){.btnrow .btn{width:100%}}
+@media(min-width:800px){.sec{padding:96px 0}h1{font-size:64px;line-height:1.02;letter-spacing:-.038em}h2{font-size:42px;line-height:1.1;letter-spacing:-.025em}.ingress{font-size:20px}.hero{grid-template-columns:1.15fr .85fr;gap:64px}.grid{gap:32px}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&quot;header&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;
+&lt;a href=&quot;#&quot; aria-label=&quot;Cartaia&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;119&quot; height=&quot;30&quot;&gt;&lt;/a&gt;
+&lt;!-- LENKE: prøvestart for bedrift. Bytt hvis Cartaia har egen adresse for Bedrift. --&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis&lt;/a&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap hero&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Cartaia Bedrift&lt;/p&gt;
+&lt;h1&gt;Plantene har aldri hatt det bedre.&lt;/h1&gt;
+&lt;p class=&quot;ingress&quot;&gt;Outlook var nede i to dager, torsdag 12. og fredag 13. november. Noen kontorer fikk god tid til plantene. Hos Cartaia gikk arbeidsdagen som normalt.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;status&quot;&gt;&lt;i aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Cartaia var oppe 12. og 13. november&lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;btnrow&quot;&gt;&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;&lt;a class=&quot;btn btn-secondary&quot; href=&quot;#samtale&quot;&gt;Avtal en samtale&lt;/a&gt;&lt;/div&gt;
+&lt;p class=&quot;small muted&quot;&gt;149 kr per bruker per måned, inkl. mva. Ingen binding ved månedlig betaling.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;hero-media&quot;&gt;&lt;video src=&quot;assets/hero.mp4&quot; poster=&quot;assets/hero.jpg&quot; autoplay muted loop playsinline aria-label=&quot;Mann vanner kontorplantene grundig&quot;&gt;&lt;/video&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;div class=&quot;fact stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Hva skjedde&lt;/p&gt;
+&lt;p&gt;Torsdag 12. november 2026 kl. 17.17 norsk tid meldte Microsoft om problemer med e-post i Microsoft 365. Outlook, kalender, SharePoint og OneDrive ble berørt, og problemene varte inn i fredag 13. november.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Kilde: Microsofts statusmeldinger EX1550543 og MO1550821. Lest 13.11.2026.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;h2&gt;Kontorpakken dere kjenner, hos et norsk selskap.&lt;/h2&gt;
+&lt;div class=&quot;grid g3&quot;&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Oppe 12. og 13. november&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Cartaia kjører i et datasenter i Tyskland og gikk som normalt begge dagene.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Filene åpnes som før&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Cartaia åpner og lagrer .docx, .xlsx og .pptx. Ta med filene dere bruker mest og test selv.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;E-post på eget domene&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Felles adresser, kalender og 1 TB lagring per bruker i samme løsning.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;tags&quot;&gt;&lt;span class=&quot;tag&quot;&gt;.docx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.xlsx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.pptx&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Slik kommer dere i gang&lt;/p&gt;&lt;h2&gt;Tre steg, i dag.&lt;/h2&gt;&lt;/div&gt;
+&lt;ol class=&quot;steps grid g3&quot;&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 1&lt;/p&gt;&lt;h3&gt;Start prøveperioden&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Logg inn med BankID. 14 dager gratis, uten betalingskort.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 2&lt;/p&gt;&lt;h3&gt;Åpne filene dere har&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Last opp noen Word- og Excel-filer og se hvordan de oppfører seg.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 3&lt;/p&gt;&lt;h3&gt;Ta en samtale om resten&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Vi går gjennom e-post, brukere og hva et bytte innebærer for dere.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Fire løfter&lt;/p&gt;&lt;h2&gt;Det dere kan holde oss til.&lt;/h2&gt;&lt;/div&gt;
+&lt;div class=&quot;grid g4&quot;&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Suverenitet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Data i Europa, under GDPR.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Frihet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ta med alle data når som helst, i åpne formater.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Personvern&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ingen annonser og ingen videresalg av data.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Åpenhet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Åpne standarder og åpen kildekode.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap grid g2&quot; style=&quot;align-items:center&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Én pris per bruker.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;For virksomheter med 1 til 50 brukere. 1 TB lagring per bruker og e-post på eget domene.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot; style=&quot;border:2px solid var(--verdigris)&quot;&gt;
+&lt;h3&gt;Cartaia Bedrift&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&quot;price&quot;&gt;149 kr&lt;/span&gt; &lt;span class=&quot;small&quot;&gt;per bruker per måned&lt;/span&gt;&lt;/p&gt;
+&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;inkl. mva.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Ingen binding ved månedlig betaling. To måneder gratis ved årsbetaling.&lt;/p&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot; style=&quot;width:100%&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot; style=&quot;max-width:820px&quot;&gt;
+&lt;h2&gt;Vanlige spørsmål.&lt;/h2&gt;
+&lt;div&gt;
+&lt;details open&gt;&lt;summary&gt;Fungerer Word- og Excel-filene våre?&lt;/summary&gt;&lt;p&gt;Cartaia åpner og lagrer .docx, .xlsx og .pptx. Ta med filene dere bruker mest i prøveperioden, så ser dere selv.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvor ligger dataene?&lt;/summary&gt;&lt;p&gt;I et datasenter i Tyskland, under GDPR.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvem står bak?&lt;/summary&gt;&lt;p&gt;Northflow Technologies AS i Stavanger, org.nr 936 979 815.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hva om vi vil bytte tilbake?&lt;/summary&gt;&lt;p&gt;Dere tar med alle data i åpne formater. Det er ingen binding ved månedlig betaling.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Kan Cartaia også gå ned?&lt;/summary&gt;&lt;p&gt;Alle systemer kan få driftsproblemer. Cartaia var oppe 12. og 13. november, og kjører uavhengig av Microsoft 365.&lt;/p&gt;&lt;/details&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot; id=&quot;samtale&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Avtal en samtale.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;Fortell litt om virksomheten, så tar vi kontakt. Samtalen tar 20 minutter.&lt;/p&gt;&lt;/div&gt;
+&lt;!-- SKJEMA: i demoen sendes ingenting. Koble skjemaet til Cartaias eget mottak (se LES-MEG.md). --&gt;
+&lt;form class=&quot;card stack&quot; id=&quot;skjema&quot; novalidate&gt;
+&lt;label&gt;&lt;span&gt;Virksomhet&lt;/span&gt;&lt;input name=&quot;virksomhet&quot; autocomplete=&quot;organization&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Antall brukere&lt;/span&gt;&lt;select name=&quot;brukere&quot;&gt;&lt;option&gt;1 til 4&lt;/option&gt;&lt;option&gt;5 til 10&lt;/option&gt;&lt;option&gt;11 til 25&lt;/option&gt;&lt;option&gt;26 til 50&lt;/option&gt;&lt;option&gt;Over 50&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Dagens løsning&lt;/span&gt;&lt;select name=&quot;losning&quot;&gt;&lt;option&gt;Microsoft 365&lt;/option&gt;&lt;option&gt;Google Workspace&lt;/option&gt;&lt;option&gt;Annet&lt;/option&gt;&lt;option&gt;Vet ikke&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Navn&lt;/span&gt;&lt;input name=&quot;navn&quot; autocomplete=&quot;name&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;E-post&lt;/span&gt;&lt;input name=&quot;epost&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Telefon&lt;/span&gt;&lt;input name=&quot;telefon&quot; type=&quot;tel&quot; autocomplete=&quot;tel&quot;&gt;&lt;/label&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;vinkel&quot; value=&quot;plantene&quot;&gt;
+&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot; style=&quot;width:100%&quot;&gt;Send&lt;/button&gt;
+&lt;p class=&quot;small muted&quot; id=&quot;skjema-status&quot; role=&quot;status&quot;&gt;Cartaia behandler opplysningene for å svare på henvendelsen. &lt;a href=&quot;https://cartaia.no&quot;&gt;Personvern&lt;/a&gt;&lt;/p&gt;
+&lt;/form&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;span class=&quot;logo&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;103&quot; height=&quot;26&quot;&gt;&lt;/span&gt;&lt;p class=&quot;small&quot;&gt;Hele kontorpakken, på norske vilkår.&lt;/p&gt;&lt;/div&gt;
+&lt;p class=&quot;small&quot;&gt;Northflow Technologies AS&lt;br&gt;Org.nr 936 979 815&lt;br&gt;Jåttåveien 92, Stavanger&lt;br&gt;post@cartaia.no&lt;/p&gt;
+&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+// DEMO: skjemaet sender ingenting. Bytt ut denne blokken med ekte innsending.
+document.getElementById(&#x27;skjema&#x27;).addEventListener(&#x27;submit&#x27;,function(e){e.preventDefault();var s=document.getElementById(&#x27;skjema-status&#x27;);s.textContent=&#x27;Takk. Dette er en demo, så ingenting er sendt.&#x27;;});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea></details>
+</div><div class="dev" id="kode-meldingen">
+<div class="dev-h"><b>Meldingen</b><span><a href="lp/meldingen/">Åpne siden</a> · <a href="lp/cartaia-lp-meldingen.zip" download>Last ned zip</a> · <button type="button" data-copy="c-meldingen">Kopier koden</button></span></div>
+<details><summary>Vis koden (index.html)</summary><textarea id="c-meldingen" readonly rows="14" spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;!-- DEMO: fjern neste linje når siden flyttes til cartaia.no --&gt;
+&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow, noarchive, nosnippet&quot;&gt;
+&lt;title&gt;«Er Outlook nede hos deg også?» | Cartaia Bedrift&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;Den meldingen gikk i mange bedrifter torsdag 12. og fredag 13. november. Hos Cartaia var svaret nei. Prøv kontorpakken som var oppe begge dagene.&quot;&gt;
+&lt;link rel=&quot;preload&quot; href=&quot;assets/instrument-sans-400.woff2&quot; as=&quot;font&quot; type=&quot;font/woff2&quot; crossorigin&gt;
+&lt;style&gt;
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:400;font-display:swap;src:url(&quot;assets/instrument-sans-400.woff2&quot;) format(&quot;woff2&quot;)}
+@font-face{font-family:&quot;Instrument Sans&quot;;font-weight:500;font-display:swap;src:url(&quot;assets/instrument-sans-500.woff2&quot;) format(&quot;woff2&quot;)}
+:root{--ink:#1b2a23;--ink-70:#1b2a23b3;--verdigris:#2f5f52;--verdigris-hover:#264b41;--black:#111614;--mint:#e3f1ea;--mint-strong:#cfe6da;--cream:#f2f4f2;--cream-muted:#c3ccc7;--flate:#f5f6f5;--white:#fff;--line:#1b2a2324;--field:#6b7570;--r:6px;--r-card:12px;--shadow:0 1px 2px #1b2a230a,0 12px 32px -24px #1b2a2347}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--ink);font:400 18px/1.6 &quot;Instrument Sans&quot;,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+.sec{padding:64px 0}.flate{background:var(--flate)}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+h1{font-size:40px;line-height:1.06;letter-spacing:-.03em}
+h2{font-size:30px;line-height:1.15;letter-spacing:-.02em}
+h3{font-size:19px;line-height:1.3;font-weight:500;letter-spacing:-.01em}
+p{margin:0}
+.label{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--verdigris)}
+.ingress{font-size:18px;line-height:1.5;color:var(--ink-70);max-width:34em}
+.muted{color:var(--ink-70)}.small{font-size:15px;line-height:1.5}
+.stack&gt;*+*{margin-top:16px}.stack-lg&gt;*+*{margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:var(--r);font:500 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif;text-decoration:none;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--verdigris);color:var(--white)}.btn-primary:hover{background:var(--verdigris-hover)}
+.btn-secondary{background:var(--white);color:var(--ink);border-color:var(--field)}.btn-secondary:hover{background:var(--flate)}
+.btnrow{display:flex;flex-wrap:wrap;gap:12px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--verdigris);outline-offset:2px}
+.header{border-bottom:1px solid var(--line)}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.header img{height:30px;width:auto}
+.hero{display:grid;gap:40px;align-items:center}
+.hero-media{border-radius:var(--r-card);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--flate)}
+.hero-media video,.hero-media img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.status{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:var(--r);background:var(--mint);font-size:15px;font-weight:500}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--verdigris)}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tag{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:var(--r);background:var(--mint);font-size:14px;font-weight:500}
+.grid{display:grid;gap:16px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);padding:24px;box-shadow:var(--shadow)}
+.fact{border-left:0;background:var(--mint);border-radius:var(--r-card);padding:28px}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{border-top:2px solid var(--verdigris);padding-top:16px}
+.price{font-size:42px;line-height:1.1;letter-spacing:-.025em}
+details{border-top:1px solid #1b2a2333}
+summary{min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;font-weight:500;list-style:none}
+summary::-webkit-details-marker{display:none}
+details p{padding-bottom:24px;color:var(--ink-70)}
+label{display:block}label span{display:block;font-size:15px;font-weight:500;margin-bottom:8px}
+input,select{width:100%;min-height:48px;padding:0 16px;border:1px solid var(--field);border-radius:var(--r);background:var(--white);color:var(--ink);font:400 16px/1.2 &quot;Instrument Sans&quot;,system-ui,sans-serif}
+.footer{background:var(--black);color:var(--cream);padding:48px 0}
+.footer p{color:var(--cream-muted)}.footer a{color:var(--cream)}
+.footer .logo{display:inline-flex;background:var(--white);border-radius:var(--r);padding:8px 12px}.footer .logo img{height:26px;width:auto}
+a{color:var(--verdigris);text-underline-offset:3px}
+@media(max-width:480px){.btnrow .btn{width:100%}}
+@media(min-width:800px){.sec{padding:96px 0}h1{font-size:64px;line-height:1.02;letter-spacing:-.038em}h2{font-size:42px;line-height:1.1;letter-spacing:-.025em}.ingress{font-size:20px}.hero{grid-template-columns:1.15fr .85fr;gap:64px}.grid{gap:32px}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&quot;header&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;
+&lt;a href=&quot;#&quot; aria-label=&quot;Cartaia&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;119&quot; height=&quot;30&quot;&gt;&lt;/a&gt;
+&lt;!-- LENKE: prøvestart for bedrift. Bytt hvis Cartaia har egen adresse for Bedrift. --&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis&lt;/a&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap hero&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Cartaia Bedrift&lt;/p&gt;
+&lt;h1&gt;«Er Outlook nede hos deg også?»&lt;/h1&gt;
+&lt;p class=&quot;ingress&quot;&gt;Den meldingen gikk i mange bedrifter torsdag 12. og fredag 13. november. Hos Cartaia var svaret nei. Prøv kontorpakken som var oppe begge dagene.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;status&quot;&gt;&lt;i aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Cartaia var oppe 12. og 13. november&lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;btnrow&quot;&gt;&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;&lt;a class=&quot;btn btn-secondary&quot; href=&quot;#samtale&quot;&gt;Avtal en samtale&lt;/a&gt;&lt;/div&gt;
+&lt;p class=&quot;small muted&quot;&gt;149 kr per bruker per måned, inkl. mva. Ingen binding ved månedlig betaling.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;hero-media&quot;&gt;&lt;img src=&quot;assets/hero.jpg&quot; alt=&quot;To kolleger ser spørrende på hverandre over hver sin PC&quot; width=&quot;1264&quot; height=&quot;848&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap&quot;&gt;&lt;div class=&quot;fact stack&quot;&gt;
+&lt;p class=&quot;label&quot;&gt;Hva skjedde&lt;/p&gt;
+&lt;p&gt;Torsdag 12. november 2026 kl. 17.17 norsk tid meldte Microsoft om problemer med e-post i Microsoft 365. Outlook, kalender, SharePoint og OneDrive ble berørt, og problemene varte inn i fredag 13. november.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Kilde: Microsofts statusmeldinger EX1550543 og MO1550821. Lest 13.11.2026.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;h2&gt;Kontorpakken dere kjenner, hos et norsk selskap.&lt;/h2&gt;
+&lt;div class=&quot;grid g3&quot;&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Oppe 12. og 13. november&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Cartaia kjører i et datasenter i Tyskland og gikk som normalt begge dagene.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Logg inn med BankID&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ingen installasjon og ingen nye passord. Alt kjører i nettleseren.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Filene åpnes som før&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Cartaia åpner og lagrer .docx, .xlsx og .pptx. Ta med filene dere bruker mest og test selv.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;tags&quot;&gt;&lt;span class=&quot;tag&quot;&gt;.docx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.xlsx&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;.pptx&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Slik kommer dere i gang&lt;/p&gt;&lt;h2&gt;Tre steg, i dag.&lt;/h2&gt;&lt;/div&gt;
+&lt;ol class=&quot;steps grid g3&quot;&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 1&lt;/p&gt;&lt;h3&gt;Start prøveperioden&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Logg inn med BankID. 14 dager gratis, uten betalingskort.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 2&lt;/p&gt;&lt;h3&gt;Åpne filene dere har&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Last opp noen Word- og Excel-filer og se hvordan de oppfører seg.&lt;/p&gt;&lt;/li&gt;
+&lt;li class=&quot;stack&quot;&gt;&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;Steg 3&lt;/p&gt;&lt;h3&gt;Ta en samtale om resten&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Vi går gjennom e-post, brukere og hva et bytte innebærer for dere.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;p class=&quot;label&quot;&gt;Fire løfter&lt;/p&gt;&lt;h2&gt;Det dere kan holde oss til.&lt;/h2&gt;&lt;/div&gt;
+&lt;div class=&quot;grid g4&quot;&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Suverenitet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Data i Europa, under GDPR.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Frihet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ta med alle data når som helst, i åpne formater.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Personvern&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Ingen annonser og ingen videresalg av data.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot;&gt;&lt;h3&gt;Åpenhet&lt;/h3&gt;&lt;p class=&quot;small muted&quot;&gt;Åpne standarder og åpen kildekode.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot;&gt;&lt;div class=&quot;wrap grid g2&quot; style=&quot;align-items:center&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Én pris per bruker.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;For virksomheter med 1 til 50 brukere. 1 TB lagring per bruker og e-post på eget domene.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;card stack&quot; style=&quot;border:2px solid var(--verdigris)&quot;&gt;
+&lt;h3&gt;Cartaia Bedrift&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&quot;price&quot;&gt;149 kr&lt;/span&gt; &lt;span class=&quot;small&quot;&gt;per bruker per måned&lt;/span&gt;&lt;/p&gt;
+&lt;p class=&quot;small&quot; style=&quot;font-weight:500&quot;&gt;inkl. mva.&lt;/p&gt;
+&lt;p class=&quot;small muted&quot;&gt;Ingen binding ved månedlig betaling. To måneder gratis ved årsbetaling.&lt;/p&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://solo.cartaia.no&quot; style=&quot;width:100%&quot;&gt;Prøv gratis i 14 dager&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec&quot;&gt;&lt;div class=&quot;wrap stack-lg&quot; style=&quot;max-width:820px&quot;&gt;
+&lt;h2&gt;Vanlige spørsmål.&lt;/h2&gt;
+&lt;div&gt;
+&lt;details open&gt;&lt;summary&gt;Fungerer Word- og Excel-filene våre?&lt;/summary&gt;&lt;p&gt;Cartaia åpner og lagrer .docx, .xlsx og .pptx. Ta med filene dere bruker mest i prøveperioden, så ser dere selv.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvor ligger dataene?&lt;/summary&gt;&lt;p&gt;I et datasenter i Tyskland, under GDPR.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hvem står bak?&lt;/summary&gt;&lt;p&gt;Northflow Technologies AS i Stavanger, org.nr 936 979 815.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Hva om vi vil bytte tilbake?&lt;/summary&gt;&lt;p&gt;Dere tar med alle data i åpne formater. Det er ingen binding ved månedlig betaling.&lt;/p&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;Kan Cartaia også gå ned?&lt;/summary&gt;&lt;p&gt;Alle systemer kan få driftsproblemer. Cartaia var oppe 12. og 13. november, og kjører uavhengig av Microsoft 365.&lt;/p&gt;&lt;/details&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&quot;sec flate&quot; id=&quot;samtale&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;h2&gt;Avtal en samtale.&lt;/h2&gt;&lt;p class=&quot;ingress&quot;&gt;Fortell litt om virksomheten, så tar vi kontakt. Samtalen tar 20 minutter.&lt;/p&gt;&lt;/div&gt;
+&lt;!-- SKJEMA: i demoen sendes ingenting. Koble skjemaet til Cartaias eget mottak (se LES-MEG.md). --&gt;
+&lt;form class=&quot;card stack&quot; id=&quot;skjema&quot; novalidate&gt;
+&lt;label&gt;&lt;span&gt;Virksomhet&lt;/span&gt;&lt;input name=&quot;virksomhet&quot; autocomplete=&quot;organization&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Antall brukere&lt;/span&gt;&lt;select name=&quot;brukere&quot;&gt;&lt;option&gt;1 til 4&lt;/option&gt;&lt;option&gt;5 til 10&lt;/option&gt;&lt;option&gt;11 til 25&lt;/option&gt;&lt;option&gt;26 til 50&lt;/option&gt;&lt;option&gt;Over 50&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Dagens løsning&lt;/span&gt;&lt;select name=&quot;losning&quot;&gt;&lt;option&gt;Microsoft 365&lt;/option&gt;&lt;option&gt;Google Workspace&lt;/option&gt;&lt;option&gt;Annet&lt;/option&gt;&lt;option&gt;Vet ikke&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Navn&lt;/span&gt;&lt;input name=&quot;navn&quot; autocomplete=&quot;name&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;E-post&lt;/span&gt;&lt;input name=&quot;epost&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; required&gt;&lt;/label&gt;
+&lt;label&gt;&lt;span&gt;Telefon&lt;/span&gt;&lt;input name=&quot;telefon&quot; type=&quot;tel&quot; autocomplete=&quot;tel&quot;&gt;&lt;/label&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;vinkel&quot; value=&quot;meldingen&quot;&gt;
+&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot; style=&quot;width:100%&quot;&gt;Send&lt;/button&gt;
+&lt;p class=&quot;small muted&quot; id=&quot;skjema-status&quot; role=&quot;status&quot;&gt;Cartaia behandler opplysningene for å svare på henvendelsen. &lt;a href=&quot;https://cartaia.no&quot;&gt;Personvern&lt;/a&gt;&lt;/p&gt;
+&lt;/form&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot;&gt;&lt;div class=&quot;wrap grid g2&quot;&gt;
+&lt;div class=&quot;stack&quot;&gt;&lt;span class=&quot;logo&quot;&gt;&lt;img src=&quot;assets/cartaia-logo.png&quot; alt=&quot;Cartaia&quot; width=&quot;103&quot; height=&quot;26&quot;&gt;&lt;/span&gt;&lt;p class=&quot;small&quot;&gt;Hele kontorpakken, på norske vilkår.&lt;/p&gt;&lt;/div&gt;
+&lt;p class=&quot;small&quot;&gt;Northflow Technologies AS&lt;br&gt;Org.nr 936 979 815&lt;br&gt;Jåttåveien 92, Stavanger&lt;br&gt;post@cartaia.no&lt;/p&gt;
+&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+// DEMO: skjemaet sender ingenting. Bytt ut denne blokken med ekte innsending.
+document.getElementById(&#x27;skjema&#x27;).addEventListener(&#x27;submit&#x27;,function(e){e.preventDefault();var s=document.getElementById(&#x27;skjema-status&#x27;);s.textContent=&#x27;Takk. Dette er en demo, så ingenting er sendt.&#x27;;});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea></details>
+</div>
 </section>
 <section aria-labelledby="h-flyt">
 <div class="sh"><h2 id="h-flyt">Slik henger det sammen</h2></div>
@@ -75,14 +1026,23 @@ footer{padding:32px 0 56px;font-size:14px;color:#4A5162;border-top:1px solid #CF
 <section aria-labelledby="h-need">
 <div class="sh"><h2 id="h-need">Dette trenger vi fra dere</h2></div>
 <ul class="need">
-<li>Godkjenning av annonsene, og at Microsoft kan navngis i dem.</li>
+<li>Skriftlig godkjenning av annonsetekst og landingssider.</li>
 <li>Driftslogg for 12. og 13. november, som dokumentasjon på at Cartaia var oppe.</li>
-<li>Logo i vektor (SVG), gjerne også en lys versjon til mørke flater.</li>
-<li>Skjermbilder av Cartaia i bruk, til annonser og landingssider.</li>
+<li>Riktig lenke til prøvestart for bedrift, og hvor skjemaet skal sendes.</li>
+<li>Logo i vektor (SVG) og skjermbilder av Cartaia i bruk.</li>
 <li>Tilgang til Meta-annonsekontoen.</li>
 </ul>
 </section>
+<section class="rest" aria-labelledby="h-rest">
+<div class="sh"><h2 id="h-rest">Ikke valgt nå</h2><p>Disse ble ikke valgt i denne runden. De ligger her hvis dere vil hente fram noen senere.</p></div>
+<h3>Filmer</h3><div class="grid films"><figure class="card"><video src="media/film-13-to-kontorer-b.mp4" poster="media/film-13-to-kontorer-b.jpg" muted loop playsinline controls preload="none" aria-label="To kontorer, samme torsdag"></video><figcaption><b>To kontorer, samme torsdag</b><span>Møterommet som venter, og bordet som signerer</span></figcaption></figure><figure class="card"><video src="media/film-05-kaffekoppene.mp4" poster="media/film-05-kaffekoppene.jpg" muted loop playsinline controls preload="none" aria-label="Dag to"></video><figcaption><b>Dag to</b><span>Tårn av kaffekopper</span></figcaption></figure><figure class="card"><video src="media/film-08-lappene.mp4" poster="media/film-08-lappene.jpg" muted loop playsinline controls preload="none" aria-label="Ny e-postløsning"></video><figcaption><b>Ny e-postløsning</b><span>Pulten dekket av lapper</span></figcaption></figure><figure class="card"><video src="media/film-10-pennen.mp4" poster="media/film-10-pennen.jpg" muted loop playsinline controls preload="none" aria-label="Er den oppe nå?"></video><figcaption><b>Er den oppe nå?</b><span>Fire kolleger og én lukket PC</span></figcaption></figure><figure class="card"><video src="media/film-11-kosten.mp4" poster="media/film-11-kosten.jpg" muted loop playsinline controls preload="none" aria-label="Fortsatt ikke dekningen"></video><figcaption><b>Fortsatt ikke dekningen</b><span>Står på stol, får en kost</span></figcaption></figure></div>
+<h3>Fotoannonser</h3><div class="grid"><figure class="card"><img src="media/B01a-kontoret.jpg" alt="Annonse: Microsoft falt" loading="lazy" width="720" height="900"><figcaption><b>Microsoft falt</b></figcaption></figure><figure class="card"><img src="media/B01b-klossene.jpg" alt="Annonse: Microsoft falt" loading="lazy" width="720" height="900"><figcaption><b>Microsoft falt</b></figcaption></figure><figure class="card"><img src="media/B02a-venter.jpg" alt="Annonse: To dager" loading="lazy" width="720" height="900"><figcaption><b>To dager</b></figcaption></figure><figure class="card"><img src="media/B02b-tom-pult.jpg" alt="Annonse: To dager" loading="lazy" width="720" height="900"><figcaption><b>To dager</b></figcaption></figure><figure class="card"><img src="media/B06a-fingrene.jpg" alt="Annonse: Lei av å vente" loading="lazy" width="720" height="900"><figcaption><b>Lei av å vente</b></figcaption></figure><figure class="card"><img src="media/B06b-i-gang.jpg" alt="Annonse: Lei av å vente" loading="lazy" width="720" height="900"><figcaption><b>Lei av å vente</b></figcaption></figure><figure class="card"><img src="media/B08a-pulten.jpg" alt="Annonse: Regnskapskontoret" loading="lazy" width="720" height="900"><figcaption><b>Regnskapskontoret</b></figcaption></figure><figure class="card"><img src="media/B08b-kollegene.jpg" alt="Annonse: Regnskapskontoret" loading="lazy" width="720" height="900"><figcaption><b>Regnskapskontoret</b></figcaption></figure><figure class="card"><img src="media/B11a-telefonen.jpg" alt="Annonse: Meldingen" loading="lazy" width="720" height="900"><figcaption><b>Meldingen</b></figcaption></figure></div>
+<h3>Tekstannonser</h3><div class="grid"><figure class="card"><img src="media/Main.jpg" alt="Annonse: Microsoft falt" loading="lazy" width="720" height="900"><figcaption><b>Microsoft falt</b></figcaption></figure><figure class="card"><img src="media/A02-torsdag.jpg" alt="Annonse: To dager" loading="lazy" width="720" height="900"><figcaption><b>To dager</b></figcaption></figure><figure class="card"><img src="media/A04-ett-feilpunkt.jpg" alt="Annonse: Én leverandør" loading="lazy" width="720" height="900"><figcaption><b>Én leverandør</b></figcaption></figure><figure class="card"><img src="media/A05-regn-ut.jpg" alt="Annonse: Regnestykket" loading="lazy" width="720" height="900"><figcaption><b>Regnestykket</b></figcaption></figure><figure class="card"><img src="media/A06-prov-i-dag.jpg" alt="Annonse: Lei av å vente" loading="lazy" width="720" height="900"><figcaption><b>Lei av å vente</b></figcaption></figure><figure class="card"><img src="media/A07-filene.jpg" alt="Annonse: Filene" loading="lazy" width="720" height="900"><figcaption><b>Filene</b></figcaption></figure><figure class="card"><img src="media/A08-regnskap.jpg" alt="Annonse: Regnskapskontoret" loading="lazy" width="720" height="900"><figcaption><b>Regnskapskontoret</b></figcaption></figure><figure class="card"><img src="media/A09-radgivere.jpg" alt="Annonse: Rådgiveren" loading="lazy" width="720" height="900"><figcaption><b>Rådgiveren</b></figcaption></figure><figure class="card"><img src="media/A10-egen-drift.jpg" alt="Annonse: Egen drift" loading="lazy" width="720" height="900"><figcaption><b>Egen drift</b></figcaption></figure><figure class="card"><img src="media/A11-nede-hos-deg.jpg" alt="Annonse: Meldingen" loading="lazy" width="720" height="900"><figcaption><b>Meldingen</b></figcaption></figure><figure class="card"><img src="media/A12-solo.jpg" alt="Annonse: Privat" loading="lazy" width="720" height="900"><figcaption><b>Privat</b></figcaption></figure><figure class="card"><img src="media/A15-motene.jpg" alt="Annonse: Møtet" loading="lazy" width="720" height="900"><figcaption><b>Møtet</b></figcaption></figure><figure class="card"><img src="media/A03-plan-b.jpg" alt="Annonse: Plan B (rolig)" loading="lazy" width="720" height="900"><figcaption><b>Plan B (rolig)</b></figcaption></figure><figure class="card"><img src="media/A13-ingen-binding.jpg" alt="Annonse: Ingen binding (rolig)" loading="lazy" width="720" height="900"><figcaption><b>Ingen binding (rolig)</b></figcaption></figure></div>
+</section>
 </div>
-<footer><div class="wrap">Bildene og filmene er laget med KI og viser ikke ekte personer. Kampanjen publiseres ikke før dere har godkjent den skriftlig.</div></footer>
+<footer><div class="wrap">Bildene og filmene er laget med KI og viser ikke ekte personer. Forhåndsvisningene etterligner en feed og er ikke hentet fra Meta. Kampanjen publiseres ikke før dere har godkjent den skriftlig.</div></footer>
+<script>
+document.addEventListener('click',function(e){var b=e.target.closest('[data-copy]');if(!b)return;var el=document.getElementById(b.getAttribute('data-copy'));var t=el.value!==undefined&&el.tagName==='TEXTAREA'?el.value:el.textContent;var done=function(){var o=b.textContent;b.textContent='Kopiert';setTimeout(function(){b.textContent=o},1500)};if(navigator.clipboard){navigator.clipboard.writeText(t).then(done,function(){})}});
+</script>
 </body>
 </html>
