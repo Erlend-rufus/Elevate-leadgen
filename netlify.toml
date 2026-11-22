@@ -255,6 +255,11 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
+[[headers]]
+  for = "/kontoleie/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # Nevari client proposal (served at /nevari/). Keep it out of search indexes:
 # it contains commercial terms and must not be indexable.
 [[headers]]
@@ -824,6 +829,12 @@
   from = "/etter-signering/*"
   to = "/404.html"
   status = 404
+
+# Meta ad account rental terms (Norwegian, sent by link only). Not indexed.
+[[redirects]]
+  from = "/kontoleie"
+  to = "/kontoleie/index.html"
+  status = 200
 
 # Legacy landing page (moved from / to /lp): unknown /lp/* paths serve it
 [[redirects]]
