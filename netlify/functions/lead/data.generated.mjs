@@ -266,7 +266,7 @@ export const funnels = {
     "applyPath": "/api/lead",
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
-    "calendlyUrl": "",
+    "calendlyUrl": "https://calendly.com/eb-growwithelevate/elevate-marketing-law-30-minute-google-ads-review",
     "calendlyLeadParam": "utm_content",
     "bookingHeights": {
      "narrow": 1150,
@@ -291,7 +291,7 @@ export const funnels = {
    ],
    "honeypot": "contact_by_fax",
    "clickup": {
-    "listId": ""
+    "listId": "1201270000003579"
    }
   },
   "copy": {

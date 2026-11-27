@@ -9,6 +9,8 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://assets.calendly.com" crossorigin>
+<link rel="preconnect" href="https://calendly.com" crossorigin>
 <link rel="preload" href="/g/_assets/fonts/geist-v1.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/g/_assets/fonts/fraunces-v1.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -199,7 +201,8 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
         <p class="o-p">Pick a slot for a 30 minute Google Ads review. Your own numbers are all we need.</p>
         
         <div class="o-cal-wrap">
-          <div class="o-cal" id="cal"><p class="o-note">The calendar is not connected yet. Set funnel.calendlyUrl in g/uk-law-google-ads/config.json.</p></div>
+          <div class="o-cal" id="cal"></div>
+          <noscript><p class="o-small"><a href="https://calendly.com/eb-growwithelevate/elevate-marketing-law-30-minute-google-ads-review">Open the calendar in its own page</a></p></noscript>
           <p class="o-small">No time that works? Reply to the confirmation email and we will find one.</p>
         </div>
       </div>
@@ -224,7 +227,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 <script>
 (function(){
 'use strict';
-var CFG = {"slug":"uk-law-google-ads","campaign":"uk-law-google-ads","path":"/g/uk-law-google-ads","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"","calendlyLeadParam":"utm_content","takkPath":"/g/uk-law-google-ads/takk/","prefillKey":"elevate:g:uk-law-google-ads:prefill","text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email","askDone":"Thank you. We will email you from post@elevatemarketing.no within two working days.","askError":"That did not go through. Email post@elevatemarketing.no and ask for a quote, and we will send one."}};
+var CFG = {"slug":"uk-law-google-ads","campaign":"uk-law-google-ads","path":"/g/uk-law-google-ads","applyPath":"/api/lead","interestPath":"/api/lead-interest","qualifiedEvent":"QualifiedForm","email":"post@elevatemarketing.no","calendlyUrl":"https://calendly.com/eb-growwithelevate/elevate-marketing-law-30-minute-google-ads-review","calendlyLeadParam":"utm_content","takkPath":"/g/uk-law-google-ads/takk/","prefillKey":"elevate:g:uk-law-google-ads:prefill","text":{"back":"Back","next":"Next","cta":"See whether we would take you on","retry":"Try again","sending":"Checking a few details. This takes a few seconds.","failed":"Something went wrong on our side. Your answers are still here. Please try again, or email","askDone":"Thank you. We will email you from post@elevatemarketing.no within two working days.","askError":"That did not go through. Email post@elevatemarketing.no and ask for a quote, and we will send one."}};
 /* Shared by every page of a growth funnel. The build wraps the pieces of a page in one
    function and writes CFG above them; nothing here reads the page's own copy. */
 

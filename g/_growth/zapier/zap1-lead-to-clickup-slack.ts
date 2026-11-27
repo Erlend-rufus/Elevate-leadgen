@@ -152,6 +152,7 @@ const REMIND: Record<string, Remind> = {
   "uk-it-growth": { lang: "en", offer: "30 minute pipeline review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
   "uk-private-hospitals": { lang: "en", offer: "30-minute bookings review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
   "uk-law-firms": { lang: "en", offer: "30 minute instruction review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
+  "uk-law-google-ads": { lang: "en", offer: "30 minute Google Ads review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Erlend", sign: "Erlend Bognøy", replyTo: "erlend@elevatemarketing.no" },
   "uk-ai-visibility": { lang: "en", offer: "30 minute AI visibility review", prep: "We put your buyers' questions to ChatGPT before we meet, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
   "it-ict-growth": { lang: "it", offer: "analisi della pipeline di 30 minuti", prep: "Bastano i vostri numeri, non c’è nulla da preparare.", host: "Aurora", sign: "Aurora", replyTo: "au@growwithelevate.eu" },
 };
@@ -442,6 +443,47 @@ const CAMPAIGNS: Record<string, Campaign> = {
     label: "UK LAW",
     listId: "1201270000003579", // LAW - UK - Commission
     tag: "growth-law",
+    peopleWord: "fee earners",
+    field: {
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
+      website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
+      adSpend: "13229225-75e5-4729-bd8d-eb69c20e80b2",
+      teamSize: "",
+      contractValue: "",
+      tier: "668b1a6a-4054-4b24-ac3c-55432d7c2b3e",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      phone: "a0c06e36-5028-4b86-af93-c57de3ad2418",
+      specialism: "",
+      jobTitle: "cf254478-a92a-4805-921a-a89ba06c69a0",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+      tier: {
+        fit: "153aea7a-a523-466a-997a-92e6b07e4c1f", // Tier 1
+        review: "20a259b4-95a9-435f-86fa-88bf86d399cc", // Tier 2
+        other: "1d991141-c31f-4a47-96c9-d6e2c025b29a", // Tier 3
+      },
+      specialism: {},
+      teamSize: {},
+      adSpend: {
+        "Under £1,000": "5482c305-7587-466a-bef4-ab15e6a70906", // Under £1k/mth
+        "£1,000 to under £2,000": "20422aec-d6dd-4c76-8c34-fc60a00e0ea6", // £1-2.5k/mth
+        "£5,000 to under £15,000": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
+        "£15,000 or more": "7364943c-da47-4d59-bb44-e79faeeaac5a", // £5k+/mth
+        "I do not know": "feaf2b0d-079a-4ffa-a48b-67e79c280458", // Unknown
+      },
+      contractValue: {},
+    },
+  },
+  // Google Ads on a fixed fee for law firms (27 Nov 2026). Same ClickUp list as the commission funnel, own tag and label.
+  "uk-law-google-ads": {
+    label: "UK LAW · GOOGLE ADS (fixed fee, no commission)",
+    listId: "1201270000003579", // LAW - UK - Commission
+    tag: "growth-law-gads",
     peopleWord: "fee earners",
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",

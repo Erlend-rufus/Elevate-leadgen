@@ -185,7 +185,7 @@ test('law endpoint: while not live, every post is refused', async () => {
   assert.equal(res.status, 503);
 });
 
-test('law pages: built, noindex, no case cards and no firm names, version A of the payment text', () => {
+test('law Google Ads pages: built, noindex, four anonymised case cards, no firm names, fixed fee and never a commission', () => {
   const dir = join(ROOT, 'public', 'g', 'uk-law-google-ads');
   for (const p of ['index.html', 'book/index.html', 'takk/index.html', 'review/index.html', 'not-now/index.html', 'not-a-fit/index.html', 'privacy/index.html', 'terms/index.html']) {
     assert.ok(existsSync(join(dir, p)), p + ' is built');
@@ -193,9 +193,11 @@ test('law pages: built, noindex, no case cards and no firm names, version A of t
   }
   const html = readFileSync(join(dir, 'index.html'), 'utf8');
   const t = visible(html);
-  assert.ok(!/Judicia|Campbell|Nova Law|Cedra|RSM/.test(t), 'no firm is named until figures and permission are in');
-  assert.ok(!/class="cc"/.test(html), 'no case cards');
-  assert.match(t, /Paid when a new client instructs you/);
+  assert.ok(!/Judicia|Campbell|Nova Law|Aspiria|Cedra|RSM|C-?Medical|Oslo Transport/i.test(html), 'every case is anonymised');
+  assert.equal((html.match(/<article class="cc/g) || []).length, 4, 'four case cards');
+  assert.match(t, /A fixed monthly fee\. No minimum term\./);
+  assert.ok(!/commission/i.test(t), 'this offer is a fixed fee: the word commission is never on the page');
+  assert.ok(!/removals|moving company/i.test(t), 'the moving company case is left out on purpose');
   assert.ok(!/Companies House|SRA register/.test(t), 'no register check is promised');
   assert.equal((html.match(/type="checkbox" name="practice_areas"/g) || []).length, O.areas.length);
 });
