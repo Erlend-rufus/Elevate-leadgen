@@ -1,0 +1,64 @@
+{
+  "_comment": "Google Ads on a fixed monthly fee for UK service businesses (27 Nov 2026), cloned from /g/uk-law-google-ads. The UK copy of the Norwegian /google-ads page, moving company case left out. See LAUNCH.md.",
+  "slug": "uk-google-ads",
+  "campaign": "uk-google-ads",
+  "path": "/g/uk-google-ads",
+  "_path": "The address the funnel is served at. The build checks it against the redirect and header rules in netlify.toml. Landing page and five outcome pages sit directly under it.",
+  "origin": "https://getelevateleads.com",
+  "_origin": "One host for the whole chain. sessionStorage (the consent choice, the fire-once guard) is per origin, so the ad URL, the form, the booking page and the Calendly forward must all use this one.",
+  "live": true,
+  "_live": "While false the build stays green with items missing and the lead function answers every submission with a 503 and stores nothing. Set true only when the build says nothing is outstanding. The build then refuses to finish while calendlyUrl is empty.",
+  "variables": {
+    "THRESHOLD": "£1m",
+    "OFFER": "30 minute Google Ads review",
+    "WORTH": "£500"
+  },
+  "links": {
+    "privacy": "/g/uk-google-ads/privacy/",
+    "terms": "/g/uk-google-ads/terms/"
+  },
+  "legal": {
+    "registerCheck": false,
+    "_registerCheck": "Whether the privacy notice and the terms say that the company is checked against Companies House. Set true in the same change that sets COMPANIES_HOUSE_API_KEY in production, then build; the notice must never describe a check that is not made. The words themselves are in legal.json, in the blocks and rows marked \"when\": \"register\"."
+  },
+  "contact": {
+    "email": "post@elevatemarketing.no"
+  },
+  "funnel": {
+    "fixedFeeOnPage": true,
+    "pixelId": "1466790598245604",
+    "applyPath": "/api/lead",
+    "viewEvent": "ViewContent",
+    "qualifiedEvent": "QualifiedForm",
+    "_qualifiedEvent": "A custom event, never the standard Lead. Fires on /book and /review only, with eventID = lead_id, and only after the visitor has accepted. The server sends the same event with the same id (Conversions API), so Meta counts it once.",
+    "calendlyUrl": "https://calendly.com/eb-growwithelevate/elevate-marketing-30-minute-google-ads-review",
+    "_calendlyUrl": "The event URL with no query string, from Calendly: Share, Add to website, Inline embed. Empty is allowed only while live is false. The booking page adds name, email and utm parameters itself, with lead_id in utm_content. Calendly's own redirect after booking must stay off: the page forwards to /takk itself.",
+    "calendlyLeadParam": "utm_content",
+    "_calendlyLeadParam": "The tracking parameter that carries the lead id into Calendly, where the Calendly Zap reads it back (Invitee Created, tracking). Calendly passes on only utm_source, utm_medium, utm_campaign, utm_content and utm_term. It replaces the value of the same name, so the ad's own value stays on the application. Change it here and in the Zap together, never in one place.",
+    "bookingHeights": {
+      "narrow": 1150,
+      "medium": 1000,
+      "wide": 700
+    }
+  },
+  "hiddenFields": [
+    "campaign",
+    "page_slug",
+    "lead_id",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "utm_term",
+    "fbclid",
+    "referrer",
+    "consent",
+    "fbp",
+    "fbc"
+  ],
+  "honeypot": "contact_by_fax",
+  "clickup": {
+    "listId": "1201270000003579",
+    "_comment": "Shared with the law funnels until Erlend makes a list for fixed fee leads. These leads carry tag growth-gads and the label 'UK SERVICE · GOOGLE ADS'."
+  }
+}
