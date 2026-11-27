@@ -209,12 +209,12 @@
   "outcomes": {
     "book": {
       "h": "Thank you. Choose a time that suits you.",
-      "p": "Pick a slot for a {OFFER}. If the firm runs Google Ads today, we look at the account together.",
+      "p": "Pick a slot for a {OFFER}. There is nothing to prepare.",
       "small": "No time that works? Reply to the confirmation email and we will find one."
     },
     "takk": {
       "h": "You are booked in.",
-      "p": "We will send a confirmation. If the firm runs Google Ads today, have the account open on the call, or give us read-only access beforehand and we will come prepared. Otherwise, have your main practice areas to hand and what a typical new instruction is worth to the firm."
+      "p": "We will send a confirmation. There is nothing to prepare. If the firm runs Google Ads today, we sort out read-only access together on the call. It helps to know your main practice areas and what a typical new instruction is worth to the firm."
     },
     "review": {
       "h": "Thank you. We will be in touch within one working day.",
