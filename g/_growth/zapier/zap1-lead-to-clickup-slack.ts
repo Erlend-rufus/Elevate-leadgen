@@ -152,7 +152,7 @@ const REMIND: Record<string, Remind> = {
   "uk-it-growth": { lang: "en", offer: "30 minute pipeline review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
   "uk-private-hospitals": { lang: "en", offer: "30-minute bookings review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
   "uk-law-firms": { lang: "en", offer: "30 minute instruction review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
-  "uk-law-google-ads": { lang: "en", offer: "30 minute Google Ads review", prep: "Your own numbers are all we need, so there is nothing to prepare.", host: "Erlend", sign: "Erlend Bognøy", replyTo: "erlend@elevatemarketing.no" },
+  "uk-law-google-ads": { lang: "en", offer: "30 minute Google Ads review", prep: "If the firm runs Google Ads today, have the account open on the call. Otherwise there is nothing to prepare.", host: "Erlend", sign: "Erlend Rufus", replyTo: "erlend@elevatemarketing.no" },
   "uk-ai-visibility": { lang: "en", offer: "30 minute AI visibility review", prep: "We put your buyers' questions to ChatGPT before we meet, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
   "it-ict-growth": { lang: "it", offer: "analisi della pipeline di 30 minuti", prep: "Bastano i vostri numeri, non c’è nulla da preparare.", host: "Aurora", sign: "Aurora", replyTo: "au@growwithelevate.eu" },
 };
@@ -486,7 +486,7 @@ const CAMPAIGNS: Record<string, Campaign> = {
     tag: "growth-law-gads",
     peopleWord: "fee earners",
     retainer: {
-      block: "Google Ads for advokatfirma: fast månedspris (settes i første møte), annonsebudsjettet betales direkte til Google, minst £2 000 i måneden, ingen bindingstid. Ingen kommisjon. Erlend er vert, Sondre deltar.",
+      block: "Google Ads for advokatfirma: fast månedspris fra £1 000 (bekreftes i første møte), annonsebudsjettet betales direkte til Google, minst £2 000 i måneden, ingen bindingstid. Ingen kommisjon. Erlend er vert, Sondre deltar.",
       line: "Google Ads fastpris for advokat, ingen kommisjon",
     },
     field: {
