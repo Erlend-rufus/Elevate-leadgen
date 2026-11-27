@@ -43,9 +43,26 @@ The moving company case is excluded on purpose.
    on `uk-law-firms`; the three test tasks were archived. The published sources are the repository files byte for byte.
 4. Minimum ad budget £2,000/month confirmed by Erlend. The fee is set on the first call and is not on the page.
 
+## Changed after the review, 27 Nov 2026 (Erlend's answers the same evening)
+
+- Price on the page: "from £1,000 a month" (`funnel.fixedFeeOnPage` lets the build accept an amount next to
+  "fee"; the commission words are still refused). Minimum ad budget £2,000 a month, unchanged.
+- Erlend confirmed that Elevate has run the business law account from 2023 until now, so "we run it for" stays.
+- The 14 months are called the firm's strongest stretch, and the note says later months were lower.
+- The private client card shows clicks to call or email, not enquiries.
+- The £2,000 a month question is asked of everyone. Under £1m and no: not a fit. £1m or more and no: review.
+- The SRA number is required.
+- The call to action is "Book a 30 minute Google Ads review"; the thank-you page asks for the Google Ads
+  account, not turnover.
+- Name outward: Erlend Rufus (the reminder e-mails in Zap 1).
+
 ## Still open
 
 1. A test from a phone, and one real test booking through the page (a person has to do both).
-2. The reminder e-mails are signed "Erlend Bognøy" with reply-to `erlend@elevatemarketing.no` (`REMIND` in Zap 1).
-   Not confirmed by Erlend.
-3. The Meta campaign (see ADS.md): creatives, then Erlend approves the spend.
+2. Own ClickUp list (Erlend: yes). Duplicate "LAW - UK - Commission" in ClickUp (the connector cannot copy the
+   shared fields), then put its id in `config.json` and both Zap files. Until then the leads share the law
+   list, marked `[RETAINER]`.
+3. Sondre is not on the Calendly event; the Calendly user is still `eb-growwithelevate`.
+4. The main site says "From €1,500/month" and a 90 day initial period, which this offer does not have.
+5. gclid tracking before any Google Search campaign (see ADS.md).
+6. The Meta campaign (see ADS.md): creatives, then Erlend approves the spend.

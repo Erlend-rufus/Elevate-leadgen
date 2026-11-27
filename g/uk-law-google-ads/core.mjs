@@ -54,14 +54,12 @@ export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const STEPS = [
   { id: 'website', kind: 'url', field: 'company_website', q: 'Firm website', max: 300 },
   { id: 'company', kind: 'text', field: 'company_name', q: 'Firm name', ac: 'organization', max: 200 },
-  { id: 'sra', kind: 'text', field: 'sra_number', q: 'SRA number', optional: true, help: 'Optional. It helps us prepare.', max: 40 },
+  { id: 'sra', kind: 'text', field: 'sra_number', q: 'SRA number', help: 'The number the firm is registered with at the Solicitors Regulation Authority.', max: 40 },
   { id: 'turnover', kind: 'choice', field: 'turnover_band', q: "Roughly what was the firm's turnover in the last financial year?", options: 'turnover' },
   {
     id: 'budget', kind: 'choice', field: 'low_turnover_budget', options: 'budget',
-    when: { field: 'turnover_band', values: ['Under £1m'] },
-    q: 'Your turnover is below the level we usually work with. Could the firm put at least £2,000 a month into advertising?',
-    help: 'The budget is paid directly to the ad platforms, not to us. Our fee is a fixed monthly amount, separate from the ad budget.',
-    whenNote: 'Only answer this if the firm turns over less than £1m.',
+    q: 'Could the firm put at least £2,000 a month into Google Ads?',
+    help: 'The budget is paid directly to Google, not to us. Our fee is a fixed monthly amount, from £1,000 a month, separate from the ad budget.',
   },
   { id: 'trading', kind: 'choice', field: 'trading_years', q: 'How long has the firm been trading?', options: 'trading' },
   { id: 'people', kind: 'choice', field: 'employees_or_fee_earners', q: 'How many fee earners does the firm have?', options: 'people' },

@@ -25,6 +25,7 @@
     "email": "post@elevatemarketing.no"
   },
   "funnel": {
+    "fixedFeeOnPage": true,
     "pixelId": "1466790598245604",
     "applyPath": "/api/lead",
     "viewEvent": "ViewContent",

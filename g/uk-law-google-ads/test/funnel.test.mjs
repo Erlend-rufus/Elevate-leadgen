@@ -16,6 +16,7 @@ const GOOD = {
   company_name: 'Bridgewater Law LLP',
   sra_number: '654321',
   turnover_band: O.turnover[2],
+  low_turnover_budget: O.budget[0],
   trading_years: O.trading[2],
   employees_or_fee_earners: O.people[2],
   practice_areas: 'Family, Employment',
@@ -48,7 +49,7 @@ const go = async (over, fields, opts) => {
   return { r, res, body: res.headers.get('content-type').includes('json') ? await bodyOf(res) : await res.text() };
 };
 
-test('law form: fourteen steps, one asked only after "Under £1m", practice areas is the multi-choice, bands written "to under", mobile optional', () => {
+test('law form: fourteen steps, the budget question asked of everyone, practice areas is the multi-choice, bands written "to under", mobile optional', () => {
   assert.equal(core.STEPS.length, 14);
   const multi = core.STEPS.filter((s) => s.kind === 'multi');
   assert.equal(multi.length, 1);
@@ -56,28 +57,30 @@ test('law form: fourteen steps, one asked only after "Under £1m", practice area
   assert.deepEqual(O.turnover.slice(0, 5), ['Under £1m', '£1m to under £2m', '£2m to under £5m', '£5m to under £10m', '£10m or more']);
   assert.deepEqual(O.worth, ['Under £2,000', '£2,000 to under £5,000', '£5,000 to under £15,000', '£15,000 or more']);
   assert.deepEqual(O.spend, ['Under £1,000', '£1,000 to under £2,000', '£2,000 to under £5,000', '£5,000 to under £15,000', '£15,000 or more', 'I do not know']);
-  const budget = core.STEPS.find((s) => s.when);
-  assert.equal(budget.field, 'low_turnover_budget');
+  assert.equal(core.STEPS.filter((s) => s.when).length, 0, 'no question is conditional: the fixed fee offer needs the budget whatever the turnover');
+  const budget = core.STEPS.find((s) => s.field === 'low_turnover_budget');
   assert.equal(core.STEPS.indexOf(budget), core.STEPS.findIndex((s) => s.field === 'turnover_band') + 1, 'right after the turnover question');
-  assert.deepEqual(budget.when, { field: 'turnover_band', values: ['Under £1m'] });
-  assert.ok(!/\d/.test(budget.help), 'the line about commission carries no number');
+  assert.match(budget.q, /£2,000 a month into Google Ads/);
+  assert.match(budget.help, /from £1,000 a month/, 'the fee floor Erlend set on 27 Nov 2026');
+  assert.ok(!/commission/i.test(budget.help));
+  const sra = core.STEPS.find((s) => s.field === 'sra_number');
+  assert.ok(!sra.optional, 'the SRA number is required: it is the best filter against firms that are not law firms');
+  assert.equal(core.validate(Object.assign({}, GOOD, { sra_number: '' })).errors.sra_number, core.MSG.required);
   const mobile = core.STEPS[13].fields.find((f) => f.field === 'mobile');
   assert.equal(mobile.optional, true);
   assert.equal(core.validate(GOOD).ok, true);
 });
 
-test('law form: the budget question is required after "Under £1m" and ignored otherwise', () => {
-  const small = Object.assign({}, GOOD, { turnover_band: O.turnover[0] });
-  assert.equal(core.validate(small).errors.low_turnover_budget, core.MSG.choice, 'asked and not answered');
-  assert.equal(core.validate(Object.assign({}, small, { low_turnover_budget: 'Maybe' })).errors.low_turnover_budget, core.MSG.choice);
-  const yes = core.validate(Object.assign({}, small, { low_turnover_budget: O.budget[0] }));
-  assert.equal(yes.ok, true);
-  assert.equal(yes.values.low_turnover_budget, O.budget[0]);
-  const larger = core.validate(Object.assign({}, GOOD, { low_turnover_budget: O.budget[1] }));
-  assert.equal(larger.ok, true, 'a stale answer from a turnover changed back is not an error');
-  assert.equal(larger.values.low_turnover_budget, '', 'and it is not kept');
-  assert.equal(core.applies(core.STEPS[4], (n) => small[n]), true);
-  assert.equal(core.applies(core.STEPS[4], (n) => GOOD[n]), false);
+test('law form: the budget question is required whatever the turnover, and its answer is kept', () => {
+  for (const t of [O.turnover[0], O.turnover[2], O.turnover[5]]) {
+    const v = Object.assign({}, GOOD, { turnover_band: t });
+    assert.equal(core.validate(Object.assign({}, v, { low_turnover_budget: '' })).errors.low_turnover_budget, core.MSG.choice, t + ': asked and not answered');
+    assert.equal(core.validate(Object.assign({}, v, { low_turnover_budget: 'Maybe' })).errors.low_turnover_budget, core.MSG.choice);
+    const no = core.validate(Object.assign({}, v, { low_turnover_budget: O.budget[1] }));
+    assert.equal(no.ok, true);
+    assert.equal(no.values.low_turnover_budget, O.budget[1], 'a no is kept, at any turnover');
+  }
+  assert.equal(core.applies(core.STEPS[4], () => ''), true);
   assert.ok(core.FIELDS.includes('low_turnover_budget'));
 });
 
@@ -92,6 +95,9 @@ test('law routing, 26 Oct 2026: the workshop rules', () => {
   assert.deepEqual(d({ turnover_band: T[0], low_turnover_budget: B[0] }), { route: 'fit', reasons: ['turnover_under_1m_budget_2k', 'trading_2y_plus', 'register_not_used'] });
   assert.deepEqual(d({ turnover_band: T[0], low_turnover_budget: B[1] }), { route: 'not_a_fit', reasons: ['turnover_below_1m', 'budget_2k_no'] });
   assert.deepEqual(d({ turnover_band: T[0], low_turnover_budget: '' }), { route: 'not_a_fit', reasons: ['turnover_below_1m', 'budget_2k_no'] }, 'no answer is not a yes');
+  // 27 Nov 2026: £1m or more without the £2,000 a month is read by a person, never sent to the calendar.
+  for (const t of [T[1], T[2], T[4]]) assert.deepEqual(d({ turnover_band: t, low_turnover_budget: B[1] }), { route: 'review', reasons: ['budget_2k_no'] }, t);
+  assert.deepEqual(d({ turnover_band: T[5], low_turnover_budget: B[1] }).reasons, ['budget_2k_no', 'turnover_not_stated']);
   // Trading and capacity no longer route.
   assert.deepEqual(d({ trading_years: O.trading[0] }), { route: 'fit', reasons: ['turnover_2m_plus', 'trading_under_2y_ok', 'register_not_used'] });
   assert.equal(d({ capacity: O.capacity[0] }).route, 'fit');
@@ -155,7 +161,7 @@ test('law endpoint: under £1m with the £2,000 a month books; without it is not
   const no = await go({ env: { COMPANIES_HOUSE_API_KEY: undefined } }, Object.assign({}, small, { low_turnover_budget: O.budget[1], lead_id: 'l_lawno01' }));
   assert.equal(no.body.route, 'not_a_fit');
   assert.equal(no.r.of('zapier')[0].body.route_reason, 'turnover_below_1m, budget_2k_no');
-  const missing = await go({ env: { COMPANIES_HOUSE_API_KEY: undefined } }, Object.assign({}, small, { lead_id: 'l_lawmis1' }));
+  const missing = await go({ env: { COMPANIES_HOUSE_API_KEY: undefined } }, Object.assign({}, small, { low_turnover_budget: '', lead_id: 'l_lawmis1' }));
   assert.equal(missing.res.status, 422);
   assert.deepEqual(missing.body.errors, { low_turnover_budget: core.MSG.choice });
 });
@@ -195,7 +201,12 @@ test('law Google Ads pages: built, noindex, four anonymised case cards, no firm 
   const t = visible(html);
   assert.ok(!/Judicia|Campbell|Nova Law|Aspiria|Cedra|RSM|C-?Medical|Oslo Transport/i.test(html), 'every case is anonymised');
   assert.equal((html.match(/<article class="cc/g) || []).length, 4, 'four case cards');
-  assert.match(t, /A fixed monthly fee\. No minimum term\./);
+  assert.match(t, /A fixed monthly fee, from £1,000\. No minimum term\./);
+  assert.match(t, /clicks to call or email, as counted by Google Ads/, 'clicks are called clicks');
+  assert.ok(!/1,730\s+(1,730\s+)?enquiries/i.test(t) && !/enquiries by phone or email/i.test(t), 'modelled clicks are never called enquiries');
+  assert.match(t, /its strongest/, 'the 14 months are said to be the strongest stretch');
+  assert.match(t, /One Norwegian business law firm/, 'the hero says the result is Norwegian');
+  assert.ok(!/See whether we would take you on/.test(t), 'the commission framing is gone');
   assert.ok(!/commission/i.test(t), 'this offer is a fixed fee: the word commission is never on the page');
   assert.ok(!/removals|moving company/i.test(t), 'the moving company case is left out on purpose');
   assert.ok(!/Companies House|SRA register/.test(t), 'no register check is promised');

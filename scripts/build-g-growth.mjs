@@ -159,9 +159,15 @@ const BANNED_IT = [
   [/risultati garantiti|garantiamo (i |dei |il |un )?(risultat|ritorn|vendit|contratt)/i, 'a promise of results'],
 ];
 const BANNED_BY_RULES = { en: BANNED_ALL.concat(BANNED_EN), it: BANNED_ALL.concat(BANNED_IT) };
-/** A commission is never printed with a rate or an amount on a page anyone can forward. */
+/** A commission is never printed with a rate or an amount on a page anyone can forward.
+    A funnel that sells a fixed fee and prints its price (config "funnel.fixedFeeOnPage": true, first
+    /g/uk-law-google-ads, 27 Nov 2026) may put an amount next to "fee"; the commission words are still checked. */
+let FIXED_FEE_ON_PAGE = false;
 function checkTerms(path, text) {
-  const m = /(commission|commissione|commissioni|provvigion\w*|kommisjon|\bfees?\b)/i.exec(text);
+  const words = FIXED_FEE_ON_PAGE
+    ? /(commission|commissione|commissioni|provvigion\w*|kommisjon)/i
+    : /(commission|commissione|commissioni|provvigion\w*|kommisjon|\bfees?\b)/i;
+  const m = words.exec(text);
   if (!m) return;
   const around = text.slice(Math.max(0, m.index - 100), m.index + 100);
   if (/%|[£€]\s?\d|\d\s?[£€]|\bkr\s?\d|\d\s?(percent|per cent|per cento|euro)\b/i.test(around)) {
@@ -839,6 +845,7 @@ async function build(slug) {
   if (!existsSync(join(dir, 'config.json'))) die(`g/${slug}/config.json is missing`);
   const cfg = readJson(join(dir, 'config.json'));
   const rawCopy = readJson(join(dir, 'copy.json'));
+  FIXED_FEE_ON_PAGE = cfg.funnel && cfg.funnel.fixedFeeOnPage === true;
   const coreSrc = readFileSync(join(dir, 'core.mjs'), 'utf8');
   const core = await import(pathToFileURL(join(dir, 'core.mjs')).href);
   const { renderForm } = await import(pathToFileURL(join(dir, 'render-form.mjs')).href);
