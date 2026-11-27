@@ -4,8 +4,8 @@ Google Ads on a fixed monthly fee for law firms in England and Wales. Built 27 N
 `/g/uk-law-firms` (form, routing, legal pages and endpoint are the same code; read that LAUNCH.md first).
 The Norwegian version of this offer (leads.elevatemarketing.no/google-ads/) was dropped the same day.
 
-**Status: `"live": false`.** The pages build and are noindex. The form endpoint answers 503 and the
-booking page shows a notice until the items below are done.
+**Status: `"live": true` since 27 Nov 2026.** The form endpoint takes leads and the booking page shows the
+calendar. The pages stay noindex (paid traffic only).
 
 ## What is different from /g/uk-law-firms
 
@@ -28,10 +28,24 @@ booking page shows a notice until the items below are done.
 Judicia (no Google Ads account) and RSM (no conversion tracking since Oct 2023) have no usable figures.
 The moving company case is excluded on purpose.
 
-## Outstanding before `live: true`
+## Done on 27 Nov 2026
 
-1. ClickUp list for these leads (own list, like the Norwegian fixed-fee list) → `config.json` `clickup.listId`.
-2. Calendly event "30 minute Google Ads review" under Erlend's own Calendly user (Erlend hosts, Sondre joins as co-host; decided 27 Nov 2026, an exception to the UK host rule) → `funnel.calendlyUrl`.
-3. `uk-law-google-ads` in `CAMPAIGNS` in both `g/_growth/zapier/*.ts`, publish both Zaps.
-4. Fixed fee set on the first call. Minimum ad budget £2,000/month confirmed by Erlend 27 Nov 2026.
-5. Phone test, one test booking, then the Meta campaign (see ADS.md).
+1. ClickUp: leads go to the existing list LAW - UK - Commission (`1201270000003579`), tagged `growth-law-gads` and
+   `retainer`, with `[RETAINER]` first in the task name. No list of its own: the connector cannot duplicate a list with
+   the shared fields. Move them to their own list if the commission and fixed fee leads get mixed up.
+2. Calendly: "Elevate Marketing | Law | 30 minute Google Ads review", event type
+   `95487c87-7502-42cc-a3ee-7b031edfd731`, under Erlend's own user. Erlend hosts and Sondre joins (decided by Erlend
+   27 Nov 2026, an exception to the UK host rule). Sondre is not on the event: the API cannot add a co-host, so
+   Erlend invites him per meeting or adds him in Calendly.
+3. Zapier: `uk-law-google-ads` is in `CAMPAIGNS` in both files and both Zaps are published (Zap 1 version
+   `01a21eea-f4ab-714d-bd05-129bd72b9eb4`, Zap 2 version `01a21eea-ff46-783f-83ac-b06b2e7ee8dd`, 21:30 UTC). Draft runs
+   with made-up leads (`@example.invalid`): a fit lead and a booking on the new campaign, and one lead and one booking
+   on `uk-law-firms`; the three test tasks were archived. The published sources are the repository files byte for byte.
+4. Minimum ad budget £2,000/month confirmed by Erlend. The fee is set on the first call and is not on the page.
+
+## Still open
+
+1. A test from a phone, and one real test booking through the page (a person has to do both).
+2. The reminder e-mails are signed "Erlend Bognøy" with reply-to `erlend@elevatemarketing.no` (`REMIND` in Zap 1).
+   Not confirmed by Erlend.
+3. The Meta campaign (see ADS.md): creatives, then Erlend approves the spend.

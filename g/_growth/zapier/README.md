@@ -222,3 +222,18 @@ the version before, `01a1b2c8-8662-7981-b417-24543fc5e57f`.
 
 Not shown by any test: a wait of hours in the live runtime (the draft runs waited seconds), and what a publish does to runs
 that are waiting. Check the first real fit lead after 2 and 48 hours.
+
+27 Nov 2026: Google Ads on a fixed fee for law firms (`/g/uk-law-google-ads`, PR #148). Both files gained a CAMPAIGNS
+entry `uk-law-google-ads`: the list is the law list (`1201270000003579`, shared with `uk-law-firms`), the tag is
+`growth-law-gads`, and in Zap 1 the entry has `retainer`, so every lead is marked `[RETAINER]` in the task name, a tag,
+the first block of the description and line 2 of each Slack post. Zap 1 also has a `REMIND` entry (host Erlend, an
+exception to the UK host rule that Erlend decided the same day). Zap 2 knows the Calendly event
+`95487c87-7502-42cc-a3ee-7b031edfd731`. Drafts of both files were run in Zapier against the real law list with made-up
+data (`@example.invalid`): a fit lead on the new campaign (task made, nine fields set, `[TEST]` Slack text as a preview
+only, four reminder e-mails as a preview only), a `review` lead on `uk-law-firms`, a booking without a form on the new
+event, and a booking on each lead's `l_` id (both moved from `ny lead`). The three test tasks were set to
+`ukvalifisert - archive`, never deleted. Published at 21:30 UTC with the owner's go-ahead, before the funnel was set
+live: Zap 1 version `01a21eea-f4ab-714d-bd05-129bd72b9eb4` (sha256 `25273ca8...`, 81,336 bytes), Zap 2 version
+`01a21eea-ff46-783f-83ac-b06b2e7ee8dd` (sha256 `d4216087...`). Both were read back from the publish and are
+byte-identical to the files here; Zap 1 is still switched on with its trigger active (the enabled state was not
+touched). To go back: Zap 1 `01a2103a-557b-7677-899c-3f324215532b`, Zap 2 `01a1bc57-c79e-7944-8c25-d4171c50f14d`.

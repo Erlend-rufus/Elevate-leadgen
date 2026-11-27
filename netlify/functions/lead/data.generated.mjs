@@ -245,7 +245,7 @@ export const funnels = {
    "campaign": "uk-law-google-ads",
    "path": "/g/uk-law-google-ads",
    "origin": "https://getelevateleads.com",
-   "live": false,
+   "live": true,
    "variables": {
     "THRESHOLD": "£1m",
     "OFFER": "30 minute Google Ads review",
