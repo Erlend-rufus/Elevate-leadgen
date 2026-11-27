@@ -19,6 +19,9 @@ import { renderForm as lawRenderForm } from '../../../g/uk-law-firms/render-form
 import * as lawGadsCore from '../../../g/uk-law-google-ads/core.mjs';
 import * as lawGadsRoute from '../../../g/uk-law-google-ads/route.mjs';
 import { renderForm as lawGadsRenderForm } from '../../../g/uk-law-google-ads/render-form.mjs';
+import * as gadsCore from '../../../g/uk-google-ads/core.mjs';
+import * as gadsRoute from '../../../g/uk-google-ads/route.mjs';
+import { renderForm as gadsRenderForm } from '../../../g/uk-google-ads/render-form.mjs';
 import * as itaCore from '../../../g/it-ict-growth/core.mjs';
 import * as itaRoute from '../../../g/it-ict-growth/route.mjs';
 import { renderForm as itaRenderForm } from '../../../g/it-ict-growth/render-form.mjs';
@@ -32,6 +35,7 @@ const CODE = {
   'uk-private-hospitals': { core: healthCore, route: healthRoute, renderForm: healthRenderForm },
   'uk-law-firms': { core: lawCore, route: lawRoute, renderForm: lawRenderForm },
   'uk-law-google-ads': { core: lawGadsCore, route: lawGadsRoute, renderForm: lawGadsRenderForm },
+  'uk-google-ads': { core: gadsCore, route: gadsRoute, renderForm: gadsRenderForm },
   'it-ict-growth': { core: itaCore, route: itaRoute, renderForm: itaRenderForm },
   'uk-ai-visibility': { core: aiCore, route: aiRoute, renderForm: aiRenderForm },
 };
