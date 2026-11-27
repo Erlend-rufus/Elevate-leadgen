@@ -31,7 +31,7 @@ The moving company case is excluded on purpose.
 ## Outstanding before `live: true`
 
 1. ClickUp list for these leads (own list, like the Norwegian fixed-fee list) → `config.json` `clickup.listId`.
-2. Calendly event "30 minute Google Ads review" → `funnel.calendlyUrl`. Host: decide (Sondre hosts UK by default).
+2. Calendly event "30 minute Google Ads review" under Erlend's own Calendly user (Erlend hosts, Sondre joins as co-host; decided 27 Nov 2026, an exception to the UK host rule) → `funnel.calendlyUrl`.
 3. `uk-law-google-ads` in `CAMPAIGNS` in both `g/_growth/zapier/*.ts`, publish both Zaps.
-4. Confirm the fixed fee and the £2,000/month minimum ad budget.
+4. Fixed fee set on the first call. Minimum ad budget £2,000/month confirmed by Erlend 27 Nov 2026.
 5. Phone test, one test booking, then the Meta campaign (see ADS.md).
