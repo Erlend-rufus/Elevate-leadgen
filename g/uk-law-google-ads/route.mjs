@@ -127,6 +127,9 @@ export function decide(v, ch) {
   }
 
   const review = [];
+  // 27 Nov 2026: the fixed fee offer needs the ad budget whatever the turnover, so everyone is asked. A firm
+  // of £1m or more that says no is read by a person instead of being sent to the calendar.
+  if (!budgetYes(v)) review.push('budget_2k_no');
   if (v.turnover_band === NOT_STATED) review.push('turnover_not_stated');
   if (v.first_year_value === WORTH[0]) {
     if (volumeFirm(v)) flags.push('value_under_2k_volume_firm');

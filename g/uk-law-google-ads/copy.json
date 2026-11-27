@@ -14,20 +14,20 @@
   ],
   "meta": {
     "title": "Google Ads for UK law firms | Elevate Marketing",
-    "description": "Google Ads for law firms in England and Wales, on a fixed monthly fee. See the numbers from the firms we run it for."
+    "description": "Google Ads for law firms in England and Wales, on a fixed monthly fee from £1,000. See the numbers from the Norwegian firms we run it for."
   },
   "topline": "Google Ads for law firms in England and Wales",
-  "cta": "See whether we would take you on",
+  "cta": "Book a 30 minute Google Ads review",
   "hero": {
     "h1a": "Google Ads for law firms.",
     "h1b": "Measured in enquiries, not clicks.",
     "ingress": [
       {
-        "t": "We run Google Ads for law firms on a fixed monthly fee, no minimum term. One firm we run it for had ",
+        "t": "We run Google Ads for law firms on a fixed monthly fee, with no minimum term. One Norwegian business law firm we run it for had ",
         "cls": ""
       },
       {
-        "t": "271 enquiries in 14 months",
+        "t": "271 enquiries in its strongest 14 months",
         "cls": "em"
       },
       {
@@ -35,7 +35,7 @@
         "cls": ""
       }
     ],
-    "micro": "A few questions, about three minutes. We only take on firms we think we can help."
+    "micro": "A few questions, about three minutes, so we come prepared."
   },
   "how": {
     "h2": "One practice area at a time, tracked to enquiries.",
@@ -60,7 +60,7 @@
     "body": "The firms we work best with already win work through reputation and referral. What they lack is a second channel they control: enquiries that arrive because the right page was in front of the right person, in a practice area they want to grow.",
     "yesTitle": "This works if",
     "yes": [
-      "You are a firm in England and Wales with £1m or more in turnover, or a smaller firm that can put £2,000 a month into Google Ads",
+      "You are a firm in England and Wales that can put £2,000 a month or more into Google Ads",
       "You act for private clients or businesses in areas such as family, conveyancing, wills and probate, employment, commercial or immigration",
       "A new client is worth {WORTH} or more to you in the first year",
       "Someone at the firm can respond to a new enquiry within one working day"
@@ -69,17 +69,17 @@
     "no": [
       "Your work is mainly personal injury",
       "Your work is mainly legal aid",
-      "You turn over less than £1m and cannot put £2,000 a month into Google Ads",
+      "You cannot put £2,000 a month into Google Ads",
       "Nobody has time to approve marketing material"
     ],
-    "note": "We check the details you give after you apply, and we confirm turnover with you on the call."
+    "note": "We check the details you give after you apply."
   },
   "pay": {
-    "h2": "A fixed monthly fee. No minimum term.",
-    "body": "We manage your Google Ads for a fixed monthly fee, agreed in writing before anything runs. It does not grow with your ad budget, so we have no reason to tell you to spend more. The fee depends on how many practice areas we run, so we set it on the first call.",
+    "h2": "A fixed monthly fee, from £1,000. No minimum term.",
+    "body": "We manage your Google Ads for a fixed monthly fee, from £1,000 a month, agreed in writing before anything runs. It does not grow with your ad budget, so we have no reason to tell you to spend more. The fee depends on how many practice areas we run, so we confirm it on the first call.",
     "open": [
       "The fee covers campaign build, search term clean-up, ads, landing page advice and monthly reporting.",
-      "There is no setup fee and no minimum term. Results are the reason to stay.",
+      "There is no setup fee and no minimum term. You can stop with 30 days' notice.",
       "We invoice monthly in advance. Payment terms are 14 days.",
       "The advertising budget is separate. You pay it to Google directly, in your own account, and we agree it with you before anything runs."
     ]
@@ -169,7 +169,7 @@
       },
       {
         "q": "What does it cost?",
-        "a": "A fixed monthly fee for the management, set on the first call, plus the ad budget you pay to Google. We need at least £2,000 a month in ad budget to get results we can stand behind."
+        "a": "A fixed monthly fee for the management, from £1,000 a month and confirmed on the first call, plus the ad budget you pay to Google. We need at least £2,000 a month in ad budget to get results we can stand behind."
       },
       {
         "q": "What do you need from us?",
@@ -194,12 +194,12 @@
     "label": "Cookie choice"
   },
   "form": {
-    "heading": "See whether we would take you on",
-    "under": "A few questions. We only take on firms we think we can help.",
+    "heading": "Book a 30 minute Google Ads review",
+    "under": "A few questions, so we come prepared.",
     "back": "Back",
     "next": "Next",
     "submit": "Submit",
-    "cta": "See whether we would take you on",
+    "cta": "Book a 30 minute Google Ads review",
     "retry": "Try again",
     "sending": "Checking a few details. This takes a few seconds.",
     "failed": "Something went wrong on our side. Your answers are still here. Please try again, or email",
@@ -209,12 +209,12 @@
   "outcomes": {
     "book": {
       "h": "Thank you. Choose a time that suits you.",
-      "p": "Pick a slot for a {OFFER}. Your own numbers are all we need.",
+      "p": "Pick a slot for a {OFFER}. If the firm runs Google Ads today, we look at the account together.",
       "small": "No time that works? Reply to the confirmation email and we will find one."
     },
     "takk": {
       "h": "You are booked in.",
-      "p": "We will send a confirmation and a short note on what to have to hand: last year's turnover, your main practice areas, your growth target for next year, and what a typical new instruction is worth to the firm."
+      "p": "We will send a confirmation. If the firm runs Google Ads today, have the account open on the call, or give us read-only access beforehand and we will come prepared. Otherwise, have your main practice areas to hand and what a typical new instruction is worth to the firm."
     },
     "review": {
       "h": "Thank you. We will be in touch within one working day.",
@@ -226,11 +226,11 @@
     },
     "not-a-fit": {
       "h": "Thank you. This is not the right fit at the moment.",
-      "p": "We work with firms in England and Wales outside personal injury that turn over £1m or more, and with smaller firms that can put £2,000 a month into advertising. If that changes, we would be glad to hear from you.",
+      "p": "We work with firms in England and Wales outside personal injury that can put £2,000 a month or more into Google Ads. If that changes, we would be glad to hear from you.",
       "note": "If we have misread your answers, email {EMAIL} and we will look again.",
       "interest": {
         "h": "Looking for a new website instead?",
-        "p": "If you would like a fixed-price quote for a new website, or a monthly retainer for your marketing, press the button and we will email you once, within two working days. A person at Elevate Marketing also reads every application, and may email you once about this if we think it could suit your firm. Every email says how to say no.",
+        "p": "If you would like a fixed-price quote for a new website, press the button and we will email you once, within two working days. A person at Elevate Marketing also reads every application, and may email you once about this if we think it could suit your firm. Every email says how to say no.",
         "button": "Yes, send me a quote",
         "done": "Thank you. We will email you from {EMAIL} within two working days.",
         "error": "That did not go through. Email {EMAIL} and ask for a quote, and we will send one.",
@@ -249,16 +249,16 @@
         "figs": [
           {
             "value": "271",
-            "label": "enquiries by form or phone"
-          },
-          {
-            "value": "19",
-            "label": "enquiries a month",
+            "label": "form submissions and phone clicks",
             "emph": true
           },
           {
             "value": "14",
-            "label": "months, Oct 2023 to Nov 2024"
+            "label": "months, Oct 2023 to Nov 2024, its strongest stretch"
+          },
+          {
+            "value": "19",
+            "label": "a month in that stretch"
           }
         ]
       },
@@ -269,12 +269,12 @@
         "figs": [
           {
             "value": "75%",
-            "label": "lower cost per enquiry, 2024 to 2026",
+            "label": "lower cost per click to call or email, 2024 to 2026",
             "emph": true
           },
           {
             "value": "1,730",
-            "label": "enquiries by phone or email"
+            "label": "clicks to call or email, as counted by Google Ads"
           },
           {
             "value": "33",
@@ -323,6 +323,6 @@
         ]
       }
     ],
-    "note": "Enquiries are form submissions and clicks on the firm's phone number or email, counted by Google Ads. Firms anonymised. Pound figures converted from Norwegian kroner. The legal market in England and Wales is different. The method is the same."
+    "note": "For the business law firm, enquiries are form submissions and clicks on the firm's phone number, and the 14 months shown are its strongest; later months were lower. For the private client firm we show clicks to call or email, which Google Ads partly estimates. They are not confirmed enquiries. Firms anonymised. Pound figures converted from Norwegian kroner at 0.073. The legal market in England and Wales is different. The method is the same."
   }
 }
