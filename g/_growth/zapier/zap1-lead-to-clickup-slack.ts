@@ -485,6 +485,10 @@ const CAMPAIGNS: Record<string, Campaign> = {
     listId: "1201270000003579", // LAW - UK - Commission
     tag: "growth-law-gads",
     peopleWord: "fee earners",
+    retainer: {
+      block: "Google Ads for advokatfirma: fast månedspris (settes i første møte), annonsebudsjettet betales direkte til Google, minst £2 000 i måneden, ingen bindingstid. Ingen kommisjon. Erlend er vert, Sondre deltar.",
+      line: "Google Ads fastpris for advokat, ingen kommisjon",
+    },
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
       website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
