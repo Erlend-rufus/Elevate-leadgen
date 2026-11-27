@@ -52,8 +52,8 @@ The moving company case is excluded on purpose.
 - The private client card shows clicks to call or email, not enquiries.
 - The £2,000 a month question is asked of everyone. Under £1m and no: not a fit. £1m or more and no: review.
 - The SRA number is required.
-- The call to action is "Book a 30 minute Google Ads review"; the thank-you page asks for the Google Ads
-  account, not turnover.
+- The call to action is "Book a 30 minute Google Ads review". Nothing to prepare: nobody has the account id to
+  hand, so access to the Google Ads account is sorted together on the call (Erlend, 27 Nov 2026).
 - Name outward: Erlend Rufus (the reminder e-mails in Zap 1).
 
 ## Still open

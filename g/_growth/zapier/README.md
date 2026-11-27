@@ -237,3 +237,16 @@ live: Zap 1 version `01a21eea-f4ab-714d-bd05-129bd72b9eb4` (sha256 `25273ca8...`
 `01a21eea-ff46-783f-83ac-b06b2e7ee8dd` (sha256 `d4216087...`). Both were read back from the publish and are
 byte-identical to the files here; Zap 1 is still switched on with its trigger active (the enabled state was not
 touched). To go back: Zap 1 `01a2103a-557b-7677-899c-3f324215532b`, Zap 2 `01a1bc57-c79e-7944-8c25-d4171c50f14d`.
+
+27 Nov 2026, second publish the same evening (PR #150, Erlend's go-ahead): Zap 1 signs the Google Ads reminders
+"Erlend Rufus" and says there is nothing to prepare (access to the Google Ads account is sorted on the call); the
+retainer block names the fee floor. Zap 2: a campaign entry can say `retainer` (a task made without a form is named
+`[RETAINER] ...` and tagged `retainer`), `emailTag` and `emailNotTag` (the e-mail lookup keeps the two campaigns of a
+shared list apart: `uk-law-google-ads` only takes a task tagged `growth-law-gads`, `uk-law-firms` never does). Draft
+runs against the real law list with made-up data: a fit lead on the new campaign, a booking without a form on the new
+event, a booking on the commission event with the e-mail of the Google Ads test lead (not linked, a task of its own),
+and a booking on the Google Ads event with the same e-mail (linked, moved from `ny lead`). The three test tasks were
+set to `ukvalifisert - archive`. Published at 21:59 UTC: Zap 1 version `01a21f05-9715-7111-91bf-8df0e75e65bf` (sha256
+`a12baf82...`, 81,388 bytes), Zap 2 version `01a21f05-a1a0-7962-bd7e-3ea29397f3fa` (sha256 `3d35115a...`, 35,687
+bytes), both read back and byte-identical to the files here. To go back: Zap 1 `01a21eea-f4ab-714d-bd05-129bd72b9eb4`,
+Zap 2 `01a21eea-ff46-783f-83ac-b06b2e7ee8dd`.
