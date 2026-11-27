@@ -60,6 +60,9 @@ type Campaign = {
   eventTypes: string[]; // Calendly event type ids (the uuid at the end of the event type URI)
   lang?: "no" | "en"; // default "no", the language of the UK workflow
   zones?: Zone[]; // the zones the meeting time is written in; default London, then Oslo
+  retainer?: boolean; // a fixed fee offer: a task made here without a form is marked [RETAINER] like the ones Zap 1 makes
+  emailTag?: string; // the e-mail lookup only takes a task with this tag (a campaign that shares its list with another)
+  emailNotTag?: string; // the e-mail lookup never takes a task with this tag (the other campaign in a shared list)
   field: { leadId: string; email: string; contactName: string; crmItemType: string; salesStage: string };
   option: { crmItemType: string; salesStage: string };
 };
@@ -129,6 +132,7 @@ const CAMPAIGNS: Record<string, Campaign> = {
     label: "UK LAW",
     listId: "1201270000003579", // LAW - UK - Commission
     tag: "growth-law",
+    emailNotTag: "growth-law-gads", // the fixed fee Google Ads leads sit in the same list
     eventTypes: ["1a655d87-d08d-4b52-a8fa-2120472d584d"], // Elevate Marketing | Law | 30 minute instruction review
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
@@ -147,6 +151,8 @@ const CAMPAIGNS: Record<string, Campaign> = {
     label: "UK LAW · GOOGLE ADS (fixed fee, no commission)",
     listId: "1201270000003579", // LAW - UK - Commission
     tag: "growth-law-gads",
+    retainer: true,
+    emailTag: "growth-law-gads", // never link a booking here to a commission lead with the same e-mail
     eventTypes: ["95487c87-7502-42cc-a3ee-7b031edfd731"], // Elevate Marketing | Law | 30 minute Google Ads review (Erlend, 27 Nov 2026)
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
@@ -462,6 +468,12 @@ async function findByEmail(c: Campaign, email: string): Promise<{ found: Found |
   const hits = (r.json?.tasks ?? [])
     .filter((t: any) => String((t.custom_fields ?? []).find((f: any) => f.id === c.field.email)?.value ?? "").trim().toLowerCase() === wanted)
     .filter((t: any) => Number(t.date_created) >= since)
+    .filter((t: any) => {
+      const tags = (t.tags ?? []).map((tag: any) => String(tag?.name ?? "").toLowerCase());
+      if (c.emailTag && !tags.includes(c.emailTag)) return false;
+      if (c.emailNotTag && tags.includes(c.emailNotTag)) return false;
+      return true;
+    })
     .sort((a: any, b: any) => Number(b.date_created) - Number(a.date_created));
   return hits.length > 0 ? { found: asFound(hits[0]), note: `${hits.length} task(s) with this e-mail` } : { found: null, note: "no recent task with this e-mail" };
 }
@@ -650,10 +662,10 @@ const workflow = defineDurable<Record<string, unknown>, unknown>("leads-v3-calen
         if (b.name) fields.push({ id: campaign.field.contactName, value: b.name });
         if (b.email.includes("@") && !b.email.includes(" ")) fields.push({ id: campaign.field.email, value: b.email });
         const body: Record<string, unknown> = {
-          name: `${b.name || b.email} · ${tr(campaign, "booket uten skjema")}`,
+          name: `${campaign.retainer ? "[RETAINER] " : ""}${b.name || b.email} · ${tr(campaign, "booket uten skjema")}`,
           markdown_description: newTaskDescription(campaign, b, leadId, formId, startMs, endMs, isTest),
           status: BOOKED,
-          tags: [campaign.tag, "booket-uten-skjema", ...(isTest ? ["test"] : [])],
+          tags: [campaign.tag, "booket-uten-skjema", ...(campaign.retainer ? ["retainer"] : []), ...(isTest ? ["test"] : [])],
           due_date: startMs,
           due_date_time: true,
           custom_fields: fields,
