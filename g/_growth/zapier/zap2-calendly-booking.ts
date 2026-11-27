@@ -142,6 +142,24 @@ const CAMPAIGNS: Record<string, Campaign> = {
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
   },
+  // Google Ads on a fixed fee for law firms (27 Nov 2026). Same list as the commission funnel, own tag.
+  "uk-law-google-ads": {
+    label: "UK LAW · GOOGLE ADS (fixed fee, no commission)",
+    listId: "1201270000003579", // LAW - UK - Commission
+    tag: "growth-law-gads",
+    eventTypes: ["95487c87-7502-42cc-a3ee-7b031edfd731"], // Elevate Marketing | Law | 30 minute Google Ads review (Erlend, 27 Nov 2026)
+    field: {
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+    },
+  },
   // Italy, IT and ICT firms (23 Oct 2026, wired 3 Nov 2026). The ClickUp list "IT - ITALY - Commission" has the same
   // statuses and the same fields as "IT - UK - Commision" (the fields are shared), so the field ids are the UK ones.
   // The Calendly event is made in the same organisation as the UK events, because the trigger listens to that
