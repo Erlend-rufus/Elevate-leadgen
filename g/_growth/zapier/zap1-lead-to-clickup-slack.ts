@@ -711,8 +711,8 @@ const CAMPAIGNS: Record<string, Campaign> = {
     peopleWord: "ansatte",
     slackDetail: true, // the sector, the website and why the lead was routed as it was belong in the post
     retainer: {
-      block: "AI Visibility: fra £1 500 i måneden inkl. £500 i ChatGPT-annonser, månedlig fra start, 30 dagers oppsigelse. Ingen kommisjon og ingen garanti. Sondre er kontaktperson.",
-      line: "AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon",
+      block: "SELG: GEO + CHATGPT-ANNONSER. AI Visibility fra £1 500 i måneden inkl. £500 i ChatGPT-annonser, månedlig fra start, 30 dagers oppsigelse. Ingen kommisjon og ingen garanti. Sondre er kontaktperson.",
+      line: "SELG: GEO + CHATGPT-ANNONSER · fra £1 500/mnd inkl. £500 annonser, ingen kommisjon",
     },
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
@@ -748,8 +748,8 @@ const CAMPAIGNS: Record<string, Campaign> = {
     peopleWord: "ansatte",
     slackDetail: true, // the sector, the website and why the lead was routed as it was belong in the post
     retainer: {
-      block: "GEO alene: fast månedspris fra £1 000, uten ChatGPT-annonser, månedlig fra start, 30 dagers oppsigelse. Ingen kommisjon og ingen garanti. Sondre er kontaktperson.",
-      line: "GEO alene fra £1 000/mnd, uten ChatGPT-annonser, ingen kommisjon",
+      block: "SELG: KUN GEO. Fast månedspris fra £1 000, uten ChatGPT-annonser, månedlig fra start, 30 dagers oppsigelse. Ingen kommisjon og ingen garanti. Sondre er kontaktperson.",
+      line: "SELG: KUN GEO · fra £1 000/mnd, uten ChatGPT-annonser, ingen kommisjon",
     },
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",

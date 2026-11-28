@@ -22,7 +22,7 @@ state the workflows are in (switched on or off) is also kept there, not here.
    node g/_growth/zapier/build.mjs zap2-calendly-booking.ts
    node g/_growth/zapier/zap2.test.mjs        # 232 checks
    node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
-   node g/_growth/zapier/zap1.test.mjs        # 362 checks
+   node g/_growth/zapier/zap1.test.mjs        # 370 checks
    node g/_growth/zapier/zap1-it.test.mjs     # 685 checks, Italy (after zap1's build)
    node g/_growth/zapier/zap2-it.test.mjs     # 98 checks, Italy (after zap2's build)
    ```
@@ -250,6 +250,15 @@ set to `ukvalifisert - archive`. Published at 21:59 UTC: Zap 1 version `01a21f05
 `a12baf82...`, 81,388 bytes), Zap 2 version `01a21f05-a1a0-7962-bd7e-3ea29397f3fa` (sha256 `3d35115a...`, 35,687
 bytes), both read back and byte-identical to the files here. To go back: Zap 1 `01a21eea-f4ab-714d-bd05-129bd72b9eb4`,
 Zap 2 `01a21eea-ff46-783f-83ac-b06b2e7ee8dd`.
+
+28 Nov 2026, afternoon (Erlend: "kjør alt"): `uk-geo` in Zap 1 (GEO alone from £1,000, `/g/uk-geo`), sharing the AI
+visibility list with tag `geo-alone`, and both retainer entries of that list now say what to sell first in the task block
+and on line 2 of the Slack post: "SELG: KUN GEO" or "SELG: GEO + CHATGPT-ANNONSER". Zap 2 is not changed: the two pages
+share Sondre's Calendly event, and a booking finds its task by lead id in the shared list. Draft runs with made-up leads
+(`@example.invalid`) for `uk-geo` and `uk-ai-visibility`: each made a `[RETAINER]` task with the right tag and line; both
+were then set to `ukvalifisert - archive`. Published about 14:55 UTC: Zap 1 version
+`01a222a6-b255-7007-b866-cd2eafaefc9d` (sha256 `ffa64ead...`, 85,975 bytes), read back and byte-identical to the file
+here. To go back: Zap 1 `01a22264-d5fb-7bc0-85bf-85ffb0bee32a`.
 
 28 Nov 2026 (Erlend's go-ahead the evening before): `uk-google-ads` (Google Ads on a fixed fee for UK service businesses,
 PR #152) in both files, sharing the law list with tag `growth-gads`. Draft runs with a made-up lead (`@example.invalid`): a fit

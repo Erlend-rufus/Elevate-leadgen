@@ -603,8 +603,8 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
   eq(t.list, '1201270000005380', 'geo: the list it shares with the AI visibility retainer');
   eq(t.name, '[RETAINER] Northgate IT · Test Fit', 'geo: the name says RETAINER first');
   ok(t.tags.includes('geo-alone') && t.tags.includes('retainer') && !t.tags.includes('ai-visibility'), 'geo: tagged geo-alone and retainer, never ai-visibility');
-  ok(t.description.includes('**💼 RETAINER**\nGEO alene: fast månedspris fra £1 000, uten ChatGPT-annonser'), 'geo: the retainer block names the price and that there are no ads');
-  eq(w.slack[0].split('\n')[1], '💼 *RETAINER* · GEO alene fra £1 000/mnd, uten ChatGPT-annonser, ingen kommisjon', 'geo: line 2 of the post');
+  ok(t.description.includes('**💼 RETAINER**\nSELG: KUN GEO. Fast månedspris fra £1 000, uten ChatGPT-annonser'), 'geo: the retainer block names the price and that there are no ads');
+  eq(w.slack[0].split('\n')[1], '💼 *RETAINER* · SELG: KUN GEO · fra £1 000/mnd, uten ChatGPT-annonser, ingen kommisjon', 'geo: line 2 of the post');
   console.log('18b ok');
 }
 // ---------------------------------------------------------------- 19. uk-ai-visibility (6 Nov 2026): a retainer campaign, every lead marked RETAINER
@@ -616,10 +616,10 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
   eq(t.list, '1201270000005380', 'ai: the retainer list');
   eq(t.name, '[RETAINER] Northgate IT · Test Fit', 'ai: the name says RETAINER first');
   ok(t.tags.includes('ai-visibility') && t.tags.includes('retainer') && !t.tags.includes('ingen-kommisjon-lovet'), 'ai: tagged ai-visibility and retainer');
-  ok(t.description.includes('**💼 RETAINER**\nAI Visibility: fra £1 500 i måneden'), 'ai: the retainer block');
+  ok(t.description.includes('**💼 RETAINER**\nSELG: GEO + CHATGPT-ANNONSER. AI Visibility fra £1 500 i måneden'), 'ai: the retainer block');
   ok(t.description.indexOf('RETAINER') < t.description.indexOf('**Selskap**'), 'ai: before the company');
   const lines = w.slack[0].split('\n');
-  eq(lines[1], '💼 *RETAINER* · AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon', 'ai: line 2 of the post');
+  eq(lines[1], '💼 *RETAINER* · SELG: GEO + CHATGPT-ANNONSER · fra £1 500/mnd inkl. £500 annonser, ingen kommisjon', 'ai: line 2 of the post');
   ok(w.slack[0].includes('Spesialisering: IT and technology'), 'ai: the sector is in the post');
   ok(!w.slack[0].includes('KOMMISJON LOVET'), 'ai: the open-terms line never shows on a retainer lead');
   const w2 = makeWorld();
@@ -627,7 +627,7 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
   ok(w2.slack[0].includes('⚠ Juss: OpenAI tar ikke annonser for juridiske tjenester'), 'ai: the legal flag');
   const w3 = makeWorld();
   await run(w3, withLead({ ...ai, route: 'not_a_fit', route_reason: 'turnover_below_1m', turnover_band: 'Under £1m', lead_id: 'l_ai_0003', email: 'ai3@example.invalid', slack_test: true }));
-  eq(w3.slack[0].split('\n')[1], '💼 *RETAINER* · AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon', 'ai: in the not-a-fit post too');
+  eq(w3.slack[0].split('\n')[1], '💼 *RETAINER* · SELG: GEO + CHATGPT-ANNONSER · fra £1 500/mnd inkl. £500 annonser, ingen kommisjon', 'ai: in the not-a-fit post too');
   ok(w3.slack[0].includes('Grunn: omsetning under £1m'), 'ai: the reason');
   console.log('19 ok');
 }

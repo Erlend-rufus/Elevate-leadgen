@@ -5,8 +5,8 @@
   "path": "/g/uk-geo",
   "_path": "The address the funnel is served at. The build checks it against the redirect and header rules in netlify.toml.",
   "origin": "https://getelevateleads.com",
-  "live": false,
-  "_live": "False until g/uk-geo/LAUNCH.md section 3 is done: Zap 1 must know the campaign before a lead can be delivered. While false the pages are noindex and the endpoint answers 503 for this campaign.",
+  "live": true,
+  "_live": "True since 28 Nov 2026: Zap 1 version 01a222a6-b255-7007-b866-cd2eafaefc9d knows the campaign, and a draft run with a test lead made a task tagged geo-alone in the shared list.",
   "variables": {
     "THRESHOLD": "£1m",
     "OFFER": "30 minute AI visibility review",

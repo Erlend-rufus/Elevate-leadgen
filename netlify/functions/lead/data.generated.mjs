@@ -576,7 +576,7 @@ export const funnels = {
    "campaign": "uk-geo",
    "path": "/g/uk-geo",
    "origin": "https://getelevateleads.com",
-   "live": false,
+   "live": true,
    "variables": {
     "THRESHOLD": "£1m",
     "OFFER": "30 minute AI visibility review",

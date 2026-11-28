@@ -25,16 +25,18 @@ npm run test:g-growth  # g/uk-geo/test/funnel.test.mjs is in it
 | Price | From £1,000 a month. The other page: from £1,500 with £500 of ChatGPT ad spend. |
 | Form | The same nine steps and the same payload keys. |
 | Routing | The same, without the two flags about ChatGPT ads (`legal_no_chatgpt_ads`, `health_ads_check`). |
-| ClickUp | The same list, `AI VISIBILITY - UK - Retainer` (1201270000005380). Tags `geo-alone` and `retainer`, never `ai-visibility`. Zap 1 writes "GEO alene fra £1 000/mnd, uten ChatGPT-annonser" in the task and in Slack. |
-| Calendly | The same event as the other page (`2b6f4168-ecb4-45a4-b565-aadb51fe96ce`, owned by Sondre). An own event could not be made under his user through the API. Zap 2 is not changed: it reads a booking from this page as `uk-ai-visibility`, finds the task by `lead_id` in the shared list, and the Slack post about the booking says "UK AI VISIBILITY". The task keeps its `geo-alone` tag. A booking made without a lead id (somebody opens the Calendly link directly) gets a task without that tag. |
+| ClickUp | The same list, `AI VISIBILITY - UK - Retainer` (1201270000005380). Tags `geo-alone` and `retainer`, never `ai-visibility`. Zap 1 writes "SELG: KUN GEO" first in the task block and on line 2 of the Slack post; leads from the other page get "SELG: GEO + CHATGPT-ANNONSER". |
+| Calendly | The same event as the other page (`2b6f4168-ecb4-45a4-b565-aadb51fe96ce`, owned by Sondre). An own event could not be made under his user through the API. Zap 2 is not changed: it reads a booking from this page as `uk-ai-visibility` and finds the task by `lead_id` in the shared list. Zap 2 posts nothing to Slack. The task keeps its `geo-alone` tag. A booking made without a lead id (somebody opens the Calendly link directly) gets a task without that tag. |
 | Test | No A/B test and no ten to one module. |
 | Case | A Norwegian private clinic group, not named (owner's rule of 27 Nov 2026). Bookings from AI assistants are GA4 `booking_completed`, Norwegian pages, all AI sources: 35 from Sept to 27 Nov 2026 against 3 in Sept to Nov 2025. The 20 question table is Search Atlas analysis `ff77201a-04b2-4fc9-a931-9068a0d96863`, one run on 28 Nov 2026: named in 42 of 58 answers. There is no earlier run, so the page never says how far the share has moved. The page says that a new website went live in August 2026 and that its effect cannot be separated from the rest. Never write "from nothing": AI assistants sent 83 visits to Norwegian topic pages in Feb to Nov 2025. No ChatGPT ad figure may stand on this page. |
 
-## 3. Before "live": true
+## 3. Launch (done 28 Nov 2026)
 
-1. Make the tag `geo-alone` in the ClickUp space.
-2. Publish Zap 1 with the `uk-geo` entry (`g/_growth/zapier/README.md`, "Changing one"), and send one test lead.
-3. Set `"live": true` in `config.json`, build, merge.
+1. Zap 1 published with the `uk-geo` entry: version `01a222a6-b255-7007-b866-cd2eafaefc9d`, see
+   `g/_growth/zapier/README.md`. The tag `geo-alone` was made by the first task.
+2. Two draft runs with made-up leads (`@example.invalid`), one per page: both made a `[RETAINER]` task in the shared
+   list with the right tag and the right "SELG" line. Both tasks were set to `ukvalifisert - archive`.
+3. `"live": true`.
 4. Ads: none exist for this page yet. Angles and stop rules are in the project doc
    `claude/plan-geo-fastpris-2026-11-28.md`.
 
