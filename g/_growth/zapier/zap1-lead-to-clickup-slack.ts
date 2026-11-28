@@ -155,6 +155,7 @@ const REMIND: Record<string, Remind> = {
   "uk-law-google-ads": { lang: "en", offer: "30 minute Google Ads review", prep: "There is nothing to prepare. If the firm runs Google Ads today, we sort out access together on the call.", host: "Erlend", sign: "Erlend Rufus", replyTo: "erlend@elevatemarketing.no" },
   "uk-google-ads": { lang: "en", offer: "30 minute Google Ads review", prep: "There is nothing to prepare. If you run Google Ads today, we sort out access together on the call.", host: "Erlend", sign: "Erlend Rufus", replyTo: "erlend@elevatemarketing.no" },
   "uk-ai-visibility": { lang: "en", offer: "30 minute AI visibility review", prep: "We put your buyers' questions to ChatGPT before we meet, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
+  "uk-geo": { lang: "en", offer: "30 minute AI visibility review", prep: "We put your buyers' questions to ChatGPT, Gemini and Google AI Mode before we meet, so there is nothing to prepare.", host: "Sondre", sign: "Sondre Henanger", replyTo: "sh@elevatemarketing.no" },
   "it-ict-growth": { lang: "it", offer: "analisi della pipeline di 30 minuti", prep: "Bastano i vostri numeri, non c’è nulla da preparare.", host: "Aurora", sign: "Aurora", replyTo: "au@growwithelevate.eu" },
 };
 
@@ -712,6 +713,43 @@ const CAMPAIGNS: Record<string, Campaign> = {
     retainer: {
       block: "AI Visibility: fra £1 500 i måneden inkl. £500 i ChatGPT-annonser, månedlig fra start, 30 dagers oppsigelse. Ingen kommisjon og ingen garanti. Sondre er kontaktperson.",
       line: "AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon",
+    },
+    field: {
+      leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",
+      website: "09d8fbaa-d659-4b44-9738-39fcf5c6f25b",
+      adSpend: "",
+      teamSize: "",
+      contractValue: "",
+      tier: "",
+      email: "78c13487-0fee-46d2-893f-68b212b09e6b",
+      crmItemType: "8289eaa9-7492-40eb-a35d-092c51bd01ac",
+      contactName: "8fb666f4-c213-4f7a-a8ce-627e496a8313",
+      phone: "a0c06e36-5028-4b86-af93-c57de3ad2418",
+      specialism: "",
+      jobTitle: "cf254478-a92a-4805-921a-a89ba06c69a0",
+      salesStage: "f4bfea58-b05c-4427-ba1c-b4aa61200583",
+    },
+    option: {
+      crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
+      salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
+      tier: { fit: "", review: "", other: "" },
+      specialism: {},
+      teamSize: {},
+      adSpend: {},
+      contractValue: {},
+    },
+  },
+  // GEO alone on a fixed monthly price (28 Nov 2026), /g/uk-geo. The same list as the AI visibility retainer, its own
+  // tag, so that the two offers (from £1,000 without ChatGPT ads, from £1,500 with them) are never mixed up on a call.
+  "uk-geo": {
+    label: "UK GEO (fixed fee, no ChatGPT ads)",
+    listId: "1201270000005380", // AI VISIBILITY - UK - Retainer
+    tag: "geo-alone",
+    peopleWord: "ansatte",
+    slackDetail: true, // the sector, the website and why the lead was routed as it was belong in the post
+    retainer: {
+      block: "GEO alene: fast månedspris fra £1 000, uten ChatGPT-annonser, månedlig fra start, 30 dagers oppsigelse. Ingen kommisjon og ingen garanti. Sondre er kontaktperson.",
+      line: "GEO alene fra £1 000/mnd, uten ChatGPT-annonser, ingen kommisjon",
     },
     field: {
       leadId: "08cf9ecc-ff51-4296-9e03-c5250ebb7abf",

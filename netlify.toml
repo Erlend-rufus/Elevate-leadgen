@@ -211,6 +211,17 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
+# /g/uk-geo: GEO alone on a fixed monthly price (28 Nov 2026). Same as /g/uk-it-growth, paid traffic only.
+[[headers]]
+  for = "/g/uk-geo"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-geo/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # /g/uk-law-firms: same as /g/uk-it-growth, paid traffic only.
 [[headers]]
   for = "/g/uk-law-firms"
@@ -787,6 +798,47 @@
 [[redirects]]
   from = "/g/uk-ai-visibility/terms"
   to = "/g/uk-ai-visibility/terms/index.html"
+  status = 200
+
+# /g/uk-geo (28 Nov 2026): the same eight pages as /g/uk-it-growth, built by scripts/build-g-growth.mjs.
+[[redirects]]
+  from = "/g/uk-geo"
+  to = "/g/uk-geo/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-geo/book"
+  to = "/g/uk-geo/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-geo/takk"
+  to = "/g/uk-geo/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-geo/review"
+  to = "/g/uk-geo/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-geo/not-now"
+  to = "/g/uk-geo/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-geo/not-a-fit"
+  to = "/g/uk-geo/not-a-fit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-geo/privacy"
+  to = "/g/uk-geo/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-geo/terms"
+  to = "/g/uk-geo/terms/index.html"
   status = 200
 
 # /g/it-ict-growth: the same eight pages as /g/uk-it-growth, built by scripts/build-g-growth.mjs.
