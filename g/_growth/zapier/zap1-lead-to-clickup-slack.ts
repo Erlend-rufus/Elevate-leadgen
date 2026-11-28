@@ -480,10 +480,11 @@ const CAMPAIGNS: Record<string, Campaign> = {
       contractValue: {},
     },
   },
-  // Google Ads on a fixed fee for law firms (27 Nov 2026). Same ClickUp list as the commission funnel, own tag and label.
+  // Google Ads on a fixed fee for law firms (27 Nov 2026). Own ClickUp list "GOOGLE ADS - UK - Fastpris" since 28 Nov 2026
+  // (the law list's statuses, and lead_id, Nettside, Ad Spend Budget and Tier added as the existing shared fields).
   "uk-law-google-ads": {
     label: "UK LAW · GOOGLE ADS (fixed fee, no commission)",
-    listId: "1201270000003579", // LAW - UK - Commission
+    listId: "1201270000007500", // GOOGLE ADS - UK - Fastpris
     tag: "growth-law-gads",
     peopleWord: "fee earners",
     retainer: {
@@ -525,10 +526,10 @@ const CAMPAIGNS: Record<string, Campaign> = {
       contractValue: {},
     },
   },
-  // Google Ads on a fixed fee for UK service businesses (27 Nov 2026). Shares the law list until a fixed fee list exists; own tag and label.
+  // Google Ads on a fixed fee for UK service businesses (27 Nov 2026). Same fixed fee list as the law entry; own tag and label.
   "uk-google-ads": {
     label: "UK SERVICE · GOOGLE ADS (fixed fee, no commission)",
-    listId: "1201270000003579", // LAW - UK - Commission
+    listId: "1201270000007500", // GOOGLE ADS - UK - Fastpris
     tag: "growth-gads",
     peopleWord: "people",
     retainer: {

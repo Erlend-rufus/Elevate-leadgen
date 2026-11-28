@@ -146,10 +146,10 @@ const CAMPAIGNS: Record<string, Campaign> = {
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
   },
-  // Google Ads on a fixed fee for law firms (27 Nov 2026). Same list as the commission funnel, own tag.
+  // Google Ads on a fixed fee for law firms (27 Nov 2026). Own list "GOOGLE ADS - UK - Fastpris" since 28 Nov 2026, own tag.
   "uk-law-google-ads": {
     label: "UK LAW · GOOGLE ADS (fixed fee, no commission)",
-    listId: "1201270000003579", // LAW - UK - Commission
+    listId: "1201270000007500", // GOOGLE ADS - UK - Fastpris
     tag: "growth-law-gads",
     retainer: true,
     emailTag: "growth-law-gads", // never link a booking here to a commission lead with the same e-mail
@@ -166,10 +166,10 @@ const CAMPAIGNS: Record<string, Campaign> = {
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
   },
-  // Google Ads on a fixed fee for UK service businesses (27 Nov 2026). Shares the law list, own tag.
+  // Google Ads on a fixed fee for UK service businesses (27 Nov 2026). Same fixed fee list as the law entry, own tag.
   "uk-google-ads": {
     label: "UK SERVICE · GOOGLE ADS (fixed fee, no commission)",
-    listId: "1201270000003579", // LAW - UK - Commission
+    listId: "1201270000007500", // GOOGLE ADS - UK - Fastpris
     tag: "growth-gads",
     retainer: true,
     emailTag: "growth-gads", // never link a booking here to a commission lead with the same e-mail

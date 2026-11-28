@@ -257,3 +257,16 @@ lead made a `[RETAINER]` task and a booking on event `1ec70106-0099-4dc1-ad03-58
 test task was then set to `ukvalifisert - archive`. Published about 07:06 UTC: Zap 1 version
 `01a220f9-fb14-78cd-84a4-c587cfa8ed01`, Zap 2 version `01a220fc-6119-7a03-ac20-9c5346c3250d`. Both are the repository files
 byte for byte.
+
+28 Nov 2026, afternoon (Erlend's go-ahead, "Fiks alt dette"): the two fixed fee Google Ads campaigns (`uk-law-google-ads`,
+`uk-google-ads`) got their own ClickUp list, `GOOGLE ADS - UK - Fastpris` (`1201270000007500`, CRM folder), in both
+files. The list has the law list's statuses (template "Lead-statu" plus `møte booket - noshow`) and the shared fields
+`lead_id`, `Nettside`, `Ad Spend Budget` and `Tier` added as existing fields; the rest come from the CRM folder, so every
+field and option id is unchanged. The commission law list keeps only commission leads (no live fixed fee lead had to
+move; the five there were archived tests). The tests know the new list. Draft runs with made-up data
+(`@example.invalid`): a fit lead on `uk-law-google-ads` made a `[RETAINER]` task in the new list with nine fields set
+(the phone field answered 400 on the made-up 07700 number), and a booking without a form on event
+`1ec70106-0099-4dc1-ad03-5839369d0bd3` made a task there in `møte booket`; both were set to `ukvalifisert - archive`.
+Published about 13:45 UTC: Zap 1 version `01a22264-d5fb-7bc0-85bf-85ffb0bee32a` (sha256 `32a1650b...`), Zap 2 version
+`01a2225f-d3fa-7f36-a037-68871b59646b` (sha256 `d50b3ff1...`), both read back and byte-identical to the files here.
+To go back: Zap 1 `01a220f9-fb14-78cd-84a4-c587cfa8ed01`, Zap 2 `01a220fc-6119-7a03-ac20-9c5346c3250d`.
