@@ -1,6 +1,6 @@
 {
   "_comment": "Page copy for /g/uk-ai-visibility, written 6 Nov 2026 from the owner's decisions of that day: a retainer from £1,500 a month with £500 of ChatGPT ad spend included, month to month, 30 days' notice, a named contact and a monthly status report; no guarantee; UK companies with £1m or more in turnover. The case is C-Medical, named with its written consent. Figures: AI assistant bookings are booking_completed in the group's Google Analytics (property 419601371) by month, all AI sources, paid and unpaid together, because the ChatGPT ads carried no utm tags until 6 Nov 2026 and some ad clicks are therefore inside the count. The ad figures (NOK 10,000, 420 clicks, 12 bookings, the 30 days to 6 Nov 2026) are the owner's, from OpenAI's ads manager, at NOK 12.5148 to the pound. The two are shown side by side and never added. Market figures: Which?, December 2025 (Yonder, 4,189 UK adults, 10 to 14 Sept 2025); OpenAI's head of ChatGPT, February 2026; OpenAI Ads Manager open to UK advertisers from 22 June 2026. The build refuses dashes, exclamation marks and American spellings. Nothing here may describe commission.",
-  "layout": ["hero", "strip", "search", "how", "fit", "pay", "keep", "measure", "meeting", "faq", "form"],
+  "layout": ["hero", "strip", "search", "tenone", "how", "fit", "pay", "keep", "measure", "meeting", "faq", "form"],
   "meta": {
     "title": "AI visibility for UK companies | Elevate Marketing",
     "description": "Be named when your buyers ask ChatGPT. Content, mentions and ChatGPT ads from £1,500 a month, ad spend included, month to month."
@@ -49,6 +49,18 @@
       { "value": "£0", "label": "minimum spend for ChatGPT ads, open to UK advertisers since June 2026" }
     ],
     "note": "Sources: Which?, Consumer use and attitudes towards AI search tools, December 2025 (4,189 UK adults, September 2025). OpenAI, head of ChatGPT, February 2026. OpenAI Ads Manager, open to UK advertisers from 22 June 2026."
+  },
+  "tenone": {
+    "_comment": "The ten to one module, 8 Nov 2026: the C7 ad's line drawn as a scroll story. Shown only to variant b of the test in config.json \"ab\". The names in the answer are placeholders on purpose: no real firm is shown as recommended.",
+    "h2": "Search shows ten results. AI gives one answer.",
+    "steps": [
+      { "k": "Search", "t": "Ten links to compare.", "p": "A Google search gives your buyer a page of links. They open a few and compare, so third or fourth place still gets looked at." },
+      { "k": "AI", "t": "One question, one answer.", "p": "The same buyer asks ChatGPT and gets a short answer that names two or three firms. That is where the shortlist starts." },
+      { "k": "You", "t": "In the answer, or not in it.", "p": "There is no second page to scroll to. Before the first call we put your buyers' questions to the AI tools and show you whether they name you." }
+    ],
+    "list": "Search results",
+    "answer": { "label": "AI answer", "q": "Who should we talk to about this?", "lead": "The firms that come up most often:", "names": ["Firm A", "Firm B"], "you": "Your firm?" },
+    "note": "Illustration. AI answers change from one question, person and day to the next."
   },
   "how": {
     "h2": "What you get, every month",

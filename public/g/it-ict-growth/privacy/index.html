@@ -431,6 +431,11 @@ function fireQualified(route, leadId) {
   var key = 'elevate:g:' + CFG.slug + ':' + CFG.qualifiedEvent + ':' + leadId;
   if (storeGet(key) === '1') return;
   Consent.track(CFG.qualifiedEvent, { route: route, campaign: CFG.campaign }, { eventID: leadId });
+  /* A page with an A/B test keeps "<test>:<variant>" for the session (config.json "ab"). The
+     variant goes in an event of its own, so the server copy of QualifiedForm stays as it was. */
+  var ab = storeGet('elevate:g:' + CFG.slug + ':ab');
+  var abm = ab && /^([a-z0-9_]{1,32}):([ab])$/.exec(ab);
+  if (abm) Consent.track('AbQualified', { test: abm[1], variant: abm[2], route: route });
   storeSet(key, '1');
 }
 

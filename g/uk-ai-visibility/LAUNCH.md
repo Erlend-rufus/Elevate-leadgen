@@ -42,3 +42,13 @@ npm run test:g-growth  # g/uk-ai-visibility/test/funnel.test.mjs is in it
   both in use. The owner buys a third (6 Nov 2026); then add the topics and queries.
 - Reddit and other community posts for UK clients must say who is posting (Reddit's rules, and hidden advertising
   under the DMCC Act 2024). Nothing about them goes on the page.
+
+## A/B test: ten to one (from 8 Nov 2026)
+
+Variant b shows the module "Search shows ten results. AI gives one answer." after "Why now"; variant a is the page as before. Settings in `config.json` "ab", copy in `copy.json` "tenone", styles in `@section tenone` of `g/_growth/style.css`, events in `g/_growth/js/ab.js`.
+
+- 50/50 per visit, drawn in the head, kept in sessionStorage for the session. No script: variant a.
+- `?ab=a` or `?ab=b` forces a variant for checking. Forced views are sent with `forced: 1`; leave them out when reading.
+- Meta custom events, after Accept only: `AbView`, `AbFormReach`, `AbFormStart`, `AbQualified`, each with `test` and `variant`.
+- Main measure: `AbFormStart` per `AbView`, by variant. Guard: `AbQualified` per `AbView` must not fall in b.
+- Decide on a number of views fixed beforehand, not when the figures look good. End the test by removing "ab" and either the module or the `data-ab-only` gate.
