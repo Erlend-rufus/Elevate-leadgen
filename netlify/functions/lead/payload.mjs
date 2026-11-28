@@ -22,7 +22,7 @@ export const PAYLOAD_KEYS = [
   'meeting_goal',
   'first_name', 'last_name', 'job_title', 'email', 'mobile',
   'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
-  'fbclid', 'page_slug', 'referrer',
+  'fbclid', 'gclid', 'page_slug', 'referrer',
   'entry', 'commission_promised',
 ];
 
@@ -74,7 +74,7 @@ export function buildPayload({ leadId, campaign, route, reasons, submittedAt, va
     mobile: s(v.mobile),
   };
   const t = tracking || {};
-  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'page_slug', 'referrer', 'entry']
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'page_slug', 'referrer', 'entry']
     .forEach((k) => { out[k] = s(t[k]); });
   // A lead stored before 6 Nov 2026 has no such field; it came from a funnel page, which promises commission.
   out.commission_promised = t.commission_promised === 'no' ? 'no' : 'yes';

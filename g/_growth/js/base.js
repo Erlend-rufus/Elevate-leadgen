@@ -19,7 +19,7 @@ function readQuery() {
   var out = {};
   try {
     var q = new URLSearchParams(location.search);
-    ['lead_id', 'fbclid'].concat(UTM_KEYS).forEach(function (k) {
+    ['lead_id', 'fbclid', 'gclid'].concat(UTM_KEYS).forEach(function (k) {
       var v = q.get(k);
       if (v) out[k] = v;
     });

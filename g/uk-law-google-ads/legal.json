@@ -59,6 +59,7 @@
           ["Calendly", "Takes bookings", "Your name, email address, your choice of time and an application reference"],
           ["Our email and text message providers", "Send our emails and texts", "Your email address or mobile number, and the message"],
           ["Meta Platforms Ireland", "Measures our advertising, only if you chose Accept", "The identifiers set by the Meta pixel and your visits to our pages. From our server, also a scrambled version of your email address and name, your IP address and your browser details."],
+          ["Google Ireland (Google Ads)", "Measures our advertising, only if you chose Accept", "The identifiers set by the Google tag, the Google click identifier from the ad you clicked, your visits to our pages and whether your application went through. No name, email address or phone number."],
           ["Typeform", "Runs the form on our older enquiry page", "The answers you give there"],
           ["Our advisers, accountants and public authorities", "Advice, accounts, tax and legal duties", "What they need for that purpose"]
         ]
@@ -77,6 +78,7 @@
           ["Customers' contact details and contract records", "For the length of the agreement, and afterwards for as long as the law requires us to keep accounting and contract records"],
           ["The scrambled IP address used to limit applications", "Up to a day"],
           ["The Meta click identifier, if you chose Accept", "With your application, and deleted with it. Meta keeps what it receives under its own policy."],
+          ["The Google click identifier, if you chose Accept", "With your application, and deleted with it. Google keeps what it receives under its own policy."],
           ["Your cookie choice", "In your browser until you clear it"],
           ["Answers on the older Typeform page", "As for applications above"]
         ]

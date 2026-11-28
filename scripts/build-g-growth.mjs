@@ -755,7 +755,7 @@ const HEAD_SCRIPT = `(function(){var d=document.documentElement;d.classList.add(
 function head(cfg, { title, description, css, og, scripts, preconnect }) {
   const font = (f) => `<link rel="preload" href="/g/_assets/fonts/${f}" as="font" type="font/woff2" crossorigin>`;
   const consent = scripts
-    ? `<script src="/js/consent.js?v=4" data-pixel="${esc(cfg.funnel.pixelId)}" data-banner="off"${scripts.track ? ` data-track="${esc(scripts.track)}"` : ''}></script>`
+    ? `<script src="/js/consent.js?v=5" data-pixel="${esc(cfg.funnel.pixelId)}"${cfg.funnel.googleAds ? ` data-gads="${esc(cfg.funnel.googleAds.id + '/' + cfg.funnel.googleAds.label)}"` : ''} data-banner="off"${scripts.track ? ` data-track="${esc(scripts.track)}"` : ''}></script>`
     : '';
   return `<!DOCTYPE html>
 <html lang="${esc(LOCALE.lang)}">
