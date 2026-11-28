@@ -218,6 +218,7 @@ function initForm() {
     var accepted = consentState() === 'accepted';
     setHidden('consent', consentState());
     setHidden('fbclid', accepted ? (q.fbclid || '') : '');
+    setHidden('gclid', accepted ? (q.gclid || '') : '');
     var fbp = accepted ? readCookie('_fbp') : '';
     var fbc = accepted ? readCookie('_fbc') : '';
     if (accepted && !fbc && q.fbclid) fbc = 'fb.1.' + Date.now() + '.' + q.fbclid;

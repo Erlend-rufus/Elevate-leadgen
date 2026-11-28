@@ -109,9 +109,9 @@ test('the only outside host a page may use is the calendar, and only on the book
   assert.equal(/<script[^>]+calendly/.test(built['book/index.html']), false, 'the calendar script is added by the page script, after the lead id is known');
 });
 
-test('the consent script: banner off (the page owns it), version 4, the funnel\'s pixel, a view event on the landing page only', () => {
+test('the consent script: banner off (the page owns it), version 5, the funnel\'s pixel, a view event on the landing page only', () => {
   for (const p of ALL) {
-    const m = built[p].match(/<script src="\/js\/consent\.js\?v=4" data-pixel="(\d+)" data-banner="off"( data-track="(\w+)")?><\/script>/);
+    const m = built[p].match(/<script src="\/js\/consent\.js\?v=5" data-pixel="(\d+)" data-banner="off"( data-track="(\w+)")?><\/script>/);
     assert.ok(m, p);
     assert.equal(m[1], cfg.funnel.pixelId);
     assert.equal(m[3], p === 'index.html' ? cfg.funnel.viewEvent : undefined, p);

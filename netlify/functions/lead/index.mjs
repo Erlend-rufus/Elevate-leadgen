@@ -52,7 +52,7 @@ const BUDGET_MS = 8000;
 const RATE_LIMIT_PER_HOUR = 12;
 const LEAD_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 const UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-const TRACKING = UTM.concat(['fbclid', 'referrer', 'consent', 'fbp', 'fbc', 'entry']);
+const TRACKING = UTM.concat(['fbclid', 'gclid', 'referrer', 'consent', 'fbp', 'fbc', 'entry']);
 
 const SECURITY = {
   'Cache-Control': 'no-store',
@@ -156,7 +156,7 @@ export function createHandler(deps = {}) {
     hidden.consent = hidden.consent === 'accepted' || hidden.consent === 'declined' ? hidden.consent : 'unset';
     /* The advertising identifiers are kept only for a visitor who accepted the cookie. Without
        that choice they are neither stored, sent on, nor carried to the next page. */
-    if (hidden.consent !== 'accepted') { hidden.fbclid = ''; hidden.fbp = ''; hidden.fbc = ''; }
+    if (hidden.consent !== 'accepted') { hidden.fbclid = ''; hidden.gclid = ''; hidden.fbp = ''; hidden.fbc = ''; }
     let leadId = tidy(get('lead_id'), 64);
     if (!LEAD_ID_RE.test(leadId)) leadId = 'l_' + uuid().replace(/-/g, '').slice(0, 20);
     hidden.lead_id = leadId;
@@ -180,7 +180,7 @@ export function createHandler(deps = {}) {
     };
     const nextUrl = (route) => {
       const q = ['lead_id=' + encodeURIComponent(leadId)];
-      UTM.concat(['fbclid']).forEach((k) => { if (hidden[k]) q.push(k + '=' + encodeURIComponent(hidden[k])); });
+      UTM.concat(['fbclid', 'gclid']).forEach((k) => { if (hidden[k]) q.push(k + '=' + encodeURIComponent(hidden[k])); });
       return `${cfg.path}/${routing.PAGE_FOR[route]}/?${q.join('&')}`;
     };
     const answer = (route) => {
@@ -275,7 +275,7 @@ export function createHandler(deps = {}) {
       reasons: decision.reasons,
       values,
       tracking: {
-        page_slug: cfg.slug, referrer: hidden.referrer, fbclid: hidden.fbclid,
+        page_slug: cfg.slug, referrer: hidden.referrer, fbclid: hidden.fbclid, gclid: hidden.gclid,
         utm_source: hidden.utm_source, utm_medium: hidden.utm_medium, utm_campaign: hidden.utm_campaign,
         utm_content: hidden.utm_content, utm_term: hidden.utm_term,
         entry: hidden.entry, commission_promised: commissionPromised,
@@ -353,13 +353,13 @@ export function createHandler(deps = {}) {
   }
 }
 
-/** utm_* and fbclid from the page that posted, for a browser that could not fill them in. */
+/** utm_*, fbclid and gclid from the page that posted, for a browser that could not fill them in. */
 function fromReferer(req, cfg) {
   const out = {};
   try {
     const u = new URL(req.headers.get('referer') || '');
     if (u.pathname.indexOf(cfg.path) !== 0) return out;
-    UTM.concat(['fbclid']).forEach((k) => { const v = u.searchParams.get(k); if (v) out[k] = v; });
+    UTM.concat(['fbclid', 'gclid']).forEach((k) => { const v = u.searchParams.get(k); if (v) out[k] = v; });
   } catch (e) { /* no usable Referer: nothing to recover */ }
   return out;
 }

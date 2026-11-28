@@ -189,7 +189,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 @media print{.cb{display:none}}
 </style>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
-<script src="/js/consent.js?v=4" data-pixel="1466790598245604" data-banner="off"></script>
+<script src="/js/consent.js?v=5" data-pixel="1466790598245604" data-gads="AW-11161185005/-0Q-CMSqisEdEO3ViMop" data-banner="off"></script>
 </head>
 <body>
 <div class="o"><div class="o-in em-fluid o--book">
@@ -220,7 +220,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 </div></div>
 <div class="cb" id="g-consent" role="region" aria-label="Cookie choice" hidden>
   <div class="cb-in">
-    <p class="cb-t">We use a Meta cookie to measure whether our advertising works. It is not set until you choose. The page works the same either way. <a href="/g/uk-law-google-ads/privacy/">Privacy</a></p>
+    <p class="cb-t">We use Meta and Google cookies to measure whether our advertising works. It is not set until you choose. The page works the same either way. <a href="/g/uk-law-google-ads/privacy/">Privacy</a></p>
     <div class="cb-btns"><button class="cb-btn" type="button" data-c="yes">Accept</button><button class="cb-btn" type="button" data-c="no">Decline</button></div>
   </div>
 </div>
@@ -249,7 +249,7 @@ function readQuery() {
   var out = {};
   try {
     var q = new URLSearchParams(location.search);
-    ['lead_id', 'fbclid'].concat(UTM_KEYS).forEach(function (k) {
+    ['lead_id', 'fbclid', 'gclid'].concat(UTM_KEYS).forEach(function (k) {
       var v = q.get(k);
       if (v) out[k] = v;
     });

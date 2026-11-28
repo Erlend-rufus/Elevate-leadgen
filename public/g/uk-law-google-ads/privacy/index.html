@@ -214,7 +214,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 @media print{.lg-btn{display:none}}
 </style>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
-<script src="/js/consent.js?v=4" data-pixel="1466790598245604" data-banner="off"></script>
+<script src="/js/consent.js?v=5" data-pixel="1466790598245604" data-gads="AW-11161185005/-0Q-CMSqisEdEO3ViMop" data-banner="off"></script>
 </head>
 <body>
 <div class="o"><div class="o-in em-fluid">
@@ -266,6 +266,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
           <tr><th scope="row">Calendly</th><td data-label="What they do for us">Takes bookings</td><td data-label="What they receive">Your name, email address, your choice of time and an application reference</td></tr>
           <tr><th scope="row">Our email and text message providers</th><td data-label="What they do for us">Send our emails and texts</td><td data-label="What they receive">Your email address or mobile number, and the message</td></tr>
           <tr><th scope="row">Meta Platforms Ireland</th><td data-label="What they do for us">Measures our advertising, only if you chose Accept</td><td data-label="What they receive">The identifiers set by the Meta pixel and your visits to our pages. From our server, also a scrambled version of your email address and name, your IP address and your browser details.</td></tr>
+          <tr><th scope="row">Google Ireland (Google Ads)</th><td data-label="What they do for us">Measures our advertising, only if you chose Accept</td><td data-label="What they receive">The identifiers set by the Google tag, the Google click identifier from the ad you clicked, your visits to our pages and whether your application went through. No name, email address or phone number.</td></tr>
           <tr><th scope="row">Typeform</th><td data-label="What they do for us">Runs the form on our older enquiry page</td><td data-label="What they receive">The answers you give there</td></tr>
           <tr><th scope="row">Our advisers, accountants and public authorities</th><td data-label="What they do for us">Advice, accounts, tax and legal duties</td><td data-label="What they receive">What they need for that purpose</td></tr>
         </tbody></table>
@@ -280,6 +281,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
           <tr><th scope="row">Customers&#39; contact details and contract records</th><td data-label="How long">For the length of the agreement, and afterwards for as long as the law requires us to keep accounting and contract records</td></tr>
           <tr><th scope="row">The scrambled IP address used to limit applications</th><td data-label="How long">Up to a day</td></tr>
           <tr><th scope="row">The Meta click identifier, if you chose Accept</th><td data-label="How long">With your application, and deleted with it. Meta keeps what it receives under its own policy.</td></tr>
+          <tr><th scope="row">The Google click identifier, if you chose Accept</th><td data-label="How long">With your application, and deleted with it. Google keeps what it receives under its own policy.</td></tr>
           <tr><th scope="row">Your cookie choice</th><td data-label="How long">In your browser until you clear it</td></tr>
           <tr><th scope="row">Answers on the older Typeform page</th><td data-label="How long">As for applications above</td></tr>
         </tbody></table>
@@ -320,7 +322,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 </div></div>
 <div class="cb" id="g-consent" role="region" aria-label="Cookie choice" hidden>
   <div class="cb-in">
-    <p class="cb-t">We use a Meta cookie to measure whether our advertising works. It is not set until you choose. The page works the same either way. <a href="/g/uk-law-google-ads/privacy/">Privacy</a></p>
+    <p class="cb-t">We use Meta and Google cookies to measure whether our advertising works. It is not set until you choose. The page works the same either way. <a href="/g/uk-law-google-ads/privacy/">Privacy</a></p>
     <div class="cb-btns"><button class="cb-btn" type="button" data-c="yes">Accept</button><button class="cb-btn" type="button" data-c="no">Decline</button></div>
   </div>
 </div>
@@ -349,7 +351,7 @@ function readQuery() {
   var out = {};
   try {
     var q = new URLSearchParams(location.search);
-    ['lead_id', 'fbclid'].concat(UTM_KEYS).forEach(function (k) {
+    ['lead_id', 'fbclid', 'gclid'].concat(UTM_KEYS).forEach(function (k) {
       var v = q.get(k);
       if (v) out[k] = v;
     });

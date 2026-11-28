@@ -444,7 +444,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 @media print{.cb{display:none}}
 </style>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
-<script src="/js/consent.js?v=4" data-pixel="1466790598245604" data-banner="off" data-track="ViewContent"></script>
+<script src="/js/consent.js?v=5" data-pixel="1466790598245604" data-gads="AW-11161185005/-0Q-CMSqisEdEO3ViMop" data-banner="off" data-track="ViewContent"></script>
 </head>
 <body>
 <div class="pg"><div class="pg-in em-fluid">
@@ -559,7 +559,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
       <p class="lf-under">A few questions, so we come prepared.</p>
     </div>
     <form class="lf-panel" id="lf-form" method="post" action="/api/lead" novalidate>
-      <input type="hidden" name="campaign" value="uk-law-google-ads"><input type="hidden" name="page_slug" value="uk-law-google-ads"><input type="hidden" name="lead_id" value=""><input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="fbclid" value=""><input type="hidden" name="referrer" value=""><input type="hidden" name="consent" value=""><input type="hidden" name="fbp" value=""><input type="hidden" name="fbc" value="">
+      <input type="hidden" name="campaign" value="uk-law-google-ads"><input type="hidden" name="page_slug" value="uk-law-google-ads"><input type="hidden" name="lead_id" value=""><input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="fbclid" value=""><input type="hidden" name="gclid" value=""><input type="hidden" name="referrer" value=""><input type="hidden" name="consent" value=""><input type="hidden" name="fbp" value=""><input type="hidden" name="fbc" value="">
       <div class="lf-trap" aria-hidden="true"><label>Fax <input type="text" name="contact_by_fax" tabindex="-1" autocomplete="off" value=""></label></div>
 <div class="lf-block" data-step="website"><label class="lf-q" for="f-company_website">Firm website</label><input class="lf-input" id="f-company_website" name="company_website" type="url" value="" autocomplete="url" inputmode="url" aria-invalid="false" aria-required="true"></div>
 <div class="lf-block" data-step="company"><label class="lf-q" for="f-company_name">Firm name</label><input class="lf-input" id="f-company_name" name="company_name" type="text" value="" autocomplete="organization" inputmode="text" aria-invalid="false" aria-required="true"></div>
@@ -595,7 +595,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 </div></div>
 <div class="cb" id="g-consent" role="region" aria-label="Cookie choice" hidden>
   <div class="cb-in">
-    <p class="cb-t">We use a Meta cookie to measure whether our advertising works. It is not set until you choose. The page works the same either way. <a href="/g/uk-law-google-ads/privacy/">Privacy</a></p>
+    <p class="cb-t">We use Meta and Google cookies to measure whether our advertising works. It is not set until you choose. The page works the same either way. <a href="/g/uk-law-google-ads/privacy/">Privacy</a></p>
     <div class="cb-btns"><button class="cb-btn" type="button" data-c="yes">Accept</button><button class="cb-btn" type="button" data-c="no">Decline</button></div>
   </div>
 </div>
@@ -624,7 +624,7 @@ function readQuery() {
   var out = {};
   try {
     var q = new URLSearchParams(location.search);
-    ['lead_id', 'fbclid'].concat(UTM_KEYS).forEach(function (k) {
+    ['lead_id', 'fbclid', 'gclid'].concat(UTM_KEYS).forEach(function (k) {
       var v = q.get(k);
       if (v) out[k] = v;
     });
@@ -1116,6 +1116,7 @@ function initForm() {
     var accepted = consentState() === 'accepted';
     setHidden('consent', consentState());
     setHidden('fbclid', accepted ? (q.fbclid || '') : '');
+    setHidden('gclid', accepted ? (q.gclid || '') : '');
     var fbp = accepted ? readCookie('_fbp') : '';
     var fbc = accepted ? readCookie('_fbc') : '';
     if (accepted && !fbc && q.fbclid) fbc = 'fb.1.' + Date.now() + '.' + q.fbclid;

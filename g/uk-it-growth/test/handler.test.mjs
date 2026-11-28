@@ -100,7 +100,7 @@ test('what Zapier receives: fixed keys in a fixed order, nothing else', async ()
     meeting_goal: 'A straight answer on whether this can work for a firm our size.',
     first_name: 'Alex', last_name: 'Morgan', job_title: 'Managing Director', email: 'alex@northbridge-it.co.uk', mobile: '07700 900123',
     utm_source: 'meta', utm_medium: 'paid', utm_campaign: 'itq4', utm_content: 'ad7', utm_term: 'managed',
-    fbclid: 'FB1', page_slug: 'uk-it-growth', referrer: 'https://l.facebook.com/',
+    fbclid: 'FB1', gclid: '', page_slug: 'uk-it-growth', referrer: 'https://l.facebook.com/',
     entry: '', commission_promised: 'yes',
   });
 });
