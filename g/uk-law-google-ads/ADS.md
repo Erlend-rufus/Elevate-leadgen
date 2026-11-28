@@ -36,10 +36,10 @@ Headline: Google Ads for law firms
 Description: Fixed fee. No minimum term.
 CTA: Learn more
 
-## 02 private-client (image: 75% lower cost per click to call or email, Norway)
+## 02 private-client (image: 74% lower cost per click to call or email, Norway)
 
 Primary text:
-A Norwegian private client firm: 75% lower cost per click to call or email over two years on Google Ads.
+A Norwegian private client firm: 74% lower cost per click to call or email over two years on Google Ads.
 
 Every week we cut the searches that spend without producing enquiries.
 
