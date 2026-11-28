@@ -101,8 +101,8 @@ export const services: Service[] = [
       { title: 'Scale', desc: 'Relaunch, measure weekly, scale winners.' },
     ],
     /** Engagement start confirmed by client (July 2026). */
-    pricingFrom: 'From €1,500/month',
-    pricingNote: 'Fee depends on spend level and campaign count.',
+    pricingFrom: 'From £1,000/month',
+    pricingNote: 'Fixed monthly fee, no percentage of your ad spend. Fee depends on spend level and campaign count.',
     relatedCase: 'trades-lead-gen',
     faq: [
       {

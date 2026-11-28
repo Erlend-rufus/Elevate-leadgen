@@ -141,7 +141,7 @@ placeholders are **intentional** (client wants anonymity): case-study figures/qu
 case placeholders do. Never invent concrete numbers, client names or quotes.
 
 Confirmed real data (do not flag as placeholder): ProofBar (£2.4M+, 4.2×, 92%, 10 years),
-pricing "From €1,500/month", response time "one working day", contract terms (90-day
+pricing "From €1,500/month" (Google Ads alone "From £1,000/month", Nov 2026), response time "one working day", contract terms (90-day
 initial → monthly), invoicing (monthly in arrears, 15–30 day terms), 30-day notice,
 retention (24 mo enquiries / 14 mo analytics), no retrospective liability, GA4 + Microsoft
 Clarity, European servers, team bios (Erlend Rufus, Sondre Henanger).
