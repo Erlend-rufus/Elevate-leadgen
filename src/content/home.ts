@@ -105,7 +105,7 @@ export const home = {
     items: [
       {
         q: 'How much does it cost?',
-        a: 'Most engagements start from €1,500 per month, depending on channels and spend. You see the full fee structure before signing anything. No percentage-of-spend surprises.',
+        a: 'Most engagements start from €1,500 per month, depending on channels and spend. Google Ads on its own starts from £1,000 per month. You see the full fee structure before signing anything. No percentage-of-spend surprises.',
       },
       {
         q: 'How fast will we see results?',
