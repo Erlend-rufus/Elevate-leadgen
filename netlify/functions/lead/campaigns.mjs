@@ -28,6 +28,9 @@ import { renderForm as itaRenderForm } from '../../../g/it-ict-growth/render-for
 import * as aiCore from '../../../g/uk-ai-visibility/core.mjs';
 import * as aiRoute from '../../../g/uk-ai-visibility/route.mjs';
 import { renderForm as aiRenderForm } from '../../../g/uk-ai-visibility/render-form.mjs';
+import * as geoCore from '../../../g/uk-geo/core.mjs';
+import * as geoRoute from '../../../g/uk-geo/route.mjs';
+import { renderForm as geoRenderForm } from '../../../g/uk-geo/render-form.mjs';
 import { funnels } from './data.generated.mjs';
 
 const CODE = {
@@ -38,6 +41,7 @@ const CODE = {
   'uk-google-ads': { core: gadsCore, route: gadsRoute, renderForm: gadsRenderForm },
   'it-ict-growth': { core: itaCore, route: itaRoute, renderForm: itaRenderForm },
   'uk-ai-visibility': { core: aiCore, route: aiRoute, renderForm: aiRenderForm },
+  'uk-geo': { core: geoCore, route: geoRoute, renderForm: geoRenderForm },
 };
 
 export const campaigns = {};

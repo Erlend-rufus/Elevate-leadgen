@@ -10,7 +10,7 @@ const LIST = '901522580321'; // IT - UK - Commision
 const HEALTH_LIST = '1201270000003578'; // HEALTH - UK - Commission
 const LAW_LIST = '1201270000003579'; // LAW - UK - Commission
 const LISTS = new Set([LIST, HEALTH_LIST, LAW_LIST, '1201270000005380', '1201270000007500']); // last: GOOGLE ADS - UK - Fastpris
-const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import', 'vurder-nettside', 'ingen-kommisjon-lovet', 'ai-visibility', 'retainer']); // ingen-kommisjon-lovet made in the space 6 Nov 2026
+const KNOWN_TAGS = new Set(['growth-2m', 'growth-health', 'growth-law', 'sjekk-størrelse', 'ta-opp-om-3-mnd', 'booket-uten-skjema', 'test', 'old-import', 'vurder-nettside', 'ingen-kommisjon-lovet', 'ai-visibility', 'geo-alone', 'retainer']); // ingen-kommisjon-lovet made in the space 6 Nov 2026
 const SONDRE = 106690144;
 const KNOWN_STATUS = new Set(['ny lead', 'møte booket', 'klar for deal', 'ukvalifisert - archive', 'kontaktet', 'møte booket - noshow']);
 
@@ -594,6 +594,19 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
   }
   console.log('18 ok');
 }
+// ---------------------------------------------------------------- 18b. uk-geo (28 Nov 2026): GEO alone, same list as the AI visibility retainer, own tag
+{
+  const geo = { campaign: 'uk-geo', page_slug: 'uk-geo', specialism: 'IT and technology', turnover_band: '£2m to under £5m', employees_or_fee_earners: '10 to 49', marketing_spend: '£3,000 to under £10,000', decision_maker: 'Me', meeting_goal: 'Who is the best managed IT provider in Leeds?', route_reason: 'turnover_2m_plus, register_not_used' };
+  const w = makeWorld();
+  await run(w, withLead({ ...geo, lead_id: 'l_geo_0001', email: 'geo@example.invalid', company_name: 'Northgate IT', slack_test: true }));
+  const t = w.tasks[0];
+  eq(t.list, '1201270000005380', 'geo: the list it shares with the AI visibility retainer');
+  eq(t.name, '[RETAINER] Northgate IT · Test Fit', 'geo: the name says RETAINER first');
+  ok(t.tags.includes('geo-alone') && t.tags.includes('retainer') && !t.tags.includes('ai-visibility'), 'geo: tagged geo-alone and retainer, never ai-visibility');
+  ok(t.description.includes('**💼 RETAINER**\nSELG: KUN GEO. Fast månedspris fra £1 000, uten ChatGPT-annonser'), 'geo: the retainer block names the price and that there are no ads');
+  eq(w.slack[0].split('\n')[1], '💼 *RETAINER* · SELG: KUN GEO · fra £1 000/mnd, uten ChatGPT-annonser, ingen kommisjon', 'geo: line 2 of the post');
+  console.log('18b ok');
+}
 // ---------------------------------------------------------------- 19. uk-ai-visibility (6 Nov 2026): a retainer campaign, every lead marked RETAINER
 {
   const ai = { campaign: 'uk-ai-visibility', page_slug: 'uk-ai-visibility', specialism: 'IT and technology', turnover_band: '£2m to under £5m', employees_or_fee_earners: '10 to 49', marketing_spend: '£3,000 to under £10,000', decision_maker: 'Me', meeting_goal: 'Who is the best managed IT provider in Leeds?', route_reason: 'turnover_2m_plus, register_not_used', practice_areas: '', sra_number: '', regulator_number: '', self_pay_share: '', specialties: '', first_consultation_value: '', first_year_value: '', sales_cycle: '', capacity: '', trading_years: '', company_number: '', ch_check: 'unchecked' };
@@ -603,10 +616,10 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
   eq(t.list, '1201270000005380', 'ai: the retainer list');
   eq(t.name, '[RETAINER] Northgate IT · Test Fit', 'ai: the name says RETAINER first');
   ok(t.tags.includes('ai-visibility') && t.tags.includes('retainer') && !t.tags.includes('ingen-kommisjon-lovet'), 'ai: tagged ai-visibility and retainer');
-  ok(t.description.includes('**💼 RETAINER**\nAI Visibility: fra £1 500 i måneden'), 'ai: the retainer block');
+  ok(t.description.includes('**💼 RETAINER**\nSELG: GEO + CHATGPT-ANNONSER. AI Visibility fra £1 500 i måneden'), 'ai: the retainer block');
   ok(t.description.indexOf('RETAINER') < t.description.indexOf('**Selskap**'), 'ai: before the company');
   const lines = w.slack[0].split('\n');
-  eq(lines[1], '💼 *RETAINER* · AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon', 'ai: line 2 of the post');
+  eq(lines[1], '💼 *RETAINER* · SELG: GEO + CHATGPT-ANNONSER · fra £1 500/mnd inkl. £500 annonser, ingen kommisjon', 'ai: line 2 of the post');
   ok(w.slack[0].includes('Spesialisering: IT and technology'), 'ai: the sector is in the post');
   ok(!w.slack[0].includes('KOMMISJON LOVET'), 'ai: the open-terms line never shows on a retainer lead');
   const w2 = makeWorld();
@@ -614,7 +627,7 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
   ok(w2.slack[0].includes('⚠ Juss: OpenAI tar ikke annonser for juridiske tjenester'), 'ai: the legal flag');
   const w3 = makeWorld();
   await run(w3, withLead({ ...ai, route: 'not_a_fit', route_reason: 'turnover_below_1m', turnover_band: 'Under £1m', lead_id: 'l_ai_0003', email: 'ai3@example.invalid', slack_test: true }));
-  eq(w3.slack[0].split('\n')[1], '💼 *RETAINER* · AI Visibility fra £1 500/mnd inkl. £500 ChatGPT-annonser, ingen kommisjon', 'ai: in the not-a-fit post too');
+  eq(w3.slack[0].split('\n')[1], '💼 *RETAINER* · SELG: GEO + CHATGPT-ANNONSER · fra £1 500/mnd inkl. £500 annonser, ingen kommisjon', 'ai: in the not-a-fit post too');
   ok(w3.slack[0].includes('Grunn: omsetning under £1m'), 'ai: the reason');
   console.log('19 ok');
 }
@@ -730,7 +743,7 @@ const press = (o = {}) => withLead({ ...naf, event: 'website_interest', interest
   }
   // k) every campaign has its reminders, in its own words; the second delivery of a lead starts no second round
   {
-    const camp = { 'uk-private-hospitals': ['30-minute bookings review', 'sh@elevatemarketing.no'], 'uk-law-firms': ['30 minute instruction review', 'sh@elevatemarketing.no'], 'uk-ai-visibility': ['30 minute AI visibility review', 'sh@elevatemarketing.no'] };
+    const camp = { 'uk-private-hospitals': ['30-minute bookings review', 'sh@elevatemarketing.no'], 'uk-law-firms': ['30 minute instruction review', 'sh@elevatemarketing.no'], 'uk-ai-visibility': ['30 minute AI visibility review', 'sh@elevatemarketing.no'], 'uk-geo': ['30 minute AI visibility review', 'sh@elevatemarketing.no'] };
     for (const [campaign, [offer, replyTo]] of Object.entries(camp)) {
       const w = makeWorld({ reminders: true });
       await run(w, real({ lead_id: 'l_rem_k_' + campaign.length, campaign, page_slug: campaign, specialism: '', marketing_spend: '', first_year_value: '', employees_or_fee_earners: '' }));

@@ -1,0 +1,60 @@
+{
+  "_comment": "Everything in this funnel that is a setting rather than copy. Built 28 Nov 2026 for GEO alone on a fixed monthly price, as a copy of g/uk-ai-visibility (which sells GEO with ChatGPT ads and stays as it is). Read g/uk-geo/LAUNCH.md before changing anything here. Nothing on these pages may describe commission.",
+  "slug": "uk-geo",
+  "campaign": "uk-geo",
+  "path": "/g/uk-geo",
+  "_path": "The address the funnel is served at. The build checks it against the redirect and header rules in netlify.toml.",
+  "origin": "https://getelevateleads.com",
+  "live": true,
+  "_live": "True since 28 Nov 2026: Zap 1 version 01a222a6-b255-7007-b866-cd2eafaefc9d knows the campaign, and a draft run with a test lead made a task tagged geo-alone in the shared list.",
+  "variables": {
+    "THRESHOLD": "£1m",
+    "OFFER": "30 minute AI visibility review",
+    "WORTH": "£1,000"
+  },
+  "links": {
+    "privacy": "/g/uk-geo/privacy/",
+    "terms": "/g/uk-geo/terms/"
+  },
+  "legal": {
+    "registerCheck": false,
+    "_registerCheck": "As the law funnel: true only in the same change that sets COMPANIES_HOUSE_API_KEY in production."
+  },
+  "contact": {
+    "email": "post@elevatemarketing.no"
+  },
+  "funnel": {
+    "pixelId": "1466790598245604",
+    "applyPath": "/api/lead",
+    "viewEvent": "ViewContent",
+    "qualifiedEvent": "QualifiedForm",
+    "calendlyUrl": "https://calendly.com/sh-elevatemarketing/elevate-marketing-ai-visibility-30-minute-review",
+    "_calendlyUrl": "The event of /g/uk-ai-visibility (2b6f4168-ecb4-45a4-b565-aadb51fe96ce, owned by Sondre), shared on purpose: the same host, the same meeting. An own event could not be made under Sondre's user through the API on 28 Nov 2026. Zap 2 therefore reads a booking from this page as campaign uk-ai-visibility; the task is still found by its lead_id, in the same list, and keeps the tag geo-alone that Zap 1 gave it.",
+    "calendlyLeadParam": "utm_content",
+    "bookingHeights": {
+      "narrow": 1150,
+      "medium": 1000,
+      "wide": 700
+    }
+  },
+  "hiddenFields": [
+    "campaign",
+    "page_slug",
+    "lead_id",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "utm_term",
+    "fbclid",
+    "referrer",
+    "consent",
+    "fbp",
+    "fbc"
+  ],
+  "honeypot": "contact_by_fax",
+  "clickup": {
+    "listId": "1201270000005380",
+    "_comment": "AI VISIBILITY - UK - Retainer, shared with /g/uk-ai-visibility. Leads from this page carry the tags geo-alone and retainer; the others carry ai-visibility and retainer."
+  }
+}
