@@ -407,7 +407,7 @@ function recordsTable(r) {
     `<tr class="tg"><th scope="colgroup" colspan="${r.columns.length}">${esc(g.title)}${g.sub ? ` <span class="tg-sub">${esc(g.sub)}</span>` : ''}</th></tr>` +
     g.rows.map((row) => `<tr${row.key ? ' class="is-key"' : ''}>${row.c.map((c, i) => i === 0 ? `<th scope="row">${esc(c)}</th>` : `<td>${esc(c)}</td>`).join('')}</tr>`).join('')).join('');
   return `<details class="dd"><summary class="dd-s">${esc(r.button)}</summary>
-            <div class="mt mt--data mt--records"><table><caption class="mt-cap">${esc(r.tableTitle)}</caption><thead><tr>${r.columns.map((c) => `<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${groups}</tbody></table></div>
+            <div class="mt mt--data mt--records${r.compact ? ' mt--compact' : ''}"><table><caption class="mt-cap">${esc(r.tableTitle)}</caption><thead><tr>${r.columns.map((c) => `<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${groups}</tbody></table></div>
             <ul class="notes">${r.notes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
           </details>`;
 }

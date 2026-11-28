@@ -1,74 +1,168 @@
 {
-  "_comment": "Page copy for /g/uk-ai-visibility, written 6 Nov 2026 from the owner's decisions of that day: a retainer from £1,500 a month with £500 of ChatGPT ad spend included, month to month, 30 days' notice, a named contact and a monthly status report; no guarantee; UK companies with £1m or more in turnover. The case is C-Medical, named with its written consent. Figures: AI assistant bookings are booking_completed in the group's Google Analytics (property 419601371) by month, all AI sources, paid and unpaid together, because the ChatGPT ads carried no utm tags until 6 Nov 2026 and some ad clicks are therefore inside the count. The ad figures (NOK 10,000, 420 clicks, 12 bookings, the 30 days to 6 Nov 2026) are the owner's, from OpenAI's ads manager, at NOK 12.5148 to the pound. The two are shown side by side and never added. Market figures: Which?, December 2025 (Yonder, 4,189 UK adults, 10 to 14 Sept 2025); OpenAI's head of ChatGPT, February 2026; OpenAI Ads Manager open to UK advertisers from 22 June 2026. The build refuses dashes, exclamation marks and American spellings. Nothing here may describe commission.",
-  "layout": ["hero", "strip", "search", "tenone", "how", "fit", "pay", "keep", "measure", "meeting", "faq", "form"],
+  "_comment": "Page copy for /g/uk-ai-visibility. Rewritten 28 Nov 2026 as GEO alone at a fixed monthly price: the ChatGPT ads and the £500 of ad spend are out of the package, because OpenAI's ads manager (read 28 Nov 2026) shows that the one campaign has never served or spent, so the ad figures on the earlier page (£67 a booking, 420 clicks, £799) had no source. The price (from £1,500 a month) is unchanged until the owner sets a new one. The case is a Norwegian private clinic group and is not named: the owner's rule of 27 Nov 2026 is that every client is anonymous in marketing. Figures: AI assistant bookings are booking_completed in the group's Google Analytics (property 419601371), Norwegian pages, all AI sources: Sept to 27 Nov 2026 is 8 + 10 + 17 = 35, Sept to Nov 2025 is 2 + 0 + 1 = 3. The measurement is Search Atlas analysis ff77201a, run 28 Nov 2026: 20 Norwegian questions without the clinic's name, put to ChatGPT, Gemini and Google AI Mode; named in 42 of 58 answers (ChatGPT 13 of 18, two answers came back empty; Gemini 14 of 20; AI Mode 15 of 20), in at least one answer on 18 of 20 questions. It is one run with no earlier measurement, so the page never says 'from x% to 72%'. A new website launched in August 2026, the month the rise began, and the page says the two cannot be separated. Market figures: Which?, December 2025 (Yonder, 4,189 UK adults, 10 to 14 Sept 2025); OpenAI's head of ChatGPT, February 2026. The build refuses dashes, exclamation marks and American spellings. Nothing here may describe commission.",
+  "layout": [
+    "hero",
+    "strip",
+    "records",
+    "search",
+    "tenone",
+    "how",
+    "fit",
+    "pay",
+    "keep",
+    "measure",
+    "meeting",
+    "faq",
+    "form"
+  ],
   "meta": {
     "title": "AI visibility for UK companies | Elevate Marketing",
-    "description": "Be named when your buyers ask ChatGPT. Content, mentions and ChatGPT ads from £1,500 a month, ad spend included, month to month."
+    "description": "Be named when your buyers ask ChatGPT, Gemini or Google's AI Mode. Content, mentions and a monthly measurement from £1,500 a month, month to month."
   },
   "topline": "For UK companies with {THRESHOLD}+ turnover",
   "cta": "See whether we would take you on",
   "hero": {
     "h1a": "Your buyers ask ChatGPT now.",
-    "h1b": "We make sure it names you.",
+    "h1b": "We work to get you named.",
     "ingress": [
-      { "t": "Half of UK adults already use AI tools to look for products, services and advice. For a Norwegian private clinic group we wrote the content and ran the ChatGPT ads that put it in those answers. Bookings from AI assistants went from ", "cls": "" },
-      { "t": "about one a month to ten in October", "cls": "em" },
-      { "t": ".", "cls": "" }
+      {
+        "t": "Half of UK adults already use AI tools to look for products, services and advice. For a Norwegian private clinic group we worked on the site, the content and the mentions those tools read. Bookings from AI assistants went from ",
+        "cls": ""
+      },
+      {
+        "t": "3 in autumn 2025 to 35 in autumn 2026",
+        "cls": "em"
+      },
+      {
+        "t": ".",
+        "cls": ""
+      }
     ],
-    "micro": "From £1,500 a month, ChatGPT ad spend included. Month to month.",
-    "cta2": { "t": "See the numbers", "href": "#strip" },
+    "micro": "From £1,500 a month. Month to month. No guarantee of a position.",
+    "cta2": {
+      "t": "See the numbers",
+      "href": "#strip"
+    },
     "panel": {
-      "title": "C-Medical, ChatGPT",
-      "total": { "value": "£67", "label": "per booking from ChatGPT ads, the last 30 days" },
+      "title": "A Norwegian clinic group, AI search",
+      "total": {
+        "value": "35",
+        "label": "bookings from AI assistants, September to 27 November 2026"
+      },
       "rows": [
-        { "n": "1", "name": "Ad spend, 30 days", "value": "£799", "sr": "NOK 10,000" },
-        { "n": "2", "name": "Clicks from ChatGPT ads", "value": "420" },
-        { "n": "3", "name": "Bookings from ChatGPT ads", "value": "12" },
-        { "n": "4", "name": "Bookings from AI assistants, October 2026", "value": "10", "sr": "against none in October 2025" }
+        {
+          "n": "1",
+          "name": "The same months of 2025",
+          "value": "3"
+        },
+        {
+          "n": "2",
+          "name": "AI answers that name the clinic",
+          "value": "42",
+          "sr": "of 58"
+        },
+        {
+          "n": "3",
+          "name": "Patient questions asked, none naming the clinic",
+          "value": "20"
+        },
+        {
+          "n": "4",
+          "name": "AI tools asked",
+          "value": "3",
+          "sr": "ChatGPT, Gemini, Google AI Mode"
+        }
       ],
-      "foot": "Ad figures from OpenAI's ads manager, the 30 days to 5 November 2026, at NOK 12.5148 to the pound. AI assistant bookings counted in the group's Google Analytics, paid and unpaid together. Shown side by side, never added up."
+      "foot": "Bookings are online bookings counted in the group's own Google Analytics, all AI sources. The answers were collected on 28 November 2026, one run. AI answers change from one day to the next."
     }
   },
   "strip": {
     "h2": "One clinic group, AI search, 2026",
     "items": [
-      { "value": "18", "label": "bookings from AI assistants in September and October 2026, against 2 in the same months of 2025" },
-      { "value": "£67", "label": "per booking from ChatGPT ads over the last 30 days: 12 bookings from 420 clicks" },
-      { "value": "240", "label": "visits from AI assistants in October 2026, the most in any month so far, up 34% on October 2025" }
+      {
+        "value": "35",
+        "label": "bookings from AI assistants from September to 27 November 2026, against 3 in September to November 2025"
+      },
+      {
+        "value": "72%",
+        "label": "of AI answers named the clinic: 42 of 58 answers to 20 patient questions that do not mention it"
+      },
+      {
+        "value": "18 of 20",
+        "label": "questions where at least one of ChatGPT, Gemini and Google AI Mode named the clinic"
+      }
     ],
-    "tail": "C-Medical is a private clinic group in Oslo. From February 2026 we worked on its site for search and AI assistants: around 30 articles, about 150 page titles and descriptions, a new website in August, mentions on the third-party sites AI tools read, and ChatGPT ads. Bookings are online bookings counted in Google Analytics."
+    "tail": "The client is a private clinic group in Norway with several sites. From February 2026 we worked on its site for search and AI assistants: around 30 articles, about 150 page titles and descriptions, and mentions on the third-party sites AI tools read. A new website went live in August 2026, the month the rise began, and we cannot separate its effect from the rest of the work. AI assistants did send a few visitors before we started, so this is from barely visible, not from nothing."
   },
   "search": {
     "theme": "dark",
     "h2": "Why now",
     "intro": "Google is not going away. But a growing share of buying questions now start in an AI assistant, and the answer names two or three companies, not ten links.",
     "items": [
-      { "value": "51%", "label": "of UK adults use AI search tools to look for products, services and advice" },
-      { "value": "24%", "label": "use them daily or a few times a week. Search engines are still used that often by 82%: this is a second front door, not a replacement" },
-      { "value": "900m", "label": "people use ChatGPT every week" },
-      { "value": "£0", "label": "minimum spend for ChatGPT ads, open to UK advertisers since June 2026" }
+      {
+        "value": "51%",
+        "label": "of UK adults use AI search tools to look for products, services and advice"
+      },
+      {
+        "value": "24%",
+        "label": "use them daily or a few times a week. Search engines are still used that often by 82%: this is a second front door, not a replacement"
+      },
+      {
+        "value": "900m",
+        "label": "people use ChatGPT every week"
+      }
     ],
-    "note": "Sources: Which?, Consumer use and attitudes towards AI search tools, December 2025 (4,189 UK adults, September 2025). OpenAI, head of ChatGPT, February 2026. OpenAI Ads Manager, open to UK advertisers from 22 June 2026."
+    "note": "Sources: Which?, Consumer use and attitudes towards AI search tools, December 2025 (4,189 UK adults, September 2025). OpenAI, head of ChatGPT, February 2026."
   },
   "tenone": {
     "_comment": "The ten to one module, 8 Nov 2026: the C7 ad's line drawn as a scroll story. Shown only to variant b of the test in config.json \"ab\". The names in the answer are placeholders on purpose: no real firm is shown as recommended.",
     "h2": "Search shows ten results. AI gives one answer.",
     "steps": [
-      { "k": "Search", "t": "Ten links to compare.", "p": "A Google search gives your buyer a page of links. They open a few and compare, so third or fourth place still gets looked at." },
-      { "k": "AI", "t": "One question, one answer.", "p": "The same buyer asks ChatGPT and gets a short answer that names two or three firms. That is where the shortlist starts." },
-      { "k": "You", "t": "In the answer, or not in it.", "p": "There is no second page to scroll to. Before the first call we put your buyers' questions to the AI tools and show you whether they name you." }
+      {
+        "k": "Search",
+        "t": "Ten links to compare.",
+        "p": "A Google search gives your buyer a page of links. They open a few and compare, so third or fourth place still gets looked at."
+      },
+      {
+        "k": "AI",
+        "t": "One question, one answer.",
+        "p": "The same buyer asks ChatGPT and gets a short answer that names two or three firms. That is where the shortlist starts."
+      },
+      {
+        "k": "You",
+        "t": "In the answer, or not in it.",
+        "p": "There is no second page to scroll to. Before the first call we put your buyers' questions to the AI tools and show you whether they name you."
+      }
     ],
     "list": "Search results",
-    "answer": { "label": "AI answer", "q": "Who should we talk to about this?", "lead": "The firms that come up most often:", "names": ["Firm A", "Firm B"], "you": "Your firm?" },
+    "answer": {
+      "label": "AI answer",
+      "q": "Who should we talk to about this?",
+      "lead": "The firms that come up most often:",
+      "names": [
+        "Firm A",
+        "Firm B"
+      ],
+      "you": "Your firm?"
+    },
     "note": "Illustration. AI answers change from one question, person and day to the next."
   },
   "how": {
     "h2": "What you get, every month",
-    "intro": "One package, run by one team, reported once a month. The ChatGPT ad spend is inside the price.",
+    "intro": "One package, run by one team, reported once a month.",
     "items": [
-      { "t": "Where you stand", "p": "In the first month we track 25 questions your buyers ask across ChatGPT, Gemini, Perplexity, Copilot and Google's AI answers, see who is named instead of you, and fix what stops AI tools reading your site." },
-      { "t": "Content and mentions", "p": "Every month, four pages written to answer those questions, and work to get you named on the third-party sites AI tools trust: trade directories, industry press and review sites." },
-      { "t": "ChatGPT ads", "p": "We set up and run your ChatGPT ads, with £500 a month of ad spend included, and track every enquiry they bring in." }
+      {
+        "t": "Where you stand",
+        "p": "In the first month we track 25 questions your buyers ask across ChatGPT, Gemini and Google's AI Mode, see who is named instead of you, and fix what stops AI tools reading your site."
+      },
+      {
+        "t": "Content and mentions",
+        "p": "Every month, four pages written to answer those questions, and work to get you named on the third-party sites AI tools trust: trade directories, industry press and review sites."
+      },
+      {
+        "t": "Measured every month",
+        "p": "We put the same 25 questions to the AI tools again each month and count the enquiries from AI assistants in your own analytics, so you can see whether it is working."
+      }
     ]
   },
   "fit": {
@@ -85,57 +179,106 @@
     "no": [
       "You turn over less than £1m",
       "You need results this month: being named in unpaid AI answers takes months, not days",
-      "You want ChatGPT ads for legal services, which OpenAI does not allow (law firms can still have the search work)",
       "Nobody has time to approve content"
     ],
     "note": "We confirm the details you give on the call."
   },
   "pay": {
-    "h2": "From £1,500 a month. Ad spend included.",
-    "body": "One price each month, with £500 of ChatGPT ad spend inside it. Nothing to pay up front and no long contract: the agreement runs month to month from the start, and you can stop with 30 days' notice.",
+    "h2": "From £1,500 a month. Month to month.",
+    "body": "One fixed price each month. Nothing to pay up front and no long contract: the agreement runs month to month from the start, and you can stop with 30 days' notice.",
     "open": [
-      "From £1,500 a month, excluding VAT, with £500 of ChatGPT ad spend included. A larger scope is priced on the call, in writing, before anything runs.",
+      "From £1,500 a month, excluding VAT. A larger scope is priced on the call, in writing, before anything runs.",
       "Month to month from the first day. Give 30 days' notice by email to stop.",
       "A named contact person at Elevate Marketing, who answers within one working day.",
-      "A status report every month: where you are named in AI answers and where you are not, what we published, what the ads cost and what they brought in."
+      "A status report every month: where you are named in AI answers and where you are not, what we published, and the enquiries that came from AI assistants."
     ]
   },
   "keep": {
     "h2": "What stays yours",
     "items": [
-      { "t": "Your ad account", "p": "ChatGPT ads run in an account in your company's name. If you stop, you keep it." },
-      { "t": "Your content", "p": "Every page we write is yours, on your site, approved by you before it goes live." },
-      { "t": "A straight report", "p": "If a question still names a competitor after three months, the report says so, and what we will change." }
+      {
+        "t": "Your measurements",
+        "p": "The list of 25 questions and every monthly measurement are yours. If you stop, you keep them."
+      },
+      {
+        "t": "Your content",
+        "p": "Every page we write is yours, on your site, approved by you before it goes live."
+      },
+      {
+        "t": "A straight report",
+        "p": "If a question still names a competitor after three months, the report says so, and what we will change."
+      }
     ]
   },
   "measure": {
     "h2": "What we report every month",
     "rows": [
-      { "metric": "Mentions in AI answers to your 25 questions", "status": "Against named competitors", "key": true },
-      { "metric": "Visits from AI assistants", "status": "Counted in your own analytics" },
-      { "metric": "Enquiries from AI assistants and ChatGPT ads", "status": "What we work towards", "key": true },
-      { "metric": "Cost per enquiry from ChatGPT ads", "status": "Reported, with the spend" }
+      {
+        "metric": "Mentions in AI answers to your 25 questions",
+        "status": "Against named competitors",
+        "key": true
+      },
+      {
+        "metric": "Visits from AI assistants",
+        "status": "Counted in your own analytics"
+      },
+      {
+        "metric": "Enquiries from AI assistants",
+        "status": "What we work towards",
+        "key": true
+      },
+      {
+        "metric": "Pages published and mentions gained",
+        "status": "Listed, with links"
+      }
     ]
   },
   "meeting": {
     "h2": "The first meeting: a {OFFER}",
-    "body": "We do not pitch. Before the call we put your buyers' questions to ChatGPT, Gemini and Perplexity and look at who they name.",
+    "body": "We do not pitch. Before the call we put your buyers' questions to ChatGPT, Gemini and Google's AI Mode and look at who they name.",
     "steps": [
-      { "t": "Before the call", "p": "You tell us your website and the questions your best clients ask before they buy." },
-      { "t": "On the call", "p": "We show you what the AI tools answer today, who they name instead of you, and why." },
-      { "t": "Within one working day", "p": "You receive a one page summary: where you stand, the three changes that would matter most, and what the package would cost for you." }
+      {
+        "t": "Before the call",
+        "p": "You tell us your website and the questions your best clients ask before they buy."
+      },
+      {
+        "t": "On the call",
+        "p": "We show you what the AI tools answer today, who they name instead of you, and why."
+      },
+      {
+        "t": "Within one working day",
+        "p": "You receive a one page summary: where you stand, the three changes that would matter most, and what the package would cost for you."
+      }
     ],
     "closing": "You keep the summary whether or not we work together."
   },
   "faq": {
     "h2": "Straight answers",
     "items": [
-      { "q": "Is this just SEO with a new name?", "a": "Partly. AI assistants read the same web as Google, so a site that is easy to read and well referenced helps both. What is new is that an AI answer names a few companies instead of listing ten, leans heavily on third-party sources, and now carries ads. We work on all three." },
-      { "q": "How soon will we see anything?", "a": "ChatGPT ads can bring visits in the first week. Being named in unpaid AI answers usually takes two to four months of content and mentions, and depends on how strong your competitors are." },
-      { "q": "Do you guarantee results?", "a": "No. An AI answer changes from one person and one day to the next, so nobody can honestly promise a position. We track the same questions every month, so you can see whether it is working." },
-      { "q": "Your case is a Norwegian clinic group. Why would this work for us?", "a": "ChatGPT, Gemini and Perplexity give UK and Norwegian buyers the same kind of answer, built from the same kind of sources. What differs is competition and cost per click, and we go through both on the first call." },
-      { "q": "Can law firms use this?", "a": "Yes, for the search work. OpenAI does not take ads for legal services in ChatGPT, so we agree the scope for a law firm on the call." },
-      { "q": "What if we want to stop?", "a": "Give 30 days' notice by email. You keep the content and the ad account." }
+      {
+        "q": "Is this just SEO with a new name?",
+        "a": "Partly. AI assistants read the same web as Google, so a site that is easy to read and well referenced helps both. What is new is that an AI answer names a few companies instead of listing ten, and leans heavily on third-party sources. We work on both."
+      },
+      {
+        "q": "How soon will we see anything?",
+        "a": "Expect months, not weeks. For the clinic group the work started in February 2026 and the rise in bookings came in the autumn. How long it takes for you depends on how strong your competitors are."
+      },
+      {
+        "q": "Do you guarantee results?",
+        "a": "No. An AI answer changes from one person and one day to the next, so nobody can honestly promise a position. We track the same questions every month, so you can see whether it is working."
+      },
+      {
+        "q": "Your case is a Norwegian clinic group. Why would this work for us?",
+        "a": "ChatGPT, Gemini and Google's AI Mode give UK and Norwegian buyers the same kind of answer, built from the same kind of sources. What differs is the competition, and we go through that on the first call. We have not yet measured a UK client over the same length of time, and we would rather say so."
+      },
+      {
+        "q": "Do you run ChatGPT ads as well?",
+        "a": "Not as part of this package. This is the unpaid work: being named in the answer itself."
+      },
+      {
+        "q": "What if we want to stop?",
+        "a": "Give 30 days' notice by email. You keep the content and the measurements."
+      }
     ]
   },
   "footer": {
@@ -195,5 +338,204 @@
         "privacy": "How we use your details"
       }
     }
+  },
+  "records": {
+    "h2": "The 20 questions, answer by answer.",
+    "method": [
+      {
+        "t": "What we asked.",
+        "p": "20 questions a patient might ask before choosing a private clinic. None of them contains the clinic's name. They were asked in Norwegian and are translated here, with place names taken out."
+      },
+      {
+        "t": "Who we asked.",
+        "p": "ChatGPT, Gemini and Google AI Mode, set to Norway, on 28 November 2026. Each question was asked once on each."
+      },
+      {
+        "t": "What it does not show.",
+        "p": "There is no measurement from before the work started, so this is where the clinic stands now, not how far it has moved. The bookings above are the before and after."
+      }
+    ],
+    "button": "Show all 20 questions",
+    "compact": true,
+    "tableTitle": "A Norwegian private clinic group: named or not, 28 November 2026",
+    "columns": [
+      "Question",
+      "ChatGPT",
+      "Gemini",
+      "Google AI Mode"
+    ],
+    "groups": [
+      {
+        "title": "Named in 42 of 58 answers",
+        "sub": "ChatGPT 13 of 18, Gemini 14 of 20, Google AI Mode 15 of 20",
+        "rows": [
+          {
+            "c": [
+              "Which private fertility clinic in the capital is best?",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Where can I freeze my eggs, and what does it cost?",
+              "Yes",
+              "No",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Best private gynaecologist in the capital without a referral",
+              "No",
+              "No",
+              "No"
+            ]
+          },
+          {
+            "c": [
+              "Where can I have a vasectomy done privately?",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Private urologist with a short wait",
+              "No",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Where can I get help with the menopause from a private gynaecologist?",
+              "No",
+              "No",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Which private clinics offer IVF?",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Private orthopaedic surgeon for a knee operation without a long wait",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Where can I have a semen analysis done privately?",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Where can I have a prostate check done privately?",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Where can I have a sterilisation reversed?",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Private clinic for an endometriosis assessment",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Where can I have an early pregnancy scan privately?",
+              "No answer",
+              "No",
+              "No"
+            ]
+          },
+          {
+            "c": [
+              "Which private clinic is recommended for a fertility assessment?",
+              "No",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Private gynaecologist in a named suburb",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Where can I have a tight foreskin operated on privately?",
+              "No",
+              "Yes",
+              "No"
+            ]
+          },
+          {
+            "c": [
+              "Private hip operation without a wait",
+              "No answer",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Which clinic is best for assisted conception for single women?",
+              "Yes",
+              "No",
+              "No"
+            ]
+          },
+          {
+            "c": [
+              "Private rheumatologist in the capital",
+              "Yes",
+              "Yes",
+              "Yes"
+            ]
+          },
+          {
+            "c": [
+              "Recommended private clinic for urinary incontinence in women",
+              "Yes",
+              "No",
+              "No"
+            ]
+          }
+        ]
+      }
+    ],
+    "notes": [
+      "Yes means the clinic's name appears in the answer text. A link in the sources alone does not count.",
+      "ChatGPT returned no answer to two questions. They are left out of the count, which is why the total is 58 and not 60.",
+      "AI answers change from one person and one day to the next. This is one run, and a second run would not give exactly the same table."
+    ]
   }
 }

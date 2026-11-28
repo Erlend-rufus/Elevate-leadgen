@@ -2,7 +2,7 @@
 
 The AI visibility retainer for UK companies with £1m or more in turnover, any sector: GEO (content, technical
 fixes and third-party mentions so that ChatGPT, Gemini, Perplexity, Copilot and Google's AI answers name the
-company) and ChatGPT ads. Built 6 Nov 2026 on the framework of `/g/uk-it-growth` (read `g/uk-it-growth/LAUNCH.md`
+company). Built 6 Nov 2026 with ChatGPT ads in the package; since 28 Nov 2026 it is GEO alone (section 1). Built on the framework of `/g/uk-it-growth` (read `g/uk-it-growth/LAUNCH.md`
 first: the endpoint, storage, delivery, alerts, Meta and the daily check are the same code). This file says what is
 different.
 
@@ -11,9 +11,14 @@ npm run build          # or: node scripts/build-g-growth.mjs
 npm run test:g-growth  # g/uk-ai-visibility/test/funnel.test.mjs is in it
 ```
 
-## 1. The offer (owner, 6 Nov 2026)
+## 1. The offer (owner, 6 Nov 2026; GEO alone from 28 Nov 2026)
 
-- From £1,500 a month, with £500 of ChatGPT ad spend included. A larger scope is priced on the call.
+- From £1,500 a month. A larger scope is priced on the call. Until 28 Nov 2026 the price included £500 of ChatGPT
+  ad spend and the running of the ads. They came out when OpenAI's ads manager (one account, one campaign, started
+  21 Oct 2026) showed no impressions, clicks, spend or payments, so there was nothing to show for them. The price
+  itself was not changed in that rewrite: the owner sets a new one if he wants one.
+- The measurement covers ChatGPT, Gemini and Google's AI Mode, the three the tool we use (Search Atlas) can ask.
+  The page no longer names Perplexity or Copilot.
 - Month to month from the start, 30 days' notice. A named contact (Sondre). A status report every month.
 - No guarantee of any kind. The owner dropped the first idea (traffic and rankings on 10 keywords in 3 months or the
   money back) on 6 Nov 2026 because a position in an AI answer cannot be measured the same way twice.
@@ -32,23 +37,23 @@ npm run test:g-growth  # g/uk-ai-visibility/test/funnel.test.mjs is in it
 | Register | off, as the law funnel. |
 | ClickUp | `AI VISIBILITY - UK - Retainer` (1201270000005380), CRM folder, statuses of the health and law lists, the shared fields. Tags `ai-visibility` and `retainer`. |
 | Calendly | `https://calendly.com/sh-elevatemarketing/elevate-marketing-ai-visibility-30-minute-review`, event type `2b6f4168-ecb4-45a4-b565-aadb51fe96ce`, owned by Sondre. He is the host of every meeting and takes first meetings alone (owner's rule, 8 Nov 2026: Sondre hosts for the UK and the rest of the world except Italy, where Aurora does). The first event, `f1f1d78a-9b14-435d-8de6-3472da1df542` on the organisation account, was replaced on 8 Nov 2026. It stays in Zap 2's `eventTypes` so that a cancellation or a reschedule of a booking made on it (one, Wed 11 Nov 2026 at 10:00 Oslo time) still finds its lead; it can come out once that meeting is over. |
-| Case | C-Medical, named with its written consent. AI assistant bookings by month from GA4 `booking_completed` (all AI sources, paid and unpaid together: the ChatGPT ads had no utm tags before 6 Nov 2026, so ad clicks are likely inside the count). ChatGPT ads figures are the owner's, from OpenAI's ads manager. The two are shown side by side and never added. |
+| Case | A Norwegian private clinic group, not named (owner's rule of 27 Nov 2026: every client is anonymous in marketing). Bookings from AI assistants are GA4 `booking_completed`, Norwegian pages, all AI sources: 35 from Sept to 27 Nov 2026 against 3 in Sept to Nov 2025. The 20 question table is Search Atlas analysis `ff77201a-04b2-4fc9-a931-9068a0d96863`, one run on 28 Nov 2026: named in 42 of 58 answers. There is no earlier run, so the page never says how far the share has moved. The page says that a new website went live in August 2026 and that its effect cannot be separated from the rest. Never write "from nothing": AI assistants sent 83 visits to Norwegian topic pages in Feb to Nov 2025. |
 | Ads | Meta, `LEADS / UK / AI_VISIBILITY`, NOK 715 a day for 7 days (NOK 5,000), created paused. Success after one week: 2 booked meetings with companies that fit; a signed client is judged after 30 days. |
 
 ## 3. Before the next update of the figures
 
-- Tag the C-Medical ChatGPT ads with `utm_source=chatgpt_ads`, so paid and unpaid can be told apart.
-- The Search Atlas LLM Visibility project `cmedical.no` exists but tracks nothing: the plan has two tracked slots,
-  both in use. The owner buys a third (6 Nov 2026); then add the topics and queries.
+- November 2026 is counted to the 27th. When the month is over, update 35 and the three places it stands
+  (hero, panel, strip), and the dates beside it.
+- Run the same 20 questions again before quoting a change in the 72%. One run against one run is still thin:
+  say what was measured and when.
+- The Search Atlas LLM Visibility project `cmedical.no` exists but tracks nothing, and its prompts are English.
+  Both tracked slots are in use. When one is free, track the 20 Norwegian questions so that there is a series.
+- If ChatGPT ads are ever run for a client, tag them `utm_source=chatgpt&utm_medium=cpc` from the first click.
+  The figures on the page before 28 Nov 2026 (£67 a booking, 420 clicks, £799) could not be traced to the ads
+  manager and must not come back without a source.
+- Stop rule for the ads to this page (28 Nov 2026): no signed client after 10 meetings held, counting those of the
+  first round, means the offer or the meeting is the problem. Stop the ads then, do not only change the creatives.
+- The routing flags `legal_no_chatgpt_ads` and `health_ads_check` are still sent. They no longer mean anything
+  for the offer, and are left in because the Zap and the tests read them.
 - Reddit and other community posts for UK clients must say who is posting (Reddit's rules, and hidden advertising
   under the DMCC Act 2024). Nothing about them goes on the page.
-
-## A/B test: ten to one (from 8 Nov 2026)
-
-Variant b shows the module "Search shows ten results. AI gives one answer." after "Why now"; variant a is the page as before. Settings in `config.json` "ab", copy in `copy.json` "tenone", styles in `@section tenone` of `g/_growth/style.css`, events in `g/_growth/js/ab.js`.
-
-- 50/50 per visit, drawn in the head, kept in sessionStorage for the session. No script: variant a.
-- `?ab=a` or `?ab=b` forces a variant for checking. Forced views are sent with `forced: 1`; leave them out when reading.
-- Meta custom events, after Accept only: `AbView`, `AbFormReach`, `AbFormStart`, `AbQualified`, each with `test` and `variant`.
-- Main measure: `AbFormStart` per `AbView`, by variant. Guard: `AbQualified` per `AbView` must not fall in b.
-- Decide on a number of views fixed beforehand, not when the figures look good. End the test by removing "ab" and either the module or the `data-ab-only` gate.

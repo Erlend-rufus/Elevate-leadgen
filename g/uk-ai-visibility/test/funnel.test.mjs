@@ -111,6 +111,26 @@ test('ai pages: built, noindex, the price is on the page, commission is nowhere'
   assert.match(readFileSync(join(dir, 'book', 'index.html'), 'utf8'), /elevate-marketing-ai-visibility-30-minute-review/);
 });
 
+test('ai pages: GEO alone since 28 Nov 2026, the client is not named, no ad figure without a source', () => {
+  const dir = join(ROOT, 'public', 'g', 'uk-ai-visibility');
+  for (const p of ['index.html', 'book/index.html', 'takk/index.html', 'review/index.html', 'not-a-fit/index.html']) {
+    const t = visible(readFileSync(join(dir, p), 'utf8'));
+    assert.ok(!/c-?medical/i.test(t), p + ' does not name the client (owner, 27 Nov 2026)');
+    assert.ok(!/£67|£799|\b420 clicks|ad spend/i.test(t), p + ' carries no ChatGPT ad figure and no ad spend');
+  }
+  const t = visible(readFileSync(join(dir, 'index.html'), 'utf8'));
+  assert.match(t, /42 of 58 answers/);
+  assert.match(t, /against 3 in September to November 2025/);
+  assert.match(t, /cannot separate its effect/, 'the new website of August 2026 is named as something we cannot separate out');
+  assert.ok(!/from nothing to|from zero/i.test(t), 'never "from nothing": AI assistants sent visits before the work started');
+  const copy = JSON.parse(readFileSync(join(ROOT, 'g', 'uk-ai-visibility', 'copy.json'), 'utf8'));
+  const rows = copy.records.groups[0].rows.map((r) => r.c);
+  assert.equal(rows.length, 20);
+  const yes = [1, 2, 3].map((i) => rows.filter((r) => r[i] === 'Yes').length);
+  assert.deepEqual(yes, [13, 14, 15], 'the table adds up to the 42 the page states');
+  assert.equal(rows.filter((r) => r.includes('No answer')).length, 2, '58 answers, not 60');
+});
+
 test('ai ab test: the ten to one module is variant b only, hidden without a script, events wired', () => {
   const html = readFileSync(join(ROOT, 'public', 'g', 'uk-ai-visibility', 'index.html'), 'utf8');
   assert.match(html, /<section data-ab-only="b" class="sec t1" id="tenone"/);
