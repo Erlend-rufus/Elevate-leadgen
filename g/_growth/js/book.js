@@ -48,7 +48,9 @@ function initBook() {
     if (e.data && e.data.event === 'calendly.event_scheduled') {
       var out = { lead_id: leadId };
       UTM_KEYS.forEach(function (k) { if (q[k]) out[k] = q[k]; });
-      location.href = CFG.takkPath + '?' + qs(out);
+      var go = function () { location.href = CFG.takkPath + '?' + qs(out); };
+      if (CFG.gadsBooked && Consent && Consent.gadsConversion) Consent.gadsConversion(CFG.gadsBooked, leadId ? leadId + '-booked' : '', go);
+      else go();
     }
   });
 

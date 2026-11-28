@@ -688,7 +688,7 @@ const html = `<!DOCTYPE html>
 <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 <style>${CSS}</style>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
-<script src="/js/consent.js?v=5" data-pixel="1466790598245604" data-banner="off" data-track="ViewContent"></script>
+<script src="/js/consent.js?v=6" data-pixel="1466790598245604" data-banner="off" data-track="ViewContent"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>

@@ -269,7 +269,8 @@ export const funnels = {
     "qualifiedEvent": "QualifiedForm",
     "googleAds": {
      "id": "AW-11161185005",
-     "label": "-0Q-CMSqisEdEO3ViMop"
+     "label": "-0Q-CMSqisEdEO3ViMop",
+     "bookedLabel": "ZgLnCLKTh8EdEO3ViMop"
     },
     "calendlyUrl": "https://calendly.com/eb-growwithelevate/elevate-marketing-law-30-minute-google-ads-review",
     "calendlyLeadParam": "utm_content",

@@ -165,6 +165,16 @@
     pageView: function () {
       if (loaded && window.fbq) window.fbq('track', 'PageView');
     },
+    /** A Google Ads conversion other than the qualified event (data-gads), e.g. a booked meeting.
+     *  Sent only after Accept and only when the page loaded the Google tag. cb always runs, at once
+     *  when nothing is sent, so a caller can wait on it before navigating. */
+    gadsConversion: function (sendTo, transactionId, cb) {
+      var done = false;
+      var finish = function () { if (!done) { done = true; if (cb) cb(); } };
+      if (!GADS || !loaded || !window.gtag || !/^AW-\d+\/[A-Za-z0-9_-]+$/.test(sendTo || '')) { finish(); return; }
+      window.gtag('event', 'conversion', { send_to: sendTo, transaction_id: transactionId || '', event_callback: finish });
+      setTimeout(finish, 800);
+    },
     accept: function () { choose('accepted'); },
     decline: function () { choose('declined'); },
     status: read
