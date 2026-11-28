@@ -189,7 +189,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 @media print{.cb{display:none}}
 </style>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
-<script src="/js/consent.js?v=5" data-pixel="1466790598245604" data-banner="off"></script>
+<script src="/js/consent.js?v=6" data-pixel="1466790598245604" data-banner="off"></script>
 </head>
 <body>
 <div class="o"><div class="o-in em-fluid o--book">
@@ -393,7 +393,9 @@ function initBook() {
     if (e.data && e.data.event === 'calendly.event_scheduled') {
       var out = { lead_id: leadId };
       UTM_KEYS.forEach(function (k) { if (q[k]) out[k] = q[k]; });
-      location.href = CFG.takkPath + '?' + qs(out);
+      var go = function () { location.href = CFG.takkPath + '?' + qs(out); };
+      if (CFG.gadsBooked && Consent && Consent.gadsConversion) Consent.gadsConversion(CFG.gadsBooked, leadId ? leadId + '-booked' : '', go);
+      else go();
     }
   });
 

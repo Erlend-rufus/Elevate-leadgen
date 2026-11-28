@@ -470,7 +470,7 @@ should be on for both Zaps.
   function sets its own path in code; Netlify matches functions with their own path before redirects,
   so the redirect rule is only a fallback. No `method` is set on that path on purpose: a `GET` has to
   reach the function and get a 405, not fall through to the home page.
-- **`consent.js?v=5`.** The new pages load the consent script with `?v=4`. About 35 older pages keep
+- **`consent.js?v=6`.** The new pages load the consent script with `?v=4`. About 35 older pages keep
   `?v=3` deliberately: the change to the script is additive, the file revalidates on every visit, and
   those pages were not touched.
 - Generated output is committed (`public/g/uk-it-growth/**`, `netlify/functions/lead/data.generated.mjs`).

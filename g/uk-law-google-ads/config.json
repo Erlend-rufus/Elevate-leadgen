@@ -30,7 +30,7 @@
     "applyPath": "/api/lead",
     "viewEvent": "ViewContent",
     "qualifiedEvent": "QualifiedForm",
-    "googleAds": { "id": "AW-11161185005", "label": "-0Q-CMSqisEdEO3ViMop", "_comment": "Aspiria account 635-846-6803, conversion «EM UK fastpris - kvalifisert skjema». Fires with the Meta qualified event, after Accept." },
+    "googleAds": { "id": "AW-11161185005", "label": "-0Q-CMSqisEdEO3ViMop", "bookedLabel": "ZgLnCLKTh8EdEO3ViMop", "_comment": "Aspiria account 635-846-6803, conversion «EM UK fastpris - kvalifisert skjema». Fires with the Meta qualified event, after Accept." },
     "_qualifiedEvent": "A custom event, never the standard Lead. Fires on /book and /review only, with eventID = lead_id, and only after the visitor has accepted. The server sends the same event with the same id (Conversions API), so Meta counts it once.",
     "calendlyUrl": "https://calendly.com/eb-growwithelevate/elevate-marketing-law-30-minute-google-ads-review",
     "_calendlyUrl": "The event URL with no query string, from Calendly: Share, Add to website, Inline embed. Empty is allowed only while live is false. The booking page adds name, email and utm parameters itself, with lead_id in utm_content. Calendly's own redirect after booking must stay off: the page forwards to /takk itself.",
