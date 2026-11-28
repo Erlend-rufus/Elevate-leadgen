@@ -165,7 +165,8 @@ const CAMPAIGNS: Record<string, Campaign> = {
       crmItemType: "0b565b82-9090-45fa-8bf9-67f2a7d2eca3", // Lead
       salesStage: "819060db-e6c9-43ab-a7f9-be1322061f3f", // Lead Qualification
     },
-  },  // Google Ads on a fixed fee for UK service businesses (27 Nov 2026). Shares the law list, own tag.
+  },
+  // Google Ads on a fixed fee for UK service businesses (27 Nov 2026). Shares the law list, own tag.
   "uk-google-ads": {
     label: "UK SERVICE · GOOGLE ADS (fixed fee, no commission)",
     listId: "1201270000003579", // LAW - UK - Commission
