@@ -214,7 +214,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 @media print{.lg-btn{display:none}}
 </style>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
-<script src="/js/consent.js?v=4" data-pixel="1466790598245604" data-banner="off"></script>
+<script src="/js/consent.js?v=5" data-pixel="1466790598245604" data-banner="off"></script>
 </head>
 <body>
 <div class="o"><div class="o-in em-fluid">
@@ -345,7 +345,7 @@ function readQuery() {
   var out = {};
   try {
     var q = new URLSearchParams(location.search);
-    ['lead_id', 'fbclid'].concat(UTM_KEYS).forEach(function (k) {
+    ['lead_id', 'fbclid', 'gclid'].concat(UTM_KEYS).forEach(function (k) {
       var v = q.get(k);
       if (v) out[k] = v;
     });

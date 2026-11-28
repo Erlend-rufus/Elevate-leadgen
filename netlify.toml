@@ -222,6 +222,28 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
+# /g/uk-law-google-ads (27 Nov 2026): Google Ads fixed fee for law firms. Paid traffic only.
+[[headers]]
+  for = "/g/uk-law-google-ads"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-law-google-ads/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# /g/uk-google-ads (27 Nov 2026): Google Ads fixed fee for UK service businesses. Paid traffic only.
+[[headers]]
+  for = "/g/uk-google-ads"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/g/uk-google-ads/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # /g/it-ict-growth: Italy, IT and ICT firms. Same as /g/uk-it-growth, paid traffic only.
 [[headers]]
   for = "/g/it-ict-growth"
@@ -252,6 +274,11 @@
 # indexable. Each page also carries a robots meta; this is defence in depth.
 [[headers]]
   for = "/case/what-a-client-costs/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/kontoleie/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
@@ -639,6 +666,88 @@
   to = "/g/uk-law-firms/terms/index.html"
   status = 200
 
+# /g/uk-law-google-ads (27 Nov 2026): the same eight pages, built by scripts/build-g-growth.mjs.
+[[redirects]]
+  from = "/g/uk-law-google-ads"
+  to = "/g/uk-law-google-ads/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-google-ads/book"
+  to = "/g/uk-law-google-ads/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-google-ads/takk"
+  to = "/g/uk-law-google-ads/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-google-ads/review"
+  to = "/g/uk-law-google-ads/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-google-ads/not-now"
+  to = "/g/uk-law-google-ads/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-google-ads/not-a-fit"
+  to = "/g/uk-law-google-ads/not-a-fit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-google-ads/privacy"
+  to = "/g/uk-law-google-ads/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-law-google-ads/terms"
+  to = "/g/uk-law-google-ads/terms/index.html"
+  status = 200
+
+# /g/uk-google-ads (27 Nov 2026): the same eight pages, built by scripts/build-g-growth.mjs.
+[[redirects]]
+  from = "/g/uk-google-ads"
+  to = "/g/uk-google-ads/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-google-ads/book"
+  to = "/g/uk-google-ads/book/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-google-ads/takk"
+  to = "/g/uk-google-ads/takk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-google-ads/review"
+  to = "/g/uk-google-ads/review/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-google-ads/not-now"
+  to = "/g/uk-google-ads/not-now/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-google-ads/not-a-fit"
+  to = "/g/uk-google-ads/not-a-fit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-google-ads/privacy"
+  to = "/g/uk-google-ads/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/g/uk-google-ads/terms"
+  to = "/g/uk-google-ads/terms/index.html"
+  status = 200
+
 # /g/uk-ai-visibility (6 Nov 2026): the same eight pages as /g/uk-it-growth, built by scripts/build-g-growth.mjs.
 [[redirects]]
   from = "/g/uk-ai-visibility"
@@ -824,6 +933,12 @@
   from = "/etter-signering/*"
   to = "/404.html"
   status = 404
+
+# Meta ad account rental terms (Norwegian, sent by link only). Not indexed.
+[[redirects]]
+  from = "/kontoleie"
+  to = "/kontoleie/index.html"
+  status = 200
 
 # Legacy landing page (moved from / to /lp): unknown /lp/* paths serve it
 [[redirects]]

@@ -41,7 +41,7 @@ const SHARED = join(G, '_growth');
 const OUT = process.env.G_GROWTH_OUT || join(root, 'public', 'g');
 const FUNCTION_DATA = process.env.G_GROWTH_FUNCTION_DATA || join(root, 'netlify', 'functions', 'lead', 'data.generated.mjs');
 
-const FUNNELS = ['uk-it-growth', 'uk-private-hospitals', 'uk-law-firms', 'it-ict-growth', 'uk-ai-visibility'];
+const FUNNELS = ['uk-it-growth', 'uk-private-hospitals', 'uk-law-firms', 'uk-law-google-ads', 'uk-google-ads', 'it-ict-growth', 'uk-ai-visibility'];
 
 /* What a funnel says about its own language. The UK funnels have no "locale" in config.json and get this, so their
    output is exactly what it was before Italy: lang en-GB, UK number format, the English rule set. A funnel may
@@ -159,9 +159,15 @@ const BANNED_IT = [
   [/risultati garantiti|garantiamo (i |dei |il |un )?(risultat|ritorn|vendit|contratt)/i, 'a promise of results'],
 ];
 const BANNED_BY_RULES = { en: BANNED_ALL.concat(BANNED_EN), it: BANNED_ALL.concat(BANNED_IT) };
-/** A commission is never printed with a rate or an amount on a page anyone can forward. */
+/** A commission is never printed with a rate or an amount on a page anyone can forward.
+    A funnel that sells a fixed fee and prints its price (config "funnel.fixedFeeOnPage": true, first
+    /g/uk-law-google-ads, 27 Nov 2026) may put an amount next to "fee"; the commission words are still checked. */
+let FIXED_FEE_ON_PAGE = false;
 function checkTerms(path, text) {
-  const m = /(commission|commissione|commissioni|provvigion\w*|kommisjon|\bfees?\b)/i.exec(text);
+  const words = FIXED_FEE_ON_PAGE
+    ? /(commission|commissione|commissioni|provvigion\w*|kommisjon)/i
+    : /(commission|commissione|commissioni|provvigion\w*|kommisjon|\bfees?\b)/i;
+  const m = words.exec(text);
   if (!m) return;
   const around = text.slice(Math.max(0, m.index - 100), m.index + 100);
   if (/%|[£€]\s?\d|\d\s?[£€]|\bkr\s?\d|\d\s?(percent|per cent|per cento|euro)\b/i.test(around)) {
@@ -786,7 +792,7 @@ function abHead(cfg) {
 function head(cfg, { title, description, css, og, scripts, preconnect, ab }) {
   const font = (f) => `<link rel="preload" href="/g/_assets/fonts/${f}" as="font" type="font/woff2" crossorigin>`;
   const consent = scripts
-    ? `<script src="/js/consent.js?v=4" data-pixel="${esc(cfg.funnel.pixelId)}" data-banner="off"${scripts.track ? ` data-track="${esc(scripts.track)}"` : ''}></script>`
+    ? `<script src="/js/consent.js?v=5" data-pixel="${esc(cfg.funnel.pixelId)}"${cfg.funnel.googleAds ? ` data-gads="${esc(cfg.funnel.googleAds.id + '/' + cfg.funnel.googleAds.label)}"` : ''} data-banner="off"${scripts.track ? ` data-track="${esc(scripts.track)}"` : ''}></script>`
     : '';
   return `<!DOCTYPE html>
 <html lang="${esc(LOCALE.lang)}">
@@ -878,6 +884,7 @@ async function build(slug) {
   if (!existsSync(join(dir, 'config.json'))) die(`g/${slug}/config.json is missing`);
   const cfg = readJson(join(dir, 'config.json'));
   const rawCopy = readJson(join(dir, 'copy.json'));
+  FIXED_FEE_ON_PAGE = cfg.funnel && cfg.funnel.fixedFeeOnPage === true;
   const coreSrc = readFileSync(join(dir, 'core.mjs'), 'utf8');
   const core = await import(pathToFileURL(join(dir, 'core.mjs')).href);
   const { renderForm } = await import(pathToFileURL(join(dir, 'render-form.mjs')).href);

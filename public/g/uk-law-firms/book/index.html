@@ -189,7 +189,7 @@ html.has-cb{scroll-padding-bottom:var(--cb-h,0px)}
 @media print{.cb{display:none}}
 </style>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
-<script src="/js/consent.js?v=4" data-pixel="1466790598245604" data-banner="off"></script>
+<script src="/js/consent.js?v=5" data-pixel="1466790598245604" data-banner="off"></script>
 </head>
 <body>
 <div class="o"><div class="o-in em-fluid o--book">
@@ -249,7 +249,7 @@ function readQuery() {
   var out = {};
   try {
     var q = new URLSearchParams(location.search);
-    ['lead_id', 'fbclid'].concat(UTM_KEYS).forEach(function (k) {
+    ['lead_id', 'fbclid', 'gclid'].concat(UTM_KEYS).forEach(function (k) {
       var v = q.get(k);
       if (v) out[k] = v;
     });
@@ -397,8 +397,10 @@ function initBook() {
     }
   });
 
-  /* A qualified form is a lead we sent here from the form. A visit without a lead id is not. */
-  function fire() { if (known) fireQualified('fit', leadId); }
+  /* A qualified form is a lead we sent here from the form. A visit without a lead id is not, and neither is
+     a visit from a booking reminder e-mail (utm_medium=reminder, set by the lead Zap): that lead was counted
+     when the form sent it here, and a second count days later would be a second conversion in Meta. */
+  function fire() { if (known && q.utm_medium !== 'reminder') fireQualified('fit', leadId); }
   initBanner(fire);
   fire();
 }

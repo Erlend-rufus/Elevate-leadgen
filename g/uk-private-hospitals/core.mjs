@@ -17,7 +17,7 @@ export const OPTIONS = {
   turnover: ['Under £2m', '£2m to under £5m', '£5m to under £10m', '£10m to under £25m', '£25m or more', 'I would rather not say'],
   trading: ['Under two years', 'Two to five years', 'More than five years'],
   selfpay: ['Under 10%', '10% to under 30%', '30% to under 60%', '60% or more', 'I do not know'],
-  specialties: ['Gynaecology', 'Urology', 'Orthopaedics', 'Dermatology', 'Diagnostics and imaging', 'Fertility', 'Other'],
+  specialties: ['Gynaecology', 'Urology', 'Orthopaedics', 'Dermatology', 'Diagnostics and imaging', 'Fertility', 'Dentistry and implants', 'Other'],
   worth: ['Under £500', '£500 to under £1,500', '£1,500 to under £5,000', '£5,000 or more', 'I do not know'],
   // 26 Oct 2026: the lowest band ends at £3,000, the line that lets a group under £2m through (route.mjs).
   spend: ['Under £3,000', '£3,000 to under £20,000', '£20,000 to under £50,000', '£50,000 or more', 'I do not know'],

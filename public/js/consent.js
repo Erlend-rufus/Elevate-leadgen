@@ -26,6 +26,9 @@
  *
  * The React app suppresses the built-in banner and drives the choice itself:
  *   <script src="/js/consent.js" data-pixel="..." data-banner="off"></script>
+ *   <script src="/js/consent.js" data-pixel="..." data-gads="AW-123/label"></script>
+ *     also loads the Google Ads tag after Accept, and track() with an eventID then sends that
+ *     conversion too, with the event id as transaction_id.
  *   ElevateConsent.accept()   ElevateConsent.decline()   ElevateConsent.pageView()
  */
 (function () {
@@ -36,6 +39,7 @@
   var d = (self && self.dataset) || {};
   var PIXEL = d.pixel || '1466790598245604';
   var SHOW_BANNER = d.banner !== 'off';
+  var GADS = /^AW-\d+\/[A-Za-z0-9_-]+$/.test(d.gads || '') ? d.gads : '';
 
   /* Accent for the Accept button. The banner runs on two palettes: the cyan
      brand gradient (/case, /journey, /audit) and the funnel green (/lp,
@@ -76,6 +80,17 @@
     window.fbq('init', PIXEL);
     window.fbq('track', 'PageView');
 
+    if (GADS) {
+      var g = document.createElement('script');
+      g.async = true;
+      g.src = 'https://www.googletagmanager.com/gtag/js?id=' + GADS.split('/')[0];
+      document.head.appendChild(g);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', GADS.split('/')[0]);
+    }
+
     while (queue.length) {
       var ev = queue.shift();
       send(ev.std ? 'track' : 'trackCustom', ev.name, ev.params, ev.opts);
@@ -87,6 +102,10 @@
   function send(kind, name, params, opts) {
     if (opts) window.fbq(kind, name, params || {}, opts);
     else window.fbq(kind, name, params || {});
+    /* The page's one qualified event (the one sent with an event id) is also the Google Ads conversion. */
+    if (GADS && opts && opts.eventID && window.gtag) {
+      window.gtag('event', 'conversion', { send_to: GADS, transaction_id: opts.eventID });
+    }
   }
 
   function choose(choice) {

@@ -1,0 +1,131 @@
+{
+  "_comment": "Homepage draft for Nowasys Ltd (ClickUp 124hhvu6bm5, form 10 Nov 2026, Sondre asked for a mockup to attach to the follow-up email). Read from nowasys.com on 10 Nov 2026: the home page and /ai-consulting; /overview and /contact-us could not be read. Brand colours and logo file could not be read from the site, so the palette is a neutral placeholder and the page uses a text wordmark: replace both before the draft is shown. The portrait is the founder photograph on the home page, licence theirs to confirm. Contact e-mail is the info address on their footer, not the form address. The telephone number on their footer is the same as the form contact's mobile, so it is left out. Figures are the ones on their site and are marked to confirm. Style technical, design 2.",
+  "company": "Nowasys",
+  "site": "https://www.nowasys.com",
+  "lang": "en-GB",
+  "design": 2,
+  "industry": "it",
+  "style": "technical",
+  "palette": {
+    "theme": "light",
+    "primary": "#1D4ED8",
+    "secondary": "#0EA5E9"
+  },
+  "nav": [
+    { "label": "Services", "href": "#services" },
+    { "label": "Why Nowasys", "href": "#why" },
+    { "label": "About", "href": "#about" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+  "cta": "Book a strategy call",
+  "hero": {
+    "eyebrow": "B2B data and AI consultancy · London",
+    "title": "Data and AI transformation built for growth",
+    "sub": "Nowasys helps founders, CEOs, CTOs and heads of data build the data foundations, deploy production-ready AI agents and bring cloud costs under control.",
+    "cta": "Book a strategy call",
+    "ctaHref": "https://www.nowasys.com/meeting-schedule",
+    "secondary": "See the services",
+    "secondaryHref": "#services",
+    "note": "First working pilot in 30 to 90 days, as stated on the current site. [[TO CONFIRM: wording and whether it applies to every engagement]]",
+    "stat": {
+      "value": "30 to 90 days",
+      "label": "to a first working AI agent pilot [[TO CONFIRM: figure from the current site]]"
+    }
+  },
+  "stats": [
+    { "value": "30 to 90", "label": "days from discovery to a working pilot [[TO CONFIRM]]" },
+    { "value": "3", "label": "stages: data foundation, AI and automation, adoption and return" },
+    { "value": "25", "label": "ready-made AI agents in the catalogue [[TO CONFIRM: current count]]" }
+  ],
+  "services": {
+    "id": "services",
+    "eyebrow": "What we do",
+    "title": "Three stages, from clean data to measured return",
+    "lead": "Each stage stands on its own, and each one makes the next cheaper to run.",
+    "items": [
+      {
+        "title": "B2B data engineering",
+        "text": "A modern cloud and data foundation for AI: data integration, a cloud data platform, unified reporting and pipelines ready for real-time use."
+      },
+      {
+        "title": "AI transformation and automation",
+        "text": "AI employees and agents, workflow automation and human review built in, so AI moves beyond a pilot and into daily work."
+      },
+      {
+        "title": "Adoption and return",
+        "text": "KPI tracking, executive dashboards, team enablement and governance with an audit trail after go-live."
+      }
+    ]
+  },
+  "highlight": {
+    "kind": "terms",
+    "eyebrow": "Where the work lands",
+    "title": "Built on the platforms your team already uses",
+    "lead": "The technology partners shown on the current site. [[TO CONFIRM: which partner relationships are formal and may be shown]]",
+    "items": [
+      { "term": "AWS", "label": "Cloud" },
+      { "term": "Microsoft Azure", "label": "Cloud" },
+      { "term": "Google Cloud", "label": "Cloud" },
+      { "term": "Snowflake", "label": "Data platform" },
+      { "term": "Databricks", "label": "Data platform" },
+      { "term": "NVIDIA", "label": "AI infrastructure" },
+      { "term": "OpenAI", "label": "Models" },
+      { "term": "Anthropic", "label": "Models" }
+    ]
+  },
+  "why": {
+    "id": "why",
+    "eyebrow": "Why Nowasys",
+    "title": "Practical AI, tied to measurable outcomes",
+    "quote": {
+      "text": "Nowasys made the AI conversation practical.",
+      "who": "Revenue Operations Lead, B2B SaaS [[TO CONFIRM: permission to reuse]]"
+    },
+    "items": [
+      {
+        "title": "Human-led.",
+        "text": "Agents are discovered, built, governed and deployed with people in the loop, for business workflows."
+      },
+      {
+        "title": "Measured.",
+        "text": "Every recommendation is tied back to revenue, cost, risk or customer experience, with the KPIs tracked after go-live."
+      },
+      {
+        "title": "Clear about the limits.",
+        "text": "The AI Opportunity Clarity Guarantee commits to the agreed deliverables and does not promise a financial outcome. [[TO CONFIRM: current terms]]"
+      }
+    ]
+  },
+  "about": {
+    "id": "about",
+    "eyebrow": "About",
+    "title": "A UK B2B data and AI consultancy",
+    "paragraphs": [
+      "Nowasys Ltd is registered in England and Wales, company number 08435963, with its office at 20 Wenlock Road, London N1 7GU.",
+      "Founded by Adnan Tariq. [[TO CONFIRM: founder biography and the rest of the team, as the about page could not be read]]"
+    ]
+  },
+  "band": {
+    "eyebrow": "Next step",
+    "title": "Start with a strategy call",
+    "text": "A short conversation about your data, where AI could help first, and what a 30 to 90 day pilot would look like. [[TO CONFIRM: call length and format]]",
+    "cta": "Book a strategy call",
+    "ctaHref": "https://www.nowasys.com/meeting-schedule",
+    "secondary": "Email the team",
+    "secondaryHref": "mailto:info@nowasys.com"
+  },
+  "contact": {
+    "email": "info@nowasys.com",
+    "address": "20 Wenlock Road, London N1 7GU"
+  },
+  "footer": {
+    "legal": "© 2026 Nowasys Ltd. Registered in England and Wales, company number 08435963."
+  },
+  "images": {
+    "about": {
+      "file": "adnan.jpg",
+      "alt": "Adnan Tariq, founder of Nowasys",
+      "position": "50% 25%"
+    }
+  }
+}

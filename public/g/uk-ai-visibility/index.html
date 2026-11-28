@@ -503,7 +503,7 @@ html.ab-a [data-ab-only="a"],html.ab-b [data-ab-only="b"]{display:block}
 </style>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('anim')}catch(e){}})();</script>
 <script>(function(){var d=document.documentElement,k="elevate:g:uk-ai-visibility:ab",id="ten_one",v=null,f=0,s=null;try{var m=/[?&]ab=([ab])(&|$)/.exec(location.search);if(m){v=m[1];f=1}}catch(e){}if(!v){try{s=sessionStorage.getItem(k)}catch(e){}if(s&&s.indexOf(id+':')===0)v=s.slice(id.length+1)}if(v!=='a'&&v!=='b'){v=Math.random()<.5?'a':'b'}if(!f){try{sessionStorage.setItem(k,id+':'+v)}catch(e){}}else d.setAttribute('data-ab-forced','1');d.setAttribute('data-ab',v);d.classList.add('ab-'+v)})();</script>
-<script src="/js/consent.js?v=4" data-pixel="1466790598245604" data-banner="off" data-track="ViewContent"></script>
+<script src="/js/consent.js?v=5" data-pixel="1466790598245604" data-banner="off" data-track="ViewContent"></script>
 </head>
 <body>
 <div class="pg"><div class="pg-in em-fluid">
@@ -694,7 +694,7 @@ function readQuery() {
   var out = {};
   try {
     var q = new URLSearchParams(location.search);
-    ['lead_id', 'fbclid'].concat(UTM_KEYS).forEach(function (k) {
+    ['lead_id', 'fbclid', 'gclid'].concat(UTM_KEYS).forEach(function (k) {
       var v = q.get(k);
       if (v) out[k] = v;
     });
@@ -1150,6 +1150,7 @@ function initForm() {
     var accepted = consentState() === 'accepted';
     setHidden('consent', consentState());
     setHidden('fbclid', accepted ? (q.fbclid || '') : '');
+    setHidden('gclid', accepted ? (q.gclid || '') : '');
     var fbp = accepted ? readCookie('_fbp') : '';
     var fbc = accepted ? readCookie('_fbc') : '';
     if (accepted && !fbc && q.fbclid) fbc = 'fb.1.' + Date.now() + '.' + q.fbclid;

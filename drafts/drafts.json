@@ -155,6 +155,13 @@
       "slug": "my-commercial-lawyers-v2-47nx4t",
       "spec": "spec-v2.json",
       "clickup": "124hhvu5814"
+    },
+    {
+      "dir": "nowasys",
+      "company": "Nowasys",
+      "slug": "nowasys-z6jo3r",
+      "spec": "spec.json",
+      "clickup": "124hhvu6bm5"
     }
   ]
 }

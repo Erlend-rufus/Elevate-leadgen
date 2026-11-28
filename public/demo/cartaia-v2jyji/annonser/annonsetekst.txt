@@ -1,0 +1,63 @@
+CARTAIA: ANNONSETEKST TIL META
+Knapp i alle annonser: Registrer deg
+Beskrivelse i alle annonser: 149 kr per bruker/mnd inkl. mva.
+
+==== To kontorer, samme torsdag ====
+Filer: to-kontorer-9x16.mp4, to-kontorer-4x5.mp4
+Landingsside: /to-kontorer
+
+Primærtekst:
+Torsdag 12. november falt Outlook og flere Microsoft 365-tjenester ut. Noen kontorer ble stående stille. Andre jobbet som vanlig.
+
+Cartaia var oppe begge dagene. E-post, dokumenter og filer i nettleseren, fra et norsk selskap. Prøv gratis i 14 dager.
+
+Overskrift:
+Samme torsdag. Annen kontorpakke.
+
+==== Signalet ====
+Filer: signalet-9x16.mp4
+Landingsside: /signalet
+
+Primærtekst:
+Nei, det hjelper ikke å holde PC-en nærmere vinduet.
+
+Outlook og flere Microsoft 365-tjenester falt ut 12. og 13. november. Cartaia var oppe begge dagene. Prøv gratis i 14 dager, og logg inn med BankID.
+
+Overskrift:
+Det er ikke dekningen. Det er Microsoft.
+
+==== Møtet er utsatt ====
+Filer: motet-er-utsatt-9x16.mp4
+Landingsside: /motet-er-utsatt
+
+Primærtekst:
+Når kalenderen er nede, får møtebordet nye bruksområder.
+
+Kalender og innkallinger i Microsoft 365 falt ut 12. november. Cartaia har kalender, chat og videomøter i samme løsning, og var oppe begge dagene. Prøv gratis i 14 dager.
+
+Overskrift:
+Møtet er utsatt. Kalenderen er nede.
+
+==== Plantene ====
+Filer: plantene-9x16.mp4
+Landingsside: /plantene
+
+Primærtekst:
+To dager uten Outlook gir god tid til kontorplantene.
+
+Outlook var nede torsdag 12. og fredag 13. november. Cartaia var oppe. E-post, dokumenter og filer i nettleseren, fra et norsk selskap. Prøv gratis i 14 dager.
+
+Overskrift:
+Plantene har aldri hatt det bedre.
+
+==== Meldingen ====
+Filer: meldingen-4x5.png
+Landingsside: /meldingen
+
+Primærtekst:
+«Er Outlook nede hos deg også?»
+
+Den meldingen gikk i mange bedrifter torsdag og fredag. Hos Cartaia var svaret nei. E-post, dokumenter og filer fra et norsk selskap. Prøv gratis i 14 dager.
+
+Overskrift:
+«Er Outlook nede hos deg også?»

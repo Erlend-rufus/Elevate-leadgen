@@ -22,8 +22,8 @@ state the workflows are in (switched on or off) is also kept there, not here.
    node g/_growth/zapier/build.mjs zap2-calendly-booking.ts
    node g/_growth/zapier/zap2.test.mjs        # 232 checks
    node g/_growth/zapier/build.mjs zap1-lead-to-clickup-slack.ts
-   node g/_growth/zapier/zap1.test.mjs        # 244 checks
-   node g/_growth/zapier/zap1-it.test.mjs     # 669 checks, Italy (after zap1's build)
+   node g/_growth/zapier/zap1.test.mjs        # 362 checks
+   node g/_growth/zapier/zap1-it.test.mjs     # 685 checks, Italy (after zap1's build)
    node g/_growth/zapier/zap2-it.test.mjs     # 98 checks, Italy (after zap2's build)
    ```
 
@@ -184,3 +184,76 @@ page change was merged, so that no booking on the new event could arrive before 
 `01a1bc57-c79e-7944-8c25-d4171c50f14d`, sha256 `adf4912d...`, 33,856 bytes, read back and byte-identical to the file here, still
 switched on with its trigger active (the enabled state was not touched). Zap 1 was not changed. To go back: the version before,
 `01a1b2cc-97ea-7b0a-ac6b-cb94a2c204c2`.
+
+11 Nov 2026: booking reminders (the owner, 10 Nov 2026: "we want to nag a lot at the start, so they do not fall off"). Zap 1
+only. A fit lead that has not booked gets an e-mail 2, 6, 12 and 48 hours after the form, in every campaign (`REMIND` has an
+entry for each one; a test fails if a campaign is added without one).
+
+- **Not booked** means that the lead's task is still in `ny lead` when the e-mail is due. Zap 2 moves it to `møte booket`
+  on a booking (also when the booking came without the lead id and was matched on the e-mail address), and that stops the
+  reminders. So does a person who moves the task anywhere else. **To stop the reminders for one lead, move its task out of
+  `ny lead`.** To stop them for everyone, set `REMIND_ON` to false and publish.
+- The run waits between the e-mails (`ctx.wait`, six hours at most per wait), so the run of a real fit lead now ends up to
+  48 hours after it started. The task, the Slack post, the fields and the phone number are done before the first wait. The
+  step and wait names (`wait-before-reminder-N-part-K`, `check-booking-before-reminder-N`, `send-reminder-N`,
+  `note-reminder-N`) must not be renamed while runs are waiting: the journal finds a step by its name.
+- The e-mails are plain text, sent through the Outlook connection (`outlook_main`) from the shared mailbox
+  `post@elevatemarketing.no`, the address the pages give, with the host of the meeting as Reply-To and under the e-mail
+  (Sondre for the UK, Aurora for Italy). The link is the lead's own booking page with its lead id, so Zap 2 ties the
+  booking to the task, and `utm_medium=reminder`, which tells the booking page not to send `QualifiedForm` a second time
+  (`g/_growth/js/book.js`). The texts say nothing about how we are paid. A first name or a company name that does not look
+  like one (a link, an address) is left out of the text.
+- Each e-mail is noted in a ClickUp comment without a notification. Nothing goes to Slack. Nothing in the reminders can fail
+  the run: an unreadable task skips that reminder (no e-mail on a guess), a refused e-mail is noted and the next is still tried.
+- A reminder whose time has passed when the lead arrives (a late delivery from the function's store) is skipped.
+- A test lead gets no wait and no e-mail: the four e-mails are in `reminders.preview` of the run's output. For a draft run of
+  the real path, the payload of a test lead can carry `reminder_test_seconds` (1 to 30, the gap between reminders) and
+  `reminder_test_send: true` (the e-mails are sent, to `post@elevatemarketing.no`, marked `[TEST]`, never to the lead).
+- If a lead answers "stop", nothing happens by itself: whoever reads the answer moves the task out of `ny lead`.
+
+`zap1.test.mjs` section 20 and `zap1-it.test.mjs` section 9 cover it. The draft was run in Zapier against the real lists with
+made-up leads (`@example.invalid`): a UK IT fit lead with five seconds for the hours and a real send (four e-mails arrived in
+the shared mailbox nine to ten seconds apart, four comments on the task), and an Italy fit lead whose task was moved to
+`møte booket` during the first wait (the log says `stopped`, no e-mail). Both test tasks were set to `ukvalifisert - archive`
+and archived, never deleted. Published 10 Nov 2026 at 23:14 UTC: Zap 1 version `01a1c7bd-731d-7d9f-b19a-99fc659fcbc7`, sha256
+`440b590a...`, 78,919 bytes, read back and byte-identical to the file here, still switched on with its trigger active (the
+enabled state was not touched). The connection `outlook_main` was added to the version. Zap 2 was not changed. To go back:
+the version before, `01a1b2c8-8662-7981-b417-24543fc5e57f`.
+
+Not shown by any test: a wait of hours in the live runtime (the draft runs waited seconds), and what a publish does to runs
+that are waiting. Check the first real fit lead after 2 and 48 hours.
+
+27 Nov 2026: Google Ads on a fixed fee for law firms (`/g/uk-law-google-ads`, PR #148). Both files gained a CAMPAIGNS
+entry `uk-law-google-ads`: the list is the law list (`1201270000003579`, shared with `uk-law-firms`), the tag is
+`growth-law-gads`, and in Zap 1 the entry has `retainer`, so every lead is marked `[RETAINER]` in the task name, a tag,
+the first block of the description and line 2 of each Slack post. Zap 1 also has a `REMIND` entry (host Erlend, an
+exception to the UK host rule that Erlend decided the same day). Zap 2 knows the Calendly event
+`95487c87-7502-42cc-a3ee-7b031edfd731`. Drafts of both files were run in Zapier against the real law list with made-up
+data (`@example.invalid`): a fit lead on the new campaign (task made, nine fields set, `[TEST]` Slack text as a preview
+only, four reminder e-mails as a preview only), a `review` lead on `uk-law-firms`, a booking without a form on the new
+event, and a booking on each lead's `l_` id (both moved from `ny lead`). The three test tasks were set to
+`ukvalifisert - archive`, never deleted. Published at 21:30 UTC with the owner's go-ahead, before the funnel was set
+live: Zap 1 version `01a21eea-f4ab-714d-bd05-129bd72b9eb4` (sha256 `25273ca8...`, 81,336 bytes), Zap 2 version
+`01a21eea-ff46-783f-83ac-b06b2e7ee8dd` (sha256 `d4216087...`). Both were read back from the publish and are
+byte-identical to the files here; Zap 1 is still switched on with its trigger active (the enabled state was not
+touched). To go back: Zap 1 `01a2103a-557b-7677-899c-3f324215532b`, Zap 2 `01a1bc57-c79e-7944-8c25-d4171c50f14d`.
+
+27 Nov 2026, second publish the same evening (PR #150, Erlend's go-ahead): Zap 1 signs the Google Ads reminders
+"Erlend Rufus" and says there is nothing to prepare (access to the Google Ads account is sorted on the call); the
+retainer block names the fee floor. Zap 2: a campaign entry can say `retainer` (a task made without a form is named
+`[RETAINER] ...` and tagged `retainer`), `emailTag` and `emailNotTag` (the e-mail lookup keeps the two campaigns of a
+shared list apart: `uk-law-google-ads` only takes a task tagged `growth-law-gads`, `uk-law-firms` never does). Draft
+runs against the real law list with made-up data: a fit lead on the new campaign, a booking without a form on the new
+event, a booking on the commission event with the e-mail of the Google Ads test lead (not linked, a task of its own),
+and a booking on the Google Ads event with the same e-mail (linked, moved from `ny lead`). The three test tasks were
+set to `ukvalifisert - archive`. Published at 21:59 UTC: Zap 1 version `01a21f05-9715-7111-91bf-8df0e75e65bf` (sha256
+`a12baf82...`, 81,388 bytes), Zap 2 version `01a21f05-a1a0-7962-bd7e-3ea29397f3fa` (sha256 `3d35115a...`, 35,687
+bytes), both read back and byte-identical to the files here. To go back: Zap 1 `01a21eea-f4ab-714d-bd05-129bd72b9eb4`,
+Zap 2 `01a21eea-ff46-783f-83ac-b06b2e7ee8dd`.
+
+28 Nov 2026 (Erlend's go-ahead the evening before): `uk-google-ads` (Google Ads on a fixed fee for UK service businesses,
+PR #152) in both files, sharing the law list with tag `growth-gads`. Draft runs with a made-up lead (`@example.invalid`): a fit
+lead made a `[RETAINER]` task and a booking on event `1ec70106-0099-4dc1-ad03-5839369d0bd3` moved it to `møte booket`; the
+test task was then set to `ukvalifisert - archive`. Published about 07:06 UTC: Zap 1 version
+`01a220f9-fb14-78cd-84a4-c587cfa8ed01`, Zap 2 version `01a220fc-6119-7a03-ac20-9c5346c3250d`. Both are the repository files
+byte for byte.
