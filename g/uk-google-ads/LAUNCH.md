@@ -28,7 +28,7 @@ The moving company case is left out on purpose. NOK converted at 0.073.
   under Erlend's user (`eb-growwithelevate`), like the law Google Ads event.
 - ClickUp: shares LAW - UK - Commission (`1201270000003579`) with tag `growth-gads`, label
   "UK SERVICE · GOOGLE ADS" and `[RETAINER]` first in the task name, until Erlend makes one list for fixed fee leads.
-- Zapier: `uk-google-ads` in `CAMPAIGNS` and `REMIND` in both Zap files. Republish both Zaps after merge.
+- Zapier: `uk-google-ads` in `CAMPAIGNS` and `REMIND` in both Zap files. Published 28 Nov 2026 (Zap 1 `01a220f9-fb14-78cd-84a4-c587cfa8ed01`, Zap 2 `01a220fc-6119-7a03-ac20-9c5346c3250d`), tested with a made-up lead and booking.
 
 ## Still open
 1. One test from a phone and one real booking.

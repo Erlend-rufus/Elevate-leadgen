@@ -524,7 +524,8 @@ const CAMPAIGNS: Record<string, Campaign> = {
       },
       contractValue: {},
     },
-  },  // Google Ads on a fixed fee for UK service businesses (27 Nov 2026). Shares the law list until a fixed fee list exists; own tag and label.
+  },
+  // Google Ads on a fixed fee for UK service businesses (27 Nov 2026). Shares the law list until a fixed fee list exists; own tag and label.
   "uk-google-ads": {
     label: "UK SERVICE · GOOGLE ADS (fixed fee, no commission)",
     listId: "1201270000003579", // LAW - UK - Commission

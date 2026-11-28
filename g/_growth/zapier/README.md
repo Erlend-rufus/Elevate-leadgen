@@ -250,3 +250,10 @@ set to `ukvalifisert - archive`. Published at 21:59 UTC: Zap 1 version `01a21f05
 `a12baf82...`, 81,388 bytes), Zap 2 version `01a21f05-a1a0-7962-bd7e-3ea29397f3fa` (sha256 `3d35115a...`, 35,687
 bytes), both read back and byte-identical to the files here. To go back: Zap 1 `01a21eea-f4ab-714d-bd05-129bd72b9eb4`,
 Zap 2 `01a21eea-ff46-783f-83ac-b06b2e7ee8dd`.
+
+28 Nov 2026 (Erlend's go-ahead the evening before): `uk-google-ads` (Google Ads on a fixed fee for UK service businesses,
+PR #152) in both files, sharing the law list with tag `growth-gads`. Draft runs with a made-up lead (`@example.invalid`): a fit
+lead made a `[RETAINER]` task and a booking on event `1ec70106-0099-4dc1-ad03-5839369d0bd3` moved it to `møte booket`; the
+test task was then set to `ukvalifisert - archive`. Published about 07:06 UTC: Zap 1 version
+`01a220f9-fb14-78cd-84a4-c587cfa8ed01`, Zap 2 version `01a220fc-6119-7a03-ac20-9c5346c3250d`. Both are the repository files
+byte for byte.
