@@ -21,7 +21,7 @@ calendar. The pages stay noindex (paid traffic only).
 | Card | Account | Figure | Basis |
 |---|---|---|---|
 | Business law firm | Google Ads "Aspiria" (Nova Law conversions), campaign Forretningsjus | 271 enquiries, 19.4/month, Oct 2023 to Nov 2024 | form submissions + phone clicks, counted. Best 14 months of a 20 month run; the dates are on the card |
-| Private client firm | Google Ads "Campbell & Co" | cost per contact click NOK 642 (2024) to 162 (2026), -75%; ~1,730 phone/email clicks over 33 months | Google-modelled click events |
+| Private client firm | Google Ads "Campbell & Co" | cost per contact click NOK 642 (2024) to 166 (1 Jan to 27 Nov 2026), -74%; ~1,730 phone/email clicks over 33 months | Google-modelled click events |
 | Private clinic group | C-Medical | 632 bookings, NOK 614 per booking (~£45 at 0.073), 2 months | same figures as the C-Medical case |
 | Online retailer | garn/strikk webshop | 4.7× ROAS, ~4,210 orders, 11 months | as on the Norwegian page |
 
